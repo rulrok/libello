@@ -4,7 +4,7 @@ class Visao {
 
    public function renderizar($diretorio, $arquivo)
 	{
-            $local  = '../../Vision/';
+            $local  = 'app/visao/';
 	    require $local . $diretorio . '/' . $arquivo;
 	}
 }
