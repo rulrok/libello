@@ -9,6 +9,7 @@ body{
 }
 /* CONTENT */
 .content {
+    min-height: 200px;
     width: 70%;
     position: relative;
     margin: auto;
@@ -40,7 +41,6 @@ footer{
     min-height:200px;
     background: ghostwhite;
     border-color: #c8d7dc;
-
 }
 .footerLinks{
     vertical-align: top;

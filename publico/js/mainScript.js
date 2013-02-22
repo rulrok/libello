@@ -5,6 +5,12 @@ $buoop.ol = window.onload;
 window.menuHasUpped = false;
 
 window.onload = function() {
+    if (!String.prototype.trim) {
+        String.prototype.trim = function() {
+            return this.replace(/^\s+|\s+$/g, '');
+        }
+    }
+
     //Função para detectar navegadores antigos
     try {
         if ($buoop.ol)
@@ -21,6 +27,7 @@ window.onload = function() {
     for (var i = 0; i < menus.length; i++) {
 
         menus[i].onclick = function() {
+            hideSubMenu(0);
             var id = this.id;
             if (!this.className.match(".*visited.*")) {
                 var menu = $('#' + id);
@@ -29,7 +36,7 @@ window.onload = function() {
                     $(menus[i]).removeClass("visited");
                 }
                 menu.addClass("visited");
-                hideSubMenu(0);
+
                 makeSubMenu(this);
                 showSubMenu();
             } else {
@@ -37,8 +44,8 @@ window.onload = function() {
             }
         };
     }
-    makeSubMenu();
-    showSubMenu();
+    //makeSubMenu();
+    //showSubMenu();
 };
 
 //Função para manter os menus 'colados' no topo da página
@@ -51,12 +58,13 @@ window.onscroll = function() {
         window.menuHasUpped = true;
         //console.debug("Fixou o menu");
         var divMenu = $(".menuContainer");
+        var menuHeight = divMenu.height();
         divMenu.css('position', 'fixed');
         divMenu.css('top', '0px');
         divMenu.css('width', '100%');
 
         var divContent = $(".content");
-        divContent.css('padding-top', '100px');
+        divContent.css('padding-top', menuHeight + 'px');
     } else if (window.menuHasUpped && windowPosition < menuPosition) {
         window.menuHasUpped = false;
         //console.debug("Retornou ao normal");
@@ -97,35 +105,63 @@ function makeSubMenu(originMenu) {
 
     var subMenus;
     //Esse trecho deve ser feito se possível com ajax, para separar a lógica de negócio da camada de visão
+    var controlador = "";
     switch (menuName) {
         case "homeLink":
-            subMenus = new Array('Home->http://reuel.com.br', 'Link alternativos->localhost','Link 3->#','Link 4->#');
+            subMenus = new Array(
+                    'Home->http://reuel.com.br', 'Link alternativos->localhost',
+                    'Link 3->#', 'Link 4->#');
             break;
         case "usuariosLink":
-            subMenus = new Array('Usuarios->http://reuel.com.br', 'Link alternativos->localhost');
+            controlador = "usuario";
+            subMenus = new Array(
+                    'Inserir novo usuário->index.php?c=' + controlador + '&a=novo',
+                    'Gerenciar usuários->index.php?c=' + controlador + '&a=gerenciar');
             break;
         case "cursosLink":
-            subMenus = new Array('cursos->http://reuel.com.br', 'Link alternativos->localhost');
+            controlador = "cursos";
+            subMenus = new Array(
+                    'Inserir novo registro->index.php?c=' + controlador + '&a=novo',
+                    'Gerenciar registros->index.php?c=' + controlador + '&a=gerenciar');
             break;
         case "livrosLink":
-            subMenus = new Array('livros->http://reuel.com.br', 'Link alternativos->localhost');
+            controlador = "livro";
+            subMenus = new Array(
+                    'Inserri novo registro->index.php?c=' + controlador + '&a=novo',
+                    'Gerenciar registros->index.php?c=' + controlador + '&a=gerenciar',
+                    'Registrar saída->index.php?c=' + controlador + '&a=saida',
+                    'Registrar retorno->index.php?c=' + controlador + '&a=retorno',
+                    'Gerar relatórios->index.php?c=' + controlador + '&a=relatorios');
             break;
         case "equipamentosLink":
-            subMenus = new Array('equipamentos->http://reuel.com.br', 'Link alternativos->localhost');
+            controlador = "equipamento";
+            subMenus = new Array(
+                    'Novo registro->index.php?c=' + controlador + '&a=novo',
+                    'Gerenciar registros->index.php?c=' + controlador + '&a=gerenciar',
+                    'Registrar saída->index.php?c=' + controlador + '&a=saida',
+                    'Registrar retorno->index.php?c=' + controlador + '&a=retorno',
+                    'Consultar registros->index.php?c=' + controlador + '&a=consulta');
             break;
         case "documentosLink":
-            subMenus = new Array('documentos->http://reuel.com.br', 'Link alternativos->localhost');
+            controlador = "documentos";
+            subMenus = new Array(
+                    'Gerar ofício->index.php?c=' + controlador + '&a=gerarOficio',
+                    'Gerar relatório->index.php?c=' + controlador + '&a=gerarRelatorio',
+                    'Gerenciar histórico->index.php?c=' + controlador + '&a=historico');
             break;
         case "viagensLink":
-            subMenus = new Array('viagens->http://reuel.com.br', 'Link alternativos->localhost');
+            controlador = "viagens";
+            subMenus = new Array(
+                    'Inserir nova viagem->index.php?c=' + controlador + '&a=nova',
+                    'Gerenciar viagens->index.php?c=' + controlador + '&a=gerenciar');
             break;
     }
     var subMenuContainer = $('.subMenu menu');
     var linkName, link, htmlStruct = "";
     subMenuContainer.empty();
     for (var i = 0; i < subMenus.length; i++) {
-        linkName = subMenus[i].split("->")[0];
-        link = subMenus[i].split("->")[1];
+        linkName = subMenus[i].split("->")[0].trim();
+        link = subMenus[i].split("->")[1].trim();
         htmlStruct += '<a href="' + link + '"><li>' + linkName + '</li></a>';
     }
     htmlStruct += '<a id="hideSubMenu" onclick="hideSubMenu();"><li class="visited"><img alt="Esconder sub-menu" src="publico/images/icons/go-up.png"></li></a>';

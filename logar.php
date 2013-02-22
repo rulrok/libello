@@ -1,18 +1,18 @@
 <?php
 /*
-define('ROOT_PATH', $_SERVER['DOCUMENT_ROOT']);
-include("includes/seguranca.php");
+  define('ROOT_PATH', $_SERVER['DOCUMENT_ROOT']);
+  include("includes/seguranca.php");
 
 
-//Faz com que a pessoa não precise 'relogar' caso acesse a página principal.
-if (isset($_SESSION['idUsuario'])) {
-    header("Location: ./intermed.php");
-}*/
+  //Faz com que a pessoa não precise 'relogar' caso acesse a página principal.
+  if (isset($_SESSION['idUsuario'])) {
+  header("Location: ./intermed.php");
+  } */
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!DOCTYPE html">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel='stylesheet' href='publico/css/login.css' />
         <link rel='stylesheet' href='publico/css/mainStyle.css' />  
         <title>Login</title>
