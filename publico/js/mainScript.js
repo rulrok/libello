@@ -27,20 +27,24 @@ window.onload = function() {
     for (var i = 0; i < menus.length; i++) {
 
         menus[i].onclick = function() {
-            hideSubMenu(0);
             var id = this.id;
             if (!this.className.match(".*visited.*")) {
+
                 var menu = $('#' + id);
                 var menus = $('.menuLink');
                 for (var i = 0; i < menus.length; i++) {
                     $(menus[i]).removeClass("visited");
                 }
                 menu.addClass("visited");
-
+                hideSubMenu(0);
                 makeSubMenu(this);
                 showSubMenu();
             } else {
-                showSubMenu();
+                if ($(".subMenu").css("opacity") == "1") {
+                    hideSubMenu();
+                } else {
+                    showSubMenu();
+                }
             }
         };
     }
@@ -84,14 +88,17 @@ function hideSubMenu(time) {
     var height = $('.subMenu menu').height();
     var subMenu = $(".subMenu");
     subMenu.animate({
-        top: (-1) * height
+        top: (-1) * height,
+        opacity: 0.0
     }, time);
+
 }
 
 function showSubMenu() {
     var subMenu = $(".subMenu");
     subMenu.animate({
-        top: "0px"
+        top: "0px",
+        opacity: 1
     }, 350);
 }
 
@@ -162,9 +169,9 @@ function makeSubMenu(originMenu) {
     for (var i = 0; i < subMenus.length; i++) {
         linkName = subMenus[i].split("->")[0].trim();
         link = subMenus[i].split("->")[1].trim();
-        htmlStruct += '<a href="' + link + '"><li>' + linkName + '</li></a>';
+        htmlStruct += '<a href="javascript:void(0)" onclick="ajax(\'' + link + '\');"><li>' + linkName + '</li></a>';
     }
-    htmlStruct += '<a id="hideSubMenu" onclick="hideSubMenu();"><li class="visited"><img alt="Esconder sub-menu" src="publico/images/icons/go-up.png"></li></a>';
+    htmlStruct += '<a  id="hideSubMenu" onclick="hideSubMenu();"><li class="visited"><img alt="Esconder sub-menu" src="publico/images/icons/go-up.png"></li></a>';
 
     subMenuContainer.append(htmlStruct);
 }

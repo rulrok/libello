@@ -5,6 +5,40 @@
         <link type="text/css" rel="stylesheet" href="publico/css/mainStyle.css" />
         <script type="text/javascript" src="publico/js/jquery-1.9.1.js"></script>
         <script type="text/javascript" src="publico/js/mainScript.js"></script>
+        <script>
+            function ajax(link)
+            {/*
+             var xmlhttp;
+             if (window.XMLHttpRequest)
+             {// code for IE7+, Firefox, Chrome, Opera, Safari
+             xmlhttp = new XMLHttpRequest();
+             }
+             else
+             {// code for IE6, IE5
+             xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+             }
+             /*
+             xmlhttp.onreadystatechange = function()
+             {
+             if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
+             {
+             document.getElementById("contentWrap").innerHTML = xmlhttp.responseText;
+             }
+             }
+             
+             xmlhttp.open("GET", "app/visao/inicial/teste.php", false);
+             xmlhttp.send();
+             document.getElementById("contentWrap").innerHTML = xmlhttp.responseText;
+             */
+                    $(".contentWrap").empty();
+                $.ajax({
+                    url: link
+                }).done(function(data) {
+                    //document.getElementById(".contentWrap").innerHTML = data;
+                    $(".contentWrap").append(data);
+                });
+            }
+        </script>
         <title><?php echo $this->titulo ?></title>
     </head>
     <body>
@@ -49,7 +83,6 @@
             </div>
             <div class="content">
                 <div class="contentWrap">
-                    <!-- o conteúdo é pego pelo ajax -->
                 </div>
             </div>
             <footer>

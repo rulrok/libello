@@ -14,7 +14,6 @@ class Controlador {
 
         $this->visao->renderizar($diretorio, $arquivo);
     }
-
 }
 
 ?>
