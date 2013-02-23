@@ -16,7 +16,14 @@ body{
     padding: 0;
     height:100%;
 }
-
+/*Opera Fix*/
+body:before {
+    content:"";
+    height:100%;
+    float:left;
+    width:0;
+    margin-top:-32767px;
+}
 html {
     height: 100%;
 }
@@ -39,11 +46,6 @@ html {
     display: block;
 }
 
-body > nav {
-    height: auto;
-    min-height: 100%;
-}
-
 .content p{
     text-align: justify;
     font-size: 95%;
@@ -52,19 +54,47 @@ body > nav {
 nav {
     height: 100%;
 }
+
+body > nav {
+    height: auto;
+    min-height: 100%;
+}
+
 /* FIM DO CONTENT */
+/*================================================*/
 /* FOOTER */
 
-.clearfooter {
-    height: 330px;
-    clear: both;
+.arrow-down {
+
+    position: absolute;
+    right: 10px;
+    width: 0; 
+    height: 0; 
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+
+    border-top: 20px solid rgb(28, 82, 150);
+}
+
+.arrow-up {
+    display: none;
+    opacity: 0;
+    position: absolute;
+    right: 10px;
+    bottom: 20px;
+    width: 0; 
+    height: 0; 
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+
+    border-bottom: 20px solid rgb(28, 82, 150);
 }
 
 footer{
     height: 150px;
-    min-height: 130px;
     max-height: 300px;
-    background: darkslategrey;
+    /*background: steelblue;*/
+    background: url("../images/candidato1.png");
     position: relative;
     bottom:0;
     margin: 0;
@@ -76,10 +106,13 @@ footer{
 }
 .footerWrap {
     height:100%;
-    min-height:120px;
     max-height: 300px;
-    background: ghostwhite;
+    /*background: lavender;*/
+    background: url("../images/candidato1.png");
     border-color: #c8d7dc;
+    -webkit-box-shadow: 10px 2px 12px rgba(50, 50, 50, 0.1) inset ;
+    -moz-box-shadow:    10px 2px 12px rgba(50, 50, 50, 0.1) inset;
+    box-shadow:         10px 2px 12px rgba(50, 50, 50, 0.1) inset;
 }
 .footerLinks{
     vertical-align: top;
@@ -108,8 +141,8 @@ footer{
     left: 5px;
 }
 /* FIM FOOTER */
+/*================================================*/
 /* HEADER */
-
 .headerWrap{
     position: relative;
     min-height: 140px;
@@ -145,6 +178,12 @@ header .logo {
     left: 10px;
     top: 10px;
     bottom: auto;
+
+    /*    -webkit-box-shadow: 0px 0px 12px rgba(50, 50, 50, 0.1);
+        -moz-box-shadow:    0px 0px 12px rgba(50, 50, 50, 0.1);
+        box-shadow:         0px 0px 12px rgba(50, 50, 50, 0.1);*/
+
+
 }
 
 @media (max-width: 500px){
@@ -194,29 +233,58 @@ header .userInfoWrap [id=gerenciarConta]:before{
 }
 
 /* FIM HEADER */
+/*================================================*/
 /* MENU */
 
-/* Icones para os menus*/
-#homeLink:before{
-    content: url("../images/icons/home.png");
+@media (min-width:500px ) and ( max-width:800px){
+    /* Icones para os menus*/
+    #homeLink:before{
+        content: url("../images/icons/home_22.png");
+    }
+    #usuariosLink:before{
+        content: url("../images/icons/usuarios_22.png");
+    }
+    #cursosLink:before{
+        content: url("../images/icons/cursos_22.png");
+    }
+    #livrosLink:before{
+        content: url("../images/icons/livros_22.png");
+    }
+    #documentosLink:before{
+        content: url("../images/icons/documentos_22.png");
+    }
+    #equipamentosLink:before{
+        content: url("../images/icons/equipamentos_22.png");
+    }
+    #viagensLink:before{
+        content: url("../images/icons/viagens_22.png");
+    }
 }
-#usuariosLink:before{
-    content: url("../images/icons/usuarios.png");
-}
-#cursosLink:before{
-    content: url("../images/icons/cursos.png");
-}
-#livrosLink:before{
-    content: url("../images/icons/livros.png");
-}
-#documentosLink:before{
-    content: url("../images/icons/documentos.png");
-}
-#equipamentosLink:before{
-    content: url("../images/icons/equipamentos.png");
-}
-#viagensLink:before{
-    content: url("../images/icons/viagens.png");
+@media (min-width:800px ){
+
+
+    /* Icones para os menus*/
+    #homeLink:before{
+        content: url("../images/icons/home.png");
+    }
+    #usuariosLink:before{
+        content: url("../images/icons/usuarios.png");
+    }
+    #cursosLink:before{
+        content: url("../images/icons/cursos.png");
+    }
+    #livrosLink:before{
+        content: url("../images/icons/livros.png");
+    }
+    #documentosLink:before{
+        content: url("../images/icons/documentos.png");
+    }
+    #equipamentosLink:before{
+        content: url("../images/icons/equipamentos.png");
+    }
+    #viagensLink:before{
+        content: url("../images/icons/viagens.png");
+    }
 }
 /* Correção para a posição dos nomes dos links ao lado da imagem */
 li[id$=Link]:before{
@@ -266,7 +334,7 @@ li[id$=Link]:before{
     font-weight: bold;
     position:relative;
     display: inline-block;
-    padding-bottom: 7px;
+    padding-bottom: 6px;
     padding-left: 10px;
     padding-right: 10px;
 }
@@ -334,10 +402,8 @@ li[id$=Link]:before{
     padding: 10px;
 }
 /* FIM MENU */
-
-/*==============================================================================
-== Formulários alinhados sem necessidade de tabela =============================
-==============================================================================*/
+/*================================================*/
+/* Forms alinhados sem tabela */
 
 /* Campos de texto e senha de qualquer formulário */
 form input[type=text], form input[type=password] {
@@ -402,3 +468,6 @@ select:disabled{
     background-color: #DDD;
     color: #000;
 }
+
+/* FIM Forms alinhados sem tabela */
+/*================================================*/

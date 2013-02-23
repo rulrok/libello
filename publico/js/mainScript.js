@@ -80,6 +80,52 @@ window.onscroll = function() {
     }
 };
 
+function hideFooter() {
+    $(".footerWrap").animate({
+        opacity: 0,
+        top: '+=50',
+        height: 'toggle'
+    }, 500);
+
+    $("footer").animate({
+        height: "10px",
+        marginTop: "-20px"
+    }, 500);
+
+    $(".content").animate({
+        paddingBottom: "10px"
+    }, 700, function() {
+        $(".arrow-up").show();
+        $(".arrow-up").animate({
+            opacity: 1
+        }, 200);
+    });
+
+}
+
+function showFooter() {
+    $(".arrow-up").animate({opacity: 0}, 300, function() {
+        $(".arrow-up").hide();
+        $(".footerWrap").animate({
+            opacity: 1,
+            top: '+=50',
+            height: 'toggle'
+        }, 400);
+
+        $("footer").animate({
+            height: "150",
+            marginTop: "-160px"
+        }, 400);
+        $(".content").animate({
+            paddingBottom: "150px"
+        }, 500);
+    });
+
+
+
+
+
+}
 
 function hideSubMenu(time) {
     if (time === null) {
@@ -115,9 +161,8 @@ function makeSubMenu(originMenu) {
     var controlador = "";
     switch (menuName) {
         case "homeLink":
-            subMenus = new Array(
-                    'Home->http://reuel.com.br', 'Link alternativos->localhost',
-                    'Link 3->#', 'Link 4->#');
+            return;
+            subMenus = new Array();
             break;
         case "usuariosLink":
             controlador = "usuario";
@@ -174,4 +219,14 @@ function makeSubMenu(originMenu) {
     htmlStruct += '<a  id="hideSubMenu" onclick="hideSubMenu();"><li class="visited"><img alt="Esconder sub-menu" src="publico/images/icons/go-up.png"></li></a>';
 
     subMenuContainer.append(htmlStruct);
+}
+
+function ajax(link)
+{
+    $(".contentWrap").empty();
+    $.ajax({
+        url: link
+    }).done(function(data) {
+        $(".contentWrap").append(data);
+    });
 }
