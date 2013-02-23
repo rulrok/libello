@@ -9,7 +9,7 @@ class ControladorUsuario extends Controlador {
     }
 
     public function acaoGerenciar() {
-        $this->visao->conteudo = "Reuel";
+        $this->visao->title = "Reuel";
         $this->renderizar();
     }
 
