@@ -25,7 +25,22 @@ window.onload = function() {
     //Associa uma função para todos os links do menu
     var menus = $('.menuLink');
     for (var i = 0; i < menus.length; i++) {
+        if (menus[i].id == "homeLink") {
+            menus[i].onclick = function() {
+                if (!this.className.match(".*visited.*")) {
 
+                    var menu = $('#homeLink');
+                    var menus = $('.menuLink');
+                    for (var i = 0; i < menus.length; i++) {
+                        $(menus[i]).removeClass("visited");
+                    }
+                    menu.addClass("visited");
+                }
+            
+                hideSubMenu(150);
+            }
+        continue;
+        }
         menus[i].onclick = function() {
             var id = this.id;
             if (!this.className.match(".*visited.*")) {
@@ -93,7 +108,7 @@ function hideFooter() {
     }, 500);
 
     $(".content").animate({
-        paddingBottom: "10px"
+        paddingBottom: "30px"
     }, 700, function() {
         $(".arrow-up").show();
         $(".arrow-up").animate({
@@ -117,7 +132,7 @@ function showFooter() {
             marginTop: "-160px"
         }, 400);
         $(".content").animate({
-            paddingBottom: "150px"
+            paddingBottom: "180px"
         }, 500);
     });
 

@@ -52,6 +52,7 @@ html {
 }
 
 nav {
+    width: 100%;
     height: 100%;
 }
 
@@ -240,6 +241,7 @@ header .userInfoWrap [id=gerenciarConta]:before{
     /* Icones para os menus*/
     #homeLink:before{
         content: url("../images/icons/home_22.png");
+
     }
     #usuariosLink:before{
         content: url("../images/icons/usuarios_22.png");
@@ -286,19 +288,36 @@ header .userInfoWrap [id=gerenciarConta]:before{
         content: url("../images/icons/viagens.png");
     }
 }
+/* Links do menu */
 /* Correção para a posição dos nomes dos links ao lado da imagem */
 li[id$=Link]:before{
     vertical-align: -50%;
     padding-right: 5px;
 }
-/* Links do menu */
+/* Para tratar a opacidade dos icones dos menus */ 
+li[id$=Link]:before{
+    opacity: 0.3;
+}
+.menu li[id$=Link]:hover:before{
+    opacity: 0.5;
+}
+.menu li[id$=Link]:active:before{
+    opacity: 0.8;
+}
+.menu li[class$=visited]:before{
+    opacity: 1;
+}
+.menu li[class$=visited]:hover:before{
+    opacity: 1;
+}
 
 .menu{
+    user-select: none;
     position: relative;
     z-index: 2;
     width: 100%;
     min-height: 53px;
-    border: rgb(230, 230, 230) solid 1px;
+    /*border: rgb(230, 230, 230) solid 1px;*/
     border-left: none;
     border-right: none;
     background: url("../images/backgroundMenu.png");
@@ -309,7 +328,6 @@ li[id$=Link]:before{
 .menuContainer {
     z-index: 1;
     position: relative;
-    top:-2px;
 }
 
 .menu a:hover{
@@ -322,47 +340,69 @@ li[id$=Link]:before{
     user-select: none;
 }
 .menu menu{
+    padding: 0;
     margin-bottom: 0;
-    margin-top: 10px;
+    margin-top: 0;
     position: relative;
     display: table;
 }
+
+.menu menu:after{
+    content: '';
+    display: table;
+    clear: both;
+}
 .menu li{
+    color: #000;
     z-index:2;
     font-size: 80%;
     font-family: 'open-sans-bold', sans-serif;
     font-weight: bold;
     position:relative;
     display: inline-block;
-    padding-bottom: 6px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 10px;
+    list-style-type: none;
+    border-top: none;
+    border-bottom: none;
+}
+
+.menu li:after, .menu li:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .menu li:hover {
-    /*background: #c8d7dc;  Old browsers */
-    /*    background: -moz-linear-gradient(top,  #c8d7dc 0%, #e3eaed 63%, #f2f5f6 100%);  FF3.6+ 
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c8d7dc), color-stop(63%,#e3eaed), color-stop(100%,#f2f5f6));  Chrome,Safari4+ 
-        background: -webkit-linear-gradient(top,  #c8d7dc 0%,#e3eaed 63%,#f2f5f6 100%);  Chrome10+,Safari5.1+ 
-        background: -o-linear-gradient(top,  #c8d7dc 0%,#e3eaed 63%,#f2f5f6 100%);  Opera 11.10+ 
-        background: -ms-linear-gradient(top,  #c8d7dc 0%,#e3eaed 63%,#f2f5f6 100%);  IE10+ 
-        background: linear-gradient(to bottom,  #c8d7dc 0%,#e3eaed 63%,#f2f5f6 100%);  W3C 
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c8d7dc', endColorstr='#f2f5f6',GradientType=0 );  IE6-9 */
+    background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(255,255,255,0.96) 2%, rgba(255,255,255,0) 54%, rgba(255,255,255,0) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(2%,rgba(255,255,255,0.96)), color-stop(54%,rgba(255,255,255,0)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.96) 2%,rgba(255,255,255,0) 54%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.96) 2%,rgba(255,255,255,0) 54%,rgba(255,255,255,0) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.96) 2%,rgba(255,255,255,0) 54%,rgba(255,255,255,0) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.96) 2%,rgba(255,255,255,0) 54%,rgba(255,255,255,0) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
 
     border-bottom: #3871a6 3px solid;
 }
 
 .menu li.visited {
+    z-index: 3;
     border-bottom: #3871a6 3px solid;
-}
+    -webkit-box-shadow: 2px 0px 12px rgba(50, 50, 50, 0.2) ;
+    -moz-box-shadow:    2px 0px 12px rgba(50, 50, 50, 0.2) ;
+    box-shadow:         2px 0px 12px rgba(50, 50, 50, 0.2) ;
 
-.menu li:active{
-    text-shadow: 1px 1px 10px #8f97cf;
-    filter: dropshadow(color=#8f97cf, offx=1, offy=1);
+    background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(255,255,255,0.96) 2%, rgba(255,255,255,0) 54%, rgba(255,255,255,0) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(2%,rgba(255,255,255,0.96)), color-stop(54%,rgba(255,255,255,0)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.96) 2%,rgba(255,255,255,0) 54%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.96) 2%,rgba(255,255,255,0) 54%,rgba(255,255,255,0) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.96) 2%,rgba(255,255,255,0) 54%,rgba(255,255,255,0) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.96) 2%,rgba(255,255,255,0) 54%,rgba(255,255,255,0) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
+
 }
 
 .menuLink {
-    text-transform: capitalize;
+    text-transform: uppercase;
     font-size: 75% !important;
 }
 .subMenu{

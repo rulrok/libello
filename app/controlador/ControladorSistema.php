@@ -9,7 +9,6 @@ class ControladorSistema extends Controlador {
     }
 
     public function acaoSair() {
-        $this->visao->conteudo = "Reuel";
         $this->renderizar();
     }
 

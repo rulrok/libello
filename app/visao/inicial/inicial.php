@@ -28,8 +28,8 @@
                 </div>
                 <div class="userInfoWrap">
                     <p>Logado como: <b>$algum_nome</b></p>
-                    <a href="index.php?c=sistema&a=gerenciar" id="gerenciarConta">Gerenciar Conta</a>
-                    <a href="index.php?c=sistema&a=sair" id="sair">Sair</a>
+                    <a href="javascript:void(0)" onclick="ajax('index.php?c=sistema&a=gerenciar');" id="gerenciarConta">Gerenciar Conta</a>
+                    <a href="javascript:void(0)" onclick="ajax('index.php?c=sistema&a=sair');" id="sair">Sair</a>
                 </div>
 
             </header>
@@ -37,7 +37,7 @@
                 <div class="menuContainer">
                     <div class="menu">
                         <menu class="centered">
-                            <a href="index.php"><li class="menuLink visited" id="homeLink" class="visited">Home</li></a>
+                            <a onclick="ajax('index.php?c=inicial&a=homepage');"><li class="menuLink visited" id="homeLink" class="visited">Home</li></a>
                             <a><li class="menuLink" id="usuariosLink">Controle de usuarios</li></a>
                             <a><li class="menuLink" id="cursosLink">Cursos e polos</li></a>
                             <a><li class="menuLink" id="livrosLink">Livros</li></a>
@@ -64,17 +64,15 @@
                 <span class="arrow-down" onclick="hideFooter();"></span>
                 <center>
                     <div class="footerLinks">
-                        <ul><lt>Links rapidos</lt>
+                        <ul><lt>Links rápidos</lt>
                             <li><a href="http://cead.unifal-mg.edu.br" target="_blank">Cead - portal</a></li>
                             <li><a href="http://virtual.unifal-mg.edu.br" target="_blank">Moodle</a></li>
                             <li><a href="http://www.unifal-mg.edu.br" target="_blank">Unifal</a></li>
                         </ul>
                     </div>
                     <div class="footerLinks">
-                        <ul><lt>Informacoes</lt>
-                            <li><p>Este é o sistema de controle do CEAD.
-                                    Nele estão disponíveis ferramentas que irão auxiliar na gestão do CEAD
-                                </p>
+                        <ul><lt>Informações</lt>
+                            <li><p>Este site é corretamente visualizado nos seguintes navegadores: Internet Explorer 9+, Google Chrome, Firefox</p>
                             </li>
                             <!--
                             <li>
