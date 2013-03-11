@@ -27,9 +27,9 @@
 
                 </div>
                 <div class="userInfoWrap">
-                    <p>Logado como: <b>$algum_nome</b></p>
-                    <a href="javascript:void(0)" onclick="ajax('index.php?c=sistema&a=gerenciar');" id="gerenciarConta">Gerenciar Conta</a>
-                    <a href="javascript:void(0)" onclick="ajax('index.php?c=sistema&a=sair');" id="sair">Sair</a>
+                    <p>Logado como: <b><?php echo $this->usuario?></b></p>
+                    <a href="javascript:void(0)" onclick="ajax('index.php?c=sistema&a=gerenciarconta');hideSubMenu(150);" id="gerenciarConta">Gerenciar Conta</a>
+                    <a href="sair.php"  id="sair">Sair</a>
                 </div>
 
             </header>

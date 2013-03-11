@@ -1,23 +1,18 @@
-<?php
-/*
-  define('ROOT_PATH', $_SERVER['DOCUMENT_ROOT']);
-  include("includes/seguranca.php");
-
-
-  //Faz com que a pessoa não precise 'relogar' caso acesse a página principal.
-  if (isset($_SESSION['idUsuario'])) {
-  header("Location: ./intermed.php");
-  } */
-?>
 <!DOCTYPE html">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel='stylesheet' href='publico/css/login.css' />
         <link rel='stylesheet' href='publico/css/mainStyle.css' />  
-        <title>Login</title>
+        <title>Autenticação</title>
     </head>
     <body>
+        <?php
+        session_start();
+        if ($_SESSION['iniciada'] === true && $_SESSION['autenticado'] === TRUE){
+            header("Location: index.php");
+        }
+        ?>
         <div id="login" >
             <table width="520" border="0" style="position: relative; margin: 0 auto;">
                 <thead>
@@ -31,7 +26,7 @@
                     </tr>
                     <tr>
                         <td align="center">
-                            <form id="form1" name="form1" action="includes/validalogin.php" method="post">
+                            <form name="identificacao" action="./biblioteca/seguranca/seguranca.php" method="post">
                                 <table width="200" border="0" align="center">
                                     <tr>
                                         <td><div style="font-size: 14px;text-align: right;">Usuário: </div></td>
@@ -46,13 +41,19 @@
                                             </label></td>
                                     </tr>
                                     <tr>
-                                        <th colspan="2"><label><input type="submit" value="Entrar" /></label></th>
+                                        <th colspan="2"><label><input name="identificacao" type="submit" value="Entrar" /></label></th>
                                     </tr>
                                 </table>
                             </form>
                         </td>
                     </tr>
-                    <tr align="center"><td><div id="message"></div></td></tr>
+                    <tr align="center"><td><div id="message">
+                                <?php
+                                if (isset($GLOBALS['mensagem_erro'])) {
+                                    echo $GLOBALS['mensagem_erro'];
+                                }
+                                ?>
+                            </div></td></tr>
             </table>
         </div>
         <div id="apoio">

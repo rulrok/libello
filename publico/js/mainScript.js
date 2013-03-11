@@ -5,6 +5,7 @@ $buoop.ol = window.onload;
 window.menuHasUpped = false;
 
 window.onload = function() {
+
     if (!String.prototype.trim) {
         String.prototype.trim = function() {
             return this.replace(/^\s+|\s+$/g, '');
@@ -36,10 +37,10 @@ window.onload = function() {
                     }
                     menu.addClass("visited");
                 }
-            
+
                 hideSubMenu(150);
             }
-        continue;
+            continue;
         }
         menus[i].onclick = function() {
             var id = this.id;
@@ -83,7 +84,7 @@ window.onscroll = function() {
         divMenu.css('width', '100%');
 
         var divContent = $(".content");
-        divContent.css('padding-top', menuHeight + 50 + 'px');
+        divContent.css('padding-top', menuHeight  + 'px');
     } else if (window.menuHasUpped && windowPosition < menuPosition) {
         window.menuHasUpped = false;
         //console.debug("Retornou ao normal");
@@ -91,7 +92,7 @@ window.onscroll = function() {
         divMenu.css('position', 'relative');
         divMenu.css('top', '-2px');
         var divContent = $(".content");
-        divContent.css('padding-top', '50px');
+        divContent.css('padding-top', '0px');
     }
 };
 
@@ -238,10 +239,12 @@ function makeSubMenu(originMenu) {
 
 function ajax(link)
 {
-    $(".contentWrap").empty();
     $.ajax({
         url: link
     }).done(function(data) {
+        $(".contentWrap").empty();
         $(".contentWrap").append(data);
+        $(".campoObrigatorio").after("<img src=\"publico/images/icons/importante.png\">");
+        //$(".campoObrigatorio").after("*");
     });
 }

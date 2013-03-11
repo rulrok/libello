@@ -1,13 +1,14 @@
 @font-face {
     font-family: open-sans-bold;
-    src: url('../biblioteca/fontes/openSans/OpenSans-Bold.ttf');
+    src: url('../../biblioteca/fontes/openSans/OpenSans-Bold.ttf');
     font-family: pt-sans-caption;
-    src: url('../biblioteca/fontes/ptSansCaption/regular.ttf');
+    src: url('../../biblioteca/fontes/ptSansCaption/regular.ttf');
 
 }
 
+/* GERAL */
 * {
-    font-family: 'pt-sans-caption', sans-serif;
+    font-family: 'open-sans-bold', sans-serif;
     color: #393939;
 }
 body{
@@ -32,6 +33,34 @@ html {
     margin-left:auto;
     margin-right: auto;
 }
+.centeredText{
+    text-align: center !important;
+}
+
+input:focus,select:focus{
+    border: #ccc solid 2px;
+    border-radius: 4px;
+    outline: cornflowerblue solid 2px;
+    outline-offset: -2px;
+}
+
+input,select {
+    border-radius: 0px !important;
+    border: #000 solid 1px;
+    height: 25px;
+}
+
+.campoObrigatorio{
+    
+}
+
+.campoErrado {
+    border-color: red;
+    outline: red solid 2px;
+    outline-offset: -2px;
+}
+
+/* FIM DO GERAL */
 /* CONTENT */
 .content {
     overflow:auto;
@@ -41,7 +70,7 @@ html {
     margin: auto;
     padding-left: 50px;
     padding-right: 50px;
-    padding-top: 50px;
+    //padding-top: 50px;
     padding-bottom: 180px;
     display: block;
 }
@@ -59,6 +88,37 @@ nav {
 body > nav {
     height: auto;
     min-height: 100%;
+}
+
+.content fieldset{
+    position: relative;
+    padding: 30px;
+
+    border: none;
+    border-radius: 4px;
+    background-color: #FFF;
+
+    -webkit-box-shadow: 3px 3px 4px rgba(50, 50, 50, 0.13);
+    -moz-box-shadow:    3px 3px 4px rgba(50, 50, 50, 0.13);
+    box-shadow:         3px 3px 4px rgba(50, 50, 50, 0.13);
+}
+
+.content fieldset > fieldset{
+    border: #ccc solid 1px;
+    box-shadow: none;
+
+    padding: 10px;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+}
+
+.content fieldset legend {
+    position: relative;
+    background-color: #FFF;
+    border: #ccc solid 1px;
+    border-radius: 4px;
+    padding: 4px;
 }
 
 /* FIM DO CONTENT */
@@ -105,6 +165,14 @@ footer{
     padding-bottom: 0;
     clear: both;
 }
+
+footer lt{
+    font-size: 130%;
+    font-weight: bold;
+}
+footer p{
+    font-size: 110%;
+}
 .footerWrap {
     height:100%;
     max-height: 300px;
@@ -116,6 +184,7 @@ footer{
     box-shadow:         10px 2px 12px rgba(50, 50, 50, 0.1) inset;
 }
 .footerLinks{
+    font-size: 85%;
     vertical-align: top;
     display: inline-block;
     max-width: 400px;
@@ -131,9 +200,6 @@ footer{
 }
 .footerLinks ul li p{
     text-align: justify;
-}
-.footerLinks ul li p:first-letter{
-    font-size: 200%;
 }
 
 .footerLinks a:after{
@@ -353,6 +419,7 @@ li[id$=Link]:before{
     clear: both;
 }
 .menu li{
+    opacity: 0.7;
     color: #000;
     z-index:2;
     font-size: 80%;
@@ -385,6 +452,7 @@ li[id$=Link]:before{
 }
 
 .menu li.visited {
+    opacity: 1;
     z-index: 3;
     border-bottom: #3871a6 3px solid;
     -webkit-box-shadow: 2px 0px 12px rgba(50, 50, 50, 0.2) ;
@@ -479,6 +547,21 @@ form input[type=text], form input[type=password] {
     display: table-cell;
     font-family: sans-serif;
     text-align: right;
+}
+
+.table .line img{
+    position:relative;
+    top: 8px;
+    display: -webkit-box;
+    display: 
+}
+
+.table .line p:first-letter{
+    text-transform: uppercase;
+}
+
+.table .line p:after{
+    content: ':';
 }
 
 /* Campos de senha e texto específicos de formulários alinhados sem tabela */

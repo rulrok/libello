@@ -1,4 +1,12 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+if (file_exists(ROOT.'/biblioteca/seguranca/seguranca.php')) {
+    require_once ROOT.'/biblioteca/seguranca/seguranca.php';
+} else {
+    exit;
+}
+session_start();
 
 class Mvc {
 
@@ -48,29 +56,33 @@ class Mvc {
     }
 
     public function rodar() {
-        //pega o modulo, controlador e acao 
-        $controlador = isset($_GET['c']) ? $_GET['c'] : 'inicial';
-        $acao = isset($_GET['a']) ? $_GET['a'] : 'inicial';
+        if (isset($_SESSION['iniciada']) && $_SESSION['autenticado'] === true) {
+            //pega o modulo, controlador e acao
+            $controlador = isset($_GET['c']) ? $_GET['c'] : 'inicial';
+            $acao = isset($_GET['a']) ? $_GET['a'] : 'inicial';
 
-        //padronizacao de nomes
-        $this->controlador = ucfirst(strtolower($controlador));
-        $this->acao = ucfirst(strtolower($acao));
+            //padronizacao de nomes
+            $this->controlador = ucfirst(strtolower($controlador));
+            $this->acao = ucfirst(strtolower($acao));
 
-        $nomeClasseControlador = 'Controlador' . $this->controlador;
-        $nomeAcao = 'acao' . $this->acao;
+            $nomeClasseControlador = 'Controlador' . $this->controlador;
+            $nomeAcao = 'acao' . $this->acao;
 
-        //verifica se a classe existe
-        if (class_exists($nomeClasseControlador)) {
-            $controladorObjeto = new $nomeClasseControlador;
+            //verifica se a classe existe
+            if (class_exists($nomeClasseControlador)) {
+                $controladorObjeto = new $nomeClasseControlador;
 
-            //verifica se o metodo existe
-            if (method_exists($controladorObjeto, $nomeAcao)) {
-                $controladorObjeto->$nomeAcao();
-                return true;
+                //verifica se o metodo existe
+                if (method_exists($controladorObjeto, $nomeAcao)) {
+                    $controladorObjeto->$nomeAcao();
+                    return true;
+                }
+                throw new Exception('Acao nao existente.');
             }
-            throw new Exception('Acao nao existente.');
+            throw new Exception('Controlador nao existente.');
+        } else {
+            expulsaVisitante("Você precisa estar autenticado para realizar essa operação");
         }
-        throw new Exception('Controlador nao existente.');
     }
 
     private function __clone() {
