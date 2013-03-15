@@ -6,7 +6,7 @@ if (file_exists(ROOT.'/biblioteca/seguranca/seguranca.php')) {
 } else {
     exit;
 }
-session_start();
+//session_start();
 
 class Mvc {
 

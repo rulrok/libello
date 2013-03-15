@@ -27,8 +27,9 @@
 
                 </div>
                 <div class="userInfoWrap">
-                    <p>Logado como: <b><?php echo $this->usuario?></b></p>
-                    <a href="javascript:void(0)" onclick="ajax('index.php?c=sistema&a=gerenciarconta');hideSubMenu(150);" id="gerenciarConta">Gerenciar Conta</a>
+                    <p>Logado como: <b><?php echo $this->usuario ?></b></p>
+                    <a href="javascript:void(0)" onclick="ajax('index.php?c=sistema&a=gerenciarconta');
+                            hideSubMenu(150);" id="gerenciarConta">Gerenciar Conta</a>
                     <a href="sair.php"  id="sair">Sair</a>
                 </div>
 
@@ -51,6 +52,11 @@
                             <!-- o código desse trecho é gerado automaticamente -->
                         </menu>
                     </div>
+                    <div class="popUp table">
+                        <div class="botao_fechar" onclick="hidePopUp();"></div>
+                        <p class="popUpContent centeredText "></p>
+                    </div>
+
                 </div>
                 <div class="content centered">
                     <div class="contentWrap centered">

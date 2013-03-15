@@ -1,18 +1,17 @@
 
 var $buoop = {};
 $buoop.ol = window.onload;
-
 window.menuHasUpped = false;
 
 window.onload = function() {
-
+    $(".popUp").hide();
     if (!String.prototype.trim) {
         String.prototype.trim = function() {
             return this.replace(/^\s+|\s+$/g, '');
         }
     }
 
-    //Função para detectar navegadores antigos
+//Função para detectar navegadores antigos
     try {
         if ($buoop.ol)
             $buoop.ol();
@@ -22,7 +21,6 @@ window.onload = function() {
     e.setAttribute("type", "text/javascript");
     e.setAttribute("src", "http://browser-update.org/update.js");
     document.body.appendChild(e);
-
     //Associa uma função para todos os links do menu
     var menus = $('.menuLink');
     for (var i = 0; i < menus.length; i++) {
@@ -64,16 +62,14 @@ window.onload = function() {
             }
         };
     }
-    //makeSubMenu();
-    //showSubMenu();
+//makeSubMenu();
+//showSubMenu();
 };
-
 //Função para manter os menus 'colados' no topo da página
 window.onscroll = function() {
     var menu = $("#menuPosition");
     var menuPosition = menu.position().top;
     var windowPosition = $(window).scrollTop();
-
     if (!window.menuHasUpped && windowPosition >= menuPosition) {
         window.menuHasUpped = true;
         //console.debug("Fixou o menu");
@@ -82,9 +78,8 @@ window.onscroll = function() {
         divMenu.css('position', 'fixed');
         divMenu.css('top', '0px');
         divMenu.css('width', '100%');
-
         var divContent = $(".content");
-        divContent.css('padding-top', menuHeight  + 'px');
+        divContent.css('padding-top', menuHeight + 'px');
     } else if (window.menuHasUpped && windowPosition < menuPosition) {
         window.menuHasUpped = false;
         //console.debug("Retornou ao normal");
@@ -102,12 +97,10 @@ function hideFooter() {
         top: '+=50',
         height: 'toggle'
     }, 500);
-
     $("footer").animate({
         height: "10px",
         marginTop: "-20px"
     }, 500);
-
     $(".content").animate({
         paddingBottom: "30px"
     }, 700, function() {
@@ -116,7 +109,6 @@ function hideFooter() {
             opacity: 1
         }, 200);
     });
-
 }
 
 function showFooter() {
@@ -127,7 +119,6 @@ function showFooter() {
             top: '+=50',
             height: 'toggle'
         }, 400);
-
         $("footer").animate({
             height: "150",
             marginTop: "-160px"
@@ -136,13 +127,28 @@ function showFooter() {
             paddingBottom: "180px"
         }, 500);
     });
+}
 
+function showPopUp(data) {
+    $(".popUpContent").empty();
+    $(".popUpContent").append(data);
+    $(".popUp").show(200, function() {
+        $(".botao_fechar").show(100, function() {
+            $(".popUp").css("display", "table");
+        });
+    });
+}
 
+function hidePopUp() {
+    $(".botao_fechar").hide(100, function() {
+        $(".popUp").hide(200, function() {
+            $(".sub_popUp").empty();
+        })
+    });
 
 
 
 }
-
 function hideSubMenu(time) {
     if (time === null) {
         time = 350;
@@ -153,7 +159,6 @@ function hideSubMenu(time) {
         top: (-1) * height,
         opacity: 0.0
     }, time);
-
 }
 
 function showSubMenu() {
@@ -233,7 +238,6 @@ function makeSubMenu(originMenu) {
         htmlStruct += '<a href="javascript:void(0)" onclick="ajax(\'' + link + '\');"><li>' + linkName + '</li></a>';
     }
     htmlStruct += '<a  id="hideSubMenu" onclick="hideSubMenu();"><li class="visited"><img alt="Esconder sub-menu" src="publico/images/icons/go-up.png"></li></a>';
-
     subMenuContainer.append(htmlStruct);
 }
 
@@ -244,7 +248,19 @@ function ajax(link)
     }).done(function(data) {
         $(".contentWrap").empty();
         $(".contentWrap").append(data);
-        $(".campoObrigatorio").after("<img src=\"publico/images/icons/importante.png\">");
-        //$(".campoObrigatorio").after("*");
+        hidePopUp();
+//        var camposObrigatorios = $(".campoObrigatorio");
+//        if (camposObrigatorios.length > 0) {
+//            //document.head.children[document.head.children.length] = "<script src=\"publico/js/validarCampos.js\"></script>";
+//            $("head").append("<script src=\"publico/js/validarCampos.js\"></script>");
+//            for (i = 0; i < camposObrigatorios.length; i++) {
+//                $(camposObrigatorios[i]).after("<img src=\"publico/images/icons/campo_obrigatorio.png\">");
+//                //$(camposObrigatorios[i]).on('blur',liberarCadastro());
+//                //$(camposObrigatorios[i]).append(liberarCadastro());
+//            }
+//            $(".campoObrigatorio").on('change', function() {
+//                liberarCadastro()
+//            });
+//        }
     });
 }

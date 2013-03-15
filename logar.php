@@ -11,6 +11,8 @@
         session_start();
         if ($_SESSION['iniciada'] === true && $_SESSION['autenticado'] === TRUE){
             header("Location: index.php");
+        } else {
+            $_SESSION['autenticado'] = false;
         }
         ?>
         <div id="login" >

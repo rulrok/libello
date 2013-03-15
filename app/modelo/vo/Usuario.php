@@ -1,5 +1,7 @@
 <?php
+
 class Usuario {
+
     var $idUsuario;
     var $login;
     var $senha;
@@ -7,8 +9,8 @@ class Usuario {
     var $UNome;
     var $email;
     var $dataNascimento;
-    var $papel_idpapel;
-    
+    var $papel_idpapel = null;
+
     public function get_id() {
         return $this->idUsuario;
     }
@@ -70,9 +72,24 @@ class Usuario {
     }
 
     public function set_papel($papel) {
-        $this->papel_idpapel = (int)$papel;
+        $this->papel_idpapel = (int) $papel;
     }
 
+    /**
+     * Função auxiliar para verificar se os campos do objeto usuário que são requeridos para inserir no banco de dados não são vazios
+     * 
+     * @return boolean
+     */
+    public function validarCampos() {
+        if ($this->PNome !== null && $this->PNome !== "" 
+                && $this->UNome !== null && $this->UNome !== ""
+                && $this->login !== null && $this->login !== ""
+                && $this->senha !== null && $this->senha !== ""
+                && $this->papel_idpapel !== null) {
+            return true;
+        }
+        return false;
+    }
 
 }
 

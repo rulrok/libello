@@ -1,6 +1,7 @@
 <?php
+
 require_once 'abstractDAO.php';
-require_once __DIR__.'/../vo/Usuario.php';
+require_once __DIR__ . '/../vo/Usuario.php';
 
 class usuarioDAO extends abstractDAO {
 
@@ -8,11 +9,11 @@ class usuarioDAO extends abstractDAO {
 //    public function __construct() {
 //        $this->conexao = PDOconnectionFactory::getConection();
 //    }
-    public function atualizar($valueObject, $condicao = null) {
+    public function atualizar(Usuario $valueObject, $condicao = null) {
         
     }
 
-    public function consultar($colunas = null, $condicao = null) {
+    public static function consultar($colunas = null, $condicao = null) {
         if ($colunas == null) {
             $colunas = "*";
         }
@@ -22,16 +23,15 @@ class usuarioDAO extends abstractDAO {
             $condicao = "WHERE " . $condicao;
         }
         $sql = "SELECT " . $colunas . " FROM usuario " . $condicao;
-        $resultado = parent::$conexao->query($sql)->fetch();
-        print_r($resultado);
+        $resultado = parent::getConexao()->query($sql)->fetchAll();
         return $resultado;
     }
 
-    public function remover($valueObject) {
+    public static function remover(Usuario $valueObject) {
         
     }
 
-    public function inserir($valueObject) {
+    public static function inserir(Usuario $valueObject) {
         $s = "','";
         $login = $valueObject->get_login();
         $senha = $valueObject->get_senha();
@@ -43,12 +43,17 @@ class usuarioDAO extends abstractDAO {
         $sql = "INSERT INTO usuario(login,senha,PNome, UNome, email, dataNascimento,papel_idpapel)";
         $sql .= " VALUES ('" . $login . $s . $senha . $s . $PNome . $s . $UNome . $s . $email . $s . $nasc . "'," . $papel . ")";
         //    echo $sql;
-        parent::$conexao->query($sql);
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
-    public function consultarPapel(Usuario $usuario) {
+    public static function consultarPapel(Usuario $usuario) {
         $sql = "SELECT p.nome FROM papel p, usuario u WHERE u.papel_idpapel = p.idpapel AND u.login = \"" . $usuario->get_login() . "\"";
-        $resultado = parent::$conexao->query($sql)->fetch();
+        $resultado = parent::getConexao()->query($sql)->fetch();
         return $resultado[0];
     }
 
@@ -64,7 +69,7 @@ class usuarioDAO extends abstractDAO {
   $novo->set_papel("0");
   $novo->set_senha("123456");
 
-  
+
   $dao = new usuarioDAO();
   //$dao->inserir($novo);
   $r = $dao->consultarPapel($novo);

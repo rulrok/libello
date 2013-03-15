@@ -37,6 +37,10 @@ html {
     text-align: center !important;
 }
 
+.boldedText{
+    font-weight: bold;
+}
+
 input:focus,select:focus{
     border: #ccc solid 2px;
     border-radius: 4px;
@@ -50,8 +54,52 @@ input,select {
     height: 25px;
 }
 
+/* Estilo em botões e botões de envio */
+input[type=submit], input[type=button],input[type=reset]{
+    background-color: #FBFBFB;
+    border: 1px #CDF solid;
+    border-radius: 3px !important;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    position: relative;
+    margin-top: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    min-height: 30px;
+}
+
+/* Botões específicos */
+input[value~='Cadastrar']:enabled, .table input[value~='Atualizar'] {
+    float: right;
+    min-width: 100px;
+    min-height: 30px;
+    border: 1px #0F0 solid;
+    -moz-box-shadow: 1px 1px 1px #73f480;
+    -webkit-box-shadow: 1px 1px 1px #73f480;
+    box-shadow: 1px 1px 1px #73f480;
+}
+/* Botões específicos */
+input[value~='Cadastrar']:disabled,input[value~='Atualizar']:disabled {
+    min-width: 100px;
+    min-height: 30px;
+    float: right;
+    background: whitesmoke;
+    color: #DDD;
+    border: 1px #fe8888 solid;
+    -moz-box-shadow: 1px 1px 1px #fe8888;
+    -webkit-box-shadow: 1px 1px 1px #fe8888;
+    box-shadow: 1px 1px 1px #fe8888;
+}
+
+/* Quando clicar em algum botão, ele 'desce' */
+input[type=button]:active,input[type=submit]:active{
+    position: relative;
+    top: 2px;
+}
+
 .campoObrigatorio{
-    
+
 }
 
 .campoErrado {
@@ -61,6 +109,36 @@ input,select {
 }
 
 /* FIM DO GERAL */
+
+/* POP-UP */
+
+.botao_fechar{
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: url("../images/icons/fechar_16.png");
+    min-height: 16px;
+    min-width: 16px;
+    z-index: 2;
+    border: none;
+    max-width: 16px;
+    max-height: 16px;
+}
+
+.popUp {
+    display: none;
+    padding: 5px;
+    position: absolute;
+    min-width: 200px;
+    min-height: 50px;
+    right: 10px;
+    top: 70px;
+    border: #ccc solid 1px;
+    border-radius: 5px;
+    background-color: white;
+}
+/* FIM DO POP-UP */
+
 /* CONTENT */
 .content {
     overflow:auto;
@@ -70,7 +148,7 @@ input,select {
     margin: auto;
     padding-left: 50px;
     padding-right: 50px;
-    //padding-top: 50px;
+
     padding-bottom: 180px;
     display: block;
 }
@@ -553,7 +631,7 @@ form input[type=text], form input[type=password] {
     position:relative;
     top: 8px;
     display: -webkit-box;
-    display: 
+    opacity: 0.8;
 }
 
 .table .line p:first-letter{

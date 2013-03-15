@@ -10,7 +10,7 @@ if (!defined("ROOT")) {
  * Inicia um sessão, com o usuário inicialmente não autenticado.
  * @return type
  */
-function iniciarSessao() {  
+function iniciarSessao() {
     if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true) {
         return;
     } else {
@@ -105,7 +105,9 @@ function autenticaUsuario(Usuario $user) {
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+//if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+session_start();
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_SESSION['autenticado'] === FALSE) {
     iniciarSessao();
     $_SERVER['REQUEST_METHOD'] = NULL;
 
