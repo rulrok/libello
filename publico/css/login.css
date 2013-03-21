@@ -90,7 +90,7 @@ input[type=submit]{
     color: #060;
 }
 .error {
-    color: red;
+    color: red !important;
 }
 
 /* Div que apresentará logotipo da Unifal */

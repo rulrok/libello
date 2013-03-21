@@ -36,6 +36,7 @@
             </header>
             <hr id="menuPosition" style="margin:0;width:100%; visibility: hidden;border:none" >
                 <div class="menuContainer">
+                    <!--
                     <div class="menu">
                         <menu class="centered">
                             <a onclick="ajax('index.php?c=inicial&a=homepage');"><li class="menuLink visited" id="homeLink" class="visited">Home</li></a>
@@ -49,15 +50,25 @@
                     </div>
                     <div class="subMenu">
                         <menu>
-                            <!-- o código desse trecho é gerado automaticamente -->
+                            <ul class="usuariosSubMenu">
+                                <a href="javascript:void(0)" onclick="ajax('index.php?c=usuario&amp;a=novo');"><li>Inserir novo usuário</li></a><a href="javascript:void(0)" onclick="ajax('index.php?c=usuario&amp;a=gerenciar');"><li>Gerenciar usuários</li></a><a id="hideSubMenu" onclick="hideSubMenu();"><li class="visited"><img alt="Esconder sub-menu" src="publico/images/icons/go-up.png"></li></a>
+                            </ul>
+                            <ul class="cursos">
+                                <a href="javascript:void(0)" onclick="ajax('index.php?c=usuario&amp;a=novo');"><li>Inserir novo usuário</li></a><a href="javascript:void(0)" onclick="ajax('index.php?c=usuario&amp;a=gerenciar');"><li>Gerenciar usuários</li></a><a id="hideSubMenu" onclick="hideSubMenu();"><li class="visited"><img alt="Esconder sub-menu" src="publico/images/icons/go-up.png"></li></a>
+                            </ul>
+                            
                         </menu>
-                    </div>
+                    </div> 
+                -->
+                <?php echo $this->menu ?>
+                
                     <div class="popUp table">
                         <div class="botao_fechar" onclick="hidePopUp();"></div>
                         <p class="popUpContent centeredText "></p>
                     </div>
 
                 </div>
+
                 <div class="content centered">
                     <div class="contentWrap centered">
                         <?php include $this->conteudo ?>

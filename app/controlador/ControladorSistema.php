@@ -11,10 +11,7 @@ class ControladorSistema extends Controlador {
     }
 
     public function acaoSair() {
-        //$this->renderizar();
-        //encerrarSessao();
-        session_destroy();
-        header("Location: index.php");
+        expulsaVisitante();
     }
 
     public function acaoNaoautenticado() {

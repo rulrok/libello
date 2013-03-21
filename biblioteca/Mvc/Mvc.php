@@ -1,12 +1,13 @@
 <?php
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-if (file_exists(ROOT.'/biblioteca/seguranca/seguranca.php')) {
-    require_once ROOT.'/biblioteca/seguranca/seguranca.php';
+require_once ROOT.'biblioteca/Configurations.php';
+if (file_exists(ROOT . 'biblioteca/seguranca/seguranca.php')) {
+    require ROOT . 'biblioteca/seguranca/seguranca.php';
 } else {
     exit;
 }
-//session_start();
 
 class Mvc {
 

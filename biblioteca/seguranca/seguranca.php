@@ -1,10 +1,8 @@
 <?php
 
-if (!defined("ROOT")) {
-    define("ROOT", $_SERVER['DOCUMENT_ROOT'] . "/controle-cead");
-    require_once ROOT . '/biblioteca/bancoDeDados/PDOconnectionFactory.php';
-    require ROOT . '/app/modelo/vo/Usuario.php';
-}
+require_once __DIR__ . '/../Configurations.php';
+require_once ROOT . '/biblioteca/bancoDeDados/PDOconnectionFactory.php';
+require ROOT . '/app/modelo/vo/Usuario.php';
 
 /**
  * Inicia um sessão, com o usuário inicialmente não autenticado.
@@ -17,13 +15,6 @@ function iniciarSessao() {
         session_start();
         $_SESSION['iniciada'] = true;
         $_SESSION['autenticado'] = false;
-        /* try {
-          $_SESSION['conexao'] = PDOconnectionFactory::getConection();
-          } catch (PDOException $e) {
-          expulsaVisitante("Erro desconhecido");
-          }
-         * 
-         */
     }
 }
 
@@ -33,7 +24,6 @@ function iniciarSessao() {
 function encerrarSessao() {
     if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true) {
         session_destroy();
-        exit;
     }
 }
 
@@ -49,15 +39,9 @@ function protegePaginaLogado() {
 /**
  * Encerra a sessão e manda a pessoa para a página principal.
  */
-function expulsaVisitante($msg_erro = null) {
-    if ($msg_erro === null) {
-        //unset($GLOBALS['mensagem_erro']);
-    } else {
-        $GLOBALS['mensagem_erro'] = $msg_erro;
-    }
+function expulsaVisitante($msg_erro = "") {
     encerrarSessao();
-    header("Location: logar.php");
-    //require ROOT.'/logar.php';
+    header("Location: " . WEB_SERVER_NAME . "logar.php?m=" . $msg_erro);
     exit;
 }
 
@@ -71,7 +55,7 @@ function autenticaUsuario(Usuario $user) {
     if (($con = PDOconnectionFactory::getConection()) != null) {
         //$con = $_SESSION['conexao'];
 
-        if ($user->get_login() !== null && $user->get_senha() !== null) {
+        if ($user->get_login() !== null && $user->get_login() !== '' && $user->get_senha() !== null && $user->get_senha() !== '') {
             try {
                 $query = $con->prepare("SELECT * FROM usuario WHERE login = :login AND senha = :senha");
                 $query->execute(array('login' => $user->get_login(), 'senha' => $user->senha));
@@ -89,18 +73,19 @@ function autenticaUsuario(Usuario $user) {
 
                     return true;
                 } else {
-                    expulsaVisitante("Usuário inexistente");
+                    expulsaVisitante("Usuário ou senha incorretos.");
                     return false;
                 }
             } catch (PDOException $e) {
-                encerrarSessao();
+                expulsaVisitante($e);
+                return false;
             }
         } else {
-            encerrarSessao();
+            expulsaVisitante("Usuário e senha são requeridos.");
             return false;
         }
     } else {
-        encerrarSessao("Não foi possível se conectar ao banco de dados");
+        expulsaVisitante("Não foi possível se conectar ao banco de dados");
         return false;
     }
 }
@@ -112,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_SESSION['autenticado'] === FALSE) 
     $_SERVER['REQUEST_METHOD'] = NULL;
 
     $login = (isset($_POST['login'])) ? $_POST['login'] : '';
-    $senha = (isset($_POST['senha'])) ? $_POST['senha'] : '';
+    $senha = (isset($_POST['senha'])) ? md5($_POST['senha']) : '';
     $usuario = new Usuario();
     $usuario->set_login($login);
     $usuario->set_senha($senha);

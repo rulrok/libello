@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel='stylesheet' href='publico/css/login.css' />
         <link rel='stylesheet' href='publico/css/mainStyle.css' />  
+        <link rel='stylesheet' href='publico/css/login.css' />
         <title>Autenticação</title>
     </head>
     <body>
         <?php
         session_start();
-        if ($_SESSION['iniciada'] === true && $_SESSION['autenticado'] === TRUE){
+        if ($_SESSION['iniciada'] === true && $_SESSION['autenticado'] === TRUE) {
             header("Location: index.php");
         } else {
             $_SESSION['autenticado'] = false;
@@ -49,10 +49,11 @@
                             </form>
                         </td>
                     </tr>
-                    <tr align="center"><td><div id="message">
+                    <tr><td colspan="3" class="centered centeredText">
+                            <div class="error">
                                 <?php
-                                if (isset($GLOBALS['mensagem_erro'])) {
-                                    echo $GLOBALS['mensagem_erro'];
+                                if (isset($_GET['m'])) {
+                                    echo $_GET['m'];
                                 }
                                 ?>
                             </div></td></tr>

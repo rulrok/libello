@@ -171,74 +171,91 @@ function showSubMenu() {
 
 function makeSubMenu(originMenu) {
     var menuName;
-    if (originMenu != null) {
+    if (originMenu !== null) {
         menuName = originMenu.id;
     } else {
         menuName = "homeLink";
     }
 
-    var subMenus;
-    //Esse trecho deve ser feito se possível com ajax, para separar a lógica de negócio da camada de visão
-    var controlador = "";
-    switch (menuName) {
-        case "homeLink":
-            return;
-            subMenus = new Array();
-            break;
-        case "usuariosLink":
-            controlador = "usuario";
-            subMenus = new Array(
-                    'Inserir novo usuário->index.php?c=' + controlador + '&a=novo',
-                    'Gerenciar usuários->index.php?c=' + controlador + '&a=gerenciar');
-            break;
-        case "cursosLink":
-            controlador = "cursos";
-            subMenus = new Array(
-                    'Inserir novo registro->index.php?c=' + controlador + '&a=novo',
-                    'Gerenciar registros->index.php?c=' + controlador + '&a=gerenciar');
-            break;
-        case "livrosLink":
-            controlador = "livro";
-            subMenus = new Array(
-                    'Inserri novo registro->index.php?c=' + controlador + '&a=novo',
-                    'Gerenciar registros->index.php?c=' + controlador + '&a=gerenciar',
-                    'Registrar saída->index.php?c=' + controlador + '&a=saida',
-                    'Registrar retorno->index.php?c=' + controlador + '&a=retorno',
-                    'Gerar relatórios->index.php?c=' + controlador + '&a=relatorios');
-            break;
-        case "equipamentosLink":
-            controlador = "equipamento";
-            subMenus = new Array(
-                    'Novo registro->index.php?c=' + controlador + '&a=novo',
-                    'Gerenciar registros->index.php?c=' + controlador + '&a=gerenciar',
-                    'Registrar saída->index.php?c=' + controlador + '&a=saida',
-                    'Registrar retorno->index.php?c=' + controlador + '&a=retorno',
-                    'Consultar registros->index.php?c=' + controlador + '&a=consulta');
-            break;
-        case "documentosLink":
-            controlador = "documentos";
-            subMenus = new Array(
-                    'Gerar ofício->index.php?c=' + controlador + '&a=gerarOficio',
-                    'Gerar relatório->index.php?c=' + controlador + '&a=gerarRelatorio',
-                    'Gerenciar histórico->index.php?c=' + controlador + '&a=historico');
-            break;
-        case "viagensLink":
-            controlador = "viagens";
-            subMenus = new Array(
-                    'Inserir nova viagem->index.php?c=' + controlador + '&a=nova',
-                    'Gerenciar viagens->index.php?c=' + controlador + '&a=gerenciar');
-            break;
-    }
-    var subMenuContainer = $('.subMenu menu');
-    var linkName, link, htmlStruct = "";
-    subMenuContainer.empty();
+    menuName = menuName.substring(0, menuName.lastIndexOf("Link"));
+    menuName = menuName.concat("SubMenu");
+    var subMenus = $(".subMenu menu ul");
+
     for (var i = 0; i < subMenus.length; i++) {
-        linkName = subMenus[i].split("->")[0].trim();
-        link = subMenus[i].split("->")[1].trim();
-        htmlStruct += '<a href="javascript:void(0)" onclick="ajax(\'' + link + '\');"><li>' + linkName + '</li></a>';
+
+        subMenus[i].classList.add("hiddenSubMenuLink");
+
     }
-    htmlStruct += '<a  id="hideSubMenu" onclick="hideSubMenu();"><li class="visited"><img alt="Esconder sub-menu" src="publico/images/icons/go-up.png"></li></a>';
-    subMenuContainer.append(htmlStruct);
+
+    for (var i = 0; i < subMenus.length; i++) {
+        if (subMenus[i].classList.contains(menuName)) {
+            subMenus[i].classList.remove("hiddenSubMenuLink");
+            break;
+        }
+    }
+
+//    var subMenus;
+    //Esse trecho deve ser feito se possível com ajax, para separar a lógica de negócio da camada de visão
+//    var controlador = "";
+//    switch (menuName) {
+//        case "homeLink":
+//            return;
+//            subMenus = new Array();
+//            break;
+//        case "usuariosLink":
+//            controlador = "usuario";
+//            subMenus = new Array(
+//                    'Inserir novo usuário->index.php?c=' + controlador + '&a=novo',
+//                    'Gerenciar usuários->index.php?c=' + controlador + '&a=gerenciar');
+//            break;
+//        case "cursosLink":
+//            controlador = "cursos";
+//            subMenus = new Array(
+//                    'Inserir novo registro->index.php?c=' + controlador + '&a=novo',
+//                    'Gerenciar registros->index.php?c=' + controlador + '&a=gerenciar');
+//            break;
+//        case "livrosLink":
+//            controlador = "livro";
+//            subMenus = new Array(
+//                    'Inserri novo registro->index.php?c=' + controlador + '&a=novo',
+//                    'Gerenciar registros->index.php?c=' + controlador + '&a=gerenciar',
+//                    'Registrar saída->index.php?c=' + controlador + '&a=saida',
+//                    'Registrar retorno->index.php?c=' + controlador + '&a=retorno',
+//                    'Gerar relatórios->index.php?c=' + controlador + '&a=relatorios');
+//            break;
+//        case "equipamentosLink":
+//            controlador = "equipamento";
+//            subMenus = new Array(
+//                    'Novo registro->index.php?c=' + controlador + '&a=novo',
+//                    'Gerenciar registros->index.php?c=' + controlador + '&a=gerenciar',
+//                    'Registrar saída->index.php?c=' + controlador + '&a=saida',
+//                    'Registrar retorno->index.php?c=' + controlador + '&a=retorno',
+//                    'Consultar registros->index.php?c=' + controlador + '&a=consulta');
+//            break;
+//        case "documentosLink":
+//            controlador = "documentos";
+//            subMenus = new Array(
+//                    'Gerar ofício->index.php?c=' + controlador + '&a=gerarOficio',
+//                    'Gerar relatório->index.php?c=' + controlador + '&a=gerarRelatorio',
+//                    'Gerenciar histórico->index.php?c=' + controlador + '&a=historico');
+//            break;
+//        case "viagensLink":
+//            controlador = "viagens";
+//            subMenus = new Array(
+//                    'Inserir nova viagem->index.php?c=' + controlador + '&a=nova',
+//                    'Gerenciar viagens->index.php?c=' + controlador + '&a=gerenciar');
+//            break;
+//    }
+//    var subMenuContainer = $('.subMenu menu');
+//    var linkName, link, htmlStruct = "";
+//    //subMenuContainer.empty();
+//    for (var i = 0; i < subMenus.length; i++) {
+//        linkName = subMenus[i].split("->")[0].trim();
+//        link = subMenus[i].split("->")[1].trim();
+//        htmlStruct += '<a href="javascript:void(0)" onclick="ajax(\'' + link + '\');"><li>' + linkName + '</li></a>';
+//    }
+//    htmlStruct += '<a  id="hideSubMenu" onclick="hideSubMenu();"><li class="visited"><img alt="Esconder sub-menu" src="publico/images/icons/go-up.png"></li></a>';
+//    subMenuContainer.append(htmlStruct);
 }
 
 function ajax(link)

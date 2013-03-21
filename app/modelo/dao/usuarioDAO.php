@@ -57,22 +57,30 @@ class usuarioDAO extends abstractDAO {
         return $resultado[0];
     }
 
+    public static function obterPermissoes(Usuario $usuario) {
+        $sql = "SELECT f.idFerramenta,nomeFerramenta,tp.idPermissao,tipoPermissao FROM ferramenta f, permissao tp, usuario_permissao p WHERE f.idFerramenta = p.idFerramenta AND tp.idPermissao = p.idPermissao AND idUsuario = " . $usuario->get_id() . " ORDER BY idFerramenta";
+        $resultado = parent::getConexao()->query($sql)->fetchAll();
+        return $resultado;
+    }
+
 }
 
-/*
-  $novo = new Usuario();
-  $novo->set_PNome("Reuel");
-  $novo->set_UNome("Ramos");
-  $novo->set_dataNascimento("28/09/1991");
-  $novo->set_email("rulrok@gmail.com");
-  $novo->set_login("rulrok");
-  $novo->set_papel("0");
-  $novo->set_senha("123456");
 
-
-  $dao = new usuarioDAO();
-  //$dao->inserir($novo);
-  $r = $dao->consultarPapel($novo);
-  echo $r[0];
- */
+//  $novo = new Usuario();
+//  $novo->set_id(1);
+//
+//
+//  $dao = new usuarioDAO();
+//  //$dao->inserir($novo);
+//  $r = $dao->obterPermissoes($novo);
+//  foreach ($r as $permissao){
+//      echo "Ferramenta:\t";
+//      print($permissao['idFerramenta']);
+//      echo "Permissao:\t";
+//      print($permissao['tipo']);
+//      echo "\tNome:\t";
+//      print($permissao['nome']);
+//      echo "<br>";
+//  }
+ 
 ?>

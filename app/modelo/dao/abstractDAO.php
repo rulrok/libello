@@ -1,6 +1,6 @@
 <?php
-
-require __DIR__.'/../../../biblioteca/bancoDeDados/PDOconnectionFactory.php';
+require_once __DIR__.'/../../../biblioteca/Configurations.php';
+require_once ROOT.'/biblioteca/bancoDeDados/PDOconnectionFactory.php';
 
 
 abstract class abstractDAO {
