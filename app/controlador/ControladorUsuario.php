@@ -1,6 +1,7 @@
 <?php
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/biblioteca/Mvc/Controlador.php';
+include_once ROOT . 'biblioteca/Mvc/Controlador.php';
+include_once ROOT . 'app/modelo/ComboBoxPermissoes.php';
 
 class ControladorUsuario extends Controlador {
 
@@ -15,6 +16,7 @@ class ControladorUsuario extends Controlador {
             $this->visao->email = "";
             $this->visao->dataNascimento = "";
         }
+        $this->visao->comboPermissoes = ComboBoxPermissoes::montarComboBoxPadrao();
         $this->renderizar();
     }
 
@@ -46,6 +48,14 @@ class ControladorUsuario extends Controlador {
                     $this->visao->login = "";
                     $this->acaoNovo(true);
                 elseif (usuarioDAO::inserir($usuario)):
+                    $permissoes = new PermissoesFerramenta();
+                    $permissoes->set_controleCursos($_POST['permissoescursos_e_polos']);
+                    $permissoes->set_controleDocumentos($_POST['permissoescontrole_de_documentos']);
+                    $permissoes->set_controleEquipamentos($_POST['permissoescontrole_de_equipamentos']);
+                    $permissoes->set_controleLivros($_POST['permissoescontrole_de_livros']);
+                    $permissoes->set_controleUsuarios($_POST['permissoescontrole_de_usuarios']);
+                    $permissoes->set_controleViagens($_POST['permissoescontrole_de_viagens']);
+                    usuarioDAO::cadastrarPermissoes($usuario, $permissoes);
                     $this->visao->mensagem_usuario = "Cadastro realizado com sucesso";
                     $this->visao->nome = "";
                     $this->visao->sobrenome = "";

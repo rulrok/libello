@@ -53,9 +53,20 @@ else:
 
             <span class="line">
                 <p>Papel</p>
-                <select required name="papel" class="campoObrigatorio"><option value="default" selected="selected"> -- Selecione uma opção --</option><option value="0">Administrador </option><option value="1">Gestor </option><option value="2">Professor </option><option value="3">Coordenador </option><option value="4">Estudante </option></select
+                <select required name="papel" class="campoObrigatorio">
+                    <option value="default" selected="selected"> -- Selecione uma opção --</option>
+                    <option value="0">Administrador </option>
+                    <option value="1">Gestor </option>
+                    <option value="2">Professor </option>
+                    <option value="3">Coordenador </option>
+                    <option value="4">Estudante </option>
+                </select>
             </span>
-
+            <br/>
+            <fieldset>
+                <legend>Permissões por ferramenta</legend>
+                <?php echo $this->comboPermissoes ?>
+            </fieldset>
         </fieldset>
         <input disabled id="submit" type="submit" value="Cadastrar">
         <input type="reset" value="Limpar">

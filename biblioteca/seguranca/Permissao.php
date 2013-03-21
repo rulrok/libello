@@ -2,9 +2,10 @@
 /**
  * Simular classe de enumeração
  */
-final class Permissoes {
+final class Permissao {
 
     const __default = self::SEM_ACESSO;
+    const __length = 5;
     const SEM_ACESSO = 1;
     const CONSULTA = 2;
     const ESCRITA = 3;
