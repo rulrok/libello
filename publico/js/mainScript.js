@@ -1,4 +1,3 @@
-
 var $buoop = {};
 $buoop.ol = window.onload;
 window.menuHasUpped = false;
@@ -203,7 +202,8 @@ function ajax(link)
         url: link
     }).done(function(data) {
         $(".contentWrap").empty();
-        $(".contentWrap").append(data);
+        $(".contentWrap").  append(data);
+        eval(document.getElementById("pos_script").innerHTML);
         hidePopUp();
     });
 }

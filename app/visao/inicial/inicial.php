@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br">
     <head>
-        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+        <meta charset="UTF-8"/>
         <!--[if !IE 7]>
         <style type="text/css">
                 nav {display:table;height:100%}
         </style>
 <![endif]-->
         <link type="text/css" rel="stylesheet" href="publico/css/mainStyle.css" />
+        <link type="text/css" rel="stylesheet" href="publico/css/jquery.dataTables_themeroller.css" />
+        <link type="text/css" rel="stylesheet" href="publico/css/jquery-ui-1.8.4.custom.css" />
+        <!-- Inicialização dos principais scripts -->
         <script type="text/javascript" src="publico/js/jquery-1.9.1.js"></script>
         <script type="text/javascript" src="publico/js/mainScript.js"></script>
         <title><?php echo $this->titulo ?></title>
@@ -16,10 +19,10 @@
         <nav>
             <header>
                 <figure>
-                    <map name="logoMap">
-                        <area shape="poly" coords="86,178,120,157,177,134,202,125,224,120,240,95,243,80,228,59,201,49,196,54,197,98,188,88,186,59,176,51,167,48,156,25,135,13,127,0,92,4,43,13,2,13,12,32,32,62,31,91,40,118,65,141," alt="Controle CEAD" title="Controle CEAD" />
+                    <map name="#logoMap">
+                        <area shape="poly" coords="86,178,120,157,177,134,202,125,224,120,240,95,243,80,228,59,201,49,196,54,197,98,188,88,186,59,176,51,167,48,156,25,135,13,127,0,92,4,43,13,2,13,12,32,32,62,31,91,40,118,65,141" alt="Controle CEAD" title="Controle CEAD" />
                     </map>
-                    <img class="logo" src="publico/images/cead.png" usemap="logoMap">
+                    <img class="logo" src="publico/images/cead.png" usemap="#logoMap"></img>
                 </figure>
                 <div class="headerWrap">
                     <br/>
@@ -59,9 +62,9 @@
                             
                         </menu>
                     </div> 
-                -->
-                <?php echo $this->menu ?>
-                
+                    -->
+                    <?php echo $this->menu ?>
+
                     <div class="popUp table">
                         <div class="botao_fechar" onclick="hidePopUp();"></div>
                         <p class="popUpContent centeredText "></p>
@@ -108,5 +111,36 @@
                 </center>
             </div>
         </footer>
+        <!-- Inicialização de scripts importantes para outras páginas -->
+        <script src="publico/js/jquery.dataTables.js"></script>
+        <script>
+                        $.extend($.fn.dataTable.defaults, {
+                            "bFilter": true,
+                            "bSort": true,
+                            "bJQueryUI": true,
+                            "sPaginationType": "full_numbers",
+                            "oLanguage": {
+                                "sProcessing": "Processando...",
+                                "sLengthMenu": "Mostrar _MENU_ registros",
+                                "sZeroRecords": "Não foram encontrados resultados",
+                                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                                "sInfoEmpty": "Mostrando de 0 até 0 de 0 registros",
+                                "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
+                                "sInfoPostFix": "",
+                                "sSearch": "Buscar:",
+                                "sUrl": "",
+                                "oPaginate": {
+                                    "sFirst": "Primeiro",
+                                    "sPrevious": "Anterior",
+                                    "sNext": "Seguinte",
+                                    "sLast": "Último"
+                                },
+                                "oAria": {
+                                    "sSortAscending": " - Ordenar crescentemente",
+                                    "sSortDescending": " - Ordenar decrescentemente"
+                                }
+                            }
+                        });
+        </script>
     </body>
 </html>

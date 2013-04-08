@@ -50,7 +50,7 @@ input:focus,select:focus{
 
 input,select {
     border-radius: 0px !important;
-    border: #000 solid 1px;
+    border: #ccc solid 2px;
     height: 25px;
 }
 
@@ -106,6 +106,22 @@ input[type=button]:active,input[type=submit]:active{
     border-color: red;
     outline: red solid 2px;
     outline-offset: -2px;
+}
+
+.campoData {
+    background: url("../images/icons/icon-calendar.png") #FFF no-repeat right;
+    background-size: 20px;
+    margin-right: 2px;
+    margin-bottom: 1px;
+    min-width: 120px;
+}
+
+.campoHora {
+    background: url("../images/icons/clock-calendar.png") #FFF no-repeat right;
+    background-size: 20px;
+    margin-right: 2px;
+    margin-bottom: 1px;
+    min-width: 120px;
 }
 
 /* FIM DO GERAL */

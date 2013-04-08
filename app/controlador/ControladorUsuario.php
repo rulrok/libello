@@ -82,6 +82,10 @@ class ControladorUsuario extends Controlador {
     public function acaoGerenciar() {
         $this->renderizar();
     }
+    
+    public function acaoConsultar(){
+        $this->renderizar();
+    }
 
 }
 
