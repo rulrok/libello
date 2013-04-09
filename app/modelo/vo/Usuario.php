@@ -9,7 +9,7 @@ class Usuario {
     var $UNome;
     var $email;
     var $dataNascimento;
-    var $papel_idpapel = null;
+    var $idPapel = null;
 
     public function get_id() {
         return $this->idUsuario;
@@ -68,11 +68,11 @@ class Usuario {
     }
 
     public function get_papel() {
-        return $this->papel_idpapel;
+        return $this->idPapel;
     }
 
     public function set_papel($papel) {
-        $this->papel_idpapel = (int) $papel;
+        $this->idPapel = (int) $papel;
     }
 
     /**
@@ -85,7 +85,7 @@ class Usuario {
                 && $this->UNome !== null && $this->UNome !== ""
                 && $this->login !== null && $this->login !== ""
                 && $this->senha !== null && $this->senha !== ""
-                && $this->papel_idpapel !== null) {
+                && $this->idPapel !== null) {
             return true;
         }
         return false;

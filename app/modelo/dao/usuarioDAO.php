@@ -42,9 +42,9 @@ class usuarioDAO extends abstractDAO {
         $UNome = $valueObject->get_UNome();
         $email = $valueObject->get_email();
         $nasc = $valueObject->get_dataNascimento();
-        $papel = $valueObject->get_papel();
-        $sql = "INSERT INTO usuario(login,senha,PNome, UNome, email, dataNascimento,papel_idpapel)";
-        $sql .= " VALUES ('" . $login . $s . $senha . $s . $PNome . $s . $UNome . $s . $email . $s . $nasc . "'," . $papel . ")";
+        $idPapel = $valueObject->get_papel()+1;
+        $sql = "INSERT INTO usuario(idPapel,login,senha,PNome, UNome, email, dataNascimento)";
+        $sql .= " VALUES (" . $idPapel . ",'" . $login . $s . $senha . $s . $PNome . $s . $UNome . $s . $email . $s . $nasc . "')";
         //    echo $sql;
         try {
             parent::getConexao()->query($sql);
@@ -55,13 +55,13 @@ class usuarioDAO extends abstractDAO {
     }
 
     public static function consultarPapel(Usuario $usuario) {
-        $sql = "SELECT p.nome FROM papel p, usuario u WHERE u.papel_idpapel = p.idpapel AND u.login = \"" . $usuario->get_login() . "\"";
+        $sql = "SELECT p.nome FROM papel p NATURAL JOIN usuario u WHERE u.login = \"" . $usuario->get_login() . "\"";
         $resultado = parent::getConexao()->query($sql)->fetch();
         return $resultado[0];
     }
 
     public static function obterPermissoes(Usuario $usuario) {
-        $sql = "SELECT f.idFerramenta,nomeFerramenta,tp.idPermissao,tipoPermissao FROM ferramenta f, permissao tp, usuario_permissao p WHERE f.idFerramenta = p.idFerramenta AND tp.idPermissao = p.idPermissao AND idUsuario = " . $usuario->get_id() . " ORDER BY idFerramenta";
+        $sql = "SELECT f.idFerramenta,f.nome,tp.idPermissao,tp.tipo FROM ferramenta f, permissao tp, usuario_x_permissao_x_ferramenta p WHERE f.idFerramenta = p.idFerramenta AND tp.idPermissao = p.idPermissao AND idUsuario = " . $usuario->get_id() . " ORDER BY idFerramenta";
         $resultado = parent::getConexao()->query($sql)->fetchAll();
         return $resultado;
     }
@@ -81,7 +81,7 @@ class usuarioDAO extends abstractDAO {
             if (sizeof($consulta) == 1) {
                 for ($i = 0; $i < Ferramenta::__length; $i++) {
                     if ($permissoes->get_permissao($i + 1) != null) {
-                        $querys[sizeof($querys)] = "UPDATE usuario_permissao SET idPermissao = " . $permissoes->get_permissao($i + 1) . " WHERE idUsuario = " . $usuario->get_id() . " AND idFerramenta = " . ($i + 1);
+                        $querys[sizeof($querys)] = "UPDATE usuario_x_permissao_x_ferramenta SET idPermissao = " . $permissoes->get_permissao($i + 1) . " WHERE idUsuario = " . $usuario->get_id() . " AND idFerramenta = " . ($i + 1);
                     }
                 }
                 foreach ($querys as $query) {
@@ -101,7 +101,7 @@ class usuarioDAO extends abstractDAO {
      */
     public static function cadastrarPermissoes(Usuario $usuario, PermissoesFerramenta $permissoes) {
         if ($usuario->get_login() != null) {
-                $consulta = self::consultar("idUsuario", "login = \"" . $usuario->get_login()."\"");
+            $consulta = self::consultar("idUsuario", "login = \"" . $usuario->get_login() . "\"");
             $values = array();
             if (sizeof($consulta) == 1) {
                 for ($i = 0; $i < Ferramenta::__length; $i++) {
@@ -111,12 +111,17 @@ class usuarioDAO extends abstractDAO {
                         $values[sizeof($values)] = "(" . $consulta[0]['idUsuario'] . "," . ($i + 1) . "," . Permissao::SEM_ACESSO . ")";
                     }
                 }
-                $sql = "INSERT INTO usuario_permissao (idUsuario, idFerramenta, idPermissao) VALUES ".$values[0];
-                for ($i = 1; $i < sizeof($values);$i++) {
-                    $sql .= " ,".$values[$i];
+                $sql = "INSERT INTO usuario_x_permissao_x_ferramenta (idUsuario, idFerramenta, idPermissao) VALUES " . $values[0];
+                for ($i = 1; $i < sizeof($values); $i++) {
+                    $sql .= " ," . $values[$i];
                 }
-                $sql = str_pad($sql, strlen($sql)-2);
+                $sql = str_pad($sql, strlen($sql) - 2);
+                try {
                 parent::getConexao()->query($sql);
+                } catch (Exception $e){
+                    return false;
+                }
+                return true;
             }
         } else {
             return false;

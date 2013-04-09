@@ -49,7 +49,7 @@ class ControladorUsuario extends Controlador {
                     $this->acaoNovo(true);
                 elseif (usuarioDAO::inserir($usuario)):
                     $permissoes = new PermissoesFerramenta();
-                    $permissoes->set_controleCursos($_POST['permissoescursos_e_polos']);
+                    $permissoes->set_controleCursos($_POST['permissoescontrole_de_cursos_e_polos']);
                     $permissoes->set_controleDocumentos($_POST['permissoescontrole_de_documentos']);
                     $permissoes->set_controleEquipamentos($_POST['permissoescontrole_de_equipamentos']);
                     $permissoes->set_controleLivros($_POST['permissoescontrole_de_livros']);

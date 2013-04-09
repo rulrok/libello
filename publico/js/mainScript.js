@@ -202,8 +202,8 @@ function ajax(link)
         url: link
     }).done(function(data) {
         $(".contentWrap").empty();
-        $(".contentWrap").  append(data);
-        eval(document.getElementById("pos_script").innerHTML);
+        $(".contentWrap").append(data);
+        //eval(document.getElementById("pos_script").innerHTML);
         hidePopUp();
     });
 }

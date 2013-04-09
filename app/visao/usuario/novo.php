@@ -17,8 +17,8 @@ else:
     <script src="publico/js/ajaxForms.js"></script> 
     <form class="table centered" id="myForm" method="post" action="index.php?c=usuario&a=novo">
         <fieldset>
-            <p class="centered centeredText boldedText">Campos com <img src="publico/images/icons/campo_obrigatorio.png"> são obrigatórios</p>
             <legend>Informações sobre o usuário</legend>
+            <p class="centered centeredText boldedText">Campos com <img src="publico/images/icons/campo_obrigatorio.png"> são obrigatórios</p>
             <div class="line">
                 <p>Nome</p>
                 <input required type="text" id="nome" class="campoObrigatorio" name="nome" value="<? echo $this->nome ?>"  style="width: 265px">
@@ -33,7 +33,7 @@ else:
             </div>
             <div class="line">
                 <p>Data de nascimento</p>
-                <input type="text" id="email" class="campoData" name="dataNascimento" value="<? echo $this->dataNascimento ?>" style="width: 265px">
+                <input type="text" id="dataNascimento" class="campoData" name="dataNascimento" value="<? echo $this->dataNascimento ?>" style="width: 265px">
             </div>
             <div class="line">
                 <p>Login</p>
@@ -52,7 +52,7 @@ else:
 
             <div class="line">
                 <p>Papel</p>
-                <select required name="papel" class="campoObrigatorio">
+                <select name="papel" class="campoObrigatorio">
                     <option value="default" selected="selected"> -- Selecione uma opção --</option>
                     <option value="0">Administrador </option>
                     <option value="1">Gestor </option>
@@ -71,6 +71,18 @@ else:
         <input type="reset" value="Limpar">
     </form>
     <script type="text/javascript" src="publico/js/validarCampos.js"></script>
+
+
+    <script>
+        $(function() {
+            $("#dataNascimento").datepicker({
+                year: 1990,
+                numberOfMonths: 3,
+                showButtonPanel: true
+            });
+            $("#dataNascimento").datepicker("option", "showAnim", "blind");
+        });
+    </script>
 <?php
 endif;
 ?>

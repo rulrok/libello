@@ -6,7 +6,7 @@ class ferramentaDAO extends abstractDAO {
 
     public static function obterNomeFerramenta($ferramentaID) {
         $ferramentaID = (int) $ferramentaID;
-        $sql = "SELECT nomeFerramenta FROM ferramenta WHERE idFerramenta = " . $ferramentaID;
+        $sql = "SELECT nome FROM ferramenta WHERE idFerramenta = " . $ferramentaID;
         try {
             $resultado = parent::getConexao()->query($sql)->fetch();
         } catch (Exception $e) {
