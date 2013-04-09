@@ -3,13 +3,13 @@
 class Usuario {
 
     var $idUsuario;
+    var $idPapel = null;
     var $login;
     var $senha;
     var $PNome;
     var $UNome;
     var $email;
     var $dataNascimento;
-    var $idPapel = null;
 
     public function get_id() {
         return $this->idUsuario;

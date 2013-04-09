@@ -12,8 +12,28 @@ class usuarioDAO extends abstractDAO {
 //    public function __construct() {
 //        $this->conexao = PDOconnectionFactory::getConection();
 //    }
-    public function atualizar(Usuario $valueObject, $condicao = null) {
-        
+    public static function atualizar($login, Usuario $usuario) {
+
+        $condicao = " WHERE login = '" . $login . "'";
+
+        $nome = $usuario->get_PNome();
+        $sobrenome = $usuario->get_UNome();
+        $login = $usuario->get_login();
+        $papel = (int) $usuario->get_papel();
+        $senha = $usuario->get_senha();
+        $email = $usuario->get_email();
+        $dataNascimento = $usuario->get_dataNascimento();
+
+        $sql = "UPDATE usuario SET idPapel = " . $papel . ", login = '" . $login . "', senha = '" . $senha . "', PNome='" . $nome . "', UNome = '" . $sobrenome . "', email ='" . $email . "', dataNascimento = '" . $dataNascimento . "'";
+        $sql .= $condicao;
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            echo $e;
+            exit;
+            return false;
+        }
     }
 
     public static function consultar($colunas = null, $condicao = null) {
@@ -42,7 +62,7 @@ class usuarioDAO extends abstractDAO {
         $UNome = $valueObject->get_UNome();
         $email = $valueObject->get_email();
         $nasc = $valueObject->get_dataNascimento();
-        $idPapel = $valueObject->get_papel()+1;
+        $idPapel = $valueObject->get_papel() + 1;
         $sql = "INSERT INTO usuario(idPapel,login,senha,PNome, UNome, email, dataNascimento)";
         $sql .= " VALUES (" . $idPapel . ",'" . $login . $s . $senha . $s . $PNome . $s . $UNome . $s . $email . $s . $nasc . "')";
         //    echo $sql;
@@ -58,6 +78,18 @@ class usuarioDAO extends abstractDAO {
         $sql = "SELECT p.nome FROM papel p NATURAL JOIN usuario u WHERE u.login = \"" . $usuario->get_login() . "\"";
         $resultado = parent::getConexao()->query($sql)->fetch();
         return $resultado[0];
+    }
+
+    public static function recuperarUsuario($login) {
+        $usuario;
+
+        $sql = "SELECT * from usuario WHERE login ='" . $login . "'";
+        try {
+            $usuario = parent::getConexao()->query($sql)->fetchObject("Usuario");
+        } catch (Exception $e) {
+            $usuario = NULL;
+        }
+        return $usuario;
     }
 
     public static function obterPermissoes(Usuario $usuario) {
@@ -117,8 +149,8 @@ class usuarioDAO extends abstractDAO {
                 }
                 $sql = str_pad($sql, strlen($sql) - 2);
                 try {
-                parent::getConexao()->query($sql);
-                } catch (Exception $e){
+                    parent::getConexao()->query($sql);
+                } catch (Exception $e) {
                     return false;
                 }
                 return true;

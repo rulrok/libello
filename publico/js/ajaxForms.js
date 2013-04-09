@@ -7,7 +7,7 @@ $(document).ready(function() {
 //        }
     };
     // bind 'myForm' and provide a simple callback function 
-    $('#myForm').submit(function() {
+    $('#ajaxForm').submit(function() {
         $(this).ajaxSubmit(options);
         return false;
     });

@@ -110,6 +110,7 @@ input[type=button]:active,input[type=submit]:active{
 
 .campoData {
     background: url("../images/icons/icon-calendar.png") #FFF no-repeat right;
+    background-position: 98% 50%;
     background-size: 20px;
     margin-right: 2px;
     margin-bottom: 1px;

@@ -1,57 +1,76 @@
-<!--<div class="popup" style="
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-    z-index: 9999;
-    opacity: 0.6;
-">
-    <p class="centered" style="position:absolute;">daskldalsjdlasjdlkasjdklj</p>
-</div>
--->
-<form class="table centered" method="post" action="index.php?c=sistema&a=gerenciarconta">
-    <fieldset>
-        <p class="centered centeredText boldedText">Campos com <img src="publico/images/icons/campo_obrigatorio.png"> são obrigatórios</p>
-        <legend>Dados</legend>
-        <span class="line">
-            <p>Nome</p>
-            <input name="nome" class="campoObrigatorio" type="text" value="<? echo $this->nome ?>">
-        </span>
-        <span class="line">
-            <p>Sobrenome</p>
-            <input name="sobrenome" class="campoObrigatorio" type="text" value="<? echo $this->sobrenome ?>">
-        </span>
-        <span class="line">
-            <p>email</p>
-            <input type="text" value="<? echo $this->email ?>">
-        </span>
-        <span class="line">
-            <p>login</p>
-            <input type="text" disabled="true" value="<? echo $this->login ?>">
-        </span>
-        <span class="line">
-            <p>Papel no sistema</p>
-            <input type="text" disabled="true" value="<? echo $this->papel ?>">
-        </span>
-        <br/>
+<?php if (isset($this->mensagem_usuario) && $this->mensagem_usuario !== null) : ?>
+    <script>
+        showPopUp(
+    <?php echo "\"" . $this->mensagem_usuario . "\""; ?>
+        );
+    </script>
+    <?php
+    unset($this->mensagem_usuario);
+endif;
+if ($_SERVER['REQUEST_METHOD'] == 'POST') :
+    $controlador = new ControladorSistema();
+    $controlador->acaoValidarAlteracoesConta();
+else:
+    ?>
+    <!--Início da página -->
+    <script src="publico/js/jquery.form.js"></script>
+    <script src="publico/js/ajaxForms.js"></script> 
+    <form class="table centered" id="ajaxForm" method="post" action="index.php?c=sistema&a=gerenciarconta">
         <fieldset>
-            <legend>Atualizar senha (opcional) </legend>
-            <span class="line">
-                <p>Nova senha</p>
-                <input onblur="querMudarSenha()" name="senha" type="password">
-            </span>
-            <span class="line">
-                <p>Confirmar senha</p>
-                <input onblur="querMudarSenha()" name="confsenha" type="password">
-            </span>
+            <legend>Dados</legend>
+            <p class="centered centeredText boldedText">Campos com <img src="publico/images/icons/campo_obrigatorio.png"> são obrigatórios</p>
+            <div class="line">
+                <p>Nome</p>
+                <input required name="nome" class="campoObrigatorio" type="text" value="<? echo $this->nome ?>">
+            </div>
+            <div class="line">
+                <p>Sobrenome</p>
+                <input required name="sobrenome" class="campoObrigatorio" type="text" value="<? echo $this->sobrenome ?>">
+            </div>
+            <div class="line">
+                <p>email</p>
+                <input type="text" name="email" value="<? echo $this->email ?>">
+            </div>
+            <div class="line">
+                <p>Data de nascimento</p>
+                <input type="text" readonly id="dataNascimento" class="campoData" name="dataNascimento" value="<? echo $this->dataNascimento ?>" >
+            </div>
+            <div class="line">
+                <p>login</p>
+                <input id="login" type="text" name="login" disabled value="<? echo $this->login ?>">
+            </div>
+            <div class="line">
+                <p>Papel no sistema</p>
+                <input id="papel" type="text" name="papel" disabled value="<? echo $this->papel ?>">
+            </div>
+            <br/>
+            <fieldset>
+                <legend>Atualizar senha (opcional) </legend>
+                <div class="line">
+                    <p>Nova senha</p>
+                    <input onblur="querMudarSenha()" name="senha" type="password">
+                </div>
+                <div class="line">
+                    <p>Confirmar senha</p>
+                    <input onblur="querMudarSenha()" name="confSenha" type="password">
+                </div>
+            </fieldset>
+            <hr>
+            <div class="line">
+                <p>Senha atual</p>
+                <input required name="senhaAtual" class="campoObrigatorio" type="password">
+            </div>
         </fieldset>
-        <hr>
-        <span class="line">
-            <p>Senha atual</p>
-            <input name="senhaAtual" class="campoObrigatorio" type="password">
-        </span>
-    </fieldset>
-    <input type="submit" disabled="true" value="Atualizar dados">
-</form>
+        <input type="submit" disabled value="Atualizar dados">
+    </form>
+    <script type="text/javascript" src="publico/js/validarCampos.js"></script>
+
+
+    <script>
+        $(function() {
+            $("#dataNascimento").datepick();
+        });
+    </script>
+<?php
+endif;
+?>

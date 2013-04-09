@@ -70,6 +70,7 @@ function autenticaUsuario(Usuario $user) {
                     $_SESSION['sobrenome'] = $ret[0]->get_UNome();
                     $_SESSION['papel'] = $ret[0]->get_papel();
                     $_SESSION['email'] = $ret[0]->get_email();
+                    $_SESSION['dataNascimento'] = $ret[0]->get_dataNascimento();
 
                     return true;
                 } else {

@@ -7,13 +7,18 @@
                 nav {display:table;height:100%}
         </style>
 <![endif]-->
-        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+        <link type="text/css" rel="stylesheet" href="publico/css/jquery-ui.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/mainStyle.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.dataTables_themeroller.css" />
+        <link type="text/css" rel="stylesheet" href="publico/css/jquery.datepick.css"/> 
+
+
         <!--<link type="text/css" rel="stylesheet" href="publico/css/jquery-ui-1.8.4.custom.css" />-->
         <!-- Inicialização dos principais scripts -->
-        <script type="text/javascript" src="publico/js/jquery-1.9.1.js"></script>
-        <script type="text/javascript" src="publico/js/mainScript.js"></script>
+        <script src="publico/js/jquery-1.9.1.js"></script>
+        <script src="publico/js/mainScript.js"></script>
+        <script src="publico/js/jquery.datepick.js"></script>
+        <script src="publico/js/jquery.datepick-pt-BR.js"></script>
         <title><?php echo $this->titulo ?></title>
     </head>
     <body>
@@ -113,7 +118,7 @@
             </div>
         </footer>
         <!-- Inicialização de scripts importantes para outras páginas -->
-        <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+        <script src="publico/js/jquery-ui.js"></script>
         <script src="publico/js/jquery.dataTables.js"></script>
         <script>
                         $.extend($.fn.dataTable.defaults, {
@@ -143,6 +148,9 @@
                                 }
                             }
                         });
+                        $.datepick.setDefaults({
+                            dateFormat: 'dd/mm/yyyy'
+                        })
         </script>
     </body>
 </html>

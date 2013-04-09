@@ -12,10 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') :
     $controlador->acaoVerificarNovo();
 else:
     ?>
-
+    <!--Início da página -->
     <script src="publico/js/jquery.form.js"></script>
     <script src="publico/js/ajaxForms.js"></script> 
-    <form class="table centered" id="myForm" method="post" action="index.php?c=usuario&a=novo">
+    <form class="table centered" id="ajaxForm" method="post" action="index.php?c=usuario&a=novo">
         <fieldset>
             <legend>Informações sobre o usuário</legend>
             <p class="centered centeredText boldedText">Campos com <img src="publico/images/icons/campo_obrigatorio.png"> são obrigatórios</p>
@@ -33,7 +33,7 @@ else:
             </div>
             <div class="line">
                 <p>Data de nascimento</p>
-                <input type="text" id="dataNascimento" class="campoData" name="dataNascimento" value="<? echo $this->dataNascimento ?>" style="width: 265px">
+                <input type="text" readonly id="dataNascimento" class="campoData" name="dataNascimento" value="<? echo $this->dataNascimento ?>" style="width: 265px">
             </div>
             <div class="line">
                 <p>Login</p>
@@ -75,12 +75,7 @@ else:
 
     <script>
         $(function() {
-            $("#dataNascimento").datepicker({
-                year: 1990,
-                numberOfMonths: 3,
-                showButtonPanel: true
-            });
-            $("#dataNascimento").datepicker("option", "showAnim", "blind");
+            $("#dataNascimento").datepick();
         });
     </script>
 <?php
