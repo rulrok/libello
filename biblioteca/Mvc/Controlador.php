@@ -1,5 +1,5 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT'].'/controle-cead/biblioteca/Mvc/Visao.php';
+include_once BIBLIOTECA_DIR.'Mvc/Visao.php';
 class Controlador {
 
     protected $visao;

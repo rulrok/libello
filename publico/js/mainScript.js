@@ -71,7 +71,7 @@ window.onscroll = function() {
     var menu = $("#menuPosition");
     var menuPosition = menu.position().top;
     var windowPosition = $(window).scrollTop();
-    if (!window.menuHasUpped && windowPosition >= menuPosition) {
+    if (!window.menuHasUpped && windowPosition >= menuPosition -2) {
         window.menuHasUpped = true;
         //console.debug("Fixou o menu");
         var divMenu = $(".menuContainer");

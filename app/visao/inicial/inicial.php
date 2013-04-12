@@ -89,14 +89,14 @@
             <div class="footerWrap">
                 <span class="arrow-down" onclick="hideFooter();"></span>
                 <center>
-                    <div class="footerLinks">
+                    <div class="footerLinks" id="links-rapidos">
                         <ul><lt>Links rápidos</lt>
                             <li><a href="http://cead.unifal-mg.edu.br" target="_blank">Cead - portal</a></li>
                             <li><a href="http://virtual.unifal-mg.edu.br" target="_blank">Moodle</a></li>
                             <li><a href="http://www.unifal-mg.edu.br" target="_blank">Unifal</a></li>
                         </ul>
                     </div>
-                    <div class="footerLinks">
+                    <div class="footerLinks" id="informacoes">
                         <ul><lt>Informações</lt>
                             <li><p>Este site é corretamente visualizado nos seguintes navegadores: Internet Explorer 9+, Google Chrome, Firefox</p>
                             </li>
@@ -109,7 +109,7 @@
                             -->
                         </ul>
                     </div>
-                    <div class="footerLinks">
+                    <div class="footerLinks" id="suporte">
                         <ul><lt>Suporte</lt>
                             <li>reuel@bcc.unifal-mg.edu.br</li>
                         </ul>

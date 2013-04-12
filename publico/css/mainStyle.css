@@ -372,10 +372,16 @@ header .logo {
         padding-top:5px;
         padding-bottom:5px;
     }
+    footer {
+        display: none;
+    }
 }
 @media (min-width:500px ) and ( max-width:800px){
     header h1{
         display: none;
+    }
+    div#informacoes{
+        display:none;
     }
 }
 @media (min-width:800px) and (max-width:1100px){
