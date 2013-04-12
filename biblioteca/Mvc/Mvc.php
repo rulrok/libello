@@ -57,6 +57,11 @@ class Mvc {
     }
 
     public function rodar() {
+        $usuario = new Usuario();
+        $usuario->set_login($_SESSION['login']);
+        $usuario->set_senha($_SESSION['senha']);
+        BIBLIOTECA_DIR.'seguranca/seguranca.php'.  autenticaUsuario($usuario);
+        
         if (isset($_SESSION['iniciada']) && $_SESSION['autenticado'] === true) {
             //pega o modulo, controlador e acao
             $controlador = isset($_GET['c']) ? $_GET['c'] : 'inicial';

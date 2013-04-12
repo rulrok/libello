@@ -1,7 +1,7 @@
 <?php
-require __DIR__."/../../biblioteca/Configurations.php";
-require_once ROOT . "biblioteca/seguranca/Menu.php";
-require_once ROOT . "biblioteca/seguranca/Ferramenta.php";
+require BIBLIOTECA_DIR."Configurations.php";
+require_once BIBLIOTECA_DIR . "seguranca/Menu.php";
+require_once BIBLIOTECA_DIR . "seguranca/Ferramenta.php";
 
 class ComboBoxPermissoes {
 

@@ -1,7 +1,7 @@
 <?php
 
-include_once __DIR__ . '/../../app/modelo/vo/Usuario.php';
-include_once __DIR__ . '/../../app/modelo/dao/usuarioDAO.php';
+include_once ROOT . 'app/modelo/vo/Usuario.php';
+include_once ROOT . 'app/modelo/dao/usuarioDAO.php';
 require_once 'Ferramenta.php';
 require_once 'Permissao.php';
 

@@ -3,18 +3,20 @@
 require_once 'abstractDAO.php';
 require_once __DIR__ . '/../vo/Usuario.php';
 require_once __DIR__ . '/../vo/PermissoesFerramenta.php';
-require_once __DIR__ . '/../../../biblioteca/seguranca/Ferramenta.php';
-require_once __DIR__ . '/../../../biblioteca/seguranca/Permissao.php';
+require_once BIBLIOTECA_DIR . 'seguranca/Ferramenta.php';
+require_once BIBLIOTECA_DIR . 'seguranca/Permissao.php';
 
 class usuarioDAO extends abstractDAO {
 
-//    protected $conexao = null;
-//    public function __construct() {
-//        $this->conexao = PDOconnectionFactory::getConection();
-//    }
+    /**
+     * Atualiza informações de um usuário.
+     * @param type $login Usado para localizar o usuário no banco de dados.
+     * @param Usuario $usuario Objecto VO com as novas informações.
+     * @return boolean
+     */
     public static function atualizar($login, Usuario $usuario) {
 
-        $condicao = " WHERE login = '" . $login . "'";
+        $condicao = " WHERE login = '" . $login . "' AND ativo = 1";
 
         $nome = $usuario->get_PNome();
         $sobrenome = $usuario->get_UNome();
@@ -36,16 +38,20 @@ class usuarioDAO extends abstractDAO {
         }
     }
 
-    public static function consultar($colunas = null, $condicao = null) {
-        if ($colunas == null) {
-            $colunas = "*";
-        }
+    /**
+     * Retorna a lista com todos os usuários, com base nas colunas especificadas e nas condições de seleção.
+     * @param string $colunas Colunas a serem retornadas, por padrão, retorna
+     * @param type $condicao A string que precede WHERE na cláusula SQL. Não é necessário escrever a palavra WHERE.
+     * @return type A tabela com o resultado da consulta.
+     */
+    public static function consultar($colunas = "*", $condicao = null) {
+
         if ($condicao == null) {
-            $condicao = "";
+            $condicao = "WHERE ativo = 1";
         } else {
-            $condicao = "WHERE " . $condicao;
+            $condicao = "WHERE ativo = 1 AND " . $condicao;
         }
-        $sql = "SELECT " . $colunas . " FROM usuario " . $condicao;
+        $sql = "SELECT " . $colunas . " FROM usuario NATURAL JOIN papel " . $condicao;
         $resultado = parent::getConexao()->query($sql)->fetchAll();
         return $resultado;
     }
@@ -54,6 +60,11 @@ class usuarioDAO extends abstractDAO {
         
     }
 
+    /**
+     * Insere um novo usuário no banco de dados.
+     * @param Usuario $valueObject Objeto com as informações do novo usuário.
+     * @return boolean
+     */
     public static function inserir(Usuario $valueObject) {
         $s = "','";
         $login = $valueObject->get_login();
@@ -74,16 +85,25 @@ class usuarioDAO extends abstractDAO {
         }
     }
 
-    public static function consultarPapel(Usuario $usuario) {
-        $sql = "SELECT p.nome FROM papel p NATURAL JOIN usuario u WHERE u.login = \"" . $usuario->get_login() . "\"";
+    /**
+     * Retorna uma string contendo o nome do papel do usuário, e.g, 'Administrador', 'Professor', etc.
+     * @param $usuario Login do usuário.
+     * @return type
+     */
+    public static function consultarPapel($login) {
+        $sql = "SELECT p.nome FROM papel p NATURAL JOIN usuario u WHERE u.login = \"" . $login . "\"";
         $resultado = parent::getConexao()->query($sql)->fetch();
         return $resultado[0];
     }
 
+    /**
+     * Retorna um objeto VO Usuário se o usuário existe E está ativo, ou então retorna NULL.
+     * @param type $login Login do usuário
+     */
     public static function recuperarUsuario($login) {
-        $usuario;
 
-        $sql = "SELECT * from usuario WHERE login ='" . $login . "'";
+
+        $sql = "SELECT * from usuario WHERE login ='" . $login . "' AND ativo = 1";
         try {
             $usuario = parent::getConexao()->query($sql)->fetchObject("Usuario");
         } catch (Exception $e) {

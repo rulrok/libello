@@ -1,6 +1,6 @@
 <?php
 
-include_once ROOT . 'biblioteca/Mvc/Controlador.php';
+include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
 include_once ROOT . 'app/modelo/ComboBoxPermissoes.php';
 
 class ControladorUsuario extends Controlador {

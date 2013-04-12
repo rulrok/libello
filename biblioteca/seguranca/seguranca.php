@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../Configurations.php';
-require_once ROOT . '/biblioteca/bancoDeDados/PDOconnectionFactory.php';
+require_once BIBLIOTECA_DIR . 'bancoDeDados/PDOconnectionFactory.php';
 require ROOT . '/app/modelo/vo/Usuario.php';
 
 /**
@@ -57,7 +57,7 @@ function autenticaUsuario(Usuario $user) {
 
         if ($user->get_login() !== null && $user->get_login() !== '' && $user->get_senha() !== null && $user->get_senha() !== '') {
             try {
-                $query = $con->prepare("SELECT * FROM usuario WHERE login = :login AND senha = :senha");
+                $query = $con->prepare("SELECT * FROM usuario WHERE login = :login AND senha = :senha AND ativo = 1");
                 $query->execute(array('login' => $user->get_login(), 'senha' => $user->senha));
                 $ret = $query->fetchAll(PDO::FETCH_CLASS, 'Usuario');
 
@@ -66,6 +66,7 @@ function autenticaUsuario(Usuario $user) {
 
                     $_SESSION['idUsuario'] = $ret[0]->get_id();
                     $_SESSION['login'] = $ret[0]->get_login();
+                    $_SESSION['senha'] = $ret[0]->get_senha();
                     $_SESSION['nome'] = $ret[0]->get_PNome();
                     $_SESSION['sobrenome'] = $ret[0]->get_UNome();
                     $_SESSION['papel'] = $ret[0]->get_papel();
@@ -109,5 +110,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_SESSION['autenticado'] === FALSE) 
         // O usuário e/ou a senha são inválidos, manda de volta pro form de login
         expulsaVisitante("Usuário ou senha inválidos.");
     }
-}
+} 
 ?>

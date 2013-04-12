@@ -11,5 +11,7 @@ if (!defined("APP_CONFIGS")) {
     define("DATABASE_SERVER_DBNAME", "controleCead");
     define("DATABASE_SERVER_USER", "root");
     define("DATABASE_SERVER_PASSWORD", "");
+    
+    define("BIBLIOTECA_DIR",ROOT."biblioteca/");
 }
 ?>

@@ -2,6 +2,10 @@ h1{font-size:26px; color: #0056A5; font-weight: bold; margin: 0;}
 
 h2{font-size:18px; }
 
+fieldset {
+    border: none;
+}
+
 /*Configura inputs em geral */
 input {
     -webkit-border-radius: 3px;
@@ -30,9 +34,11 @@ input[type=submit]{
 
 #login {
     background-color: #FBFBFB;
-    width: 550px;
-    margin: 150px auto 0 auto;
-    border: 1px solid #eee;
+    width: 600px;
+    /*margin: 150px auto 0 auto;*/
+    position:relative;
+    top:25%;
+    /*border: 1px solid #eee;*/
     border-radius: 10px;
     -moz-border-radius: 10px;
     -moz-box-shadow: 0 0 10px #aaa;
@@ -43,14 +49,11 @@ input[type=submit]{
     -moz-opacity: 0.90;
     filter: alpha(opacity=90);
 }
-#login p {
-    position: relative;
-    left: 11%;
-}
 
 /* Será exibido na tela de login, abaixo do campo de identificação de usuário. */
 #apoio{
     display: block;
+    top:25%;
     width: 300px;
     height: 110px;
     position: relative;
@@ -101,7 +104,7 @@ input[type=submit]{
     height: 110px;
     position: relative;
     float: left;
-    margin: 20px 0 0 20px;
+    margin: 0 0 0 20px;
 }
 
 /* Div que apresentará logotipo do CEAD */
@@ -113,7 +116,7 @@ input[type=submit]{
     position: relative;
     right: 0;
     float: right;
-    margin: 20px 20px 0 0;
+    margin: 0 20px 0 0;
 }
 
 #footer {

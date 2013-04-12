@@ -15,49 +15,33 @@
             $_SESSION['autenticado'] = false;
         }
         ?>
-        <div id="login" >
-            <table width="520" border="0" style="position: relative; margin: 0 auto;">
-                <thead>
-                    <tr align="center">
-                        <td colspan="3"><h1>Sistema de Controle CEAD</h1></td>
-                        <tr align="center">
-                            </thead>
-                            <td width="140" rowspan="2" align="center"><div id="unifal" style="margin: 0"></div></td>
-                            <td width="220"><h2 style="text-align: center;"><p>Login de Acesso</p></h2></td>
-                            <td width="160" rowspan="2" align="right"><div id="cead" style="margin: 0"></div></td></tr>
-                    </tr>
-                    <tr>
-                        <td align="center">
-                            <form name="identificacao" action="./biblioteca/seguranca/seguranca.php" method="post">
-                                <table width="200" border="0" align="center">
-                                    <tr>
-                                        <td><div style="font-size: 14px;text-align: right;">Usuário: </div></td>
-                                        <td><label>
-                                                <input type="text" name="login"/>
-                                            </label></td>
-                                    </tr>
-                                    <tr>
-                                        <td><div style="font-size: 14px;text-align: right;">Senha: </div></td>
-                                        <td><label>
-                                                <input type="password" name="senha" />
-                                            </label></td>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="2"><label><input name="identificacao" type="submit" value="Entrar" /></label></th>
-                                    </tr>
-                                </table>
-                            </form>
-                        </td>
-                    </tr>
-                    <tr><td colspan="3" class="centered centeredText">
-                            <div class="error">
-                                <?php
-                                if (isset($_GET['m'])) {
-                                    echo $_GET['m'];
-                                }
-                                ?>
-                            </div></td></tr>
-            </table>
+        <div id="login" class="centered">
+            <h1 class="centeredText">Sistema de Controle CEAD</h1>
+            <h2 class="centeredText">Login de Acesso</h2>
+            <div id="unifal"></div>
+            <div id="cead"></div>
+            <div id="loginArea">
+                <form class="table centered" name="identificacao" action="./biblioteca/seguranca/seguranca.php" method="post">
+                    <fieldset>
+                        <div class="line">
+                            <p>Usuário</p>
+                            <input type="text" name="login">
+                        </div>
+                        <div class="line">
+                            <p>Senha</p>
+                            <input type="password" name="senha" >
+                        </div>
+                        <input name="identificacao" type="submit" value="Entrar" >
+                    </fieldset>
+                </form>
+            </div>
+            <div class="error centeredText">
+                <?php
+                if (isset($_GET['m'])) {
+                    echo $_GET['m'];
+                }
+                ?>
+            </div>
         </div>
         <div id="apoio">
             <h3>Apoio:</h3>
@@ -65,7 +49,7 @@
             <div id="capes"></div>
         </div>
         <div id="footer" >
-            <center><p>Copyright &copy; 2012 - Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a></p></center>
+            <p class="centeredText">Copyright &copy; 2012 - Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a></p>
         </div>
     </body>
 </html>

@@ -248,3 +248,10 @@ table.dataTable th:active {
     -webkit-overflow-scrolling: touch;
 }
 
+table.tabelaDeSelecao tr.even.row_selected td {
+	background-color: #B0BED9;
+}
+
+table.tabelaDeSelecao tr.odd.row_selected td {
+	background-color: #9FAFD1;
+}

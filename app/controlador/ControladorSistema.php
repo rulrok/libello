@@ -1,7 +1,7 @@
 <?php
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/biblioteca/Mvc/Controlador.php';
-include_once __DIR__ . '/../../biblioteca/seguranca/seguranca.php';
+include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
+include_once BIBLIOTECA_DIR . 'seguranca/seguranca.php';
 include_once __DIR__ . '/../modelo/dao/usuarioDAO.php';
 
 class ControladorSistema extends Controlador {
@@ -27,12 +27,9 @@ class ControladorSistema extends Controlador {
             $this->visao->login = $_SESSION['login'];
             $this->visao->dataNascimento = $_SESSION['dataNascimento'];
 
-            $usuario = new Usuario();
-            $usuario->set_login($_SESSION['login']);
+            
 
-            $usuarioDao = new usuarioDAO();
-
-            $this->visao->papel = $usuarioDao->consultarPapel($usuario);
+            $this->visao->papel = usuarioDAO::consultarPapel($_SESSION['login']);
         } else {
             if ($this->visao->mensagem_usuario == NULL || $this->visao->mensagem_usuario == "") {
                 $this->visao->mensagem_usuario = "Informações inválidas.";
@@ -57,7 +54,7 @@ class ControladorSistema extends Controlador {
             $this->visao->dataNascimento = $_POST['dataNascimento'];
 
             $usuario = usuarioDAO::recuperarUsuario($_SESSION['login']);
-            $this->visao->papel = usuarioDao::consultarPapel($usuario);
+            $this->visao->papel = usuarioDao::consultarPapel($_SESSION['login']);
 
             if ($usuario->get_senha() == $this->visao->senha) {
 
