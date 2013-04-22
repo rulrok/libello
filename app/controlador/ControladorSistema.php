@@ -11,7 +11,7 @@ class ControladorSistema extends Controlador {
     }
 
     public function acaoSair() {
-        expulsaVisitante();
+        expulsaVisitante("");
     }
 
     public function acaoNaoautenticado() {

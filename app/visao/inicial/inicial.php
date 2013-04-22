@@ -31,7 +31,6 @@
                     <img class="logo" src="publico/images/cead.png" usemap="#logoMap"></img>
                 </figure>
                 <div class="headerWrap">
-                    <br/>
                     <h1>Bem vindo ao controle CEAD <sup>(beta)</sup></h1>
 
                 </div>
@@ -43,6 +42,12 @@
                 </div>
 
             </header>
+            <div class="shaderFrame">
+
+            </div>
+            <div class="shaderFrameContent">
+                <!-- Conteúdo dinâmico -->
+            </div>
             <hr id="menuPosition" style="margin:0;width:100%; visibility: hidden;border:none" >
                 <div class="menuContainer">
                     <!--

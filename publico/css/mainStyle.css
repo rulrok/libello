@@ -28,11 +28,44 @@ body:before {
 html {
     height: 100%;
 }
+
+/* Frame central que obscurece o resto da tela */
+.shaderFrame{
+    position: fixed;
+    top: 0;
+    background-color: #000;
+    width:100%;
+    height: 100%;
+
+    opacity: 0.5;
+    z-index: 9999;
+
+    visibility: hidden;
+}
+
+/* Conteúdo que fica dentro do frame escuro acima /\ */
+.shaderFrameContent {
+    border-radius: 5px;
+    background-color: #fff;
+    position: fixed;
+    left: 10%;
+    top: 25%;
+    border: 1px solid #FFF;
+    padding: 5px;
+    width: 80%;
+
+    z-index: 9999;
+    opacity: 1;
+    visibility: hidden;
+}
+
+/* Conteúdos centralizados */
 .centered {
     position:relative;
     margin-left:auto;
     margin-right: auto;
 }
+/* Texto centralizado */
 .centeredText{
     text-align: center !important;
 }
@@ -54,6 +87,40 @@ input,select {
     height: 25px;
 }
 
+td {
+    font-size: 14px;
+}
+
+/* Estilo em botões de tabelas de consultas e edições*/
+.botaoTabela{
+    border: none !important;
+}
+
+input[id^='btn'].botaoTabela:active{
+    left: 2px;
+    background-size: 16px 16px !important;
+    height: 22px!important;
+    width: 22px!important;
+}
+
+#btn_del_superior,#btn_del_inferior{
+    background: url("../images/icons/botoes/botao_excluir.png") no-repeat;
+    height: 22px;
+    width: 22px;
+}
+
+#btn_edit_superior,#btn_edit_inferior {
+    background: url("../images/icons/botoes/botao_editar.png") no-repeat;
+    height: 22px;
+    width: 22px;
+}
+
+#btn_novo_superior,#btn_novo_inferior{
+    background: url("../images/icons/botoes/botao_adicionar.png") no-repeat;
+    height: 22px;
+    width: 22px;
+}
+
 /* Estilo em botões e botões de envio */
 input[type=submit], input[type=button],input[type=reset]{
     background-color: #FBFBFB;
@@ -62,7 +129,6 @@ input[type=submit], input[type=button],input[type=reset]{
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     position: relative;
-    margin-top: 5px;
     font-size: 14px;
     font-weight: bold;
     color: #333;
@@ -93,7 +159,7 @@ input[value~='Cadastrar']:disabled,input[value~='Atualizar']:disabled {
 }
 
 /* Quando clicar em algum botão, ele 'desce' */
-input[type=button]:active,input[type=submit]:active{
+input[type=button]:active,input[type=reset]:active,input[type=submit]:active{
     position: relative;
     top: 2px;
 }
@@ -125,7 +191,7 @@ input[type=button]:active,input[type=submit]:active{
     min-width: 120px;
 }
 
-.tabelaDeSelecao tr{
+.tabelaDeEdicao tr{
     cursor: pointer;
     -webkit-user-select: none;  /* Chrome all / Safari all */
     -moz-user-select: none;     /* Firefox all */
@@ -174,10 +240,11 @@ input[type=button]:active,input[type=submit]:active{
     width: 70%;
     position: relative;
     margin: auto;
+    margin-top: 60px;
     padding-left: 50px;
     padding-right: 50px;
 
-    padding-bottom: 180px;
+    padding-bottom: 30px;
     display: block;
 }
 
@@ -199,6 +266,8 @@ body > nav {
 .content fieldset{
     position: relative;
     padding: 30px;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
 
     border: none;
     border-radius: 4px;
@@ -232,7 +301,7 @@ body > nav {
 /* FOOTER */
 
 .arrow-down {
-
+    display: none;
     position: absolute;
     right: 10px;
     width: 0; 
@@ -258,14 +327,14 @@ body > nav {
 }
 
 footer{
-    height: 150px;
+    height: 10px;
     max-height: 300px;
     /*background: steelblue;*/
     background: url("../images/candidato1.png");
     position: relative;
     bottom:0;
     margin: 0;
-    margin-top: -160px;
+    margin-top: -20px;
     display: block;
     padding-top: 10px;
     padding-bottom: 0;
@@ -280,6 +349,7 @@ footer p{
     font-size: 110%;
 }
 .footerWrap {
+    top: 50px;
     height:100%;
     max-height: 300px;
     /*background: lavender;*/
@@ -318,7 +388,7 @@ footer p{
 /* HEADER */
 .headerWrap{
     position: relative;
-    min-height: 140px;
+    min-height: 100px;
 
     margin-left: 5%;
     margin-right: 5%;
@@ -347,6 +417,7 @@ header a{ /* Todos os links do header */
 }
 header .logo {
     position: absolute;
+    width: 190px;
     display: inline;
     z-index: 2;
     left: 10px;
@@ -508,6 +579,7 @@ li[id$=Link]:before{
 .menuContainer {
     z-index: 1;
     position: relative;
+    height: 60px;
 }
 
 .menu a:hover{
@@ -600,7 +672,7 @@ li[id$=Link]:before{
 
 .subMenu{
     position:relative;
-    display:inline-block;
+    display:none;
     width:100%;
     min-height: 30px;
     max-height: 40px;
@@ -675,7 +747,7 @@ form input[type=text], form input[type=password] {
 }
 
 /* Label para algum campo respectivo */
-.table .line p{
+.table .line label{
     display: table-cell;
     font-family: sans-serif;
     text-align: right;
@@ -688,11 +760,11 @@ form input[type=text], form input[type=password] {
     opacity: 0.8;
 }
 
-.table .line p:first-letter{
+.table .line label:first-letter{
     text-transform: uppercase;
 }
 
-.table .line p:after{
+.table .line label:after{
     content: ':';
 }
 
@@ -701,7 +773,6 @@ form input[type=text], form input[type=password] {
     display: table-cell;
     float: left;
     margin-bottom: -7px;
-    margin-top: 5px;
     margin-left: 10px; /* Para deixar o texto do campo da esquerda mais afastado */
 }
 

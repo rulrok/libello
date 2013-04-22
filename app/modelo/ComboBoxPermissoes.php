@@ -11,7 +11,7 @@ class ComboBoxPermissoes {
         for ($i = 1; $i <= Ferramenta::__length; $i++) {
             $code .= "<span class=\"line\">\n";
             $nomeFerramenta = Ferramenta::get_nome_ferramenta($i);
-            $code .= "<p>" . $nomeFerramenta . "</p>\n";
+            $code .= "<label>" . $nomeFerramenta . "</label>\n";
             $code .= Menu::montarCaixaSelecaoPermissoes(true, null, "permissoes" . trim(strtolower($nomeFerramenta)));
             $code .= "\n</span>\n";
         }

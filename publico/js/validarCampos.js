@@ -31,8 +31,11 @@ function liberarCadastro() {
             case "login":
                 patter = new RegExp("^[a-z]{3,}$");
                 break;
+            case "email":
+                patter = new RegExp(".*@.*");
+                break;
             case "senha":
-                patter = new RegExp(".{6,}");
+                patter = new RegExp(".{3,}");
                 if (senhaLida === "") {
                     senhaLida = campos[i].value;
                 } else {
@@ -61,7 +64,7 @@ function liberarCadastro() {
                 }
                 break;
             case "senhaAtual":
-                patter = new RegExp(".{6,}");
+                patter = new RegExp(".{3,}");
                 break;
             case "papel":
                 //patter = new RegExp("([1-9]{1,1}[0-9]*|[0]*[1-9]+)");

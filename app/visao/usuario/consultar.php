@@ -35,20 +35,20 @@ $usuarios = usuarioDAO::consultar("concat(PNome,' ',UNome),email,login,dataNasci
             oTable.fnAdjustColumnSizing();
         });
 
-        oTable.$('tr').click(function(e) {
-//            if ($(this).hasClass('row_selected')) {
-//                $(this).removeClass('row_selected');
-//            } else {
-                oTable.$('tr.row_selected').removeClass('row_selected');
-                $(this).addClass('row_selected');
-//            }
-        });
-
-        oTable.$('tr').dblclick(function() {
-            var data = oTable.fnGetData(this);
-            window.alert(data);
-            // ... do something with the array / object of data for the row
-        });
+//        oTable.$('tr').click(function(e) {
+////            if ($(this).hasClass('row_selected')) {
+////                $(this).removeClass('row_selected');
+////            } else {
+//                oTable.$('tr.row_selected').removeClass('row_selected');
+//                $(this).addClass('row_selected');
+////            }
+//        });
+//
+//        oTable.$('tr').dblclick(function() {
+//            var data = oTable.fnGetData(this);
+//            window.alert(data);
+//            // ... do something with the array / object of data for the row
+//        });
     });
 //    $('#table_id').dataTable();
 </script>

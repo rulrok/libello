@@ -56,8 +56,34 @@ class usuarioDAO extends abstractDAO {
         return $resultado;
     }
 
-    public static function remover(Usuario $valueObject) {
-        
+    public static function remover($login) {
+        if ($login !== null) {
+            $login = "'" . $login . "'";
+            $sql = "UPDATE usuario SET ativo = 0 WHERE login = " . $login;
+            try {
+                parent::getConexao()->query($sql);
+                return true;
+            } catch (Exception $e) {
+                return false;
+            }
+        }
+    }
+
+    /**
+     * Retorna o login do usuário com base em seu id no banco de dados. 
+     * Retorna NULL caso não exista.
+     */
+    public static function descobrirLogin($id) {
+        if ($id != null) {
+            $login;
+            $sql = "SELECT login FROM usuario WHERE idUsuario = " . $id;
+            try {
+                $login = parent::getConexao()->query($sql)->fetch()['login'];
+            } catch (Exception $e) {
+                $login =  null;
+            }
+            return $login;
+        }
     }
 
     /**

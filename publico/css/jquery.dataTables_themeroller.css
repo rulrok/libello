@@ -44,6 +44,8 @@ table.dataTable tr.even td.sorting_3 { background-color: #F9F9FF; }
  * Table wrapper
  */
 .dataTables_wrapper {
+    margin-bottom: 10px;
+    margin-top: 10px;
     position: relative;
     clear: both;
     *zoom: 1;
@@ -248,10 +250,10 @@ table.dataTable th:active {
     -webkit-overflow-scrolling: touch;
 }
 
-table.tabelaDeSelecao tr.even.row_selected td {
-	background-color: #B0BED9;
+table.tabelaDeEdicao tr.even.row_selected td {
+    background-color: #B0BED9;
 }
 
-table.tabelaDeSelecao tr.odd.row_selected td {
-	background-color: #9FAFD1;
+table.tabelaDeEdicao tr.odd.row_selected td {
+    background-color: #9FAFD1;
 }

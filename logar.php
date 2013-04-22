@@ -24,11 +24,11 @@
                 <form class="table centered" name="identificacao" action="./biblioteca/seguranca/seguranca.php" method="post">
                     <fieldset>
                         <div class="line">
-                            <p>Usuário</p>
+                            <label>Usuário</label>
                             <input type="text" name="login">
                         </div>
                         <div class="line">
-                            <p>Senha</p>
+                            <label>Senha</label>
                             <input type="password" name="senha" >
                         </div>
                         <input name="identificacao" type="submit" value="Entrar" >
@@ -49,7 +49,7 @@
             <div id="capes"></div>
         </div>
         <div id="footer" >
-            <p class="centeredText">Copyright &copy; 2012 - Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a></p>
+            <p class="centeredText">Copyright &copy; 2012 - Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a></label>
         </div>
     </body>
 </html>

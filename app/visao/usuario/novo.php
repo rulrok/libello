@@ -18,40 +18,40 @@ else:
     <form class="table centered" id="ajaxForm" method="post" action="index.php?c=usuario&a=novo">
         <fieldset>
             <legend>Informações sobre o usuário</legend>
-            <p class="centered centeredText boldedText">Campos com <img src="publico/images/icons/campo_obrigatorio.png"> são obrigatórios</p>
+            <p class="centered centeredText boldedText">Campos com <img src="publico/images/icons/campo_obrigatorio.png"> são obrigatórios</label>
             <div class="line">
-                <p>Nome</p>
+                <label>Nome</label>
                 <input required type="text" id="nome" class="campoObrigatorio" name="nome" value="<? echo $this->nome ?>"  style="width: 265px">
             </div>
             <div class="line">
-                <p>Sobrenome</p>
+                <label>Sobrenome</label>
                 <input required type="text" id="sobrenome" class="campoObrigatorio" name="sobrenome" value="<? echo $this->sobrenome ?>" style="width: 265px">
             </div>
             <div class="line">
-                <p>E-mail</p>
-                <input type="text" id="email" name="email" value="<? echo $this->email ?>" style="width: 265px">
+                <label>E-mail</label>
+                <input requiered type="text" id="email" class="campoObrigatorio" name="email" value="<? echo $this->email ?>" style="width: 265px">
             </div>
             <div class="line">
-                <p>Data de nascimento</p>
+                <label>Data de nascimento</label>
                 <input type="text" readonly id="dataNascimento" class="campoData" name="dataNascimento" value="<? echo $this->dataNascimento ?>" style="width: 265px">
             </div>
             <div class="line">
-                <p>Login</p>
+                <label>Login</label>
                 <input required type="text" class="campoObrigatorio" name="login" value="<? echo $this->login ?>">
             </div>
 
             <div class="line">
-                <p>Senha</p>
+                <label>Senha</label>
                 <input required type="password" class="campoObrigatorio" name="senha" style="width: 100px">
             </div>
 
             <div class="line">
-                <p>Confirmar Senha</p>
+                <label>Confirmar Senha</label>
                 <input required type="password" class="campoObrigatorio" name="confsenha" style="width: 100px">
             </div>
 
             <div class="line">
-                <p>Papel</p>
+                <label>Papel</label>
                 <select name="papel" class="campoObrigatorio">
                     <option value="default" selected="selected"> -- Selecione uma opção --</option>
                     <option value="0">Administrador </option>
@@ -77,6 +77,12 @@ else:
         $(function() {
             $("#dataNascimento").datepick();
         });
+
+
+        $(document).ready(function() {
+            
+        });
+
     </script>
 <?php
 endif;

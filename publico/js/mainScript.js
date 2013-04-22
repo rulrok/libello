@@ -1,8 +1,19 @@
 var $buoop = {};
 $buoop.ol = window.onload;
 window.menuHasUpped = false;
+//Usado para quando se muda de página para não sair
+//por engano e perder dados.
+document.paginaAlterada = false;
 
 window.onload = function() {
+
+    $(".shaderFrame").click(function() {
+        $(".shaderFrame").css("visibility", "hidden");
+        $(".shaderFrameContent").css("visibility", "hidden");
+    });
+
+    hideFooter();
+
     $(".popUp").hide();
     if (!String.prototype.trim) {
         String.prototype.trim = function() {
@@ -71,7 +82,7 @@ window.onscroll = function() {
     var menu = $("#menuPosition");
     var menuPosition = menu.position().top;
     var windowPosition = $(window).scrollTop();
-    if (!window.menuHasUpped && windowPosition >= menuPosition -2) {
+    if (!window.menuHasUpped && windowPosition >= menuPosition - 2) {
         window.menuHasUpped = true;
         //console.debug("Fixou o menu");
         var divMenu = $(".menuContainer");
@@ -108,12 +119,13 @@ function hideFooter() {
         $(".arrow-up").show();
         $(".arrow-up").animate({
             opacity: 1
-        }, 200);
+        }, 200);    
     });
 }
 
 function showFooter() {
     $(".arrow-up").animate({opacity: 0}, 300, function() {
+        $(".arrow-down").show();
         $(".arrow-up").hide();
         $(".footerWrap").animate({
             opacity: 1,
@@ -158,7 +170,8 @@ function hideSubMenu(time) {
     var subMenu = $(".subMenu");
     subMenu.animate({
         top: (-1) * height,
-        opacity: 0.0
+        opacity: 0.0,
+        display: "none"
     }, time);
 }
 
@@ -166,7 +179,8 @@ function showSubMenu() {
     var subMenu = $(".subMenu");
     subMenu.animate({
         top: "0px",
-        opacity: 1
+        opacity: "1",
+        display: "inline-block"
     }, 350);
 }
 
@@ -196,13 +210,34 @@ function makeSubMenu(originMenu) {
     }
 }
 
-function ajax(link)
+
+
+function ajax(link, place)
 {
+    if (place == null) {
+        place = ".contentWrap";
+    }
     $.ajax({
         url: link
     }).done(function(data) {
-        $(".contentWrap").empty();
-        $(".contentWrap").append(data);
+
+        if (document.paginaAlterada) {
+            var ignorarMudanças = confirm("Modificações não salvas. Continuar?");
+            if (!ignorarMudanças) {
+                return false;
+            }
+        }
+        document.paginaAlterada = false;
+        $(place).empty();
+        $(place).append(data);
+        if (place == ".shaderFrameContent") {
+            $(".shaderFrame").css("visibility", "visible");
+            $(".shaderFrameContent").css("visibility", "visible");
+        }
+
+        $("input, select").not('.ignorar').change(function() {
+            document.paginaAlterada = true;
+        });
         //eval(document.getElementById("pos_script").innerHTML);
         hidePopUp();
     });
