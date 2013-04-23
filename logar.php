@@ -9,7 +9,7 @@
     <body>
         <?php
         session_start();
-        if ($_SESSION['iniciada'] === true && $_SESSION['autenticado'] === TRUE) {
+        if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION['autenticado'] === TRUE) {
             header("Location: index.php");
         } else {
             $_SESSION['autenticado'] = false;

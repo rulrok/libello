@@ -37,7 +37,7 @@ html {
     width:100%;
     height: 100%;
 
-    opacity: 0.5;
+    opacity: 0;
     z-index: 9999;
 
     visibility: hidden;
@@ -55,7 +55,7 @@ html {
     width: 80%;
 
     z-index: 9999;
-    opacity: 1;
+    opacity: 0;
     visibility: hidden;
 }
 
@@ -266,7 +266,7 @@ body > nav {
 .content fieldset{
     position: relative;
     padding: 30px;
-    padding-bottom: 5px;
+    padding-bottom: 25px;
     margin-bottom: 5px;
 
     border: none;
@@ -672,7 +672,6 @@ li[id$=Link]:before{
 
 .subMenu{
     position:relative;
-    display:none;
     width:100%;
     min-height: 30px;
     max-height: 40px;

@@ -50,30 +50,7 @@
             </div>
             <hr id="menuPosition" style="margin:0;width:100%; visibility: hidden;border:none" >
                 <div class="menuContainer">
-                    <!--
-                    <div class="menu">
-                        <menu class="centered">
-                            <a onclick="ajax('index.php?c=inicial&a=homepage');"><li class="menuLink visited" id="homeLink" class="visited">Home</li></a>
-                            <a><li class="menuLink" id="usuariosLink">Controle de usuarios</li></a>
-                            <a><li class="menuLink" id="cursosLink">Cursos e polos</li></a>
-                            <a><li class="menuLink" id="livrosLink">Livros</li></a>
-                            <a><li class="menuLink" id="equipamentosLink">Equipamentos</li></a>
-                            <a><li class="menuLink" id="documentosLink">Documentos</li></a>
-                            <a><li class="menuLink" id="viagensLink">Viagens</li></a>
-                        </menu>
-                    </div>
-                    <div class="subMenu">
-                        <menu>
-                            <ul class="usuariosSubMenu">
-                                <a href="javascript:void(0)" onclick="ajax('index.php?c=usuario&amp;a=novo');"><li>Inserir novo usuário</li></a><a href="javascript:void(0)" onclick="ajax('index.php?c=usuario&amp;a=gerenciar');"><li>Gerenciar usuários</li></a><a id="hideSubMenu" onclick="hideSubMenu();"><li class="visited"><img alt="Esconder sub-menu" src="publico/images/icons/go-up.png"></li></a>
-                            </ul>
-                            <ul class="cursos">
-                                <a href="javascript:void(0)" onclick="ajax('index.php?c=usuario&amp;a=novo');"><li>Inserir novo usuário</li></a><a href="javascript:void(0)" onclick="ajax('index.php?c=usuario&amp;a=gerenciar');"><li>Gerenciar usuários</li></a><a id="hideSubMenu" onclick="hideSubMenu();"><li class="visited"><img alt="Esconder sub-menu" src="publico/images/icons/go-up.png"></li></a>
-                            </ul>
-                            
-                        </menu>
-                    </div> 
-                    -->
+
                     <?php echo $this->menu ?>
 
                     <div class="popUp table">
@@ -103,7 +80,7 @@
                     </div>
                     <div class="footerLinks" id="informacoes">
                         <ul><lt>Informações</lt>
-                            <li><p>Este site é corretamente visualizado nos seguintes navegadores: Internet Explorer 9+, Google Chrome, Firefox</p>
+                            <li><p>Este site é corretamente visualizado no Google Chrome.</p>
                             </li>
                             <!--
                             <li>

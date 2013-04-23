@@ -11,6 +11,7 @@ $usuarios = usuarioDAO::consultar("concat(PNome,' ',UNome),email,login,dataNasci
             <th>Login</th>
             <th>Data de nascimento</th>
             <th>Papel</th>
+            <th>Permissões</th>
         </tr>
     </thead>
     <tbody>
@@ -22,6 +23,7 @@ $usuarios = usuarioDAO::consultar("concat(PNome,' ',UNome),email,login,dataNasci
                 echo $value[$i];
                 echo '</td>';
             }
+            echo '<td><center><input type="button" value="Ver"/></center></td>';
             echo '</tr>';
         }
         ?>

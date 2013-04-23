@@ -58,6 +58,9 @@ class usuarioDAO extends abstractDAO {
 
     public static function remover($login) {
         if ($login !== null) {
+            if (is_array($login)){
+                $login = $login['login'];
+            }
             $login = "'" . $login . "'";
             $sql = "UPDATE usuario SET ativo = 0 WHERE login = " . $login;
             try {
@@ -75,10 +78,9 @@ class usuarioDAO extends abstractDAO {
      */
     public static function descobrirLogin($id) {
         if ($id != null) {
-            $login;
             $sql = "SELECT login FROM usuario WHERE idUsuario = " . $id;
             try {
-                $login = parent::getConexao()->query($sql)->fetch()['login'];
+                $login = parent::getConexao()->query($sql)->fetch();
             } catch (Exception $e) {
                 $login =  null;
             }
@@ -128,6 +130,9 @@ class usuarioDAO extends abstractDAO {
      */
     public static function recuperarUsuario($login) {
 
+        if (is_array($login)){
+            $login = $login['login'];
+        }
 
         $sql = "SELECT * from usuario WHERE login ='" . $login . "' AND ativo = 1";
         try {

@@ -78,20 +78,38 @@ class ControladorUsuario extends Controlador {
 
         return;
     }
-    
-    public function acaoEditar(){
-        $this->renderizar();
+
+    public function acaoEditar() {
+        if (isset($_GET['userID'])) {
+            $userID = $_GET['userID'];
+            $login = usuarioDAO::descobrirLogin($userID);
+            $usuario = usuarioDAO::recuperarUsuario($login);
+            $this->visao->nome = $usuario->get_PNome();
+            $this->visao->sobrenome = $usuario->get_UNome();
+            $this->visao->email = $usuario->get_email();
+            $this->visao->dataNascimento = $usuario->get_dataNascimento();
+            
+            $this->renderizar();
+        }
     }
     
-    public function acaoRemover(){
+    public function acaoVerificarEdicao(){
+        
+    }
+    
+    public function acaoConsultarpermissoes(){
+        
+    }
+
+    public function acaoRemover() {
         $this->renderizar();
     }
 
     public function acaoGerenciar() {
         $this->renderizar();
     }
-    
-    public function acaoConsultar(){
+
+    public function acaoConsultar() {
         $this->renderizar();
     }
 

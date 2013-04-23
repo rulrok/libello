@@ -8,8 +8,8 @@ document.paginaAlterada = false;
 window.onload = function() {
 
     $(".shaderFrame").click(function() {
-        $(".shaderFrame").css("visibility", "hidden");
-        $(".shaderFrameContent").css("visibility", "hidden");
+        $(".shaderFrame").css("visibility", "hidden").css("opacity","0");
+        $(".shaderFrameContent").css("visibility", "hidden").css("opacity","0");
     });
 
     hideFooter();
@@ -38,15 +38,17 @@ window.onload = function() {
     for (var i = 0; i < menus.length; i++) {
         if (menus[i].id == "homeLink") {
             menus[i].onclick = function() {
-                if (!this.className.match(".*visited.*")) {
-
-                    var menu = $('#homeLink');
-                    var menus = $('.menuLink');
-                    for (var i = 0; i < menus.length; i++) {
-                        $(menus[i]).removeClass("visited");
-                    }
-                    menu.addClass("visited");
-                }
+//                if (!this.className.match(".*visited.*")) {
+//
+//                    var menu = $('#homeLink');
+//                    var menus = $('.menuLink');
+//                    for (var i = 0; i < menus.length; i++) {
+//                        $(menus[i]).removeClass("visited");
+//                    }
+//                    menu.addClass("visited");
+//                }
+                $(".menuLink.visited").removeClass("visited");
+                $(this).addClass("visited");
 
                 hideSubMenu(150);
             }
@@ -56,12 +58,14 @@ window.onload = function() {
             var id = this.id;
             if (!this.className.match(".*visited.*")) {
 
-                var menu = $('#' + id);
-                var menus = $('.menuLink');
-                for (var i = 0; i < menus.length; i++) {
-                    $(menus[i]).removeClass("visited");
-                }
-                menu.addClass("visited");
+//                var menu = $('#' + id);
+//                var menus = $('.menuLink');
+//                for (var i = 0; i < menus.length; i++) {
+//                    $(menus[i]).removeClass("visited");
+//                }
+//                menu.addClass("visited");
+                $(".menuLink.visited").removeClass("visited");
+                $(this).addClass("visited");
                 hideSubMenu(0);
                 makeSubMenu(this);
                 showSubMenu();
@@ -119,7 +123,7 @@ function hideFooter() {
         $(".arrow-up").show();
         $(".arrow-up").animate({
             opacity: 1
-        }, 200);    
+        }, 200);
     });
 }
 
@@ -231,11 +235,11 @@ function ajax(link, place)
         $(place).empty();
         $(place).append(data);
         if (place == ".shaderFrameContent") {
-            $(".shaderFrame").css("visibility", "visible");
-            $(".shaderFrameContent").css("visibility", "visible");
+            $(".shaderFrame").css("visibility", "visible").animate({opacity: "0.5"},150);
+            $(".shaderFrameContent").css("visibility", "visible").animate({opacity: "1"},350);
         }
 
-        $("input, select").not('.ignorar').change(function() {
+        $("input, select").not('.ignorar').not('.dataTables_filter input').change(function() {
             document.paginaAlterada = true;
         });
         //eval(document.getElementById("pos_script").innerHTML);
