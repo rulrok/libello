@@ -11,7 +11,11 @@ if (camposObrigatorios.length > 0) {
     $(".campoObrigatorio").on('change', function() {
         liberarCadastro()
     });
-    $('input').not(".campoObrigatorio").on('forminput', function() {
+    $('input').not(".campoObrigatorio").on('change', function() {
+        $("input[type=submit],input[value~='Atualizar']").attr('disabled', false);
+    });
+
+    $('input[readonly]').on('blur', function() {
         $("input[type=submit],input[value~='Atualizar']").attr('disabled', false);
     });
 }

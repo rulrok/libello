@@ -3,7 +3,7 @@
 <script src = "publico/js/jquery.form.js"></script>
 <script src="publico/js/ajaxForms.js"></script> 
 
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=usuario&a=gerenciarconta">
+<form class="table centered" id="ajaxForm" method="post" action="index.php?c=usuario&a=editar">
     <fieldset>
         <legend>Dados</legend>
         <p class="centered centeredText boldedText">Campos com <img src="publico/images/icons/campo_obrigatorio.png"> são obrigatórios</label>

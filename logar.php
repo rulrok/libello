@@ -4,6 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel='stylesheet' href='publico/css/mainStyle.css' />  
         <link rel='stylesheet' href='publico/css/login.css' />
+        <!--<link rel='stylesheet' href='publico/css/bootstrap.css' />-->
         <title>Autenticação</title>
     </head>
     <body>
@@ -43,13 +44,15 @@
                 ?>
             </div>
         </div>
+        <?php if (!isset($_GET['m'])): ?>
         <div id="apoio">
             <h3>Apoio:</h3>
             <div id="uab"></div>
             <div id="capes"></div>
         </div>
-        <div id="footer" >
-            <p class="centeredText">Copyright &copy; 2012 - Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a></label>
-        </div>
+            <div id="footer" >
+                <p class="centeredText">Copyright &copy; 2012 - Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a></label>
+            </div>
+        <?php endif; ?>
     </body>
 </html>

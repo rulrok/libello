@@ -11,7 +11,7 @@ class ControladorSistema extends Controlador {
     }
 
     public function acaoSair() {
-        expulsaVisitante("");
+        expulsaVisitante();
     }
 
     public function acaoNaoautenticado() {
@@ -82,9 +82,10 @@ class ControladorSistema extends Controlador {
                     }
                     //Se não quer alterar a senha
                     if (UsuarioDAO::atualizar($_SESSION['login'], $usuario)) {
+                        $_SESSION['senha'] = $usuario->get_senha();
                         $this->visao->mensagem_usuario = "Alteração concluída com sucesso";
                         $this->visao->tipo_mensagem = "sucesso";
-                        header('refresh: 2; url=http://localhost/controle-cead/index.php');
+//                        header('refresh: 2; url=http://localhost/controle-cead/index.php');
                         $this->acaoGerenciarconta(false);
                     } else {
                         $this->visao->mensagem_usuario = "Erro ao inserir no banco de dados.";

@@ -39,9 +39,9 @@ function protegePaginaLogado() {
 /**
  * Encerra a sessão e manda a pessoa para a página principal.
  */
-function expulsaVisitante($msg_erro = "") {
+function expulsaVisitante($msg_erro = null) {
     encerrarSessao();
-    header("Location: " . WEB_SERVER_NAME . "logar.php?m=" . $msg_erro);
+    header("Location: " . WEB_SERVER_NAME . "logar.php" . ($msg_erro != null ? "?m=" . $msg_erro : ""));
     exit;
 }
 
@@ -110,5 +110,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_SESSION['autenticado'] === FALSE) 
         // O usuário e/ou a senha são inválidos, manda de volta pro form de login
         expulsaVisitante("Usuário ou senha inválidos.");
     }
-} 
+}
 ?>

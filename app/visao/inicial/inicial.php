@@ -18,10 +18,7 @@
         <!-- Inicialização dos principais scripts -->
         <script src="publico/js/jquery-1.9.1.js"></script>
         <script src="publico/js/mainScript.js"></script>
-        <script src="publico/js/jquery.datepick.js"></script>
-        <script src="publico/js/jquery.datepick-pt-BR.js"></script>
 
-        <script src="publico/js/bootstrap.js"></script> 
         <title><?php echo $this->titulo ?></title>
     </head>
     <body>
@@ -51,12 +48,12 @@
                 </div>
 
             </header>
-            <div class="shaderFrame"></div>
+<!--            <div class="shaderFrame"></div>
             <div class="shaderFrameContent">
                 <div class="shaderFrameContentWrap centered">
-                    <!-- Conteúdo dinâmico -->    
+                     Conteúdo dinâmico     
                 </div>
-            </div>
+            </div>-->
             <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <!--                <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -101,15 +98,10 @@
                     </div>
                     <div class="footerLinks" id="informacoes">
                         <ul><lt>Informações</lt>
-                            <li><p>Este site é corretamente visualizado no <a href="http://www.google.com/chrome/" target="_blank">Google Chrome</a>.</p>
+                            <li><p>Este site é corretamente visualizado no <a href="http://www.google.com/chrome/" target="_blank">Google Chrome</a>.
+                                    <br>
+                                        <i><b>Não há garantias de funcionar com o Internet Explorer.</b></i></p>
                             </li>
-                            <!--
-                            <li>
-                                <p>Por se tratar de uma ferramenta em fase beta, alguns erros podem ser
-                                    encontrados. Por favor, entre em contato se você estiver tendo qualquer
-                                    dificuldade de uso por funcionamento inadequado do sistema.</p>
-                            </li>
-                            -->
                         </ul>
                     </div>
                     <div class="footerLinks" id="suporte">
@@ -123,7 +115,11 @@
         <!-- Inicialização de scripts importantes para outras páginas -->
         <script src="publico/js/jquery-ui.js"></script>
         <script src="publico/js/jquery.dataTables.js"></script>
+        <script src="publico/js/jquery.datepick.js"></script>
+        <script src="publico/js/jquery.datepick-pt-BR.js"></script>
+        <script src="publico/js/bootstrap.js"></script> 
         <script>
+                                //Configurações globais para dataTables
                                 $.extend($.fn.dataTable.defaults, {
                                     "bFilter": true,
                                     "bSort": true,
@@ -154,8 +150,10 @@
                                 $.datepick.setDefaults({
                                     dateFormat: 'dd/mm/yyyy'
                                 })
-                                $("#fullscreen-on").tooltip({trigger:'hover',container:'body',delay:{show:50,hide:0}});
-                                $("#fullscreen-off").tooltip({trigger:'hover',container:'body',delay:{show:50,hide:0}});
+
+                                //Configura botão para tela cheia
+                                $("#fullscreen-on").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
+                                $("#fullscreen-off").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
         </script>
     </body>
 </html>

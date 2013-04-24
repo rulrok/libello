@@ -51,6 +51,20 @@ $usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,login
             "aaSorting": [[1, "asc"]]
         });
 
+        $('input[aria-controls="gerenciar_usuario"]').on('keyup', function() {
+            if ($('.row_selected').size() == 0) {
+                $('.btn-deletar').addClass('disabled');
+                $('.btn-deletar').attr('disabled',true);
+                $('.btn-editar').addClass('disabled');
+                $('.btn-editar').attr('disabled',true);
+            } else {
+                $('.btn-deletar').removeClass('disabled');
+                $('.btn-deletar').attr('disabled',false);
+                $('.btn-editar').removeClass('disabled');
+                $('.btn-editar').attr('disabled',false);
+            }
+        });
+
         $($("#gerenciar_usuario tr")[1]).addClass('row_selected');
 
         oTable.$('tr').mousedown(function(e) {
@@ -63,11 +77,17 @@ $usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,login
             ajax('index.php?c=usuario&a=novo');
         });
         $(".btn-editar").on('mousedown', function() {
+            if ($('.row_selected').size() == 0) {
+                return false;
+            }
             var id = $("tr.row_selected>.campoID").html();
             ajax("index.php?c=usuario&a=editar&userID=" + id);
         });
 
         $(".btn-deletar").on('click', function() {
+            if ($('.row_selected').size() == 0) {
+                return false;
+            }
             if (confirm('Deseja realmente fazer isso?')) {
                 var id = $("tr.row_selected>.campoID").html();
                 ajax("index.php?c=usuario&a=remover&userID=" + id, "nenhum");
@@ -80,9 +100,9 @@ $usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,login
         $(".visualizarPermissoes").on('click', function() {
             var id = $("tr.row_selected>.campoID").html();
             $("#myModal").modal({
-                remote:"index.php?c=usuario&a=consultarpermissoes&userID="+id
+                remote: "index.php?c=usuario&a=consultarpermissoes&userID=" + id
             });
-            
+
 //            ajax("index.php?c=usuario&a=consultarpermissoes&userID=" + id, "#myModal");
         });
     });

@@ -260,6 +260,10 @@ input[value~='Cadastrar']:disabled,input[value~='Atualizar']:disabled {
     border-radius: 5px;
     background-color: white;
 }
+
+.popUp p{
+    margin: 15px 10px 10px 15px ;
+}
 /* FIM DO POP-UP */
 
 /* CONTENT */

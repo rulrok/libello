@@ -13,6 +13,7 @@ input {
 
 /*Configura os campos de senha e usuário */
 input[type=text],input[type=password]{
+    border: 1px solid #CCC;
     height: 23px;
     width: 154px;
     background-color: #fff;

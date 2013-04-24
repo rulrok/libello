@@ -111,20 +111,24 @@ window.onscroll = function() {
 };
 
 function launchFullScreen(element) {
-    
+
     if (element.requestFullScreen) {
         element.requestFullScreen();
     } else if (element.mozRequestFullScreen) {
         element.mozRequestFullScreen();
     } else if (element.webkitRequestFullScreen) {
         element.webkitRequestFullScreen();
+    } else {
+        var wscript = new ActiveXObject("Wscript.shell");
+        wscript.SendKeys("{F11}");
+
     }
     $("#fullscreen-on").addClass("hide");
     $("#fullscreen-off").removeClass("hide");
 }
 
 function cancelFullscreen() {
-    
+
     if (document.cancelFullScreen) {
         document.cancelFullScreen();
     } else if (document.mozCancelFullScreen) {
@@ -263,14 +267,24 @@ function makeSubMenu(originMenu) {
 
     for (var i = 0; i < subMenus.length; i++) {
 
-        subMenus[i].classList.add("hiddenSubMenuLink");
+        $(subMenus[i]).addClass("hiddenSubMenuLink");
 
     }
 
-    for (var i = 0; i < subMenus.length; i++) {
-        if (subMenus[i].classList.contains(menuName)) {
-            subMenus[i].classList.remove("hiddenSubMenuLink");
-            break;
+    try {
+        for (var i = 0; i < subMenus.length; i++) {
+            if (subMenus[i].classList.contains(menuName)) {
+                subMenus[i].classList.remove("hiddenSubMenuLink");
+                break;
+            }
+        }
+    } catch (e) {
+        //fix for IE
+        for (var i = 0; i < subMenus.length; i++) {
+            if (subMenus[i].className.search(menuName) != -1) {
+                $(subMenus[i]).removeClass("hiddenSubMenuLink");
+                break;
+            }
         }
     }
 }
