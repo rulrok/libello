@@ -22,6 +22,7 @@ class ControladorUsuario extends Controlador {
 
     public function acaoVerificarNovo() {
         $this->visao->mensagem_usuario = null;
+        $this->visao->tipo_mensagem = null;
         if ($_SERVER['REQUEST_METHOD'] == 'POST') :
             $_SERVER['REQUEST_METHOD'] = null;
             $this->visao->nome = $_POST['nome'];
@@ -45,6 +46,7 @@ class ControladorUsuario extends Controlador {
             if ($usuario->validarCampos()) :
                 if (count(usuarioDAO::consultar("login", "login = '" . $this->visao->login . "'")) > 0):
                     $this->visao->mensagem_usuario = "Login " . $this->visao->login . " já existe!";
+                    $this->visao->tipo_mensagem = 'erro';
                     $this->visao->login = "";
                     $this->acaoNovo(true);
                 elseif (usuarioDAO::inserir($usuario)):
@@ -57,6 +59,7 @@ class ControladorUsuario extends Controlador {
                     $permissoes->set_controleViagens($_POST['permissoescontrole_de_viagens']);
                     usuarioDAO::cadastrarPermissoes($usuario, $permissoes);
                     $this->visao->mensagem_usuario = "Cadastro realizado com sucesso";
+                    $this->visao->tipo_mensagem = 'sucesso';
                     $this->visao->nome = "";
                     $this->visao->sobrenome = "";
                     $this->visao->login = "";
@@ -66,10 +69,12 @@ class ControladorUsuario extends Controlador {
                     $this->acaoNovo(false);
                 else :
                     $this->visao->mensagem_usuario = "Algum erro ocorreu <br/>ao inserir no banco de dados!";
+                    $this->visao->tipo_mensagem = 'erro';
                     $this->acaoNovo(true);
                 endif;
             else:
                 $this->visao->mensagem_usuario = "Algum campo está inválido";
+                $this->visao->tipo_mensagem = 'erro';
                 $this->acaoNovo(true);
 
             endif;
@@ -88,17 +93,17 @@ class ControladorUsuario extends Controlador {
             $this->visao->sobrenome = $usuario->get_UNome();
             $this->visao->email = $usuario->get_email();
             $this->visao->dataNascimento = $usuario->get_dataNascimento();
-            
+
             $this->renderizar();
         }
     }
-    
-    public function acaoVerificarEdicao(){
+
+    public function acaoVerificarEdicao() {
         
     }
-    
-    public function acaoConsultarpermissoes(){
-        
+
+    public function acaoConsultarpermissoes() {
+        $this->renderizar();
     }
 
     public function acaoRemover() {

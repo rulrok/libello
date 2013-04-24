@@ -8,6 +8,7 @@
         </style>
 <![endif]-->
         <link type="text/css" rel="stylesheet" href="publico/css/jquery-ui.css" />
+        <link type="text/css" rel="stylesheet" href="publico/css/bootstrap.css"/> 
         <link type="text/css" rel="stylesheet" href="publico/css/mainStyle.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.dataTables_themeroller.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.datepick.css"/> 
@@ -19,6 +20,8 @@
         <script src="publico/js/mainScript.js"></script>
         <script src="publico/js/jquery.datepick.js"></script>
         <script src="publico/js/jquery.datepick-pt-BR.js"></script>
+
+        <script src="publico/js/bootstrap.js"></script> 
         <title><?php echo $this->titulo ?></title>
     </head>
     <body>
@@ -35,18 +38,36 @@
 
                 </div>
                 <div class="userInfoWrap">
-                    <p>Logado como: <b><?php echo $this->usuario ?></b></p>
-                    <a href="javascript:void(0)" onclick="ajax('index.php?c=sistema&a=gerenciarconta');
-                            hideSubMenu(150);" id="gerenciarConta">Gerenciar Conta</a>
-                    <a href="sair.php"  id="sair">Sair</a>
+                    <p>Logado como: <b><?php echo $this->usuario ?></b>(<?php echo $this->papel ?>)</p>
+                    <div class="btn-toolbar">
+                        <div class="centered btn-group">
+                            <a id="fullscreen-on" title="Modo tela cheia" class="btn btn-small" href="javascript:void(0)" onclick="launchFullScreen(document.documentElement);"><i class="icon-fullscreen"></i></a>
+                            <a id="fullscreen-off" title="Voltar ao modo normal" class="btn btn-small hide" href="javascript:void(0)" onclick="cancelFullscreen();"><i class="icon-resize-small"></i></a>
+                            <a class="btn btn-small" href="javascript:void(0)" onclick="ajax('index.php?c=sistema&a=gerenciarconta');
+                                    hideSubMenu(150);"><i class="icon-cog"></i> Gerenciar Conta</a>
+                            <a class="btn btn-small" href="sair.php"><i class="icon-off"></i> Sair</a>
+                        </div>
+                    </div>
                 </div>
 
             </header>
-            <div class="shaderFrame">
-
-            </div>
+            <div class="shaderFrame"></div>
             <div class="shaderFrameContent">
-                <!-- Conteúdo dinâmico -->
+                <div class="shaderFrameContentWrap centered">
+                    <!-- Conteúdo dinâmico -->    
+                </div>
+            </div>
+            <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <!--                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h3 id="myModalLabel">Modal header</h3>
+                                </div>-->
+                <div class="modal-body">
+                    <p>One fine body…</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+                </div>
             </div>
             <hr id="menuPosition" style="margin:0;width:100%; visibility: hidden;border:none" >
                 <div class="menuContainer">
@@ -80,7 +101,7 @@
                     </div>
                     <div class="footerLinks" id="informacoes">
                         <ul><lt>Informações</lt>
-                            <li><p>Este site é corretamente visualizado no Google Chrome.</p>
+                            <li><p>Este site é corretamente visualizado no <a href="http://www.google.com/chrome/" target="_blank">Google Chrome</a>.</p>
                             </li>
                             <!--
                             <li>
@@ -103,36 +124,38 @@
         <script src="publico/js/jquery-ui.js"></script>
         <script src="publico/js/jquery.dataTables.js"></script>
         <script>
-                        $.extend($.fn.dataTable.defaults, {
-                            "bFilter": true,
-                            "bSort": true,
-                            "bJQueryUI": true,
-                            "sPaginationType": "full_numbers",
-                            "oLanguage": {
-                                "sProcessing": "Processando...",
-                                "sLengthMenu": "Mostrar _MENU_ registros",
-                                "sZeroRecords": "Não foram encontrados resultados",
-                                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-                                "sInfoEmpty": "Mostrando de 0 até 0 de 0 registros",
-                                "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
-                                "sInfoPostFix": "",
-                                "sSearch": "Buscar:",
-                                "sUrl": "",
-                                "oPaginate": {
-                                    "sFirst": "Primeiro",
-                                    "sPrevious": "Anterior",
-                                    "sNext": "Seguinte",
-                                    "sLast": "Último"
-                                },
-                                "oAria": {
-                                    "sSortAscending": " - Ordenar crescentemente",
-                                    "sSortDescending": " - Ordenar decrescentemente"
-                                }
-                            }
-                        });
-                        $.datepick.setDefaults({
-                            dateFormat: 'dd/mm/yyyy'
-                        })
+                                $.extend($.fn.dataTable.defaults, {
+                                    "bFilter": true,
+                                    "bSort": true,
+                                    "bJQueryUI": true,
+                                    "sPaginationType": "full_numbers",
+                                    "oLanguage": {
+                                        "sProcessing": "Processando...",
+                                        "sLengthMenu": "Mostrar _MENU_ registros",
+                                        "sZeroRecords": "Não foram encontrados resultados",
+                                        "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                                        "sInfoEmpty": "Mostrando de 0 até 0 de 0 registros",
+                                        "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
+                                        "sInfoPostFix": "",
+                                        "sSearch": "Buscar:",
+                                        "sUrl": "",
+                                        "oPaginate": {
+                                            "sFirst": "Primeiro",
+                                            "sPrevious": "Anterior",
+                                            "sNext": "Seguinte",
+                                            "sLast": "Último"
+                                        },
+                                        "oAria": {
+                                            "sSortAscending": " - Ordenar crescentemente",
+                                            "sSortDescending": " - Ordenar decrescentemente"
+                                        }
+                                    }
+                                });
+                                $.datepick.setDefaults({
+                                    dateFormat: 'dd/mm/yyyy'
+                                })
+                                $("#fullscreen-on").tooltip({trigger:'hover',container:'body',delay:{show:50,hide:0}});
+                                $("#fullscreen-off").tooltip({trigger:'hover',container:'body',delay:{show:50,hide:0}});
         </script>
     </body>
 </html>

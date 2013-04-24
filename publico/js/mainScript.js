@@ -5,11 +5,31 @@ window.menuHasUpped = false;
 //por engano e perder dados.
 document.paginaAlterada = false;
 
+//Prepara algumas funções especiais e conteúdos para serem exibidos no início
 window.onload = function() {
 
+    //Função para centralizar elementos na página de acordo com o tamanho da tela
+    jQuery.fn.center = function() {
+        this.css("position", "absolute");
+        this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
+                $(window).scrollTop()) + "px");
+        this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
+                $(window).scrollLeft()) + "px");
+        return this;
+    };
+
+    //Para que quando a tela redimensionar e o popup com fundo cinza estiver sendo exibido,
+    //ele seja centralizado novamente, evitando exibições estranhas
+    window.onresize = function() {
+        $(".shaderFrameContent").center();
+    };
+
+    //Permite que o popup seja arrastado pela tela
+    $('.shaderFrameContent').draggable({cancel: ".shaderFrameContentWrap", });
+
     $(".shaderFrame").click(function() {
-        $(".shaderFrame").css("visibility", "hidden").css("opacity","0");
-        $(".shaderFrameContent").css("visibility", "hidden").css("opacity","0");
+        $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
+        $(".shaderFrameContent").css("visibility", "hidden").css("opacity", "0");
     });
 
     hideFooter();
@@ -21,7 +41,7 @@ window.onload = function() {
         }
     }
 
-//Função para detectar navegadores antigos
+    //Função para detectar navegadores antigos
     try {
         if ($buoop.ol)
             $buoop.ol();
@@ -38,15 +58,6 @@ window.onload = function() {
     for (var i = 0; i < menus.length; i++) {
         if (menus[i].id == "homeLink") {
             menus[i].onclick = function() {
-//                if (!this.className.match(".*visited.*")) {
-//
-//                    var menu = $('#homeLink');
-//                    var menus = $('.menuLink');
-//                    for (var i = 0; i < menus.length; i++) {
-//                        $(menus[i]).removeClass("visited");
-//                    }
-//                    menu.addClass("visited");
-//                }
                 $(".menuLink.visited").removeClass("visited");
                 $(this).addClass("visited");
 
@@ -57,13 +68,6 @@ window.onload = function() {
         menus[i].onclick = function() {
             var id = this.id;
             if (!this.className.match(".*visited.*")) {
-
-//                var menu = $('#' + id);
-//                var menus = $('.menuLink');
-//                for (var i = 0; i < menus.length; i++) {
-//                    $(menus[i]).removeClass("visited");
-//                }
-//                menu.addClass("visited");
                 $(".menuLink.visited").removeClass("visited");
                 $(this).addClass("visited");
                 hideSubMenu(0);
@@ -78,15 +82,14 @@ window.onload = function() {
             }
         };
     }
-//makeSubMenu();
-//showSubMenu();
 };
-//Função para manter os menus 'colados' no topo da página
+
+//Função para manter o menu 'colado' no topo da página quando ela desce muito
 window.onscroll = function() {
     var menu = $("#menuPosition");
     var menuPosition = menu.position().top;
     var windowPosition = $(window).scrollTop();
-    if (!window.menuHasUpped && windowPosition >= menuPosition - 2) {
+    if (!window.menuHasUpped && windowPosition >= menuPosition) {
         window.menuHasUpped = true;
         //console.debug("Fixou o menu");
         var divMenu = $(".menuContainer");
@@ -101,11 +104,37 @@ window.onscroll = function() {
         //console.debug("Retornou ao normal");
         var divMenu = $(".menuContainer");
         divMenu.css('position', 'relative');
-        divMenu.css('top', '-2px');
+        divMenu.css('top', '0px');
         var divContent = $(".content");
         divContent.css('padding-top', '0px');
     }
 };
+
+function launchFullScreen(element) {
+    
+    if (element.requestFullScreen) {
+        element.requestFullScreen();
+    } else if (element.mozRequestFullScreen) {
+        element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullScreen) {
+        element.webkitRequestFullScreen();
+    }
+    $("#fullscreen-on").addClass("hide");
+    $("#fullscreen-off").removeClass("hide");
+}
+
+function cancelFullscreen() {
+    
+    if (document.cancelFullScreen) {
+        document.cancelFullScreen();
+    } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+    } else if (document.webkitCancelFullScreen) {
+        document.webkitCancelFullScreen();
+    }
+    $("#fullscreen-off").addClass("hide");
+    $("#fullscreen-on").removeClass("hide");
+}
 
 function hideFooter() {
     $(".footerWrap").animate({
@@ -146,8 +175,40 @@ function showFooter() {
     });
 }
 
-function showPopUp(data) {
+/**
+ * Exibe um balão de aviso no canto direito da tela. Você pode personalizar o
+ * tipo de aviso.
+ * @param {type} data
+ * @param {type} type 'sucesso', 'erro' ou 'informacao'. Por padrão, 'informacao'.
+ * @returns {undefined}
+ */
+function showPopUp(data, type) {
+    if (type == null) {
+        type = "informacao";
+    }
+    var texto, fundo, borda;
+    switch (type) {
+        case "informacao":
+            texto = "#3a87ad !important";
+            fundo = "#d9edf7";
+            borda = "#bce8f1";
+            break;
+        case "erro":
+            texto = "#b94a48 !important";
+            fundo = "#f2dede";
+            borda = "#eed3d7";
+            break;
+        case "sucesso":
+            texto = "#468847 !important";
+            fundo = "#dff0d8";
+            borda = "#d6e9c6";
+            break;
+    }
+
     $(".popUpContent").empty();
+    $(".popUp").css('color', texto);
+    $(".popUp").css('background-color', fundo);
+    $(".popUp").css('border-color', borda);
     $(".popUpContent").append(data);
     $(".popUp").show(200, function() {
         $(".botao_fechar").show(100, function() {
@@ -214,8 +275,6 @@ function makeSubMenu(originMenu) {
     }
 }
 
-
-
 function ajax(link, place)
 {
     if (place == null) {
@@ -234,9 +293,11 @@ function ajax(link, place)
         document.paginaAlterada = false;
         $(place).empty();
         $(place).append(data);
-        if (place == ".shaderFrameContent") {
-            $(".shaderFrame").css("visibility", "visible").animate({opacity: "0.5"},150);
-            $(".shaderFrameContent").css("visibility", "visible").animate({opacity: "1"},350);
+        //Caso o conteúdo seja carregado no popup com fundo cinza
+        if (place == ".shaderFrameContentWrap") {
+            $(".shaderFrame").css("visibility", "visible").animate({opacity: "0.5"}, 150);
+            $(".shaderFrameContent").css("visibility", "visible").animate({opacity: "1"}, 350);
+            $(".shaderFrameContent").center();
         }
 
         $("input, select").not('.ignorar').not('.dataTables_filter input').change(function() {

@@ -2,6 +2,7 @@
     <script>
         showPopUp(
     <?php echo "\"" . $this->mensagem_usuario . "\""; ?>
+        ,<?php echo "\"" . $this->tipo_mensagem . "\"" ?>
         );
     </script>
     <?php
@@ -29,7 +30,7 @@ else:
             </div>
             <div class="line">
                 <label>email</label>
-                <input type="text" name="email" value="<? echo $this->email ?>">
+                <input required type="text" class="campoObrigatorio" name="email" value="<? echo $this->email ?>">
             </div>
             <div class="line">
                 <label>Data de nascimento</label>
@@ -61,11 +62,11 @@ else:
                 <input required name="senhaAtual" class="campoObrigatorio" type="password">
             </div>
         </fieldset>
-        <input type="submit" disabled value="Atualizar dados">
+        
+            <input class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit" value="Atualizar">
+        
     </form>
     <script type="text/javascript" src="publico/js/validarCampos.js"></script>
-
-
     <script>
         $(function() {
             $("#dataNascimento").datepick();

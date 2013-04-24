@@ -3,16 +3,12 @@
 <?php
 $usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,login,dataNascimento,nome", "idUsuario <> " . $_SESSION['idUsuario']);
 ?>
-<div class="botoesTabela">
-    <label>
-        <input type="button" id="btn_novo_superior" class="botaoTabela"  onclick="ajax('index.php?c=usuario&a=novo')" /> Adicionar
-    </label>
-    <label>
-        <input type="button" id="btn_edit_superior" class="botaoTabela"/> Editar
-    </label>
-    <label>
-        <input type="button" id="btn_del_superior" class="botaoTabela"/> Excluir
-    </label>
+<div class="btn-toolbar">
+    <div class="btn-group">
+        <button class="btn btn-adicionar"><i class="icon-user"></i> Adicionar novo</button>
+        <button class="btn btn-editar" href="#"><i class="icon-edit"></i> Editar</button>
+        <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
+    </div>
 </div>
 <table id="gerenciar_usuario" class="tabelaDeEdicao">
     <thead>
@@ -35,58 +31,61 @@ $usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,login
                 echo $value[$i];
                 echo '</td>';
             }
-            echo '<td><center><input class="visualizarPermissoes" type="button" value="Ver"/></center></td>';
+            echo '<td><center><input class="btn visualizarPermissoes" type="button" value="Ver"/></center></td>';
             echo '</tr>';
         }
         ?>
     </tbody>
 </table>
-<div class="botoesTabela">
-    <label>
-        <input type="button" id="btn_novo_inferior" class="botaoTabela"  onmousedown="ajax('index.php?c=usuario&a=novo')" /> Adicionar
-    </label>
-    <label>
-        <input type="button" id="btn_edit_inferior" class="botaoTabela"/> Editar
-    </label>
-    <label>
-        <input type="button" id="btn_del_inferior" class="botaoTabela"/> Excluir
-    </label>
+<div class="btn-toolbar">
+    <div class="btn-group">
+        <button class="btn btn-adicionar"><i class="icon-user"></i> Adicionar novo</button>
+        <button class="btn btn-editar" href="#"><i class="icon-edit"></i> Editar</button>
+        <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
+    </div>
 </div>
-<script id="pos_script">
-            $(document).ready(function() {
-                var selectedElement;
-                var oTable = $('#gerenciar_usuario').dataTable({
-                    "aaSorting": [[1, "asc"]]
-                });
+<script>
+    $(document).ready(function() {
+        var selectedElement;
+        var oTable = $('#gerenciar_usuario').dataTable({
+            "aaSorting": [[1, "asc"]]
+        });
 
-                $($("tr")[1]).addClass('row_selected');
+        $($("#gerenciar_usuario tr")[1]).addClass('row_selected');
 
-                oTable.$('tr').click(function(e) {
-                    oTable.$('tr.row_selected').removeClass('row_selected');
-                    $(this).addClass('row_selected');
-                    selectedElement = this;
-                });
+        oTable.$('tr').mousedown(function(e) {
+            oTable.$('tr.row_selected').removeClass('row_selected');
+            $(this).addClass('row_selected');
+            selectedElement = this;
+        });
 
-                $("input[id^=btn_edit]").on('mousedown', function() {
-                    var id = $("tr.row_selected>.campoID").html();
-                    ajax("index.php?c=usuario&a=editar&userID=" + id);
-                });
+        $(".btn-adicionar").on('click', function() {
+            ajax('index.php?c=usuario&a=novo');
+        });
+        $(".btn-editar").on('mousedown', function() {
+            var id = $("tr.row_selected>.campoID").html();
+            ajax("index.php?c=usuario&a=editar&userID=" + id);
+        });
 
-                $("input[id^=btn_del]").on('click', function() {
-                    if (confirm('Deseja realmente fazer isso?')) {
-                        var id = $("tr.row_selected>.campoID").html();
-                        ajax("index.php?c=usuario&a=remover&userID=" + id, "nenhum");
-                        var pos = oTable.fnGetPosition(selectedElement);
-                        oTable.fnDeleteRow(pos);
-                        $("tr.odd")[0].addClass("row_selected");
-                    }
-                });
+        $(".btn-deletar").on('click', function() {
+            if (confirm('Deseja realmente fazer isso?')) {
+                var id = $("tr.row_selected>.campoID").html();
+                ajax("index.php?c=usuario&a=remover&userID=" + id, "nenhum");
+                var pos = oTable.fnGetPosition(selectedElement);
+                oTable.fnDeleteRow(pos);
+                $("tr.odd")[0].addClass("row_selected");
+            }
+        });
 
-                $(".visualizarPermissoes").on('click', function() {
-                    var id = $("tr.row_selected>.campoID").html();
-                    ajax("index.php?c=usuario&a=consultarpermissoes&userID=" + id, ".shaderFrameContent");
-                });
+        $(".visualizarPermissoes").on('click', function() {
+            var id = $("tr.row_selected>.campoID").html();
+            $("#myModal").modal({
+                remote:"index.php?c=usuario&a=consultarpermissoes&userID="+id
             });
+            
+//            ajax("index.php?c=usuario&a=consultarpermissoes&userID=" + id, "#myModal");
+        });
+    });
 
 
 //    $('#table_id').dataTable();

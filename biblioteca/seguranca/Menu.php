@@ -9,9 +9,7 @@ class Menu {
 
     public static function montarMenuNavegacao() {
 
-        $usuario = new Usuario();
-        $usuario->set_id($_SESSION['idUsuario']);
-        $permissoes = usuarioDAO::obterPermissoes($usuario);
+        $permissoes = usuarioDAO::obterPermissoes($_SESSION['idUsuario']);
 
         $menuCode = "<div class=\"menu\">" . "\n";
         $menuCode .= "<menu class=\"centered\">" . "\n";

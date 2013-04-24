@@ -2,6 +2,7 @@
     <script>
         showPopUp(
     <?php echo "\"" . $this->mensagem_usuario . "\""; ?>
+        ,<?php echo "\"" . $this->tipo_mensagem . "\"" ?>
         );
     </script>
     <?php
@@ -21,33 +22,33 @@ else:
             <p class="centered centeredText boldedText">Campos com <img src="publico/images/icons/campo_obrigatorio.png"> são obrigatórios</label>
             <div class="line">
                 <label>Nome</label>
-                <input required type="text" id="nome" class="campoObrigatorio" name="nome" value="<? echo $this->nome ?>"  style="width: 265px">
+                <input required type="text" id="nome" class="campoObrigatorio" placeholder="Primeiro nome apenas" name="nome" value="<? echo $this->nome ?>"  data-content="Apenas letras.">
             </div>
             <div class="line">
                 <label>Sobrenome</label>
-                <input required type="text" id="sobrenome" class="campoObrigatorio" name="sobrenome" value="<? echo $this->sobrenome ?>" style="width: 265px">
+                <input required type="text" id="sobrenome" class="campoObrigatorio" placeholder="Demais nomes" name="sobrenome" value="<? echo $this->sobrenome ?>"  data-content="Apenas letras e espaços.">
             </div>
             <div class="line">
                 <label>E-mail</label>
-                <input requiered type="text" id="email" class="campoObrigatorio" name="email" value="<? echo $this->email ?>" style="width: 265px">
+                <input required type="text" id="email" class="campoObrigatorio" placeholder="email@dominio.com" name="email" value="<? echo $this->email ?>">
             </div>
             <div class="line">
                 <label>Data de nascimento</label>
-                <input type="text" readonly id="dataNascimento" class="campoData" name="dataNascimento" value="<? echo $this->dataNascimento ?>" style="width: 265px">
+                <input type="text" readonly id="dataNascimento" class="campoData" placeholder="Clique para escolher" name="dataNascimento" value="<? echo $this->dataNascimento ?>">
             </div>
             <div class="line">
                 <label>Login</label>
-                <input required type="text" class="campoObrigatorio" name="login" value="<? echo $this->login ?>">
+                <input required type="text" class="campoObrigatorio" name="login" value="<? echo $this->login ?>"  data-content="Apenas letras minúsculas. Mínimo de três caracteres.">
             </div>
 
             <div class="line">
                 <label>Senha</label>
-                <input required type="password" class="campoObrigatorio" name="senha" style="width: 100px">
+                <input required type="password" class="campoObrigatorio" name="senha"  data-content="Quaisquer caracteres exceto 'espaço'.Mínimo de seis caracteres.">
             </div>
 
             <div class="line">
                 <label>Confirmar Senha</label>
-                <input required type="password" class="campoObrigatorio" name="confsenha" style="width: 100px">
+                <input required type="password" class="campoObrigatorio" name="confsenha" >
             </div>
 
             <div class="line">
@@ -67,8 +68,9 @@ else:
                 <?php echo $this->comboPermissoes ?>
             </fieldset>
         </fieldset>
-        <input disabled id="submit" type="submit" value="Cadastrar">
-        <input type="reset" value="Limpar">
+            <input class="btn btn-large" type="reset" value="Limpar">
+            <input class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit" value="Cadastrar">
+        
     </form>
     <script type="text/javascript" src="publico/js/validarCampos.js"></script>
 
@@ -79,9 +81,7 @@ else:
         });
 
 
-        $(document).ready(function() {
-            
-        });
+        $(".line input").popover({trigger:'focus',container:'body'});
 
     </script>
 <?php

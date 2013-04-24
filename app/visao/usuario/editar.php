@@ -2,6 +2,7 @@
 <!--Início da página-->
 <script src = "publico/js/jquery.form.js"></script>
 <script src="publico/js/ajaxForms.js"></script> 
+
 <form class="table centered" id="ajaxForm" method="post" action="index.php?c=usuario&a=gerenciarconta">
     <fieldset>
         <legend>Dados</legend>
@@ -28,15 +29,17 @@
                 </div>-->
 
     </fieldset>
-    <input type="submit" disabled value="Atualizar dados">
+    <input class=" btn btn-primary btn-right" type="submit" disabled value="Atualizar dados">
+
 </form>
+
+
 <script type="text/javascript" src="publico/js/validarCampos.js"></script>
 
 
 <script>
     $(function() {
         $("#dataNascimento").datepick();
-        $('.datepick-popup').css('zIndex', 10000);
     });
 </script>
 

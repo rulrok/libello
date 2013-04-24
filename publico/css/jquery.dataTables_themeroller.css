@@ -51,10 +51,11 @@ table.dataTable tr.even td.sorting_3 { background-color: #F9F9FF; }
     *zoom: 1;
     padding: 20px;
     border-radius: 5px;
+    border: 1px solid #ccc;
     background-color: #FFF;
-    -webkit-box-shadow: 3px 3px 4px rgba(50, 50, 50, 0.13);
+/*    -webkit-box-shadow: 3px 3px 4px rgba(50, 50, 50, 0.13);
     -moz-box-shadow: 3px 3px 4px rgba(50, 50, 50, 0.13);
-    box-shadow: 3px 3px 4px rgba(50, 50, 50, 0.13);
+    box-shadow: 3px 3px 4px rgba(50, 50, 50, 0.13);*/
 }
 .dataTables_wrapper .ui-widget-header {
     font-weight: normal;

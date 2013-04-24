@@ -58,7 +58,7 @@ class usuarioDAO extends abstractDAO {
 
     public static function remover($login) {
         if ($login !== null) {
-            if (is_array($login)){
+            if (is_array($login)) {
                 $login = $login['login'];
             }
             $login = "'" . $login . "'";
@@ -73,7 +73,7 @@ class usuarioDAO extends abstractDAO {
     }
 
     /**
-     * Retorna o login do usuário com base em seu id no banco de dados. 
+     * Retorna o login do usuário COMO STRING com base em seu id no banco de dados. 
      * Retorna NULL caso não exista.
      */
     public static function descobrirLogin($id) {
@@ -82,7 +82,10 @@ class usuarioDAO extends abstractDAO {
             try {
                 $login = parent::getConexao()->query($sql)->fetch();
             } catch (Exception $e) {
-                $login =  null;
+                $login = null;
+            }
+            if (is_array($login)) {
+                $login = $login['login'];
             }
             return $login;
         }
@@ -130,21 +133,26 @@ class usuarioDAO extends abstractDAO {
      */
     public static function recuperarUsuario($login) {
 
-        if (is_array($login)){
+        if (is_array($login)) {
             $login = $login['login'];
         }
 
         $sql = "SELECT * from usuario WHERE login ='" . $login . "' AND ativo = 1";
         try {
-            $usuario = parent::getConexao()->query($sql)->fetchObject("Usuario");
+            $stmt = parent::getConexao()->query($sql);
+            $stmt->setFetchMode(\PDO::FETCH_CLASS, 'Usuario');
+            $usuario = $stmt->fetch();
+            if ($usuario == null){
+                $usuario = "Usuário não encontrado";
+            }
         } catch (Exception $e) {
             $usuario = NULL;
         }
         return $usuario;
     }
 
-    public static function obterPermissoes(Usuario $usuario) {
-        $sql = "SELECT f.idFerramenta,f.nome,tp.idPermissao,tp.tipo FROM ferramenta f, permissao tp, usuario_x_permissao_x_ferramenta p WHERE f.idFerramenta = p.idFerramenta AND tp.idPermissao = p.idPermissao AND idUsuario = " . $usuario->get_id() . " ORDER BY idFerramenta";
+    public static function obterPermissoes($idUsuario) {
+        $sql = "SELECT f.idFerramenta,f.nome,tp.idPermissao,tp.tipo FROM ferramenta f, permissao tp, usuario_x_permissao_x_ferramenta p WHERE f.idFerramenta = p.idFerramenta AND tp.idPermissao = p.idPermissao AND idUsuario = " . $idUsuario . " ORDER BY idFerramenta";
         $resultado = parent::getConexao()->query($sql)->fetchAll();
         return $resultado;
     }

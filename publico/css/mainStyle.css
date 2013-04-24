@@ -7,8 +7,11 @@
 }
 
 /* GERAL */
+
 * {
     font-family: 'open-sans-bold', sans-serif;
+}
+* a{
     color: #393939;
 }
 body{
@@ -38,27 +41,45 @@ html {
     height: 100%;
 
     opacity: 0;
-    z-index: 9999;
+    z-index: 8000;
 
     visibility: hidden;
 }
 
 /* Conteúdo que fica dentro do frame escuro acima /\ */
 .shaderFrameContent {
+    border-top: 23px solid rgb(21, 85, 146);
     border-radius: 5px;
-    background-color: #fff;
-    position: fixed;
-    left: 10%;
+    cursor: move;
+    position: absolute;
     top: 25%;
-    border: 1px solid #FFF;
-    padding: 5px;
-    width: 80%;
+    padding: 0;
+    margin: 0;
 
-    z-index: 9999;
+    z-index: 9000;
     opacity: 0;
     visibility: hidden;
 }
 
+.shaderFrameContentWrap{
+    cursor: auto;
+    background-color: #fff;
+    padding: 10px;
+    z-index: 10000;
+}
+
+.tabelaPermissoes{
+    border: 1px solid #000;
+    padding: 5px;
+}
+.tabelaPermissoes tr{
+    margin-bottom: 3px; 
+}
+.tabelaPermissoes td{
+    border: 0px;
+    border-bottom: 1px solid #000;
+    padding: 2px;
+}
 /* Conteúdos centralizados */
 .centered {
     position:relative;
@@ -74,55 +95,63 @@ html {
     font-weight: bold;
 }
 
-input:focus,select:focus{
+/*input:focus,select:focus{
     border: #ccc solid 2px;
     border-radius: 4px;
     outline: cornflowerblue solid 2px;
     outline-offset: -2px;
-}
+}*/
 
 input,select {
-    border-radius: 0px !important;
-    border: #ccc solid 2px;
-    height: 25px;
+    /*    border-radius: 0px !important;
+        border: #ccc solid 2px;*/
+    min-height: 25px;
+    padding: 2px;
 }
 
 td {
     font-size: 14px;
 }
 
-/* Estilo em botões de tabelas de consultas e edições*/
+/* Estilo em botões de tabelas de consultas e edições
 .botaoTabela{
     border: none !important;
+    background: none;
 }
 
-input[id^='btn'].botaoTabela:active{
-    left: 2px;
-    background-size: 16px 16px !important;
-    height: 22px!important;
-    width: 22px!important;
+.botaoTabela:active{
+    position:relative;
+    top: 2px;
+}
+.botaoTabela{
+    position:relative;
 }
 
-#btn_del_superior,#btn_del_inferior{
-    background: url("../images/icons/botoes/botao_excluir.png") no-repeat;
-    height: 22px;
+.iconExcluir{
+    background: url("../images/icons/botoes/botao_excluir.png") no-repeat 0;
+    position: relative;
+    top: 2px;
+    left: -3px;
+}
+
+.iconEditar {
+    background: url("../images/icons/botoes/botao_editar.png") no-repeat 0;
+    position: relative;
+    top: 2px;
+    left: -3px;
+}
+
+.iconAdicionar{
+    background: url("../images/icons/botoes/botao_adicionar.png") no-repeat 0;
     width: 22px;
-}
-
-#btn_edit_superior,#btn_edit_inferior {
-    background: url("../images/icons/botoes/botao_editar.png") no-repeat;
     height: 22px;
-    width: 22px;
-}
-
-#btn_novo_superior,#btn_novo_inferior{
-    background: url("../images/icons/botoes/botao_adicionar.png") no-repeat;
-    height: 22px;
-    width: 22px;
-}
+    position: relative;
+    top: 2px;
+    left: -3px;
+}*/
 
 /* Estilo em botões e botões de envio */
-input[type=submit], input[type=button],input[type=reset]{
+/*input[type=submit], input[type=button],input[type=reset]{
     background-color: #FBFBFB;
     border: 1px #CDF solid;
     border-radius: 3px !important;
@@ -133,10 +162,10 @@ input[type=submit], input[type=button],input[type=reset]{
     font-weight: bold;
     color: #333;
     min-height: 30px;
-}
+}*/
 
 /* Botões específicos */
-input[value~='Cadastrar']:enabled, .table input[value~='Atualizar'] {
+/*input[value~='Cadastrar']:enabled, .table input[value~='Atualizar'] {
     float: right;
     min-width: 100px;
     min-height: 30px;
@@ -145,7 +174,7 @@ input[value~='Cadastrar']:enabled, .table input[value~='Atualizar'] {
     -webkit-box-shadow: 1px 1px 1px #73f480;
     box-shadow: 1px 1px 1px #73f480;
 }
-/* Botões específicos */
+ Botões específicos 
 input[value~='Cadastrar']:disabled,input[value~='Atualizar']:disabled {
     min-width: 100px;
     min-height: 30px;
@@ -156,13 +185,13 @@ input[value~='Cadastrar']:disabled,input[value~='Atualizar']:disabled {
     -moz-box-shadow: 1px 1px 1px #fe8888;
     -webkit-box-shadow: 1px 1px 1px #fe8888;
     box-shadow: 1px 1px 1px #fe8888;
-}
+}*/
 
 /* Quando clicar em algum botão, ele 'desce' */
-input[type=button]:active,input[type=reset]:active,input[type=submit]:active{
+/*input[type=button]:active,input[type=reset]:active,input[type=submit]:active{
     position: relative;
     top: 2px;
-}
+}*/
 
 .campoObrigatorio{
 
@@ -269,13 +298,13 @@ body > nav {
     padding-bottom: 25px;
     margin-bottom: 5px;
 
-    border: none;
+    border: 1px solid #CCC;
     border-radius: 4px;
     background-color: #FFF;
 
-    -webkit-box-shadow: 3px 3px 4px rgba(50, 50, 50, 0.13);
-    -moz-box-shadow:    3px 3px 4px rgba(50, 50, 50, 0.13);
-    box-shadow:         3px 3px 4px rgba(50, 50, 50, 0.13);
+    /*    -webkit-box-shadow: 3px 3px 4px rgba(50, 50, 50, 0.13);
+        -moz-box-shadow:    3px 3px 4px rgba(50, 50, 50, 0.13);
+        box-shadow:         3px 3px 4px rgba(50, 50, 50, 0.13);*/
 }
 
 .content fieldset > fieldset{
@@ -364,6 +393,12 @@ footer p{
     vertical-align: top;
     display: inline-block;
     max-width: 400px;
+}
+
+.footerLinks ul {
+    padding-left: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px
 }
 
 .footerLinks ul lt{
@@ -469,7 +504,7 @@ header .userInfoWrap {
     padding: 20px;
 }
 header .userInfoWrap *{
-    font-size: 100%;
+    /*font-size: 100%;*/
     font-family: monospace;
     text-align: right;
 }
@@ -614,12 +649,13 @@ li[id$=Link]:before{
     opacity: 0.7;
     color: #000;
     z-index:2;
-    font-size: 80%;
+    font-size: 85%;
     font-family: 'open-sans-bold', sans-serif;
     font-weight: bold;
     position:relative;
     display: inline-block;
     padding: 10px;
+    padding-bottom: 5px;
     list-style-type: none;
     border-top: none;
     border-bottom: none;
@@ -663,7 +699,7 @@ li[id$=Link]:before{
 
 .menuLink {
     text-transform: uppercase;
-    font-size: 75% !important;
+    font-size: 85% !important;
 }
 
 .hiddenSubMenuLink{
@@ -699,7 +735,9 @@ li[id$=Link]:before{
     background: #fff;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
-
+    border: 1px solid #ccc;
+    border-top: none;
+    
     -webkit-box-shadow: 0px 0px 12px rgba(50, 50, 50, 0.1);
     -moz-box-shadow:    0px 0px 12px rgba(50, 50, 50, 0.1);
     box-shadow:         0px 0px 12px rgba(50, 50, 50, 0.1);
@@ -707,7 +745,7 @@ li[id$=Link]:before{
 
 .subMenu menu li{
     z-index:2;
-    font-size: 80%;
+    font-size: 90%;
     position:relative;
     display: inline-block;
     padding: 10px;
@@ -717,7 +755,7 @@ li[id$=Link]:before{
 /* Forms alinhados sem tabela */
 
 /* Campos de texto e senha de qualquer formulário */
-form input[type=text], form input[type=password] {
+/*form input[type=text], form input[type=password] {
     margin: 0.2em;
     padding-left: 5px;
     font-size: 14px;
@@ -729,7 +767,7 @@ form input[type=text], form input[type=password] {
     border-color: #DDD;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
-}
+}*/
 
 /* Exibe componente como tabela */
 .table {

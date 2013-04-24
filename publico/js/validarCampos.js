@@ -11,6 +11,9 @@ if (camposObrigatorios.length > 0) {
     $(".campoObrigatorio").on('change', function() {
         liberarCadastro()
     });
+    $('input').not(".campoObrigatorio").on('forminput', function() {
+        $("input[type=submit],input[value~='Atualizar']").attr('disabled', false);
+    });
 }
 
 function liberarCadastro() {
@@ -35,7 +38,7 @@ function liberarCadastro() {
                 patter = new RegExp(".*@.*");
                 break;
             case "senha":
-                patter = new RegExp(".{3,}");
+                patter = new RegExp("[^ ]{6,}");
                 if (senhaLida === "") {
                     senhaLida = campos[i].value;
                 } else {

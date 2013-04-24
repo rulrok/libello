@@ -33,6 +33,7 @@ class ControladorSistema extends Controlador {
         } else {
             if ($this->visao->mensagem_usuario == NULL || $this->visao->mensagem_usuario == "") {
                 $this->visao->mensagem_usuario = "Informações inválidas.";
+                $this->visao->tipo_mensagem = "erro";
             }
         }
 
@@ -75,24 +76,29 @@ class ControladorSistema extends Controlador {
                             $usuario->set_senha($this->visao->novaSenha);
                         } else {
                             $this->visao->mensagem_usuario = "Senhas não conferem.";
+                            $this->visao->tipo_mensagem = "erro";
                             $this->acaoGerenciarconta(true);
                         }
                     }
                     //Se não quer alterar a senha
                     if (UsuarioDAO::atualizar($_SESSION['login'], $usuario)) {
                         $this->visao->mensagem_usuario = "Alteração concluída com sucesso";
+                        $this->visao->tipo_mensagem = "sucesso";
                         header('refresh: 2; url=http://localhost/controle-cead/index.php');
                         $this->acaoGerenciarconta(false);
                     } else {
                         $this->visao->mensagem_usuario = "Erro ao inserir no banco de dados.";
+                        $this->visao->tipo_mensagem = "erro";
                         $this->acaoGerenciarconta(true);
                     }
                 } else {
                     $this->visao->mensagem_usuario = "Preencha todos os campos obrigatórios";
+                    $this->visao->tipo_mensagem = "erro";
                     $this->acaoGerenciarconta(true);
                 }
             } else {
                 $this->visao->mensagem_usuario = "Senha incorreta";
+                $this->visao->tipo_mensagem = "erro";
                 $this->acaoGerenciarconta(true);
             }
         }
