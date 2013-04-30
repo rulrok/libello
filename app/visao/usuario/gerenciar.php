@@ -1,7 +1,7 @@
 
 
 <?php
-$usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,login,dataNascimento,nome", "idUsuario <> " . $_SESSION['idUsuario']);
+$usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,dataNascimento,nome", "idUsuario <> " . $_SESSION['idUsuario']);
 ?>
 <div class="btn-toolbar">
     <div class="btn-group">
@@ -16,7 +16,6 @@ $usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,login
             <th hidden>id</th>
             <th>Nome completo</th>
             <th>Email</th>
-            <th>Login</th>
             <th>Data de nascimento</th>
             <th>Papel</th>
             <th>Permissões</th>

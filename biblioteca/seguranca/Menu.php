@@ -161,11 +161,9 @@ class Menu {
 
     public static function montarCaixaSelecaoPermissoes($required = null,$class = null, $name = null){
         if ($required === true){
-            if ($class !== null){
-                $class .= " campoObrigatorio";
-            } else {
-                $class = "campoObrigatorio";
-            }
+            if ($class == null){
+                $class = "";
+            } 
         }
         $codigo = "<select ".($required === true ? "required ":" ").($class !== null ? "class=\"".$class."\"" : " ").($name !== null ? "name =\"".$name."\"" : " ").">";
         $codigo .= "\n<option value=\"default\"> -- Selecione uma opção -- </option>";

@@ -58,7 +58,7 @@ class Mvc {
 
     public function rodar() {
         $usuario = new Usuario();
-        $usuario->set_login($_SESSION['login']);
+        $usuario->set_email($_SESSION['email']);
         $usuario->set_senha($_SESSION['senha']);
         BIBLIOTECA_DIR.'seguranca/seguranca.php'.  autenticaUsuario($usuario);
         

@@ -9,7 +9,7 @@ class ControladorUsuario extends Controlador {
         if ($erro == false) {
             $this->visao->nome = "";
             $this->visao->sobrenome = "";
-            $this->visao->login = "";
+//            $this->visao->login = "";
             $this->visao->senha = "";
             $this->visao->confsenha = "";
             $this->visao->papel = "";
@@ -27,7 +27,7 @@ class ControladorUsuario extends Controlador {
             $_SERVER['REQUEST_METHOD'] = null;
             $this->visao->nome = $_POST['nome'];
             $this->visao->sobrenome = $_POST['sobrenome'];
-            $this->visao->login = $_POST['login'];
+//            $this->visao->login = $_POST['login'];
             $this->visao->senha = md5($_POST['senha']);
             $this->visao->confsenha = md5($_POST['confsenha']);
             $this->visao->papel = $_POST['papel'];
@@ -37,17 +37,17 @@ class ControladorUsuario extends Controlador {
             $usuario = new Usuario();
             $usuario->set_PNome($this->visao->nome);
             $usuario->set_UNome($this->visao->sobrenome);
-            $usuario->set_login($this->visao->login);
+//            $usuario->set_login($this->visao->login);
             $usuario->set_senha($this->visao->senha);
             $usuario->set_papel($this->visao->papel);
             $usuario->set_email($this->visao->email);
             $usuario->set_dataNascimento($this->visao->dataNascimento);
 
             if ($usuario->validarCampos()) :
-                if (count(usuarioDAO::consultar("login", "login = '" . $this->visao->login . "'")) > 0):
-                    $this->visao->mensagem_usuario = "Login " . $this->visao->login . " já existe!";
+                if (count(usuarioDAO::consultar("email", "email = '" . $this->visao->email . "'")) > 0):
+                    $this->visao->mensagem_usuario = "Email " . $this->visao->email . " está indisponível!";
                     $this->visao->tipo_mensagem = 'erro';
-                    $this->visao->login = "";
+//                    $this->visao->login = "";
                     $this->acaoNovo(true);
                 elseif (usuarioDAO::inserir($usuario)):
                     $permissoes = new PermissoesFerramenta();
@@ -62,7 +62,7 @@ class ControladorUsuario extends Controlador {
                     $this->visao->tipo_mensagem = 'sucesso';
                     $this->visao->nome = "";
                     $this->visao->sobrenome = "";
-                    $this->visao->login = "";
+//                    $this->visao->login = "";
                     $this->visao->senha = "";
                     $this->visao->confsenha = "";
                     $this->visao->papel = "";

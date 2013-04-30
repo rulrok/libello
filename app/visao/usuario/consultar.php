@@ -1,7 +1,7 @@
 
 
 <?php
-$usuarios = usuarioDAO::consultar("idUsuario, concat(PNome,' ',UNome),email,login,dataNascimento,nome");
+$usuarios = usuarioDAO::consultar("idUsuario, concat(PNome,' ',UNome),email,dataNascimento,nome");
 ?>
 <table id="consulta_usuario" class="tabelaDeSelecao">
     <thead>
@@ -9,7 +9,6 @@ $usuarios = usuarioDAO::consultar("idUsuario, concat(PNome,' ',UNome),email,logi
             <th hidden>id</th>
             <th>Nome completo</th>
             <th>Email</th>
-            <th>Login</th>
             <th>Data de nascimento</th>
             <th>Papel</th>
             <th>Permissões</th>
@@ -42,7 +41,11 @@ $usuarios = usuarioDAO::consultar("idUsuario, concat(PNome,' ',UNome),email,logi
 
         $(".visualizarPermissoes").on('click', function() {
             var id = $("tr.row_selected>.campoID").html();
-            ajax("index.php?c=usuario&a=consultarpermissoes&userID=" + id, ".shaderFrameContentWrap");
+            $("#myModal").modal({
+                remote: "index.php?c=usuario&a=consultarpermissoes&userID=" + id
+            });
+
+//            ajax("index.php?c=usuario&a=consultarpermissoes&userID=" + id, "#myModal");
         });
         oTable.$('tr').mousedown(function() {
             if ($(this).hasClass('row_selected')) {

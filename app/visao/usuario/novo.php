@@ -22,38 +22,38 @@ else:
             <p class="centered centeredText boldedText">Campos com <img src="publico/images/icons/campo_obrigatorio.png"> são obrigatórios</label>
             <div class="line">
                 <label>Nome</label>
-                <input required type="text" id="nome" class="campoObrigatorio" placeholder="Primeiro nome apenas" name="nome" value="<? echo $this->nome ?>"  data-content="Apenas letras.">
+                <input required type="text" id="nome" class="input-xlarge" placeholder="Primeiro nome apenas" name="nome" value="<? echo $this->nome ?>"  data-content="Apenas letras.">
             </div>
             <div class="line">
                 <label>Sobrenome</label>
-                <input required type="text" id="sobrenome" class="campoObrigatorio" placeholder="Demais nomes" name="sobrenome" value="<? echo $this->sobrenome ?>"  data-content="Apenas letras e espaços.">
+                <input required type="text" id="sobrenome" class="input-xlarge" placeholder="Demais nomes" name="sobrenome" value="<? echo $this->sobrenome ?>"  data-content="Apenas letras e espaços.">
             </div>
             <div class="line">
                 <label>E-mail</label>
-                <input required type="text" id="email" class="campoObrigatorio" placeholder="email@dominio.com" name="email" value="<? echo $this->email ?>">
+                <input required type="text" id="email" class="input-large" placeholder="email@dominio.com" name="email" value="<? echo $this->email ?>" data-content="O email será usado como login.">
             </div>
             <div class="line">
                 <label>Data de nascimento</label>
-                <input type="text" readonly id="dataNascimento" class="campoData" placeholder="Clique para escolher" name="dataNascimento" value="<? echo $this->dataNascimento ?>">
+                <input type="text" readonly id="dataNascimento" class=" input-large campoData" placeholder="Clique para escolher" name="dataNascimento" value="<? echo $this->dataNascimento ?>">
             </div>
-            <div class="line">
+<!--            <div class="line">
                 <label>Login</label>
-                <input required type="text" class="campoObrigatorio" name="login" value="<? echo $this->login ?>"  data-content="Apenas letras minúsculas. Mínimo de três caracteres.">
-            </div>
+                <input required type="text"  name="login" class="input-large" value="<? echo $this->login ?>"  data-content="Apenas letras minúsculas. Mínimo de três caracteres.">
+            </div>-->
 
             <div class="line">
                 <label>Senha</label>
-                <input required type="password" class="campoObrigatorio" name="senha"  data-content="Quaisquer caracteres exceto 'espaço'.Mínimo de seis caracteres.">
+                <input required type="password"  name="senha" class="input-large" data-content="Quaisquer caracteres exceto 'espaço'.Mínimo de seis caracteres.">
             </div>
 
             <div class="line">
                 <label>Confirmar Senha</label>
-                <input required type="password" class="campoObrigatorio" name="confsenha" >
+                <input required type="password" class="input-large" name="confsenha" >
             </div>
 
             <div class="line">
                 <label>Papel</label>
-                <select name="papel" class="campoObrigatorio">
+                <select required name="papel" class="input-large">
                     <option value="default" selected="selected"> -- Selecione uma opção --</option>
                     <option value="0">Administrador </option>
                     <option value="1">Gestor </option>

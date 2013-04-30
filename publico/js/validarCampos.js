@@ -1,5 +1,5 @@
 
-var camposObrigatorios = $(".campoObrigatorio");
+var camposObrigatorios = $("input[required],select[required]");
 if (camposObrigatorios.length > 0) {
 //document.head.children[document.head.children.length] = "<script src=\"publico/js/validarCampos.js\"></script>";
     //$("head").append("<script src=\"publico/js/validarCampos.js\"></script>");
@@ -8,10 +8,10 @@ if (camposObrigatorios.length > 0) {
         //$(camposObrigatorios[i]).on('blur',liberarCadastro());
         //$(camposObrigatorios[i]).append(liberarCadastro());
     }
-    $(".campoObrigatorio").on('change', function() {
+    $("input[required],select[required]").on('change', function() {
         liberarCadastro()
     });
-    $('input').not(".campoObrigatorio").on('change', function() {
+    $('input').not("input[required],select[required]").on('change', function() {
         $("input[type=submit],input[value~='Atualizar']").attr('disabled', false);
     });
 
@@ -21,10 +21,11 @@ if (camposObrigatorios.length > 0) {
 }
 
 function liberarCadastro() {
-    var campos = $(".campoObrigatorio");
-    var patter;
+    var campos = $("input[required],select[required]");
+    var patter = null;
     var senhaLida = "";
     var tudoCerto = true;
+    var todosEmBranco = true;
 
     for (var i = 0; i < campos.length; i++) {
 
@@ -80,6 +81,10 @@ function liberarCadastro() {
         }
 
         //window.alert("Vai testar: " + campos[i].value+"\nPattern: "+patter);
+        if (campos[i].value != ""){
+            todosEmBranco = false;
+        }
+        
         if (!patter.test(campos[i].value)) {
             tudoCerto = false;
             $(campos[i]).addClass("campoErrado");
@@ -88,6 +93,10 @@ function liberarCadastro() {
             $(campos[i]).removeClass("campoErrado");
             //window.alert("Campo correto: "+campos[i].value );
         }
+    }
+    
+    if (todosEmBranco){
+        $(".campoErrado").removeClass("campoErrado");
     }
     if (tudoCerto) {
         $("input[type=submit],input[value~='Atualizar']").attr('disabled', false);

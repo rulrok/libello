@@ -25,7 +25,7 @@
                 <form class="table centered" name="identificacao" action="./biblioteca/seguranca/seguranca.php" method="post">
                     <fieldset>
                         <div class="line">
-                            <label>Usuário</label>
+                            <label>Email</label>
                             <input type="text" name="login">
                         </div>
                         <div class="line">

@@ -24,7 +24,7 @@ class ControladorSistema extends Controlador {
             $this->visao->nome = $_SESSION['nome'];
             $this->visao->sobrenome = $_SESSION['sobrenome'];
             $this->visao->email = $_SESSION['email'];
-            $this->visao->login = $_SESSION['login'];
+//            $this->visao->login = $_SESSION['login'];
             $this->visao->dataNascimento = $_SESSION['dataNascimento'];
 
             
@@ -47,15 +47,15 @@ class ControladorSistema extends Controlador {
             $_SERVER['REQUEST_METHOD'] = null;
             $this->visao->nome = $_POST['nome'];
             $this->visao->sobrenome = $_POST['sobrenome'];
-            $this->visao->email = $_POST['email'];
-            $this->visao->login = $_SESSION['login'];
+            $this->visao->email = $_SESSION['email'];
+//            $this->visao->login = $_SESSION['login'];
             $this->visao->novaSenha = $_POST['senha'] == "" ? "" : md5($_POST['senha']);
             $this->visao->confSenha = $_POST['confSenha'] == "" ? "" : md5($_POST['confSenha']);
             $this->visao->senha = md5($_POST['senhaAtual']);
             $this->visao->dataNascimento = $_POST['dataNascimento'];
 
-            $usuario = usuarioDAO::recuperarUsuario($_SESSION['login']);
-            $this->visao->papel = usuarioDao::consultarPapel($_SESSION['login']);
+            $usuario = usuarioDAO::recuperarUsuario($_SESSION['email']);
+            $this->visao->papel = usuarioDao::consultarPapel($_SESSION['email']);
 
             if ($usuario->get_senha() == $this->visao->senha) {
 
@@ -81,7 +81,7 @@ class ControladorSistema extends Controlador {
                         }
                     }
                     //Se não quer alterar a senha
-                    if (UsuarioDAO::atualizar($_SESSION['login'], $usuario)) {
+                    if (UsuarioDAO::atualizar($_SESSION['email'], $usuario)) {
                         $_SESSION['senha'] = $usuario->get_senha();
                         $this->visao->mensagem_usuario = "Alteração concluída com sucesso";
                         $this->visao->tipo_mensagem = "sucesso";

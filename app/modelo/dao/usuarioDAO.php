@@ -10,23 +10,22 @@ class usuarioDAO extends abstractDAO {
 
     /**
      * Atualiza informações de um usuário.
-     * @param type $login Usado para localizar o usuário no banco de dados.
+     * @param type $email Usado para localizar o usuário no banco de dados.
      * @param Usuario $usuario Objecto VO com as novas informações.
      * @return boolean
      */
-    public static function atualizar($login, Usuario $usuario) {
+    public static function atualizar($email, Usuario $usuario) {
 
-        $condicao = " WHERE login = '" . $login . "' AND ativo = 1";
+        $condicao = " WHERE email = '" . $email . "' AND ativo = 1";
 
         $nome = $usuario->get_PNome();
         $sobrenome = $usuario->get_UNome();
-        $login = $usuario->get_login();
         $papel = (int) $usuario->get_papel();
         $senha = $usuario->get_senha();
         $email = $usuario->get_email();
         $dataNascimento = $usuario->get_dataNascimento();
 
-        $sql = "UPDATE usuario SET idPapel = " . $papel . ", login = '" . $login . "', senha = '" . $senha . "', PNome='" . $nome . "', UNome = '" . $sobrenome . "', email ='" . $email . "', dataNascimento = '" . $dataNascimento . "'";
+        $sql = "UPDATE usuario SET idPapel = " . $papel . ", senha = '" . $senha . "', PNome='" . $nome . "', UNome = '" . $sobrenome . "', email ='" . $email . "', dataNascimento = '" . $dataNascimento . "'";
         $sql .= $condicao;
         try {
             parent::getConexao()->query($sql);
@@ -121,23 +120,23 @@ class usuarioDAO extends abstractDAO {
      * @param $usuario Login do usuário.
      * @return type
      */
-    public static function consultarPapel($login) {
-        $sql = "SELECT p.nome FROM papel p NATURAL JOIN usuario u WHERE u.login = \"" . $login . "\"";
+    public static function consultarPapel($email) {
+        $sql = "SELECT p.nome FROM papel p NATURAL JOIN usuario u WHERE u.email = \"" . $email . "\"";
         $resultado = parent::getConexao()->query($sql)->fetch();
         return $resultado[0];
     }
 
     /**
      * Retorna um objeto VO Usuário se o usuário existe E está ativo, ou então retorna NULL.
-     * @param type $login Login do usuário
+     * @param type $email Login do usuário
      */
-    public static function recuperarUsuario($login) {
+    public static function recuperarUsuario($email) {
 
-        if (is_array($login)) {
-            $login = $login['login'];
+        if (is_array($email)) {
+            $email = $email['email'];
         }
 
-        $sql = "SELECT * from usuario WHERE login ='" . $login . "' AND ativo = 1";
+        $sql = "SELECT * from usuario WHERE email ='" . $email . "' AND ativo = 1";
         try {
             $stmt = parent::getConexao()->query($sql);
             $stmt->setFetchMode(\PDO::FETCH_CLASS, 'Usuario');

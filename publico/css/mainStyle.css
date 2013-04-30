@@ -820,13 +820,12 @@ li[id$=Link]:before{
 select{
     background-color: #FFF;
     border-width: 1px;
-    border-radius: 3px;
+    /*border-radius: 3px;*/
     border-color: #DDD;
     min-width:100px;
     min-height: 25px;
     color: #000;
     width: auto;
-    height: auto;
 }
 
 select:disabled{
