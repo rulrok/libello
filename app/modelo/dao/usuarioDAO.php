@@ -3,7 +3,7 @@
 require_once 'abstractDAO.php';
 require_once __DIR__ . '/../vo/Usuario.php';
 require_once __DIR__ . '/../vo/PermissoesFerramenta.php';
-require_once BIBLIOTECA_DIR . 'seguranca/Ferramenta.php';
+require_once __DIR__ . '/../Ferramenta.php';
 require_once BIBLIOTECA_DIR . 'seguranca/Permissao.php';
 
 class usuarioDAO extends abstractDAO {
@@ -55,13 +55,13 @@ class usuarioDAO extends abstractDAO {
         return $resultado;
     }
 
-    public static function remover($login) {
-        if ($login !== null) {
-            if (is_array($login)) {
-                $login = $login['login'];
+    public static function remover($email) {
+        if ($email !== null) {
+            if (is_array($email)) {
+                $email = $email['email'];
             }
-            $login = "'" . $login . "'";
-            $sql = "UPDATE usuario SET ativo = 0 WHERE login = " . $login;
+            $email = "'" . $email . "'";
+            $sql = "UPDATE usuario SET ativo = 0 WHERE email = " . $email;
             try {
                 parent::getConexao()->query($sql);
                 return true;
@@ -72,21 +72,21 @@ class usuarioDAO extends abstractDAO {
     }
 
     /**
-     * Retorna o login do usuário COMO STRING com base em seu id no banco de dados. 
+     * Retorna o email do usuário COMO STRING com base em seu id no banco de dados. 
      * Retorna NULL caso não exista.
      */
-    public static function descobrirLogin($id) {
+    public static function descobrirEmail($id) {
         if ($id != null) {
-            $sql = "SELECT login FROM usuario WHERE idUsuario = " . $id;
+            $sql = "SELECT email FROM usuario WHERE idUsuario = " . $id;
             try {
-                $login = parent::getConexao()->query($sql)->fetch();
+                $email = parent::getConexao()->query($sql)->fetch();
             } catch (Exception $e) {
-                $login = null;
+                $email = null;
             }
-            if (is_array($login)) {
-                $login = $login['login'];
+            if (is_array($email)) {
+                $email = $email['email'];
             }
-            return $login;
+            return $email;
         }
     }
 
@@ -97,15 +97,15 @@ class usuarioDAO extends abstractDAO {
      */
     public static function inserir(Usuario $valueObject) {
         $s = "','";
-        $login = $valueObject->get_login();
+//        $login = $valueObject->get_login();
         $senha = $valueObject->get_senha();
         $PNome = $valueObject->get_PNome();
         $UNome = $valueObject->get_UNome();
         $email = $valueObject->get_email();
         $nasc = $valueObject->get_dataNascimento();
         $idPapel = $valueObject->get_papel() + 1;
-        $sql = "INSERT INTO usuario(idPapel,login,senha,PNome, UNome, email, dataNascimento)";
-        $sql .= " VALUES (" . $idPapel . ",'" . $login . $s . $senha . $s . $PNome . $s . $UNome . $s . $email . $s . $nasc . "')";
+        $sql = "INSERT INTO usuario(idPapel,senha,PNome, UNome, email, dataNascimento)";
+        $sql .= " VALUES (" . $idPapel . ",'" . $senha . $s . $PNome . $s . $UNome . $s . $email . $s . $nasc . "')";
         //    echo $sql;
         try {
             parent::getConexao()->query($sql);
@@ -117,7 +117,7 @@ class usuarioDAO extends abstractDAO {
 
     /**
      * Retorna uma string contendo o nome do papel do usuário, e.g, 'Administrador', 'Professor', etc.
-     * @param $usuario Login do usuário.
+     * @param $usuario Email do usuário.
      * @return type
      */
     public static function consultarPapel($email) {
@@ -128,7 +128,7 @@ class usuarioDAO extends abstractDAO {
 
     /**
      * Retorna um objeto VO Usuário se o usuário existe E está ativo, ou então retorna NULL.
-     * @param type $email Login do usuário
+     * @param type $email Email do usuário
      */
     public static function recuperarUsuario($email) {
 
@@ -141,7 +141,7 @@ class usuarioDAO extends abstractDAO {
             $stmt = parent::getConexao()->query($sql);
             $stmt->setFetchMode(\PDO::FETCH_CLASS, 'Usuario');
             $usuario = $stmt->fetch();
-            if ($usuario == null){
+            if ($usuario == null) {
                 $usuario = "Usuário não encontrado";
             }
         } catch (Exception $e) {
@@ -190,8 +190,8 @@ class usuarioDAO extends abstractDAO {
      * @param PermissoesFerramenta $permissoes
      */
     public static function cadastrarPermissoes(Usuario $usuario, PermissoesFerramenta $permissoes) {
-        if ($usuario->get_login() != null) {
-            $consulta = self::consultar("idUsuario", "login = \"" . $usuario->get_login() . "\"");
+        if ($usuario->get_email() != null) {
+            $consulta = self::consultar("idUsuario", "email = \"" . $usuario->get_email() . "\"");
             $values = array();
             if (sizeof($consulta) == 1) {
                 for ($i = 0; $i < Ferramenta::__length; $i++) {

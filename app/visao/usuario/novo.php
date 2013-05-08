@@ -53,14 +53,15 @@ else:
 
             <div class="line">
                 <label>Papel</label>
-                <select required name="papel" class="input-large">
+<!--                <select required name="papel" class="input-large">
                     <option value="default" selected="selected"> -- Selecione uma opção --</option>
                     <option value="0">Administrador </option>
                     <option value="1">Gestor </option>
                     <option value="2">Professor </option>
                     <option value="3">Coordenador </option>
                     <option value="4">Estudante </option>
-                </select>
+                </select>-->
+                <?php echo $this->comboPapeis ?>
             </div>
             <br/>
             <fieldset>

@@ -3,7 +3,8 @@
 include_once ROOT . 'app/modelo/vo/Usuario.php';
 include_once ROOT . 'app/modelo/dao/usuarioDAO.php';
 require_once 'Ferramenta.php';
-require_once 'Permissao.php';
+require_once BIBLIOTECA_DIR. 'seguranca/Permissao.php';
+require_once 'Papel.php';
 
 class Menu {
 
@@ -159,13 +160,13 @@ class Menu {
         return $menuCode . $subMenuCode;
     }
 
-    public static function montarCaixaSelecaoPermissoes($required = null,$class = null, $name = null){
-        if ($required === true){
-            if ($class == null){
+    public static function montarCaixaSelecaoPermissoes($required = null, $class = null, $name = null) {
+        if ($required === true) {
+            if ($class == null) {
                 $class = "";
-            } 
+            }
         }
-        $codigo = "<select ".($required === true ? "required ":" ").($class !== null ? "class=\"".$class."\"" : " ").($name !== null ? "name =\"".$name."\"" : " ").">";
+        $codigo = "<select " . ($required === true ? "required " : " ") . ($class !== null ? "class=\"" . $class . "\"" : " ") . ($name !== null ? "name =\"" . $name . "\"" : " ") . ">";
         $codigo .= "\n<option value=\"default\"> -- Selecione uma opção -- </option>";
         $codigo .= "\n<option value=\"1\">Sem acesso</option>";
         $codigo .= "\n<option value=\"2\">Consulta</option>";
@@ -175,6 +176,28 @@ class Menu {
         $codigo .= "</select>";
         return $codigo;
     }
+
+    public static function montarCaixaSelecaoPapeis($required = false, $class = null, $name = null) {
+        $codigo = "<select ";
+        if ($required) {
+            $codigo .= "required ";
+        }
+        if ($class != null) {
+            $codigo .= " class = \"" . $class . "\" ";
+        }
+        if ($name != null) {
+            $codigo .= " name = \"" . $name . "\"";
+        }
+        $codigo .= ">\n";
+
+        $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
+        for ($i = 1; $i <= Papel::__length; $i++) {
+            $codigo .= "<option value=\"$i\">" . papelDAO::obterNomePapel($i) . "</option>\n";
+        }
+        $codigo .= "</select>\n";
+        return $codigo;
+    }
+
 }
 ?>
 

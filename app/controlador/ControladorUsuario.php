@@ -2,6 +2,7 @@
 
 include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
 include_once ROOT . 'app/modelo/ComboBoxPermissoes.php';
+include_once ROOT . 'app/modelo/ComboBoxPapeis.php';
 
 class ControladorUsuario extends Controlador {
 
@@ -17,6 +18,7 @@ class ControladorUsuario extends Controlador {
             $this->visao->dataNascimento = "";
         }
         $this->visao->comboPermissoes = ComboBoxPermissoes::montarComboBoxPadrao();
+        $this->visao->comboPapeis = ComboBoxPapeis::montarComboBoxPadrao();
         $this->renderizar();
     }
 
@@ -51,12 +53,12 @@ class ControladorUsuario extends Controlador {
                     $this->acaoNovo(true);
                 elseif (usuarioDAO::inserir($usuario)):
                     $permissoes = new PermissoesFerramenta();
-                    $permissoes->set_controleCursos($_POST['permissoescontrole_de_cursos_e_polos']);
-                    $permissoes->set_controleDocumentos($_POST['permissoescontrole_de_documentos']);
-                    $permissoes->set_controleEquipamentos($_POST['permissoescontrole_de_equipamentos']);
-                    $permissoes->set_controleLivros($_POST['permissoescontrole_de_livros']);
-                    $permissoes->set_controleUsuarios($_POST['permissoescontrole_de_usuarios']);
-                    $permissoes->set_controleViagens($_POST['permissoescontrole_de_viagens']);
+                    $permissoes->set_controleCursos($_POST['permissoes_controle_de_cursos_e_polos']);
+                    $permissoes->set_controleDocumentos($_POST['permissoes_controle_de_documentos']);
+                    $permissoes->set_controleEquipamentos($_POST['permissoes_controle_de_equipamentos']);
+                    $permissoes->set_controleLivros($_POST['permissoes_controle_de_livros']);
+                    $permissoes->set_controleUsuarios($_POST['permissoes_controle_de_usuarios']);
+                    $permissoes->set_controleViagens($_POST['permissoes_controle_de_viagens']);
                     usuarioDAO::cadastrarPermissoes($usuario, $permissoes);
                     $this->visao->mensagem_usuario = "Cadastro realizado com sucesso";
                     $this->visao->tipo_mensagem = 'sucesso';
@@ -86,13 +88,18 @@ class ControladorUsuario extends Controlador {
 
     public function acaoEditar() {
         if (isset($_GET['userID'])) {
+            $this->visao->comboPermissoes = ComboBoxPermissoes::montarComboBoxPadrao();
             $userID = $_GET['userID'];
-            $login = usuarioDAO::descobrirLogin($userID);
-            $usuario = usuarioDAO::recuperarUsuario($login);
+            $email = usuarioDAO::descobrirEmail($userID);
+            $usuario = usuarioDAO::recuperarUsuario($email);
             $this->visao->nome = $usuario->get_PNome();
             $this->visao->sobrenome = $usuario->get_UNome();
             $this->visao->email = $usuario->get_email();
             $this->visao->dataNascimento = $usuario->get_dataNascimento();
+            $this->visao->papel = usuarioDAO::consultarPapel($email);
+            $this->visao->idPapel = (int) papelDAO::obterIdPapel($this->visao->papel);
+            $this->visao->comboPapel = ComboBoxPapeis::montarComboBoxPadrao();  
+            $this->visao->permissoes = usuarioDAO::obterPermissoes($_GET['userID']);
 
             $this->renderizar();
         }

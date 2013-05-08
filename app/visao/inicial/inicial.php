@@ -31,7 +31,7 @@
                     <img class="logo" src="publico/images/cead.png" usemap="#logoMap"></img>
                 </figure>
                 <div class="headerWrap">
-                    <h1>Bem vindo ao controle CEAD <sup>(beta)</sup></h1>
+                    <h1>Controle CEAD <sup>(versão alpha)</sup></h1>
 
                 </div>
                 <div class="userInfoWrap">

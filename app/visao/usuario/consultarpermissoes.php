@@ -2,14 +2,15 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 
     <?php
-    $login = usuarioDAO::descobrirLogin($_GET['userID']);
-    if ($login != NULL) {
-        $usuario = usuarioDAO::recuperarUsuario($login);
+    $email = usuarioDAO::descobrirEmail($_GET['userID']);
+    if ($email != NULL) {
+        $usuario = usuarioDAO::recuperarUsuario($email);
         echo "<h3 id=\"myModalLabel\">Usuário: " . $usuario->get_PNome() . " " . $usuario->get_UNome() . "</h3>";
         if ($usuario instanceof Usuario) :
             $resultado = usuarioDAO::obterPermissoes($_GET['userID']);
             ?>
-        </div><div class="modal-body">
+        </div>
+        <div class="modal-body">
 
 
             <table class="tabelaPermissoes centered">
@@ -26,7 +27,9 @@
                 ?>
             </table>
         </div>
-
+        <div class="modal-footer">
+            <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
         <?php
     else:
         echo "Usuário foi removido do banco de dados.";

@@ -3,11 +3,12 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 require_once ROOT.'biblioteca/Configurations.php';
-if (file_exists(ROOT . 'biblioteca/seguranca/seguranca.php')) {
-    require ROOT . 'biblioteca/seguranca/seguranca.php';
-} else {
-    exit;
-}
+//if (file_exists(ROOT . 'biblioteca/seguranca/seguranca.php')) {
+//    require ROOT . 'biblioteca/seguranca/seguranca.php';
+//} else {
+//    exit;
+//}
+require_once BIBLIOTECA_DIR.'seguranca/seguranca.php';
 
 class Mvc {
 

@@ -98,10 +98,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_SESSION['autenticado'] === FALSE) 
     iniciarSessao();
     $_SERVER['REQUEST_METHOD'] = NULL;
 
-    $login = (isset($_POST['login'])) ? $_POST['login'] : '';
+    $email = (isset($_POST['login'])) ? $_POST['login'] : '';
     $senha = (isset($_POST['senha'])) ? md5($_POST['senha']) : '';
     $usuario = new Usuario();
-    $usuario->set_email($login);
+    $usuario->set_email($email);
     $usuario->set_senha($senha);
 
     if (autenticaUsuario($usuario)) {

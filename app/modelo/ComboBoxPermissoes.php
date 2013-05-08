@@ -1,7 +1,7 @@
 <?php
 require BIBLIOTECA_DIR."Configurations.php";
-require_once BIBLIOTECA_DIR . "seguranca/Menu.php";
-require_once BIBLIOTECA_DIR . "seguranca/Ferramenta.php";
+require_once "Menu.php";
+require_once "Ferramenta.php";
 
 class ComboBoxPermissoes {
 
@@ -12,7 +12,7 @@ class ComboBoxPermissoes {
             $code .= "<span class=\"line\">\n";
             $nomeFerramenta = Ferramenta::get_nome_ferramenta($i);
             $code .= "<label>" . $nomeFerramenta . "</label>\n";
-            $code .= Menu::montarCaixaSelecaoPermissoes(true, null, "permissoes" . trim(strtolower($nomeFerramenta)));
+            $code .= Menu::montarCaixaSelecaoPermissoes(true, null, "permissoes " . trim(strtolower($nomeFerramenta)));
             $code .= "\n</span>\n";
         }
         

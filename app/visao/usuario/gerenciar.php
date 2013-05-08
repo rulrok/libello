@@ -98,9 +98,7 @@ $usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,dataN
 
         $(".visualizarPermissoes").on('click', function() {
             var id = $("tr.row_selected>.campoID").html();
-            $("#myModal").modal({
-                remote: "index.php?c=usuario&a=consultarpermissoes&userID=" + id
-            });
+            $("#myModal").load("index.php?c=usuario&a=consultarpermissoes&userID=" + id).modal();
 
 //            ajax("index.php?c=usuario&a=consultarpermissoes&userID=" + id, "#myModal");
         });
