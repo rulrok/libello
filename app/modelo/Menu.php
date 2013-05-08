@@ -120,6 +120,8 @@ class Menu {
                             case Permissao::ESCRITA:
                                 $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=documentos&a=gerarOficio')\">" . "\n";
                                 $subMenuCode .= "<li>Gerar ofício</li></a>" . "\n";
+                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=documentos&a=gerarMemorando')\">" . "\n";
+                                $subMenuCode .= "<li>Gerar memorando</li></a>" . "\n";
                                 $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=documentos&a=gerarRelatorio')\">" . "\n";
                                 $subMenuCode .= "<li>Gerar relatório</li></a>" . "\n";
                             case Permissao::CONSULTA:
