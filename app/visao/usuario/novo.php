@@ -22,23 +22,23 @@ else:
             <p class="centered centeredText boldedText">Campos com <img src="publico/images/icons/campo_obrigatorio.png"> são obrigatórios</label>
             <div class="line">
                 <label>Nome</label>
-                <input required type="text" id="nome" class="input-xlarge" placeholder="Primeiro nome apenas" name="nome" value="<? echo $this->nome ?>"  data-content="Apenas letras.">
+                <input required type="text" id="nome" class="input-xlarge" placeholder="Primeiro nome apenas" name="nome" value="<?php echo $this->nome ?>"  data-content="Apenas letras.">
             </div>
             <div class="line">
                 <label>Sobrenome</label>
-                <input required type="text" id="sobrenome" class="input-xlarge" placeholder="Demais nomes" name="sobrenome" value="<? echo $this->sobrenome ?>"  data-content="Apenas letras e espaços.">
+                <input required type="text" id="sobrenome" class="input-xlarge" placeholder="Demais nomes" name="sobrenome" value="<?php echo $this->sobrenome ?>"  data-content="Apenas letras e espaços.">
             </div>
             <div class="line">
                 <label>E-mail</label>
-                <input required type="text" id="email" class="input-large" placeholder="email@dominio.com" name="email" value="<? echo $this->email ?>" data-content="O email será usado como login.">
+                <input required type="text" id="email" class="input-large" placeholder="email@dominio.com" name="email" value="<?php echo $this->email ?>" data-content="O email será usado como login.">
             </div>
             <div class="line">
                 <label>Data de nascimento</label>
-                <input type="text" readonly id="dataNascimento" class=" input-large campoData" placeholder="Clique para escolher" name="dataNascimento" value="<? echo $this->dataNascimento ?>">
+                <input type="text" readonly id="dataNascimento" class=" input-large campoData" placeholder="Clique para escolher" name="dataNascimento" value="<?php echo $this->dataNascimento ?>">
             </div>
 <!--            <div class="line">
                 <label>Login</label>
-                <input required type="text"  name="login" class="input-large" value="<? echo $this->login ?>"  data-content="Apenas letras minúsculas. Mínimo de três caracteres.">
+                <input required type="text"  name="login" class="input-large" value="<?php echo $this->login ?>"  data-content="Apenas letras minúsculas. Mínimo de três caracteres.">
             </div>-->
 
             <div class="line">

@@ -15,7 +15,7 @@ $usuarios = usuarioDAO::consultar("idUsuario, concat(PNome,' ',UNome),email,data
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($usuarios as $value) {
             echo '<tr>';
             for ($i = 0; $i < sizeof($value) / 2; $i++) {
@@ -52,8 +52,8 @@ $usuarios = usuarioDAO::consultar("idUsuario, concat(PNome,' ',UNome),email,data
             if ($(this).hasClass('row_selected')) {
                 return;
             } else {
-            oTable.$('tr.row_selected').removeClass('row_selected');
-            $(this).addClass('row_selected');
+                oTable.$('tr.row_selected').removeClass('row_selected');
+                $(this).addClass('row_selected');
             }
         });
 //

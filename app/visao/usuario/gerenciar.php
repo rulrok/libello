@@ -22,7 +22,7 @@ $usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,dataN
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($usuarios as $value) {
             echo '<tr>';
             for ($i = 0; $i < sizeof($value) / 2; $i++) {
