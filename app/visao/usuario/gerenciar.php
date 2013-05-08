@@ -53,14 +53,14 @@ $usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,dataN
         $('input[aria-controls="gerenciar_usuario"]').on('keyup', function() {
             if ($('.row_selected').size() == 0) {
                 $('.btn-deletar').addClass('disabled');
-                $('.btn-deletar').attr('disabled',true);
+                $('.btn-deletar').attr('disabled', true);
                 $('.btn-editar').addClass('disabled');
-                $('.btn-editar').attr('disabled',true);
+                $('.btn-editar').attr('disabled', true);
             } else {
                 $('.btn-deletar').removeClass('disabled');
-                $('.btn-deletar').attr('disabled',false);
+                $('.btn-deletar').attr('disabled', false);
                 $('.btn-editar').removeClass('disabled');
-                $('.btn-editar').attr('disabled',false);
+                $('.btn-editar').attr('disabled', false);
             }
         });
 
@@ -69,6 +69,10 @@ $usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,dataN
         oTable.$('tr').mousedown(function(e) {
             oTable.$('tr.row_selected').removeClass('row_selected');
             $(this).addClass('row_selected');
+            $('.btn-deletar').removeClass('disabled');
+            $('.btn-deletar').attr('disabled', false);
+            $('.btn-editar').removeClass('disabled');
+            $('.btn-editar').attr('disabled', false);
             selectedElement = this;
         });
 

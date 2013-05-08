@@ -9,23 +9,42 @@ require_once BIBLIOTECA_DIR . 'seguranca/Permissao.php';
 class usuarioDAO extends abstractDAO {
 
     /**
-     * Atualiza informações de um usuário.
+     * Atualiza informações de um usuário. O email não é alterado, pois ele é a
+     * chave primaria no banco de dados.
      * @param type $email Usado para localizar o usuário no banco de dados.
      * @param Usuario $usuario Objecto VO com as novas informações.
+     * @param PermissoesFerramenta $permissoes permissoes para o usuario (opcional)
      * @return boolean
      */
-    public static function atualizar($email, Usuario $usuario) {
+    public static function atualizar($email, Usuario $novosDados) {
+
+        $dadosAntigos = usuarioDAO::recuperarUsuario($email);
 
         $condicao = " WHERE email = '" . $email . "' AND ativo = 1";
 
-        $nome = $usuario->get_PNome();
-        $sobrenome = $usuario->get_UNome();
-        $papel = (int) $usuario->get_papel();
-        $senha = $usuario->get_senha();
-        $email = $usuario->get_email();
-        $dataNascimento = $usuario->get_dataNascimento();
+        $nome = $novosDados->get_PNome();
+        if ($nome == null) {
+            $nome = $dadosAntigos->get_PNome();
+        }
+        $sobrenome = $novosDados->get_UNome();
+        if ($sobrenome == null) {
+            $sobrenome = $dadosAntigos->get_UNome();
+        }
+        $papel = (int) $novosDados->get_papel();
+        if ($papel == null) {
+            $papel = $dadosAntigos->get_papel();
+        }
+        $senha = $novosDados->get_senha();
+        if ($senha == null) {
+            $senha = $dadosAntigos->get_senha();
+        }
+//        $email = $usuario->get_email();
+        $dataNascimento = $novosDados->get_dataNascimento();
+        if ($dataNascimento == null) {
+            $dataNascimento = $dadosAntigos->get_dataNascimento();
+        }
 
-        $sql = "UPDATE usuario SET idPapel = " . $papel . ", senha = '" . $senha . "', PNome='" . $nome . "', UNome = '" . $sobrenome . "', email ='" . $email . "', dataNascimento = '" . $dataNascimento . "'";
+        $sql = "UPDATE usuario SET idPapel = " . $papel . ", senha = '" . $senha . "', PNome='" . $nome . "', UNome = '" . $sobrenome . "', dataNascimento = '" . $dataNascimento . "'";
         $sql .= $condicao;
         try {
             parent::getConexao()->query($sql);
@@ -213,6 +232,34 @@ class usuarioDAO extends abstractDAO {
                 }
                 return true;
             }
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Atualiza as permissões de um usuário já existente, conforme as novas permissões
+     * passados como parâmetro.
+     * 
+     * @param Usuario $usuario
+     * @param PermissoesFerramenta $permissoes
+     * @return boolean True se cadastrado com sucesso, false caso contrário.
+     */
+    public static function atualizarPermissoes(Usuario $usuario, PermissoesFerramenta $permissoes) {
+        if ($usuario !== null && $permissoes !== null) {
+            $idUsuario = $usuario->get_id();
+            if ($idUsuario == null) {
+                $idUsuario = usuarioDAO::recuperarUsuario($usuario->get_email())->get_id();
+            }
+
+            $sql = "DELETE FROM usuario_x_permissao_x_ferramenta WHERE idUsuario =  ". $idUsuario;
+            try {
+                parent::getConexao()->query($sql);
+            } catch (Exception $e) {
+                return false;
+            }
+            usuarioDAO::cadastrarPermissoes($usuario, $permissoes);
+            return true;
         } else {
             return false;
         }

@@ -36,10 +36,10 @@ else:
                 <label>Data de nascimento</label>
                 <input type="text" readonly id="dataNascimento" class=" input-large campoData" placeholder="Clique para escolher" name="dataNascimento" value="<?php echo $this->dataNascimento ?>">
             </div>
-<!--            <div class="line">
-                <label>Login</label>
-                <input required type="text"  name="login" class="input-large" value="<?php echo $this->login ?>"  data-content="Apenas letras minúsculas. Mínimo de três caracteres.">
-            </div>-->
+            <!--            <div class="line">
+                            <label>Login</label>
+                            <input required type="text"  name="login" class="input-large" value="<?php echo $this->login ?>"  data-content="Apenas letras minúsculas. Mínimo de três caracteres.">
+                        </div>-->
 
             <div class="line">
                 <label>Senha</label>
@@ -53,14 +53,6 @@ else:
 
             <div class="line">
                 <label>Papel</label>
-<!--                <select required name="papel" class="input-large">
-                    <option value="default" selected="selected"> -- Selecione uma opção --</option>
-                    <option value="0">Administrador </option>
-                    <option value="1">Gestor </option>
-                    <option value="2">Professor </option>
-                    <option value="3">Coordenador </option>
-                    <option value="4">Estudante </option>
-                </select>-->
                 <?php echo $this->comboPapeis ?>
             </div>
             <br/>
@@ -69,9 +61,9 @@ else:
                 <?php echo $this->comboPermissoes ?>
             </fieldset>
         </fieldset>
-            <input class="btn btn-large" type="reset" value="Limpar">
-            <input class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit" value="Cadastrar">
-        
+        <input class="btn btn-large" type="reset" value="Limpar">
+        <input class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit" value="Cadastrar">
+
     </form>
     <script type="text/javascript" src="publico/js/validarCampos.js"></script>
 
@@ -82,7 +74,7 @@ else:
         });
 
 
-        $(".line input").popover({trigger:'focus',container:'body'});
+        $(".line input").popover({trigger: 'focus', container: 'body'});
 
     </script>
 <?php
