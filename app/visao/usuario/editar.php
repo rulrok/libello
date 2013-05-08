@@ -9,24 +9,30 @@
         <p class="centered centeredText boldedText">Campos com <img src="publico/images/icons/campo_obrigatorio.png"> são obrigatórios</label>
         <div class="line">
             <label>Nome</label>
-            <input required name="nome" class="campoObrigatorio" type="text" value="<? echo $this->nome ?>">
+            <input required name="nome" class="campoObrigatorio" type="text" value="<?php echo $this->nome ?>">
         </div>
         <div class="line">
             <label>Sobrenome</label>
-            <input required name="sobrenome" class="campoObrigatorio" type="text" value="<? echo $this->sobrenome ?>">
+            <input required name="sobrenome" class="campoObrigatorio" type="text" value="<?php echo $this->sobrenome ?>">
         </div>
         <div class="line">
             <label>email</label>
-            <input type="text" name="email" value="<? echo $this->email ?>">
+            <input disabled type="text" name="email" value="<?php echo $this->email ?>">
         </div>
         <div class="line">
             <label>Data de nascimento</label>
-            <input type="text" readonly id="dataNascimento" class="campoData" name="dataNascimento" value="<? echo $this->dataNascimento ?>" >
+            <input type="text" readonly id="dataNascimento" class="campoData" name="dataNascimento" value="<?php echo $this->dataNascimento ?>" >
         </div>
-        <!--        <div class="line">
-                    <label>Papel no sistema</label>
-                    <input id="papel" type="text" name="papel" disabled value="<? echo $this->papel ?>">
-                </div>-->
+        <div class="line">
+            <label>Papel no sistema</label>
+            <?php echo $this->comboPapel ?>
+<!--            <input id="papel" type="text" name="papel" value="">-->
+        </div>
+        <br/>
+        <fieldset>
+            <legend>Permissões por ferramenta</legend>
+            <?php echo $this->comboPermissoes ?>
+        </fieldset>
 
     </fieldset>
     <input class=" btn btn-primary btn-right" type="submit" disabled value="Atualizar dados">
@@ -41,5 +47,13 @@
     $(function() {
         $("#dataNascimento").datepick();
     });
+
+    $('[name=papel]').val("<?php echo $this->idPapel ?>");
+
+    $obj = <?php echo json_encode($this->permissoes) ?>;
+    for (var i = 0; i < $obj.length ; i++){
+        element = $obj[i];
+        console.debug(element);
+    }
 </script>
 

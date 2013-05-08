@@ -321,3 +321,9 @@ function ajax(link, place)
         hidePopUp();
     });
 }
+
+function mudarTitulo(titulo){
+    tituloPadrao = "Controle CEAD | ";
+    $("title").empty();
+    $("title").append(tituloPadrao + titulo);    
+}

@@ -4,7 +4,7 @@ class Usuario {
 
     var $idUsuario;
     var $idPapel = null;
-    var $login;
+//    var $login;
     var $senha;
     var $PNome;
     var $UNome;
@@ -19,13 +19,13 @@ class Usuario {
         $this->idUsuario = $id;
     }
 
-    public function get_login() {
-        return $this->login;
-    }
-
-    public function set_login($login) {
-        $this->login = $login;
-    }
+//    public function get_login() {
+//        return $this->login;
+//    }
+//
+//    public function set_login($login) {
+//        $this->login = $login;
+//    }
 
     public function get_senha() {
         return $this->senha;
@@ -83,7 +83,7 @@ class Usuario {
     public function validarCampos() {
         if ($this->PNome !== null && $this->PNome !== "" 
                 && $this->UNome !== null && $this->UNome !== ""
-                && $this->login !== null && $this->login !== ""
+//                && $this->login !== null && $this->login !== ""
                 && $this->senha !== null && $this->senha !== ""
                 && $this->idPapel !== null) {
             return true;

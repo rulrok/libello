@@ -55,17 +55,17 @@ function autenticaUsuario(Usuario $user) {
     if (($con = PDOconnectionFactory::getConection()) != null) {
         //$con = $_SESSION['conexao'];
 
-        if ($user->get_login() !== null && $user->get_login() !== '' && $user->get_senha() !== null && $user->get_senha() !== '') {
+        if ($user->get_email() !== null && $user->get_email() !== '' && $user->get_senha() !== null && $user->get_senha() !== '') {
             try {
-                $query = $con->prepare("SELECT * FROM usuario WHERE login = :login AND senha = :senha AND ativo = 1");
-                $query->execute(array('login' => $user->get_login(), 'senha' => $user->senha));
+                $query = $con->prepare("SELECT * FROM usuario WHERE email = :email AND senha = :senha AND ativo = 1");
+                $query->execute(array('email' => $user->get_email(), 'senha' => $user->senha));
                 $ret = $query->fetchAll(PDO::FETCH_CLASS, 'Usuario');
 
                 if (sizeof($ret) === 1) {
                     $_SESSION['autenticado'] = true;
 
                     $_SESSION['idUsuario'] = $ret[0]->get_id();
-                    $_SESSION['login'] = $ret[0]->get_login();
+                    $_SESSION['login'] = $ret[0]->get_email();
                     $_SESSION['senha'] = $ret[0]->get_senha();
                     $_SESSION['nome'] = $ret[0]->get_PNome();
                     $_SESSION['sobrenome'] = $ret[0]->get_UNome();
@@ -98,10 +98,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_SESSION['autenticado'] === FALSE) 
     iniciarSessao();
     $_SERVER['REQUEST_METHOD'] = NULL;
 
-    $login = (isset($_POST['login'])) ? $_POST['login'] : '';
+    $email = (isset($_POST['login'])) ? $_POST['login'] : '';
     $senha = (isset($_POST['senha'])) ? md5($_POST['senha']) : '';
     $usuario = new Usuario();
-    $usuario->set_login($login);
+    $usuario->set_email($email);
     $usuario->set_senha($senha);
 
     if (autenticaUsuario($usuario)) {

@@ -1,7 +1,7 @@
 
 
 <?php
-$usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,login,dataNascimento,nome", "idUsuario <> " . $_SESSION['idUsuario']);
+$usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,dataNascimento,nome", "idUsuario <> " . $_SESSION['idUsuario']);
 ?>
 <div class="btn-toolbar">
     <div class="btn-group">
@@ -16,14 +16,13 @@ $usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,login
             <th hidden>id</th>
             <th>Nome completo</th>
             <th>Email</th>
-            <th>Login</th>
             <th>Data de nascimento</th>
             <th>Papel</th>
             <th>Permissões</th>
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($usuarios as $value) {
             echo '<tr>';
             for ($i = 0; $i < sizeof($value) / 2; $i++) {
@@ -99,9 +98,7 @@ $usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,login
 
         $(".visualizarPermissoes").on('click', function() {
             var id = $("tr.row_selected>.campoID").html();
-            $("#myModal").modal({
-                remote: "index.php?c=usuario&a=consultarpermissoes&userID=" + id
-            });
+            $("#myModal").load("index.php?c=usuario&a=consultarpermissoes&userID=" + id).modal();
 
 //            ajax("index.php?c=usuario&a=consultarpermissoes&userID=" + id, "#myModal");
         });

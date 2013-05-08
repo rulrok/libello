@@ -1,3 +1,4 @@
 #<IfModule mod_rewrite.c>
 #IndexIgnore *
 #</IfModule>
+Php_value open_basedir /var/www/controle-cead

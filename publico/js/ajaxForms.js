@@ -9,6 +9,7 @@ $(document).ready(function() {
     // bind 'myForm' and provide a simple callback function 
     $('#ajaxForm').submit(function() {
         $(this).ajaxSubmit(options);
+        document.paginaAlterada = false;
         return false;
     });
 });

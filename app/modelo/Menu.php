@@ -3,7 +3,8 @@
 include_once ROOT . 'app/modelo/vo/Usuario.php';
 include_once ROOT . 'app/modelo/dao/usuarioDAO.php';
 require_once 'Ferramenta.php';
-require_once 'Permissao.php';
+require_once BIBLIOTECA_DIR. 'seguranca/Permissao.php';
+require_once 'Papel.php';
 
 class Menu {
 
@@ -114,14 +115,12 @@ class Menu {
                         switch ($permissao_ferramenta['idPermissao']) {
                             case Permissao::ADMINISTRADOR:
                             case Permissao::GESTOR:
-                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=documento&a=historico')\">" . "\n";
+                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=documentos&a=historico')\">" . "\n";
                                 $subMenuCode .= "<li>Gerenciar histórico</li></a>" . "\n";
                             case Permissao::ESCRITA:
-                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=documento&a=gerarOficio')\">" . "\n";
+                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=documentos&a=gerarOficio')\">" . "\n";
                                 $subMenuCode .= "<li>Gerar ofício</li></a>" . "\n";
-                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=documento&a=gerarMemorando')\">";
-                                $subMenuCode .= "<li>Gerar Memorando</li></a>";
-                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=documento&a=gerarRelatorio')\">" . "\n";
+                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=documentos&a=gerarRelatorio')\">" . "\n";
                                 $subMenuCode .= "<li>Gerar relatório</li></a>" . "\n";
                             case Permissao::CONSULTA:
                         }
@@ -161,15 +160,13 @@ class Menu {
         return $menuCode . $subMenuCode;
     }
 
-    public static function montarCaixaSelecaoPermissoes($required = null,$class = null, $name = null){
-        if ($required === true){
-            if ($class !== null){
-                $class .= " campoObrigatorio";
-            } else {
-                $class = "campoObrigatorio";
+    public static function montarCaixaSelecaoPermissoes($required = null, $class = null, $name = null) {
+        if ($required === true) {
+            if ($class == null) {
+                $class = "";
             }
         }
-        $codigo = "<select ".($required === true ? "required ":" ").($class !== null ? "class=\"".$class."\"" : " ").($name !== null ? "name =\"".$name."\"" : " ").">";
+        $codigo = "<select " . ($required === true ? "required " : " ") . ($class !== null ? "class=\"" . $class . "\"" : " ") . ($name !== null ? "name =\"" . $name . "\"" : " ") . ">";
         $codigo .= "\n<option value=\"default\"> -- Selecione uma opção -- </option>";
         $codigo .= "\n<option value=\"1\">Sem acesso</option>";
         $codigo .= "\n<option value=\"2\">Consulta</option>";
@@ -179,6 +176,28 @@ class Menu {
         $codigo .= "</select>";
         return $codigo;
     }
+
+    public static function montarCaixaSelecaoPapeis($required = false, $class = null, $name = null) {
+        $codigo = "<select ";
+        if ($required) {
+            $codigo .= "required ";
+        }
+        if ($class != null) {
+            $codigo .= " class = \"" . $class . "\" ";
+        }
+        if ($name != null) {
+            $codigo .= " name = \"" . $name . "\"";
+        }
+        $codigo .= ">\n";
+
+        $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
+        for ($i = 1; $i <= Papel::__length; $i++) {
+            $codigo .= "<option value=\"$i\">" . papelDAO::obterNomePapel($i) . "</option>\n";
+        }
+        $codigo .= "</select>\n";
+        return $codigo;
+    }
+
 }
 ?>
 

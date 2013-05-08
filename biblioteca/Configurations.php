@@ -1,9 +1,10 @@
 <?php
 
 if (!defined("APP_CONFIGS")) {
-    define("APP_CONFIGS", "SETED");
+    define("APP_CONFIGS", "SETTED");
 
     define("ROOT", $_SERVER['DOCUMENT_ROOT'] . "/controle-cead/");
+    define("APP_LOCATION", ROOT."app/");
 
     define("WEB_SERVER_NAME", "http://localhost/controle-cead/");
 

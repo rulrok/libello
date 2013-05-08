@@ -1,7 +1,7 @@
 <?php
 $id = $_GET['userID'];
-$login = usuarioDAO::descobrirLogin($id);
-if (usuarioDAO::remover($login)):
+$email = usuarioDAO::descobrirEmail($id);
+if (usuarioDAO::remover($email)):
     ?>
 <script>showPopUp("Usuário removido com sucesso","sucesso");</script>
 <?php else : ?>

@@ -1,7 +1,7 @@
 
 
 <?php
-$usuarios = usuarioDAO::consultar("idUsuario, concat(PNome,' ',UNome),email,login,dataNascimento,nome");
+$usuarios = usuarioDAO::consultar("idUsuario, concat(PNome,' ',UNome),email,dataNascimento,nome");
 ?>
 <table id="consulta_usuario" class="tabelaDeSelecao">
     <thead>
@@ -9,14 +9,13 @@ $usuarios = usuarioDAO::consultar("idUsuario, concat(PNome,' ',UNome),email,logi
             <th hidden>id</th>
             <th>Nome completo</th>
             <th>Email</th>
-            <th>Login</th>
             <th>Data de nascimento</th>
             <th>Papel</th>
             <th>Permissões</th>
         </tr>
     </thead>
     <tbody>
-        <?
+        <?php
         foreach ($usuarios as $value) {
             echo '<tr>';
             for ($i = 0; $i < sizeof($value) / 2; $i++) {
@@ -42,14 +41,19 @@ $usuarios = usuarioDAO::consultar("idUsuario, concat(PNome,' ',UNome),email,logi
 
         $(".visualizarPermissoes").on('click', function() {
             var id = $("tr.row_selected>.campoID").html();
-            ajax("index.php?c=usuario&a=consultarpermissoes&userID=" + id, ".shaderFrameContentWrap");
+            $("#myModal").load("index.php?c=usuario&a=consultarpermissoes&userID=" + id).modal();
+//            $("#myModal").modal({
+//                remote: "index.php?c=usuario&a=consultarpermissoes&userID=" + id
+//            });
+
+//            ajax("index.php?c=usuario&a=consultarpermissoes&userID=" + id, "#myModal");
         });
         oTable.$('tr').mousedown(function() {
             if ($(this).hasClass('row_selected')) {
                 return;
             } else {
-            oTable.$('tr.row_selected').removeClass('row_selected');
-            $(this).addClass('row_selected');
+                oTable.$('tr.row_selected').removeClass('row_selected');
+                $(this).addClass('row_selected');
             }
         });
 //

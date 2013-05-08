@@ -22,27 +22,27 @@ else:
             <p class="centered centeredText boldedText">Campos com <img src="publico/images/icons/campo_obrigatorio.png"> são obrigatórios</label>
             <div class="line">
                 <label>Nome</label>
-                <input required name="nome" class="campoObrigatorio" type="text" value="<? echo $this->nome ?>">
+                <input required name="nome"  type="text" value="<?php echo $this->nome ?>">
             </div>
             <div class="line">
                 <label>Sobrenome</label>
-                <input required name="sobrenome" class="campoObrigatorio" type="text" value="<? echo $this->sobrenome ?>">
+                <input required name="sobrenome"  type="text" value="<?php echo $this->sobrenome ?>">
             </div>
             <div class="line">
                 <label>email</label>
-                <input required type="text" class="campoObrigatorio" name="email" value="<? echo $this->email ?>">
+                <input required disabled type="text"  name="email" value="<?php echo $this->email ?>">
             </div>
             <div class="line">
                 <label>Data de nascimento</label>
-                <input type="text" readonly id="dataNascimento" class="campoData" name="dataNascimento" value="<? echo $this->dataNascimento ?>" >
+                <input type="text" readonly id="dataNascimento" class="campoData" name="dataNascimento" value="<?php echo $this->dataNascimento ?>" >
             </div>
-            <div class="line">
+<!--            <div class="line">
                 <label>login</label>
-                <input id="login" type="text" name="login" disabled value="<? echo $this->login ?>">
-            </div>
+                <input id="login" type="text" name="login" disabled value="<?php echo $this->login ?>">
+            </div>-->
             <div class="line">
                 <label>Papel no sistema</label>
-                <input id="papel" type="text" name="papel" disabled value="<? echo $this->papel ?>">
+                <input id="papel" type="text" name="papel" disabled value="<?php echo $this->papel ?>">
             </div>
             <br/>
             <fieldset>
@@ -59,7 +59,7 @@ else:
             <hr>
             <div class="line">
                 <label>Senha atual</label>
-                <input required name="senhaAtual" class="campoObrigatorio" type="password">
+                <input required name="senhaAtual"  type="password">
             </div>
         </fieldset>
         
