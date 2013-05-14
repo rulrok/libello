@@ -4,19 +4,17 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/biblioteca/Mvc/Controla
 
 class ControladorDocumentos extends Controlador {
 
-    public function acaoNovo() {
+public function acaoHistorico() {
         $this->renderizar();
     }
 
-    public function acaoSair() {
-        $this->visao->conteudo = "Reuel";
+    public function acaoGeraroficio() {
         $this->renderizar();
     }
-
-    public function acaoGerarOficio() {
+    public function acaoGerarRelatorio() {
         $this->renderizar();
     }
-    public function acaoGerarMemorando(){
+    public function acaoGerarMemorando() {
         $this->renderizar();
     }
     //comboDia() e comboMes() sao relativos a GerarOficio e Gerar Memorando
