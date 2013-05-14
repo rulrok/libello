@@ -25,7 +25,7 @@ window.onload = function() {
     };
 
     //Permite que o popup seja arrastado pela tela
-    $('.shaderFrameContent').draggable({cancel: ".shaderFrameContentWrap", });
+    $('.shaderFrameContent').draggable({cancel: ".shaderFrameContentWrap" });
 
     $(".shaderFrame").click(function() {
         $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
