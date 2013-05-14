@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../Configurations.php';
 require_once BIBLIOTECA_DIR . 'bancoDeDados/PDOconnectionFactory.php';
 require ROOT . '/app/modelo/vo/Usuario.php';
+require ROOT . '/app/modelo/dao/sistemaDAO.php';
 
 /**
  * Inicia um sessão, com o usuário inicialmente não autenticado.
@@ -72,6 +73,7 @@ function autenticaUsuario(Usuario $user) {
                     $_SESSION['papel'] = $ret[0]->get_papel();
                     $_SESSION['email'] = $ret[0]->get_email();
                     $_SESSION['dataNascimento'] = $ret[0]->get_dataNascimento();
+//                    sistemaDAO::registrarAccesso($_SESSION['idUsuario']);
 
                     return true;
                 } else {

@@ -12,6 +12,19 @@ class ControladorEquipamento extends Controlador {
         $this->visao->conteudo = "Reuel";
         $this->renderizar();
     }
+    
+    public function acaoGerenciar(){
+        $this->renderizar();
+    }
+    public function acaoSaida(){
+        $this->renderizar();
+    }
+    public function acaoRetorno(){
+        $this->renderizar();
+    }
+    public function acaoConsulta(){
+        $this->renderizar();
+    }
 
 }
 

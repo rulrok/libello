@@ -86,6 +86,7 @@ class Mvc {
                 }
                 throw new Exception('Acao nao existente.');
             }
+            print_r($nomeClasseControlador);
             throw new Exception('Controlador nao existente.');
         } else {
             expulsaVisitante("Você precisa estar autenticado para realizar essa operação");

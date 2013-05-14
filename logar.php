@@ -34,6 +34,7 @@
                         </div>
                         <input name="identificacao" type="submit" value="Entrar" >
                     </fieldset>
+                    <a href="#"><p class="centeredText">Esqueci minha senha.</p></a>
                 </form>
             </div>
             <div class="error centeredText">
@@ -45,11 +46,11 @@
             </div>
         </div>
         <?php if (!isset($_GET['m'])): ?>
-        <div id="apoio">
-            <h3>Apoio:</h3>
-            <div id="uab"></div>
-            <div id="capes"></div>
-        </div>
+            <div id="apoio">
+                <h3>Apoio:</h3>
+                <div id="uab"></div>
+                <div id="capes"></div>
+            </div>
             <div id="footer" >
                 <p class="centeredText">Copyright &copy; 2012 - Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a></label>
             </div>
