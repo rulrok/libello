@@ -16,7 +16,7 @@
             $tolken = usuarioDAO::consultarTolkenRecuperarSenha($id);
 
 //            $destinatario = "Reuel <rulrok@gmail.com>";
-            $link = WEB_SERVER_NAME."lembrarSenha.php?tolken=".$tolken;
+            $link = WEB_SERVER_NAME . "lembrarSenha.php?tolken=" . $tolken;
             $assunto = "Alteração de senha";
             $mensagem = "<p>Você está recebendo esse e-mail pois não se lembra mais da sua senha. Clique no link abaixo para redefinir a sua senha:</p><br/>";
             $mensagem .= "<a href=\"$link\">$link</a><br/>";
@@ -62,14 +62,19 @@
         $tolken = $_POST['tolken'];
         $novaSenha = $_POST['novaSenha'];
 
-        $idUsuario = usuarioDAO::consultarIDUsuario_RecuperarSenha($tolken);
-        $email = usuarioDAO::descobrirEmail($idUsuario);
-        $usuario = new Usuario();
-        $usuario->set_senha(md5($novaSenha));
-        usuarioDAO::atualizar($email, $usuario);
-        ?>
-        Senha alterada com sucesso!
-        <?php
+        try {
+            $idUsuario = usuarioDAO::consultarIDUsuario_RecuperarSenha($tolken);
+            $email = usuarioDAO::descobrirEmail($idUsuario);
+            $usuario = new Usuario();
+            $usuario->set_senha(md5($novaSenha));
+            usuarioDAO::atualizar($email, $usuario);
+            usuarioDAO::removerTolken($tolken);
+            ?>
+            Senha alterada com sucesso!
+            <?php
+        } catch (Exception $e) {
+            echo 'Tolken inválido';
+        }
     else:
         header("Location: " . WEB_SERVER_NAME);
     endif;

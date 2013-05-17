@@ -189,7 +189,24 @@ class usuarioDAO extends abstractDAO {
      * @param type $tolken
      */
     public static function consultarIDUsuario_RecuperarSenha($tolken) {
-        $sql = "SELECT idUsuario FROM usuariosRecuperarSenha WHERE tolken = \"" . $tolken."\"";
+        $sql = "SELECT idUsuario FROM usuariosRecuperarSenha WHERE tolken = \"" . $tolken . "\"";
+        try {
+            $resultado = parent::getConexao()->query($sql)->fetch();
+        } catch (Exception $e) {
+            echo $e;
+        }
+        if (is_array($resultado)) {
+            $resultado = $resultado[0];
+        }
+        return $resultado;
+    }
+
+    /**
+     * Remove um tolken do banco de dados.
+     * @param type $tolken
+     */
+    public static function removerTolken($tolken) {
+        $sql = "DELETE FROM usuariosRecuperarSenha WHERE tolken = \"" . $tolken . "\"";
         try {
             $resultado = parent::getConexao()->query($sql)->fetch();
         } catch (Exception $e) {
