@@ -9,6 +9,11 @@
     </head>
     <body>
         <?php
+        
+        $ocultarDetalhes = false;
+        if ($_SERVER['HTTP_ACCEPT'] != "*/*"){
+            $ocultarDetalhes = true;
+        }
         session_start();
         if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION['autenticado'] === TRUE) {
             header("Location: index.php");
@@ -34,7 +39,9 @@
                         </div>
                         <br/>
                         <input class="btn btn-right btn-info" name="identificacao" type="submit" value="Entrar" >
+                            <?php if ($ocultarDetalhes): ?>
                             <a class="btn"href="lembrarSenha.php">Esqueci a senha</a>
+                            <?php endif; ?>
                     </fieldset>
 
                 </form>
@@ -47,7 +54,7 @@
                 ?>
             </div>
         </div>
-        <?php if (!isset($_GET['m'])): ?>
+        <?php if ($ocultarDetalhes): ?>
             <div id="apoio">
                 <h3>Apoio:</h3>
                 <div id="uab"></div>
