@@ -38,7 +38,7 @@ class Menu {
                                 $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=usuario&a=consultar')\">" . "\n";
                                 $subMenuCode .= "<li>Consultar usuários</li></a>" . "\n";
                         }
-                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/images/icons/go-up.png\"></li></a>" . "\n";
+                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/imagens/icones/go-up.png\"></li></a>" . "\n";
                         $subMenuCode .= "</ul>" . "\n";
                     }
                     break;
@@ -56,7 +56,7 @@ class Menu {
                                 $subMenuCode .= "<li>Inserir novo registro</li></a>" . "\n";
                             case Permissao::CONSULTA:
                         }
-                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/images/icons/go-up.png\"></li></a>" . "\n";
+                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/imagens/icones/go-up.png\"></li></a>" . "\n";
                         $subMenuCode .= "</ul>" . "\n";
                     }
                     break;
@@ -80,7 +80,7 @@ class Menu {
                                 $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=livro&a=relatorios')\">" . "\n";
                                 $subMenuCode .= "<li>Gerar relatórios</li></a>" . "\n";
                         }
-                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/images/icons/go-up.png\"></li></a>" . "\n";
+                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/imagens/icones/go-up.png\"></li></a>" . "\n";
                         $subMenuCode .= "</ul>" . "\n";
                     }
                     break;
@@ -104,7 +104,7 @@ class Menu {
                                 $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=equipamento&a=consulta')\">" . "\n";
                                 $subMenuCode .= "<li>Consultar equipamentos</li></a>" . "\n";
                         }
-                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/images/icons/go-up.png\"></li></a>" . "\n";
+                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/imagens/icones/go-up.png\"></li></a>" . "\n";
                         $subMenuCode .= "</ul>" . "\n";
                     }
                     break;
@@ -126,7 +126,7 @@ class Menu {
                                 $subMenuCode .= "<li>Gerar relatório</li></a>" . "\n";
                             case Permissao::CONSULTA:
                         }
-                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/images/icons/go-up.png\"></li></a>" . "\n";
+                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/imagens/icones/go-up.png\"></li></a>" . "\n";
                         $subMenuCode .= "</ul>" . "\n";
                     }
                     break;
@@ -144,7 +144,7 @@ class Menu {
                                 $subMenuCode .= "<li>Inserir nova viagem</li></a>" . "\n";
                             case Permissao::CONSULTA:
                         }
-                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/images/icons/go-up.png\"></li></a>" . "\n";
+                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/imagens/icones/go-up.png\"></li></a>" . "\n";
                         $subMenuCode .= "</ul>" . "\n";
                     }
                     break;

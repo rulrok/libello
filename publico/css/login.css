@@ -74,7 +74,7 @@ float: right;
 /* Logo da "Universidade Aberto do Brasil" */
 #uab{
     display: inline-block;
-    background: url('../images/uab.PNG') no-repeat;
+    background: url('../imagens/uab.PNG') no-repeat;
     background-size: 80%;
     width: 120px;
     height: 80px;
@@ -85,7 +85,7 @@ float: right;
 /* Logo da "Capes" */
 #capes{
     display: inline-block;
-    background: url('../images/capes.png') no-repeat;
+    background: url('../imagens/capes.png') no-repeat;
     float: right;
     width: 120px;
     height: 80px;
@@ -102,7 +102,7 @@ float: right;
 /* Div que apresentará logotipo da Unifal */
 #unifal{
     display: block;
-    background: url('../images/unifal.png') no-repeat;
+    background: url('../imagens/unifal.png') no-repeat;
     width: 105px;
     height: 110px;
     position: relative;
@@ -113,7 +113,7 @@ float: right;
 /* Div que apresentará logotipo do CEAD */
 #cead{
     display: block;
-    background: url('../images/ceadMini.png') no-repeat;
+    background: url('../imagens/ceadMini.png') no-repeat;
     width: 146px;
     height: 109px;
     position: relative;

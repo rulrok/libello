@@ -4,7 +4,7 @@
     </head>
 
     <?php
-    require_once '../Configurations.php';
+    require_once '../configuracoes.php';
     require_once APP_LOCATION . "modelo/dao/usuarioDAO.php";
 
     if (isset($_POST['email']) && $_POST['email'] != NULL && $_POST['email'] != "") :

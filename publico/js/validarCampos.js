@@ -4,7 +4,7 @@ if (camposObrigatorios.length > 0) {
 //document.head.children[document.head.children.length] = "<script src=\"publico/js/validarCampos.js\"></script>";
     //$("head").append("<script src=\"publico/js/validarCampos.js\"></script>");
     for (i = 0; i < camposObrigatorios.length; i++) {
-        $(camposObrigatorios[i]).after("<img src=\"publico/images/icons/campo_obrigatorio.png\">");
+        $(camposObrigatorios[i]).after("<img src=\"publico/imagens/icones/campo_obrigatorio.png\">");
         //$(camposObrigatorios[i]).on('blur',liberarCadastro());
         //$(camposObrigatorios[i]).append(liberarCadastro());
     }

@@ -28,7 +28,7 @@
                     <map name="#logoMap">
                         <area shape="poly" coords="86,178,120,157,177,134,202,125,224,120,240,95,243,80,228,59,201,49,196,54,197,98,188,88,186,59,176,51,167,48,156,25,135,13,127,0,92,4,43,13,2,13,12,32,32,62,31,91,40,118,65,141" alt="Controle CEAD" title="Controle CEAD" />
                     </map>
-                    <img class="logo" src="publico/images/cead.png" usemap="#logoMap"></img>
+                    <img class="logo" src="publico/imagens/cead.png" usemap="#logoMap"></img>
                 </figure>
                 <div class="headerWrap">
                     <h1>Controle CEAD <sup>(versão alpha)</sup></h1>

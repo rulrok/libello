@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../Configurations.php';
+require_once __DIR__ . '/../configuracoes.php';
 require_once BIBLIOTECA_DIR . 'bancoDeDados/PDOconnectionFactory.php';
 require ROOT . '/app/modelo/vo/Usuario.php';
 require ROOT . '/app/modelo/dao/sistemaDAO.php';

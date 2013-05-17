@@ -2,7 +2,7 @@
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-require_once ROOT.'biblioteca/Configurations.php';
+require_once ROOT.'biblioteca/configuracoes.php';
 //if (file_exists(ROOT . 'biblioteca/seguranca/seguranca.php')) {
 //    require ROOT . 'biblioteca/seguranca/seguranca.php';
 //} else {

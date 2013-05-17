@@ -1,6 +1,6 @@
 <?php
 
-include_once __DIR__.'/../Configurations.php';
+include_once __DIR__.'/../configuracoes.php';
 
 class PDOconnectionFactory {
 

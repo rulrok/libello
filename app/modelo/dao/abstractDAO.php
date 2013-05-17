@@ -1,5 +1,5 @@
 <?php
-require_once BIBLIOTECA_DIR.'Configurations.php';
+require_once BIBLIOTECA_DIR.'configuracoes.php';
 require_once BIBLIOTECA_DIR.'bancoDeDados/PDOconnectionFactory.php';
 
 

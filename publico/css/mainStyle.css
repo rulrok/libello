@@ -128,21 +128,21 @@ td {
 }
 
 .iconExcluir{
-    background: url("../images/icons/botoes/botao_excluir.png") no-repeat 0;
+    background: url("../imagens/icones/botoes/botao_excluir.png") no-repeat 0;
     position: relative;
     top: 2px;
     left: -3px;
 }
 
 .iconEditar {
-    background: url("../images/icons/botoes/botao_editar.png") no-repeat 0;
+    background: url("../imagens/icones/botoes/botao_editar.png") no-repeat 0;
     position: relative;
     top: 2px;
     left: -3px;
 }
 
 .iconAdicionar{
-    background: url("../images/icons/botoes/botao_adicionar.png") no-repeat 0;
+    background: url("../imagens/icones/botoes/botao_adicionar.png") no-repeat 0;
     width: 22px;
     height: 22px;
     position: relative;
@@ -204,7 +204,7 @@ input[value~='Cadastrar']:disabled,input[value~='Atualizar']:disabled {
 }
 
 .campoData {
-    background: url("../images/icons/icon-calendar.png") #FFF no-repeat right;
+    background: url("../imagens/icones/icon-calendar.png") #FFF no-repeat right;
     background-position: 98% 50%;
     background-size: 20px;
     margin-right: 2px;
@@ -213,7 +213,7 @@ input[value~='Cadastrar']:disabled,input[value~='Atualizar']:disabled {
 }
 
 .campoHora {
-    background: url("../images/icons/clock-calendar.png") #FFF no-repeat right;
+    background: url("../imagens/icones/clock-calendar.png") #FFF no-repeat right;
     background-size: 20px;
     margin-right: 2px;
     margin-bottom: 1px;
@@ -239,7 +239,7 @@ input[value~='Cadastrar']:disabled,input[value~='Atualizar']:disabled {
     position: absolute;
     top: -5px;
     right: -5px;
-    background: url("../images/icons/fechar_16.png");
+    background: url("../imagens/icones/fechar_16.png");
     min-height: 16px;
     min-width: 16px;
     z-index: 2;
@@ -363,7 +363,7 @@ footer{
     height: 10px;
     max-height: 300px;
     /*background: steelblue;*/
-    background: url("../images/candidato1.png");
+    background: url("../imagens/candidato1.png");
     position: relative;
     bottom:0;
     margin: 0;
@@ -386,7 +386,7 @@ footer p{
     height:100%;
     max-height: 300px;
     /*background: lavender;*/
-    background: url("../images/candidato1.png");
+    background: url("../imagens/candidato1.png");
     border-color: #c8d7dc;
     -webkit-box-shadow: 10px 2px 12px rgba(50, 50, 50, 0.1) inset ;
     -moz-box-shadow:    10px 2px 12px rgba(50, 50, 50, 0.1) inset;
@@ -418,7 +418,7 @@ footer p{
 }
 
 .footerLinks a:after{
-    content: url("../images/icons/external_link.gif");
+    content: url("../imagens/icones/external_link.gif");
     position: relative;
     left: 5px;
 }
@@ -449,7 +449,7 @@ footer p{
 }
 header{
     border-top: #3871a6 4px solid;
-    background: url("../images/backgroundHeader.png");
+    background: url("../imagens/backgroundHeader.png");
 }
 header a{ /* Todos os links do header */
     text-decoration: none;
@@ -513,12 +513,12 @@ header .userInfoWrap *{
     text-align: right;
 }
 header .userInfoWrap [id=sair]:before{
-    content: url("../images/icons/sair.png");
+    content: url("../imagens/icones/sair.png");
     vertical-align: -20%;
     padding: 5px;
 }
 header .userInfoWrap [id=gerenciarConta]:before{
-    content: url("../images/icons/configuracoes.png");
+    content: url("../imagens/icones/configuracoes.png");
     vertical-align: -10%;
     padding: 5px;
 }
@@ -530,26 +530,26 @@ header .userInfoWrap [id=gerenciarConta]:before{
 @media (min-width:500px ) and ( max-width:800px){
     /* Icones para os menus*/
     #homeLink:before{
-        content: url("../images/icons/home_22.png");
+        content: url("../imagens/icones/home_22.png");
 
     }
     #usuariosLink:before{
-        content: url("../images/icons/usuarios_22.png");
+        content: url("../imagens/icones/usuarios_22.png");
     }
     #cursosLink:before{
-        content: url("../images/icons/cursos_22.png");
+        content: url("../imagens/icones/cursos_22.png");
     }
     #livrosLink:before{
-        content: url("../images/icons/livros_22.png");
+        content: url("../imagens/icones/livros_22.png");
     }
     #documentosLink:before{
-        content: url("../images/icons/documentos_22.png");
+        content: url("../imagens/icones/documentos_22.png");
     }
     #equipamentosLink:before{
-        content: url("../images/icons/equipamentos_22.png");
+        content: url("../imagens/icones/equipamentos_22.png");
     }
     #viagensLink:before{
-        content: url("../images/icons/viagens_22.png");
+        content: url("../imagens/icones/viagens_22.png");
     }
 }
 @media (min-width:800px ){
@@ -557,25 +557,25 @@ header .userInfoWrap [id=gerenciarConta]:before{
 
     /* Icones para os menus*/
     #homeLink:before{
-        content: url("../images/icons/home.png");
+        content: url("../imagens/icones/home.png");
     }
     #usuariosLink:before{
-        content: url("../images/icons/usuarios.png");
+        content: url("../imagens/icones/usuarios.png");
     }
     #cursosLink:before{
-        content: url("../images/icons/cursos.png");
+        content: url("../imagens/icones/cursos.png");
     }
     #livrosLink:before{
-        content: url("../images/icons/livros.png");
+        content: url("../imagens/icones/livros.png");
     }
     #documentosLink:before{
-        content: url("../images/icons/documentos.png");
+        content: url("../imagens/icones/documentos.png");
     }
     #equipamentosLink:before{
-        content: url("../images/icons/equipamentos.png");
+        content: url("../imagens/icones/equipamentos.png");
     }
     #viagensLink:before{
-        content: url("../images/icons/viagens.png");
+        content: url("../imagens/icones/viagens.png");
     }
 }
 /* Links do menu */
@@ -610,7 +610,7 @@ li[id$=Link]:before{
     /*border: rgb(230, 230, 230) solid 1px;*/
     border-left: none;
     border-right: none;
-    background: url("../images/backgroundMenu.png");
+    background: url("../imagens/backgroundMenu.png");
     -webkit-box-shadow: 0px 0px 12px rgba(50, 50, 50, 0.2);
     -moz-box-shadow:    0px 0px 12px rgba(50, 50, 50, 0.2);
     box-shadow:         0px 0px 12px rgba(50, 50, 50, 0.2);
