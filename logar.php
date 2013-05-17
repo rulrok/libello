@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel='stylesheet' href='publico/css/bootstrap.css' />
         <link rel='stylesheet' href='publico/css/mainStyle.css' />  
         <link rel='stylesheet' href='publico/css/login.css' />
-        <!--<link rel='stylesheet' href='publico/css/bootstrap.css' />-->
         <title>Autenticação</title>
     </head>
     <body>
@@ -26,15 +26,17 @@
                     <fieldset>
                         <div class="line">
                             <label>Email</label>
-                            <input type="text" name="login">
+                            <input required type="text" name="login">
                         </div>
                         <div class="line">
                             <label>Senha</label>
-                            <input type="password" name="senha" >
+                            <input required type="password" name="senha" >
                         </div>
-                        <input name="identificacao" type="submit" value="Entrar" >
+                        <br/>
+                        <input class="btn btn-right btn-info" name="identificacao" type="submit" value="Entrar" >
+                            <a class="btn"href="lembrarSenha.php">Esqueci a senha</a>
                     </fieldset>
-                    <a href="#"><p class="centeredText">Esqueci minha senha.</p></a>
+
                 </form>
             </div>
             <div class="error centeredText">

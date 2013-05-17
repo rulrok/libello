@@ -13,7 +13,6 @@ class usuarioDAO extends abstractDAO {
      * chave primaria no banco de dados.
      * @param type $email Usado para localizar o usuário no banco de dados.
      * @param Usuario $usuario Objecto VO com as novas informações.
-     * @param PermissoesFerramenta $permissoes permissoes para o usuario (opcional)
      * @return boolean
      */
     public static function atualizar($email, Usuario $novosDados) {
@@ -146,6 +145,63 @@ class usuarioDAO extends abstractDAO {
     }
 
     /**
+     * Gera um tolken e armazena na tabela 'usuariosRecuperarSenha'.
+     * @param type $email
+     */
+    public static function gerarTolkenRecuperarSenha($email) {
+        $usuario = usuarioDAO::recuperarUsuario($email);
+        $antigaSenhaMD5 = $usuario->get_senha();
+        $hora = time();
+        $id = $usuario->get_id();
+        $tolken = md5($antigaSenhaMD5 . $hora);
+        $sql = "INSERT INTO usuariosRecuperarSenha VALUES (" . $id . ",\"" . $tolken . "\")";
+        try {
+            parent::getConexao()->query($sql);
+        } catch (Exception $e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Caso o usuário queira redefinir sua senha, um tolken é gerado e armazenado
+     * na tabela 'usuariosRecuperarSenha'. Essa função retorna esse tolken, caso
+     * ele exista, ou NULL caso contrário.
+     * 
+     * @param type $email
+     */
+    public static function consultarTolkenRecuperarSenha($id) {
+        $sql = "SELECT tolken FROM usuariosRecuperarSenha WHERE idUsuario = " . $id;
+        try {
+            $resultado = parent::getConexao()->query($sql)->fetch();
+        } catch (Exception $e) {
+            echo $e;
+        }
+        if (is_array($resultado)) {
+            $resultado = $resultado[0];
+        }
+        return $resultado;
+    }
+
+    /**
+     * Consulta o usuário associado ao tolken, mas apenas se o usuário quis redefinir
+     * sua senha.
+     * @param type $tolken
+     */
+    public static function consultarIDUsuario_RecuperarSenha($tolken) {
+        $sql = "SELECT idUsuario FROM usuariosRecuperarSenha WHERE tolken = \"" . $tolken."\"";
+        try {
+            $resultado = parent::getConexao()->query($sql)->fetch();
+        } catch (Exception $e) {
+            echo $e;
+        }
+        if (is_array($resultado)) {
+            $resultado = $resultado[0];
+        }
+        return $resultado;
+    }
+
+    /**
      * Retorna um objeto VO Usuário se o usuário existe E está ativo, ou então retorna NULL.
      * @param type $email Email do usuário
      */
@@ -160,9 +216,9 @@ class usuarioDAO extends abstractDAO {
             $stmt = parent::getConexao()->query($sql);
             $stmt->setFetchMode(\PDO::FETCH_CLASS, 'Usuario');
             $usuario = $stmt->fetch();
-            if ($usuario == null) {
-                $usuario = "Usuário não encontrado";
-            }
+//            if ($usuario == null) {
+//                $usuario = "Usuário não encontrado";
+//            }
         } catch (Exception $e) {
             $usuario = NULL;
         }
@@ -252,7 +308,7 @@ class usuarioDAO extends abstractDAO {
                 $idUsuario = usuarioDAO::recuperarUsuario($usuario->get_email())->get_id();
             }
 
-            $sql = "DELETE FROM usuario_x_permissao_x_ferramenta WHERE idUsuario =  ". $idUsuario;
+            $sql = "DELETE FROM usuario_x_permissao_x_ferramenta WHERE idUsuario =  " . $idUsuario;
             try {
                 parent::getConexao()->query($sql);
             } catch (Exception $e) {

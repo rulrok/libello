@@ -73,7 +73,7 @@ function autenticaUsuario(Usuario $user) {
                     $_SESSION['papel'] = $ret[0]->get_papel();
                     $_SESSION['email'] = $ret[0]->get_email();
                     $_SESSION['dataNascimento'] = $ret[0]->get_dataNascimento();
-//                    sistemaDAO::registrarAccesso($_SESSION['idUsuario']);
+                    
 
                     return true;
                 } else {
@@ -107,6 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_SESSION['autenticado'] === FALSE) 
     $usuario->set_senha($senha);
 
     if (autenticaUsuario($usuario)) {
+        sistemaDAO::registrarAccesso($_SESSION['idUsuario']);
         header("Location: ../../index.php");
     } else {
         // O usuário e/ou a senha são inválidos, manda de volta pro form de login
