@@ -208,14 +208,12 @@ class usuarioDAO extends abstractDAO {
     public static function removerTolken($tolken) {
         $sql = "DELETE FROM usuariosRecuperarSenha WHERE tolken = \"" . $tolken . "\"";
         try {
-            $resultado = parent::getConexao()->query($sql)->fetch();
+            parent::getConexao()->query($sql);
         } catch (Exception $e) {
             echo $e;
+            return false;
         }
-        if (is_array($resultado)) {
-            $resultado = $resultado[0];
-        }
-        return $resultado;
+        return true;
     }
 
     /**
