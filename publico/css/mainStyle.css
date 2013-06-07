@@ -701,6 +701,23 @@ li[id$=Link]:before{
 
 }
 
+.actualTool {
+    border: 1px dashed #3871a6;
+    opacity: 1.0!important;
+    color: rgb(14, 81, 143)!important;
+
+    background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(255,255,255,0.96) 2%, rgba(255,255,255,0) 54%, rgba(255,255,255,0) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(2%,rgba(255,255,255,0.96)), color-stop(54%,rgba(255,255,255,0)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.96) 2%,rgba(255,255,255,0) 54%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.96) 2%,rgba(255,255,255,0) 54%,rgba(255,255,255,0) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.96) 2%,rgba(255,255,255,0) 54%,rgba(255,255,255,0) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.96) 2%,rgba(255,255,255,0) 54%,rgba(255,255,255,0) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
+}
+.actualTool:before{
+    opacity:1.0!important;
+}
+
 .menuLink {
     text-transform: uppercase;
     font-size: 85% !important;
@@ -741,7 +758,7 @@ li[id$=Link]:before{
     border-bottom-right-radius: 5px;
     border: 1px solid #ccc;
     border-top: none;
-    
+
     -webkit-box-shadow: 0px 0px 12px rgba(50, 50, 50, 0.1);
     -moz-box-shadow:    0px 0px 12px rgba(50, 50, 50, 0.1);
     box-shadow:         0px 0px 12px rgba(50, 50, 50, 0.1);

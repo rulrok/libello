@@ -25,7 +25,7 @@ window.onload = function() {
     };
 
     //Permite que o popup seja arrastado pela tela
-    $('.shaderFrameContent').draggable({cancel: ".shaderFrameContentWrap" });
+    $('.shaderFrameContent').draggable({cancel: ".shaderFrameContentWrap"});
 
     $(".shaderFrame").click(function() {
         $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
@@ -60,6 +60,7 @@ window.onload = function() {
             menus[i].onclick = function() {
                 $(".menuLink.visited").removeClass("visited");
                 $(this).addClass("visited");
+                $(".actualTool").removeClass('actualTool');
 
                 hideSubMenu(150);
             }
@@ -275,6 +276,11 @@ function makeSubMenu(originMenu) {
         for (var i = 0; i < subMenus.length; i++) {
             if (subMenus[i].classList.contains(menuName)) {
                 subMenus[i].classList.remove("hiddenSubMenuLink");
+
+                subMenus[i].onclick = function() {
+                    $(".actualTool").removeClass('actualTool');
+                    $('.menuLink.visited').addClass('actualTool');
+                };
                 break;
             }
         }
@@ -285,6 +291,10 @@ function makeSubMenu(originMenu) {
                 $(subMenus[i]).removeClass("hiddenSubMenuLink");
                 break;
             }
+            subMenus[i].onclick = function() {
+                $(".actualTool").removeClass('actualTool');
+                $('.menuLink.visited').addClass('actualTool');
+            };
         }
     }
 }
@@ -322,8 +332,8 @@ function ajax(link, place)
     });
 }
 
-function mudarTitulo(titulo){
+function mudarTitulo(titulo) {
     tituloPadrao = "Controle CEAD | ";
     $("title").empty();
-    $("title").append(tituloPadrao + titulo);    
+    $("title").append(tituloPadrao + titulo);
 }

@@ -60,6 +60,8 @@ class ControladorUsuario extends Controlador {
                     $permissoes->set_controleUsuarios($_POST['permissoes_controle_de_usuarios']);
                     $permissoes->set_controleViagens($_POST['permissoes_controle_de_viagens']);
                     usuarioDAO::cadastrarPermissoes($usuario, $permissoes);
+                    $usuario = usuarioDAO::recuperarUsuario($usuario->get_email());
+                    sistemaDAO::registrarCadastroUsuario($_SESSION['idUsuario'], $usuario->get_id());
                     $this->visao->mensagem_usuario = "Cadastro realizado com sucesso";
                     $this->visao->tipo_mensagem = 'sucesso';
                     $this->visao->nome = "";
@@ -142,7 +144,9 @@ class ControladorUsuario extends Controlador {
                 $permissoes->set_controleViagens($_POST['permissoes_controle_de_viagens']);
 
                 usuarioDAO::atualizarPermissoes($usuario, $permissoes);
-
+                $usuario = usuarioDAO::recuperarUsuario($usuario->get_email());
+                sistemaDAO::registrarAlteracaoUsuario($_SESSION['idUsuario'], $usuario->get_id());
+                
                 $this->visao->permissoes = usuarioDAO::obterPermissoes(usuarioDAO::recuperarUsuario($this->visao->email)->get_id());
                 $this->visao->mensagem_usuario = "Atualização concluída";
                 $this->visao->tipo_mensagem = 'sucesso';

@@ -16,7 +16,7 @@
 
         <!--<link type="text/css" rel="stylesheet" href="publico/css/jquery-ui-1.8.4.custom.css" />-->
         <!-- Inicialização dos principais scripts -->
-        <script src="publico/js/jquery-1.9.1.js"></script>
+        <script src="publico/js/jquery/jquery-1.9.1.js"></script>
         <script src="publico/js/mainScript.js"></script>
 
         <title><?php echo $this->titulo ?></title>
@@ -113,10 +113,10 @@
             </div>
         </footer>
         <!-- Inicialização de scripts importantes para outras páginas -->
-        <script src="publico/js/jquery-ui.js"></script>
-        <script src="publico/js/jquery.dataTables.js"></script>
-        <script src="publico/js/jquery.datepick.js"></script>
-        <script src="publico/js/jquery.datepick-pt-BR.js"></script>
+        <script src="publico/js/jquery/jquery-ui.js"></script>
+        <script src="publico/js/jquery/jquery.dataTables.js"></script>
+        <script src="publico/js/jquery/jquery.datepick.js"></script>
+        <script src="publico/js/jquery/jquery.datepick-pt-BR.js"></script>
         <script src="publico/js/bootstrap.js"></script> 
         <script>
                                 //Configurações globais para dataTables

@@ -1,7 +1,10 @@
+/*
+ * Esse javascript se encarrega de tratar os formulários <form> que são enviados.
+ */
 // wait for the DOM to be loaded 
 $(document).ready(function() {
     var options = {
-        target: '.contentWrap',
+        target: '.contentWrap', //Área de conteúdo principal
 //        beforeSend: function() {
 //            $(".contentWrap").empty();
 //        }

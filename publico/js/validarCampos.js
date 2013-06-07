@@ -1,4 +1,9 @@
-
+/*
+ * Esse script varre os campos que são marcados como requeridos e trata eles com
+ * base na propriedade 'name' dos campos para verificálos.
+ * Apenas insíra-o no HTML e certifique-se dos nomes dos campos 'name' serem
+ * compatíveis.
+ */
 var camposObrigatorios = $("input[required],select[required]");
 if (camposObrigatorios.length > 0) {
 //document.head.children[document.head.children.length] = "<script src=\"publico/js/validarCampos.js\"></script>";
@@ -81,10 +86,10 @@ function liberarCadastro() {
         }
 
         //window.alert("Vai testar: " + campos[i].value+"\nPattern: "+patter);
-        if (campos[i].value != ""){
+        if (campos[i].value != "") {
             todosEmBranco = false;
         }
-        
+
         if (!patter.test(campos[i].value)) {
             tudoCerto = false;
             $(campos[i]).addClass("campoErrado");
@@ -94,8 +99,8 @@ function liberarCadastro() {
             //window.alert("Campo correto: "+campos[i].value );
         }
     }
-    
-    if (todosEmBranco){
+
+    if (todosEmBranco) {
         $(".campoErrado").removeClass("campoErrado");
     }
     if (tudoCerto) {

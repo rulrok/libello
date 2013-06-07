@@ -1,4 +1,4 @@
-<img class="img-circle media-object" src="publico/images/create_website_1_1.gif" style="float:left;margin:10px;">
+<img class="img-circle media-object" src="publico/imagens/create_website_1_1.gif" style="float:left;margin:10px;">
 <div class="hero-unit">
 
     <h1>Página em construção</h1>
