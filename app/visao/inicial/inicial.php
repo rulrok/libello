@@ -48,7 +48,7 @@
                 </div>
 
             </header>
-            <!--            <div class="shaderFrame"></div>
+<!--                        <div class="shaderFrame"></div>
                         <div class="shaderFrameContent">
                             <div class="shaderFrameContentWrap centered">
                                  Conteúdo dinâmico     

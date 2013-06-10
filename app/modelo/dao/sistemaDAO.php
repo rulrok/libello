@@ -18,6 +18,8 @@ class sistemaDAO extends abstractDAO {
         }
     }
 
+// <editor-fold defaultstate="collapsed" desc="Registro de atividade para ferramenta de usuários">
+
     /**
      * Registra um evento de cadastro de usuário no sistema.
      * 
@@ -26,8 +28,9 @@ class sistemaDAO extends abstractDAO {
      */
     public static function registrarCadastroUsuario($idUsuarioFonte, $idUsuarioAlvo) {
         $quote = "\"";
+        $tipo = TipoEventoSistema::CADASTRO_USUARIO;
         $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES ";
-        $sql .= " ($idUsuarioFonte,$idUsuarioAlvo,1,<data>,<hora>)";
+        $sql .= " ($idUsuarioFonte,$idUsuarioAlvo,$tipo,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
         $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
         try {
@@ -47,8 +50,9 @@ class sistemaDAO extends abstractDAO {
      */
     public static function registrarExclusaoUsuario($idUsuarioFonte, $idUsuarioAlvo) {
         $quote = "\"";
+        $tipo = TipoEventoSistema::REMOCAO_USUARIO;
         $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES ";
-        $sql .= " ($idUsuarioFonte,$idUsuarioAlvo,2,<data>,<hora>)";
+        $sql .= " ($idUsuarioFonte,$idUsuarioAlvo,$tipo,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
         $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
         try {
@@ -68,8 +72,9 @@ class sistemaDAO extends abstractDAO {
      */
     public static function registrarAlteracaoUsuario($idUsuarioFonte, $idUsuarioAlvo) {
         $quote = "\"";
+        $tipo = TipoEventoSistema::ALTERACAO_USUARIO;
         $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES ";
-        $sql .= " ($idUsuarioFonte,$idUsuarioAlvo,3,<data>,<hora>)";
+        $sql .= " ($idUsuarioFonte,$idUsuarioAlvo,$tipo,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
         $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
         try {
@@ -83,4 +88,5 @@ class sistemaDAO extends abstractDAO {
 
 }
 
+// </editor-fold>
 ?>

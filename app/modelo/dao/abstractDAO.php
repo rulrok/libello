@@ -16,6 +16,10 @@ abstract class abstractDAO {
         }
         return self::$conexao;
     }
+    
+    public static function quote($string){
+        return self::getConexao()->quote($string);
+    }
 
     /*
       abstract function atualizar($valueObject, $condicao = null);

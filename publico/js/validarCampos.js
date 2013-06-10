@@ -83,6 +83,16 @@ function liberarCadastro() {
                 //patter = new RegExp("([1-9]{1,1}[0-9]*|[0]*[1-9]+)");
                 patter = new RegExp("^((?!default).)*$");
                 break;
+            case "estado":
+                patter = new RegExp("^((?!default).)*$");
+                break;
+            case "cidade":
+                patter = new RegExp("^((?!default).)*$");
+                break;
+//                A opção default casa qualquer input do tipo caixa de seleção para que não seja válida a opção default
+            default:
+                patter = new RegExp(".*");
+                break;
         }
 
         //window.alert("Vai testar: " + campos[i].value+"\nPattern: "+patter);

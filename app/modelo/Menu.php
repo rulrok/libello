@@ -49,11 +49,15 @@ class Menu {
                         switch ($permissao_ferramenta['idPermissao']) {
                             case Permissao::ADMINISTRADOR:
                             case Permissao::GESTOR:
-                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=cursos&a=gerenciar')\">" . "\n";
-                                $subMenuCode .= "<li>Gerenciar registros</li></a>" . "\n";
+                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=cursospolos&a=gerenciarcursos')\">" . "\n";
+                                $subMenuCode .= "<li>Gerenciar cursos</li></a>" . "\n";
+                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=cursospolos&a=gerenciarpolos')\">" . "\n";
+                                $subMenuCode .= "<li>Gerenciar polos</li></a>" . "\n";
                             case Permissao::ESCRITA:
-                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=cursos&a=novo')\">" . "\n";
-                                $subMenuCode .= "<li>Inserir novo registro</li></a>" . "\n";
+                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=cursospolos&a=novocurso')\">" . "\n";
+                                $subMenuCode .= "<li>Inserir novo curso</li></a>" . "\n";
+                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=cursospolos&a=novopolo')\">" . "\n";
+                                $subMenuCode .= "<li>Inserir novo polo</li></a>" . "\n";
                             case Permissao::CONSULTA:
                         }
 //                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/imagens/icones/go-up.png\"></li></a>" . "\n";

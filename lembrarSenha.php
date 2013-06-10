@@ -6,7 +6,7 @@
         <link rel='stylesheet' href='publico/css/mainStyle.css' />  
         <link rel='stylesheet' href='publico/css/login.css' />
 
-        <script src="publico/js/jquery-1.9.1.js"></script>
+        <script src="publico/js/jquery/jquery-1.9.1.js"></script>
 
         <title>Lembrar senha</title>
     </head>
