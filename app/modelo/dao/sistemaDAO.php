@@ -1,6 +1,7 @@
 <?php
 
 require_once 'abstractDAO.php';
+include_once __DIR__.'/../enumeracao/TipoEventoSistema.php';
 
 class sistemaDAO extends abstractDAO {
 

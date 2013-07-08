@@ -309,8 +309,8 @@ function ajax(link, place)
     }).done(function(data) {
 
         if (document.paginaAlterada) {
-            var ignorarMudanças = confirm("Modificações não salvas. Continuar?");
-            if (!ignorarMudanças) {
+            var ignorarMudancas = confirm("Modificações não salvas. Continuar?");
+            if (!ignorarMudancas) {
                 return false;
             }
         }

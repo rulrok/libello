@@ -89,7 +89,6 @@ function liberarCadastro() {
             case "cidade":
                 patter = new RegExp("^((?!default).)*$");
                 break;
-//                A opção default casa qualquer input do tipo caixa de seleção para que não seja válida a opção default
             default:
                 patter = new RegExp(".*");
                 break;

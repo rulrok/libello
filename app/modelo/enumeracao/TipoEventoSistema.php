@@ -22,7 +22,5 @@ final class TipoEventoSistema {
     const REMOCAO_CURSO = 8;
     const ALTERACAO_CURSO = 9;
     
-    
-
 }
 ?>

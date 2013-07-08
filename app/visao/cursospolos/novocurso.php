@@ -23,15 +23,15 @@ else:
             <legend>Inserir novo curso</legend>
             <span class="line">
                 <label>Curso</label>
-                <input type="text" class="input-large" id="nomecurso" />
+                <input required type="text" class="input-large" id="nomecurso" />
             </span>
             <span class="line">
                 <label>Área</label>
-                <select class="input-medium" id="area"></select>
+                 <?php echo $this->comboArea ?>
             </span>
             <span class="line">
                 <label>Tipo</label>
-                <select class="input-xlarge" id="tipo"></select>
+                 <?php echo $this->comboTipoCurso ?>
             </span>
         </fieldset>
         <input class="btn btn-large" type="reset" value="Limpar">

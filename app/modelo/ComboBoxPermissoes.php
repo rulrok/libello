@@ -1,7 +1,7 @@
 <?php
 require BIBLIOTECA_DIR."configuracoes.php";
 require_once "Menu.php";
-require_once "Ferramenta.php";
+require_once "enumeracao/Ferramenta.php";
 
 class ComboBoxPermissoes {
 

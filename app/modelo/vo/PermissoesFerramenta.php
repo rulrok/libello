@@ -1,7 +1,7 @@
 <?php
 
 require_once BIBLIOTECA_DIR . "seguranca/Permissao.php";
-require_once __DIR__ . "/../Ferramenta.php";
+require_once __DIR__ . "/../enumeracao/Ferramenta.php";
 
 class PermissoesFerramenta {
 

@@ -1,11 +1,13 @@
 <?php
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/biblioteca/Mvc/Controlador.php';
+include_once ROOT . 'app/modelo/ComboBoxAreas.php';
+include_once ROOT . 'app/modelo/ComboBoxTipoCurso.php';
 
 class ControladorCursospolos extends Controlador {
 
     public function acaoNovoPolo($erro = false) {
-        if (!$erro){
+        if (!$erro) {
             $this->visao->nome = '';
             $this->visao->estado = '';
             $this->visao->cidade = '';
@@ -60,6 +62,8 @@ class ControladorCursospolos extends Controlador {
     }
 
     public function acaoNovoCurso() {
+        $this->visao->comboArea = ComboBoxAreas::montarTodasAsAreas();
+        $this->visao->comboTipoCurso = ComboBoxTipoCurso::montarTodosOsTipos();
         $this->renderizar();
     }
 

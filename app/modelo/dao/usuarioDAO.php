@@ -3,7 +3,7 @@
 require_once 'abstractDAO.php';
 require_once __DIR__ . '/../vo/Usuario.php';
 require_once __DIR__ . '/../vo/PermissoesFerramenta.php';
-require_once __DIR__ . '/../Ferramenta.php';
+require_once __DIR__ . '/../enumeracao/Ferramenta.php';
 require_once BIBLIOTECA_DIR . 'seguranca/Permissao.php';
 
 class usuarioDAO extends abstractDAO {

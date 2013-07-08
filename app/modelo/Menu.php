@@ -2,9 +2,12 @@
 
 include_once ROOT . 'app/modelo/vo/Usuario.php';
 include_once ROOT . 'app/modelo/dao/usuarioDAO.php';
-require_once 'Ferramenta.php';
+include_once ROOT . 'app/modelo/dao/areaDAO.php';
+require_once 'enumeracao/Ferramenta.php';
+require_once 'enumeracao/Area.php';
+require_once 'enumeracao/TipoCurso.php';
+require_once 'enumeracao/Papel.php';
 require_once BIBLIOTECA_DIR . 'seguranca/Permissao.php';
-require_once 'Papel.php';
 
 class Menu {
 
@@ -202,6 +205,48 @@ class Menu {
         $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
         for ($i = 1; $i <= Papel::__length; $i++) {
             $codigo .= "<option value=\"$i\">" . papelDAO::obterNomePapel($i) . "</option>\n";
+        }
+        $codigo .= "</select>\n";
+        return $codigo;
+    }
+    
+    public static function montarCaixaSelecaoAreas($required = false, $class = null, $name = null){
+        $codigo = "<select ";
+        if ($required) {
+            $codigo .= "required ";
+        }
+        if ($class != null) {
+            $codigo .= " class = \"" . $class . "\" ";
+        }
+        if ($name != null) {
+            $codigo .= " name = \"" . $name . "\"";
+        }
+        $codigo .= ">\n";
+
+        $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
+        for ($i = 1; $i <= Area::__length; $i++) {
+            $codigo .= "<option value=\"$i\">" . areaDAO::obterNomeArea($i) . "</option>\n";
+        }
+        $codigo .= "</select>\n";
+        return $codigo;
+    }
+    
+    public static function montarCaixaSelecaoTiposCurso($required = false, $class = null, $name = null){
+        $codigo = "<select ";
+        if ($required) {
+            $codigo .= "required ";
+        }
+        if ($class != null) {
+            $codigo .= " class = \"" . $class . "\" ";
+        }
+        if ($name != null) {
+            $codigo .= " name = \"" . $name . "\"";
+        }
+        $codigo .= ">\n";
+
+        $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
+        for ($i = 1; $i <= TipoCurso::__length; $i++) {
+            $codigo .= "<option value=\"$i\">" . cursoDAO::obterNomeTipoCurso($i) . "</option>\n";
         }
         $codigo .= "</select>\n";
         return $codigo;
