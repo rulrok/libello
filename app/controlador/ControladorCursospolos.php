@@ -124,6 +124,68 @@ class ControladorCursospolos extends Controlador {
         $this->renderizar();
     }
 
+    public function acaoEditarCurso($erro = false) {
+        if ($erro == false) {
+            if (isset($_GET['cursoID']) || isset($_POST['cursoID'])) {
+                $this->visao->comboArea = ComboBoxAreas::montarTodasAsAreas();
+                $this->visao->comboTipoCurso = ComboBoxTipoCurso::montarTodosOsTipos();
+                $this->visao->cursoID = $cursoID = $_REQUEST['cursoID'];
+                $curso = cursoDAO::recuperarCurso($cursoID);
+                $this->visao->curso = $curso->get_nome();
+                $this->visao->idArea = (int) $curso->get_area();
+                $this->visao->idTipoCurso = (int) $curso->get_tipo();
+            }
+        }
+        $this->renderizar();
+    }
+
+    public function acaoVerificarEdicaoCurso($erro = false) {
+        $this->visao->mensagem_usuario = null;
+        $this->visao->tipo_mensagem = null;
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') :
+            $_SERVER['REQUEST_METHOD'] = null;
+            $this->visao->curso = $_POST['curso'];
+            $this->visao->area = $_POST['area'];
+            $this->visao->tipoCurso = $_POST['tipocurso'];
+            $this->visao->cursoID = $_POST['cursoID'];
+
+            $this->visao->comboArea = ComboBoxAreas::montarTodasAsAreas();
+            $this->visao->comboTipoCurso = ComboBoxTipoCurso::montarTodosOsTipos();
+
+
+            $cursoNovo = new Curso();
+            $cursoNovo->set_nome($this->visao->curso);
+            $cursoNovo->set_area($this->visao->area);
+            $cursoNovo->set_tipo($this->visao->tipoCurso);
+
+            $curso = cursoDAO::recuperarCurso($this->visao->cursoID);
+
+            if ($curso->get_nome() != "") {
+
+                if (cursoDAO::atualizar($this->visao->cursoID, $cursoNovo)) {
+                    $this->visao->mensagem_usuario = "Atualização concluída";
+                    $this->visao->tipo_mensagem = 'sucesso';
+                    $this->acaoEditarCurso(false);
+                } else {
+                    $this->visao->mensagem_usuario = "Atualização mal sucedida";
+                    $this->visao->tipo_mensagem = 'erro';
+                    $this->acaoEditarCurso(true);
+                }
+            } else {
+                $this->visao->mensagem_usuario = "Dados inconsistentes";
+                $this->visao->tipo_mensagem = 'erro';
+                $this->acaoEditarCurso(true);
+            }
+
+        endif;
+
+        return;
+    }
+
+    public function acaoRemoverCurso() {
+        $this->renderizar();
+    }
+
 }
 
 ?>

@@ -6,7 +6,7 @@ class areaDAO extends abstractDAO {
 
     public static function obterNomeArea($areaId) {
         $areaId = (int) $areaId;
-        $sql = "SELECT nome FROM area WHERE idArea = " . $areaId;
+        $sql = "SELECT nomeArea FROM area WHERE idArea = " . $areaId;
         try {
             $resultado = parent::getConexao()->query($sql)->fetch();
         } catch (Exception $e) {

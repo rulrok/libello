@@ -9,8 +9,7 @@ require_once BIBLIOTECA_DIR . 'seguranca/Permissao.php';
 class usuarioDAO extends abstractDAO {
 
     /**
-     * Atualiza informações de um usuário. O email não é alterado, pois ele é a
-     * chave primaria no banco de dados.
+     * Atualiza informações de um usuário. O email não é alterado.
      * @param type $email Usado para localizar o usuário no banco de dados.
      * @param Usuario $usuario Objecto VO com as novas informações.
      * @return boolean
