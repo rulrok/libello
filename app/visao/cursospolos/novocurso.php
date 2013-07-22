@@ -23,7 +23,7 @@ else:
             <legend>Inserir novo curso</legend>
             <span class="line">
                 <label>Curso</label>
-                <input required type="text" class="input-large" id="nomecurso" />
+                <input required type="text" class="input-xlarge" id="nomecurso" name="curso" value="<?php echo $this->curso?>" />
             </span>
             <span class="line">
                 <label>Área</label>

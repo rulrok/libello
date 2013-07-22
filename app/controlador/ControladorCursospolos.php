@@ -61,10 +61,59 @@ class ControladorCursospolos extends Controlador {
         return;
     }
 
-    public function acaoNovoCurso() {
+    public function acaoNovoCurso($erro = false) {
+        if (!$erro) {
+            $this->visao->curso = "";
+        }
         $this->visao->comboArea = ComboBoxAreas::montarTodasAsAreas();
         $this->visao->comboTipoCurso = ComboBoxTipoCurso::montarTodosOsTipos();
         $this->renderizar();
+    }
+
+    public function acaoVerificarNovoCurso() {
+        $this->visao->mensagem_usuario = null;
+        $this->visao->tipo_mensagem = null;
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') :
+            $_SERVER['REQUEST_METHOD'] = null;
+        endif;
+        $this->visao->curso = $_POST['curso'];
+        $this->visao->area = $_POST['area'];
+        $this->visao->tipocurso = $_POST['tipocurso'];
+
+        if (!strpos($this->visao->tipocurso, "selecione")) {
+            if (!strpos($this->visao->area, "selecione")) {
+                if (strcmp($this->visao->curso, "") != 0) {
+                    $curso = new Curso();
+                    $curso->set_nome($this->visao->curso);
+                    $curso->set_area($this->visao->area);
+                    $curso->set_tipo($this->visao->tipocurso);
+                    if (cursoDAO::consultarCurso($curso) == 0) {
+                        cursoDAO::cadastrarCurso($curso);
+                        $this->visao->mensagem_usuario = "Cadastrado com sucesso";
+                        $this->visao->tipo_mensagem = "sucesso";
+                        $this->acaoNovoCurso(false);
+                    } else {
+                        $this->visao->mensagem_usuario = "Polo já existe!";
+                        $this->visao->tipo_mensagem = "informacao";
+                        $this->acaoNovoCurso(true);
+                    }
+                } else {
+                    $this->visao->mensagem_usuario = "Erro ao cadastrar";
+                    $this->visao->tipo_mensagem = "erro";
+                    $this->acaoNovoCurso(true);
+                }
+            } else {
+                $this->visao->mensagem_usuario = "Erro ao cadastrar";
+                $this->visao->tipo_mensagem = "erro";
+                $this->acaoNovoCurso(true);
+            }
+        } else {
+            $this->visao->mensagem_usuario = "Erro ao cadastrar";
+            $this->visao->tipo_mensagem = "erro";
+            $this->acaoNovoCurso(true);
+        }
+
+        return;
     }
 
     public function acaoGerenciarcursos() {

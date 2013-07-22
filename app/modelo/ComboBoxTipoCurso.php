@@ -6,7 +6,7 @@ require_once "Menu.php";
 class ComboBoxTipoCurso {
 
     public static function montarTodosOsTipos() {
-        $code = Menu::montarCaixaSelecaoTiposCurso(true, 'input-large', 'curso');
+        $code = Menu::montarCaixaSelecaoTiposCurso(true, 'input-large', 'tipocurso');
 
         return $code;
     }
