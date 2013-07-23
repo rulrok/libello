@@ -178,6 +178,9 @@ class ControladorUsuario extends Controlador {
         $this->renderizar();
     }
 
+    public function acaoRestaurar(){
+        $this->renderizar();
+    }
 }
 
 ?>

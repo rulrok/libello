@@ -76,7 +76,7 @@ class ControladorCursospolos extends Controlador {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') :
             $_SERVER['REQUEST_METHOD'] = null;
         endif;
-        $this->visao->curso = $_POST['curso'];
+        $this->visao->curso = $_POST['nomecurso'];
         $this->visao->area = $_POST['area'];
         $this->visao->tipocurso = $_POST['tipocurso'];
 
@@ -144,7 +144,7 @@ class ControladorCursospolos extends Controlador {
         $this->visao->tipo_mensagem = null;
         if ($_SERVER['REQUEST_METHOD'] == 'POST') :
             $_SERVER['REQUEST_METHOD'] = null;
-            $this->visao->curso = $_POST['curso'];
+            $this->visao->curso = $_POST['nomecurso'];
             $this->visao->area = $_POST['area'];
             $this->visao->tipoCurso = $_POST['tipocurso'];
             $this->visao->cursoID = $_POST['cursoID'];

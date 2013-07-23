@@ -31,6 +31,8 @@ class Menu {
                         $subMenuCode .="<ul class=\"hiddenSubMenuLink usuariosSubMenu\">" . "\n";
                         switch ($permissao_ferramenta['idPermissao']) {
                             case Permissao::ADMINISTRADOR:
+                                $subMenuCode .= "   <a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=usuario&a=restaurar')\">" . "\n";
+                                $subMenuCode .= "<li>Verificar usuários excluídos</li></a>" . "\n";
                             case Permissao::GESTOR:
                                 $subMenuCode .= "   <a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=usuario&a=gerenciar')\">" . "\n";
                                 $subMenuCode .= "<li>Gerenciar usuários</li></a>" . "\n";

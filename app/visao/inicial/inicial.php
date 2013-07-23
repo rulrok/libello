@@ -12,6 +12,7 @@
         <link type="text/css" rel="stylesheet" href="publico/css/mainStyle.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.dataTables_themeroller.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.datepick.css"/> 
+<script src="publico/js/validarCampos.js"></script>
 
 
         <!--<link type="text/css" rel="stylesheet" href="publico/css/jquery-ui-1.8.4.custom.css" />-->

@@ -22,11 +22,11 @@ else:
             <legend>Inserir novo polo</legend>
             <span class="line">
                 <label>Nome</label>
-                <input required type="text" class="input-large" id="nomepolo" name="nomepolo" value="<?php echo $this->nome; ?>" />
+                <input required type="text" class="input-xlarge" id="nomepolo" name="nomepolo" value="<?php echo $this->nome; ?>" />
             </span>
             <span class="line">
                 <label>Estado</label>
-                <select required class="input-xlarge" id="estado" name="estado"></select>
+                <select required class="input-large" id="estado" name="estado"></select>
             </span>
             <span class="line">
                 <label>Cidade</label>
