@@ -171,6 +171,7 @@ class ControladorUsuario extends Controlador {
     }
 
     public function acaoGerenciar() {
+        $this->visao->usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,dataNascimento,nome", "idUsuario <> " . $_SESSION['idUsuario']);
         $this->renderizar();
     }
 

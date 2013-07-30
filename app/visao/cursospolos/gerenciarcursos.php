@@ -1,8 +1,6 @@
 
 
-<?php
-$cursos = cursoDAO::consultar("idCurso,nome,nomeArea,nomeTipoCurso");
-?>
+
 <div class="btn-toolbar">
     <div class="btn-group">
         <button class="btn btn-adicionar"><i class="icon-user"></i> Adicionar novo</button>
@@ -21,7 +19,7 @@ $cursos = cursoDAO::consultar("idCurso,nome,nomeArea,nomeTipoCurso");
     </thead>
     <tbody>
         <?php
-        foreach ($cursos as $value) {
+        foreach ($this->cursos as $value) {
             echo '<tr>';
             for ($i = 0; $i < sizeof($value) / 2; $i++) {
                 echo $i == 0 ? '<td hidden class="campoID">' : '<td>';
@@ -63,6 +61,7 @@ $cursos = cursoDAO::consultar("idCurso,nome,nomeArea,nomeTipoCurso");
         });
 
         $($("#gerenciar_curso tr")[1]).addClass('row_selected');
+        selectedElement = $("#gerenciar_curso tr")[1];
 
         oTable.$('tr').mousedown(function(e) {
             oTable.$('tr.row_selected').removeClass('row_selected');
@@ -86,7 +85,7 @@ $cursos = cursoDAO::consultar("idCurso,nome,nomeArea,nomeTipoCurso");
         });
 
         $(".btn-deletar").on('click', function() {
-            if ($('.row_selected').size() == 0) {
+            if ($('.row_selected td').attr('class') == 'dataTables_empty' | $('.row_selected').size() == 0) {
                 return false;
             }
             if (confirm('Deseja realmente fazer isso?')) {
@@ -94,7 +93,9 @@ $cursos = cursoDAO::consultar("idCurso,nome,nomeArea,nomeTipoCurso");
                 ajax("index.php?c=cursospolos&a=removerCurso&cursoID=" + id, "nenhum");
                 var pos = oTable.fnGetPosition(selectedElement);
                 oTable.fnDeleteRow(pos);
+
                 $("tr.odd")[0].addClass("row_selected");
+
             }
         });
     });

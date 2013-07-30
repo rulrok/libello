@@ -23,15 +23,15 @@ else:
             <legend>Inserir novo curso</legend>
             <span class="line">
                 <label>Curso</label>
-                <input required type="text" class="input-xlarge" id="nomecurso" name="nomecurso" value="<?php echo $this->curso?>" />
+                <input required type="text" class="input-xlarge" id="nomecurso" name="nomecurso" value="<?php echo $this->curso ?>" />
             </span>
             <span class="line">
                 <label>Área</label>
-                 <?php echo $this->comboArea ?>
+                <?php echo $this->comboArea ?>
             </span>
             <span class="line">
                 <label>Tipo</label>
-                 <?php echo $this->comboTipoCurso ?>
+                <?php echo $this->comboTipoCurso ?>
             </span>
         </fieldset>
         <input class="btn btn-large" type="reset" value="Limpar">
@@ -41,6 +41,11 @@ else:
 
     <script src="publico/js/validarCampos.js"></script>
     <script src="publico/js/cidades-estados.js"></script>
+    <script>
+        $('[name=area]').val("<?php echo $this->area ?>");
+//        $('#estado').change();
+        $('[name=tipocurso]').val("<?php echo $this->tipocurso ?>");
+    </script>
 <?php
 endif;
 ?>

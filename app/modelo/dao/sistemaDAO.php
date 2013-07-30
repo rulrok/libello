@@ -1,7 +1,7 @@
 <?php
 
 require_once 'abstractDAO.php';
-include_once __DIR__.'/../enumeracao/TipoEventoSistema.php';
+include_once __DIR__ . '/../enumeracao/TipoEventoSistema.php';
 
 class sistemaDAO extends abstractDAO {
 
@@ -64,16 +64,27 @@ class sistemaDAO extends abstractDAO {
             return false;
         }
     }
-    
-       /**
-     * Registra um evento de remoção de um usuário do sistema.
-     * @param type $idUsuarioFonte Usuário que está editando.
-     * @param type $idUsuarioAlvo Usuário que está sendo editado.
-     * @return boolean True em caso de sucesso, False em caso contrário.
-     */
+
+
     public static function registrarExclusaoCurso($idUsuarioFonte) {
         $quote = "\"";
         $tipo = TipoEventoSistema::REMOCAO_CURSO;
+        $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES ";
+        $sql .= " ($idUsuarioFonte,'NULL',$tipo,<data>,<hora>)";
+        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
+        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            print_r($e);
+            return false;
+        }
+    }
+    
+    public static function registrarExclusaoPolo($idUsuarioFonte) {
+        $quote = "\"";
+        $tipo = TipoEventoSistema::REMOCAO_POLO;
         $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES ";
         $sql .= " ($idUsuarioFonte,'NULL',$tipo,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);

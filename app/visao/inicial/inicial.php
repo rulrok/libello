@@ -12,13 +12,13 @@
         <link type="text/css" rel="stylesheet" href="publico/css/mainStyle.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.dataTables_themeroller.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.datepick.css"/> 
-<script src="publico/js/validarCampos.js"></script>
 
 
         <!--<link type="text/css" rel="stylesheet" href="publico/css/jquery-ui-1.8.4.custom.css" />-->
         <!-- Inicialização dos principais scripts -->
         <script src="publico/js/jquery/jquery-1.9.1.js"></script>
         <script src="publico/js/mainScript.js"></script>
+        <script src="publico/js/validarCampos.js"></script>
 
         <title><?php echo $this->titulo ?></title>
     </head>
@@ -49,12 +49,12 @@
                 </div>
 
             </header>
-<!--                        <div class="shaderFrame"></div>
-                        <div class="shaderFrameContent">
-                            <div class="shaderFrameContentWrap centered">
-                                 Conteúdo dinâmico     
-                            </div>
-                        </div>-->
+            <!--                        <div class="shaderFrame"></div>
+                                    <div class="shaderFrameContent">
+                                        <div class="shaderFrameContentWrap centered">
+                                             Conteúdo dinâmico     
+                                        </div>
+                                    </div>-->
             <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <!--                <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>

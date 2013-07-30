@@ -59,6 +59,8 @@ function liberarCadastro() {
                 break;
             case "nomecurso":
             case "nomepolo":
+                patter = new RegExp("^[" + letrasacentuadas + " -]{1,30}[" + letrasacentuadas + "-] *$");
+                break;
             case "sobrenome":
                 //Padrão: Apenas letras e espaços
                 patter = new RegExp("^[" + letrasacentuadas + " ]{1,30}[" + letrasacentuadas + "] *$");

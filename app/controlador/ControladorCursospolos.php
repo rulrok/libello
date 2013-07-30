@@ -93,7 +93,10 @@ class ControladorCursospolos extends Controlador {
                         $this->visao->tipo_mensagem = "sucesso";
                         $this->acaoNovoCurso(false);
                     } else {
-                        $this->visao->mensagem_usuario = "Polo já existe!";
+//                        $this->visao->id
+//                        $this->visao->idArea = areaDAO::obterIdArea($this->visao->area);
+//                        $this->visao->idTipoCurso = cursoDAO::obterIdCurso($this->visao->tipocurso);
+                        $this->visao->mensagem_usuario = "Curso já existe!";
                         $this->visao->tipo_mensagem = "informacao";
                         $this->acaoNovoCurso(true);
                     }
@@ -117,10 +120,12 @@ class ControladorCursospolos extends Controlador {
     }
 
     public function acaoGerenciarcursos() {
+        $this->visao->cursos = cursoDAO::consultar("idCurso,nome,nomeArea,nomeTipoCurso");
         $this->renderizar();
     }
 
     public function acaoGerenciarpolos() {
+        $this->visao->polos = poloDAO::consultar("idPolo,nome,cidade,estado");
         $this->renderizar();
     }
 
@@ -144,10 +149,10 @@ class ControladorCursospolos extends Controlador {
         $this->visao->tipo_mensagem = null;
         if ($_SERVER['REQUEST_METHOD'] == 'POST') :
             $_SERVER['REQUEST_METHOD'] = null;
+            $this->visao->cursoID = $_POST['cursoID'];
             $this->visao->curso = $_POST['nomecurso'];
             $this->visao->area = $_POST['area'];
             $this->visao->tipoCurso = $_POST['tipocurso'];
-            $this->visao->cursoID = $_POST['cursoID'];
 
             $this->visao->comboArea = ComboBoxAreas::montarTodasAsAreas();
             $this->visao->comboTipoCurso = ComboBoxTipoCurso::montarTodosOsTipos();
@@ -184,6 +189,63 @@ class ControladorCursospolos extends Controlador {
 
     public function acaoRemoverCurso() {
         $this->renderizar();
+    }
+
+    public function acaoRemoverPolo() {
+        $this->renderizar();
+    }
+
+    public function acaoEditarPolo($erro = false) {
+        if ($erro == false) {
+            if (isset($_GET['poloID']) || isset($_POST['poloID'])) {
+                $this->visao->poloID = $cursoID = $_REQUEST['poloID'];
+                $polo = poloDAO::recuperarPolo($this->visao->poloID);
+                $this->visao->polo = $polo->get_nome();
+                $this->visao->cidade = $polo->get_cidade();
+                $this->visao->estado = $polo->get_estado();
+            }
+        }
+        $this->renderizar();
+    }
+
+    public function acaoVerificarEdicaoPolo($erro = false) {
+        $this->visao->mensagem_usuario = null;
+        $this->visao->tipo_mensagem = null;
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') :
+            $_SERVER['REQUEST_METHOD'] = null;
+
+            $this->visao->poloID = $_POST['poloID'];
+            $this->visao->polo = $_POST['polo'];
+            $this->visao->estado = $_POST['estado'];
+            $this->visao->cidade = $_POST['cidade'];
+
+            $poloNovo = new Polo();
+            $poloNovo->set_nome($this->visao->polo);
+            $poloNovo->set_estado($this->visao->estado);
+            $poloNovo->set_cidade($this->visao->cidade);
+
+            $polo = poloDAO::recuperarPolo($this->visao->poloID);
+
+            if ($polo->get_nome() != "") {
+
+                if (poloDAO::atualizar($this->visao->poloID, $poloNovo)) {
+                    $this->visao->mensagem_usuario = "Atualização concluída";
+                    $this->visao->tipo_mensagem = 'sucesso';
+                    $this->acaoEditarPolo(false);
+                } else {
+                    $this->visao->mensagem_usuario = "Atualização mal sucedida";
+                    $this->visao->tipo_mensagem = 'erro';
+                    $this->acaoEditarPolo(true);
+                }
+            } else {
+                $this->visao->mensagem_usuario = "Dados inconsistentes";
+                $this->visao->tipo_mensagem = 'erro';
+                $this->acaoEditarPolo(true);
+            }
+
+        endif;
+
+        return;
     }
 
 }

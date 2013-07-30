@@ -110,8 +110,6 @@ class cursoDAO extends abstractDAO {
 
         if ($condicao == null) {
             $condicao = "";
-        } else {
-            $condicao = "WHERE ativo = 1 AND " . $condicao;
         }
         $sql = "SELECT " . $colunas . " FROM curso JOIN area ON area=idArea JOIN tipoCurso ON tipo=idtipoCurso" . $condicao;
         $resultado = parent::getConexao()->query($sql)->fetchAll();
