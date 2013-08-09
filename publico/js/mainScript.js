@@ -93,6 +93,7 @@ window.onscroll = function() {
     if (!window.menuHasUpped && windowPosition >= menuPosition) {
         window.menuHasUpped = true;
         //console.debug("Fixou o menu");
+        $("#barra_superior").show(800);
         var divMenu = $(".menuContainer");
         var menuHeight = divMenu.height();
         divMenu.css('position', 'fixed');
@@ -102,6 +103,7 @@ window.onscroll = function() {
         divContent.css('padding-top', menuHeight + 'px');
     } else if (window.menuHasUpped && windowPosition < menuPosition) {
         window.menuHasUpped = false;
+        $("#barra_superior").hide(500);
         //console.debug("Retornou ao normal");
         var divMenu = $(".menuContainer");
         divMenu.css('position', 'relative');
