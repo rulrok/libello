@@ -5,15 +5,24 @@ $controlador = new ControladorDocumentos();
  * and open the template in the editor.
  */
 ?>
-
-<script type="text/javascript">                        
+<script src="publico/js/jquery-te-1.0.5.min.js" type="text/javascript"></script>
+        <link href='publico/css/jquery-te-Style.css' rel='stylesheet' type="text/css"/>
+<script type="text/javascript">  
+    
+    
+        $(document).ready(function(){
+                 $("#corpo").jqte();
+                 
+            });
+  
+    
             function confirmaAcao(acao){
                 bloqueia();
                 if(acao == 'gerar'){
                     $('#msgCadastro').removeAttr('hidden');
                     $('#msgSalvar').attr({hidden: 'true'});
                      $('#form1').attr("target", "_blank");
-                    $('#form1').attr({action:'../../../includes/relatoriosPDF/gerarMemorando.php?booledit=0'});
+                    $('#form1').attr({action:'app/modelo/relatoriosPDF/gerarMemorando.php?booledit=0'});
                 }else{
                     if(acao == 'salvar'){
                         $('#msgSalvar').removeAttr('hidden');
@@ -33,7 +42,7 @@ $controlador = new ControladorDocumentos();
             function b_sim(){
                 capturaNumMemorando();
                 alert('Memorando gerado com sucesso.');
-                $(location).attr('href', '../menu.php');
+                //$("#form1").submit();
             }
             
             function bloqueia(){
@@ -92,10 +101,10 @@ $controlador = new ControladorDocumentos();
             }
             
             function capturaNumMemorando(){
-                $.getJSON('../paginasAuxiliares/valores.ajax.php?search=',{valor: 2, ajax: 'true'}, function(j){
+                $.getJSON('app/modelo/valores.ajax.php?search=',{valor: 2, ajax: 'true'}, function(j){
                     $('#i_numMemorando').val(j);
                     //alert('Numero de memorando: ' + $('#i_numMemorando').val() + ' gerado.');
-                    document.form1.submit();
+                    $(document).form1.submit();
                 });
             }
             
@@ -113,7 +122,15 @@ $controlador = new ControladorDocumentos();
             
         </script>
 
-<form  id="form1" name="form1" method="post">
+<form  id="form1" name="form1" target="_blank" method="post">
+    <table align="center">
+                              
+                                <tr>
+                                    <td align="center" colspan="2">
+                                        <h5>Memorando</h5>
+                                    </td>
+                                </tr>
+     </table>
                             <table style='width: 794px; height: 1123px; font-family:"Times New Roman",Georgia,Serif; font-size: 15px; background-color: #FFF;' border="0" align="center">
                                 <tr height="189">
                                     <td width="113" rowspan="20"></td>
@@ -158,7 +175,7 @@ $controlador = new ControladorDocumentos();
                                 <tr height="40"><td></td></tr>
                                 <tr height="30">
                                     <td align="left">
-                                        <div align="center">
+                                        <div align="">
                                             <textarea style="max-height: 500px;min-height: 200px;max-width: 625px;min-width: 625px" id="corpo" name="corpo" onkeyup="liberarCadastro()">Corpo do Memorando</textarea>
                                         </div>
                                     </td>
@@ -189,7 +206,9 @@ $controlador = new ControladorDocumentos();
                                                         <input type="text" id="cargo_remetente" name="cargo_remetente" onkeyup="liberarCadastro()" size="25" style="margin-left: 110px"/><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
                                                     </td>
                                                     <td>
-                                                        <input type="button" title="Adicionar Remetente" id="add_rem" value="" onclick="adicionarRemetente();" class="classeBotaoAdicionar" />
+                                                        <a  title="Adicionar Remetente" href="javascript:void(0);" value="" onclick="adicionarRemetente();" class="btn" >
+                                                            <i class="icon-plus"></i>
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -212,7 +231,9 @@ $controlador = new ControladorDocumentos();
                                                         <input type="text" id="cargo_remetente2" name="cargo_remetente2" onkeyup="liberarCadastro()" size="25" style="margin-left: 110px"/><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
                                                     </td>
                                                     <td>
-                                                        <input type="button" title="Remover Remetente" id="del_rem" value="" onclick="removerRemetente();" class="classeBotaoExcluir" />
+                                                        <a title="Remover Remetente" href="javascript:void(0);" value="" onclick="removerRemetente();" class="btn" >
+                                                            <i class="icon-minus"></i>
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -226,7 +247,7 @@ $controlador = new ControladorDocumentos();
                                     <td align="center" colspan="2">
                                         <input class="btn" type="button" value="Gerar" disabled="true" name="b_gerar" id="b_gerar" onclick="confirmaAcao('gerar');"/>
                                         <input class="btn" type="button" value="Salvar" disabled="true" name="b_salvar" id="b_salvar" onclick="confirmaAcao('salvar');"/>
-                                        <input class="btn" type="button" value="Voltar" name="b_voltar" id="b_voltar" onclick=""/>
+<!--                                        <input class="btn" type="button" value="Voltar" name="b_voltar" id="b_voltar" onclick=""/>-->
                                     </td>
                                 </tr>
                                 <tr id="tr_confirmacao" height="50">
@@ -234,10 +255,10 @@ $controlador = new ControladorDocumentos();
                                         <div id="msgCadastro" hidden="true">
                                             <label>Atenção, o memorando será gerado e registrado permanentemente! Tem certeza?</label>
                                             <label>
-                                                <input type="button" onclick="b_sim();" name="b_sim_g" id="b_sim_g" value="Sim"/>
+                                                <input class="btn" type="button" onclick="b_sim();" name="b_sim_g" id="b_sim_g" value="Sim"/>
                                             </label>
                                             <label>
-                                                <input type="button" value="Não" onclick="b_nao();" name="b_nao_g" id="b_nao_g"/>
+                                                <input class="btn" type="button" value="Não" onclick="b_nao();" name="b_nao_g" id="b_nao_g"/>
                                             </label>
                                         </div>
                                     </th>
@@ -245,10 +266,10 @@ $controlador = new ControladorDocumentos();
                                         <div id="msgSalvar" hidden="true">
                                             <label>Atenção, o memorando será salvo! Tem certeza?</label>
                                             <label>
-                                                <input type="submit"  name="b_sim_s" id="b_sim_s" value="Sim" onclick="alert('Memorando salvo com sucesso.')"/>
+                                                <input class="btn" type="submit"  name="b_sim_s" id="b_sim_s" value="Sim" onclick="alert('Memorando salvo com sucesso.')"/>
                                             </label>
                                             <label>
-                                                <input type="button" value="Não" onclick="b_nao();" name="b_nao_s" id="b_nao_s"/>
+                                                <input class="btn" type="button" value="Não" onclick="b_nao();" name="b_nao_s" id="b_nao_s"/>
                                             </label>
                                         </div>
                                     </th>

@@ -1,6 +1,7 @@
 <?php
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/biblioteca/Mvc/Controlador.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/app/modelo/dao/documentoDAO.php';
 
 class ControladorDocumentos extends Controlador {
 
@@ -16,13 +17,15 @@ class ControladorDocumentos extends Controlador {
     public function acaoGerarOficio() {
         $this->renderizar();
     }
-    public function acaoGerarMemorando(){
+
+    public function acaoGerarMemorando() {
         $this->renderizar();
     }
+
     //comboDia() e comboMes() sao relativos a GerarOficio e Gerar Memorando
-        //combo dia
-        function comboDia() {
-            echo "<select id='dia' name='dia'>
+    //combo dia
+    function comboDia() {
+        echo "<select id='dia' name='dia'>
                 <option value='01'>01</option>
                 <option value='02'>02</option>
                 <option value='03'>03</option>
@@ -55,11 +58,11 @@ class ControladorDocumentos extends Controlador {
                 <option value='30'>30</option>
                 <option value='31'>31</option>
             </select>";
-        }
+    }
 
-        //combo mês
-        function comboMes() {
-            echo "<select id='mes' name='mes'>
+    //combo mês
+    function comboMes() {
+        echo "<select id='mes' name='mes'>
                 <option value='01'>janeiro</option>
                 <option value='02'>fevereiro</option>
                 <option value='03'>março</option>
@@ -73,10 +76,85 @@ class ControladorDocumentos extends Controlador {
                 <option value='11'>novembro</option>
                 <option value='12'>dezembro</option>
             </select>";
+    }
+
+    function acaoHistorico() {
+        $this->renderizar();
+    }
+
+    function menuGerenciar() {
+        $menu = " <div class=\"btn-toolbar\">
+                    <div class=\"btn-group\">
+                        <button class=\"btn btn-adicionar\"><i class=\"icon-user\"></i> Adicionar novo</button>
+                        <button class=\"btn btn-editar\" href=\"#\"><i class=\"icon-edit\"></i> Editar</button>
+                        <button class=\"btn btn-danger btn-deletar\" href=\"#\"><i class=\"icon-remove\"></i> Excluir</button>
+                    </div>
+                </div>";
+
+        return $menu;
+    }
+
+    function novoOficio($idusuario, $assunto, $corpo, $tratamento, $destino, $cargo_destino, $data, $estadoEdicao, $tipoSigla, $referencia, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $numOficio) {
+        $dao = new documentoDAO();
+        $dao->inserirOficio($idusuario, $assunto, $corpo, $tratamento, $destino, $cargo_destino, $data, $estadoEdicao, $tipoSigla, $referencia, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $numOficio);
+    }
+
+    function salvarOficio($idusuario, $assunto, $corpo, $tratamento, $destino, $cargo_destino, $data, $estadoEdicao, $tipoSigla, $referencia, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $numOficio) {
+        $dao = new documentoDAO();
+        $dao->inserirOficio($idusuario, $assunto, $corpo, $tratamento, $destino, $cargo_destino, $data, $estadoEdicao, $tipoSigla, $referencia, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $numOficio);
+    }
+
+    function atualizarOficio($idoficio, $assunto, $corpo, $tratamento, $destino, $cargo_destino, $data, $estadoEdicao, $tipoSigla, $referencia, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $numOficio) {
+        update_oficioSalvo($idoficio, $assunto, $corpo, $tratamento, $destino, $cargo_destino, $data, $estadoEdicao, $tipoSigla, $referencia, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $numOficio);
+    }
+
+    function retornaNumOficio() {
+        //$busca = selectMaxNumOficio();
+       // $dao = new documentoDAO();
+        $busca = documentoDAO::consultar("oficio", "idOficio in (SELECT max(idOficio) FROM oficio WHERE numOficio > (-1))");
+        if ($busca != null) {
+            $numOficio = $busca[0];
+            $num = ($numOficio->getNumOficio() + 1);
+        } else {
+            //erro
+            $num = -1;
         }
-        
-       
-        
+        return $num;
+    }
+
+    function retornaNumMemorando() {
+        $busca = selectMaxNumMemorando();
+        if ($busca != null) {
+            $numMemorando = mysql_fetch_array($busca);
+            $num = ($numMemorando["numMemorando"] + 1);
+        } else {
+            //erro
+            $num = -1;
+        }
+        return $num;
+    }
+
+    function salvarMemorando($idusuario, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao) {
+        insertNovoMemorando($idusuario, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao);
+    }
+
+    function novoMemorando($idusuario, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao) {
+        $dao = new documentoDAO();
+        $dao->insertNovoMemorando($idusuario, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao);
+    }
+
+    function invalidarMemorando($idmemorando) {
+        update_invalidarMemorando($idmemorando);
+    }
+
+    function deletarMemorando($idmemorando) {
+        deleteMemorando($idmemorando);
+    }
+
+    function atualizarMemorando($idmemorando, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao) {
+        update_memorandoSalvo($idmemorando, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao);
+    }
+
 }
 
 ?>
