@@ -42,7 +42,7 @@ function protegePaginaLogado() {
  */
 function expulsaVisitante($msg_erro = null) {
     encerrarSessao();
-    header("Location: " . WEB_SERVER_NAME . "logar.php" . ($msg_erro != null ? "?m=" . $msg_erro : ""));
+    header("Location: " . WEB_SERVER_NAME . "logar.php" . ($msg_erro != null ? "?m=" . $msg_erro : ""),true);
     exit;
 }
 

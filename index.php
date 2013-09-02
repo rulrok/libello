@@ -1,3 +1,4 @@
+<?php ob_start();?>
 <!DOCTYPE html>
 <noscript>
     <meta http-equiv="refresh" content="0;url=no-js.html" />
