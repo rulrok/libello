@@ -5,7 +5,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/app/modelo/dao/document
 
 class ControladorDocumentos extends Controlador {
 
-public function acaoHistorico() {
+    public function acaoHistorico() {
         $this->renderizar();
     }
 
@@ -74,10 +74,6 @@ public function acaoHistorico() {
                 <option value='11'>novembro</option>
                 <option value='12'>dezembro</option>
             </select>";
-    }
-
-    function acaoHistorico() {
-        $this->renderizar();
     }
 
     function menuGerenciar() {

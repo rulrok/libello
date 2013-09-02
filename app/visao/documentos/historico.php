@@ -1,7 +1,7 @@
 <?php
 $controladorAux = new ControladorDocumentos();
 ?>
-<script src="publico/js/jquery.dataTables.js"></script>
+<script src="publico/js/jquery/jquery.dataTables.js"></script>
 
 <style>
     .btn_oficio{
