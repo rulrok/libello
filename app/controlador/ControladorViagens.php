@@ -2,16 +2,17 @@
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/biblioteca/Mvc/Controlador.php';
 
-class ControladorCursos extends Controlador {
+class ControladorViagens extends Controlador {
 
-    public function acaoNovo() {
+    public function acaoNova() {
         $this->renderizar();
     }
 
     public function acaoGerenciar() {
-        $this->visao->conteudo = "Reuel";
         $this->renderizar();
     }
+    
+    
 
 }
 

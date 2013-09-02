@@ -4,7 +4,11 @@ class Visao {
 
     public function renderizar($diretorio, $arquivo) {
         $local = 'app/visao/';
-        require ROOT . $local . $diretorio . '/' . $arquivo;
+        if (file_exists(ROOT . $local . $diretorio . '/' . $arquivo)) {
+            require ROOT . $local . $diretorio . '/' . $arquivo;
+        } else {
+            require ROOT."app/visao/paginaInexistente.php";
+        }
     }
 
 }

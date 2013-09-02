@@ -85,7 +85,8 @@ class Usuario {
                 && $this->UNome !== null && $this->UNome !== ""
 //                && $this->login !== null && $this->login !== ""
                 && $this->senha !== null && $this->senha !== ""
-                && $this->idPapel !== null) {
+                && $this->idPapel !== null
+                && $this->email !== null && $this->email !== "") {
             return true;
         }
         return false;

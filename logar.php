@@ -2,13 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel='stylesheet' href='publico/css/bootstrap.css' />
         <link rel='stylesheet' href='publico/css/mainStyle.css' />  
         <link rel='stylesheet' href='publico/css/login.css' />
-        <!--<link rel='stylesheet' href='publico/css/bootstrap.css' />-->
         <title>Autenticação</title>
     </head>
     <body>
         <?php
+        
+        $ocultarDetalhes = false;
+        if ($_SERVER['HTTP_ACCEPT'] != "*/*"){
+            $ocultarDetalhes = true;
+        }
         session_start();
         if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION['autenticado'] === TRUE) {
             header("Location: index.php");
@@ -26,14 +31,19 @@
                     <fieldset>
                         <div class="line">
                             <label>Email</label>
-                            <input type="text" name="login">
+                            <input required type="text" name="login">
                         </div>
                         <div class="line">
                             <label>Senha</label>
-                            <input type="password" name="senha" >
+                            <input required type="password" name="senha" >
                         </div>
-                        <input name="identificacao" type="submit" value="Entrar" >
+                        <br/>
+                        <input class="btn btn-right btn-info" name="identificacao" type="submit" value="Entrar" >
+                            <?php if ($ocultarDetalhes): ?>
+                            <a class="btn"href="lembrarSenha.php">Esqueci a senha</a>
+                            <?php endif; ?>
                     </fieldset>
+
                 </form>
             </div>
             <div class="error centeredText">
@@ -44,12 +54,12 @@
                 ?>
             </div>
         </div>
-        <?php if (!isset($_GET['m'])): ?>
-        <div id="apoio">
-            <h3>Apoio:</h3>
-            <div id="uab"></div>
-            <div id="capes"></div>
-        </div>
+        <?php if ($ocultarDetalhes): ?>
+            <div id="apoio">
+                <h3>Apoio:</h3>
+                <div id="uab"></div>
+                <div id="capes"></div>
+            </div>
             <div id="footer" >
                 <p class="centeredText">Copyright &copy; 2012 - Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a></label>
             </div>

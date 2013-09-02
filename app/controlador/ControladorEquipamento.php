@@ -5,11 +5,28 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/biblioteca/Mvc/Controla
 class ControladorEquipamento extends Controlador {
 
     public function acaoNovo() {
+        $this->visao->equipamento = "";
+        $this->visao->quantidade = "";
+        $this->visao->dataEntrada = "";
+        $this->visao->comboTipo = "";
         $this->renderizar();
     }
 
     public function acaoSair() {
         $this->visao->conteudo = "Reuel";
+        $this->renderizar();
+    }
+    
+    public function acaoGerenciar(){
+        $this->renderizar();
+    }
+    public function acaoSaida(){
+        $this->renderizar();
+    }
+    public function acaoRetorno(){
+        $this->renderizar();
+    }
+    public function acaoConsulta(){
         $this->renderizar();
     }
 

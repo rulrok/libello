@@ -14,12 +14,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') :
 else:
     ?>
     <!--Início da página -->
-    <script src="publico/js/jquery.form.js"></script>
+    <script src="publico/js/jquery/jquery.form.js"></script>
     <script src="publico/js/ajaxForms.js"></script> 
     <form class="table centered" id="ajaxForm" method="post" action="index.php?c=usuario&a=novo">
         <fieldset>
             <legend>Informações sobre o usuário</legend>
-            <p class="centered centeredText boldedText">Campos com <img src="publico/images/icons/campo_obrigatorio.png"> são obrigatórios</label>
+            <p class="centered centeredText boldedText">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png"> são obrigatórios</label>
             <div class="line">
                 <label>Nome</label>
                 <input required type="text" id="nome" class="input-xlarge" placeholder="Primeiro nome apenas" name="nome" value="<?php echo $this->nome ?>"  data-content="Apenas letras.">
@@ -36,10 +36,10 @@ else:
                 <label>Data de nascimento</label>
                 <input type="text" readonly id="dataNascimento" class=" input-large campoData" placeholder="Clique para escolher" name="dataNascimento" value="<?php echo $this->dataNascimento ?>">
             </div>
-<!--            <div class="line">
-                <label>Login</label>
-                <input required type="text"  name="login" class="input-large" value="<?php echo $this->login ?>"  data-content="Apenas letras minúsculas. Mínimo de três caracteres.">
-            </div>-->
+            <!--            <div class="line">
+                            <label>Login</label>
+                            <input required type="text"  name="login" class="input-large" value="<?php echo $this->login ?>"  data-content="Apenas letras minúsculas. Mínimo de três caracteres.">
+                        </div>-->
 
             <div class="line">
                 <label>Senha</label>
@@ -53,14 +53,6 @@ else:
 
             <div class="line">
                 <label>Papel</label>
-<!--                <select required name="papel" class="input-large">
-                    <option value="default" selected="selected"> -- Selecione uma opção --</option>
-                    <option value="0">Administrador </option>
-                    <option value="1">Gestor </option>
-                    <option value="2">Professor </option>
-                    <option value="3">Coordenador </option>
-                    <option value="4">Estudante </option>
-                </select>-->
                 <?php echo $this->comboPapeis ?>
             </div>
             <br/>
@@ -69,9 +61,9 @@ else:
                 <?php echo $this->comboPermissoes ?>
             </fieldset>
         </fieldset>
-            <input class="btn btn-large" type="reset" value="Limpar">
-            <input class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit" value="Cadastrar">
-        
+        <input class="btn btn-large" type="reset" value="Limpar">
+        <input class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit" value="Cadastrar">
+
     </form>
     <script type="text/javascript" src="publico/js/validarCampos.js"></script>
 
@@ -79,10 +71,10 @@ else:
     <script>
         $(function() {
             $("#dataNascimento").datepick();
-        });
+            });
 
 
-        $(".line input").popover({trigger:'focus',container:'body'});
+        $(".line input").popover({trigger: 'focus', container: 'body'});
 
     </script>
 <?php

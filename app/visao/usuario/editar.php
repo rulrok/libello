@@ -1,59 +1,81 @@
+<?php if (isset($this->mensagem_usuario) && $this->mensagem_usuario !== null) : ?>
+    <script>
+        showPopUp(
+    <?php echo "\"" . $this->mensagem_usuario . "\""; ?>
+        ,<?php echo "\"" . $this->tipo_mensagem . "\"" ?>
+        );
+    </script>
+    <?php
+    unset($this->mensagem_usuario);
+endif;
+if ($_SERVER['REQUEST_METHOD'] == 'POST') :
+    $controlador = new ControladorUsuario();
+    $controlador->acaoVerificarEdicao();
+else:
+    ?>
+    <!--Início da página-->
+    <script src = "publico/js/jquery/jquery.form.js"></script>
+    <script src="publico/js/ajaxForms.js"></script> 
 
-<!--Início da página-->
-<script src = "publico/js/jquery.form.js"></script>
-<script src="publico/js/ajaxForms.js"></script> 
-
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=usuario&a=editar">
-    <fieldset>
-        <legend>Dados</legend>
-        <p class="centered centeredText boldedText">Campos com <img src="publico/images/icons/campo_obrigatorio.png"> são obrigatórios</label>
-        <div class="line">
-            <label>Nome</label>
-            <input required name="nome" class="campoObrigatorio" type="text" value="<?php echo $this->nome ?>">
-        </div>
-        <div class="line">
-            <label>Sobrenome</label>
-            <input required name="sobrenome" class="campoObrigatorio" type="text" value="<?php echo $this->sobrenome ?>">
-        </div>
-        <div class="line">
-            <label>email</label>
-            <input disabled type="text" name="email" value="<?php echo $this->email ?>">
-        </div>
-        <div class="line">
-            <label>Data de nascimento</label>
-            <input type="text" readonly id="dataNascimento" class="campoData" name="dataNascimento" value="<?php echo $this->dataNascimento ?>" >
-        </div>
-        <div class="line">
-            <label>Papel no sistema</label>
-            <?php echo $this->comboPapel ?>
-<!--            <input id="papel" type="text" name="papel" value="">-->
-        </div>
-        <br/>
+    <form class="table centered" id="ajaxForm" method="post" action="index.php?c=usuario&a=editar">
         <fieldset>
-            <legend>Permissões por ferramenta</legend>
-            <?php echo $this->comboPermissoes ?>
+            <legend>Dados</legend>
+            <p class="centered centeredText boldedText">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png"> são obrigatórios</label>
+            <div class="line">
+                <label>Nome</label>
+                <input required name="nome" class="campoObrigatorio" type="text" value="<?php echo $this->nome ?>">
+            </div>
+            <div class="line">
+                <label>Sobrenome</label>
+                <input required name="sobrenome" class="campoObrigatorio" type="text" value="<?php echo $this->sobrenome ?>">
+            </div>
+            <div class="line">
+                <label>email</label>
+                <input readonly type="text" name="email" value="<?php echo $this->email ?>">
+            </div>
+            <div class="line">
+                <label>Data de nascimento</label>
+                <input type="text" readonly id="dataNascimento" class="campoData" name="dataNascimento" value="<?php echo $this->dataNascimento ?>" >
+            </div>
+            <div class="line">
+                <label>Papel no sistema</label>
+                <?php echo $this->comboPapel ?>
+    <!--            <input id="papel" type="text" name="papel" value="">-->
+            </div>
+            <br/>
+            <fieldset>
+                <legend>Permissões por ferramenta</legend>
+                <?php echo $this->comboPermissoes ?>
+            </fieldset>
+
         </fieldset>
+        <input disabled class=" btn btn-primary btn-right" type="submit" disabled value="Atualizar dados">
 
-    </fieldset>
-    <input class=" btn btn-primary btn-right" type="submit" disabled value="Atualizar dados">
-
-</form>
+    </form>
 
 
-<script type="text/javascript" src="publico/js/validarCampos.js"></script>
+    <script type="text/javascript" src="publico/js/validarCampos.js"></script>
 
 
-<script>
-    $(function() {
-        $("#dataNascimento").datepick();
-    });
+    <script>
+        $(function() {
+            $("#dataNascimento").datepick();
+        });
 
-    $('[name=papel]').val("<?php echo $this->idPapel ?>");
+        $('[name=papel]').val("<?php echo $this->idPapel ?>");
 
-    $obj = <?php echo json_encode($this->permissoes) ?>;
-    for (var i = 0; i < $obj.length ; i++){
-        element = $obj[i];
-        console.debug(element);
-    }
-</script>
+        var obj = <?php echo json_encode($this->permissoes) ?>;
+        var nome, idFerramenta, idPermissao, element;
+        for (var i = 0; i < obj.length; i++) {
+            element = obj[i];
+            nome = element['nome'].toLowerCase();
+    //        idFerramenta = element['idFerramenta'];
+            idPermissao = element['idPermissao'];
 
+            $('[name$="' + nome + '"]').val(idPermissao);
+        }
+    </script>
+
+<?php
+endif;
+?>

@@ -25,7 +25,7 @@ window.onload = function() {
     };
 
     //Permite que o popup seja arrastado pela tela
-    $('.shaderFrameContent').draggable({cancel: ".shaderFrameContentWrap" });
+    $('.shaderFrameContent').draggable({cancel: ".shaderFrameContentWrap"});
 
     $(".shaderFrame").click(function() {
         $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
@@ -60,6 +60,7 @@ window.onload = function() {
             menus[i].onclick = function() {
                 $(".menuLink.visited").removeClass("visited");
                 $(this).addClass("visited");
+                $(".actualTool").removeClass('actualTool');
 
                 hideSubMenu(150);
             }
@@ -92,6 +93,7 @@ window.onscroll = function() {
     if (!window.menuHasUpped && windowPosition >= menuPosition) {
         window.menuHasUpped = true;
         //console.debug("Fixou o menu");
+        $("#barra_superior").show(800);
         var divMenu = $(".menuContainer");
         var menuHeight = divMenu.height();
         divMenu.css('position', 'fixed');
@@ -101,6 +103,7 @@ window.onscroll = function() {
         divContent.css('padding-top', menuHeight + 'px');
     } else if (window.menuHasUpped && windowPosition < menuPosition) {
         window.menuHasUpped = false;
+        $("#barra_superior").hide(500);
         //console.debug("Retornou ao normal");
         var divMenu = $(".menuContainer");
         divMenu.css('position', 'relative');
@@ -275,6 +278,11 @@ function makeSubMenu(originMenu) {
         for (var i = 0; i < subMenus.length; i++) {
             if (subMenus[i].classList.contains(menuName)) {
                 subMenus[i].classList.remove("hiddenSubMenuLink");
+
+                subMenus[i].onclick = function() {
+                    $(".actualTool").removeClass('actualTool');
+                    $('.menuLink.visited').addClass('actualTool');
+                };
                 break;
             }
         }
@@ -285,6 +293,10 @@ function makeSubMenu(originMenu) {
                 $(subMenus[i]).removeClass("hiddenSubMenuLink");
                 break;
             }
+            subMenus[i].onclick = function() {
+                $(".actualTool").removeClass('actualTool');
+                $('.menuLink.visited').addClass('actualTool');
+            };
         }
     }
 }
@@ -299,14 +311,15 @@ function ajax(link, place)
     }).done(function(data) {
 
         if (document.paginaAlterada) {
-            var ignorarMudanças = confirm("Modificações não salvas. Continuar?");
-            if (!ignorarMudanças) {
+            var ignorarMudancas = confirm("Modificações não salvas. Continuar?");
+            if (!ignorarMudancas) {
                 return false;
             }
         }
         document.paginaAlterada = false;
         $(place).empty();
         $(place).append(data);
+        
         //Caso o conteúdo seja carregado no popup com fundo cinza
         if (place == ".shaderFrameContentWrap") {
             $(".shaderFrame").css("visibility", "visible").animate({opacity: "0.5"}, 150);
@@ -317,13 +330,43 @@ function ajax(link, place)
         $("input, select").not('.ignorar').not('.dataTables_filter input').change(function() {
             document.paginaAlterada = true;
         });
-        //eval(document.getElementById("pos_script").innerHTML);
+
+        
         hidePopUp();
     });
 }
 
-function mudarTitulo(titulo){
+// this function create an Array that contains the JS code of every <script> tag in parameter
+// then apply the eval() to execute the code in every script collected
+function parseScript(strcode) {
+    var scripts = new Array();         // Array which will store the script's code
+
+    // Strip out tags
+    while (strcode.indexOf("<script") > -1 || strcode.indexOf("</script") > -1) {
+        var s = strcode.indexOf("<script");
+        var s_e = strcode.indexOf(">", s);
+        var e = strcode.indexOf("</script", s);
+        var e_e = strcode.indexOf(">", e);
+
+        // Add to scripts array
+        scripts.push(strcode.substring(s_e + 1, e));
+        // Strip from strcode
+        strcode = strcode.substring(0, s) + strcode.substring(e_e + 1);
+    }
+
+    // Loop through every script collected and eval it
+    for (var i = 0; i < scripts.length; i++) {
+        try {
+            eval(scripts[i]);
+        }
+        catch (ex) {
+            // do what you want here when a script fails
+        }
+    }
+}
+
+function mudarTitulo(titulo) {
     tituloPadrao = "Controle CEAD | ";
     $("title").empty();
-    $("title").append(tituloPadrao + titulo);    
+    $("title").append(tituloPadrao + titulo);
 }

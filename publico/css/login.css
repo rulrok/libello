@@ -22,7 +22,7 @@ input[type=text],input[type=password]{
 }
 /* Configura o botão para logar */
 input[type=submit]{
-    background-color: #FBFBFB;
+/*    background-color: #FBFBFB;
     border-width: 1px;
     width: 77px;
     height: 25px;
@@ -30,12 +30,14 @@ input[type=submit]{
     float: right;
     margin-top: 5px;
     margin-right: 4px;
-    font-size: 14px;
+    font-size: 14px;*/
+float: right;
 }
 
 #login {
     background-color: #FBFBFB;
     width: 600px;
+    min-height: 220px;
     /*margin: 150px auto 0 auto;*/
     position:relative;
     top:25%;
@@ -72,7 +74,7 @@ input[type=submit]{
 /* Logo da "Universidade Aberto do Brasil" */
 #uab{
     display: inline-block;
-    background: url('../images/uab.PNG') no-repeat;
+    background: url('../imagens/uab.PNG') no-repeat;
     background-size: 80%;
     width: 120px;
     height: 80px;
@@ -83,7 +85,7 @@ input[type=submit]{
 /* Logo da "Capes" */
 #capes{
     display: inline-block;
-    background: url('../images/capes.png') no-repeat;
+    background: url('../imagens/capes.png') no-repeat;
     float: right;
     width: 120px;
     height: 80px;
@@ -100,7 +102,7 @@ input[type=submit]{
 /* Div que apresentará logotipo da Unifal */
 #unifal{
     display: block;
-    background: url('../images/unifal.png') no-repeat;
+    background: url('../imagens/unifal.png') no-repeat;
     width: 105px;
     height: 110px;
     position: relative;
@@ -111,7 +113,7 @@ input[type=submit]{
 /* Div que apresentará logotipo do CEAD */
 #cead{
     display: block;
-    background: url('../images/ceadMini.png') no-repeat;
+    background: url('../imagens/ceadMini.png') no-repeat;
     width: 146px;
     height: 109px;
     position: relative;

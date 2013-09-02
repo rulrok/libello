@@ -1,8 +1,6 @@
 
 
-<?php
-$usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,dataNascimento,nome", "idUsuario <> " . $_SESSION['idUsuario']);
-?>
+
 <div class="btn-toolbar">
     <div class="btn-group">
         <button class="btn btn-adicionar"><i class="icon-user"></i> Adicionar novo</button>
@@ -23,7 +21,7 @@ $usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,dataN
     </thead>
     <tbody>
         <?php
-        foreach ($usuarios as $value) {
+        foreach ($this->usuarios as $value) {
             echo '<tr>';
             for ($i = 0; $i < sizeof($value) / 2; $i++) {
                 echo $i == 0 ? '<td hidden class="campoID">' : '<td>';
@@ -53,22 +51,27 @@ $usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,dataN
         $('input[aria-controls="gerenciar_usuario"]').on('keyup', function() {
             if ($('.row_selected').size() == 0) {
                 $('.btn-deletar').addClass('disabled');
-                $('.btn-deletar').attr('disabled',true);
+                $('.btn-deletar').attr('disabled', true);
                 $('.btn-editar').addClass('disabled');
-                $('.btn-editar').attr('disabled',true);
+                $('.btn-editar').attr('disabled', true);
             } else {
                 $('.btn-deletar').removeClass('disabled');
-                $('.btn-deletar').attr('disabled',false);
+                $('.btn-deletar').attr('disabled', false);
                 $('.btn-editar').removeClass('disabled');
-                $('.btn-editar').attr('disabled',false);
+                $('.btn-editar').attr('disabled', false);
             }
         });
 
         $($("#gerenciar_usuario tr")[1]).addClass('row_selected');
+        selectedElement = $("#gerenciar_usuario tr")[1];
 
         oTable.$('tr').mousedown(function(e) {
             oTable.$('tr.row_selected').removeClass('row_selected');
             $(this).addClass('row_selected');
+            $('.btn-deletar').removeClass('disabled');
+            $('.btn-deletar').attr('disabled', false);
+            $('.btn-editar').removeClass('disabled');
+            $('.btn-editar').attr('disabled', false);
             selectedElement = this;
         });
 

@@ -2,9 +2,12 @@
 
 include_once ROOT . 'app/modelo/vo/Usuario.php';
 include_once ROOT . 'app/modelo/dao/usuarioDAO.php';
-require_once 'Ferramenta.php';
-require_once BIBLIOTECA_DIR. 'seguranca/Permissao.php';
-require_once 'Papel.php';
+include_once ROOT . 'app/modelo/dao/areaDAO.php';
+require_once 'enumeracao/Ferramenta.php';
+require_once 'enumeracao/Area.php';
+require_once 'enumeracao/TipoCurso.php';
+require_once 'enumeracao/Papel.php';
+require_once BIBLIOTECA_DIR . 'seguranca/Permissao.php';
 
 class Menu {
 
@@ -28,6 +31,8 @@ class Menu {
                         $subMenuCode .="<ul class=\"hiddenSubMenuLink usuariosSubMenu\">" . "\n";
                         switch ($permissao_ferramenta['idPermissao']) {
                             case Permissao::ADMINISTRADOR:
+                                $subMenuCode .= "   <a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=usuario&a=restaurar')\">" . "\n";
+                                $subMenuCode .= "<li>Verificar usuários excluídos</li></a>" . "\n";
                             case Permissao::GESTOR:
                                 $subMenuCode .= "   <a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=usuario&a=gerenciar')\">" . "\n";
                                 $subMenuCode .= "<li>Gerenciar usuários</li></a>" . "\n";
@@ -38,8 +43,8 @@ class Menu {
                                 $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=usuario&a=consultar')\">" . "\n";
                                 $subMenuCode .= "<li>Consultar usuários</li></a>" . "\n";
                         }
-                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/images/icons/go-up.png\"></li></a>" . "\n";
-                        $subMenuCode .= "</ul>" . "\n";
+//                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/imagens/icones/go-up.png\"></li></a>" . "\n";
+//                        $subMenuCode .= "</ul>" . "\n";
                     }
                     break;
                 case Ferramenta::CURSOS_E_POLOS:
@@ -49,15 +54,19 @@ class Menu {
                         switch ($permissao_ferramenta['idPermissao']) {
                             case Permissao::ADMINISTRADOR:
                             case Permissao::GESTOR:
-                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=cursos&a=gerenciar')\">" . "\n";
-                                $subMenuCode .= "<li>Gerenciar registros</li></a>" . "\n";
+                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=cursospolos&a=gerenciarcursos')\">" . "\n";
+                                $subMenuCode .= "<li>Gerenciar cursos</li></a>" . "\n";
+                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=cursospolos&a=gerenciarpolos')\">" . "\n";
+                                $subMenuCode .= "<li>Gerenciar polos</li></a>" . "\n";
                             case Permissao::ESCRITA:
-                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=cursos&a=novo')\">" . "\n";
-                                $subMenuCode .= "<li>Inserir novo registro</li></a>" . "\n";
+                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=cursospolos&a=novocurso')\">" . "\n";
+                                $subMenuCode .= "<li>Inserir novo curso</li></a>" . "\n";
+                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=cursospolos&a=novopolo')\">" . "\n";
+                                $subMenuCode .= "<li>Inserir novo polo</li></a>" . "\n";
                             case Permissao::CONSULTA:
                         }
-                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/images/icons/go-up.png\"></li></a>" . "\n";
-                        $subMenuCode .= "</ul>" . "\n";
+//                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/imagens/icones/go-up.png\"></li></a>" . "\n";
+//                        $subMenuCode .= "</ul>" . "\n";
                     }
                     break;
                 case Ferramenta::CONTROLE_LIVROS:
@@ -80,8 +89,8 @@ class Menu {
                                 $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=livro&a=relatorios')\">" . "\n";
                                 $subMenuCode .= "<li>Gerar relatórios</li></a>" . "\n";
                         }
-                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/images/icons/go-up.png\"></li></a>" . "\n";
-                        $subMenuCode .= "</ul>" . "\n";
+//                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/imagens/icones/go-up.png\"></li></a>" . "\n";
+//                        $subMenuCode .= "</ul>" . "\n";
                     }
                     break;
                 case Ferramenta::CONTROLE_EQUIPAMENTOS:
@@ -104,8 +113,8 @@ class Menu {
                                 $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=equipamento&a=consulta')\">" . "\n";
                                 $subMenuCode .= "<li>Consultar equipamentos</li></a>" . "\n";
                         }
-                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/images/icons/go-up.png\"></li></a>" . "\n";
-                        $subMenuCode .= "</ul>" . "\n";
+//                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/imagens/icones/go-up.png\"></li></a>" . "\n";
+//                        $subMenuCode .= "</ul>" . "\n";
                     }
                     break;
                 case Ferramenta::CONTROLE_DOCUMENTOS:
@@ -126,8 +135,8 @@ class Menu {
 //                                $subMenuCode .= "<li>Gerar relatório</li></a>" . "\n";
                             case Permissao::CONSULTA:
                         }
-                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/images/icons/go-up.png\"></li></a>" . "\n";
-                        $subMenuCode .= "</ul>" . "\n";
+//                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/imagens/icones/go-up.png\"></li></a>" . "\n";
+//                        $subMenuCode .= "</ul>" . "\n";
                     }
                     break;
                 case Ferramenta::CONTROLE_VIAGENS:
@@ -144,12 +153,15 @@ class Menu {
                                 $subMenuCode .= "<li>Inserir nova viagem</li></a>" . "\n";
                             case Permissao::CONSULTA:
                         }
-                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/images/icons/go-up.png\"></li></a>" . "\n";
-                        $subMenuCode .= "</ul>" . "\n";
+//                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/imagens/icones/go-up.png\"></li></a>" . "\n";
+//                        $subMenuCode .= "</ul>" . "\n";
                     }
                     break;
             }
+//            $subMenuCode .= "<a class =\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/imagens/icones/go-up.png\"></li></a>" . "\n";
+            $subMenuCode .= "</ul>" . "\n";
         }
+
 
         $menuCode .= "</menu>" . "\n";
         $menuCode .= "</div>" . "\n";
@@ -195,6 +207,48 @@ class Menu {
         $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
         for ($i = 1; $i <= Papel::__length; $i++) {
             $codigo .= "<option value=\"$i\">" . papelDAO::obterNomePapel($i) . "</option>\n";
+        }
+        $codigo .= "</select>\n";
+        return $codigo;
+    }
+    
+    public static function montarCaixaSelecaoAreas($required = false, $class = null, $name = null){
+        $codigo = "<select ";
+        if ($required) {
+            $codigo .= "required ";
+        }
+        if ($class != null) {
+            $codigo .= " class = \"" . $class . "\" ";
+        }
+        if ($name != null) {
+            $codigo .= " name = \"" . $name . "\"";
+        }
+        $codigo .= ">\n";
+
+        $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
+        for ($i = 1; $i <= Area::__length; $i++) {
+            $codigo .= "<option value=\"$i\">" . areaDAO::obterNomeArea($i) . "</option>\n";
+        }
+        $codigo .= "</select>\n";
+        return $codigo;
+    }
+    
+    public static function montarCaixaSelecaoTiposCurso($required = false, $class = null, $name = null){
+        $codigo = "<select ";
+        if ($required) {
+            $codigo .= "required ";
+        }
+        if ($class != null) {
+            $codigo .= " class = \"" . $class . "\" ";
+        }
+        if ($name != null) {
+            $codigo .= " name = \"" . $name . "\"";
+        }
+        $codigo .= ">\n";
+
+        $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
+        for ($i = 1; $i <= TipoCurso::__length; $i++) {
+            $codigo .= "<option value=\"$i\">" . cursoDAO::obterNomeTipoCurso($i) . "</option>\n";
         }
         $codigo .= "</select>\n";
         return $codigo;
