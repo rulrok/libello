@@ -1,28 +1,44 @@
 /*
- * Esse script varre os campos que são marcados como requeridos e trata eles com
- * base na propriedade 'name' dos campos para verificálos.
- * Apenas insíra-o no HTML e certifique-se dos nomes dos campos 'name' serem
+ * Esse script, ao ser incorporado pela primeira vez à uma página, ele então
+ * varre os campos que são marcados como requeridos e trata eles com
+ * base na propriedade 'name' dos campos para verifica-los.
+ * Apenas insira-o no HTML e certifique-se dos nomes dos campos 'name' serem
  * compatíveis.
  */
-var camposObrigatorios = $("input[required],select[required]");
-if (camposObrigatorios.length > 0) {
-//document.head.children[document.head.children.length] = "<script src=\"publico/js/validarCampos.js\"></script>";
-    //$("head").append("<script src=\"publico/js/validarCampos.js\"></script>");
-    for (i = 0; i < camposObrigatorios.length; i++) {
-        $(camposObrigatorios[i]).after("<img src=\"publico/imagens/icones/campo_obrigatorio.png\">");
-        //$(camposObrigatorios[i]).on('blur',liberarCadastro());
-        //$(camposObrigatorios[i]).append(liberarCadastro());
-    }
-    $("input[required],select[required]").on('change', function() {
-        liberarCadastro()
-    });
-    $('input').not("input[required],select[required]").on('change', function() {
-        $("input[type=submit],input[value~='Atualizar']").attr('disabled', false);
-    });
 
-    $('input[readonly]').on('blur', function() {
-        $("input[type=submit],input[value~='Atualizar']").attr('disabled', false);
-    });
+
+/**
+ * Quando novos campos são dinamicamente adicionados a algum formulário, esse método deve ser execultado
+ * para atribuir a esses novos campos, as verificações necessárias, como quando um deles perde o foco ou
+ * tem seu conteúdo alterado.
+ * 
+ */
+function varrerCampos() {
+    var camposObrigatorios = $("input[required],select[required]").not(".campoVarrido").not("input[readonly]");
+    if (camposObrigatorios.length > 0) {
+//document.head.children[document.head.children.length] = "<script src=\"publico/js/validarCampos.js\"></script>";
+        //$("head").append("<script src=\"publico/js/validarCampos.js\"></script>");
+//        for (i = 0; i < camposObrigatorios.length; i++) {
+//            $(camposObrigatorios[i]).after("<img src=\"publico/imagens/icones/campo_obrigatorio.png\">");
+//            //$(camposObrigatorios[i]).on('blur',liberarCadastro());
+//            //$(camposObrigatorios[i]).append(liberarCadastro());
+//        }
+        $(camposObrigatorios).after("<img src=\"publico/imagens/icones/campo_obrigatorio.png\">");
+        $(camposObrigatorios).addClass("campoVarrido");
+        $(camposObrigatorios).on('change', function() {
+            liberarCadastro();
+        });
+        $(camposObrigatorios).on('blur', function() {
+            liberarCadastro();
+        });
+//    $('input').not("input[required],select[required]").on('change', function() {
+//        $("input[type=submit],input[value~='Atualizar']").attr('disabled', false);
+//    });
+//
+//    $('input[readonly]').on('blur', function() {
+//        $("input[type=submit],input[value~='Atualizar'],input[value~='Cadastrar'").attr('disabled', false);
+//    });
+    }
 }
 
 /**
@@ -64,6 +80,10 @@ function liberarCadastro() {
             case "sobrenome":
                 //Padrão: Apenas letras e espaços
                 patter = new RegExp("^[" + letrasacentuadas + " ]{1,30}[" + letrasacentuadas + "] *$");
+                break;
+            case "quantidade":
+            case "quantidadePatrimonios":
+                patter = new RegExp("[0-9]+");
                 break;
             case "login":
                 //Apenas letras minúsculas, com no mínimo 3
@@ -132,6 +152,7 @@ function liberarCadastro() {
 
     if (todosEmBranco) {
         $(".campoErrado").removeClass("campoErrado");
+        tudoCerto = false;
     }
     if (tudoCerto) {
         $("input[type=submit],input[value~='Atualizar']").attr('disabled', false);
@@ -140,3 +161,5 @@ function liberarCadastro() {
         $("input[type=submit],input[value~='Atualizar']").attr('disabled', true);
     }
 }
+
+varrerCampos();

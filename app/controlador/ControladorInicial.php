@@ -19,6 +19,9 @@ class ControladorInicial extends Controlador {
         $this->renderizar();
     }
 
+    public function acao404(){
+        $this->renderizar();
+    }
 }
 
 ?>

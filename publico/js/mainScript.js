@@ -194,7 +194,7 @@ function showPopUp(data, type) {
         type = "informacao";
     }
     var texto, fundo, borda;
-    switch (type) {
+    switch (type.toLocaleLowerCase()) {
         case "informacao":
             texto = "#3a87ad !important";
             fundo = "#d9edf7";
@@ -319,19 +319,21 @@ function ajax(link, place)
         document.paginaAlterada = false;
         $(place).empty();
         $(place).append(data);
-        
-        //Caso o conteúdo seja carregado no popup com fundo cinza
-        if (place == ".shaderFrameContentWrap") {
-            $(".shaderFrame").css("visibility", "visible").animate({opacity: "0.5"}, 150);
-            $(".shaderFrameContent").css("visibility", "visible").animate({opacity: "1"}, 350);
-            $(".shaderFrameContent").center();
-        }
 
+//        //Caso o conteúdo seja carregado no popup com fundo cinza
+//        if (place == ".shaderFrameContentWrap") {
+//            $(".shaderFrame").css("visibility", "visible").animate({opacity: "0.5"}, 150);
+//            $(".shaderFrameContent").css("visibility", "visible").animate({opacity: "1"}, 350);
+//            $(".shaderFrameContent").center();
+//        }
+
+        //TODO encontrar uma forma de tratar os campos somente leitura dos datapickers, pois quando
+        //é escolhida uma data através do jquery, o evento change não é acionado.
         $("input, select").not('.ignorar').not('.dataTables_filter input').change(function() {
             document.paginaAlterada = true;
         });
 
-        
+
         hidePopUp();
     });
 }
@@ -369,4 +371,20 @@ function mudarTitulo(titulo) {
     tituloPadrao = "Controle CEAD | ";
     $("title").empty();
     $("title").append(tituloPadrao + titulo);
+}
+
+
+function extrairJSON(string) {
+    console.log(string);
+    var json;
+    try {
+        json = $.parseJSON(string);
+    } catch (ex) {
+        var index = string.lastIndexOf('{"status":');
+        if (index > -1)
+            return extrairJSON(string.substring(index));
+        else
+            json = '{"status":"Informacao","mensagem":"Ocorreu algum erro no processamento da resposta do servidor.<br/>Verifique manualmente se o dado foi cadastrado."}';
+    }
+    return json;
 }

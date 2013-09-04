@@ -2,13 +2,13 @@
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-require_once ROOT.'biblioteca/configuracoes.php';
+require_once ROOT . 'biblioteca/configuracoes.php';
 //if (file_exists(ROOT . 'biblioteca/seguranca/seguranca.php')) {
 //    require ROOT . 'biblioteca/seguranca/seguranca.php';
 //} else {
 //    exit;
 //}
-require_once BIBLIOTECA_DIR.'seguranca/seguranca.php';
+require_once BIBLIOTECA_DIR . 'seguranca/seguranca.php';
 
 class Mvc {
 
@@ -59,13 +59,13 @@ class Mvc {
 
     public function rodar() {
         $usuario = new Usuario();
-        if (!isset($_SESSION['email'])){
+        if (!isset($_SESSION['email'])) {
             expulsaVisitante();
         }
         $usuario->set_email($_SESSION['email']);
         $usuario->set_senha($_SESSION['senha']);
-        BIBLIOTECA_DIR.'seguranca/seguranca.php'.  autenticaUsuario($usuario);
-        
+        BIBLIOTECA_DIR . 'seguranca/seguranca.php' . autenticaUsuario($usuario);
+
         if (isset($_SESSION['iniciada']) && $_SESSION['autenticado'] === true) {
             //pega o modulo, controlador e acao
             $controlador = isset($_GET['c']) ? $_GET['c'] : 'inicial';
@@ -78,19 +78,26 @@ class Mvc {
             $nomeClasseControlador = 'Controlador' . $this->controlador;
             $nomeAcao = 'acao' . $this->acao;
 
-            //verifica se a classe existe
-            if (class_exists($nomeClasseControlador)) {
-                $controladorObjeto = new $nomeClasseControlador;
+            try {
+                //verifica se a classe existe
+                if (class_exists($nomeClasseControlador)) {
+                    $controladorObjeto = new $nomeClasseControlador;
 
-                //verifica se o metodo existe
-                if (method_exists($controladorObjeto, $nomeAcao)) {
-                    $controladorObjeto->$nomeAcao();
-                    return true;
+                    //verifica se o metodo existe
+                    if (method_exists($controladorObjeto, $nomeAcao)) {                
+                        $controladorObjeto->$nomeAcao();
+                        return true;
+                    } else {
+                        throw new Exception('Acao nao existente.');
+                    }
+                } else {
+                    throw new Exception('Controlador nao existente.');
                 }
-                throw new Exception('Acao nao existente.');
+            } catch (Exception $e) {
+                $_GET['c'] = "Inicial";
+                $_GET['a'] = "404";
+                $this->rodar();
             }
-            print_r($nomeClasseControlador);
-            throw new Exception('Controlador nao existente.');
         } else {
             expulsaVisitante("Você precisa estar autenticado para realizar essa operação");
         }

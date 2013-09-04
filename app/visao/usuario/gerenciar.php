@@ -1,6 +1,3 @@
-
-
-
 <div class="btn-toolbar">
     <div class="btn-group">
         <button class="btn btn-adicionar"><i class="icon-user"></i> Adicionar novo</button>
@@ -43,6 +40,7 @@
 </div>
 <script src="publico/js/oTable.js"></script>
 <script>
+    //Este script configura as ações para os botões da página.
     $(document).ready(function() {
         configurarTabela({
             idTabela: 'gerenciar_usuario',

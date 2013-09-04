@@ -207,6 +207,7 @@ input[value~='Cadastrar']:disabled,input[value~='Atualizar']:disabled {
     background: url("../imagens/icones/icon-calendar.png") #FFF no-repeat right;
     background-position: 98% 50%;
     background-size: 20px;
+    background-color: #fff !important;
     margin-right: 2px;
     margin-bottom: 1px;
     min-width: 120px;
@@ -231,6 +232,12 @@ input[value~='Cadastrar']:disabled,input[value~='Atualizar']:disabled {
     user-select: none;  
 }
 
+input[disabled]{
+    background-color: #eee;
+}
+input[readonly]{
+    background-color: #eee;
+}
 /* FIM DO GERAL */
 
 /* POP-UP */
