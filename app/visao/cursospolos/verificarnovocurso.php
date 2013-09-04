@@ -42,6 +42,6 @@ class VerificarNovoCurso extends verificadorFormularioAjax {
 
 }
 
-$verificarNovoPolo = new VerificarNovoCurso();
-$verificarNovoPolo->verificar();
+$verificarNovoCurso = new VerificarNovoCurso();
+$verificarNovoCurso->verificar();
 ?>
