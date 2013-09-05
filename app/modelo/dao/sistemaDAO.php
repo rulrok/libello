@@ -97,6 +97,22 @@ class sistemaDAO extends abstractDAO {
             return false;
         }
     }
+    
+        public static function registrarExclusaoEquipamento($idUsuarioFonte) {
+        $quote = "\"";
+        $tipo = TipoEventoSistema::REMOCAO_EQUIPAMENTO;
+        $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES ";
+        $sql .= " ($idUsuarioFonte,NULL,$tipo,<data>,<hora>)";
+        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
+        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            print_r($e);
+            return false;
+        }
+    }
 
     /**
      * Registra um evento de alteração de um usuário do sistema.

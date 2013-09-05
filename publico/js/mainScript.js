@@ -239,7 +239,7 @@ function hidePopUp() {
 }
 function hideSubMenu(time) {
     if (time === null) {
-        time = 350;
+        time = 200;
     }
     var height = $('.subMenu menu').height();
     var subMenu = $(".subMenu");
@@ -256,7 +256,7 @@ function showSubMenu() {
         top: "0px",
         opacity: "1",
         display: "inline-block"
-    }, 350);
+    }, 200);
 }
 
 function makeSubMenu(originMenu) {

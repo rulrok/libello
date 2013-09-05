@@ -54,6 +54,7 @@ class ControladorUsuario extends Controlador {
     }
 
     public function acaoConsultar() {
+        $this->visao->usuarios = usuarioDAO::consultar("idUsuario, concat(PNome,' ',UNome),email,dataNascimento,nome");
         $this->renderizar();
     }
 

@@ -10,7 +10,7 @@ class Equipamento {
     var $idEquipamento;
     var $nomeEquipamento;
     var $dataEntrada = null;
-    var $quantidadde;
+    var $quantidade;
 //    var $tipo;
     var $numeroPatrimonio;
 
@@ -51,12 +51,12 @@ class Equipamento {
         return $this;
     }
 
-    public function get_quantidadde() {
-        return (int) $this->quantidadde;
+    public function get_quantidade() {
+        return (int) $this->quantidade;
     }
 
     public function set_quantidadde($quantidadde) {
-        $this->quantidadde = (int) $quantidadde;
+        $this->quantidade = (int) $quantidadde;
         return $this;
     }
 

@@ -1,5 +1,4 @@
 <!--Início da página -->
-
 <form class="table centered" id="ajaxForm" method="post" action="index.php?c=equipamento&a=verificarnovo">
     <fieldset>
         <legend>Registro de novo equipamento</legend>
@@ -61,7 +60,6 @@
 <script src="publico/js/validarCampos.js"></script>
 <script src="publico/js/ajaxForms.js"></script>
 <script>
-
                         var quantidadePatrimonios = 1;
                         var codigoHtml = "";
 
@@ -107,9 +105,8 @@
 
 
 
-                            $(function() {
-                                $("#dataEntrada").datepick();
-                            });
+                            $("#dataEntrada").datepick();
+
 
                             $("#custeio").on("click", function() {
                                 if (!$(this).hasClass("btn-info")) {
@@ -159,5 +156,4 @@
 
 
                         });
-
 </script>

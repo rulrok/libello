@@ -1,24 +1,22 @@
-<table id="consulta_usuario" class="tabelaDeSelecao">
+<table id="consulta_equipamento" class="tabelaDeSelecao">
     <thead>
         <tr>
             <th hidden>id</th>
-            <th>Nome completo</th>
-            <th>Email</th>
-            <th>Data de nascimento</th>
-            <th>Papel</th>
-            <th>Permissões</th>
+            <th>Nome</th>
+            <th>Quantidade</th>
+            <th>Data de entrada</th>
+            <th>Patrimônio</th>
         </tr>
     </thead>
     <tbody>
         <?php
-        foreach ($this->usuarios as $value) {
+        foreach ($this->equipamentos as $value) {
             echo '<tr>';
             for ($i = 0; $i < sizeof($value) / 2; $i++) {
                 echo $i == 0 ? '<td hidden class="campoID">' : '<td>';
                 echo $value[$i];
                 echo '</td>';
             }
-            echo '<td><center><input class="btn visualizarPermissoes" type="button" value="Ver"/></center></td>';
             echo '</tr>';
         }
         ?>
@@ -26,7 +24,7 @@
 </table>
 <script id="pos_script">
     $(document).ready(function() {
-        var oTable = $('#consulta_usuario').dataTable({
+        var oTable = $('#consulta_equipamento').dataTable({
             "aaSorting": [[1, "asc"]]
         });
 
@@ -34,15 +32,15 @@
             oTable.fnAdjustColumnSizing();
         });
 
-        $(".visualizarPermissoes").on('click', function() {
-            var id = $("tr.row_selected>.campoID").html();
-            $("#myModal").load("index.php?c=usuario&a=consultarpermissoes&userID=" + id).modal();
-//            $("#myModal").modal({
-//                remote: "index.php?c=usuario&a=consultarpermissoes&userID=" + id
-//            });
-
-//            ajax("index.php?c=usuario&a=consultarpermissoes&userID=" + id, "#myModal");
-        });
+//        $(".visualizarPermissoes").on('click', function() {
+//            var id = $("tr.row_selected>.campoID").html();
+//            $("#myModal").load("index.php?c=usuario&a=consultarpermissoes&userID=" + id).modal();
+////            $("#myModal").modal({
+////                remote: "index.php?c=usuario&a=consultarpermissoes&userID=" + id
+////            });
+//
+////            ajax("index.php?c=usuario&a=consultarpermissoes&userID=" + id, "#myModal");
+//        });
         oTable.$('tr').mousedown(function() {
             if ($(this).hasClass('row_selected')) {
                 return;

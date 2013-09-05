@@ -1,7 +1,7 @@
 <?php
 
 require_once 'abstractDAO.php';
-require_once __DIR__ . '/../vo/Curso.php';
+require_once APP_LOCATION."modelo/vo/Curso.php";
 
 class cursoDAO extends abstractDAO {
 
@@ -60,8 +60,8 @@ class cursoDAO extends abstractDAO {
 
     /**
      * Atualiza informações de um curso.
-     * @param type $idCurso Usado para localizar o usuário no banco de dados.
-     * @param Usuario $usuario Objecto VO com as novas informações.
+     * @param type $idCurso Usado para localizar o curso no banco de dados.
+     * @param Curso $novosDados Objecto VO com as novas informações.
      * @return boolean
      */
     public static function atualizar($idCurso, Curso $novosDados) {
