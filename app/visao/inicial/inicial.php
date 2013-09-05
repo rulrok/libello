@@ -55,8 +55,7 @@
                         <div class="centered btn-group">
                             <a id="fullscreen-on" title="Modo tela cheia" class="btn btn-small" href="javascript:void(0)" onclick="launchFullScreen(document.documentElement);"><i class="icon-fullscreen"></i></a>
                             <a id="fullscreen-off" title="Voltar ao modo normal" class="btn btn-small hide" href="javascript:void(0)" onclick="cancelFullscreen();"><i class="icon-resize-small"></i></a>
-                            <a class="btn btn-small" href="javascript:void(0)" onclick="ajax('index.php?c=sistema&a=gerenciarconta');
-                                        hideSubMenu(150);"><i class="icon-cog"></i> Gerenciar Conta</a>
+                            <a class="btn btn-small" href="javascript:void(0)" onclick="ajax('index.php?c=sistema&a=gerenciarconta');hideSubMenu(150);$('.visited').removeClass('visited');$('.actualTool').removeClass('actualTool')"><i class="icon-cog"></i> Gerenciar Conta</a>
                             <a class="btn btn-small" href="sair.php"><i class="icon-off"></i> Sair</a>
                         </div>
                     </div>

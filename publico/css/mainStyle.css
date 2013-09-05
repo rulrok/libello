@@ -619,7 +619,7 @@ li[id$=Link]:before{
     position: relative;
     z-index: 2;
     width: 100%;
-    min-height: 53px;
+    min-height: 56px;
     /*border: rgb(230, 230, 230) solid 1px;*/
     border-left: none;
     border-right: none;
@@ -715,7 +715,7 @@ li[id$=Link]:before{
 }
 
 .actualTool {
-    border: 1px dashed #3871a6;
+    border: 1px dotted #3871a6;
     opacity: 1.0!important;
     color: rgb(14, 81, 143)!important;
 

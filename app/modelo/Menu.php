@@ -27,7 +27,7 @@ class Menu {
             switch ($permissao_ferramenta['idFerramenta']) {
                 case Ferramenta::CONTROLE_USUARIOS:
                     if ($permissao_ferramenta['idPermissao'] != Permissao::SEM_ACESSO) {
-                        $menuCode .= "<a><li class=\"menuLink\" id=\"usuariosLink\">Controle de usuarios</li></a>" . "\n";
+                        $menuCode .= "<a><li class=\"menuLink\" id=\"usuariosLink\">Usuários</li></a>" . "\n";
                         $subMenuCode .="<ul class=\"hiddenSubMenuLink usuariosSubMenu\">" . "\n";
                         switch ($permissao_ferramenta['idPermissao']) {
                             case Permissao::ADMINISTRADOR:
