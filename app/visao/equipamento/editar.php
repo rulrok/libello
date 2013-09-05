@@ -95,5 +95,15 @@
             $("#submit").prop("disabled", true);
             varrerCampos();
         });
+
+        var numeroPatrimonio;
+        //Gambiarra master
+        numeroPatrimonio = <?php echo "'".$this->numeroPatrimonio."'"; ?>;
+        if (numeroPatrimonio == ""){
+            $("#custeio").click();
+        } else {
+            $("#patrimonio").click();
+        }
+        
     });
 </script>
