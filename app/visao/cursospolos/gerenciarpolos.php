@@ -1,6 +1,3 @@
-
-
-
 <div class="btn-toolbar">
     <div class="btn-group">
         <button class="btn btn-adicionar"><i class="icon-user"></i> Adicionar novo</button>
@@ -38,7 +35,6 @@
         <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
     </div>
 </div>
-<script src="publico/js/oTable.js" ></script>
 <script>
     $(document).ready(function() {
         configurarTabela({

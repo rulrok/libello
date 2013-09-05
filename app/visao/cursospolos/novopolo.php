@@ -31,9 +31,9 @@
             });
         });
 
-        $('#estado').val("<?php echo $this->estado ?>");
-        $('#estado').change();
-        $('#cidade').val("<?php echo $this->cidade ?>");
+//        $('#estado').val("");
+//        $('#estado').change();
+//        $('#cidade').val("");
 </script>
 <script src="publico/js/validarCampos.js"></script>
 <script src="publico/js/ajaxForms.js"></script>

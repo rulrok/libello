@@ -74,10 +74,25 @@ function configurarTabela(json) {
         }
         if (confirm('Deseja realmente fazer isso?')) {
             var id = $("tr.row_selected>.campoID").html();
-            ajax(acaoDeletar + id, "nenhum");
+            var data = ajax(acaoDeletar + id, null, false,false);
+            if (data !== null && data !== undefined) {
+                data = extrairJSON(data);
+
+                if (data.status !== undefined && data.mensagem !== undefined) {
+                    showPopUp(data.mensagem, data.status);
+                    if (data.status.toLowerCase() === "sucesso") {
+                        $("input[type=reset]").click();
+                    }
+                } else {
+                    showPopUp("Houve algum problema na resposta do servidor.", "erro");
+                }
+            } else {
+                showPopUp("Houve algum problema na resposta do servidor.", "erro");
+            }
             var pos = oTable.fnGetPosition(selectedElement);
             oTable.fnDeleteRow(pos);
             $("tr.odd")[0].addClass("row_selected");
+            
         }
     });
 

@@ -196,16 +196,19 @@ function showPopUp(data, type) {
     var texto, fundo, borda;
     switch (type.toLocaleLowerCase()) {
         case "informacao":
+        case "info":
             texto = "#3a87ad !important";
             fundo = "#d9edf7";
             borda = "#bce8f1";
             break;
+        case "error":
         case "erro":
             texto = "#b94a48 !important";
             fundo = "#f2dede";
             borda = "#eed3d7";
             break;
         case "sucesso":
+        case "success":
             texto = "#468847 !important";
             fundo = "#dff0d8";
             borda = "#d6e9c6";
@@ -301,25 +304,45 @@ function makeSubMenu(originMenu) {
     }
 }
 
-function ajax(link, place)
-{
-    if (place == null) {
+/**
+ * Faz uma requisição Ajax de alguma página qualquer, podendo escolher onde a 
+ * resposta será colocada.
+ * 
+ * @param {URL} link URL para a página que deseja-se obter via ajax.
+ * @param {String} place Um div (ou até mesmo um SPAN) referenciado pelo nome da sua classe
+ * ou ID, onde a resposta será inserida. Caso seja <code>undefined</code>, <i>.contentWrap</i> será utilizado
+ * por padrão. Caso <code>null</code>, a resposta não será colocada em nenhum lugar.
+ * @param {boolean} hidePop Determina se, caso um pop-up esteja sendo exibido no canto da tela do usuário,
+ * se ele deve ser escondido ou permanecer sendo exibido.
+ * @param {boolean} async Especifíca se o carregamento deve ser assíncrono ou não. Por padrão, essa opção é falsa.
+ * @returns O retorno da página requisitada, caso ela retorne algum.
+ */
+function ajax(link, place, hidePop,async) {
+    if (place === undefined) {
         place = ".contentWrap";
     }
-    $.ajax({
-        url: link
-    }).done(function(data) {
+    if (async === undefined || async === null){
+        async = true;
+    }
+    var request = $.ajax({
+        url: link,
+        async: async,
+        timeout: 5000 //Espera no máximo 5 segundos
+    });
 
-        if (document.paginaAlterada) {
-            var ignorarMudancas = confirm("Modificações não salvas. Continuar?");
-            if (!ignorarMudancas) {
-                return false;
+    var sucesso = request.success(function(data) {
+
+        if (place !== null) {
+            if (document.paginaAlterada) {
+                var ignorarMudancas = confirm("Modificações não salvas. Continuar?");
+                if (!ignorarMudancas) {
+                    return false;
+                }
             }
+            document.paginaAlterada = false;
+            $(place).empty();
+            $(place).append(data);
         }
-        document.paginaAlterada = false;
-        $(place).empty();
-        $(place).append(data);
-
 //        //Caso o conteúdo seja carregado no popup com fundo cinza
 //        if (place == ".shaderFrameContentWrap") {
 //            $(".shaderFrame").css("visibility", "visible").animate({opacity: "0.5"}, 150);
@@ -333,9 +356,25 @@ function ajax(link, place)
             document.paginaAlterada = true;
         });
 
-
-        hidePopUp();
+        if (hidePop === undefined) {
+            hidePop = true;
+        }
+        if (hidePop === true) {
+            hidePopUp();
+        }
+        return data;
     });
+
+    var erro = request.error(function(jqXHR, textStatus, errorThrown) {
+        if (textStatus != "timeout") {
+            showPopUp("<b>" + errorThrown.name + "</b><br/>" + errorThrown.message, textStatus);
+        } else {
+            showPopUp("Timeout. A operação não pode ser concluída pois o <br/>servidor demorou muito para responder.", "Info");
+        }
+    });
+
+
+    return sucesso.responseText;
 }
 
 // this function create an Array that contains the JS code of every <script> tag in parameter
@@ -373,10 +412,16 @@ function mudarTitulo(titulo) {
     $("title").append(tituloPadrao + titulo);
 }
 
-
+/**
+ * Procura por uma resposta JSON. Especififamente feito para as respostas de páginas,
+ * como por exemplo, páginas de edições, alterações, ou quando deleta-se algum item.
+ * 
+ * @param {String} String qualquer. Nesse caso, trata-se do retorno das páginas solicitadas via Ajax.
+ * @returns {String} String para ser criado um Json, caso alguma seja encontrada.
+ */
 function extrairJSON(string) {
     console.log(string);
-    var json;
+    var json = null;
     try {
         json = $.parseJSON(string);
     } catch (ex) {

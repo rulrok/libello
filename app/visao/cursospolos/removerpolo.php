@@ -1,14 +1,15 @@
 <?php
 
-$id = $_GET['poloID'];
+require_once APP_LOCATION . "modelo/Mensagem.php";
 
-if (poloDAO::remover($id)):
+$id = $_GET['poloID'];
+$mensagem = new Mensagem();
+
+if (poloDAO::remover($id)) {
     sistemaDAO::registrarExclusaoPolo($_SESSION['idUsuario']);
-    ?>
-    <script>showPopUp("Polo removido com sucesso", "sucesso");</script>
-<?php else : ?>
-    <script>
-        showPopUp("Erro ao remover o polo", "erro");
-    </script>
-<?php endif;
-exit; ?>
+    $mensagem->set_mensagem("Excluído com sucesso.")->set_status(Mensagem::SUCESSO);
+} else {
+    $mensagem->set_mensagem("Erro ao excluir")->set_status(Mensagem::ERRO);
+}
+echo json_encode($mensagem);
+?>

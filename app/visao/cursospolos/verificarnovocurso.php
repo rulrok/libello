@@ -14,12 +14,12 @@ class VerificarNovoCurso extends verificadorFormularioAjax {
         if (!strpos($tipocurso, "selecione")) {
             if (!strpos($area, "selecione")) {
                 if (strcmp($curso, "") != 0) {
-                    $curso = new Curso();
-                    $curso->set_nome($curso);
-                    $curso->set_area($area);
-                    $curso->set_tipo($tipocurso);
-                    if (cursoDAO::consultarCurso($curso) == 0) {
-                        cursoDAO::cadastrarCurso($curso);
+                    $novocurso = new Curso();
+                    $novocurso->set_nome($curso);
+                    $novocurso->set_area($area);
+                    $novocurso->set_tipo($tipocurso);
+                    if (cursoDAO::consultarCurso($novocurso) == 0) {
+                        cursoDAO::cadastrarCurso($novocurso);
                         $this->mensagem->set_mensagem("Cadastrado com sucesso.");
                         $this->mensagem->set_status(Mensagem::SUCESSO);
                     } else {

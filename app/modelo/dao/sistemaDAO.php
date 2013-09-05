@@ -70,7 +70,7 @@ class sistemaDAO extends abstractDAO {
         $quote = "\"";
         $tipo = TipoEventoSistema::REMOCAO_CURSO;
         $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES ";
-        $sql .= " ($idUsuarioFonte,'NULL',$tipo,<data>,<hora>)";
+        $sql .= " ($idUsuarioFonte,NULL,$tipo,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
         $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
         try {
@@ -86,7 +86,7 @@ class sistemaDAO extends abstractDAO {
         $quote = "\"";
         $tipo = TipoEventoSistema::REMOCAO_POLO;
         $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES ";
-        $sql .= " ($idUsuarioFonte,'NULL',$tipo,<data>,<hora>)";
+        $sql .= " ($idUsuarioFonte,NULL,$tipo,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
         $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
         try {

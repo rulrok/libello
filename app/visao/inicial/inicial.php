@@ -20,6 +20,8 @@
         <script src="publico/js/mainScript.js"></script>
         <!--<script src="publico/js/validarCampos.js"></script>-->
         <script src="publico/js/jquery/jquery.form.js"></script>
+        
+<script src="publico/js/oTable.js" ></script>
         <title><?php echo $this->titulo ?></title>
     </head>
     <body>

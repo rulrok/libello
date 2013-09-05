@@ -1,6 +1,3 @@
-
-
-
 <div class="btn-toolbar">
     <div class="btn-group">
         <button class="btn btn-adicionar"><i class="icon-user"></i> Adicionar novo</button>
@@ -26,7 +23,6 @@
                 echo $value[$i];
                 echo '</td>';
             }
-//            echo '<td><center><input class="btn visualizarPermissoes" type="button" value="Ver"/></center></td>';
             echo '</tr>';
         }
         ?>

@@ -260,6 +260,7 @@ input[readonly]{
     padding: 5px;
     position: absolute;
     min-width: 200px;
+    max-width: 350px;
     min-height: 50px;
     right: 10px;
     top: 70px;
