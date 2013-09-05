@@ -1,5 +1,3 @@
-
-
 <?php
 $usuarios = usuarioDAO::consultar("idUsuario, concat(PNome,' ',UNome),email,dataNascimento,nome");
 ?>

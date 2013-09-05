@@ -1,13 +1,16 @@
 <?php
+
+require_once APP_LOCATION . "modelo/Mensagem.php";
+
 $id = $_GET['userID'];
 $email = usuarioDAO::descobrirEmail($id);
+$mensagem = new Mensagem();
 
-if (usuarioDAO::remover($email)):
+if (usuarioDAO::remover($email)) {
     sistemaDAO::registrarExclusaoUsuario($_SESSION['idUsuario'], $id);
-    ?>
-<script>showPopUp("Usuário removido com sucesso","sucesso");</script>
-<?php else : ?>
-<script>
-    showPopUp("Erro ao remover o usuário","erro");
-</script>
-<?php endif; exit;?>
+    $mensagem->set_mensagem("Usuário removido com sucesso.")->set_status(Mensagem::SUCESSO);
+} else {
+    $mensagem->set_mensagem("Erro ao excluir")->set_status(Mensagem::ERRO);
+}
+echo json_encode($mensagem);
+?>
