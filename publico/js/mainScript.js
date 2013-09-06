@@ -1,118 +1,123 @@
 var $buoop = {};
 $buoop.ol = window.onload;
 window.menuHasUpped = false;
-//Usado para quando se muda de página para não sair
-//por engano e perder dados.
+//Usado para quando se muda de página para não sair por engano e perder dados.
 document.paginaAlterada = false;
 
+$(document).ready(function() {
+
+
 //Prepara algumas funções especiais e conteúdos para serem exibidos no início
-window.onload = function() {
+    window.onload = function() {
 
-    //Função para centralizar elementos na página de acordo com o tamanho da tela
-    jQuery.fn.center = function() {
-        this.css("position", "absolute");
-        this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
-                $(window).scrollTop()) + "px");
-        this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
-                $(window).scrollLeft()) + "px");
-        return this;
-    };
-
-    //Para que quando a tela redimensionar e o popup com fundo cinza estiver sendo exibido,
-    //ele seja centralizado novamente, evitando exibições estranhas
-    window.onresize = function() {
-        $(".shaderFrameContent").center();
-    };
-
-    //Permite que o popup seja arrastado pela tela
-    $('.shaderFrameContent').draggable({cancel: ".shaderFrameContentWrap"});
-
-    $(".shaderFrame").click(function() {
-        $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
-        $(".shaderFrameContent").css("visibility", "hidden").css("opacity", "0");
-    });
-
-    hideFooter();
-
-    $(".popUp").hide();
-    if (!String.prototype.trim) {
-        String.prototype.trim = function() {
-            return this.replace(/^\s+|\s+$/g, '');
-        }
-    }
-
-    //Função para detectar navegadores antigos
-    try {
-        if ($buoop.ol)
-            $buoop.ol();
-    } catch (e) {
-    }
-    var e = document.createElement("script");
-    e.setAttribute("type", "text/javascript");
-    e.setAttribute("src", "http://browser-update.org/update.js");
-    document.body.appendChild(e);
-
-
-    //Associa uma função para todos os links do menu
-    var menus = $('.menuLink');
-    for (var i = 0; i < menus.length; i++) {
-        if (menus[i].id == "homeLink") {
-            menus[i].onclick = function() {
-                $(".menuLink.visited").removeClass("visited");
-                $(this).addClass("visited");
-                $(".actualTool").removeClass('actualTool');
-
-                hideSubMenu(150);
-            }
-            continue;
-        }
-        menus[i].onclick = function() {
-            var id = this.id;
-            if (!this.className.match(".*visited.*")) {
-                $(".menuLink.visited").removeClass("visited");
-                $(this).addClass("visited");
-                hideSubMenu(0);
-                makeSubMenu(this);
-                showSubMenu();
-            } else {
-                if ($(".subMenu").css("opacity") == "1") {
-                    hideSubMenu();
-                } else {
-                    showSubMenu();
-                }
-            }
+        //Função para centralizar elementos na página de acordo com o tamanho da tela
+        jQuery.fn.center = function() {
+            this.css("position", "absolute");
+            this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
+                    $(window).scrollTop()) + "px");
+            this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
+                    $(window).scrollLeft()) + "px");
+            return this;
         };
-    }
-};
+
+        //Para que quando a tela redimensionar e o popup com fundo cinza estiver sendo exibido,
+        //ele seja centralizado novamente, evitando exibições estranhas
+        window.onresize = function() {
+            $(".shaderFrameContent").center();
+        };
+
+        //Permite que o popup seja arrastado pela tela
+        $('.shaderFrameContent').draggable({cancel: ".shaderFrameContentWrap"});
+
+        $(".shaderFrame").click(function() {
+            $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
+            $(".shaderFrameContent").css("visibility", "hidden").css("opacity", "0");
+        });
+
+        hideFooter();
+
+        $(".popUp").hide();
+        if (!String.prototype.trim) {
+            String.prototype.trim = function() {
+                return this.replace(/^\s+|\s+$/g, '');
+            };
+        }
+
+        //Função para detectar navegadores antigos
+        try {
+            if ($buoop.ol)
+                $buoop.ol();
+        } catch (e) {
+        }
+        var e = document.createElement("script");
+        e.setAttribute("type", "text/javascript");
+        e.setAttribute("src", "http://browser-update.org/update.js");
+        document.body.appendChild(e);
+
+
+        //Associa uma função para todos os links do menu
+        var menus = $('.menuLink');
+        for (var i = 0; i < menus.length; i++) {
+            if (menus[i].id == "homeLink") {
+                menus[i].onclick = function() {
+                    $(".menuLink.visited").removeClass("visited");
+                    $(this).addClass("visited");
+                    $(".actualTool").removeClass('actualTool');
+
+                    hideSubMenu(150);
+                };
+                continue;
+            }
+            menus[i].onclick = function() {
+                var id = this.id;
+                if (!this.className.match(".*visited.*")) {
+                    $(".menuLink.visited").removeClass("visited");
+                    $(this).addClass("visited");
+                    hideSubMenu(0);
+                    makeSubMenu(this);
+                    showSubMenu();
+                } else {
+                    if ($(".subMenu").css("opacity") == "1") {
+                        hideSubMenu();
+                    } else {
+                        showSubMenu();
+                    }
+                }
+            };
+        }
+    };
 
 //Função para manter o menu 'colado' no topo da página quando ela desce muito
-window.onscroll = function() {
-    var menu = $("#menuPosition");
-    var menuPosition = menu.position().top;
-    var windowPosition = $(window).scrollTop();
-    if (!window.menuHasUpped && windowPosition >= menuPosition) {
-        window.menuHasUpped = true;
-        //console.debug("Fixou o menu");
-        $("#barra_superior").show(800);
-        var divMenu = $(".menuContainer");
-        var menuHeight = divMenu.height();
-        divMenu.css('position', 'fixed');
-        divMenu.css('top', '0px');
-        divMenu.css('width', '100%');
-        var divContent = $(".content");
-        divContent.css('padding-top', menuHeight + 'px');
-    } else if (window.menuHasUpped && windowPosition < menuPosition) {
-        window.menuHasUpped = false;
-        $("#barra_superior").hide(500);
-        //console.debug("Retornou ao normal");
-        var divMenu = $(".menuContainer");
-        divMenu.css('position', 'relative');
-        divMenu.css('top', '0px');
-        var divContent = $(".content");
-        divContent.css('padding-top', '0px');
-    }
-};
+    window.onscroll = function() {
+        var menu = $("#menuPosition");
+        var menuPosition = menu.position().top;
+        var windowPosition = $(window).scrollTop();
+        if (!window.menuHasUpped && windowPosition >= menuPosition) {
+            window.menuHasUpped = true;
+            //console.debug("Fixou o menu");
+            $("#barra_superior").show(800);
+            var divMenu = $(".menuContainer");
+            var menuHeight = divMenu.height();
+            divMenu.css('position', 'fixed');
+            divMenu.css('top', '0px');
+            divMenu.css('width', '100%');
+            var divContent = $(".content");
+            divContent.css('padding-top', menuHeight + 'px');
+        } else if (window.menuHasUpped && windowPosition < menuPosition) {
+            window.menuHasUpped = false;
+            $("#barra_superior").hide(500);
+            //console.debug("Retornou ao normal");
+            var divMenu = $(".menuContainer");
+            divMenu.css('position', 'relative');
+            divMenu.css('top', '0px');
+            var divContent = $(".content");
+            divContent.css('padding-top', '0px');
+        }
+    };
+});
 
+//TODO verificar porque a tela cheia não funciona, através desse método, do mesmo
+//modo que apertando F11 (ou botão apropriado para exibir em tela cheia) no navegador.
 function launchFullScreen(element) {
 
     if (element.requestFullScreen) {
@@ -143,6 +148,13 @@ function cancelFullscreen() {
     $("#fullscreen-on").removeClass("hide");
 }
 
+/**
+ * Esconde o rodapé da página.
+ * 
+ * @author Reuel
+ * 
+ * @returns {undefined} 
+ */
 function hideFooter() {
     $(".footerWrap").animate({
         opacity: 0,
@@ -163,6 +175,13 @@ function hideFooter() {
     });
 }
 
+/**
+ * Mostra o rodapé da página. Por padão ela fica escondida para ganhar espaço.
+ * 
+ * @author Reuel
+ * 
+ * @returns {undefined} 
+ */
 function showFooter() {
     $(".arrow-up").animate({opacity: 0}, 300, function() {
         $(".arrow-down").show();
@@ -185,12 +204,15 @@ function showFooter() {
 /**
  * Exibe um balão de aviso no canto direito da tela. Você pode personalizar o
  * tipo de aviso.
- * @param {type} data
- * @param {type} type 'sucesso', 'erro' ou 'informacao'. Por padrão, 'informacao'.
+ * 
+ * @author Reuel
+ * 
+ * @param {string} data
+ * @param {string} type 'sucesso', 'erro' ou 'informacao'. Por padrão, 'informacao'.
  * @returns {undefined}
  */
 function showPopUp(data, type) {
-    if (type == null) {
+    if (type === undefined || type === null) {
         type = "informacao";
     }
     var texto, fundo, borda;
@@ -227,16 +249,32 @@ function showPopUp(data, type) {
     });
 }
 
+/**
+ * Esconde o pop-up direito superior da página.
+ * 
+ * @author Reuel
+ * 
+ * @returns {undefined}
+ */
 function hidePopUp() {
     $(".botao_fechar").hide(100, function() {
         $(".popUp").hide(200, function() {
             $(".sub_popUp").empty();
-        })
+        });
     });
 
 
 
 }
+
+/**
+ * Esconde o sub-menu.
+ * 
+ * @author Reuel
+ * 
+ * @param {int} time Tempo de duração da animação.
+ * @returns {undefined}
+ */
 function hideSubMenu(time) {
     if (time === null) {
         time = 200;
@@ -250,15 +288,33 @@ function hideSubMenu(time) {
     }, time);
 }
 
-function showSubMenu() {
+/**
+ * Mostra o sub-menu.
+ * 
+ * @author Reuel
+ * 
+ * @param {int} time Tempo de duração da animação.
+ * @returns {undefined}
+ */
+function showSubMenu(time) {
+    if (time === null) {
+        time = 200;
+    }
     var subMenu = $(".subMenu");
     subMenu.animate({
         top: "0px",
         opacity: "1",
         display: "inline-block"
-    }, 200);
+    }, time);
 }
-
+/**
+ * Função responsável pelo funcionamento do menu.
+ * 
+ * @author Reuel
+ * 
+ * @param {json} Menu onde o clique foi originado.
+ * @returns {undefined}
+ */
 function makeSubMenu(originMenu) {
     var menuName;
     if (originMenu !== null) {
@@ -307,6 +363,8 @@ function makeSubMenu(originMenu) {
 /**
  * Faz uma requisição Ajax de alguma página qualquer, podendo escolher onde a 
  * resposta será colocada.
+ * 
+ * @author Reuel
  * 
  * @param {URL} link URL para a página que deseja-se obter via ajax.
  * @param {String} place Um div (ou até mesmo um SPAN) referenciado pelo nome da sua classe
@@ -391,38 +449,52 @@ function ajax(link, place, hidePop, async) {
     return sucesso.responseText;
 }
 
-// this function create an Array that contains the JS code of every <script> tag in parameter
-// then apply the eval() to execute the code in every script collected
-function parseScript(strcode) {
-    var scripts = new Array();         // Array which will store the script's code
+//// this function create an Array that contains the JS code of every <script> tag in parameter
+//// then apply the eval() to execute the code in every script collected
+//function parseScript(strcode) {
+//    var scripts = new Array();         // Array which will store the script's code
+//
+//    // Strip out tags
+//    while (strcode.indexOf("<script") > -1 || strcode.indexOf("</script") > -1) {
+//        var s = strcode.indexOf("<script");
+//        var s_e = strcode.indexOf(">", s);
+//        var e = strcode.indexOf("</script", s);
+//        var e_e = strcode.indexOf(">", e);
+//
+//        // Add to scripts array
+//        scripts.push(strcode.substring(s_e + 1, e));
+//        // Strip from strcode
+//        strcode = strcode.substring(0, s) + strcode.substring(e_e + 1);
+//    }
+//
+//    // Loop through every script collected and eval it
+//    for (var i = 0; i < scripts.length; i++) {
+//        try {
+//            eval(scripts[i]);
+//        }
+//        catch (ex) {
+//            // do what you want here when a script fails
+//        }
+//    }
+//}
 
-    // Strip out tags
-    while (strcode.indexOf("<script") > -1 || strcode.indexOf("</script") > -1) {
-        var s = strcode.indexOf("<script");
-        var s_e = strcode.indexOf(">", s);
-        var e = strcode.indexOf("</script", s);
-        var e_e = strcode.indexOf(">", e);
+/**
+ * Muda o título da página, mas mudando apenas o final. O título padrão é "Controle CEAD".
+ * Caso você altere o título para "Nova página" o resultado então seria: "Controle CEAD | Nova página".
+ * O título padrão pode ser omitido.
+ * 
+ * @author Reuel
+ * 
+ * @param {string} titulo Titulo para ser adicionado ao título padrão.
+ * @param {boolean} ignorarTituloPadrao Omite ou não o título padrão.
+ */
+function mudarTitulo(titulo, ignorarTituloPadrao) {
 
-        // Add to scripts array
-        scripts.push(strcode.substring(s_e + 1, e));
-        // Strip from strcode
-        strcode = strcode.substring(0, s) + strcode.substring(e_e + 1);
+    if (ignorarTituloPadrao === undefined) {
+        ignorarTituloPadrao = false;
     }
-
-    // Loop through every script collected and eval it
-    for (var i = 0; i < scripts.length; i++) {
-        try {
-            eval(scripts[i]);
-        }
-        catch (ex) {
-            // do what you want here when a script fails
-        }
-    }
-}
-
-function mudarTitulo(titulo) {
     if (titulo !== undefined) {
-        tituloPadrao = "Controle CEAD";
+        var tituloPadrao = ignorarTituloPadrao ? "" : "Controle CEAD";
         $("title").empty();
         $("title").append(tituloPadrao + " | " + titulo);
     } else {
@@ -436,6 +508,8 @@ function mudarTitulo(titulo) {
  * como por exemplo, páginas de edições, alterações, ou quando deleta-se algum item.
  * Isso precisa ser melhorado, mas por enquanto, funciona bem =).
  * 
+ * @author Reuel
+ *  
  * @param {String} string Texto qualquer. Nesse caso, trata-se do retorno das páginas solicitadas via Ajax.
  * @returns {String} String para ser criado um Json, caso alguma seja encontrada.
  */

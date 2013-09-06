@@ -1,10 +1,18 @@
-function configurarTabela(json) {
+/**
+ * Configura as tabelas das páginas de gerencia de coisas, como usuários, equipamentos e etc.
+ * 
+ * @author Reuel
+ * 
+ * @param {type} parametros
+ * @returns {undefined}
+ */
+function configurarTabela(parametros) {
 
 
-    var idTabela = json['idTabela'];
-    var acaoDeletar = json['deletar'];
-    var acaoEditar = json['editar'];
-    var acaoAdicionar = json['adicionar'];
+    var idTabela = parametros['idTabela'];
+    var acaoDeletar = parametros['deletar'];
+    var acaoEditar = parametros['editar'];
+    var acaoAdicionar = parametros['adicionar'];
 
     var selectedElement;
     var oTable = $("#" + idTabela).dataTable({

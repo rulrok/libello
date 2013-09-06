@@ -1,12 +1,3 @@
-/*
- * Esse script, ao ser incorporado pela primeira vez à uma página, ele então
- * varre os campos que são marcados como requeridos e trata eles com
- * base na propriedade 'name' dos campos para verifica-los.
- * Apenas insira-o no HTML e certifique-se dos nomes dos campos 'name' serem
- * compatíveis.
- */
-
-
 /**
  * Quando novos campos são dinamicamente adicionados a algum formulário, esse método deve ser execultado
  * para atribuir a esses novos campos, as verificações necessárias, como quando um deles perde o foco ou
@@ -45,11 +36,11 @@ function varrerCampos() {
  * A função varre todos os campos obrigatório, e com base na propriedade 'name' dos componenetes,
  * ela decide qual a validação utilizada para o campo, como por exemplo, se são apenas letras,
  * números e etc; essa validação é feita através de uma expressão regular.
- * Para comboboxes, a única validação é que o primeiro elemento não pode estár selecionado
+ * Para comboboxes, a única validação é que o primeiro elemento não pode estar selecionado
  * (opções como "-- Escolha uma opção --" que são valores padrões. Para esses casos, o campo 'name'
  * desses componentes deve começar obrigatoriamente com a palavra 'cb_';
  * Se nenhuma regra de nome for casada, a opção padrão de validação será selecionada, que no caso,
- * apenas exige que o campo contenha qualquer tipo de caracter.
+ * apenas exige que o campo não esteja vazio.
  * @returns {undefined}
  */
 function liberarCadastro() {
@@ -161,5 +152,3 @@ function liberarCadastro() {
         $("input[type=submit],input[value~='Atualizar']").attr('disabled', true);
     }
 }
-
-varrerCampos();
