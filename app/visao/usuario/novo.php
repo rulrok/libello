@@ -1,4 +1,5 @@
-<!--Início da página -->
+<title>Inserir novo usuário</title>
+<!-- Início da página -->
 <script src="publico/js/jquery/jquery.form.js"></script>
 <script src="publico/js/ajaxForms.js"></script> 
 <form class="table centered" id="ajaxForm" method="post" action="index.php?c=usuario&a=verificarnovo">

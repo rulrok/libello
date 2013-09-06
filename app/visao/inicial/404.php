@@ -1,3 +1,4 @@
+<title>Página não encontrada</title>
 <div class="hero-unit">
 
     <h1>Erro 404&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=(</h1>

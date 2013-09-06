@@ -1,3 +1,4 @@
+<title>Homepage</title>
 <div class="hero-unit">
     <?php if (isset($this->usuario)) : ?>
         <h1><?php echo $this->usuario ?></h1>

@@ -1,4 +1,5 @@
-<!--Início da página-->
+<title>Editando usuário <?php echo $this->nome; ?></title>
+<!-- Início da página -->
 <script src = "publico/js/jquery/jquery.form.js"></script>
 <script src="publico/js/ajaxForms.js"></script> 
 

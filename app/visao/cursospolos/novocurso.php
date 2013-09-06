@@ -1,5 +1,5 @@
-
-<!--Início da página -->
+<title>Inserir novo curso</title>
+<!-- Início da página -->
 <script src="publico/js/jquery/jquery.form.js"></script>
 <script src="publico/js/ajaxForms.js"></script> 
 

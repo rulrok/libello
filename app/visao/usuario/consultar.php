@@ -1,4 +1,5 @@
-<table id="consulta_usuario" class="tabelaDeSelecao">
+<title>Consultar usuários</title>
+<!-- Início da página --><table id="consulta_usuario" class="tabelaDeSelecao">
     <thead>
         <tr>
             <th hidden>id</th>

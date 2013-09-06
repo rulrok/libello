@@ -1,3 +1,5 @@
+<title>Gerenciar cursos</title>
+<!-- Início da página -->
 <div class="btn-toolbar">
     <div class="btn-group">
         <button class="btn btn-adicionar"><i class="icon-user"></i> Adicionar novo</button>

@@ -63,18 +63,9 @@ function autenticaUsuario(Usuario $user) {
                 $ret = $query->fetchAll(PDO::FETCH_CLASS, 'Usuario');
 
                 if (sizeof($ret) === 1) {
+                    $_SESSION['usuario'] = $ret[0];
                     $_SESSION['autenticado'] = true;
-
-                    $_SESSION['idUsuario'] = $ret[0]->get_id();
-                    $_SESSION['login'] = $ret[0]->get_email();
-                    $_SESSION['senha'] = $ret[0]->get_senha();
-                    $_SESSION['nome'] = $ret[0]->get_PNome();
-                    $_SESSION['sobrenome'] = $ret[0]->get_UNome();
-                    $_SESSION['papel'] = $ret[0]->get_papel();
-                    $_SESSION['email'] = $ret[0]->get_email();
-                    $_SESSION['dataNascimento'] = $ret[0]->get_dataNascimento();
-                    
-
+                  
                     return true;
                 } else {
                     expulsaVisitante("Usuário ou senha incorretos.");
@@ -107,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_SESSION['autenticado'] === FALSE) 
     $usuario->set_senha($senha);
 
     if (autenticaUsuario($usuario)) {
-        sistemaDAO::registrarAccesso($_SESSION['idUsuario']);
+        sistemaDAO::registrarAccesso($_SESSION['usuario']->get_id());
         header("Location: ../../index.php");
     } else {
         // O usuário e/ou a senha são inválidos, manda de volta pro form de login

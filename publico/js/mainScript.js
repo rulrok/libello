@@ -317,11 +317,11 @@ function makeSubMenu(originMenu) {
  * @param {boolean} async Especifíca se o carregamento deve ser assíncrono ou não. Por padrão, essa opção é falsa.
  * @returns O retorno da página requisitada, caso ela retorne algum.
  */
-function ajax(link, place, hidePop,async) {
+function ajax(link, place, hidePop, async) {
     if (place === undefined) {
         place = ".contentWrap";
     }
-    if (async === undefined || async === null){
+    if (async === undefined || async === null) {
         async = true;
     }
     var request = $.ajax({
@@ -341,6 +341,20 @@ function ajax(link, place, hidePop,async) {
             }
             document.paginaAlterada = false;
             $(place).empty();
+            var tituloProprio = data.lastIndexOf("<title>");
+
+            //Trata páginas com títulos personalizados
+            if (tituloProprio !== -1) {
+                var fimTitulo = data.lastIndexOf("</title>");
+                var titulo = data.substr(tituloProprio + 7, fimTitulo);
+                mudarTitulo(titulo);
+                data = data.replace("<title>","");
+                data = data.replace(titulo,"");
+                data = data.replace("</title>","");
+            } else {
+                //Volta o título para o padrão
+                mudarTitulo();
+            }
             $(place).append(data);
         }
 //        //Caso o conteúdo seja carregado no popup com fundo cinza
@@ -369,7 +383,7 @@ function ajax(link, place, hidePop,async) {
         if (textStatus != "timeout") {
             showPopUp("<b>" + errorThrown.name + "</b><br/>" + errorThrown.message, textStatus);
         } else {
-            showPopUp("Timeout. A operação não pode ser concluída pois o <br/>servidor demorou muito para responder.", "Info");
+            showPopUp("<B>Timeout</b><br/>A operação não pode ser concluída pois o servidor demorou muito para responder.", "Info");
         }
     });
 
@@ -407,20 +421,26 @@ function parseScript(strcode) {
 }
 
 function mudarTitulo(titulo) {
-    tituloPadrao = "Controle CEAD | ";
-    $("title").empty();
-    $("title").append(tituloPadrao + titulo);
+    if (titulo !== undefined) {
+        tituloPadrao = "Controle CEAD";
+        $("title").empty();
+        $("title").append(tituloPadrao + " | " + titulo);
+    } else {
+        $("title").empty();
+        $("title").append(tituloPadrao);
+    }
 }
 
 /**
  * Procura por uma resposta JSON. Especififamente feito para as respostas de páginas,
  * como por exemplo, páginas de edições, alterações, ou quando deleta-se algum item.
+ * Isso precisa ser melhorado, mas por enquanto, funciona bem =).
  * 
- * @param {String} String qualquer. Nesse caso, trata-se do retorno das páginas solicitadas via Ajax.
+ * @param {String} string Texto qualquer. Nesse caso, trata-se do retorno das páginas solicitadas via Ajax.
  * @returns {String} String para ser criado um Json, caso alguma seja encontrada.
  */
 function extrairJSON(string) {
-    console.log(string);
+//    console.log(string);
     var json = null;
     try {
         json = $.parseJSON(string);

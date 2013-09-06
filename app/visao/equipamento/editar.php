@@ -1,3 +1,4 @@
+<title>Editando equipamento</title>
 <!--Início da página-->
 <form class="table centered" id="ajaxForm" method="post" action="index.php?c=equipamento&a=verificaredicao">
     <fieldset>
@@ -98,12 +99,12 @@
 
         var numeroPatrimonio;
         //Gambiarra master
-        numeroPatrimonio = <?php echo "'".$this->numeroPatrimonio."'"; ?>;
-        if (numeroPatrimonio == ""){
+        numeroPatrimonio = <?php echo "'" . $this->numeroPatrimonio . "'"; ?>;
+        if (numeroPatrimonio == "") {
             $("#custeio").click();
         } else {
             $("#patrimonio").click();
         }
-        
+
     });
 </script>

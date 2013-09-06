@@ -26,14 +26,18 @@ class verificarEdicao extends verificadorFormularioAjax {
                     //É um patrimônio
                     $quantidade = 1;
                 }
+                if ($quantidade > 0) {
+                    $equipamento->set_nomeEquipamento($equipamentoNome)->set_dataEntrada($dataEntrada)->set_numeroPatrimonio($numeroPatrimonio)->set_quantidadde($quantidade);
 
-                $equipamento->set_nomeEquipamento($equipamentoNome)->set_dataEntrada($dataEntrada)->set_numeroPatrimonio($numeroPatrimonio)->set_quantidadde($quantidade);
-
-                if (equipamentoDAO::atualizar($equipamentoID, $equipamento)) {
-                    $this->mensagem->set_mensagem("Atualizado com sucesso");
-                    $this->mensagem->set_status(Mensagem::SUCESSO);
+                    if (equipamentoDAO::atualizar($equipamentoID, $equipamento)) {
+                        $this->mensagem->set_mensagem("Atualizado com sucesso");
+                        $this->mensagem->set_status(Mensagem::SUCESSO);
+                    } else {
+                        $this->mensagem->set_mensagem("Um erro ocorreu ao cadastrar no banco");
+                        $this->mensagem->set_status(Mensagem::ERRO);
+                    }
                 } else {
-                    $this->mensagem->set_mensagem("Um erro ocorreu ao cadastrar no banco");
+                    $this->mensagem->set_mensagem("Quantidade deve ser maior que 0");
                     $this->mensagem->set_status(Mensagem::ERRO);
                 }
             } else {

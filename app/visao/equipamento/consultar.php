@@ -1,3 +1,5 @@
+<title>Consultar equipamentos</title>
+<!-- Início da página -->
 <table id="consulta_equipamento" class="tabelaDeSelecao">
     <thead>
         <tr>
@@ -32,15 +34,6 @@
             oTable.fnAdjustColumnSizing();
         });
 
-//        $(".visualizarPermissoes").on('click', function() {
-//            var id = $("tr.row_selected>.campoID").html();
-//            $("#myModal").load("index.php?c=usuario&a=consultarpermissoes&userID=" + id).modal();
-////            $("#myModal").modal({
-////                remote: "index.php?c=usuario&a=consultarpermissoes&userID=" + id
-////            });
-//
-////            ajax("index.php?c=usuario&a=consultarpermissoes&userID=" + id, "#myModal");
-//        });
         oTable.$('tr').mousedown(function() {
             if ($(this).hasClass('row_selected')) {
                 return;
@@ -49,12 +42,6 @@
                 $(this).addClass('row_selected');
             }
         });
-//
-//        oTable.$('tr').dblclick(function() {
-//            var data = oTable.fnGetData(this);
-//            window.alert(data);
-//            // ... do something with the array / object of data for the row
-//        });
+
     });
-//    $('#table_id').dataTable();
 </script>

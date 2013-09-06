@@ -1,3 +1,5 @@
+<title>Gerenciar equipamentos</title>
+<!-- Início da páginas -->
 <div class="btn-toolbar">
     <div class="btn-group">
         <button class="btn btn-adicionar"><i class="icon-user"></i> Adicionar novo</button>

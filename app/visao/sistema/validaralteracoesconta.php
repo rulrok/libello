@@ -10,40 +10,42 @@ class validarAlteracoesConta extends verificadorFormularioAjax {
             $_SERVER['REQUEST_METHOD'] = null;
             $nome = $_POST['nome'];
             $sobreNome = $_POST['sobrenome'];
-            $email = $_SESSION['email'];
-            $novaSenha= $_POST['senha'] == "" ? "" : md5($_POST['senha']);
+
+            //!!! Garantir que o usuario nao burlou o JS da página e alterou o email do campo apenas leitura
+            $email = $_SESSION['usuario']->get_email();
+
+            $novaSenha = $_POST['senha'] == "" ? "" : md5($_POST['senha']);
             $confSenha = $_POST['confSenha'] == "" ? "" : md5($_POST['confSenha']);
             $senha = md5($_POST['senhaAtual']);
             $dataNascimento = $_POST['dataNascimento'];
 
-            $usuario = usuarioDAO::recuperarUsuario($_SESSION['email']);
+            $usuario = usuarioDAO::recuperarUsuario($_SESSION['usuario']->get_email());
 //            $this->visao->papel = usuarioDao::consultarPapel($_SESSION['email']);
 
             if ($usuario->get_senha() == $senha) {
 
                 if ($nome != "" && $sobreNome != "") {
 
-                    $usuario->set_PNome($nome);
-                    $_SESSION['nome'] = $nome;
-                    $usuario->set_UNome($sobreNome);
-                    $_SESSION['sobrenome'] = $sobreNome;
-                    $usuario->set_email($email);
-                    $_SESSION['email'] = $email;
-                    $usuario->set_dataNascimento($dataNascimento);
-                    $_SESSION['dataNascimento'] = $dataNascimento;
-
-                    if ($novaSenha!= "") {
+                    if ($novaSenha != "") {
                         //Se quer atualizar a senha
-                        if ($novaSenha== $confSenha) {
-                            $usuario->set_senha($this->visao->novaSenha);
+                        if ($novaSenha == $confSenha) {
+                            $usuario->set_senha($novaSenha);
                         } else {
                             $this->mensagem->set_mensagem("Senhas não conferem.");
                             $this->mensagem->set_status(Mensagem::ERRO);
+                            return;
                         }
+                    } else {
+                        $usuario->set_senha($senha);
                     }
+                    $usuario->set_PNome($nome);
+                    $usuario->set_UNome($sobreNome);
+                    $usuario->set_email($email);
+                    $usuario->set_dataNascimento($dataNascimento);
+
                     //Se não quer alterar a senha
-                    if (UsuarioDAO::atualizar($_SESSION['email'], $usuario)) {
-                        $_SESSION['senha'] = $usuario->get_senha();
+                    if (UsuarioDAO::atualizar($_SESSION['usuario']->get_email(), $usuario)) {
+                        $_SESSION['usuario'] = $usuario;
                         $this->mensagem->set_mensagem("Alteração concluída com sucesso");
                         $this->mensagem->set_status(Mensagem::SUCESSO);
                         //TODO arrumar um modo de atualizar o nome do usuário na parte superior direita do site quando ele altera o nome.

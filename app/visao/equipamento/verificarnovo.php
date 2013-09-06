@@ -37,15 +37,20 @@ class verificarnovo extends verificadorFormularioAjax {
                     }
                 }
             } else {
-                //É do tipo custeio
-                $equipamento->set_quantidadde($quantidade);
-                $equipamento->set_numeroPatrimonio(null);
-                //Vai tentar cadastrar
-                try {
-                    equipamentoDAO::cadastrarEquipamento($equipamento);
-                    $this->mensagem->set_mensagem("Cadastrado com sucesso.")->set_status(Mensagem::SUCESSO);
-                } catch (Exception $e) {
-                    $this->mensagem->set_mensagem("Erro ao cadastrar no banco de dados.")->set_status(Mensagem::ERRO);
+                if (quantidade > 0) {
+                    //É do tipo custeio
+                    $equipamento->set_quantidadde($quantidade);
+                    $equipamento->set_numeroPatrimonio(null);
+                    //Vai tentar cadastrar
+                    try {
+                        equipamentoDAO::cadastrarEquipamento($equipamento);
+                        $this->mensagem->set_mensagem("Cadastrado com sucesso.")->set_status(Mensagem::SUCESSO);
+                    } catch (Exception $e) {
+                        $this->mensagem->set_mensagem("Erro ao cadastrar no banco de dados.")->set_status(Mensagem::ERRO);
+                    }
+                } else {
+                    $this->mensagem->set_mensagem("Quantidade deve ser maior que 0");
+                    $this->mensagem->set_status(Mensagem::ERRO);
                 }
             }
         } catch (Exception $e) {
@@ -58,5 +63,4 @@ class verificarnovo extends verificadorFormularioAjax {
 
 $verificar = new verificarnovo();
 $verificar->verificar();
-
 ?>

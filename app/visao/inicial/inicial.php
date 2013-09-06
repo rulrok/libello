@@ -20,9 +20,9 @@
         <script src="publico/js/mainScript.js"></script>
         <!--<script src="publico/js/validarCampos.js"></script>-->
         <script src="publico/js/jquery/jquery.form.js"></script>
-        
-<script src="publico/js/oTable.js" ></script>
-        <title><?php echo $this->titulo ?></title>
+
+        <script src="publico/js/oTable.js" ></script>
+        <title class="tituloFixo"><?php echo $this->titulo ?></title>
     </head>
     <body>
         <nav>
@@ -55,7 +55,10 @@
                         <div class="centered btn-group">
                             <a id="fullscreen-on" title="Modo tela cheia" class="btn btn-small" href="javascript:void(0)" onclick="launchFullScreen(document.documentElement);"><i class="icon-fullscreen"></i></a>
                             <a id="fullscreen-off" title="Voltar ao modo normal" class="btn btn-small hide" href="javascript:void(0)" onclick="cancelFullscreen();"><i class="icon-resize-small"></i></a>
-                            <a class="btn btn-small" href="javascript:void(0)" onclick="ajax('index.php?c=sistema&a=gerenciarconta');hideSubMenu(150);$('.visited').removeClass('visited');$('.actualTool').removeClass('actualTool')"><i class="icon-cog"></i> Gerenciar Conta</a>
+                            <a class="btn btn-small" href="javascript:void(0)" onclick="ajax('index.php?c=sistema&a=gerenciarconta');
+                                    hideSubMenu(150);
+                                    $('.visited').removeClass('visited');
+                                    $('.actualTool').removeClass('actualTool')"><i class="icon-cog"></i> Gerenciar Conta</a>
                             <a class="btn btn-small" href="sair.php"><i class="icon-off"></i> Sair</a>
                         </div>
                     </div>
@@ -133,41 +136,41 @@
         <script src="publico/js/jquery/jquery.datepick-pt-BR.js"></script>
         <script src="publico/js/bootstrap.js"></script> 
         <script>
-                        //Configurações globais para dataTables
-                        $.extend($.fn.dataTable.defaults, {
-                            "bFilter": true,
-                            "bSort": true,
-                            "bJQueryUI": true,
-                            "sPaginationType": "full_numbers",
-                            "oLanguage": {
-                                "sProcessing": "Processando...",
-                                "sLengthMenu": "Mostrar _MENU_ registros",
-                                "sZeroRecords": "Não foram encontrados resultados",
-                                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-                                "sInfoEmpty": "Mostrando de 0 até 0 de 0 registros",
-                                "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
-                                "sInfoPostFix": "",
-                                "sSearch": "Buscar:",
-                                "sUrl": "",
-                                "oPaginate": {
-                                    "sFirst": "Primeiro",
-                                    "sPrevious": "Anterior",
-                                    "sNext": "Seguinte",
-                                    "sLast": "Último"
-                                },
-                                "oAria": {
-                                    "sSortAscending": " - Ordenar crescentemente",
-                                    "sSortDescending": " - Ordenar decrescentemente"
-                                }
-                            }
-                        });
-                        $.datepick.setDefaults({
-                            dateFormat: 'dd/mm/yyyy'
-                        })
+                                //Configurações globais para dataTables
+                                $.extend($.fn.dataTable.defaults, {
+                                    "bFilter": true,
+                                    "bSort": true,
+                                    "bJQueryUI": true,
+                                    "sPaginationType": "full_numbers",
+                                    "oLanguage": {
+                                        "sProcessing": "Processando...",
+                                        "sLengthMenu": "Mostrar _MENU_ registros",
+                                        "sZeroRecords": "Não foram encontrados resultados",
+                                        "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                                        "sInfoEmpty": "Mostrando de 0 até 0 de 0 registros",
+                                        "sInfoFiltered": "(filtrado de _MAX_ registros no total)",
+                                        "sInfoPostFix": "",
+                                        "sSearch": "Buscar:",
+                                        "sUrl": "",
+                                        "oPaginate": {
+                                            "sFirst": "Primeiro",
+                                            "sPrevious": "Anterior",
+                                            "sNext": "Seguinte",
+                                            "sLast": "Último"
+                                        },
+                                        "oAria": {
+                                            "sSortAscending": " - Ordenar crescentemente",
+                                            "sSortDescending": " - Ordenar decrescentemente"
+                                        }
+                                    }
+                                });
+                                $.datepick.setDefaults({
+                                    dateFormat: 'dd/mm/yyyy'
+                                })
 
-                        //Configura botão para tela cheia
-                        $("#fullscreen-on").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
-                        $("#fullscreen-off").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
+                                //Configura botão para tela cheia
+                                $("#fullscreen-on").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
+                                $("#fullscreen-off").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
         </script>
     </body>
 </html>

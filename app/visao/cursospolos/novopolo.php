@@ -1,4 +1,5 @@
-<!--Início da página -->
+<title>Inserir novo polo</title>
+<!-- Início da página -->
 <script src="publico/js/jquery/jquery.form.js"></script>
 <form class="table centered" id="ajaxForm" method="post" action="index.php?c=cursospolos&a=verificarnovopolo">
     <fieldset>

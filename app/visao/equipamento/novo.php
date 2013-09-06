@@ -1,3 +1,4 @@
+<title>Inserir novo usuário</title>
 <!--Início da página -->
 <form class="table centered" id="ajaxForm" method="post" action="index.php?c=equipamento&a=verificarnovo">
     <fieldset>

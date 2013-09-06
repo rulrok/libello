@@ -1,4 +1,5 @@
-<div class="btn-toolbar">
+<title>Gerenciar usuários</title>
+<!-- Início da página --><div class="btn-toolbar">
     <div class="btn-group">
         <button class="btn btn-adicionar"><i class="icon-user"></i> Adicionar novo</button>
         <button class="btn btn-editar" href="#"><i class="icon-edit"></i> Editar</button>
