@@ -2,7 +2,7 @@
 <!-- Início da páginas -->
 <div class="btn-toolbar">
     <div class="btn-group">
-        <button class="btn btn-adicionar"><i class="icon-user"></i> Adicionar novo</button>
+        <button class="btn btn-adicionar"><i class="icon-plus"></i> Adicionar novo</button>
         <button class="btn btn-editar" href="#"><i class="icon-edit"></i> Editar</button>
         <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
     </div>
@@ -33,12 +33,11 @@
 </table>
 <div class="btn-toolbar">
     <div class="btn-group">
-        <button class="btn btn-adicionar"><i class="icon-user"></i> Adicionar novo</button>
+        <button class="btn btn-adicionar"><i class="icon-plus"></i> Adicionar novo</button>
         <button class="btn btn-editar" href="#"><i class="icon-edit"></i> Editar</button>
         <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
     </div>
 </div>
-<script src="publico/js/oTable.js"></script>
 <script>
     //Este script configura as ações para os botões da página.
     $(document).ready(function() {
@@ -49,6 +48,4 @@
             deletar: 'index.php?c=equipamento&a=remover&equipamentoID='
         });
     });
-
-
 </script>

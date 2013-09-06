@@ -348,9 +348,9 @@ function ajax(link, place, hidePop, async) {
                 var fimTitulo = data.lastIndexOf("</title>");
                 var titulo = data.substr(tituloProprio + 7, fimTitulo);
                 mudarTitulo(titulo);
-                data = data.replace("<title>","");
-                data = data.replace(titulo,"");
-                data = data.replace("</title>","");
+                data = data.replace("<title>", "");
+                data = data.replace(titulo, "");
+                data = data.replace("</title>", "");
             } else {
                 //Volta o título para o padrão
                 mudarTitulo();
@@ -376,7 +376,7 @@ function ajax(link, place, hidePop, async) {
         if (hidePop === true) {
             hidePopUp();
         }
-        return data;
+//        return data;
     });
 
     var erro = request.error(function(jqXHR, textStatus, errorThrown) {

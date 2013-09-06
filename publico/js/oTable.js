@@ -74,7 +74,7 @@ function configurarTabela(json) {
         }
         if (confirm('Deseja realmente fazer isso?')) {
             var id = $("tr.row_selected>.campoID").html();
-            var data = ajax(acaoDeletar + id, null, false,false);
+            var data = ajax(acaoDeletar + id, null, false, false);
             if (data !== null && data !== undefined) {
                 data = extrairJSON(data);
 
@@ -92,7 +92,7 @@ function configurarTabela(json) {
             var pos = oTable.fnGetPosition(selectedElement);
             oTable.fnDeleteRow(pos);
             $("tr.odd")[0].addClass("row_selected");
-            
+
         }
     });
 

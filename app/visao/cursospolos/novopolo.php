@@ -1,6 +1,5 @@
 <title>Inserir novo polo</title>
 <!-- Início da página -->
-<script src="publico/js/jquery/jquery.form.js"></script>
 <form class="table centered" id="ajaxForm" method="post" action="index.php?c=cursospolos&a=verificarnovopolo">
     <fieldset>
         <legend>Inserir novo polo</legend>
@@ -18,7 +17,7 @@
         </span>
     </fieldset>
     <input class="btn btn-large" type="reset" value="Limpar" onclick="$('#estado').val(0);
-                liberarCadastro();">
+            liberarCadastro();">
     <input class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit" value="Cadastrar">
 </form>
 
@@ -26,6 +25,8 @@
 <script src="publico/js/cidades-estados.js"></script>
 <script>
         $(document).ready(function() {
+            varrerCampos();
+            formularioAjax();
             new dgCidadesEstados({
                 cidade: $('#cidade').get(0),
                 estado: $('#estado').get(0)
@@ -36,5 +37,3 @@
 //        $('#estado').change();
 //        $('#cidade').val("");
 </script>
-<script src="publico/js/validarCampos.js"></script>
-<script src="publico/js/ajaxForms.js"></script>

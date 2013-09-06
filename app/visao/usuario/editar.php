@@ -1,8 +1,5 @@
 <title>Editando usuário <?php echo $this->nome; ?></title>
 <!-- Início da página -->
-<script src = "publico/js/jquery/jquery.form.js"></script>
-<script src="publico/js/ajaxForms.js"></script> 
-
 <form class="table centered" id="ajaxForm" method="post" action="index.php?c=usuario&a=verificaredicao">
     <fieldset>
         <legend>Dados</legend>
@@ -40,24 +37,28 @@
 </form>
 
 
-<script type="text/javascript" src="publico/js/validarCampos.js"></script>
 
 
 <script>
-    $(function() {
+    $(document).ready(function() {
+        varrerCampos();
+        formularioAjax();
+        
         $("#dataNascimento").datepick();
+
+
+        $('[name=papel]').val("<?php echo $this->idPapel ?>");
+
+        var obj = <?php echo json_encode($this->permissoes) ?>;
+        var nome, idFerramenta, idPermissao, element;
+        for (var i = 0; i < obj.length; i++) {
+            element = obj[i];
+            nome = element['nome'].toLowerCase();
+//        idFerramenta = element['idFerramenta'];
+            idPermissao = element['idPermissao'];
+
+            $('[name$="' + nome + '"]').val(idPermissao);
+        }
     });
 
-    $('[name=papel]').val("<?php echo $this->idPapel ?>");
-
-    var obj = <?php echo json_encode($this->permissoes) ?>;
-    var nome, idFerramenta, idPermissao, element;
-    for (var i = 0; i < obj.length; i++) {
-        element = obj[i];
-        nome = element['nome'].toLowerCase();
-//        idFerramenta = element['idFerramenta'];
-        idPermissao = element['idPermissao'];
-
-        $('[name$="' + nome + '"]').val(idPermissao);
-    }
 </script>

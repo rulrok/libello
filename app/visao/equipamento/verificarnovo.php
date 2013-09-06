@@ -22,7 +22,7 @@ class verificarnovo extends verificadorFormularioAjax {
             if ($tipo == "patrimonio") {
                 $quantidade = $_POST['quantidadePatrimonios'];
 
-                $colecaoEquipamentos;
+                $colecaoEquipamentos = [];
                 $aux = new Equipamento();
                 for ($i = 0; $i < $quantidade; $i++) {
                     //TODO Verificar uma forma
@@ -37,7 +37,7 @@ class verificarnovo extends verificadorFormularioAjax {
                     }
                 }
             } else {
-                if (quantidade > 0) {
+                if ($quantidade > 0) {
                     //É do tipo custeio
                     $equipamento->set_quantidadde($quantidade);
                     $equipamento->set_numeroPatrimonio(null);

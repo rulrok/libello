@@ -1,8 +1,5 @@
 <title>Editar polo</title>
 <!--Início da página-->
-<script src = "publico/js/jquery/jquery.form.js"></script>
-<script src="publico/js/ajaxForms.js"></script> 
-
 <form class="table centered" id="ajaxForm" method="post" action="index.php?c=cursospolos&a=verificaredicaopolo">
     <fieldset>
         <legend>Dados</legend>
@@ -28,18 +25,18 @@
 
 </form>
 
-
-<script type="text/javascript" src="publico/js/validarCampos.js"></script>
 <script src="publico/js/cidades-estados.js"></script>
 <script>
     $(document).ready(function() {
+        varrerCampos();
+        formularioAjax();
         new dgCidadesEstados({
             cidade: $('#cidade').get(0),
             estado: $('#estado').get(0)
         });
-    });
 
-    $('#estado').val("<?php echo $this->estado ?>");
-    $('#estado').change();
-    $('#cidade').val("<?php echo $this->cidade ?>");
+        $('#estado').val("<?php echo $this->estado ?>");
+        $('#estado').change();
+        $('#cidade').val("<?php echo $this->cidade ?>");
+    });
 </script>

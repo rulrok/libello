@@ -6,7 +6,7 @@
         <style type="text/css">
                 nav {display:table;height:100%}
         </style>
-<![endif]-->
+        <![endif]-->
         <link type="text/css" rel="stylesheet" href="publico/css/jquery-ui.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/bootstrap.css"/> 
         <link type="text/css" rel="stylesheet" href="publico/css/mainStyle.css" />
@@ -14,13 +14,12 @@
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.datepick.css"/> 
 
 
-        <!--<link type="text/css" rel="stylesheet" href="publico/css/jquery-ui-1.8.4.custom.css" />-->
         <!-- Inicialização dos principais scripts -->
         <script src="publico/js/jquery/jquery-1.9.1.js"></script>
         <script src="publico/js/mainScript.js"></script>
-        <!--<script src="publico/js/validarCampos.js"></script>-->
+        <script type="text/javascript" src="publico/js/validarCampos.js"></script>
         <script src="publico/js/jquery/jquery.form.js"></script>
-
+        <script src="publico/js/ajaxForms.js"></script> 
         <script src="publico/js/oTable.js" ></script>
         <title class="tituloFixo"><?php echo $this->titulo ?></title>
     </head>

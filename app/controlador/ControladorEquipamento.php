@@ -29,7 +29,6 @@ class ControladorEquipamento extends Controlador {
     public function acaoEditar() {
         if (isset($_GET['equipamentoID']) || isset($_POST['equipamentoID'])) {
             $this->visao->equipamentoID = $_REQUEST['equipamentoID'];
-            $equipamento = new Equipamento();
             $equipamento = equipamentoDAO::recuperarEquipamento($this->visao->equipamentoID);
 
             $this->visao->equipamento = $equipamento->get_nomeEquipamento();

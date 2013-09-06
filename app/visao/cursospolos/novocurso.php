@@ -1,8 +1,5 @@
 <title>Inserir novo curso</title>
 <!-- Início da página -->
-<script src="publico/js/jquery/jquery.form.js"></script>
-<script src="publico/js/ajaxForms.js"></script> 
-
 <form class="table centered" id="ajaxForm" method="post" action="index.php?c=cursospolos&a=verificarnovocurso">
     <fieldset>
         <legend>Inserir novo curso</legend>
@@ -24,10 +21,10 @@
 
 </form>
 
-<script src="publico/js/validarCampos.js"></script>
 <script src="publico/js/cidades-estados.js"></script>
 <script>
-    $('[name=area]').val("<?php echo $this->area ?>");
-//        $('#estado').change();
-    $('[name=tipocurso]').val("<?php echo $this->tipocurso ?>");
+    $(document).ready(function() {
+        varrerCampos();
+        formularioAjax();
+    });
 </script>

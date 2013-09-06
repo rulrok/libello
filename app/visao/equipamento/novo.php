@@ -58,9 +58,8 @@
     <input class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit" value="Cadastrar">
 </form>
 
-<script src="publico/js/validarCampos.js"></script>
-<script src="publico/js/ajaxForms.js"></script>
 <script>
+
                         var quantidadePatrimonios = 1;
                         var codigoHtml = "";
 
@@ -104,7 +103,8 @@
 
                         $(document).ready(function() {
 
-
+                            varrerCampos();
+                            formularioAjax();
 
                             $("#dataEntrada").datepick();
 
@@ -153,8 +153,6 @@
                                 $("#radioPatrimonio").click();
                                 $("#submit").prop("disabled", true);
                             });
-
-
 
                         });
 </script>

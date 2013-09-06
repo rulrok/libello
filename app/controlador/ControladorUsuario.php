@@ -18,25 +18,27 @@ class ControladorUsuario extends Controlador {
 
     public function acaoEditar() {
         if (isset($_GET['userID'])) {
-            $this->visao->comboPermissoes = ComboBoxPermissoes::montarComboBoxPadrao();
-            $userID = $_GET['userID'];
-            $email = usuarioDAO::descobrirEmail($userID);
-            $usuario = usuarioDAO::recuperarUsuario($email);
-            $this->visao->nome = $usuario->get_PNome();
-            $this->visao->sobrenome = $usuario->get_UNome();
-            $this->visao->email = $usuario->get_email();
-            $this->visao->dataNascimento = $usuario->get_dataNascimento();
-            $this->visao->papel = usuarioDAO::consultarPapel($email);
-            $this->visao->idPapel = (int) papelDAO::obterIdPapel($this->visao->papel);
-            $this->visao->comboPapel = ComboBoxPapeis::montarComboBoxPadrao();
-            $this->visao->permissoes = usuarioDAO::obterPermissoes($_GET['userID']);
+            if ($_GET['userID'] != $_SESSION['usuario']->get_id()) { //!!! Impede que o usuário edite o próprio perfil, alterando assim sua permissões e papel. Uma violação de segurança.
+                $this->visao->comboPermissoes = ComboBoxPermissoes::montarComboBoxPadrao();
+                $userID = $_GET['userID'];
+                $email = usuarioDAO::descobrirEmail($userID);
+                $usuario = usuarioDAO::recuperarUsuario($email);
+                $this->visao->nome = $usuario->get_PNome();
+                $this->visao->sobrenome = $usuario->get_UNome();
+                $this->visao->email = $usuario->get_email();
+                $this->visao->dataNascimento = $usuario->get_dataNascimento();
+                $this->visao->papel = usuarioDAO::consultarPapel($email);
+                $this->visao->idPapel = (int) papelDAO::obterIdPapel($this->visao->papel);
+                $this->visao->comboPapel = ComboBoxPapeis::montarComboBoxPadrao();
+                $this->visao->permissoes = usuarioDAO::obterPermissoes($_GET['userID']);
+            }
         }
 
         $this->renderizar();
     }
 
     public function acaoVerificarEdicao() {
-        
+
         $this->renderizar();
     }
 
@@ -49,7 +51,7 @@ class ControladorUsuario extends Controlador {
     }
 
     public function acaoGerenciar() {
-        $this->visao->usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,dataNascimento,nome", "idUsuario <> " . $_SESSION['idUsuario']);
+        $this->visao->usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,dataNascimento,nome", "idUsuario <> " . $_SESSION['usuario']->get_id());
         $this->renderizar();
     }
 

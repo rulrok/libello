@@ -51,12 +51,10 @@
 
 </form>
 
-<script type="text/javascript" src="publico/js/validarCampos.js"></script>
-<script src = "publico/js/jquery/jquery.form.js"></script>
-<script src="publico/js/ajaxForms.js"></script>
 <script>
     $(document).ready(function() {
-
+        varrerCampos();
+        formularioAjax();
         $("#dataEntrada").datepick();
 
         $("#custeio").on("click", function() {
