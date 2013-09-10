@@ -16,6 +16,7 @@
 
         <!-- Inicialização dos principais scripts -->
         <script src="publico/js/jquery/jquery-1.9.1.js"></script>
+        <script src="publico/js/jquery/jquery.ba-hashchange.js"></script>
         <script src="publico/js/mainScript.js"></script>
         <script type="text/javascript" src="publico/js/validarCampos.js"></script>
         <script src="publico/js/jquery/jquery.form.js"></script>
@@ -114,7 +115,7 @@
                     </div>
                     <div class="footerLinks" id="informacoes">
                         <ul><lt>Informações</lt>
-                            <li><p>Este site é corretamente visualizado no <a href="http://www.google.com/chrome/" target="_blank">Google Chrome</a>.
+                            <li><p>Este site é corretamente visualizado no <a href="http://www.google.com/chrome/" target="_blank">Google Chrome</a>&nbsp;&nbsp;&nbsp;ou Safari.
                                     <br>
                                     <i><b>Não há garantias de funcionar com o Internet Explorer.</b></i></p>
                             </li>
@@ -161,7 +162,13 @@
                                             "sSortAscending": " - Ordenar crescentemente",
                                             "sSortDescending": " - Ordenar decrescentemente"
                                         }
-                                    }
+                                    },
+                                    //Scrol horizontal
+                                    "sScrollX": "100%",
+                                    "sScrollXInner": "110%",
+                                    "bScrollCollapse": true,
+                                    // Salva o estado da tabela para ser exibida como da última vez
+                                    "bStateSave": false
                                 });
                                 $.datepick.setDefaults({
                                     dateFormat: 'dd/mm/yyyy'

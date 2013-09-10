@@ -149,17 +149,21 @@ class usuarioDAO extends abstractDAO {
      */
     public static function gerarTolkenRecuperarSenha($email) {
         $usuario = usuarioDAO::recuperarUsuario($email);
-        $antigaSenhaMD5 = $usuario->get_senha();
-        $hora = time();
-        $id = $usuario->get_id();
-        $tolken = md5($antigaSenhaMD5 . $hora);
-        $sql = "INSERT INTO usuariosRecuperarSenha VALUES (" . $id . ",\"" . $tolken . "\")";
-        try {
-            parent::getConexao()->query($sql);
-        } catch (Exception $e) {
+        if ($usuario !== null) {
+            $antigaSenhaMD5 = $usuario->get_senha();
+            $hora = time();
+            $id = $usuario->get_id();
+            $tolken = md5($antigaSenhaMD5 . $hora);
+            $sql = "INSERT INTO usuariosRecuperarSenha VALUES (" . $id . ",\"" . $tolken . "\")";
+            try {
+                parent::getConexao()->query($sql);
+            } catch (Exception $e) {
+                return false;
+            }
+            return true;
+        } else {
             return false;
         }
-        return true;
     }
 
     /**
@@ -193,6 +197,9 @@ class usuarioDAO extends abstractDAO {
             $resultado = parent::getConexao()->query($sql)->fetch();
         } catch (Exception $e) {
             echo $e;
+        }
+        if ($resultado === false){
+            throw new Exception("Tolken não encontrado");
         }
         if (is_array($resultado)) {
             $resultado = $resultado[0];

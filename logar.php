@@ -61,7 +61,7 @@
                 <div id="capes"></div>
             </div>
             <div id="footer" >
-                <p class="centeredText">Copyright &copy; 2012 - Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a></label>
+                <p class="centeredText">Copyright &copy; 2012 - 2013 | Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a></label>
             </div>
         <?php endif; ?>
     </body>

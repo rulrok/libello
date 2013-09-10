@@ -42,7 +42,7 @@
                     <button type="button" class="btn btn-success" id="adicionarPatrimonio" onclick="adicionarNovoPatrimonio();" style="display: table-cell;"> <i class="icon-white icon-plus-sign"></i> </button>
                 </span>
                 <label>&nbsp;&nbsp;&nbsp;Quantidade de patrimônios</label>
-                <input readonly type="text" class="input-small" id="quantidadePatrimonios" name="quantidadePatrimonios" value="1"/>
+                <input readonly required type="text" class="input-small ignorar" id="quantidadePatrimonios" name="quantidadePatrimonios" value="1"/>
             </span>
             <div id="linhasPatrimonios">
                 <span class="line patrimonio-1">

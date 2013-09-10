@@ -1,6 +1,7 @@
 <?php
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/biblioteca/Mvc/Controlador.php';
+require_once APP_LOCATION."modelo/ComboBoxPapeis.php";
 
 class ControladorEquipamento extends Controlador {
 
@@ -47,7 +48,29 @@ class ControladorEquipamento extends Controlador {
     public function acaoRemover(){
         $this->renderizar();
     }
+    
+    public function acaoSaida(){
+        $this->visao->equipamentos = equipamentoDAO::consultar();
+        $this->renderizar();
+    }
 
+    public function acaoNovasaida(){
+        if (isset($_GET['equipamentoID'])){
+            $this->visao->comboboxPapeis = ComboBoxPapeis::montarComboBoxPadrao();
+            $this->visao->equipamento = equipamentoDAO::recuperarEquipamento($_GET['equipamentoID']);
+            $this->renderizar();
+        } else {
+            die("Acesso indevido.");
+        }
+    }
+    
+    public function acaoRegistrarsaida(){
+        $this->renderizar();
+    }
+    
+    public function acaoListarusuarios(){
+        $this->renderizar();
+    }
 }
 
 ?>

@@ -46,15 +46,10 @@
     <input class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit" value="Cadastrar">
 
 </form>
-<script type="text/javascript" src="publico/js/validarCampos.js"></script>
-
-
 <script>
-    $(function() {
+    $(document).ready(function() {
         $("#dataNascimento").datepick();
+        $(".line input").popover({trigger: 'focus', container: 'body'});
+        varrerCampos();
     });
-
-
-    $(".line input").popover({trigger: 'focus', container: 'body'});
-
 </script>

@@ -5,7 +5,7 @@
  * 
  */
 function varrerCampos() {
-    var camposObrigatorios = $("input[required],select[required]").not(".campoVarrido").not("input[readonly]");
+    var camposObrigatorios = $("input[required],select[required]").not(".ignorar").not(".campoVarrido");
     if (camposObrigatorios.length > 0) {
 //document.head.children[document.head.children.length] = "<script src=\"publico/js/validarCampos.js\"></script>";
         //$("head").append("<script src=\"publico/js/validarCampos.js\"></script>");
@@ -19,9 +19,10 @@ function varrerCampos() {
         $(camposObrigatorios).on('change', function() {
             liberarCadastro();
         });
-        $(camposObrigatorios).on('blur', function() {
-            liberarCadastro();
-        });
+//        $(camposObrigatorios).on('blur', function() {
+//            liberarCadastro();
+//        });
+        trataCamposData();
 //    $('input').not("input[required],select[required]").on('change', function() {
 //        $("input[type=submit],input[value~='Atualizar']").attr('disabled', false);
 //    });
@@ -30,6 +31,23 @@ function varrerCampos() {
 //        $("input[type=submit],input[value~='Atualizar'],input[value~='Cadastrar'").attr('disabled', false);
 //    });
     }
+}
+
+/**
+ * Função especialmente feita para tratar os campos de data, para quando o usuário escolhe uma data e sai do campo.
+ * Ela foi necessária, pois a função onchange não é ativada por causa do campo estar
+ * definido como readonly e a inserção da data no campo pelo javascript não ativava a função.
+ * 
+ * @returns {undefined}
+ */
+function trataCamposData() {
+    var camposData = $(".campoData").not(".ignorar");
+
+    $(camposData).on("mousedown", function(e) {
+        $(document).on("mouseup", function() {
+            setTimeout(liberarCadastro, 300);
+        });
+    });
 }
 
 /**
@@ -74,7 +92,8 @@ function liberarCadastro() {
                 break;
             case "quantidade":
             case "quantidadePatrimonios":
-                patter = new RegExp("[0-9]+");
+                patter = new RegExp("(^[1-9]([0-9]*)?)");
+                campos[i].value = campos[i].value.replace(campos[i].value.match("^0*"), ""); //Elimina 0s a esquerda.
                 break;
             case "login":
                 //Apenas letras minúsculas, com no mínimo 3

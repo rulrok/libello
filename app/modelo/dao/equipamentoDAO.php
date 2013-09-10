@@ -82,7 +82,7 @@ class equipamentoDAO extends abstractDAO {
         }
 
         $numeroPatrimonio = $novosDados->get_numeroPatrimonio();
-        if ($numeroPatrimonio !== "NULL"){
+        if ($numeroPatrimonio !== "NULL") {
             $numeroPatrimonio = parent::quote($numeroPatrimonio);
         }
 
@@ -99,7 +99,7 @@ class equipamentoDAO extends abstractDAO {
         }
     }
 
-        public static function remover($equipamentoID) {
+    public static function remover($equipamentoID) {
         if ($equipamentoID !== null) {
             if (is_array($equipamentoID)) {
                 $equipamentoID = $equipamentoID['equipamentoID'];
@@ -114,6 +114,19 @@ class equipamentoDAO extends abstractDAO {
             }
         }
     }
+
+    public static function cadastrarSaida($idEquipamento, $idResponsavel, $destino, $quantidade, $data) {
+        $sql = "INSERT INTO equipamento_saida(equipamento,responsavel,destino,quantidade,data) VALUES " +
+                "($idEquipamento,$idResponsavel,$destino,$quantidade,$data)";
+
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
 }
 
 ?>

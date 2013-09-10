@@ -840,7 +840,7 @@ li[id$=Link]:before{
 }
 
 /* Campos de senha e texto específicos de formulários alinhados sem tabela */
-.table .line input[type=text],.table .line input[type=password], .table .line select {
+.table .line input, .table .line select {
     display: table-cell;
     float: left;
     margin-bottom: -7px;

@@ -13,6 +13,8 @@ function configurarTabela(parametros) {
     var acaoDeletar = parametros['deletar'];
     var acaoEditar = parametros['editar'];
     var acaoAdicionar = parametros['adicionar'];
+    var acaoBaixa = parametros['baixa'];
+    var acaoSaida = parametros['saida'];
 
     var selectedElement;
     var oTable = $("#" + idTabela).dataTable({
@@ -68,6 +70,7 @@ function configurarTabela(parametros) {
     $(".btn-adicionar").on('click', function() {
         ajax(acaoAdicionar);
     });
+
     $(".btn-editar").on('mousedown', function() {
         if ($('.row_selected').size() == 0) {
             return false;
@@ -108,5 +111,20 @@ function configurarTabela(parametros) {
         var id = $("tr.row_selected>.campoID").html();
         $("#myModal").load("index.php?c=usuario&a=consultarpermissoes&userID=" + id).modal();
 
+    });
+
+    $(".btn-saida").on('click', function() {
+        if ($('.row_selected').size() == 0) {
+            return false;
+        }
+        var id = $("tr.row_selected>.campoID").html();
+        ajax(acaoSaida + id);
+    });
+
+    $(".btn-baixa").on('click', function() {
+        if ($('.row_selected').size() == 0) {
+            return false;
+        }
+        var id = $("tr.row_selected>.campoID").html();
     });
 }

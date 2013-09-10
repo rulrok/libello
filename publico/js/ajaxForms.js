@@ -12,7 +12,7 @@
  * 
  * @param {String} idFormulario O nome do id, sem "#"no início, do formulário.
  */
-function formularioAjax(idFormulario) {
+function formularioAjax(idFormulario, recipient) {
 
     if (idFormulario === undefined) {
         idFormulario = $("form").prop("id");
@@ -22,8 +22,7 @@ function formularioAjax(idFormulario) {
     }
     $("#" + idFormulario).submit(function(e) {
         //Do the AJAX post
-        $.post($("#" + idFormulario).attr("action"), $("#" + idFormulario).serialize(), function(data) {
-
+        var post = $.post($("#" + idFormulario).attr("action"), $("#" + idFormulario).serialize(), function(data) {
             if (data !== null && data !== undefined) {
                 data = extrairJSON(data);
 
@@ -38,9 +37,19 @@ function formularioAjax(idFormulario) {
             } else {
                 showPopUp("Houve algum problema na resposta do servidor.", "erro");
             }
+
+        });
+
+        document.paginaAlterada = false;
+
+        post.complete(function(data) {
+            if (recipient !== undefined) {
+
+                $(recipient).empty();
+                $(recipient).html(data.responseText);
+            }
         });
         //Important. Stop the normal POST
-        document.paginaAlterada = false;
         e.preventDefault();
     });
 }

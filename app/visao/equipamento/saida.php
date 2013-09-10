@@ -1,14 +1,12 @@
-<title>Gerenciar equipamentos</title>
+<title>Saída de equipamentos</title>
 <!-- Início da páginas -->
 <div class="btn-toolbar">
     <div class="btn-group">
-        <button class="btn btn-adicionar"><i class="icon-plus"></i> Adicionar novo</button>
-        <button class="btn btn-editar" href="#"><i class="icon-edit"></i> Editar</button>
         <button class="btn btn-saida btn-success" href="#"><i class="icon-arrow-left"></i> Registrar saída</button>
-        <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
+        <!--<button class="btn btn-baixa btn-info" href="#"><i class="icon-arrow-down"></i> Registrar Baixa</button>-->
     </div>
 </div>
-<table id="gerenciar_equipamento" class="tabelaDeEdicao">
+<table id="saida_equipamento" class="tabelaDeEdicao">
     <thead>
         <tr>
             <th hidden>id</th>
@@ -34,20 +32,16 @@
 </table>
 <div class="btn-toolbar">
     <div class="btn-group">
-        <button class="btn btn-adicionar"><i class="icon-plus"></i> Adicionar novo</button>
-        <button class="btn btn-editar" href="#"><i class="icon-edit"></i> Editar</button>
         <button class="btn btn-saida btn-success" href="#"><i class="icon-arrow-left"></i> Registrar saída</button>
-        <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
+        <!--<button class="btn btn-baixa btn-info" href="#"><i class="icon-arrow-down"></i> Registrar Baixa</button>-->
     </div>
 </div>
 <script>
     //Este script configura as ações para os botões da página.
     $(document).ready(function() {
         configurarTabela({
-            idTabela: 'gerenciar_equipamento',
-            adicionar: 'index.php?c=equipamento&a=novo',
-            editar: 'index.php?c=equipamento&a=editar&equipamentoID=',
-            deletar: 'index.php?c=equipamento&a=remover&equipamentoID='
+            idTabela: 'saida_equipamento',
+            saida: 'index.php?c=equipamento&a=novasaida&equipamentoID='
         });
     });
 </script>
