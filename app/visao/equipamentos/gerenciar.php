@@ -2,7 +2,7 @@
 <!-- Início da páginas -->
 <div class="btn-toolbar">
     <div class="btn-group">
-        <button class="btn btn-adicionar"><i class="icon-plus"></i> Adicionar novo</button>
+        <a href="#!equipamentos|novo" class="btn btn-adicionar"><i class="icon-plus"></i> Adicionar novo</a>
         <button class="btn btn-editar" href="#"><i class="icon-edit"></i> Editar</button>
         <button class="btn btn-saida btn-success" href="#"><i class="icon-arrow-left"></i> Registrar saída</button>
         <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
@@ -34,7 +34,7 @@
 </table>
 <div class="btn-toolbar">
     <div class="btn-group">
-        <button class="btn btn-adicionar"><i class="icon-plus"></i> Adicionar novo</button>
+        <a href="#!equipamentos|novo" class="btn btn-adicionar"><i class="icon-plus"></i> Adicionar novo</a>
         <button class="btn btn-editar" href="#"><i class="icon-edit"></i> Editar</button>
         <button class="btn btn-saida btn-success" href="#"><i class="icon-arrow-left"></i> Registrar saída</button>
         <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
@@ -45,9 +45,8 @@
     $(document).ready(function() {
         configurarTabela({
             idTabela: 'gerenciar_equipamento',
-            adicionar: 'index.php?c=equipamento&a=novo',
-            editar: 'index.php?c=equipamento&a=editar&equipamentoID=',
-            deletar: 'index.php?c=equipamento&a=remover&equipamentoID='
+            editar: 'index.php?c=equipamentos&a=editar&equipamentoID=',
+            deletar: 'index.php?c=equipamentos&a=remover&equipamentoID='
         });
     });
 </script>

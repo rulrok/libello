@@ -1,7 +1,7 @@
 <title>Gerenciar usuários</title>
 <!-- Início da página --><div class="btn-toolbar">
     <div class="btn-group">
-        <button class="btn btn-adicionar"><i class="icon-user"></i> Adicionar novo</button>
+        <a href="#!usuarios|novo" class="btn btn-adicionar"><i class="icon-user"></i> Adicionar novo</a>
         <button class="btn btn-editar" href="#"><i class="icon-edit"></i> Editar</button>
         <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
     </div>
@@ -34,7 +34,7 @@
 </table>
 <div class="btn-toolbar">
     <div class="btn-group">
-        <button class="btn btn-adicionar"><i class="icon-user"></i> Adicionar novo</button>
+        <a href="#!usuarios|novo" class="btn btn-adicionar"><i class="icon-user"></i> Adicionar novo</a>
         <button class="btn btn-editar" href="#"><i class="icon-edit"></i> Editar</button>
         <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
     </div>
@@ -45,9 +45,8 @@
     $(document).ready(function() {
         configurarTabela({
             idTabela: 'gerenciar_usuario',
-            adicionar: 'index.php?c=usuario&a=novo',
-            editar: 'index.php?c=usuario&a=editar&userID=',
-            deletar: 'index.php?c=usuario&a=remover&userID='
+            editar: 'index.php?c=usuarios&a=editar&userID=',
+            deletar: 'index.php?c=usuarios&a=remover&userID='
         });
     });
 

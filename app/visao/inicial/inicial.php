@@ -51,7 +51,7 @@
                 </div>
                 <div class="userInfoWrap">
                     <p>Logado como: <b><?php echo $this->usuario ?></b>(<?php echo $this->papel ?>)</p>
-                    <div class="btn-toolbar">
+                    <div class="btn-toolbar" id="configuracoesSite">
                         <div class="centered btn-group">
                             <a id="fullscreen-on" title="Modo tela cheia" class="btn btn-small" href="javascript:void(0)" onclick="launchFullScreen(document.documentElement);"><i class="icon-fullscreen"></i></a>
                             <a id="fullscreen-off" title="Voltar ao modo normal" class="btn btn-small hide" href="javascript:void(0)" onclick="cancelFullscreen();"><i class="icon-resize-small"></i></a>
@@ -97,7 +97,11 @@
 
             <div class="content centered">
                 <div class="contentWrap centered">
-                    <?php include $this->conteudo ?>
+                    <?php
+                    if (isset($this->conteudo)) {
+                        include $this->conteudo;
+                    }
+                    ?>
                 </div>
             </div>
         </nav>
@@ -168,7 +172,9 @@
                                     "sScrollXInner": "110%",
                                     "bScrollCollapse": true,
                                     // Salva o estado da tabela para ser exibida como da última vez
-                                    "bStateSave": false
+                                    //Um pouco de cuidado com essa opção, ela parece ter em certas
+                                    //situações, efeitos negativos ao uso da datatable
+                                    "bStateSave": true
                                 });
                                 $.datepick.setDefaults({
                                     dateFormat: 'dd/mm/yyyy'

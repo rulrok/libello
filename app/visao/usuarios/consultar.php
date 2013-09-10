@@ -37,7 +37,7 @@
 
         $(".visualizarPermissoes").on('click', function() {
             var id = $("tr.row_selected>.campoID").html();
-            $("#myModal").load("index.php?c=usuario&a=consultarpermissoes&userID=" + id).modal();
+            $("#myModal").load("index.php?c=usuarios&a=consultarpermissoes&userID=" + id).modal();
 //            $("#myModal").modal({
 //                remote: "index.php?c=usuario&a=consultarpermissoes&userID=" + id
 //            });

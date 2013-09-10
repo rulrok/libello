@@ -9,12 +9,6 @@ $(document).ready(function() {
 
     $(function() {
 
-        // Keep a mapping of url-to-container for caching purposes.
-//        var cache = {
-//            // If url is '' (no fragment), display this div's content.
-//            '': $('.bbq-default')
-//        };
-
         // Bind an event to window.onhashchange that, when the history state changes,
         // gets the url from the hash and displays either our cached content or fetches
         // new content to be displayed.
@@ -41,7 +35,6 @@ $(document).ready(function() {
             catch (ex) {
                 var url = e.fragment;
             }
-            console.log(url);
             ajax(url);
             var menu = aUrl[0];
             if (menu === "inicial" || menu === undefined) {
@@ -54,7 +47,6 @@ $(document).ready(function() {
                     $(".visited").removeClass("visited");
                     $(".menuLink[id^=" + menu + "]").addClass("actualTool");
                     $(".menuLink[id^=" + menu + "]").addClass("visited");
-//                    $(".menuLink[id^=" + menu + "]").click();
                     var menuObj = new Object();
                     menuObj.id = menu + "Link";
                     makeSubMenu(menuObj);
@@ -66,7 +58,6 @@ $(document).ready(function() {
                 var menuObj = new Object();
                 menuObj.id = menu + "Link";
                 makeSubMenu(menuObj);
-//                $(".menuLink[id^=" + menu + "]").click();
                 showSubMenu();
             }
 
@@ -121,12 +112,12 @@ $(document).ready(function() {
 //        };
 
         //Permite que o popup seja arrastado pela tela
-        $('.shaderFrameContent').draggable({cancel: ".shaderFrameContentWrap"});
-
-        $(".shaderFrame").click(function() {
-            $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
-            $(".shaderFrameContent").css("visibility", "hidden").css("opacity", "0");
-        });
+//        $('.shaderFrameContent').draggable({cancel: ".shaderFrameContentWrap"});
+//
+//        $(".shaderFrame").click(function() {
+//            $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
+//            $(".shaderFrameContent").css("visibility", "hidden").css("opacity", "0");
+//        });
 
         hideFooter();
 
@@ -157,6 +148,7 @@ $(document).ready(function() {
                     $(".menuLink.visited").removeClass("visited");
                     $(this).addClass("visited");
                     $(".actualTool").removeClass('actualTool');
+                    $(this).addClass("actualTool");
 
                     hideSubMenu(150);
                 };
@@ -209,6 +201,8 @@ $(document).ready(function() {
         }
     };
 });
+
+
 
 //TODO verificar porque a tela cheia não funciona, através desse método, do mesmo
 //modo que apertando F11 (ou botão apropriado para exibir em tela cheia) no navegador.

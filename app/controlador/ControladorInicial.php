@@ -9,7 +9,7 @@ class ControladorInicial extends Controlador {
         $this->visao->usuario = $_SESSION['usuario']->get_PNome();
         $this->visao->papel = usuarioDAO::consultarPapel($_SESSION['usuario']->get_email());
         $this->visao->titulo = "Controle CEAD";
-        $this->visao->conteudo = $_SERVER['DOCUMENT_ROOT'] . "/controle-cead/app/visao/inicial/homepage.php";
+//        $this->visao->conteudo = $_SERVER['DOCUMENT_ROOT'] . "/controle-cead/app/visao/inicial/homepage.php";
         $this->visao->menu = Menu::montarMenuNavegacao();
         $this->renderizar();
     }
