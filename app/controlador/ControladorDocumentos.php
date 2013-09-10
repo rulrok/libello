@@ -105,36 +105,39 @@ class ControladorDocumentos extends Controlador {
     function retornaNumOficio() {
         //$busca = selectMaxNumOficio();
        // $dao = new documentoDAO();
-        $busca = documentoDAO::consultar("oficio", "idOficio in (SELECT max(idOficio) FROM oficio WHERE numOficio > (-1))");
+        $busca = documentoDAO::consultar("oficio","idOficio = (SELECT idOficio FROM oficio WHERE numOficio = (SELECT max(numOficio) FROM oficio WHERE numOficio > (-1)))");
         if ($busca != null) {
             $numOficio = $busca[0];
-            $num = ($numOficio->getNumOficio() + 1);
+            $num = ($numOficio->getNumOficio() +1);
         } else {
             //erro
-            $num = -1;
+            $num = 1;
         }
         return $num;
     }
 
     function retornaNumMemorando() {
-        $busca = selectMaxNumMemorando();
+        $busca = documentoDAO::consultar("memorando","idMemorando = (SELECT idMemorando FROM memorando WHERE numMemorando = (SELECT max(numMemorando) FROM memorando WHERE numMemorando > (-1)))");
         if ($busca != null) {
-            $numMemorando = mysql_fetch_array($busca);
-            $num = ($numMemorando["numMemorando"] + 1);
+            $numMem = $busca[0];
+            $num = ($numMem->getNumMemorando() +1);
         } else {
             //erro
-            $num = -1;
+            $num = 1;
         }
         return $num;
     }
 
     function salvarMemorando($idusuario, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao) {
-        insertNovoMemorando($idusuario, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao);
+        $dao = new documentoDAO();
+        $dao->inserirMemorando($idusuario, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao);
     }
 
     function novoMemorando($idusuario, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao) {
         $dao = new documentoDAO();
-        $dao->insertNovoMemorando($idusuario, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao);
+        $retorno = $dao->inserirMemorando($idusuario, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao);
+    
+        return $retorno;
     }
 
     function invalidarMemorando($idmemorando) {

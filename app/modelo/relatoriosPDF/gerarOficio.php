@@ -2,7 +2,7 @@
 
 //define('ROOT_PATH', $_SERVER['DOCUMENT_ROOT']);
 //incluindo o arquivo do fpdf
-require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/Configurations.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/configuracoes.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/dompdf/dompdf_config.inc.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/app/controlador/ControladorDocumentos.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/seguranca/seguranca.php");
@@ -41,6 +41,7 @@ $booledit = $_GET['booledit'];
 if ($booledit == '1') {
     $idoficio = $_POST['i_idoficio'];
     $cont->atualizarOficio($idoficio, $assunto, $corpo, $tratamento, $destino, $cargo_destino, $data, $estadoEdicao, $tipoSigla, $referencia, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $numOficio);
+
 } else {
     $cont->novoOficio($idUsuario, $assunto, $corpo, $tratamento, $destino, $cargo_destino, $data, $estadoEdicao, $tipoSigla, $referencia, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $numOficio);
 }
@@ -72,7 +73,7 @@ $document = '<<<EOF
             <table class="tabela">
                 <tr>
                     <td style="width: 597px" align="center">
-                        <img src="../../../publico/images/oficio/cabecalho.jpg"></img>
+                        <img src="../../../publico/imagens/oficio/cabecalho.jpg"></img>
                     </td>
                 </tr>
                 <tr><td style="height: 30px;"></td></tr>

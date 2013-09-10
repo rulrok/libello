@@ -1,6 +1,8 @@
 <?php
 
 require_once 'abstractDAO.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . "/controle-cead/app/modelo/vo/Oficio.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/controle-cead/app/modelo/vo/Memorando.php";
 
 class documentoDAO extends abstractDAO {
    
@@ -28,7 +30,7 @@ class documentoDAO extends abstractDAO {
     
     function inserirOficio($idusuario, $assunto, $corpo, $tratamento, $destino, $cargo_destino, $data, $estadoEdicao, $tipoSigla, $referencia, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $numOficio) {
         $sql = "INSERT INTO oficio(assunto, corpo, idusuario, estadoEdicao, tratamento, destino, cargo_destino, data, tipoSigla, referencia, remetente, remetente2, cargo_remetente, cargo_remetente2, numOficio) VALUES 
-        ('" . $assunto . "', '" . $corpo . "', " . $idusuario . ", " . $estadoEdicao . ", '" . $tratamento . "', '" . $destino . "', '" . $cargo_destino . "', '" . $data . "', '" . $tipoSigla . "', '" . $referencia . "', '" . $remetente . "', '" . $remetente2 . "', '" . $cargo_remetente . "', '" . $cargo_remetente2 . "', '" . $numOficio . "')";
+        ('" . $assunto . "', '" . $corpo . "', " . $idusuario . ", " . $estadoEdicao . ", '" . $tratamento . "', '" . $destino . "', '" . $cargo_destino . "', '" . $data . "', '" . $tipoSigla . "', '" . $referencia . "', '" . $remetente . "', '" . $remetente2 . "', '" . $cargo_remetente . "', '" . $cargo_remetente2 . "', " . $numOficio . ")";
             try {
                 parent::getConexao()->query($sql);
                 return true;
@@ -80,41 +82,48 @@ class documentoDAO extends abstractDAO {
             }
 }
 
-function insertNovoMemorando($idusuario, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao){
-   
-    $sql = "INSERT INTO memorando(
-        idUsuario, 
-        assunto,
-        data,
-        tipoSigla,
-        numMemorando,
-        estadoEdicao,
-        tratamento,
-        cargo_destino,
-        corpo,
-        remetente,
-        remetente2,
-        cargo_remetente,
-        cargo_remetente2)
-        VALUES ('".$idusuario."','"
-            .$assunto. "','"
-            .$data. "','"
-            .$tipoSigla. "', '"
-            .$numMemorando. "', '"
-            .$estadoEdicao. "','"
-            .$tratamento. "','"
-            .$cargo_destino. "','"
-            .$corpo. "','"
-            .$remetente. "', '"
-            .$remetente2. "','"
-            .$cargo_remetente. "', '"
-            .$cargo_remetente2. "')";
-    try {
+function inserirMemorando($idusuario, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao){
+   $sql = "INSERT INTO memorando(assunto, corpo, idusuario, estadoEdicao, tratamento, cargo_destino, data, tipoSigla, remetente, remetente2, cargo_remetente, cargo_remetente2, numMemorando) VALUES 
+        ('" . $assunto . "', '" . $corpo . "', " . $idusuario . ", " . $estadoEdicao . ", '" . $tratamento . "', '" . $cargo_destino . "', '" . $data . "', '" . $tipoSigla . "', '" . $remetente . "', '" . $remetente2 . "', '" . $cargo_remetente . "', '" . $cargo_remetente2 . "', " . $numMemorando . ")";
+            try {
                 parent::getConexao()->query($sql);
                 return true;
             } catch (Exception $e) {
-                return $e;
+                return false;
             }
+//    $sql = "INSERT INTO memorando(
+//        idUsuario, 
+//        assunto,
+//        data,
+//        tipoSigla,
+//        numMemorando,
+//        estadoEdicao,
+//        tratamento,
+//        cargo_destino,
+//        corpo,
+//        remetente,
+//        remetente2,
+//        cargo_remetente,
+//        cargo_remetente2)
+//        VALUES (".$idusuario.",'"
+//            .$assunto. "','"
+//            .$data. "','"
+//            .$tipoSigla. "', "
+//            .$numMemorando. ", "
+//            .$estadoEdicao. ",'"
+//            .$tratamento. "','"
+//            .$cargo_destino. "','"
+//            .$corpo. "','"
+//            .$remetente. "', '"
+//            .$remetente2. "','"
+//            .$cargo_remetente. "', '"
+//            .$cargo_remetente2. "')";
+//    try {
+//                parent::getConexao()->query($sql);
+//                return true;
+//            } catch (Exception $e) {
+//                return $e;
+//            }
 }
 
 function update_memorandoSalvo($idmemorando, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao){

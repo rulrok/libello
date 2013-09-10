@@ -1,12 +1,11 @@
 <?php
 
-define('ROOT_PATH', $_SERVER['DOCUMENT_ROOT']);
+//define('ROOT_PATH', $_SERVER['DOCUMENT_ROOT']);
 //incluindo o arquivo do fpdf
-require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/Configurations.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/configuracoes.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/dompdf/dompdf_config.inc.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/app/controlador/ControladorDocumentos.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/seguranca/seguranca.php");
-
 //-------------------
 //definindo variaveis
 $idUsuario = $_SESSION['idUsuario'];
@@ -40,6 +39,8 @@ if ($booledit == '1') {
     $controlador->atualizarMemorando($idmemorando, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao);
 } else {
     $controlador->novoMemorando($idUsuario, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao);
+
+   //print_r($retorno);die();
 }
 
 //-------------------
@@ -67,7 +68,7 @@ $document = '<<<EOF
             <table class="tabela">
                 <tr>
                     <td style="width: 580px" align="center">
-                        <img src="../../../publico/images/oficio/cabecalho.jpg"></img>
+                        <img src="../../../publico/imagens/oficio/cabecalho.jpg"></img>
                     </td>
                 </tr>
                 <tr><td style="height: 30px;"></td></tr>

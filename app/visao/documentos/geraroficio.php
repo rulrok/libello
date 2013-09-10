@@ -23,15 +23,41 @@ $controladorAux = new ControladorDocumentos();
 //                    $('#form1').attr({action:'../../../includes/relatoriosPDF/teste.php'});
             //alert("aqui");
             $('#form1').attr({action: 'app/modelo/relatoriosPDF/gerarOficio.php?booledit=0'});//'../../modelo/relatoriosPDF/gerarOficio.php?booledit=0'});
+            //$('#form1').attr({action: 'app/modelo/valores.ajax.php?valor=1'});//'../../modelo/relatoriosPDF/gerarOficio.php?booledit=0'});
             // $('#form1').attr({action:'index.php?c=documentos&a=algo'});//'../../modelo/relatoriosPDF/gerarOficio.php?booledit=0'});
         } else {
             if (acao == 'salvar') {
                 $('#msgSalvar').removeAttr('hidden');
                 $('#msgCadastro').attr({hidden: 'true'});
-               // $('#form1').removeAttr("target");
-                $('#form1').attr({action: 'publico/ajax/documentos/acoes.php?acao=salvarOficio&booledit=0'});
+                // $('#form1').removeAttr("target");
+
+                
+                // $('#form1').attr({action: 'publico/ajax/documentos/acoes.php?acao=salvarOficio&booledit=0'});
             }
         }
+    }
+
+    function salvar(){
+        $.getJSON("publico/ajax/documentos/acoes.php?acao=salvarOficio&booledit=0",
+                        {assunto: $('#assunto').val(),
+                            corpo: $('#corpo').val(),
+                            destino: $("#destino").val(),
+                            referencia: $("#referencia").val(),
+                            dia: $("#dia").val(),
+                            mes: $("#mes").val(),
+                            sigla: $("#sigla").val(),
+                            remetente: $("#remetente").val(),
+                            cargo_remetente: $("#cargo_remetente").val(),
+                            i_remetente: $("#i_remetente").val(),
+                            remetente2: $("#remetente2").val(),
+                            cargo_remetente2: $("#cargo_remetente2").val(),
+                            tratamento: $("#tratamento").val(),
+                            cargo_destino: $("#cargo_destino").val() }, function(j) {
+                    
+                        document.paginaAlterada = false;
+                        ajax('index.php?c=documentos&a=gerarOficio');
+                    $('html, body').animate({scrollTop: 0},'slow');
+                });
     }
 
     function b_nao() {
@@ -44,7 +70,7 @@ $controladorAux = new ControladorDocumentos();
         capturaNumOficio();
 
 
-        alert('Ofício gerado com sucesso.');
+
         //window.open('app/modelo/relatoriosPDF/gerarOficio.php?booledit=0', '_blank');
         //$("#form1").submit();
         // $(location).attr('href', '../menu.php');
@@ -83,7 +109,6 @@ $controladorAux = new ControladorDocumentos();
         }
         $('#b_gerar').removeAttr('disabled');
         $('#b_salvar').removeAttr('disabled');
-        $('#b_voltar').removeAttr('disabled');
     }
 
     function liberarCadastro() {
@@ -110,12 +135,20 @@ $controladorAux = new ControladorDocumentos();
     }
 
     function capturaNumOficio() {
-        $.getJSON('app/modelo/valores.ajax.php?search=', {valor: 1, ajax: 'true'}, function(j) {
-            alert("entrou");
+
+        $.getJSON('app/modelo/valores.ajax.php', {valor: 1, ajax: 'true'}, function(j) {
+            //alert("entrou");
+
             $('#i_numOficio').val(j);
-            alert('Ofício de numero: ' + $('#i_numOficio').val() + ' gerado.');
+
+            //alert('Ofício de numero: ' + $('#i_numOficio').val() + ' gerado.');
+
             $("#form1").submit();
             $('#b_nao_g').click();
+            alert('Ofício gerado com sucesso.');
+            document.paginaAlterada = false;
+            ajax('index.php?c=documentos&a=gerarOficio');
+            $('html, body').animate({scrollTop: 0},'slow');
         });
         //alert("passou");
     }
@@ -288,7 +321,7 @@ $controladorAux = new ControladorDocumentos();
         <div id="msgSalvar" hidden="true">
             <label>Atenção, o ofício será salvo! Tem certeza?</label>
             <label>
-                <input type="submit" class="btn"  name="b_sim_s" id="b_sim_s" value="Sim" onclick="alert('Ofício salvo com sucesso.');"/>
+                <input type="button" class="btn"  name="b_sim_s" id="b_sim_s" value="Sim" onclick="alert('Ofício salvo com sucesso.');salvar();"/>
             </label>
             <label>
                 <input type="button" class="btn" value="Não" onclick="b_nao();" name="b_nao_s" id="b_nao_s"/>
