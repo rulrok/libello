@@ -13,7 +13,7 @@ class Menu {
 
     public static function montarMenuNavegacao() {
 
-        $permissoes = usuarioDAO::obterPermissoes($_SESSION['idUsuario']);
+        $permissoes = usuarioDAO::obterPermissoes($_SESSION['usuario']->get_id());
 
         $menuCode = "<div class=\"menu\">" . "\n";
         $menuCode .= "<menu class=\"centered\">" . "\n";
@@ -27,7 +27,7 @@ class Menu {
             switch ($permissao_ferramenta['idFerramenta']) {
                 case Ferramenta::CONTROLE_USUARIOS:
                     if ($permissao_ferramenta['idPermissao'] != Permissao::SEM_ACESSO) {
-                        $menuCode .= "<a><li class=\"menuLink\" id=\"usuariosLink\">Controle de usuarios</li></a>" . "\n";
+                        $menuCode .= "<a><li class=\"menuLink\" id=\"usuariosLink\">Usuários</li></a>" . "\n";
                         $subMenuCode .="<ul class=\"hiddenSubMenuLink usuariosSubMenu\">" . "\n";
                         switch ($permissao_ferramenta['idPermissao']) {
                             case Permissao::ADMINISTRADOR:
@@ -110,7 +110,7 @@ class Menu {
                                 $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=equipamento&a=novo')\">" . "\n";
                                 $subMenuCode .= "<li>Registrar novo equipamento</li></a>" . "\n";
                             case Permissao::CONSULTA:
-                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=equipamento&a=consulta')\">" . "\n";
+                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=equipamento&a=consultar')\">" . "\n";
                                 $subMenuCode .= "<li>Consultar equipamentos</li></a>" . "\n";
                         }
 //                        $subMenuCode .= "<a id=\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/imagens/icones/go-up.png\"></li></a>" . "\n";

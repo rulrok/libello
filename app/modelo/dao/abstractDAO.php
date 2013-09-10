@@ -16,8 +16,18 @@ abstract class abstractDAO {
         }
         return self::$conexao;
     }
-    
-    public static function quote($string){
+
+    /**
+     * Coloca a string entre aspas e trata aspas internas dela. Caso a string
+     * seja igual a NULL, a própria string será retornada.
+     * 
+     * @param type $string
+     * @return type Uma string entre aspas.
+     */
+    public static function quote($string) {
+        if ($string == "NULL") {
+            return $string;
+        }
         return self::getConexao()->quote($string);
     }
 

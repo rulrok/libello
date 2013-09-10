@@ -22,5 +22,8 @@ final class TipoEventoSistema {
     const REMOCAO_CURSO = 8;
     const ALTERACAO_CURSO = 9;
     
+    const CADASTRO_EQUIPAMENTO = 10;
+    const REMOCAO_EQUIPAMENTO = 11;
+    const ALTERACAO_EQUIPAMENTO = 12;
 }
 ?>

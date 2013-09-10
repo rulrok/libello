@@ -1,5 +1,5 @@
-<title>Gerenciar polos</title>
-<!-- Início da página -->
+<title>Gerenciar equipamentos</title>
+<!-- Início da páginas -->
 <div class="btn-toolbar">
     <div class="btn-group">
         <button class="btn btn-adicionar"><i class="icon-plus"></i> Adicionar novo</button>
@@ -7,18 +7,19 @@
         <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
     </div>
 </div>
-<table id="gerenciar_polo" class="tabelaDeEdicao">
+<table id="gerenciar_equipamento" class="tabelaDeEdicao">
     <thead>
         <tr>
             <th hidden>id</th>
-            <th>Nome do polo</th>
-            <th>Cidade</th>
-            <th>UF</th>
+            <th>Nome</th>
+            <th>Quantidade</th>
+            <th>Data de entrada</th>
+            <th>Patrimônio</th>
         </tr>
     </thead>
     <tbody>
         <?php
-        foreach ($this->polos as $value) {
+        foreach ($this->equipamentos as $value) {
             echo '<tr>';
             for ($i = 0; $i < sizeof($value) / 2; $i++) {
                 echo $i == 0 ? '<td hidden class="campoID">' : '<td>';
@@ -37,14 +38,14 @@
         <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
     </div>
 </div>
-
 <script>
+    //Este script configura as ações para os botões da página.
     $(document).ready(function() {
         configurarTabela({
-            idTabela: 'gerenciar_polo',
-            adicionar: 'index.php?c=cursospolos&a=novopolo',
-            editar: 'index.php?c=cursospolos&a=editarpolo&poloID=',
-            deletar: 'index.php?c=cursospolos&a=removerPolo&poloID='
+            idTabela: 'gerenciar_equipamento',
+            adicionar: 'index.php?c=equipamento&a=novo',
+            editar: 'index.php?c=equipamento&a=editar&equipamentoID=',
+            deletar: 'index.php?c=equipamento&a=remover&equipamentoID='
         });
     });
 </script>

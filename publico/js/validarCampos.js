@@ -1,39 +1,46 @@
-/*
- * Esse script varre os campos que são marcados como requeridos e trata eles com
- * base na propriedade 'name' dos campos para verificálos.
- * Apenas insíra-o no HTML e certifique-se dos nomes dos campos 'name' serem
- * compatíveis.
+/**
+ * Quando novos campos são dinamicamente adicionados a algum formulário, esse método deve ser execultado
+ * para atribuir a esses novos campos, as verificações necessárias, como quando um deles perde o foco ou
+ * tem seu conteúdo alterado.
+ * 
  */
-var camposObrigatorios = $("input[required],select[required]");
-if (camposObrigatorios.length > 0) {
+function varrerCampos() {
+    var camposObrigatorios = $("input[required],select[required]").not(".campoVarrido").not("input[readonly]");
+    if (camposObrigatorios.length > 0) {
 //document.head.children[document.head.children.length] = "<script src=\"publico/js/validarCampos.js\"></script>";
-    //$("head").append("<script src=\"publico/js/validarCampos.js\"></script>");
-    for (i = 0; i < camposObrigatorios.length; i++) {
-        $(camposObrigatorios[i]).after("<img src=\"publico/imagens/icones/campo_obrigatorio.png\">");
-        //$(camposObrigatorios[i]).on('blur',liberarCadastro());
-        //$(camposObrigatorios[i]).append(liberarCadastro());
+        //$("head").append("<script src=\"publico/js/validarCampos.js\"></script>");
+//        for (i = 0; i < camposObrigatorios.length; i++) {
+//            $(camposObrigatorios[i]).after("<img src=\"publico/imagens/icones/campo_obrigatorio.png\">");
+//            //$(camposObrigatorios[i]).on('blur',liberarCadastro());
+//            //$(camposObrigatorios[i]).append(liberarCadastro());
+//        }
+        $(camposObrigatorios).after("<img src=\"publico/imagens/icones/campo_obrigatorio.png\">");
+        $(camposObrigatorios).addClass("campoVarrido");
+        $(camposObrigatorios).on('change', function() {
+            liberarCadastro();
+        });
+        $(camposObrigatorios).on('blur', function() {
+            liberarCadastro();
+        });
+//    $('input').not("input[required],select[required]").on('change', function() {
+//        $("input[type=submit],input[value~='Atualizar']").attr('disabled', false);
+//    });
+//
+//    $('input[readonly]').on('blur', function() {
+//        $("input[type=submit],input[value~='Atualizar'],input[value~='Cadastrar'").attr('disabled', false);
+//    });
     }
-    $("input[required],select[required]").on('change', function() {
-        liberarCadastro()
-    });
-    $('input').not("input[required],select[required]").on('change', function() {
-        $("input[type=submit],input[value~='Atualizar']").attr('disabled', false);
-    });
-
-    $('input[readonly]').on('blur', function() {
-        $("input[type=submit],input[value~='Atualizar']").attr('disabled', false);
-    });
 }
 
 /**
  * A função varre todos os campos obrigatório, e com base na propriedade 'name' dos componenetes,
  * ela decide qual a validação utilizada para o campo, como por exemplo, se são apenas letras,
  * números e etc; essa validação é feita através de uma expressão regular.
- * Para comboboxes, a única validação é que o primeiro elemento não pode estár selecionado
+ * Para comboboxes, a única validação é que o primeiro elemento não pode estar selecionado
  * (opções como "-- Escolha uma opção --" que são valores padrões. Para esses casos, o campo 'name'
  * desses componentes deve começar obrigatoriamente com a palavra 'cb_';
  * Se nenhuma regra de nome for casada, a opção padrão de validação será selecionada, que no caso,
- * apenas exige que o campo contenha qualquer tipo de caracter.
+ * apenas exige que o campo não esteja vazio.
  * @returns {undefined}
  */
 function liberarCadastro() {
@@ -64,6 +71,10 @@ function liberarCadastro() {
             case "sobrenome":
                 //Padrão: Apenas letras e espaços
                 patter = new RegExp("^[" + letrasacentuadas + " ]{1,30}[" + letrasacentuadas + "] *$");
+                break;
+            case "quantidade":
+            case "quantidadePatrimonios":
+                patter = new RegExp("[0-9]+");
                 break;
             case "login":
                 //Apenas letras minúsculas, com no mínimo 3
@@ -132,6 +143,7 @@ function liberarCadastro() {
 
     if (todosEmBranco) {
         $(".campoErrado").removeClass("campoErrado");
+        tudoCerto = false;
     }
     if (tudoCerto) {
         $("input[type=submit],input[value~='Atualizar']").attr('disabled', false);

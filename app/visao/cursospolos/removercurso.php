@@ -1,14 +1,14 @@
 <?php
 
-$id = $_GET['cursoID'];
+require_once APP_LOCATION . "modelo/Mensagem.php";
 
-if (cursoDAO::remover($id)):
+$id = $_GET['cursoID'];
+$mensagem = new Mensagem();
+if (cursoDAO::remover($id)) {
     sistemaDAO::registrarExclusaoCurso($_SESSION['idUsuario']);
-    ?>
-    <script>showPopUp("Curso removido com sucesso", "sucesso");</script>
-<?php else : ?>
-    <script>
-        showPopUp("Erro ao remover o curso", "erro");
-    </script>
-<?php endif;
-exit; ?>
+    $mensagem->set_mensagem("Excluído com sucesso.")->set_status(Mensagem::SUCESSO);
+} else {
+    $mensagem->set_mensagem("Erro ao excluir")->set_status(Mensagem::ERRO);
+}
+echo json_encode($mensagem);
+?>

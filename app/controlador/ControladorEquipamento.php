@@ -4,29 +4,47 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/biblioteca/Mvc/Controla
 
 class ControladorEquipamento extends Controlador {
 
+    var $tipoPadrao = "custeio";
+
     public function acaoNovo() {
-        $this->visao->equipamento = "";
-        $this->visao->quantidade = "";
-        $this->visao->dataEntrada = "";
-        $this->visao->comboTipo = "";
+
         $this->renderizar();
     }
 
-    public function acaoSair() {
-        $this->visao->conteudo = "Reuel";
+    public function acaoVerificarNovo() {
+
+        $this->renderizar();
+    }
+
+    public function acaoConsultar() {
+        $this->visao->equipamentos = equipamentoDAO::consultar();
+        $this->renderizar();
+    }
+
+    public function acaoGerenciar() {
+        $this->visao->equipamentos = equipamentoDAO::consultar();
+        $this->renderizar();
+    }
+
+    public function acaoEditar() {
+        if (isset($_GET['equipamentoID']) || isset($_POST['equipamentoID'])) {
+            $this->visao->equipamentoID = $_REQUEST['equipamentoID'];
+            $equipamento = equipamentoDAO::recuperarEquipamento($this->visao->equipamentoID);
+
+            $this->visao->equipamento = $equipamento->get_nomeEquipamento();
+            $this->visao->quantidade = $equipamento->get_quantidade();
+            $this->visao->dataEntrada = $equipamento->get_dataEntrada();
+            $this->visao->numeroPatrimonio = $equipamento->get_numeroPatrimonio();
+        }
+
         $this->renderizar();
     }
     
-    public function acaoGerenciar(){
+    public function acaoVerificarEdicao(){
         $this->renderizar();
     }
-    public function acaoSaida(){
-        $this->renderizar();
-    }
-    public function acaoRetorno(){
-        $this->renderizar();
-    }
-    public function acaoConsulta(){
+    
+    public function acaoRemover(){
         $this->renderizar();
     }
 

@@ -5,7 +5,7 @@
         <link rel='stylesheet' href='publico/css/bootstrap.css' />
         <link rel='stylesheet' href='publico/css/mainStyle.css' />  
         <link rel='stylesheet' href='publico/css/login.css' />
-        <title>Autenticação</title>
+        <title class="tituloFixo">Autenticação</title>
     </head>
     <body>
         <?php

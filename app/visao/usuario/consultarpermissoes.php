@@ -35,6 +35,6 @@
         echo "Usuário foi removido do banco de dados.";
     endif;
 } else {
-    echo "Nada foi encontrado";
+    echo "Nada foi encontrado (usuário sem email cadastrado?)";
 }
 ?>

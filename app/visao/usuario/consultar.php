@@ -1,9 +1,5 @@
-
-
-<?php
-$usuarios = usuarioDAO::consultar("idUsuario, concat(PNome,' ',UNome),email,dataNascimento,nome");
-?>
-<table id="consulta_usuario" class="tabelaDeSelecao">
+<title>Consultar usuários</title>
+<!-- Início da página --><table id="consulta_usuario" class="tabelaDeSelecao">
     <thead>
         <tr>
             <th hidden>id</th>
@@ -16,7 +12,7 @@ $usuarios = usuarioDAO::consultar("idUsuario, concat(PNome,' ',UNome),email,data
     </thead>
     <tbody>
         <?php
-        foreach ($usuarios as $value) {
+        foreach ($this->usuarios as $value) {
             echo '<tr>';
             for ($i = 0; $i < sizeof($value) / 2; $i++) {
                 echo $i == 0 ? '<td hidden class="campoID">' : '<td>';

@@ -8,7 +8,7 @@
 
         <script src="publico/js/jquery/jquery-1.9.1.js"></script>
 
-        <title>Lembrar senha</title>
+        <title class="tituloFixo">Lembrar senha</title>
     </head>
     <body>
         <?php
