@@ -2,7 +2,7 @@
 <!-- Início da página -->
 <script src="publico/js/jquery/jquery.form.js"></script>
 <script src="publico/js/ajaxForms.js"></script> 
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=usuario&a=verificarnovo">
+<form class="table centered" id="ajaxForm" method="post" action="index.php?c=usuarios&a=verificarnovo">
     <fieldset>
         <legend>Informações sobre o usuário</legend>
         <p class="centered centeredText boldedText">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png"> são obrigatórios</label>

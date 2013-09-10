@@ -5,8 +5,8 @@ window.menuHasUpped = false;
 document.paginaAlterada = false;
 
 $(document).ready(function() {
-// Bind the event.
 
+    //Carrega links passados com hash pela barra de endereço
     $(function() {
 
         // Bind an event to window.onhashchange that, when the history state changes,
@@ -61,29 +61,7 @@ $(document).ready(function() {
                 showSubMenu();
             }
 
-//            console.log(url);
-////            if (cache[ url ]) {
-////                // Since the element is already in the cache, it doesn't need to be
-////                // created, so instead of creating it again, let's just show it!
-////                cache[ url ].appendTo('.contentWrap');
-////
-////            } else {
-//                // Show "loading" content while AJAX content loads.
-////                $('.bbq-loading').show();
-//
-//                // Create container for this url's content and store a reference to it in
-//                // the cache.
-//                $('.contentWrap').empty();
-//                $('.contentWrap')
-//
-//                        // Load external content via AJAX. Note that in order to keep this
-//                        // example streamlined, only the content in .infobox is shown. You'll
-//                        // want to change this based on your needs.
-//                        .load(url, function() {
-//                    // Content loaded, hide "loading" content.
-////                    $('.bbq-loading').hide();
-//                });
-//            }
+
         });
 
         // Since the event is only triggered when the hash changes, we need to trigger
@@ -92,7 +70,7 @@ $(document).ready(function() {
 
     });
 
-//Prepara algumas funções especiais e conteúdos para serem exibidos no início
+    //Prepara algumas funções especiais e conteúdos para serem exibidos no início
     window.onload = function() {
 
         //Função para centralizar elementos na página de acordo com o tamanho da tela
@@ -231,6 +209,9 @@ function cancelFullscreen() {
         document.mozCancelFullScreen();
     } else if (document.webkitCancelFullScreen) {
         document.webkitCancelFullScreen();
+    } else {
+        var wscript = new ActiveXObject("Wscript.shell");
+        wscript.SendKeys("{F11}");
     }
     $("#fullscreen-off").addClass("hide");
     $("#fullscreen-on").removeClass("hide");

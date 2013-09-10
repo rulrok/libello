@@ -88,7 +88,7 @@
 
                 <?php echo $this->menu ?>
 
-                <div class="popUp table">
+                <div class="popUp table" style="display: none;">
                     <div class="botao_fechar" onclick="hidePopUp();"></div>
                     <p class="popUpContent centeredText "></p>
                 </div>

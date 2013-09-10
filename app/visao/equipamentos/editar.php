@@ -1,6 +1,6 @@
 <title>Editando equipamento</title>
 <!--Início da página-->
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=equipamento&a=verificaredicao">
+<form class="table centered" id="ajaxForm" method="post" action="index.php?c=equipamentos&a=verificaredicao">
     <fieldset>
         <legend>Alterar dados do equipamento</legend>
         <input hidden="true" readonly="true" type="text" class="input-small" id="equipamentoID" name="equipamentoID" value="<?php echo $this->equipamentoID ?>" />
