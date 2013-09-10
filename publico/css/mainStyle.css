@@ -549,7 +549,7 @@ header .userInfoWrap [id=gerenciarConta]:before{
     #usuariosLink:before{
         content: url("../imagens/icones/usuarios_22.png");
     }
-    #cursosLink:before{
+    #cursospolosLink:before{
         content: url("../imagens/icones/cursos_22.png");
     }
     #livrosLink:before{
@@ -575,7 +575,7 @@ header .userInfoWrap [id=gerenciarConta]:before{
     #usuariosLink:before{
         content: url("../imagens/icones/usuarios.png");
     }
-    #cursosLink:before{
+    #cursospolosLink:before{
         content: url("../imagens/icones/cursos.png");
     }
     #livrosLink:before{

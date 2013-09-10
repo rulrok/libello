@@ -4,7 +4,7 @@ include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
 include_once ROOT . 'app/modelo/ComboBoxPermissoes.php';
 include_once ROOT . 'app/modelo/ComboBoxPapeis.php';
 
-class ControladorUsuario extends Controlador {
+class ControladorUsuarios extends Controlador {
 
     public function acaoNovo() {
         $this->visao->comboPermissoes = ComboBoxPermissoes::montarComboBoxPadrao();

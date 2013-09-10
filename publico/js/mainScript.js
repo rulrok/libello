@@ -10,10 +10,10 @@ $(document).ready(function() {
     $(function() {
 
         // Keep a mapping of url-to-container for caching purposes.
-        var cache = {
-            // If url is '' (no fragment), display this div's content.
-            '': $('.bbq-default')
-        };
+//        var cache = {
+//            // If url is '' (no fragment), display this div's content.
+//            '': $('.bbq-default')
+//        };
 
         // Bind an event to window.onhashchange that, when the history state changes,
         // gets the url from the hash and displays either our cached content or fetches
@@ -23,46 +23,76 @@ $(document).ready(function() {
             // Get the hash (fragment) as a string, with any leading # removed. Note that
             // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
             var url = "index.php?c=<c>&a=<a>";
+            var aUrl;
             try {
-                var aUrl = location.hash;
+                aUrl = location.hash;
                 if (aUrl !== "") {
                     aUrl = aUrl.replace("#!", "");
                     aUrl = aUrl.split("|");
+                    if (aUrl[0] == "home") {
+                        aUrl = ["inicial", "homepage"];
+                    }
                     url = url.replace("<c>", aUrl[0]);
                     url = url.replace("<a>", aUrl[1]);
                 } else {
-                    url = "";
+                    url = "index.php?c=inicial&a=homepage";
                 }
             }
             catch (ex) {
                 var url = e.fragment;
             }
             console.log(url);
-            if (cache[ url ]) {
-                // Since the element is already in the cache, it doesn't need to be
-                // created, so instead of creating it again, let's just show it!
-                cache[ url ].show();
-
-            } else {
-                // Show "loading" content while AJAX content loads.
-//                $('.bbq-loading').show();
-
-                // Create container for this url's content and store a reference to it in
-                // the cache.
-                $('.contentWrap').empty();
-                cache[ url ] = $('<div class="bbq-item"/>')
-
-                        // Append the content container to the parent container.
-                        .appendTo('.contentWrap')
-
-                        // Load external content via AJAX. Note that in order to keep this
-                        // example streamlined, only the content in .infobox is shown. You'll
-                        // want to change this based on your needs.
-                        .load(url, function() {
-                    // Content loaded, hide "loading" content.
-//                    $('.bbq-loading').hide();
-                });
+            ajax(url);
+            var menu = aUrl[0];
+            if (menu === "inicial" || menu === undefined) {
+                menu = "home";
             }
+            var ferramentaAtual = $(".actualTool").attr("id");
+            try {
+                if (ferramentaAtual.lastIndexOf(menu) === -1) {
+                    $(".actualTool").removeClass("actualTool");
+                    $(".visited").removeClass("visited");
+                    $(".menuLink[id^=" + menu + "]").addClass("actualTool");
+                    $(".menuLink[id^=" + menu + "]").addClass("visited");
+//                    $(".menuLink[id^=" + menu + "]").click();
+                    var menuObj = new Object();
+                    menuObj.id = menu + "Link";
+                    makeSubMenu(menuObj);
+                    showSubMenu();
+                }
+            } catch (ex) {
+                $(".menuLink[id^=" + menu + "]").addClass("actualTool");
+                $(".menuLink[id^=" + menu + "]").addClass("visited");
+                var menuObj = new Object();
+                menuObj.id = menu + "Link";
+                makeSubMenu(menuObj);
+//                $(".menuLink[id^=" + menu + "]").click();
+                showSubMenu();
+            }
+
+//            console.log(url);
+////            if (cache[ url ]) {
+////                // Since the element is already in the cache, it doesn't need to be
+////                // created, so instead of creating it again, let's just show it!
+////                cache[ url ].appendTo('.contentWrap');
+////
+////            } else {
+//                // Show "loading" content while AJAX content loads.
+////                $('.bbq-loading').show();
+//
+//                // Create container for this url's content and store a reference to it in
+//                // the cache.
+//                $('.contentWrap').empty();
+//                $('.contentWrap')
+//
+//                        // Load external content via AJAX. Note that in order to keep this
+//                        // example streamlined, only the content in .infobox is shown. You'll
+//                        // want to change this based on your needs.
+//                        .load(url, function() {
+//                    // Content loaded, hide "loading" content.
+////                    $('.bbq-loading').hide();
+//                });
+//            }
         });
 
         // Since the event is only triggered when the hash changes, we need to trigger
@@ -86,9 +116,9 @@ $(document).ready(function() {
 
         //Para que quando a tela redimensionar e o popup com fundo cinza estiver sendo exibido,
         //ele seja centralizado novamente, evitando exibições estranhas
-        window.onresize = function() {
-            $(".shaderFrameContent").center();
-        };
+//        window.onresize = function() {
+//            $(".shaderFrameContent").center();
+//        };
 
         //Permite que o popup seja arrastado pela tela
         $('.shaderFrameContent').draggable({cancel: ".shaderFrameContentWrap"});

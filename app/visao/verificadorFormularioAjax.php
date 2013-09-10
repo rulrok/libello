@@ -28,7 +28,9 @@ abstract class verificadorFormularioAjax {
 
     public function verificar() {
         //Verifica se uma requisição via Ajax está sendo feita.
-        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+//        print_r($_SERVER);
+//        exit;
+        if (!empty($_SERVER['REQUEST_METHOD']) && strtolower($_SERVER['REQUEST_METHOD']) == 'post') {
 
             $this->mensagem = new Mensagem();
             $this->mensagem->set_mensagem("Mensagem padrão do validador.")->set_status(Mensagem::INFO);

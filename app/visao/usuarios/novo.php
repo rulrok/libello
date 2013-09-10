@@ -51,5 +51,6 @@
         $("#dataNascimento").datepick();
         $(".line input").popover({trigger: 'focus', container: 'body'});
         varrerCampos();
+        formularioAjax();
     });
 </script>

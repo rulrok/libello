@@ -3,7 +3,7 @@
 include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/biblioteca/Mvc/Controlador.php';
 require_once APP_LOCATION."modelo/ComboBoxPapeis.php";
 
-class ControladorEquipamento extends Controlador {
+class ControladorEquipamentos extends Controlador {
 
     var $tipoPadrao = "custeio";
 
