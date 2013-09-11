@@ -42,7 +42,7 @@
     $(document).ready(function() {
         configurarTabela({
             idTabela: 'gerenciar_curso',
-            editar: 'index.php?c=cursospolos&a=editarcurso&cursoID=',
+            editar: '#!cursospolos|editarcurso&cursoID=',
             deletar: 'index.php?c=cursospolos&a=removerCurso&cursoID='
         });
     });

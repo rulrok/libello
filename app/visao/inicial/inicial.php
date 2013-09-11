@@ -50,7 +50,7 @@
 
                 </div>
                 <div class="userInfoWrap">
-                    <p>Logado como: <b><?php echo $this->usuario ?></b>(<?php echo $this->papel ?>)</p>
+                    <p>Logado como: <b><?php echo $this->usuario ?></b> (<?php echo $this->papel ?>)</p>
                     <div class="btn-toolbar" id="configuracoesSite">
                         <div class="centered btn-group">
                             <a id="fullscreen-on" title="Modo tela cheia" class="btn btn-small" href="javascript:void(0)" onclick="launchFullScreen(document.documentElement);"><i class="icon-fullscreen"></i></a>
@@ -119,9 +119,9 @@
                     </div>
                     <div class="footerLinks" id="informacoes">
                         <ul><lt>Informações</lt>
-                            <li><p>Este site é corretamente visualizado no <a href="http://www.google.com/chrome/" target="_blank">Google Chrome</a>&nbsp;&nbsp;&nbsp;ou Safari.
+                            <li><p>Este site é corretamente visualizado no <a href="http://www.google.com/chrome/" target="_blank">Google Chrome</a>&nbsp;&nbsp;&nbsp;ou <a href="http://www.mozilla.org/pt-BR/firefox/fx/" target="_blank">Firefox</a>.
                                     <br>
-                                    <i><b>Não há garantias de funcionar com o Internet Explorer.</b></i></p>
+                                    <i><b>Não há garantias de funcionar com o Internet Explorer nem com o Safari.</b></i></p>
                             </li>
                         </ul>
                     </div>

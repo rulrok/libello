@@ -17,7 +17,7 @@ class Menu {
 
         $menuCode = "<div class=\"menu\">" . "\n";
         $menuCode .= "<menu class=\"centered\">" . "\n";
-        $menuCode .= "<a href=\"#!home\"><li class=\"menuLink actualTool visited\" id=\"homeLink\" class=\"visited\">Home</li></a>" . "\n";
+        $menuCode .= "<a href=\"#!inicial|homepage\"><li class=\"menuLink actualTool visited\" id=\"homeLink\" class=\"visited\">Home</li></a>" . "\n";
 
         $subMenuCode = "<div class=\"subMenu\">" . "\n";
         $subMenuCode .= "<menu>" . "\n";

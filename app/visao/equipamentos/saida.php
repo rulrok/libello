@@ -41,7 +41,7 @@
     $(document).ready(function() {
         configurarTabela({
             idTabela: 'saida_equipamento',
-            saida: 'index.php?c=equipamento&a=novasaida&equipamentoID='
+            saida: '#!equipamentos|novasaida&equipamentoID='
         });
     });
 </script>

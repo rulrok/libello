@@ -76,7 +76,7 @@ function configurarTabela(parametros) {
             return false;
         }
         var id = $("tr.row_selected>.campoID").html();
-        ajax(acaoEditar + id);
+        carregarPagina(acaoEditar + id);
     });
 
     $(".btn-deletar").on('click', function() {
@@ -92,7 +92,7 @@ function configurarTabela(parametros) {
                 if (data.status !== undefined && data.mensagem !== undefined) {
                     showPopUp(data.mensagem, data.status);
                     if (data.status.toLowerCase() === "sucesso") {
-                        $("input[type=reset]").click();
+                        $("input[type=reset]").click(); //Limpar o formulário depois de cadastrado com sucesso.
                     }
                 } else {
                     showPopUp("Houve algum problema na resposta do servidor.", "erro");
@@ -118,7 +118,7 @@ function configurarTabela(parametros) {
             return false;
         }
         var id = $("tr.row_selected>.campoID").html();
-        ajax(acaoSaida + id);
+        carregarPagina(acaoSaida + id);
     });
 
     $(".btn-baixa").on('click', function() {

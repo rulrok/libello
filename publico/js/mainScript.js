@@ -1,74 +1,39 @@
 var $buoop = {};
 $buoop.ol = window.onload;
-window.menuHasUpped = false;
+window.menuHadUpped = false;
+//De fato a página está configurada para exibir ele, e o script para esconde-lo é executado
+//na primeira renderização da página, por tanto, window.footerHidden deve estar inicialmente
+//configurado como false.
+window.footerHidden = false;
 //Usado para quando se muda de página para não sair por engano e perder dados.
 document.paginaAlterada = false;
 
 $(document).ready(function() {
 
     //Carrega links passados com hash pela barra de endereço
-    $(function() {
+    // Bind an event to window.onhashchange that, when the history state changes,
+    // gets the url from the hash and displays either our cached content or fetches
+    // new content to be displayed.
+    $(window).bind('hashchange', function(e) {
+        try {
+            var url = location.hash;
+        } catch (ex) {
+            url = e.fragment;
+        }
 
-        // Bind an event to window.onhashchange that, when the history state changes,
-        // gets the url from the hash and displays either our cached content or fetches
-        // new content to be displayed.
-        $(window).bind('hashchange', function(e) {
+        if (url === "") {
+            url = "#!inicial|homepage";
+            history.replaceState(null, null, url); //Importante! Não apagar!
+        }
 
-            // Get the hash (fragment) as a string, with any leading # removed. Note that
-            // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
-            var url = "index.php?c=<c>&a=<a>";
-            var aUrl;
-            try {
-                aUrl = location.hash;
-                if (aUrl !== "") {
-                    aUrl = aUrl.replace("#!", "");
-                    aUrl = aUrl.split("|");
-                    if (aUrl[0] == "home") {
-                        aUrl = ["inicial", "homepage"];
-                    }
-                    url = url.replace("<c>", aUrl[0]);
-                    url = url.replace("<a>", aUrl[1]);
-                } else {
-                    url = "index.php?c=inicial&a=homepage";
-                }
-            }
-            catch (ex) {
-                var url = e.fragment;
-            }
-            ajax(url);
-            var menu = aUrl[0];
-            if (menu === "inicial" || menu === undefined) {
-                menu = "home";
-            }
-            var ferramentaAtual = $(".actualTool").attr("id");
-            try {
-                if (ferramentaAtual.lastIndexOf(menu) === -1) {
-                    $(".actualTool").removeClass("actualTool");
-                    $(".visited").removeClass("visited");
-                    $(".menuLink[id^=" + menu + "]").addClass("actualTool");
-                    $(".menuLink[id^=" + menu + "]").addClass("visited");
-                    var menuObj = new Object();
-                    menuObj.id = menu + "Link";
-                    makeSubMenu(menuObj);
-                    showSubMenu();
-                }
-            } catch (ex) {
-                $(".menuLink[id^=" + menu + "]").addClass("actualTool");
-                $(".menuLink[id^=" + menu + "]").addClass("visited");
-                var menuObj = new Object();
-                menuObj.id = menu + "Link";
-                makeSubMenu(menuObj);
-                showSubMenu();
-            }
-
-
-        });
-
-        // Since the event is only triggered when the hash changes, we need to trigger
-        // the event now, to handle the hash the page may have loaded with.
-        $(window).trigger('hashchange');
-
+        carregarPagina(url);
     });
+
+    // Since the event is only triggered when the hash changes, we need to trigger
+    // the event now, to handle the hash the page may have loaded with.
+    $(window).trigger('hashchange');
+
+
 
     //Prepara algumas funções especiais e conteúdos para serem exibidos no início
     window.onload = function() {
@@ -151,37 +116,191 @@ $(document).ready(function() {
         }
     };
 
-//Função para manter o menu 'colado' no topo da página quando ela desce muito
-    window.onscroll = function() {
-        var menu = $("#menuPosition");
-        var menuPosition = menu.position().top;
-        var windowPosition = $(window).scrollTop();
-        if (!window.menuHasUpped && windowPosition >= menuPosition) {
-            window.menuHasUpped = true;
-            //console.debug("Fixou o menu");
-            $("#barra_superior").show(800);
-            var divMenu = $(".menuContainer");
-            var menuHeight = divMenu.height();
-            divMenu.css('position', 'fixed');
-            divMenu.css('top', '0px');
-            divMenu.css('width', '100%');
-            var divContent = $(".content");
-            divContent.css('padding-top', menuHeight + 'px');
-        } else if (window.menuHasUpped && windowPosition < menuPosition) {
-            window.menuHasUpped = false;
-            $("#barra_superior").hide(500);
-            //console.debug("Retornou ao normal");
-            var divMenu = $(".menuContainer");
-            divMenu.css('position', 'relative');
-            divMenu.css('top', '0px');
-            var divContent = $(".content");
-            divContent.css('padding-top', '0px');
-        }
-    };
+    //Manter o menu 'colado' no topo da página quando ela desce muito
+    window.onscroll = acoplarMenu;
 });
 
+/**
+ * Função para 'colar' o menu quando a página descer. Perceba que a função é otimizada.
+ * Ela não fica refazendo operações desnecessárias, como atualizar o css do menu
+ * sem necessidade. Em suma, ela detecta quando de fato o menu deve ser desprendido
+ * e quando deve ser colado superiormente, através da variável window.menuHadUpped.
+ * 
+ * @author Reuel
+ * 
+ * @returns {undefined}
+ */
+function acoplarMenu() {
+    var menu = $("#menuPosition");
+    var menuPosition = menu.position().top;
+    var windowPosition = $(window).scrollTop();
+    if (!window.menuHadUpped && windowPosition >= menuPosition) {
+        window.menuHadUpped = true;
+        //console.debug("Fixou o menu");
+        $("#barra_superior").show(800);
+        var divMenu = $(".menuContainer");
+        var menuHeight = divMenu.height();
+        divMenu.css('position', 'fixed');
+        divMenu.css('top', '0px');
+        divMenu.css('width', '100%');
+        var divContent = $(".content");
+        divContent.css('padding-top', menuHeight + 'px');
+    } else if (window.menuHadUpped && windowPosition < menuPosition) {
+        window.menuHadUpped = false;
+        $("#barra_superior").hide(500);
+        //console.debug("Retornou ao normal");
+        var divMenu = $(".menuContainer");
+        divMenu.css('position', 'relative');
+        divMenu.css('top', '0px');
+        var divContent = $(".content");
+        divContent.css('padding-top', '0px');
+    }
+}
+/**
+ * Função que carrega uma página, com auxílio da função <code>ajax</code>, com
+ * base em um meta-link formatado da seguinte maneira:
+ *  #![nomeControlador]|[nomeAcao](lista opcional de parâmetros GET).<br/>
+ * Em outras palavras, o link deve casar com a expressão regular: <code>^#![a-z]+\|[a-z]+((\&[a-zA-Z]+=[a-z0-9]*)+)?</code>
+ * 
+ * @author Reuel
+ * 
+ * @param {string} link Página a ser carregada
+ * @returns {undefined}
+ */
+function carregarPagina(link) {
+    // Get the hash (fragment) as a string, with any leading # removed. Note that
+    // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
+
+    if (link === undefined || link === null | !link.match("^#![a-z]+\|[a-z]+((\&[a-zA-Z]+=[a-z0-9]*)+)?")) {
+        return undefined;
+    }
+    var url = "index.php?c=<c>&a=<a>";
 
 
+    var novolink = link.replace("#!", "");
+    novolink = novolink.split("|");
+//    if (novolink[0] == "home") {
+//        novolink = ["inicial", "homepage"];
+//    }
+    url = url.replace("<c>", novolink[0]);
+    url = url.replace("<a>", novolink[1]);
+
+    if (link !== location.hash)
+        history.pushState(null, null, link);
+    ajax(url);
+    var menu = novolink[0];
+    if (menu === "inicial" || menu === undefined) {
+        menu = "home";
+    }
+    var ferramentaAtual = $(".actualTool").attr("id");
+    try {
+        if (ferramentaAtual.lastIndexOf(menu) === -1) {
+            $(".actualTool").removeClass("actualTool");
+            $(".visited").removeClass("visited");
+            $(".menuLink[id^=" + menu + "]").addClass("actualTool");
+            $(".menuLink[id^=" + menu + "]").addClass("visited");
+            var menuObj = new Object();
+            menuObj.id = menu + "Link";
+            makeSubMenu(menuObj);
+            showSubMenu();
+        }
+    } catch (ex) {
+        $(".menuLink[id^=" + menu + "]").addClass("actualTool");
+        $(".menuLink[id^=" + menu + "]").addClass("visited");
+        var menuObj = new Object();
+        menuObj.id = menu + "Link";
+        makeSubMenu(menuObj);
+        showSubMenu();
+    }
+}
+
+/**
+ * Faz uma requisição Ajax de alguma página qualquer, podendo escolher onde a 
+ * resposta será colocada.
+ * 
+ * @author Reuel
+ * 
+ * @param {URL} link URL para a página que deseja-se obter via ajax.
+ * @param {String} place Um div (ou até mesmo um SPAN) referenciado pelo nome da sua classe
+ * ou ID, onde a resposta será inserida. Caso seja <code>undefined</code>, <i>.contentWrap</i> será utilizado
+ * por padrão. Caso <code>null</code>, a resposta não será colocada em nenhum lugar.
+ * @param {boolean} hidePop Determina se, caso um pop-up esteja sendo exibido no canto da tela do usuário,
+ * se ele deve ser escondido ou permanecer sendo exibido.
+ * @param {boolean} async Especifíca se o carregamento deve ser assíncrono ou não. Por padrão, essa opção é falsa.
+ * @returns O retorno da página requisitada, caso ela retorne algum.
+ */
+function ajax(link, place, hidePop, async) {
+    if (place === undefined) {
+        place = ".contentWrap";
+    }
+    if (async === undefined || async === null) {
+        async = true;
+    }
+    var request = $.ajax({
+        url: link,
+        async: async,
+        timeout: 5000 //Espera no máximo 5 segundos
+    });
+
+    var sucesso = request.success(function(data) {
+
+        if (place !== null) {
+            if (document.paginaAlterada) {
+                var ignorarMudancas = confirm("Modificações não salvas. Continuar?");
+                if (!ignorarMudancas) {
+                    return false;
+                }
+            }
+            document.paginaAlterada = false;
+            $(place).empty();
+            var tituloProprio = data.lastIndexOf("<title>");
+
+            //Trata páginas com títulos personalizados
+            if (tituloProprio !== -1) {
+                var fimTitulo = data.lastIndexOf("</title>");
+                var titulo = data.substr(tituloProprio + 7, fimTitulo);
+                mudarTitulo(titulo);
+                data = data.replace("<title>", "");
+                data = data.replace(titulo, "");
+                data = data.replace("</title>", "");
+            } else {
+                //Volta o título para o padrão
+                mudarTitulo();
+            }
+            $(place).append(data);
+        }
+//        //Caso o conteúdo seja carregado no popup com fundo cinza
+//        if (place == ".shaderFrameContentWrap") {
+//            $(".shaderFrame").css("visibility", "visible").animate({opacity: "0.5"}, 150);
+//            $(".shaderFrameContent").css("visibility", "visible").animate({opacity: "1"}, 350);
+//            $(".shaderFrameContent").center();
+//        }
+
+        //TODO encontrar uma forma de tratar os campos somente leitura dos datapickers, pois quando
+        //é escolhida uma data através do jquery, o evento change não é acionado.
+        $("input, select").not('.ignorar').not('.dataTables_filter input').change(function() {
+            document.paginaAlterada = true;
+        });
+
+        if (hidePop === undefined) {
+            hidePop = true;
+        }
+        if (hidePop === true) {
+            hidePopUp();
+        }
+//        return data;
+    });
+    var erro = request.error(function(jqXHR, textStatus, errorThrown) {
+        if (textStatus != "timeout") {
+            showPopUp("<b>" + errorThrown.name + "</b><br/>" + errorThrown.message, textStatus);
+        } else {
+            showPopUp("<B>Timeout</b><br/>A operação não pode ser concluída pois o servidor demorou muito para responder.", "Info");
+        }
+    });
+
+
+    return sucesso.responseText;
+}
 //TODO verificar porque a tela cheia não funciona, através desse método, do mesmo
 //modo que apertando F11 (ou botão apropriado para exibir em tela cheia) no navegador.
 function launchFullScreen(element) {
@@ -225,23 +344,26 @@ function cancelFullscreen() {
  * @returns {undefined} 
  */
 function hideFooter() {
-    $(".footerWrap").animate({
-        opacity: 0,
-        top: '+=50',
-        height: 'toggle'
-    }, 500);
-    $("footer").animate({
-        height: "10px",
-        marginTop: "-20px"
-    }, 500);
-    $(".content").animate({
-        paddingBottom: "30px"
-    }, 700, function() {
-        $(".arrow-up").show();
-        $(".arrow-up").animate({
-            opacity: 1
-        }, 200);
-    });
+    if (window.footerHidden === false) {
+        window.footerHidden = true;
+        $(".footerWrap").animate({
+            opacity: 0,
+            top: '+=50',
+            height: 'toggle'
+        }, 500);
+        $("footer").animate({
+            height: "10px",
+            marginTop: "-20px"
+        }, 500);
+        $(".content").animate({
+            paddingBottom: "30px"
+        }, 700, function() {
+            $(".arrow-up").show();
+            $(".arrow-up").animate({
+                opacity: 1
+            }, 200);
+        });
+    }
 }
 
 /**
@@ -252,22 +374,25 @@ function hideFooter() {
  * @returns {undefined} 
  */
 function showFooter() {
-    $(".arrow-up").animate({opacity: 0}, 300, function() {
-        $(".arrow-down").show();
-        $(".arrow-up").hide();
-        $(".footerWrap").animate({
-            opacity: 1,
-            top: '+=50',
-            height: 'toggle'
-        }, 400);
-        $("footer").animate({
-            height: "150",
-            marginTop: "-160px"
-        }, 400);
-        $(".content").animate({
-            paddingBottom: "180px"
-        }, 500);
-    });
+    if (window.footerHidden === true) {
+        window.footerHidden = false; //Prevenir clique duplo sobre a seta azul, inutilizando o rodapé
+        $(".arrow-up").animate({opacity: 0}, 300, function() {
+            $(".arrow-down").show();
+            $(".arrow-up").hide();
+            $(".footerWrap").animate({
+                opacity: 1,
+                top: '+=50',
+                height: 'toggle'
+            }, 400);
+            $("footer").animate({
+                height: "150",
+                marginTop: "-160px"
+            }, 400);
+            $(".content").animate({
+                paddingBottom: "180px"
+            }, 500);
+        });
+    }
 }
 
 /**
@@ -429,94 +554,7 @@ function makeSubMenu(originMenu) {
     }
 }
 
-/**
- * Faz uma requisição Ajax de alguma página qualquer, podendo escolher onde a 
- * resposta será colocada.
- * 
- * @author Reuel
- * 
- * @param {URL} link URL para a página que deseja-se obter via ajax.
- * @param {String} place Um div (ou até mesmo um SPAN) referenciado pelo nome da sua classe
- * ou ID, onde a resposta será inserida. Caso seja <code>undefined</code>, <i>.contentWrap</i> será utilizado
- * por padrão. Caso <code>null</code>, a resposta não será colocada em nenhum lugar.
- * @param {boolean} hidePop Determina se, caso um pop-up esteja sendo exibido no canto da tela do usuário,
- * se ele deve ser escondido ou permanecer sendo exibido.
- * @param {boolean} async Especifíca se o carregamento deve ser assíncrono ou não. Por padrão, essa opção é falsa.
- * @returns O retorno da página requisitada, caso ela retorne algum.
- */
-function ajax(link, place, hidePop, async) {
-    if (place === undefined) {
-        place = ".contentWrap";
-    }
-    if (async === undefined || async === null) {
-        async = true;
-    }
-    var request = $.ajax({
-        url: link,
-        async: async,
-        timeout: 5000 //Espera no máximo 5 segundos
-    });
 
-    var sucesso = request.success(function(data) {
-
-        if (place !== null) {
-            if (document.paginaAlterada) {
-                var ignorarMudancas = confirm("Modificações não salvas. Continuar?");
-                if (!ignorarMudancas) {
-                    return false;
-                }
-            }
-            document.paginaAlterada = false;
-            $(place).empty();
-            var tituloProprio = data.lastIndexOf("<title>");
-
-            //Trata páginas com títulos personalizados
-            if (tituloProprio !== -1) {
-                var fimTitulo = data.lastIndexOf("</title>");
-                var titulo = data.substr(tituloProprio + 7, fimTitulo);
-                mudarTitulo(titulo);
-                data = data.replace("<title>", "");
-                data = data.replace(titulo, "");
-                data = data.replace("</title>", "");
-            } else {
-                //Volta o título para o padrão
-                mudarTitulo();
-            }
-            $(place).append(data);
-        }
-//        //Caso o conteúdo seja carregado no popup com fundo cinza
-//        if (place == ".shaderFrameContentWrap") {
-//            $(".shaderFrame").css("visibility", "visible").animate({opacity: "0.5"}, 150);
-//            $(".shaderFrameContent").css("visibility", "visible").animate({opacity: "1"}, 350);
-//            $(".shaderFrameContent").center();
-//        }
-
-        //TODO encontrar uma forma de tratar os campos somente leitura dos datapickers, pois quando
-        //é escolhida uma data através do jquery, o evento change não é acionado.
-        $("input, select").not('.ignorar').not('.dataTables_filter input').change(function() {
-            document.paginaAlterada = true;
-        });
-
-        if (hidePop === undefined) {
-            hidePop = true;
-        }
-        if (hidePop === true) {
-            hidePopUp();
-        }
-//        return data;
-    });
-
-    var erro = request.error(function(jqXHR, textStatus, errorThrown) {
-        if (textStatus != "timeout") {
-            showPopUp("<b>" + errorThrown.name + "</b><br/>" + errorThrown.message, textStatus);
-        } else {
-            showPopUp("<B>Timeout</b><br/>A operação não pode ser concluída pois o servidor demorou muito para responder.", "Info");
-        }
-    });
-
-
-    return sucesso.responseText;
-}
 
 //// this function create an Array that contains the JS code of every <script> tag in parameter
 //// then apply the eval() to execute the code in every script collected

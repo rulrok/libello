@@ -45,7 +45,7 @@
     $(document).ready(function() {
         configurarTabela({
             idTabela: 'gerenciar_usuario',
-            editar: 'index.php?c=usuarios&a=editar&userID=',
+            editar: '#!usuarios|editar&userID=',
             deletar: 'index.php?c=usuarios&a=remover&userID='
         });
     });

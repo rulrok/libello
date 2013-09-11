@@ -45,7 +45,7 @@
     $(document).ready(function() {
         configurarTabela({
             idTabela: 'gerenciar_equipamento',
-            editar: 'index.php?c=equipamentos&a=editar&equipamentoID=',
+            editar: '#!equipamentos|editar&equipamentoID=',
             deletar: 'index.php?c=equipamentos&a=remover&equipamentoID='
         });
     });

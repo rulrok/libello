@@ -42,7 +42,7 @@
     $(document).ready(function() {
         configurarTabela({
             idTabela: 'gerenciar_polo',
-            editar: 'index.php?c=cursospolos&a=editarpolo&poloID=',
+            editar: '#!cursospolos|editarpolo&poloID=',
             deletar: 'index.php?c=cursospolos&a=removerPolo&poloID='
         });
     });
