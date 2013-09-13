@@ -1,15 +1,12 @@
 <?php
 
-require_once APP_LOCATION . "modelo/vo/Polo.php";
-require_once APP_LOCATION . "visao/verificadorFormularioAjax.php";
-
 class VerificarEdicaoPolo extends verificadorFormularioAjax {
 
     public function _validar() {
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') :
             $_SERVER['REQUEST_METHOD'] = null;
-            $poloID = $_POST['poloID'];
+            $poloID = fnDecrypt($_POST['poloID']);
             $nomepolo = $_POST['nomepolo'];
             $estado = $_POST['estado'];
             $cidade = $_POST['cidade'];

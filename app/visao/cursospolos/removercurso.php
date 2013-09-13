@@ -1,8 +1,6 @@
 <?php
 
-require_once APP_LOCATION . "modelo/Mensagem.php";
-
-$id = $_GET['cursoID'];
+$id = fnDecrypt($_GET['cursoID']);
 $mensagem = new Mensagem();
 if (cursoDAO::remover($id)) {
     sistemaDAO::registrarExclusaoCurso($_SESSION['idUsuario']);
