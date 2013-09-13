@@ -17,17 +17,22 @@ function fnDecrypt($sValue, $sSecretKey = SECRET) {
 //    $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
     $value = trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $sSecretKey, base64_decode($sValue), MCRYPT_MODE_ECB));
 
-    $fValue = preg_replace("#^[0-9]+[a-zA-Z]+@#", "", $value);
-    if ($fValue !== false) {
-        $fValue = preg_replace("#@[a-zA-Z]+[0-9]+#", "", $fValue);
-        if ($fValue === false) {
+    if (preg_match("#^[0-9]+[a-zA-Z]+@.*@[a-zA-Z]+[0-9]+#", $value)) {
+        $fValue = preg_replace("#^[0-9]+[a-zA-Z]+@#", "", $value);
+        if ($fValue !== false) {
+            $fValue = preg_replace("#@[a-zA-Z]+[0-9]+#", "", $fValue);
+            if ($fValue === false) {
+                die("Erro ao decodificar ID");
+            }
+        } else {
             die("Erro ao decodificar ID");
         }
+        return $fValue;
     } else {
-        die("Erro ao decodificar ID");
+        die ("Código inválido");
     }
-    return $fValue;
 }
+
 //$inicial = time();
 //$crypt = fnEncrypt("20");
 //echo $crypt . "<br/>";

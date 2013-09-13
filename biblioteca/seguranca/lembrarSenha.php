@@ -12,7 +12,7 @@ if (isset($_POST['email']) && $_POST['email'] != NULL && $_POST['email'] != "") 
         $tolken = usuarioDAO::consultarTolkenRecuperarSenha($id);
 
 //            $destinatario = "Reuel <rulrok@gmail.com>";
-        $link = WEB_SERVER_NAME . "lembrarSenha.php?tolken=" . $tolken;
+        $link = WEB_SERVER_ADDRESS . "lembrarSenha.php?tolken=" . $tolken;
         $assunto = "Alteração de senha";
         $mensagem = "<p>Você está recebendo esse e-mail pois fez uma solicitação de recuperação da sua senha. Clique no link abaixo para redefinir a sua senha:</p><br/>";
         $mensagem .= "<a href=\"$link\">$link</a><br/>";
@@ -70,6 +70,6 @@ elseif (isset($_POST['novaSenha']) && $_POST['novaSenha'] != NULL && $_POST['nov
         echo "<p>Tolken inválido</p>";
     }
 else:
-    header("Location: " . WEB_SERVER_NAME);
+    header("Location: " . WEB_SERVER_ADDRESS);
 endif;
 ?>

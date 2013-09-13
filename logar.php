@@ -9,13 +9,15 @@
     </head>
     <body>
         <?php
-        
         $ocultarDetalhes = false;
-        if ($_SERVER['HTTP_ACCEPT'] != "*/*"){
+        if ($_SERVER['HTTP_ACCEPT'] != "*/*") {
             $ocultarDetalhes = true;
         }
-        session_start();
+//        if (session_status() === PHP_SESSION_NONE) {
+//            session_start();
+//        }
         if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION['autenticado'] === TRUE) {
+           
             header("Location: index.php");
         } else {
             $_SESSION['autenticado'] = false;
@@ -27,8 +29,9 @@
             <div id="unifal"></div>
             <div id="cead"></div>
             <div id="loginArea">
-                <form class="table centered" name="identificacao" action="./biblioteca/seguranca/seguranca.php" method="post">
+                <form class="table centered" name="identificacao" action="./biblioteca/seguranca/verificarLogin.php" method="post">
                     <fieldset>
+                        <input hidden type="checkbox" id="fazendo_login" name="fazendo_login" checked/>
                         <div class="line">
                             <label>Email</label>
                             <input required type="text" name="login">
@@ -40,7 +43,7 @@
                         <br/>
                         <input class="btn btn-right btn-info" name="identificacao" type="submit" value="Entrar" >
                             <?php if ($ocultarDetalhes): ?>
-                            <a class="btn"href="lembrarSenha.php">Esqueci a senha</a>
+                                <a class="btn"href="lembrarSenha.php">Esqueci a senha</a>
                             <?php endif; ?>
                     </fieldset>
 

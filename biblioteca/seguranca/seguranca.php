@@ -2,9 +2,10 @@
 
 require_once __DIR__ . '/../configuracoes.php';
 require_once BIBLIOTECA_DIR . 'bancoDeDados/PDOconnectionFactory.php';
-require ROOT . '/app/modelo/vo/Usuario.php';
-require ROOT . '/app/modelo/dao/sistemaDAO.php';
+require_once APP_LOCATION . 'modelo/vo/Usuario.php';
+require_once APP_LOCATION . 'modelo/dao/sistemaDAO.php';
 
+session_start();
 /**
  * Inicia um sessão, com o usuário inicialmente não autenticado.
  * @return type
@@ -13,9 +14,29 @@ function iniciarSessao() {
     if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true) {
         return;
     } else {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+//            session_start();
+        }
         $_SESSION['iniciada'] = true;
         $_SESSION['autenticado'] = false;
+    }
+}
+
+function sessaoIniciada() {
+//    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
+        return false;
+    } else {
+        return isset($_SESSION['iniciada']) && $_SESSION['autenticado'] === true;
+    }
+}
+
+function obterUsuarioSessao(){
+    if (sessaoIniciada()){
+        $usuario = $_SESSION['usuario'];
+        return $usuario;
+    } else {
+        return NULL;
     }
 }
 
@@ -42,7 +63,9 @@ function protegePaginaLogado() {
  */
 function expulsaVisitante($msg_erro = null) {
     encerrarSessao();
-    header("Location: " . WEB_SERVER_NAME . "logar.php" . ($msg_erro != null ? "?m=" . $msg_erro : ""),true);
+//    ob_start();
+    header("Location: " . WEB_SERVER_ADDRESS . "logar.php" . ($msg_erro != null ? "?m=" . $msg_erro : ""), true);
+//    ob_end_flush();
     exit;
 }
 
@@ -65,7 +88,7 @@ function autenticaUsuario(Usuario $user) {
                 if (sizeof($ret) === 1) {
                     $_SESSION['usuario'] = $ret[0];
                     $_SESSION['autenticado'] = true;
-                  
+
                     return true;
                 } else {
                     expulsaVisitante("Usuário ou senha incorretos.");
@@ -85,24 +108,4 @@ function autenticaUsuario(Usuario $user) {
     }
 }
 
-//if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-session_start();
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_SESSION['autenticado'] === FALSE) {
-    iniciarSessao();
-    $_SERVER['REQUEST_METHOD'] = NULL;
-
-    $email = (isset($_POST['login'])) ? $_POST['login'] : '';
-    $senha = (isset($_POST['senha'])) ? md5($_POST['senha']) : '';
-    $usuario = new Usuario();
-    $usuario->set_email($email);
-    $usuario->set_senha($senha);
-
-    if (autenticaUsuario($usuario)) {
-        sistemaDAO::registrarAccesso($_SESSION['usuario']->get_id());
-        header("Location: ../../index.php");
-    } else {
-        // O usuário e/ou a senha são inválidos, manda de volta pro form de login
-        expulsaVisitante("Usuário ou senha inválidos.");
-    }
-}
 ?>

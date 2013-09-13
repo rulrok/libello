@@ -63,6 +63,8 @@ class ControladorCursospolos extends Controlador {
             $this->visao->curso = $curso->get_nome();
             $this->visao->idArea = (int) $curso->get_area();
             $this->visao->idTipoCurso = (int) $curso->get_tipo();
+        } else {
+            die("Acesso indevido");
         }
 
         $this->renderizar();
@@ -88,6 +90,8 @@ class ControladorCursospolos extends Controlador {
             $this->visao->polo = $polo->get_nome();
             $this->visao->cidade = $polo->get_cidade();
             $this->visao->estado = $polo->get_estado();
+        } else {
+            die("Acesso indevido");
         }
 
         $this->renderizar();

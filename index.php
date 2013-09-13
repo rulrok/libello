@@ -1,6 +1,6 @@
-<?php ob_start(); ?>
 <?php
-//Ignora a verificação do javascript caso uma requisição ajax esteja sendo feita por algum formulário.
+ob_start();
+//Ignora a verificação do javascript caso uma requisição ajax esteja sendo feita via AJAX
 if (empty($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest') :
     ?>
     <!DOCTYPE html>
@@ -16,5 +16,8 @@ require_once 'biblioteca/Mvc/Mvc.php';
 
 
 CarregadorAutomatico::registrar();
+
+//ob_start();
 Mvc::pegarInstancia()->rodar();
+//$var = ob_get_clean();
 ?>
