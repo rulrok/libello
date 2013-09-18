@@ -12,13 +12,13 @@ function configurarTabela(parametros) {
     var idTabela = parametros['idTabela'];
     var acaoDeletar = parametros['deletar'];
     var acaoEditar = parametros['editar'];
-//    var acaoAdicionar = parametros['adicionar'];
     var acaoBaixa = parametros['baixa'];
     var acaoSaida = parametros['saida'];
+    var acaoRetorno = parametros['retorno'];
 
     var selectedElement;
     var oTable = $("#" + idTabela).dataTable({
-        "aaSorting": [[1, "asc"]]
+        "aaSorting": [[1, "desc"]]
     });
 
     function habilitarBotoes() {
@@ -119,6 +119,21 @@ function configurarTabela(parametros) {
         }
         var id = $("tr.row_selected>.campoID").html();
         carregarPagina(acaoSaida + id);
+    });
+
+    $(".btn-retorno").on('click', function() {
+        if ($('.row_selected').size() == 0) {
+            return false;
+        }
+        var id = $("tr.row_selected>.campoID").html();
+        carregarPagina(acaoRetorno + id);
+    });
+    $(".btn-baixa").on('click', function() {
+        if ($('.row_selected').size() == 0) {
+            return false;
+        }
+        var id = $("tr.row_selected>.campoID").html();
+        carregarPagina(acaoBaixa + id);
     });
 
     $(".btn-baixa").on('click', function() {

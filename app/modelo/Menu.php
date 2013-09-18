@@ -91,16 +91,19 @@ class Menu {
                     if ($permissao_ferramenta['idPermissao'] != Permissao::SEM_ACESSO) {
                         $menuCode .= "<a><li class=\"menuLink\" id=\"equipamentosLink\">Equipamentos</li></a>" . "\n";
                         $subMenuCode .="<ul class=\"hiddenSubMenuLink equipamentosSubMenu\">" . "\n";
-                        switch ($permissao_ferramenta['idPermissao']) {
+                        $permissao = $permissao_ferramenta['idPermissao'];
+                        switch ($permissao) {
                             case Permissao::ADMINISTRADOR:
                             case Permissao::GESTOR:
                                 $subMenuCode .= "<a href=\"#!equipamentos|gerenciar\"\">" . "\n";
                                 $subMenuCode .= "<li>Gerenciar equipamentos</li></a>" . "\n";
-                                $subMenuCode .= "<a href=\"#!equipamentos|saida\"\">" . "\n";
-                                $subMenuCode .= "<li>Registrar saída</li></a>" . "\n";
+                            case Permissao::ESCRITA:
+                                if ($permissao === Permissao::GESTOR) {
+                                    $subMenuCode .= "<a href=\"#!equipamentos|saida\"\">" . "\n";
+                                    $subMenuCode .= "<li>Registrar saída</li></a>" . "\n";
+                                }
                                 $subMenuCode .= "<a href=\"#!equipamentos|retorno\"\">" . "\n";
                                 $subMenuCode .= "<li>Registrar retorno</li></a>" . "\n";
-                            case Permissao::ESCRITA:
                                 $subMenuCode .= "<a href=\"#!equipamentos|novo\"\">" . "\n";
                                 $subMenuCode .= "<li>Registrar novo equipamento</li></a>" . "\n";
                             case Permissao::CONSULTA:

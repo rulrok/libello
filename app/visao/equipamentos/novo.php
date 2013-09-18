@@ -1,12 +1,16 @@
 <title>Cadastrar novo equipamento</title>
 <!--Início da página -->
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=equipamento&a=verificarnovo">
+<form class="table centered" id="ajaxForm" method="post" action="index.php?c=equipamentos&a=verificarnovo">
     <fieldset>
         <legend>Registro de novo equipamento</legend>
         <span class="line">
             <label>Equipamento</label>
-            <input required type="text" class="input-xlarge" id="equipamento" name="equipamento"  />
+            <input required type="text" class="input-xlarge" id="equipamento" name="equipamento" title="Equipamento" data-content="O nome do equipamento apenas" />
         </span>
+        <div class="line">
+            <label for="descricoes">Descricoes</label>
+            <textarea type="textarea" rows="8" id="descricoes" name="descricoes" title="Descrições" data-content="Alguma característica do equipamento. Limite de 1000 caracteres." ></textarea>           
+        </div>
         <div class="line">
             <label>Data de entrada</label>
             <input type="text" readonly id="dataEntrada" class="campoData" name="dataEntrada" />
@@ -30,7 +34,7 @@
         <span class="custeio">
             <span class="line">
                 <label>Quantidade</label>
-                <input required type="text" class="input-medium" id="quantidade" name="quantidade" />
+                <input required type="text" class="input-medium" id="quantidade" name="quantidade"/>
             </span>
         </span>
 
@@ -47,7 +51,7 @@
             <div id="linhasPatrimonios">
                 <span class="line patrimonio-1">
                     <label>Código Patrimônio</label>
-                    <input readonly type="text" class="input-medium" id="numeroPatrimonio-1" name="numeroPatrimonio-1"/>
+                    <input readonly type="text" class="input-medium" id="numeroPatrimonio-1" name="numeroPatrimonio-1" title="Código do Patrimônio" data-content="Equipamentos idênticos com número de patrimônio variados podem ser cadastrados em lote. Para isso, clique em no botão '+'"/>
                 </span>
             </div>
         </span>
@@ -59,7 +63,8 @@
 </form>
 
 <script>
-
+                        $(".line input").popover({trigger: 'focus', container: 'body'});
+                        $(".line textarea").popover({trigger: 'focus', container: 'body'});
                         var quantidadePatrimonios = 1;
                         var codigoHtml = "";
 

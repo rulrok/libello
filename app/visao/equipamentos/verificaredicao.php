@@ -9,7 +9,7 @@ class verificarEdicao extends verificadorFormularioAjax {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') :
             $_SERVER['REQUEST_METHOD'] = null;
 
-            $equipamentoID = $_POST['equipamentoID'];
+            $equipamentoID = fnDecrypt($_POST['equipamentoID']);
             $equipamentoNome = $_POST['equipamento'];
             $dataEntrada = $_POST['dataEntrada'];
             $quantidade = $_POST['quantidade'];
@@ -27,7 +27,7 @@ class verificarEdicao extends verificadorFormularioAjax {
                     $quantidade = 1;
                 }
                 if ($quantidade > 0) {
-                    $equipamento->set_nomeEquipamento($equipamentoNome)->set_dataEntrada($dataEntrada)->set_numeroPatrimonio($numeroPatrimonio)->set_quantidadde($quantidade);
+                    $equipamento->set_nomeEquipamento($equipamentoNome)->set_dataEntrada($dataEntrada)->set_numeroPatrimonio($numeroPatrimonio)->set_quantidade($quantidade);
 
                     if (equipamentoDAO::atualizar($equipamentoID, $equipamento)) {
                         $this->mensagem->set_mensagem("Atualizado com sucesso");

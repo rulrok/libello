@@ -6,12 +6,27 @@ require_once APP_LOCATION . "modelo/vo/Equipamento.php";
 class equipamentoDAO extends abstractDAO {
 
     public static function cadastrarEquipamento(Equipamento $equipamento) {
-        $sql = "INSERT INTO equipamento(nomeEquipamento,quantidade,dataEntrada,numeroPatrimonio) VALUES ";
+        $sql = "INSERT INTO equipamento(nomeEquipamento,quantidade,descricao,dataEntrada,numeroPatrimonio) VALUES ";
         $nome = parent::quote($equipamento->get_nomeEquipamento());
         $quantidade = $equipamento->get_quantidade();
-        $dataEntrada = parent::quote($equipamento->get_dataEntrada());
+
+        $dataEntrada = $equipamento->get_dataEntrada();
+        if ($dataEntrada === "" | $dataEntrada === null) {
+            $dataEntrada = "NULL";
+        }
+        $dataEntrada = parent::quote($dataEntrada);
+
+
         $numeroPatrimonio = parent::quote($equipamento->get_numeroPatrimonio());
-        $values = "($nome,$quantidade,$dataEntrada,$numeroPatrimonio)";
+
+        $descricao = $equipamento->get_descricao();
+        if ($descricao === "" | $descricao === null) {
+            $descricao = "NULL";
+        }
+        $descricao = parent::quote($descricao);
+
+
+        $values = "($nome,$quantidade,$descricao,$dataEntrada,$numeroPatrimonio)";
         try {
             parent::getConexao()->query($sql . $values);
         } catch (Exception $e) {
@@ -28,9 +43,9 @@ class equipamentoDAO extends abstractDAO {
     public static function consultar($colunas = "*", $condicao = null) {
 
         if ($condicao == null) {
-            $condicao = "";
+            $condicao = "WHERE quantidade > 0";
         } else {
-            $condicao = "WHERE " . $condicao;
+            $condicao = "WHERE " . $condicao . " AND quantidade > 0";
         }
         $sql = "SELECT " . $colunas . " FROM equipamento " . $condicao;
         $resultado = parent::getConexao()->query($sql)->fetchAll();
@@ -46,11 +61,51 @@ class equipamentoDAO extends abstractDAO {
         try {
             $stmt = parent::getConexao()->query($sql);
             $stmt->setFetchMode(\PDO::FETCH_CLASS, 'Equipamento');
-            $equipamentos = $stmt->fetch();
+            $saida = $stmt->fetch();
         } catch (Exception $e) {
-            $equipamentos = NULL;
+            $saida = NULL;
         }
-        return $equipamentos;
+        return $saida;
+    }
+
+    public static function recuperarSaidaEquipamento($saidaID) {
+        $saida = equipamentoDAO::consultarSaidas("*", "es.idSaida = " . $saidaID);
+        if (is_array($saida)) {
+            $saida = $saida[0];
+        }
+        return $saida;
+    }
+
+    public static function consultarSaidas($colunas = "*", $condicao = null) {
+
+        if ($condicao == null) {
+            $condicao = "WHERE quantidadeSaida > 0";
+        } else {
+            $condicao = "WHERE " . $condicao . " AND quantidadeSaida > 0";
+        }
+        $sql = "SELECT " . $colunas . " FROM `equipamento_saida` AS `es` JOIN `equipamento` AS `e` ON `es`.`equipamento` = `e`.idEquipamento JOIN `usuario` AS `u` ON `es`.`responsavel` = `u`.`idUsuario`" . $condicao;
+        try {
+            $resultado = parent::getConexao()->query($sql)->fetchAll();
+        } catch (Exception $e) {
+            die($e);
+        }
+        return $resultado;
+    }
+
+    public static function consultarBaixas($colunas = "*", $condicao = null) {
+
+        if ($condicao == null) {
+            $condicao = "";
+        } else {
+            $condicao = "WHERE " . $condicao;
+        }
+        $sql = "SELECT " . $colunas . " FROM `equipamento_baixa` AS `eb` JOIN `equipamento` AS `e` ON `eb`.`equipamento` = `e`.idEquipamento" . $condicao;
+        try {
+            $resultado = parent::getConexao()->query($sql)->fetchAll();
+        } catch (Exception $e) {
+            die($e);
+        }
+        return $resultado;
     }
 
     /**
@@ -72,7 +127,7 @@ class equipamentoDAO extends abstractDAO {
         }
 
         $quantidade = $novosDados->get_quantidade();
-        if ($quantidade == null) {
+        if ($quantidade === null) {
             $quantidade = $dadosAntigos->get_quantidade();
         }
 
@@ -115,10 +170,38 @@ class equipamentoDAO extends abstractDAO {
         }
     }
 
-    public static function cadastrarSaida($idEquipamento, $idResponsavel, $destino, $quantidade, $data) {
-        $sql = "INSERT INTO equipamento_saida(equipamento,responsavel,destino,quantidade,data) VALUES " +
-                "($idEquipamento,$idResponsavel,$destino,$quantidade,$data)";
+    public static function cadastrarSaida($idEquipamento, $idResponsavel, $destino, $quantidade, $data = "NULL") {
+        $destino = parent::quote($destino);
+        $data = parent::quote($data);
+        $sql = "INSERT INTO equipamento_saida(equipamento,responsavel,destino,quantidadeSaida,quantidadeSaidaOriginal,data) VALUES " .
+                "($idEquipamento,$idResponsavel,$destino,$quantidade,$quantidade,$data)";
 
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public static function cadastrarRetorno($idSaida, $data, $quantidade, $observacoes = "NULL") {
+        $observacoes = parent::quote($observacoes);
+        $data = parent::quote($data);
+        $sql = "INSERT INTO equipamento_retorno(saida,data,quantidadeRetorno,observacoes) VALUES " .
+                "($idSaida,$data,$quantidade,$observacoes)";
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public static function cadastrarBaixa($idEquipamento, $dataBaixa, $quantidade, $observacoes = "NULL", $idSaida = "'NULL'") {
+        $observacoes = parent::quote($observacoes);
+        $dataBaixa = parent::quote($dataBaixa);
+        $sql = "INSERT INTO equipamento_baixa(equipamento,saida,dataBaixa,quantidadeBaixa,observacoes) VALUES " .
+                "($idEquipamento,$idSaida,$dataBaixa,$quantidade,$observacoes)";
         try {
             parent::getConexao()->query($sql);
             return true;

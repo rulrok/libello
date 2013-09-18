@@ -2,7 +2,7 @@
 
 require_once APP_LOCATION . "modelo/Mensagem.php";
 
-$id = $_GET['userID'];
+$id = fnDecrypt($_GET['userID']);
 $email = usuarioDAO::descobrirEmail($id);
 $mensagem = new Mensagem();
 

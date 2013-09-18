@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if (autenticaUsuario($usuario)) {
                 sistemaDAO::registrarAccesso($_SESSION['usuario']->get_id());
-                header("Location: " . WEB_SERVER_ADDRESS . "index.php");
+                header("Location: " . WEB_SERVER_ADDRESS );
             } else {
                 // O usuário e/ou a senha são inválidos, manda de volta pro form de login
                 expulsaVisitante("Usuário ou senha inválidos.");

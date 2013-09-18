@@ -39,7 +39,6 @@
         <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
     </div>
 </div>
-<script src="publico/js/oTable.js"></script>
 <script>
     //Este script configura as ações para os botões da página.
     $(document).ready(function() {

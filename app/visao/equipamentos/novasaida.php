@@ -1,9 +1,9 @@
 <title>Registrar nova saída de equipamento</title>
 <!--Início da página-->
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=equipamento&a=registrarsaida">
+<form class="table centered" id="ajaxForm" method="post" action="index.php?c=equipamentos&a=registrarsaida">
     <fieldset>
         <legend>Saída de equipamento</legend>
-        <input hidden="true" readonly="true" type="number" class="input-small" id="equipamentoID" name="equipamentoID" value="<?php echo $this->equipamento->get_idEquipamento(); ?>" />
+        <input hidden="true" readonly="true" type="text" class="input-small" id="equipamentoID" name="equipamentoID" value="<?php echo $this->equipamentoID ?>" />
         <div class="line">
             <label>Equipamento</label>
             <input required readonly type="text" class="input-xlarge ignorar" id="equipamento" name="equipamento" value="<?php echo $this->equipamento->get_nomeEquipamento(); ?>" />
@@ -53,12 +53,23 @@
                 buscarUsuarios(id, this);
             }
         });
-        formularioAjax();
+        formularioAjax("ajaxForm", undefined,
+                function() {
+                    $("input[type=submit]").prop("disabled", true);
+                },
+                function() {
+                    setTimeout(function() {
+                        history.back();
+                    }, 1000);
+                }
+        );
         varrerCampos();
     });
 
-    function buscarUsuarios(idPapel, form) {
-        var retorno = ajax("index.php?c=equipamento&a=listarUsuarios&idPapel=" + idPapel, null, false, false);
+    function buscarUsuarios(idPapel) {
+        document.paginaAlterada = false;
+        var retorno = ajax("index.php?c=equipamentos&a=listarUsuarios&idPapel=" + idPapel, null, false, false);
+        document.paginaAlterada = true;
         var json = extrairJSON(retorno);
         var cb;
         if (json.length > 0) {

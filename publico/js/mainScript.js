@@ -7,6 +7,8 @@ window.menuHadUpped = false;
 window.footerHidden = false;
 //Usado para quando se muda de página para não sair por engano e perder dados.
 document.paginaAlterada = false;
+//Um fix
+document.ignorarHashChange = false;
 
 $(document).ready(function() {
 
@@ -15,6 +17,20 @@ $(document).ready(function() {
     // gets the url from the hash and displays either our cached content or fetches
     // new content to be displayed.
     $(window).bind('hashchange', function(e) {
+        if (document.ignorarHashChange === true) {
+            document.ignorarHashChange = false;
+            return;
+        }
+        if (document.paginaAlterada) {
+            var ignorarMudancas = confirm("Modificações não salvas. Continuar?");
+            if (!ignorarMudancas) {
+                var antigaURL = e.originalEvent.oldURL;
+                location.href = antigaURL;
+                document.ignorarHashChange = true;
+                return false;
+            }
+        }
+        document.paginaAlterada = false;
         try {
             var url = location.hash;
         } catch (ex) {
@@ -50,12 +66,12 @@ $(document).ready(function() {
 
         //Para que quando a tela redimensionar e o popup com fundo cinza estiver sendo exibido,
         //ele seja centralizado novamente, evitando exibições estranhas
-//        window.onresize = function() {
-//            $(".shaderFrameContent").center();
-//        };
+        window.onresize = function() {
+            $(".shaderFrameContent").center();
+        };
 
         //Permite que o popup seja arrastado pela tela
-//        $('.shaderFrameContent').draggable({cancel: ".shaderFrameContentWrap"});
+        $('.shaderFrameContent').draggable({cancel: ".shaderFrameContentWrap"});
 //
 //        $(".shaderFrame").click(function() {
 //            $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
@@ -120,6 +136,16 @@ $(document).ready(function() {
     window.onscroll = acoplarMenu;
 });
 
+//Função para centralizar elementos na página de acordo com o tamanho da tela
+jQuery.fn.center = function() {
+    this.css("position", "absolute");
+    this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
+            $(window).scrollTop()) + "px");
+    this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
+            $(window).scrollLeft()) + "px");
+    return this;
+};
+
 /**
  * Função para 'colar' o menu quando a página descer. Perceba que a função é otimizada.
  * Ela não fica refazendo operações desnecessárias, como atualizar o css do menu
@@ -179,15 +205,20 @@ function carregarPagina(link) {
 
     var novolink = link.replace("#!", "");
     novolink = novolink.split("|");
-//    if (novolink[0] == "home") {
-//        novolink = ["inicial", "homepage"];
-//    }
+
+    if (novolink[1] === "inicial") { //Importante para não causar um loop infinito na página.
+        novolink[1] = "404";
+    }
     url = url.replace("<c>", novolink[0]);
     url = url.replace("<a>", novolink[1]);
 
-    if (link !== location.hash)
+    var resultadoOperacao = ajax(url);
+    if (resultadoOperacao === false) {
+        return false;
+    }
+    if (link !== location.hash) {
         history.pushState(null, null, link);
-    ajax(url);
+    }
     var menu = novolink[0];
     if (menu === "inicial" || menu === undefined) {
         menu = "home";
@@ -214,6 +245,18 @@ function carregarPagina(link) {
     }
 }
 
+function exibirShader() {
+    $(".loading_background").css("display", "initial");
+    $(".shaderFrame").css("visibility", "visible").animate({opacity: "0.5"}, 150);
+    $(".shaderFrameContent").css("visibility", "visible").animate({opacity: "1"}, 350);
+    $(".shaderFrameContent").center();
+}
+
+function esconderShader() {
+    $(".loading_background").css("display", "none");
+    $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
+    $(".shaderFrameContent").css("visibility", "hidden").css("opacity", "0");
+}
 /**
  * Faz uma requisição Ajax de alguma página qualquer, podendo escolher onde a 
  * resposta será colocada.
@@ -236,22 +279,37 @@ function ajax(link, place, hidePop, async) {
     if (async === undefined || async === null) {
         async = true;
     }
+
+    paginaCompleta = false;
     var request = $.ajax({
         url: link,
         async: async,
-        timeout: 5000 //Espera no máximo 5 segundos
+        timeout: 5000, //Espera no máximo 5 segundos,
+        beforeSend: function() {
+//            if (place !== null) {
+            setTimeout(function() {
+                if (!paginaCompleta) {
+                    exibirShader();
+                }
+            }, "500");
+//            }
+        },
+        complete: function() {
+            paginaCompleta = true;
+            esconderShader();
+        }
     });
 
     var sucesso = request.success(function(data) {
 
-        if (place !== null) {
-            if (document.paginaAlterada) {
-                var ignorarMudancas = confirm("Modificações não salvas. Continuar?");
-                if (!ignorarMudancas) {
-                    return false;
-                }
+        if (document.paginaAlterada) {
+            var ignorarMudancas = confirm("Modificações não salvas. Continuar?");
+            if (!ignorarMudancas) {
+                return false;
             }
-            document.paginaAlterada = false;
+        }
+        document.paginaAlterada = false;
+        if (place !== null) {
             $(place).empty();
             var tituloProprio = data.lastIndexOf("<title>");
 
@@ -278,7 +336,7 @@ function ajax(link, place, hidePop, async) {
 
         //TODO encontrar uma forma de tratar os campos somente leitura dos datapickers, pois quando
         //é escolhida uma data através do jquery, o evento change não é acionado.
-        $("input, select").not('.ignorar').not('.dataTables_filter input').change(function() {
+        $("input, select").not('.ignorar').not('.dataTables_filter input').not('.dataTables_length *').change(function() {
             document.paginaAlterada = true;
         });
 
@@ -621,7 +679,7 @@ function mudarTitulo(titulo, ignorarTituloPadrao) {
  * @returns {String} String para ser criado um Json, caso alguma seja encontrada.
  */
 function extrairJSON(string) {
-//    console.log(string);
+    console.log(string);
     var json = null;
     try {
         json = $.parseJSON(string);

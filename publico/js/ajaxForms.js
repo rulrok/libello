@@ -11,8 +11,13 @@
  * @author Reuel
  * 
  * @param {String} idFormulario O nome do id, sem "#"no início, do formulário.
+ * @param {String} recipient Lugar onde a resposta será colocada. Caso <code>undefined</code>,
+ * nada será alterado na página.
+ * @param {Function} completeFn Função para ser ativada com o evento <code>complete</code>
+ * do ajax.
+ * @param {Function} successFn Função para ser ativada com um evento de sucesso.
  */
-function formularioAjax(idFormulario, recipient) {
+function formularioAjax(idFormulario, recipient, completeFn, successFn) {
 
     if (idFormulario === undefined) {
         idFormulario = $("form").prop("id");
@@ -30,6 +35,9 @@ function formularioAjax(idFormulario, recipient) {
                     showPopUp(data.mensagem, data.status);
                     if (data.status.toLowerCase() === "sucesso") {
                         $("input[type=reset]").click();
+                        if (successFn !== undefined && isFunction(successFn)) {
+                            successFn();
+                        }
                     }
                 } else {
                     showPopUp("Houve algum problema na resposta do servidor.", "erro");
@@ -48,8 +56,16 @@ function formularioAjax(idFormulario, recipient) {
                 $(recipient).empty();
                 $(recipient).html(data.responseText);
             }
+            if (completeFn !== undefined && isFunction(completeFn)) {
+                completeFn();
+            }
         });
         //Important. Stop the normal POST
         e.preventDefault();
     });
+}
+
+function isFunction(functionToCheck) {
+    var getType = {};
+    return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
 }

@@ -65,12 +65,12 @@
                 </div>
 
             </header>
-            <!--                        <div class="shaderFrame"></div>
-                                    <div class="shaderFrameContent">
-                                        <div class="shaderFrameContentWrap centered">
-                                             Conteúdo dinâmico     
-                                        </div>
-                                    </div>-->
+            <div class="shaderFrame"></div>
+            <div class="shaderFrameContent">
+                <div class="shaderFrameContentWrap centered">
+                    <div class="loading_background"><img src="publico/imagens/ajax-loader.gif"> Carregando...</div>
+                </div>
+            </div>
             <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <!--                <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -94,8 +94,9 @@
                 </div>
 
             </div>
-
             <div class="content centered">
+                <center>
+                </center>
                 <div class="contentWrap centered">
                     <?php
                     if (isset($this->conteudo)) {
@@ -144,6 +145,7 @@
                                 $.extend($.fn.dataTable.defaults, {
                                     "bFilter": true,
                                     "bSort": true,
+                                    "aaSorting": [[1, "desc"]],
                                     "bJQueryUI": true,
                                     "sPaginationType": "full_numbers",
                                     "oLanguage": {

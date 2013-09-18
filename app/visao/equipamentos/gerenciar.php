@@ -5,6 +5,7 @@
         <a href="#!equipamentos|novo" class="btn btn-adicionar"><i class="icon-plus"></i> Adicionar novo</a>
         <button class="btn btn-editar" href="#"><i class="icon-edit"></i> Editar</button>
         <button class="btn btn-saida btn-success" href="#"><i class="icon-arrow-left"></i> Registrar saída</button>
+        <button class="btn btn-baixa btn-info" href="#"><i class="icon-arrow-down"></i> Registrar Baixa</button>
         <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
     </div>
 </div>
@@ -13,7 +14,7 @@
         <tr>
             <th hidden>id</th>
             <th>Nome</th>
-            <th>Quantidade</th>
+            <th>Qtd</th>
             <th>Data de entrada</th>
             <th>Patrimônio</th>
         </tr>
@@ -37,7 +38,8 @@
         <a href="#!equipamentos|novo" class="btn btn-adicionar"><i class="icon-plus"></i> Adicionar novo</a>
         <button class="btn btn-editar" href="#"><i class="icon-edit"></i> Editar</button>
         <button class="btn btn-saida btn-success" href="#"><i class="icon-arrow-left"></i> Registrar saída</button>
-        <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
+        <button class="btn btn-baixa btn-info" href="#"><i class="icon-arrow-down"></i> Registrar Baixa</button>
+        <button class="btn btn-deletar btn-danger" href="#"><i class="icon-remove"></i> Excluir</button>
     </div>
 </div>
 <script>
@@ -46,7 +48,9 @@
         configurarTabela({
             idTabela: 'gerenciar_equipamento',
             editar: '#!equipamentos|editar&equipamentoID=',
-            deletar: 'index.php?c=equipamentos&a=remover&equipamentoID='
+            deletar: 'index.php?c=equipamentos&a=remover&equipamentoID=',
+            saida: '#!equipamentos|novasaida&equipamentoID=',
+            baixa: "#!equipamentos|novabaixa&equipamentoID="
         });
     });
 </script>

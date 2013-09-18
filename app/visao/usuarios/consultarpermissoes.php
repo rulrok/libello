@@ -2,12 +2,13 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 
     <?php
-    $email = usuarioDAO::descobrirEmail($_GET['userID']);
+    $idUsuario = fnDecrypt($_GET['userID']);
+    $email = usuarioDAO::descobrirEmail($idUsuario);
     if ($email != NULL) {
         $usuario = usuarioDAO::recuperarUsuario($email);
         echo "<h3 id=\"myModalLabel\">Usuário: " . $usuario->get_PNome() . " " . $usuario->get_UNome() . "</h3>";
         if ($usuario instanceof Usuario) :
-            $resultado = usuarioDAO::obterPermissoes($_GET['userID']);
+            $resultado = usuarioDAO::obterPermissoes($idUsuario);
             ?>
         </div>
         <div class="modal-body">

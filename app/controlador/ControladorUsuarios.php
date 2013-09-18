@@ -3,6 +3,7 @@
 include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
 include_once ROOT . 'app/modelo/ComboBoxPermissoes.php';
 include_once ROOT . 'app/modelo/ComboBoxPapeis.php';
+require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
 
 class ControladorUsuarios extends Controlador {
 
@@ -18,9 +19,9 @@ class ControladorUsuarios extends Controlador {
 
     public function acaoEditar() {
         if (isset($_GET['userID'])) {
-            if ($_GET['userID'] != $_SESSION['usuario']->get_id()) { //!!! Impede que o usuário edite o próprio perfil, alterando assim sua permissões e papel. Uma violação de segurança.
+            $userID = fnDecrypt($_GET['userID']);
+            if ($userID != $_SESSION['usuario']->get_id()) { //!!! Impede que o usuário edite o próprio perfil, alterando assim sua permissões e papel. Uma violação de segurança.
                 $this->visao->comboPermissoes = ComboBoxPermissoes::montarComboBoxPadrao();
-                $userID = $_GET['userID'];
                 $email = usuarioDAO::descobrirEmail($userID);
                 $usuario = usuarioDAO::recuperarUsuario($email);
                 $this->visao->nome = $usuario->get_PNome();
@@ -30,8 +31,12 @@ class ControladorUsuarios extends Controlador {
                 $this->visao->papel = usuarioDAO::consultarPapel($email);
                 $this->visao->idPapel = (int) papelDAO::obterIdPapel($this->visao->papel);
                 $this->visao->comboPapel = ComboBoxPapeis::montarComboBoxPadrao();
-                $this->visao->permissoes = usuarioDAO::obterPermissoes($_GET['userID']);
+                $this->visao->permissoes = usuarioDAO::obterPermissoes($userID);
+            } else {
+                die("Acesso indevido");
             }
+        } else {
+            die("Acesso indevido");
         }
 
         $this->renderizar();
@@ -52,11 +57,21 @@ class ControladorUsuarios extends Controlador {
 
     public function acaoGerenciar() {
         $this->visao->usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,dataNascimento,nome", "idUsuario <> " . $_SESSION['usuario']->get_id());
+        $i = 0;
+        foreach ($this->visao->usuarios as $value) {
+            $value[0] = fnEncrypt($value[0]);
+            $this->visao->usuarios[$i++] = $value;
+        }
         $this->renderizar();
     }
 
     public function acaoConsultar() {
         $this->visao->usuarios = usuarioDAO::consultar("idUsuario, concat(PNome,' ',UNome),email,dataNascimento,nome");
+        $i = 0;
+        foreach ($this->visao->usuarios as $value) {
+            $value[0] = fnEncrypt($value[0]);
+            $this->visao->usuarios[$i++] = $value;
+        }
         $this->renderizar();
     }
 

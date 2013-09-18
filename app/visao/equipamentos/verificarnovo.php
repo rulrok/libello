@@ -8,6 +8,7 @@ class verificarnovo extends verificadorFormularioAjax {
 
     public function _validar() {
         $nomeEquipamento = $_POST['equipamento'];
+        $descricao = $_POST['descricoes'];
         $dataEntrada = $_POST['dataEntrada'];
         $quantidade = $_POST['quantidade'];
         $tipo = $_POST['tipo'];
@@ -17,29 +18,38 @@ class verificarnovo extends verificadorFormularioAjax {
         try {
             $equipamento = new Equipamento();
 
-            $equipamento->set_nomeEquipamento($nomeEquipamento)->set_dataEntrada($dataEntrada);
+            $equipamento->set_nomeEquipamento($nomeEquipamento)->set_dataEntrada($dataEntrada)->set_descricao($descricao);
 
             if ($tipo == "patrimonio") {
                 $quantidade = $_POST['quantidadePatrimonios'];
 
                 $colecaoEquipamentos = [];
                 $aux = new Equipamento();
+                $patrimoniosValidos = 'Patrimônios ';
+                $patrimoniosInvalidos = '';
                 for ($i = 0; $i < $quantidade; $i++) {
                     //TODO Verificar uma forma
                     $aux = clone $equipamento;
                     $numeroPatrimonio = $_POST['numeroPatrimonio-' . ($i + 1)];
-                    $colecaoEquipamentos[$i] = $aux->set_numeroPatrimonio($numeroPatrimonio)->set_quantidadde(1);
+                    $colecaoEquipamentos[$i] = $aux->set_numeroPatrimonio($numeroPatrimonio)->set_quantidade(1);
                     try {
                         equipamentoDAO::cadastrarEquipamento($aux);
-                        $this->mensagem->set_mensagem("Cadastrado com sucesso.")->set_status(Mensagem::SUCESSO);
+                        $patrimoniosValidos .= $numeroPatrimonio . "<br/>";
                     } catch (Exception $e) {
-                        $this->mensagem->set_mensagem("Erro ao cadastrar no banco de dados.")->set_status(Mensagem::ERRO);
+                        $patrimoniosInvalidos .= "<li>" . $numeroPatrimonio . "</li>";
                     }
+                }
+                if ($patrimoniosInvalidos === '') {
+                    //Todos foram cadastrados com sucesso
+                    $this->mensagem->set_mensagem("Todos os patrimônios foram cadastrados com sucesso")->set_status(Mensagem::SUCESSO);
+                } else {
+                    //Alguns não puderam ser cadastrados
+                    $this->mensagem->set_mensagem("Os patrimônios:<br/><ul style=\"text-align: left;\"> " . $patrimoniosInvalidos . "</ul>não puderam ser cadastrados.<br/>Verifique se os mesmos já não foram cadastrados!")->set_status(Mensagem::INFO);
                 }
             } else {
                 if ($quantidade > 0) {
                     //É do tipo custeio
-                    $equipamento->set_quantidadde($quantidade);
+                    $equipamento->set_quantidade($quantidade);
                     $equipamento->set_numeroPatrimonio(null);
                     //Vai tentar cadastrar
                     try {

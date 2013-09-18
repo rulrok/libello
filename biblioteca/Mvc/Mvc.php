@@ -62,6 +62,7 @@ class Mvc {
 
 
         if (sessaoIniciada()) {
+//            sleep(4);
             //pega o modulo, controlador e acao
             $controlador = isset($_GET['c']) ? $_GET['c'] : 'inicial';
             $acao = isset($_GET['a']) ? $_GET['a'] : 'inicial';

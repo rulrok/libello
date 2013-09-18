@@ -68,6 +68,9 @@ html {
     z-index: 10000;
 }
 
+.loading_background{
+    
+}
 .tabelaPermissoes{
     border: 1px solid #000;
     padding: 5px;
@@ -102,7 +105,7 @@ html {
     outline-offset: -2px;
 }*/
 
-input,select {
+input,select,textarea {
     /*    border-radius: 0px !important;
         border: #ccc solid 2px;*/
     min-height: 25px;
@@ -840,7 +843,7 @@ li[id$=Link]:before{
 }
 
 /* Campos de senha e texto específicos de formulários alinhados sem tabela */
-.table .line input, .table .line select {
+.table .line input, .table .line select, .table .line textarea {
     display: table-cell;
     float: left;
     margin-bottom: -7px;
