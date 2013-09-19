@@ -73,10 +73,10 @@ $(document).ready(function() {
         //Permite que o popup seja arrastado pela tela
         $('.shaderFrameContent').draggable({cancel: ".shaderFrameContentWrap"});
 //
-//        $(".shaderFrame").click(function() {
-//            $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
-//            $(".shaderFrameContent").css("visibility", "hidden").css("opacity", "0");
-//        });
+        $(".shaderFrame").click(function() {
+            $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
+            $(".shaderFrameContent").css("visibility", "hidden").css("opacity", "0");
+        });
 
         hideFooter();
 
@@ -295,6 +295,10 @@ function ajax(link, place, hidePop, async) {
 //            }
         },
         complete: function() {
+            paginaCompleta = true;
+            esconderShader();
+        },
+        error: function() {
             paginaCompleta = true;
             esconderShader();
         }

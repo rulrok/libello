@@ -2075,8 +2075,8 @@
 			
 			var sSearchStr = oSettings.oLanguage.sSearch;
 			sSearchStr = (sSearchStr.indexOf('_INPUT_') !== -1) ?
-			  sSearchStr.replace('_INPUT_', '<input type="text" />') :
-			  sSearchStr==="" ? '<input type="text" />' : sSearchStr+' <input type="text" />';
+			  sSearchStr.replace('_INPUT_', '<input type="search" results="5"/>') :
+			  sSearchStr==="" ? '<input type="search" results="5" />' : sSearchStr+' <input type="search" results="5"/>';
 			
 			var nFilter = document.createElement( 'div' );
 			nFilter.className = oSettings.oClasses.sFilter;
@@ -2086,7 +2086,7 @@
 				nFilter.id = oSettings.sTableId+'_filter';
 			}
 			
-			var jqFilter = $('input[type="text"]', nFilter);
+			var jqFilter = $('input[type="search"]', nFilter);
 		
 			// Store a reference to the input element, so other input elements could be
 			// added to the filter wrapper if needed (submit button for example)

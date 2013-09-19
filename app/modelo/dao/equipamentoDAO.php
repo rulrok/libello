@@ -141,8 +141,10 @@ class equipamentoDAO extends abstractDAO {
             $numeroPatrimonio = parent::quote($numeroPatrimonio);
         }
 
+        $descricao = $novosDados->get_descricao();
+        $descricao = parent::quote($descricao);
 
-        $sql = "UPDATE equipamento SET nomeEquipamento = '" . $nome . "' ,quantidade = " . $quantidade . " ,dataEntrada = '" . $dataEntrada . "' ,numeroPatrimonio = " . $numeroPatrimonio;
+        $sql = "UPDATE equipamento SET nomeEquipamento = '" . $nome . "' ,quantidade = " . $quantidade . " ,dataEntrada = '" . $dataEntrada . "' ,numeroPatrimonio = " . $numeroPatrimonio . " ,descricao=" . $descricao;
         $sql .= $condicao;
         try {
             parent::getConexao()->query($sql);

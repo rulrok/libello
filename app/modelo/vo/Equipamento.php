@@ -9,19 +9,10 @@ class Equipamento {
 
     var $idEquipamento;
     var $nomeEquipamento;
-    var $dataEntrada;
     var $quantidade;
-    var $numeroPatrimonio;
     var $descricao;
-
-    public function get_descricao() {
-        return $this->descricao;
-    }
-
-    public function set_descricao($descricao) {
-        $this->descricao = $descricao;
-        return $this;
-    }
+    var $dataEntrada;
+    var $numeroPatrimonio;
 
     public function get_idEquipamento() {
         return (int) $this->idEquipamento;
@@ -59,6 +50,15 @@ class Equipamento {
 
     public function set_quantidade($quantidadde) {
         $this->quantidade = (int) $quantidadde;
+        return $this;
+    }
+
+    public function get_descricao() {
+        return $this->descricao;
+    }
+
+    public function set_descricao($descricao) {
+        $this->descricao = $descricao;
         return $this;
     }
 

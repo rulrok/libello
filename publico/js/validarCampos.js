@@ -16,7 +16,10 @@ function varrerCampos() {
 //        }
         $(camposObrigatorios).after("<img src=\"publico/imagens/icones/campo_obrigatorio.png\">");
         $(camposObrigatorios).addClass("campoVarrido");
-        $(camposObrigatorios).on('change', function() {
+        $(camposObrigatorios).bind('keyup', function() {
+            liberarCadastro();
+        });
+        $(camposObrigatorios).bind('blur', function() {
             liberarCadastro();
         });
 //        $(camposObrigatorios).on('blur', function() {

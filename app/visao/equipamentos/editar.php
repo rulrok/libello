@@ -9,6 +9,10 @@
             <input required type="text" class="input-xlarge" id="equipamento" name="equipamento" value="<?php echo $this->equipamento ?>" />
         </span>
         <div class="line">
+            <label for="descricao">Descrições</label>
+            <textarea type="textarea" rows="8" id="descricao" name="descricao" title="Descrições" data-content="Limite de 1000 caracteres." placeholder="Sem descrição" ><?php echo $this->descricao; ?></textarea>           
+        </div>
+        <div class="line">
             <label>Data de entrada</label>
             <input type="text" readonly id="dataEntrada" class="campoData" name="dataEntrada" value="<?php echo $this->dataEntrada ?>"/>
         </div>
@@ -47,7 +51,7 @@
         </span>
 
     </fieldset>
-        <input disabled class=" btn btn-primary btn-right" type="submit" disabled value="Atualizar dados">
+    <input disabled class=" btn btn-primary btn-right" type="submit" disabled value="Atualizar dados">
 
 </form>
 
@@ -56,6 +60,8 @@
         varrerCampos();
         formularioAjax();
         $("#dataEntrada").datepick();
+        $(".line input").popover({trigger: 'focus', container: 'body'});
+        $(".line textarea").popover({trigger: 'focus', container: 'body'});
 
         $("#custeio").on("click", function() {
             if (!$(this).hasClass("btn-info")) {

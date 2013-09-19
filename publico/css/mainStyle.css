@@ -69,7 +69,7 @@ html {
 }
 
 .loading_background{
-    
+
 }
 .tabelaPermissoes{
     border: 1px solid #000;
@@ -224,6 +224,27 @@ input[value~='Cadastrar']:disabled,input[value~='Atualizar']:disabled {
     min-width: 120px;
 }
 
+.tabelaDeEdicao{
+    width: 100%;
+}
+
+.tabelaDeEdicao .details{
+    padding: 1px;
+}
+
+.tabelaDeDetalhes{
+    width: 98%;
+    border: #ccc 1px solid;
+}
+
+.tabelaDeDetalhes td:first-of-type{
+    width: 50px;
+}
+
+.tabelaDeDetalhes td:last-of-type{
+    text-align: left !important;
+}
+
 .tabelaDeEdicao tr{
     cursor: pointer;
     -webkit-user-select: none;  /* Chrome all / Safari all */
@@ -238,8 +259,14 @@ input[value~='Cadastrar']:disabled,input[value~='Atualizar']:disabled {
 input[disabled]{
     background-color: #eee;
 }
+
 input[readonly]{
     background-color: #eee;
+}
+
+input[type=search]{
+    border-radius: 20px;
+    padding-left: 5px;
 }
 /* FIM DO GERAL */
 
@@ -265,7 +292,8 @@ input[readonly]{
     min-width: 200px;
     max-width: 350px;
     min-height: 50px;
-    right: 10px;
+    /*right: 10px;*/
+    left: 10px;
     top: 70px;
     border: #ccc solid 1px;
     border-radius: 5px;

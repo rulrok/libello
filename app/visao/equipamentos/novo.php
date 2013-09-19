@@ -8,7 +8,7 @@
             <input required type="text" class="input-xlarge" id="equipamento" name="equipamento" title="Equipamento" data-content="O nome do equipamento apenas" />
         </span>
         <div class="line">
-            <label for="descricoes">Descricoes</label>
+            <label for="descricoes">Descrições</label>
             <textarea type="textarea" rows="8" id="descricoes" name="descricoes" title="Descrições" data-content="Alguma característica do equipamento. Limite de 1000 caracteres." ></textarea>           
         </div>
         <div class="line">

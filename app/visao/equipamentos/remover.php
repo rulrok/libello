@@ -6,6 +6,7 @@ $id = fnDecrypt($_GET['equipamentoID']);
 $mensagem = new Mensagem();
 $novosDados = clone equipamentoDAO::recuperarEquipamento($id);
 $novosDados->set_quantidade(0);
+$novosDados->set_numeroPatrimonio(null);
 if (equipamentoDAO::atualizar($id, $novosDados)) {
     $mensagem->set_mensagem("Equipamento removido com sucesso.")->set_status(Mensagem::SUCESSO);
 } else {

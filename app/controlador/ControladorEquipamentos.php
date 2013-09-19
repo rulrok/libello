@@ -38,7 +38,7 @@ class ControladorEquipamentos extends Controlador {
     }
 
     public function acaoGerenciar() {
-        $this->visao->equipamentos = equipamentoDAO::consultar("idEquipamento,nomeEquipamento,quantidade,dataEntrada,numeroPatrimonio");
+        $this->visao->equipamentos = equipamentoDAO::consultar("idEquipamento,nomeEquipamento,quantidade,dataEntrada,numeroPatrimonio,descricao");
         $i = 0;
         foreach ($this->visao->equipamentos as $value) {
             $value[0] = fnEncrypt($value[0]);
@@ -53,6 +53,7 @@ class ControladorEquipamentos extends Controlador {
             $this->visao->equipamentoID = $_REQUEST['equipamentoID'];
             $equipamento = equipamentoDAO::recuperarEquipamento($idSaida);
 
+            $this->visao->descricao = $equipamento->get_descricao();
             $this->visao->equipamento = $equipamento->get_nomeEquipamento();
             $this->visao->quantidade = $equipamento->get_quantidade();
             $this->visao->dataEntrada = $equipamento->get_dataEntrada();
