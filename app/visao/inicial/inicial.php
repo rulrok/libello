@@ -15,13 +15,15 @@
 
 
         <!-- Inicialização dos principais scripts -->
-        <script src="publico/js/jquery/jquery-1.9.1.js"></script>
-        <script src="publico/js/jquery/jquery.ba-hashchange.js"></script>
-        <script src="publico/js/mainScript.js"></script>
-        <script type="text/javascript" src="publico/js/validarCampos.js"></script>
-        <script src="publico/js/jquery/jquery.form.js"></script>
-        <script src="publico/js/ajaxForms.js"></script> 
-        <script src="publico/js/oTable.js" ></script>
+        
+        
+            <script src="publico/js/jquery/jquery-1.9.1.js"></script>
+            <script src="publico/js/jquery/jquery.ba-hashchange.js"></script>
+            <script src="publico/js/mainScript.js"></script>
+            <script type="text/javascript" src="publico/js/validarCampos.js"></script>
+            <script src="publico/js/jquery/jquery.form.js"></script>
+            <script src="publico/js/ajaxForms.js"></script> 
+            <script src="publico/js/oTable.js" ></script>
         <title class="tituloFixo"><?php echo $this->titulo ?></title>
     </head>
     <body>
@@ -54,12 +56,12 @@
                     <div class="btn-toolbar" id="configuracoesSite">
                         <div id="botoesSuperiores" class="centered btn-group">
 
-                            
+
 
                             <a class="btn btn-small" href="#!sistema|gerenciarconta" onclick="
-                                    hideSubMenu(150);
-                                    $('.visited').removeClass('visited');
-                                    $('.actualTool').removeClass('actualTool')"><i class="icon-cog"></i> Gerenciar Conta</a>
+                hideSubMenu(150);
+                $('.visited').removeClass('visited');
+                $('.actualTool').removeClass('actualTool')"><i class="icon-cog"></i> Gerenciar Conta</a>
                             <a class="btn btn-small" href="sair.php"><i class="icon-off"></i> Sair</a>
                         </div>
                     </div>
@@ -121,7 +123,7 @@
                     </div>
                     <div class="footerLinks" id="informacoes">
                         <ul><lt>Informações</lt>
-                            <li><p>Este site é corretamente visualizado no <a href="http://www.google.com/chrome/" target="_blank">Google Chrome</a>&nbsp;&nbsp;&nbsp;ou <a href="http://www.mozilla.org/pt-BR/firefox/fx/" target="_blank">Firefox</a>.
+                            <li><p>Este site é corretamente visualizado no <a href="http://www.google.com/chrome/" target="_blank">Google Chrome</a>, <a href="http://www.mozilla.org/pt-BR/firefox/fx/" target="_blank">Firefox</a> ou <a href="http://www.opera.com/download" target="_blank">Opera</a>.
                                     <br>
                                     <i><b>Não há garantias de funcionar com o Internet Explorer nem com o Safari.</b></i></p>
                             </li>
@@ -142,36 +144,36 @@
         <script src="publico/js/jquery/jquery.datepick-pt-BR.js"></script>
         <script src="publico/js/bootstrap.js"></script> 
         <script>
-                                //Configurações globais para dataTables
-                                $.extend($.fn.dataTable.defaults, {
-                                    "bFilter": true,
-                                    "bSort": true,
-                                    "aaSorting": [[1, "desc"]],
-                                    "bJQueryUI": true,
-                                    "sPaginationType": "full_numbers",
-                                    "oLanguage": {
-                                        "sUrl": "publico/js/jquery/dataTables.portugues.txt"
-                                    },
-                                    //Scrol horizontal
-                                    "sScrollX": "100%",
-                                    "sScrollXInner": "110%",
-                                    "bScrollCollapse": true,
-                                    // Salva o estado da tabela para ser exibida como da última vez
-                                    //Um pouco de cuidado com essa opção, ela parece ter em certas
-                                    //situações, efeitos negativos ao uso da datatable
-                                    "bStateSave": false,
-                                    "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
-                                });
-                                $.datepick.setDefaults({
-                                    dateFormat: 'dd/mm/yyyy'
-                                })
+            //Configurações globais para dataTables
+            $.extend($.fn.dataTable.defaults, {
+                "bFilter": true,
+                "bSort": true,
+                "aaSorting": [[1, "desc"]],
+                "bJQueryUI": true,
+                "sPaginationType": "full_numbers",
+                "oLanguage": {
+                    "sUrl": "publico/js/jquery/dataTables.portugues.txt"
+                },
+                //Scrol horizontal
+                "sScrollX": "100%",
+                "sScrollXInner": "110%",
+                "bScrollCollapse": true,
+                // Salva o estado da tabela para ser exibida como da última vez
+                //Um pouco de cuidado com essa opção, ela parece ter em certas
+                //situações, efeitos negativos ao uso da datatable
+                "bStateSave": false,
+                "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
+            });
+            $.datepick.setDefaults({
+                dateFormat: 'dd/mm/yyyy'
+            })
 
-                                //Configura botão para tela cheia
+            //Configura botão para tela cheia
 //                                $("#fullscreen-toggle").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
 //                                $("#fullscreen-off").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
-                                if (canToggleFullScreen()) {
-                                    $("#botoesSuperiores").children(":first-child").before('<a id="fullscreen-toggle" title="Modo tela cheia" class="btn btn-small" href="javascript:void(0)" onclick="toggleFullScreen();"><i class="icon-fullscreen"></i></a>')
-                                }
+            if (canToggleFullScreen()) {
+                $("#botoesSuperiores").children(":first-child").before('<a id="fullscreen-toggle" title="Modo tela cheia" class="btn btn-small" href="javascript:void(0)" onclick="toggleFullScreen();"><i class="icon-fullscreen"></i></a>')
+            }
         </script>
     </body>
 </html>

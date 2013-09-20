@@ -469,6 +469,22 @@ footer p{
     content: url("../imagens/icones/external_link.gif");
     position: relative;
     left: 5px;
+    padding-right: 5px;
+}
+
+#fullscreen-toggle{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+
+    /* No support for these yet, use at own risk */
+    -o-user-select: none;
+    user-select: none;  
 }
 /* FIM FOOTER */
 /*================================================*/
@@ -710,9 +726,10 @@ li[id$=Link]:before{
     font-family: 'open-sans-bold', sans-serif;
     font-weight: bold;
     position:relative;
-    display: inline-block;
+    display: inline-table;
     padding: 10px;
     padding-bottom: 5px;
+    margin: 0px;
     list-style-type: none;
     border-top: none;
     border-bottom: none;
@@ -852,9 +869,9 @@ li[id$=Link]:before{
 
 /* Span que irá conter um label e um campo de texto ou senha */
 .table .line{
-    display: table-row-group;
+    display: table-row;
     padding: 2px;
-    line-height: 30px;
+    line-height: 35px;
 }
 
 /* Label para algum campo respectivo */
@@ -867,7 +884,7 @@ li[id$=Link]:before{
 .table .line img{
     position:relative;
     top: 8px;
-    display: -webkit-box;
+    display: table-cell;
     opacity: 0.8;
 }
 

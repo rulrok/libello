@@ -1,5 +1,5 @@
-var $buoop = {};
-$buoop.ol = window.onload;
+//var $buoop = {};
+//$buoop.ol = window.onload;
 window.menuHadUpped = false;
 //De fato a página está configurada para exibir ele, e o script para esconde-lo é executado
 //na primeira renderização da página, por tanto, window.footerHidden deve estar inicialmente
@@ -52,89 +52,144 @@ $(document).ready(function() {
 
 
     //Prepara algumas funções especiais e conteúdos para serem exibidos no início
-    window.onload = function() {
+//    window.onload = function() {
 
-        //Função para centralizar elementos na página de acordo com o tamanho da tela
-        jQuery.fn.center = function() {
-            this.css("position", "absolute");
-            this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
-                    $(window).scrollTop()) + "px");
-            this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
-                    $(window).scrollLeft()) + "px");
-            return this;
-        };
-
-        //Para que quando a tela redimensionar e o popup com fundo cinza estiver sendo exibido,
-        //ele seja centralizado novamente, evitando exibições estranhas
-        window.onresize = function() {
-            $(".shaderFrameContent").center();
-        };
-
-        //Permite que o popup seja arrastado pela tela
-        $('.shaderFrameContent').draggable({cancel: ".shaderFrameContentWrap"});
-//
-        $(".shaderFrame").click(function() {
-            $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
-            $(".shaderFrameContent").css("visibility", "hidden").css("opacity", "0");
-        });
-
-        hideFooter();
-
-        $(".popUp").hide();
-        if (!String.prototype.trim) {
-            String.prototype.trim = function() {
-                return this.replace(/^\s+|\s+$/g, '');
-            };
-        }
-
-        //Função para detectar navegadores antigos
-        try {
-            if ($buoop.ol)
-                $buoop.ol();
-        } catch (e) {
-        }
-        var e = document.createElement("script");
-        e.setAttribute("type", "text/javascript");
-        e.setAttribute("src", "http://browser-update.org/update.js");
-        document.body.appendChild(e);
-
-
-        //Associa uma função para todos os links do menu
-        var menus = $('.menuLink');
-        for (var i = 0; i < menus.length; i++) {
-            if (menus[i].id == "homeLink") {
-                menus[i].onclick = function() {
-                    $(".menuLink.visited").removeClass("visited");
-                    $(this).addClass("visited");
-                    $(".actualTool").removeClass('actualTool');
-                    $(this).addClass("actualTool");
-
-                    hideSubMenu(150);
-                };
-                continue;
-            }
-            menus[i].onclick = function() {
-                var id = this.id;
-                if (!this.className.match(".*visited.*")) {
-                    $(".menuLink.visited").removeClass("visited");
-                    $(this).addClass("visited");
-                    hideSubMenu(0);
-                    makeSubMenu(this);
-                    showSubMenu();
-                } else {
-                    if ($(".subMenu").css("opacity") == "1") {
-                        hideSubMenu();
-                    } else {
-                        showSubMenu();
-                    }
-                }
-            };
-        }
+    //Função para centralizar elementos na página de acordo com o tamanho da tela
+    jQuery.fn.center = function() {
+        this.css("position", "absolute");
+        this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
+                $(window).scrollTop()) + "px");
+        this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
+                $(window).scrollLeft()) + "px");
+        return this;
     };
 
+    //Para que quando a tela redimensionar e o popup com fundo cinza estiver sendo exibido,
+    //ele seja centralizado novamente, evitando exibições estranhas
+    window.onresize = function() {
+        $(".shaderFrameContent").center();
+    };
+
+    //Permite que o popup seja arrastado pela tela
+    $('.shaderFrameContent').draggable({cancel: ".shaderFrameContentWrap"});
+//
+    $(".shaderFrame").click(function() {
+        $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
+        $(".shaderFrameContent").css("visibility", "hidden").css("opacity", "0");
+    });
+
+    hideFooter();
+
+    $(".popUp").hide();
+    if (!String.prototype.trim) {
+        String.prototype.trim = function() {
+            return this.replace(/^\s+|\s+$/g, '');
+        };
+    }
+
+//        //Função para detectar navegadores antigos
+//        try {
+//            if ($buoop.ol)
+//                $buoop.ol();
+//        } catch (e) {
+//        }
+//        var e = document.createElement("script");
+//        e.setAttribute("type", "text/javascript");
+//        e.setAttribute("src", "http://browser-update.org/update.js");
+//        document.body.appendChild(e);
+
+
+    //Associa uma função para todos os links do menu
+    var menus = $('.menuLink');
+    for (var i = 0; i < menus.length; i++) {
+        if (menus[i].id == "homeLink") {
+            menus[i].onclick = function() {
+                $(".menuLink.visited").removeClass("visited");
+                $(this).addClass("visited");
+                $(".actualTool").removeClass('actualTool');
+                $(this).addClass("actualTool");
+
+                hideSubMenu(150);
+            };
+            continue;
+        }
+        menus[i].onclick = function() {
+            var id = this.id;
+            if (!this.className.match(".*visited.*")) {
+                $(".menuLink.visited").removeClass("visited");
+                $(this).addClass("visited");
+                hideSubMenu(0);
+                makeSubMenu(this);
+                showSubMenu();
+            } else {
+                if ($(".subMenu").css("opacity") == "1") {
+                    hideSubMenu();
+                } else {
+                    showSubMenu();
+                }
+            }
+        };
+    }
+//    };
+
     //Manter o menu 'colado' no topo da página quando ela desce muito
-    window.onscroll = acoplarMenu;
+    $(window).bind("scroll", acoplarMenu);
 });
+
+function getBrowser() {
+    var n, v, t, ua = navigator.userAgent;
+    var names = {i: 'Internet Explorer', f: 'Firefox', o: 'Opera', s: 'Apple Safari', n: 'Netscape Navigator', c: "Chrome", x: "Other"};
+    if (/bot|googlebot|slurp|mediapartners|adsbot|silk|android|phone|bingbot|google web preview|like firefox|chromeframe|seamonkey|opera mini|min|meego|netfront|moblin|maemo|arora|camino|flot|k-meleon|fennec|kazehakase|galeon|android|mobile|iphone|ipod|ipad|epiphany|rekonq|symbian|webos/i.test(ua))
+        n = "x";
+    else if (/Trident.(\d+\.\d+)/i.test(ua))
+        n = "io";
+    else if (/MSIE.(\d+\.\d+)/i.test(ua))
+        n = "i";
+    else if (/Opera.*Version.(\d+\.?\d+)/i.test(ua))
+        n = "o";
+    else if (/Opera.(\d+\.?\d+)/i.test(ua))
+        n = "o";
+    else if (/OPR.(\d+\.?\d+)/i.test(ua))
+        n = "o";
+    else if (/Chrome.(\d+\.\d+)/i.test(ua))
+        n = "c";
+    else if (/Firefox.(\d+\.\d+)/i.test(ua))
+        n = "f";
+    else if (/Version.(\d+.\d+).{0,10}Safari/i.test(ua))
+        n = "s";
+    else if (/Safari.(\d+)/i.test(ua))
+        n = "so";
+    else if (/Netscape.(\d+)/i.test(ua))
+        n = "n";
+    else
+        return {n: "x", v: 0, t: names[n]};
+    if (n == "x")
+        return {n: "x", v: 0, t: names[n]};
+
+    v = new Number(RegExp.$1);
+    if (n == "so") {
+        v = ((v < 100) && 1.0) || ((v < 130) && 1.2) || ((v < 320) && 1.3) || ((v < 520) && 2.0) || ((v < 524) && 3.0) || ((v < 526) && 3.2) || 4.0;
+        n = "s";
+    }
+    if (n == "i" && v == 7 && window.XDomainRequest) {
+        v = 8;
+    }
+    if (n == "io") {
+        n = "i";
+        if (v > 5)
+            v = 10;
+        else if (v > 4)
+            v = 9;
+        else if (v > 3.1)
+            v = 8;
+        else if (v > 3)
+            v = 7;
+        else
+            v = 9;
+    }
+    return {n: n, v: v, t: names[n] + " " + v}
+}
+
 
 //Função para centralizar elementos na página de acordo com o tamanho da tela
 jQuery.fn.center = function() {
@@ -398,50 +453,104 @@ function ajax(link, place, hidePop, async) {
 //    $("#fullscreen-on").removeClass("hide");
 //}
 
+var pfx = ["webkit", "moz", "ms", "o", ""];
+
 function canToggleFullScreen() {
-    if (document.documentElement.requestFullscreen) {
-        return true;
-    } else if (document.documentElement.mozRequestFullScreen) {
-        return true;
-    } else if (document.documentElement.webkitRequestFullscreen) {
-        return true;
-    } else {
-        var wscript = new ActiveXObject("Wscript.shell");
-        if (wscript !== undefined){
-            return true;
+//    if (document.documentElement.requestFullscreen) {
+//        return true;
+//    } else if (document.documentElement.mozRequestFullScreen) {
+//        return true;
+//    } else if (document.documentElement.webkitRequestFullscreen) {
+//        return true;
+//    } else {
+//        try {
+//            var wscript = new ActiveXObject("Wscript.shell");
+//            return true;
+//        } catch (e) {
+//        }
+//    }
+//    return false;
+    var agente = getBrowser().t;
+    if (/.*?(Safari|Opera).*?/i.test(agente)) {
+        return false;
+    }
+    var p = 0, m, method = "RequestFullScreen", obj = document.documentElement, t;
+    while (p < pfx.length && !obj[m]) {
+        m = method;
+        if (pfx[p] == "") {
+            m = m.substr(0, 1).toLowerCase() + m.substr(1);
         }
+        m = pfx[p] + m;
+
+        t = typeof obj[m];
+        if (t != "undefined") {
+            pfx = [pfx[p]];
+            return (t == "function" ? true : false);
+        }
+        p++;
     }
     return false;
 }
+
+function RunPrefixMethod(obj, method) {
+
+    var p = 0, m, t;
+    while (p < pfx.length && !obj[m]) {
+        m = method;
+        if (pfx[p] == "") {
+            m = m.substr(0, 1).toLowerCase() + m.substr(1);
+        }
+        m = pfx[p] + m;
+
+        t = typeof obj[m];
+        if (t != "undefined") {
+            pfx = [pfx[p]];
+            return (t == "function" ? obj[m](document.documentElement.webkitRequestFullscreen ? Element.ALLOW_KEYBOARD_INPUT : "") : obj[m]);
+        }
+        p++;
+    }
+
+}
+
 function toggleFullScreen() {
-    if (!document.fullscreenElement && // alternative standard method
-            !document.mozFullScreenElement && !document.webkitFullscreenElement) {  // current working methods
-        if (document.documentElement.requestFullscreen) {
-            document.documentElement.requestFullscreen();
-        } else if (document.documentElement.mozRequestFullScreen) {
-            document.documentElement.mozRequestFullScreen();
-        } else if (document.documentElement.webkitRequestFullscreen) {
-            document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-        } else if (true) {
-            var wscript = new ActiveXObject("Wscript.shell");
-            wscript.SendKeys("{F11}");
-        }
-        $("div.userInfoWrap  i.icon-fullscreen").removeClass("icon-fullscreen").addClass("icon-resize-small");
-        $("#fullscreen-toggle").prop('title', "Voltar ao modo normal");
-    } else {
-        if (document.cancelFullScreen) {
-            document.cancelFullScreen();
-        } else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen();
-        } else if (document.webkitCancelFullScreen) {
-            document.webkitCancelFullScreen();
-        } else {
-            var wscript = new ActiveXObject("Wscript.shell");
-            wscript.SendKeys("{F11}");
-        }
+//    if (!document.fullscreenElement && // alternative standard method
+//            !document.mozFullScreenElement && !document.webkitFullscreenElement) {  // current working methods
+//        if (document.documentElement.requestFullscreen) {
+//            document.documentElement.requestFullscreen();
+//        } else if (document.documentElement.mozRequestFullScreen) {
+//            document.documentElement.mozRequestFullScreen();
+//        } else if (document.documentElement.webkitRequestFullscreen) {
+//            document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+//        } else {
+//            var wscript = new ActiveXObject("Wscript.shell");
+//            wscript.SendKeys("{F11}");
+//        }
+//        $("div.userInfoWrap  i.icon-fullscreen").removeClass("icon-fullscreen").addClass("icon-resize-small");
+//        $("#fullscreen-toggle").prop('title', "Voltar ao modo normal");
+//    } else {
+//        if (document.cancelFullScreen) {
+//            document.cancelFullScreen();
+//        } else if (document.mozCancelFullScreen) {
+//            document.mozCancelFullScreen();
+//        } else if (document.webkitCancelFullScreen) {
+//            document.webkitCancelFullScreen();
+//        } else {
+//            var wscript = new ActiveXObject("Wscript.shell");
+//            wscript.SendKeys("{F11}");
+//        }
+//        $("div.userInfoWrap  i.icon-resize-small").removeClass("icon-resize-small").addClass("icon-fullscreen");
+//        $("#fullscreen-toggle").prop('title', "Modo tela cheia");
+//
+//    }
+    if (RunPrefixMethod(document, "FullScreen") || RunPrefixMethod(document, "IsFullScreen")) {
+        RunPrefixMethod(document, "CancelFullScreen");
         $("div.userInfoWrap  i.icon-resize-small").removeClass("icon-resize-small").addClass("icon-fullscreen");
         $("#fullscreen-toggle").prop('title', "Modo tela cheia");
+    } else {
+        RunPrefixMethod(document.documentElement, "RequestFullScreen");
 
+        $("div.userInfoWrap  i.icon-fullscreen").removeClass("icon-fullscreen").addClass("icon-resize-small");
+        $("#fullscreen-toggle").prop('title', "Voltar ao modo normal");
     }
     $("#fullscreen-toggle").tooltip('destroy');
     $("#fullscreen-toggle").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});

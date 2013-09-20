@@ -6,6 +6,30 @@
         <link rel='stylesheet' href='publico/css/mainStyle.css' />  
         <link rel='stylesheet' href='publico/css/login.css' />
         <title class="tituloFixo">Autenticação</title>
+<!--        <script type="text/javascript">
+            var $buoop = {vs: {i: 9, f: 15, o: 11, s: 5, n: 9}}
+            $buoop.ol = window.onload;
+            window.onload = function() {
+                try {
+                    if ($buoop.ol)
+                        $buoop.ol();
+                } catch (e) {
+                }
+                var e = document.createElement("script");
+                e.setAttribute("type", "text/javascript");
+                e.setAttribute("src", "http://browser-update.org/update.js");
+                document.body.appendChild(e);
+            };
+        </script> -->
+        <link rel="stylesheet" type="text/css" media="screen" href="http://www.devslide.com/public/labs/browser-detection/browser-detection.css" />
+        <script src="publico/js/jquery/jquery-1.9.1.js"></script>
+        <script src="publico/js/mainScript.js"></script>
+        <script src="publico/js/jquery/jquery-ui.js"></script>
+        <script src="publico/js/browser-detection.js" />
+        <script>
+            var displayPoweredBy = false;
+            
+        </script>
     </head>
     <body>
         <?php
@@ -17,7 +41,7 @@
 //            session_start();
 //        }
         if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION['autenticado'] === TRUE) {
-           
+
             header("Location: index.php");
         } else {
             $_SESSION['autenticado'] = false;
