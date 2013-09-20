@@ -365,37 +365,86 @@ function ajax(link, place, hidePop, async) {
 }
 //TODO verificar porque a tela cheia não funciona, através desse método, do mesmo
 //modo que apertando F11 (ou botão apropriado para exibir em tela cheia) no navegador.
-function launchFullScreen(element) {
+//function launchFullScreen(element) {
+//
+//    if (element.requestFullScreen) {
+//        element.requestFullScreen();
+//    } else if (element.mozRequestFullScreen) {
+//        element.mozRequestFullScreen();
+//    } else if (element.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT)) {
+//        element.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+//    } else {
+//        var wscript = new ActiveXObject("Wscript.shell");
+//        wscript.SendKeys("{F11}");
+//
+//    }
+//    $("#fullscreen-on").addClass("hide");
+//    $("#fullscreen-off").removeClass("hide");
+//}
+//
+//function cancelFullscreen() {
+//
+//    if (document.cancelFullScreen) {
+//        document.cancelFullScreen();
+//    } else if (document.mozCancelFullScreen) {
+//        document.mozCancelFullScreen();
+//    } else if (document.webkitCancelFullScreen) {
+//        document.webkitCancelFullScreen();
+//    } else {
+//        var wscript = new ActiveXObject("Wscript.shell");
+//        wscript.SendKeys("{F11}");
+//    }
+//    $("#fullscreen-off").addClass("hide");
+//    $("#fullscreen-on").removeClass("hide");
+//}
 
-    if (element.requestFullScreen) {
-        element.requestFullScreen();
-    } else if (element.mozRequestFullScreen) {
-        element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullScreen) {
-        element.webkitRequestFullScreen();
+function canToggleFullScreen() {
+    if (document.documentElement.requestFullscreen) {
+        return true;
+    } else if (document.documentElement.mozRequestFullScreen) {
+        return true;
+    } else if (document.documentElement.webkitRequestFullscreen) {
+        return true;
     } else {
         var wscript = new ActiveXObject("Wscript.shell");
-        wscript.SendKeys("{F11}");
-
+        if (wscript !== undefined){
+            return true;
+        }
     }
-    $("#fullscreen-on").addClass("hide");
-    $("#fullscreen-off").removeClass("hide");
+    return false;
 }
-
-function cancelFullscreen() {
-
-    if (document.cancelFullScreen) {
-        document.cancelFullScreen();
-    } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen();
-    } else if (document.webkitCancelFullScreen) {
-        document.webkitCancelFullScreen();
+function toggleFullScreen() {
+    if (!document.fullscreenElement && // alternative standard method
+            !document.mozFullScreenElement && !document.webkitFullscreenElement) {  // current working methods
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) {
+            document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullscreen) {
+            document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+        } else if (true) {
+            var wscript = new ActiveXObject("Wscript.shell");
+            wscript.SendKeys("{F11}");
+        }
+        $("div.userInfoWrap  i.icon-fullscreen").removeClass("icon-fullscreen").addClass("icon-resize-small");
+        $("#fullscreen-toggle").prop('title', "Voltar ao modo normal");
     } else {
-        var wscript = new ActiveXObject("Wscript.shell");
-        wscript.SendKeys("{F11}");
+        if (document.cancelFullScreen) {
+            document.cancelFullScreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen();
+        } else {
+            var wscript = new ActiveXObject("Wscript.shell");
+            wscript.SendKeys("{F11}");
+        }
+        $("div.userInfoWrap  i.icon-resize-small").removeClass("icon-resize-small").addClass("icon-fullscreen");
+        $("#fullscreen-toggle").prop('title', "Modo tela cheia");
+
     }
-    $("#fullscreen-off").addClass("hide");
-    $("#fullscreen-on").removeClass("hide");
+    $("#fullscreen-toggle").tooltip('destroy');
+    $("#fullscreen-toggle").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
 }
 
 /**

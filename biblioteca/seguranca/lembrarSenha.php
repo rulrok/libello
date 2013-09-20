@@ -23,7 +23,7 @@ if (isset($_POST['email']) && $_POST['email'] != NULL && $_POST['email'] != "") 
 
         //SMTP needs accurate times, and the PHP time zone MUST be set
 //This should be done in your php.ini, but this is how to do it if you don't have access to that
-        date_default_timezone_set('America/São Paulo');
+        date_default_timezone_set('America/Sao_Paulo');
 
         require BIBLIOTECA_DIR . 'PHPMailer/class.phpmailer.php';
 

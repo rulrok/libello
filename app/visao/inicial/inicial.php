@@ -52,9 +52,10 @@
                 <div class="userInfoWrap">
                     <p>Logado como: <b><?php echo $this->usuario ?></b> (<?php echo $this->papel ?>)</p>
                     <div class="btn-toolbar" id="configuracoesSite">
-                        <div class="centered btn-group">
-                            <a id="fullscreen-on" title="Modo tela cheia" class="btn btn-small" href="javascript:void(0)" onclick="launchFullScreen(document.documentElement);"><i class="icon-fullscreen"></i></a>
-                            <a id="fullscreen-off" title="Voltar ao modo normal" class="btn btn-small hide" href="javascript:void(0)" onclick="cancelFullscreen();"><i class="icon-resize-small"></i></a>
+                        <div id="botoesSuperiores" class="centered btn-group">
+
+                            
+
                             <a class="btn btn-small" href="#!sistema|gerenciarconta" onclick="
                                     hideSubMenu(150);
                                     $('.visited').removeClass('visited');
@@ -166,8 +167,11 @@
                                 })
 
                                 //Configura botão para tela cheia
-                                $("#fullscreen-on").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
-                                $("#fullscreen-off").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
+//                                $("#fullscreen-toggle").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
+//                                $("#fullscreen-off").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
+                                if (canToggleFullScreen()) {
+                                    $("#botoesSuperiores").children(":first-child").before('<a id="fullscreen-toggle" title="Modo tela cheia" class="btn btn-small" href="javascript:void(0)" onclick="toggleFullScreen();"><i class="icon-fullscreen"></i></a>')
+                                }
         </script>
     </body>
 </html>

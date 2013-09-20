@@ -34,7 +34,7 @@
         <span class="custeio">
             <span class="line">
                 <label>Quantidade</label>
-                <input required type="text" class="input-medium" id="quantidade" name="quantidade"/>
+                <input required type="number" min="1" class="input-medium" id="quantidade" name="quantidade"/>
             </span>
         </span>
 

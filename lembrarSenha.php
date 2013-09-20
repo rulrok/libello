@@ -15,12 +15,13 @@
     </head>
     <body>
         <?php
-        session_start();
-        if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION['autenticado'] === TRUE) {
-            header("Location: index.php");
-        } else {
-            $_SESSION['autenticado'] = false;
-        }
+//        require_once './biblioteca/seguranca/seguranca.php';
+////        session_start();
+//        if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION['autenticado'] === TRUE) {
+//            header("Location: index.php");
+//        } else {
+//            $_SESSION['autenticado'] = false;
+//        }
         ?>
         <div id="login" class="centered">
             <h1 class="centeredText">Sistema de Controle CEAD</h1>

@@ -37,7 +37,7 @@ if (preg_match("#.*" . WEB_SERVER_FOLDER . "?.*#", $_SERVER['REQUEST_URI'])) {
     $uri_requisicao = $_SERVER['REQUEST_URI'];
     //Verificamos se é uma das páginas listadas como excessões, as quais não precisamos
     //verificar o acesso.
-    $ret = preg_replace("#^/controle-cead(/((index|sair|logar)\.php(\?m=.*)?|biblioteca.*)?)?#", "", $uri_requisicao);
+    $ret = preg_replace("#^/controle-cead(/((index|sair|logar|lembrarSenha)\.php(\?(m|tolken)=.*)?|biblioteca.*)?)?#", "", $uri_requisicao);
     if ($ret !== "")
     //É uma página que não pertence às excessões, definidas pela REGEX acima.
     //Verifica se uma requisição via AJAX está sendo feita, pois todas as páginas

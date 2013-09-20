@@ -7,13 +7,7 @@
 function varrerCampos() {
     var camposObrigatorios = $("input[required],select[required]").not(".ignorar").not(".campoVarrido");
     if (camposObrigatorios.length > 0) {
-//document.head.children[document.head.children.length] = "<script src=\"publico/js/validarCampos.js\"></script>";
-        //$("head").append("<script src=\"publico/js/validarCampos.js\"></script>");
-//        for (i = 0; i < camposObrigatorios.length; i++) {
-//            $(camposObrigatorios[i]).after("<img src=\"publico/imagens/icones/campo_obrigatorio.png\">");
-//            //$(camposObrigatorios[i]).on('blur',liberarCadastro());
-//            //$(camposObrigatorios[i]).append(liberarCadastro());
-//        }
+
         $(camposObrigatorios).after("<img src=\"publico/imagens/icones/campo_obrigatorio.png\">");
         $(camposObrigatorios).addClass("campoVarrido");
         $(camposObrigatorios).bind('keyup', function() {
@@ -22,17 +16,8 @@ function varrerCampos() {
         $(camposObrigatorios).bind('blur', function() {
             liberarCadastro();
         });
-//        $(camposObrigatorios).on('blur', function() {
-//            liberarCadastro();
-//        });
+        
         trataCamposData();
-//    $('input').not("input[required],select[required]").on('change', function() {
-//        $("input[type=submit],input[value~='Atualizar']").attr('disabled', false);
-//    });
-//
-//    $('input[readonly]').on('blur', function() {
-//        $("input[type=submit],input[value~='Atualizar'],input[value~='Cadastrar'").attr('disabled', false);
-//    });
     }
 }
 
@@ -65,7 +50,7 @@ function trataCamposData() {
  * @returns {undefined}
  */
 function liberarCadastro() {
-    var campos = $("input[required],select[required]");
+    var campos = $("input[required],select[required]").not(".ignorar");
     var patter = null;
     var senhaLida = "";
     var tudoCerto = true;
