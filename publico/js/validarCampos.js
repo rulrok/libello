@@ -11,12 +11,12 @@ function varrerCampos() {
         $(camposObrigatorios).after("<img src=\"publico/imagens/icones/campo_obrigatorio.png\">");
         $(camposObrigatorios).addClass("campoVarrido");
         $(camposObrigatorios).bind('keyup', function() {
-            liberarCadastro();
+            liberarCadastro(this);
         });
         $(camposObrigatorios).bind('blur', function() {
             liberarCadastro();
         });
-        
+
         trataCamposData();
     }
 }
@@ -47,10 +47,18 @@ function trataCamposData() {
  * desses componentes deve começar obrigatoriamente com a palavra 'cb_';
  * Se nenhuma regra de nome for casada, a opção padrão de validação será selecionada, que no caso,
  * apenas exige que o campo não esteja vazio.
+ * 
+ * @author Reuel 
+ * 
  * @returns {undefined}
  */
-function liberarCadastro() {
-    var campos = $("input[required],select[required]").not(".ignorar");
+function liberarCadastro(element) {
+    var campos;
+    if (element !== undefined) {
+        campos = $(this);
+    } else {
+        campos = $("input[required],select[required]").not(".ignorar");
+    }
     var patter = null;
     var senhaLida = "";
     var tudoCerto = true;

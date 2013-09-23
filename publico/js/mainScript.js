@@ -1,5 +1,3 @@
-//var $buoop = {};
-//$buoop.ol = window.onload;
 window.menuHadUpped = false;
 //De fato a página está configurada para exibir ele, e o script para esconde-lo é executado
 //na primeira renderização da página, por tanto, window.footerHidden deve estar inicialmente
@@ -10,6 +8,10 @@ document.paginaAlterada = false;
 //Um fix
 document.ignorarHashChange = false;
 
+
+//----------------------------------------------------------------------//
+//                          INICIALIZAÇÕES BÁSICAS                      //
+//----------------------------------------------------------------------//
 $(document).ready(function() {
 
     //Carrega links passados com hash pela barra de endereço
@@ -66,9 +68,9 @@ $(document).ready(function() {
 
     //Para que quando a tela redimensionar e o popup com fundo cinza estiver sendo exibido,
     //ele seja centralizado novamente, evitando exibições estranhas
-    window.onresize = function() {
+    $(window).bind("resize", function() {
         $(".shaderFrameContent").center();
-    };
+    });
 
     //Permite que o popup seja arrastado pela tela
     $('.shaderFrameContent').draggable({cancel: ".shaderFrameContentWrap"});
@@ -86,18 +88,6 @@ $(document).ready(function() {
             return this.replace(/^\s+|\s+$/g, '');
         };
     }
-
-//        //Função para detectar navegadores antigos
-//        try {
-//            if ($buoop.ol)
-//                $buoop.ol();
-//        } catch (e) {
-//        }
-//        var e = document.createElement("script");
-//        e.setAttribute("type", "text/javascript");
-//        e.setAttribute("src", "http://browser-update.org/update.js");
-//        document.body.appendChild(e);
-
 
     //Associa uma função para todos os links do menu
     var menus = $('.menuLink');
@@ -135,6 +125,11 @@ $(document).ready(function() {
     //Manter o menu 'colado' no topo da página quando ela desce muito
     $(window).bind("scroll", acoplarMenu);
 });
+
+//----------------------------------------------------------------------//
+//                          FUNÇÕES                                     //
+//----------------------------------------------------------------------//
+
 
 function getBrowser() {
     var n, v, t, ua = navigator.userAgent;
