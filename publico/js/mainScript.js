@@ -23,15 +23,16 @@ $(document).ready(function() {
             document.ignorarHashChange = false;
             return;
         }
-        if (document.paginaAlterada) {
-            var ignorarMudancas = confirm("Modificações não salvas. Continuar?");
-            if (!ignorarMudancas) {
-                var antigaURL = e.originalEvent.oldURL;
-                location.href = antigaURL;
-                document.ignorarHashChange = true;
-                return false;
-            }
-        }
+//        if (document.paginaAlterada) {
+//            var ignorarMudancas = confirm("Modificações não salvas. Continuar?");
+//            if (!ignorarMudancas) {
+//                var antigaURL = e.originalEvent.oldURL;
+//                location.href = antigaURL;
+////                history.
+//                document.ignorarHashChange = true;
+//                return false;
+//            }
+//        }
         document.paginaAlterada = false;
         try {
             var url = location.hash;
@@ -45,6 +46,14 @@ $(document).ready(function() {
         }
 
         carregarPagina(url);
+        $("a[href^=#]").each(function(index) {
+//            console.log(this.confirmarDados)
+            if (this.confirmarDados === undefined) {
+                this.confirmarDados = true;
+                $(this).bind("click", confirmarDadosNaoSalvos);
+                $(this).bind("click", requererPaginaAtual);
+            }
+        });
     });
 
     // Since the event is only triggered when the hash changes, we need to trigger
@@ -93,17 +102,20 @@ $(document).ready(function() {
     var menus = $('.menuLink');
     for (var i = 0; i < menus.length; i++) {
         if (menus[i].id == "homeLink") {
-            menus[i].onclick = function() {
+            $(menus[i]).bind("mouseup", function() {
+                if (document.paginaAlterada) { //Fix :p
+                    return false;
+                }
                 $(".menuLink.visited").removeClass("visited");
                 $(this).addClass("visited");
                 $(".actualTool").removeClass('actualTool');
                 $(this).addClass("actualTool");
 
                 hideSubMenu(150);
-            };
+            });
             continue;
         }
-        menus[i].onclick = function() {
+        $(menus[i]).bind("mouseup", function() {
             var id = this.id;
             if (!this.className.match(".*visited.*")) {
                 $(".menuLink.visited").removeClass("visited");
@@ -118,7 +130,7 @@ $(document).ready(function() {
                     showSubMenu();
                 }
             }
-        };
+        });
     }
 //    };
 
@@ -130,6 +142,46 @@ $(document).ready(function() {
 //                          FUNÇÕES                                     //
 //----------------------------------------------------------------------//
 
+/**
+ * Função auxiliar, executada quando um link é clicado, para antes que uma hash
+ * seja mudada no endereço da url, caso um formulário esteja sendo editado,
+ * a funcão vai impedir isso, perguntando se o usuário deseja realmente sair
+ * da página atual ainda não salva.
+ * 
+ * @author Reuel
+ * 
+ * @param {type} evt
+ * @returns {undefined}
+ */
+function confirmarDadosNaoSalvos(evt) {
+    if (document.paginaAlterada) {
+        var ignorarMudancas = confirm("Modificações não salvas. Continuar?");
+        if (!ignorarMudancas) {
+            evt.preventDefault();
+            return;
+        } else {
+            document.paginaAlterada = false;
+        }
+    }
+}
+
+/**
+ * Função auxiliar para quando clica-se em um link que é a página atual.
+ * Quando isso ocorre, o event hashchange não é disparado e a página não é carregada.
+ * 
+ * @param {type} evt
+ * @returns {undefined}
+ */
+function requererPaginaAtual(evt) {
+    var index = this.href.lastIndexOf("#")
+    var hash = this.href.substring(index);
+    if (location.hash == hash) {
+        if (!document.paginaAlterada) {
+            carregarPagina(hash);
+        }
+
+    }
+}
 
 function getBrowser() {
     var n, v, t, ua = navigator.userAgent;

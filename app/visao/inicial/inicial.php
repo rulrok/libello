@@ -104,7 +104,7 @@
             <hr id="menuPosition" >
             <div class="menuContainer">
 
-<?php echo $this->menu ?>
+                <?php echo $this->menu ?>
 
                 <div class="popUp table" style="display: none;">
                     <div class="botao_fechar" onclick="hidePopUp();"></div>
