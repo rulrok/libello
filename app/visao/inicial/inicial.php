@@ -7,39 +7,34 @@
                 nav {display:table;height:100%}
         </style>
         <![endif]-->
+
+        <!-- ESTILOS -->
         <link type="text/css" rel="stylesheet" href="publico/css/jquery-ui.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/bootstrap.css"/> 
         <link type="text/css" rel="stylesheet" href="publico/css/mainStyle.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.dataTables_themeroller.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.datepick.css"/> 
+        <link rel="stylesheet" type="text/css" media="screen" href="publico/css/browser-detection.css" />
+
+        <!-- Fim ESTILOS -->
+        <!-- PRE SCRIPTS -->
 
 
-        <!-- Inicialização dos principais scripts -->
-        
-        
-            <script src="publico/js/jquery/jquery-1.9.1.js"></script>
-            <script src="publico/js/jquery/jquery.ba-hashchange.js"></script>
-            <script src="publico/js/mainScript.js"></script>
-            <script type="text/javascript" src="publico/js/validarCampos.js"></script>
-            <script src="publico/js/jquery/jquery.form.js"></script>
-            <script src="publico/js/ajaxForms.js"></script> 
-            <script src="publico/js/oTable.js" ></script>
+        <script src="publico/js/jquery/jquery-1.9.1.js"></script>
+        <script src="publico/js/jquery/jquery.ba-hashchange.js"></script>
+        <script src="publico/js/mainScript.js"></script>
+        <script type="text/javascript" src="publico/js/validarCampos.js"></script>
+        <script src="publico/js/jquery/jquery.form.js"></script>
+        <script src="publico/js/ajaxForms.js"></script> 
+        <script src="publico/js/oTable.js" ></script>
+
+
+        <!-- FIM PRE SCRIPTS -->
         <title class="tituloFixo"><?php echo $this->titulo ?></title>
     </head>
     <body>
         <nav>
-            <hr id="barra_superior" style="
-                margin: 0;
-                border: 2px solid #3871a6;
-                background: #3871a6;
-                border-left: none;
-                border-right: none;
-                position: fixed;
-                top: 0px;
-                width: 100%;
-                z-index: 99999999;
-                display: none;
-                ">
+            <hr id="barra_superior">
             <header>
                 <figure>
                     <map name="#logoMap">
@@ -59,9 +54,9 @@
 
 
                             <a class="btn btn-small" href="#!sistema|gerenciarconta" onclick="
-                hideSubMenu(150);
-                $('.visited').removeClass('visited');
-                $('.actualTool').removeClass('actualTool')"><i class="icon-cog"></i> Gerenciar Conta</a>
+                                    hideSubMenu(150);
+                                    $('.visited').removeClass('visited');
+                                    $('.actualTool').removeClass('actualTool')"><i class="icon-cog"></i> Gerenciar Conta</a>
                             <a class="btn btn-small" href="sair.php"><i class="icon-off"></i> Sair</a>
                         </div>
                     </div>
@@ -86,7 +81,7 @@
                     <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
                 </div>
             </div>
-            <hr id="menuPosition" style="margin:0;width:100%; visibility: hidden;border:none" >
+            <hr id="menuPosition" >
             <div class="menuContainer">
 
                 <?php echo $this->menu ?>
@@ -137,43 +132,45 @@
                 </center>
             </div>
         </footer>
-        <!-- Inicialização de scripts importantes para outras páginas -->
+        <!-- POS SCRIPTS -->
         <script src="publico/js/jquery/jquery-ui.js"></script>
         <script src="publico/js/jquery/jquery.dataTables.js"></script>
         <script src="publico/js/jquery/jquery.datepick.js"></script>
         <script src="publico/js/jquery/jquery.datepick-pt-BR.js"></script>
         <script src="publico/js/bootstrap.js"></script> 
         <script>
-            //Configurações globais para dataTables
-            $.extend($.fn.dataTable.defaults, {
-                "bFilter": true,
-                "bSort": true,
-                "aaSorting": [[1, "desc"]],
-                "bJQueryUI": true,
-                "sPaginationType": "full_numbers",
-                "oLanguage": {
-                    "sUrl": "publico/js/jquery/dataTables.portugues.txt"
-                },
-                //Scrol horizontal
-                "sScrollX": "100%",
-                "sScrollXInner": "110%",
-                "bScrollCollapse": true,
-                // Salva o estado da tabela para ser exibida como da última vez
-                //Um pouco de cuidado com essa opção, ela parece ter em certas
-                //situações, efeitos negativos ao uso da datatable
-                "bStateSave": false,
-                "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
-            });
-            $.datepick.setDefaults({
-                dateFormat: 'dd/mm/yyyy'
-            })
+                                //Configurações globais para dataTables
+                                $.extend($.fn.dataTable.defaults, {
+                                    "bFilter": true,
+                                    "bSort": true,
+                                    "aaSorting": [[1, "desc"]],
+                                    "bJQueryUI": true,
+                                    "sPaginationType": "full_numbers",
+                                    "oLanguage": {
+                                        "sUrl": "publico/js/jquery/dataTables.portugues.txt"
+                                    },
+                                    //Scrol horizontal
+                                    "sScrollX": "100%",
+                                    "sScrollXInner": "110%",
+                                    "bScrollCollapse": true,
+                                    // Salva o estado da tabela para ser exibida como da última vez
+                                    //Um pouco de cuidado com essa opção, ela parece ter em certas
+                                    //situações, efeitos negativos ao uso da datatable
+                                    "bStateSave": false,
+                                    "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
+                                });
+                                $.datepick.setDefaults({
+                                    dateFormat: 'dd/mm/yyyy'
+                                })
 
-            //Configura botão para tela cheia
+                                //Configura botão para tela cheia
 //                                $("#fullscreen-toggle").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
 //                                $("#fullscreen-off").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
-            if (canToggleFullScreen()) {
-                $("#botoesSuperiores").children(":first-child").before('<a id="fullscreen-toggle" title="Modo tela cheia" class="btn btn-small" href="javascript:void(0)" onclick="toggleFullScreen();"><i class="icon-fullscreen"></i></a>')
-            }
+                                if (canToggleFullScreen()) {
+                                    $("#botoesSuperiores").children(":first-child").before('<a id="fullscreen-toggle" title="Modo tela cheia" class="btn btn-small" href="javascript:void(0)" onclick="toggleFullScreen();"><i class="icon-fullscreen"></i></a>')
+                                }
         </script>
+        <script src="publico/js/browser-detection.js" />
+        <!-- FIM POS SCRIPTS -->
     </body>
 </html>

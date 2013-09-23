@@ -9,7 +9,7 @@ var notSupportedBrowsers = [];
 var displayPoweredBy = false;
 var noticeLang = 'custom';
 var noticeLangCustom = {
-    "title": "Navegador Antigo Detectado ("+getBrowser().t+")",
+    "title": "Navegador Antigo Detectado (" + getBrowser().t + ")",
     "notice": "Para o melhor uso do site, é necessário atualizar seu navegador para uma versão mais recente.",
     "selectBrowser": "Escolha um dentre os navegadores abaixo:",
     "remindMeLater": "Lembrar-me depois",
@@ -107,9 +107,9 @@ var BrowserDetection = {
         this.getEl('browser-detection-remind-later').onclick = function() {
             el.remindMe(false);
         };
-        this.getEl('browser-detection-never-remind').onclick = function() {
-            el.remindMe(true);
-        };
+//        this.getEl('browser-detection-never-remind').onclick = function() {
+//            el.remindMe(true);
+//        };
     },
     remindMe: function(never) {
         this.writeCookie('bdnotice', 1, never == true ? 4 : 1);
@@ -161,7 +161,7 @@ var BrowserDetection = {
             notice = noticeLangCustom.notice;
             selectBrowser = noticeLangCustom.selectBrowser;
             remindMeLater = noticeLangCustom.remindMeLater;
-            neverRemindAgain = noticeLangCustom.neverRemindAgain;
+//            neverRemindAgain = noticeLangCustom.neverRemindAgain;
         } else {
             var noticeTextObj = null;
             eval('noticeTextObj = this.noticeText.' + noticeLang + ';');
@@ -174,7 +174,7 @@ var BrowserDetection = {
             notice = noticeTextObj.notice;
             selectBrowser = noticeTextObj.selectBrowser;
             remindMeLater = noticeTextObj.remindMeLater;
-            neverRemindAgain = noticeTextObj.neverRemindAgain;
+//            neverRemindAgain = noticeTextObj.neverRemindAgain;
         }
 
         notice = notice.replace("\n", '</p><p class="bd-notice">');
@@ -200,7 +200,7 @@ var BrowserDetection = {
 
         code += '<ul class="bd-skip-buttons">';
         code += '<li><button id="browser-detection-remind-later" type="button">' + remindMeLater + '</button></li>';
-        code += '<li><button id="browser-detection-never-remind" type="button">' + neverRemindAgain + '</button></li>';
+//        code += '<li><button id="browser-detection-never-remind" type="button">' + neverRemindAgain + '</button></li>';
         code += '</ul>';
         code += '</div>';
         window.document.body.innerHTML += code;

@@ -21,15 +21,11 @@
                 document.body.appendChild(e);
             };
         </script> -->
-        <link rel="stylesheet" type="text/css" media="screen" href="http://www.devslide.com/public/labs/browser-detection/browser-detection.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="publico/css/browser-detection.css" />
         <script src="publico/js/jquery/jquery-1.9.1.js"></script>
         <script src="publico/js/mainScript.js"></script>
         <script src="publico/js/jquery/jquery-ui.js"></script>
-        <script src="publico/js/browser-detection.js" />
-        <script>
-            var displayPoweredBy = false;
-            
-        </script>
+        <script src="publico/js/browser-detection.js"></script>
     </head>
     <body>
         <?php

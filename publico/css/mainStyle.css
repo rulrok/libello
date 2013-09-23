@@ -489,6 +489,26 @@ footer p{
 /* FIM FOOTER */
 /*================================================*/
 /* HEADER */
+
+#barra_superior {
+    margin: 0;
+    border: 2px solid #3871a6;
+    background: #3871a6;
+    border-left: none;
+    border-right: none;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 99999999;
+    display: none;
+}
+
+#menuPosition {
+    margin:0;
+    width:100%; 
+    visibility: hidden;
+    border:none;
+}
 .headerWrap{
     position: relative;
     min-height: 100px;
