@@ -39,6 +39,7 @@
         <script src="publico/js/jquery/jquery.form.js"></script>
         <script src="publico/js/ajaxForms.js"></script> 
         <script src="publico/js/oTable.js" ></script>
+        <script src='publico/js/teste.js' type='text/javascript'></script>
         <script>
             window.onbeforeunload = function(evt) {
                 if (document.paginaAlterada)

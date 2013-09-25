@@ -3,7 +3,7 @@
 include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/biblioteca/Mvc/Controlador.php';
 include_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
 include_once ROOT . 'app/modelo/ComboBoxAreas.php';
-include_once ROOT . 'app/modelo/ComboBoxTipoCurso.php';
+include_once ROOT . 'app/modelo/ComboBoxCurso.php';
 
 require_once APP_LOCATION . "modelo/Mensagem.php";
 require_once APP_LOCATION . "modelo/vo/Polo.php";
@@ -24,7 +24,7 @@ class ControladorCursospolos extends Controlador {
 
     public function acaoNovoCurso() {
         $this->visao->comboArea = ComboBoxAreas::montarTodasAsAreas();
-        $this->visao->comboTipoCurso = ComboBoxTipoCurso::montarTodosOsTipos();
+        $this->visao->comboTipoCurso = ComboBoxCurso::montarTodosOsTipos();
         $this->renderizar();
     }
 

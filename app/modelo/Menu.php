@@ -245,6 +245,84 @@ class Menu {
         return $codigo;
     }
 
+    public static function montarCaixaSelecaoCursos($required = false, $class = null, $name = null) {
+        $codigo = "<select ";
+        if ($required) {
+            $codigo .= "required ";
+        }
+        if ($class != null) {
+            $codigo .= " class = \"" . $class . "\" ";
+        }
+        if ($name != null) {
+            $codigo .= " name = \"" . $name . "\"";
+        }
+        $codigo .= ">\n";
+
+        $cursos = cursoDAO::consultar();
+        if (sizeof($cursos) == 0) {
+            $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem cursos cadastrados --</option>\n";
+        } else {
+            $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
+            for ($i = 0; $i < sizeof($cursos); $i++) {
+                $codigo .= "<option value=\"" . fnEncrypt($cursos[$i]['idCurso']) . "\">" . $cursos[$i]['nome'] . "</option>\n";
+            }
+        }
+        $codigo .= "</select>\n";
+        return $codigo;
+    }
+
+    public static function montarCaixaSelecaoPolos($required = false, $class = null, $name = null) {
+        $codigo = "<select ";
+        if ($required) {
+            $codigo .= "required ";
+        }
+        if ($class != null) {
+            $codigo .= " class = \"" . $class . "\" ";
+        }
+        if ($name != null) {
+            $codigo .= " name = \"" . $name . "\"";
+        }
+        $codigo .= ">\n";
+
+        $polos = poloDAO::consultar();
+        if (sizeof($polos) == 0) {
+            $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem polos cadastrados --</option>\n";
+        } else {
+            $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
+            for ($i = 0; $i < sizeof($polos); $i++) {
+                $codigo .= "<option value=\"" . fnEncrypt($polos[$i]['idPolo']) . "\">" . $polos[$i]['nome'] . "</option>\n";
+            }
+        }
+        $codigo .= "</select>\n";
+        return $codigo;
+    }
+
+    public static function montarSelecaoPassageiros($required = false, $class = null, $name = null) {
+        $codigo = "<select multiple='multiple' size='7'";
+        if ($required) {
+            $codigo .= "required ";
+        }
+        if ($class != null) {
+            $codigo .= " class = \"" . $class . "\" ";
+        }
+        if ($name != null) {
+            $codigo .= " name = \"" . $name . "\"";
+        }
+        $codigo .= " style='display: table-cell'>\n";
+
+        $usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome) as Nome,email");
+        if (sizeof($usuarios) == 0) {
+            $codigo .="";
+        } else {
+//            $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
+            for ($i = 0; $i < sizeof($usuarios); $i++) {
+                $codigo .= "<option value=\"" . fnEncrypt($usuarios[$i]['idUsuario']) . "\">" . $usuarios[$i]['Nome'] ." (".$usuarios[$i]['email']. ")</option>\n";
+            }
+        }
+        $codigo .= "</select>\n";
+        return $codigo;
+    }
+
 }
 ?>
 
