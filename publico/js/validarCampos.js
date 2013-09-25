@@ -10,13 +10,19 @@ function varrerCampos() {
 
         $(camposObrigatorios).after("<img src=\"publico/imagens/icones/campo_obrigatorio.png\">");
         $(camposObrigatorios).addClass("campoVarrido");
-        $(camposObrigatorios).bind('keyup', function() {
-            liberarCadastro(this);
+        $(camposObrigatorios).bind('change', function() {
+            liberarCadastro();
         });
         $(camposObrigatorios).bind('blur', function() {
             liberarCadastro();
         });
+        $("input[type=reset]").bind('click', function() {
+            setTimeout(liberarCadastro, "100");
+        });
 
+        $("input[type=submit],input[value~='Atualizar']").bind("mouseover", function() {
+            liberarCadastro();
+        });
         trataCamposData();
     }
 }
@@ -142,9 +148,16 @@ function liberarCadastro(element) {
         }
 
         //window.alert("Vai testar: " + campos[i].value+"\nPattern: "+patter);
-        if (campos[i].value != "") {
+//        if (nome != "combobox") {
+//        console.log(campos[i].value)
+        if (campos[i].value != "" && campos[i].value != "default") {
             todosEmBranco = false;
         }
+//        } else {
+//            if (campos[i].value != "default") {
+//                todosEmBranco = false;
+//            }
+//        }
 
         if (!patter.test(campos[i].value)) {
             tudoCerto = false;
@@ -158,6 +171,7 @@ function liberarCadastro(element) {
 
     if (todosEmBranco) {
         $(".campoErrado").removeClass("campoErrado");
+        document.paginaAlterada = false;
         tudoCerto = false;
     }
     if (tudoCerto) {

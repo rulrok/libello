@@ -901,3 +901,25 @@ function extrairJSON(string) {
     }
     return json;
 }
+
+function b() {
+    $("*").each(function() {
+        var t = $(this).css("font-size");
+        t = t.substr(0, t.lastIndexOf("px"))
+        if (t > 0) {
+            t = t * 1.1;
+            $(this).css("font-size", t);
+        }
+    });
+}
+
+function c() {
+    $("*").not("menu").each(function() {
+        var t = $(this).css("font-size");
+        t = t.substr(0, t.lastIndexOf("px"))
+        if (t > 0) {
+            t = t / 1.1;
+            $(this).css("font-size", t);
+        }
+    });
+}

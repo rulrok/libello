@@ -69,7 +69,6 @@
                         <div id="botoesSuperiores" class="centered btn-group">
 
 
-
                             <a class="btn btn-small" href="#!sistema|gerenciarconta" onclick="
                 if (!document.paginaAlterada) {
                     hideSubMenu(150);
@@ -110,6 +109,8 @@
                     <div class="botao_fechar" onclick="hidePopUp();"></div>
                     <p class="popUpContent centeredText "></p>
                 </div>
+
+                <div id="esconderHeader"></div>
 
             </div>
             <div class="content centered">
@@ -176,7 +177,7 @@
                 // Salva o estado da tabela para ser exibida como da última vez
                 //Um pouco de cuidado com essa opção, ela parece ter em certas
                 //situações, efeitos negativos ao uso da datatable
-                "bStateSave": false,
+                "bStateSave": true,
                 "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
             });
             $.datepick.setDefaults({

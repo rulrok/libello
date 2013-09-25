@@ -739,6 +739,10 @@ li[id$=Link]:before{
     clear: both;
 }
 .menu li{
+/*    -webkit-transition: all 200ms ease-in-out;
+    -moz-transition: all 200ms ease-in-out;
+    -o-transition: all 200ms ease-in-out;
+    transition: all 200ms ease-in-out;*/
     opacity: 0.7;
     color: #000;
     z-index:2;
@@ -762,6 +766,11 @@ li[id$=Link]:before{
 }
 
 .menu li:hover {
+/*    -webkit-transition: border-bottom 75ms ease-in;
+    -moz-transition: border-bottom 75ms ease-in;
+    -o-transition: border-bottom 75ms ease-in;
+    transition: border-bottom 75ms ease-in;*/
+    
     background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(255,255,255,0.96) 2%, rgba(255,255,255,0) 54%, rgba(255,255,255,0) 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(2%,rgba(255,255,255,0.96)), color-stop(54%,rgba(255,255,255,0)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
     background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,0.96) 2%,rgba(255,255,255,0) 54%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
@@ -774,6 +783,10 @@ li[id$=Link]:before{
 }
 
 .menu li.visited {
+/*    -webkit-transition: all 200ms ease-in-out;
+    -moz-transition: all 200ms ease-in-out;
+    -o-transition: all 200ms ease-in-out;
+    transition: all 200ms ease-in-out;*/
     opacity: 1;
     z-index: 3;
     border-bottom: #3871a6 3px solid;
@@ -792,9 +805,14 @@ li[id$=Link]:before{
 }
 
 .actualTool {
-    border: 1px dotted #3871a6;
-    opacity: 1.0!important;
-    color: rgb(14, 81, 143)!important;
+    -webkit-transition: all 200ms ease-in-out;
+    -moz-transition: all 200ms ease-in-out;
+    -o-transition: all 200ms ease-in-out;
+    transition: all 200ms ease-in-out;
+    /*border: 1px solid #faa732 !important;*/
+    border-bottom: #ff9966 3px solid !important;
+    opacity: 1.0 !important;
+    /*color: rgb(14, 81, 143)!important;*/
 
     background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(255,255,255,0.96) 2%, rgba(255,255,255,0) 54%, rgba(255,255,255,0) 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(2%,rgba(255,255,255,0.96)), color-stop(54%,rgba(255,255,255,0)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */

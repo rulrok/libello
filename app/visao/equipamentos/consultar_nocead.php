@@ -1,4 +1,4 @@
-
+<title>Consultar equipamentos | Em estoque</title>
 <table id="consulta-equipamento_nocead" class="tabelaDeSelecao">
     <thead>
         <tr>

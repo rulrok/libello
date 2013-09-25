@@ -31,8 +31,8 @@ class Menu {
                         $subMenuCode .="<ul class=\"hiddenSubMenuLink usuariosSubMenu\">" . "\n";
                         switch ($permissao_ferramenta['idPermissao']) {
                             case Permissao::ADMINISTRADOR:
-                                $subMenuCode .= "   <a href=\"#!usuarios|restaurar\">" . "\n";
-                                $subMenuCode .= "<li>Verificar usuários excluídos</li></a>" . "\n";
+//                                $subMenuCode .= "   <a href=\"#!usuarios|restaurar\">" . "\n";
+//                                $subMenuCode .= "<li>Verificar usuários excluídos</li></a>" . "\n";
                             case Permissao::GESTOR:
                                 $subMenuCode .= "   <a href=\"#!usuarios|gerenciar\">" . "\n";
                                 $subMenuCode .= "<li>Gerenciar usuários</li></a>" . "\n";
@@ -79,7 +79,7 @@ class Menu {
                                 $subMenuCode .= "<a href=\"#!livros|retorno\"\">" . "\n";
                                 $subMenuCode .= "<li>Registrar retorno</li></a>" . "\n";
                             case Permissao::ESCRITA:
-                                $subMenuCode .= "<a href=\"#!livros|novo\"\">" . "\n";
+                                $subMenuCode .= '<a href="#!livros|novo">';
                                 $subMenuCode .= "<li>Inserir novo registro</li></a>" . "\n";
                             case Permissao::CONSULTA:
                                 $subMenuCode .= "<a href=\"#!livros|relatorios\"\">" . "\n";

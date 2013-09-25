@@ -1,4 +1,4 @@
-
+<title>Consultar equipamentos | Baixa</title>
 <table id="consulta-equipamento_embaixa" class="tabelaDeSelecao">
     <thead>
         <tr>

@@ -4,7 +4,6 @@ require_once BIBLIOTECA_DIR . "seguranca/seguranca.php";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['fazendo_login'])) {
-//        session_start();
         iniciarSessao();
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION) && $_SESSION['autenticado'] === FALSE) {
             $_SERVER['REQUEST_METHOD'] = NULL;
@@ -17,11 +16,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if (autenticaUsuario($usuario)) {
                 sistemaDAO::registrarAccesso($_SESSION['usuario']->get_id());
-                header("Location: " . WEB_SERVER_ADDRESS );
+                header("Location: " . WEB_SERVER_ADDRESS . $_POST['alvo']);
             } else {
                 // O usuário e/ou a senha são inválidos, manda de volta pro form de login
                 expulsaVisitante("Usuário ou senha inválidos.");
             }
+        } elseif (isset($_SESSION) && $_SESSION['autenticado'] === TRUE) {
+            header("Location: " . WEB_SERVER_ADDRESS);
         }
     }
 }

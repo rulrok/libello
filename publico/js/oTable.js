@@ -153,9 +153,9 @@ function configurarTabela(parametros) {
 //        }
                 );
     }
-            $(window).bind('resize', function() {
-            oTable.fnAdjustColumnSizing();
-        });
+    $(window).bind('resize', function() {
+        oTable.fnAdjustColumnSizing();
+    });
 
 //TODO
 //Future fix for SAFARI

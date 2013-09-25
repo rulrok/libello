@@ -1,4 +1,4 @@
-
+<title>Consultar equipamentos | Fora CEAD</title>
 <table id="consulta-equipamento_foracead" class="tabelaDeSelecao">
     <thead>
         <tr>
