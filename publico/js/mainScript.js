@@ -295,7 +295,7 @@ function acoplarMenu() {
     } else if (window.menuHadUpped && windowPosition < menuPosition) {
         window.menuHadUpped = false;
         $("#barra_superior").hide(500);
-        showSubMenu(400);
+        showSubMenu();
         //console.debug("Retornou ao normal");
         var divMenu = $(".menuContainer");
         divMenu.removeClass("fixedMenu");
