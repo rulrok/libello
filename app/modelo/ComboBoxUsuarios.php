@@ -6,7 +6,7 @@ require_once "Menu.php";
 class ComboBoxUsuarios {
     
     public static function montarPassageiros(){
-        $code = Menu::montarSelecaoPassageiros(false, 'input-xlarge passageirosPossiveis selecaoPassageiros', 'passageirosPossiveis[]');
+        $code = Menu::montarSelecaoPassageiros(true, 'input-xxxlarge','passageiros', 'passageiros[]');
 
         return $code;
     }

@@ -142,6 +142,9 @@ function liberarCadastro(element) {
                 //Rejeita campos com o valor 'default' (uma ER que NEGA uma palavra)
                 patter = new RegExp("^((?!default).)*$");
                 break;
+            case "diarias":
+                patter = new RegExp("(?!^0$)^[0-9]+?(\.[05])?$");
+                break;
             default:
                 patter = new RegExp(".+");
                 break;

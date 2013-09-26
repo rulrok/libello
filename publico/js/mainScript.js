@@ -8,7 +8,22 @@ document.paginaAlterada = false;
 //Um fix
 document.ignorarHashChange = false;
 
+// This script sets OSName variable as follows:
+// "Windows"    for all versions of Windows
+// "MacOS"      for all versions of Macintosh OS
+// "Linux"      for all versions of Linux
+// "UNIX"       for all other UNIX flavors 
+// "Unknown OS" indicates failure to detect the OS
 
+var OSName = "Unknown OS";
+if (navigator.appVersion.indexOf("Win") != -1)
+    OSName = "Windows";
+if (navigator.appVersion.indexOf("Mac") != -1)
+    OSName = "MacOS";
+if (navigator.appVersion.indexOf("X11") != -1)
+    OSName = "UNIX";
+if (navigator.appVersion.indexOf("Linux") != -1)
+    OSName = "Linux";
 //----------------------------------------------------------------------//
 //                          INICIALIZAÇÕES BÁSICAS                      //
 //----------------------------------------------------------------------//
@@ -112,6 +127,7 @@ $(document).ready(function() {
                 $(this).addClass("actualTool");
 
                 hideSubMenu(150);
+                makeSubMenu(null);
             });
             continue;
         }
@@ -124,7 +140,8 @@ $(document).ready(function() {
                 makeSubMenu(this);
                 showSubMenu();
             } else {
-                if ($(".subMenu").css("opacity") == "1") {
+//                if ($(".subMenu").css("opacity") == "1") {
+                if (!$(".subMenu").hasClass("hidden")) {
                     hideSubMenu();
                 } else {
                     showSubMenu();
@@ -265,9 +282,11 @@ function acoplarMenu() {
     if (!window.menuHadUpped && windowPosition >= menuPosition) {
         window.menuHadUpped = true;
         //console.debug("Fixou o menu");
+        hideSubMenu(400);
         $("#barra_superior").show(800);
         var divMenu = $(".menuContainer");
         var menuHeight = divMenu.height();
+        divMenu.addClass("fixedMenu");
         divMenu.css('position', 'fixed');
         divMenu.css('top', '0px');
         divMenu.css('width', '100%');
@@ -276,8 +295,10 @@ function acoplarMenu() {
     } else if (window.menuHadUpped && windowPosition < menuPosition) {
         window.menuHadUpped = false;
         $("#barra_superior").hide(500);
+        showSubMenu(400);
         //console.debug("Retornou ao normal");
         var divMenu = $(".menuContainer");
+        divMenu.removeClass("fixedMenu");
         divMenu.css('position', 'relative');
         divMenu.css('top', '0px');
         var divContent = $(".content");
@@ -737,11 +758,13 @@ function hidePopUp() {
  * @returns {undefined}
  */
 function hideSubMenu(time) {
-    if (time === null) {
+    if (time === null || time === undefined) {
         time = 200;
     }
     var height = $('.subMenu menu').height();
     var subMenu = $(".subMenu");
+//    subMenu.hide({effect: "clip", easing: "easeInOutBounce", duration: time});
+    subMenu.addClass("hidden");
     subMenu.animate({
         top: (-1) * height,
         opacity: 0.0,
@@ -758,10 +781,12 @@ function hideSubMenu(time) {
  * @returns {undefined}
  */
 function showSubMenu(time) {
-    if (time === null) {
+    if (time === null || time === undefined) {
         time = 200;
     }
     var subMenu = $(".subMenu");
+//    subMenu.show({effect: "clip", easing: "easeInOutBounce", duration: time});
+    subMenu.removeClass("hidden");
     subMenu.animate({
         top: "0px",
         opacity: "1",
@@ -781,6 +806,8 @@ function makeSubMenu(originMenu) {
     if (originMenu !== null) {
         menuName = originMenu.id;
     } else {
+        $(".subMenu menu ul").addClass("hiddenSubMenuLink");
+        return;
         menuName = "homeLink";
     }
 

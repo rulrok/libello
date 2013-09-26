@@ -31,9 +31,14 @@
                 cidade: $('#cidade').get(0),
                 estado: $('#estado').get(0)
             });
+            $("#estado").chosen();
+            $("#cidade").chosen();
         });
 
-//        $('#estado').val("");
-//        $('#estado').change();
-//        $('#cidade').val("");
+        $('#estado').change(function() {
+            setTimeout(function() {
+                
+                $("#cidade").val('').trigger("chosen:updated");
+            }, "200");
+        });
 </script>

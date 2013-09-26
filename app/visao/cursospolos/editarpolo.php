@@ -28,15 +28,26 @@
 <script src="publico/js/cidades-estados.js"></script>
 <script>
     $(document).ready(function() {
+        var flag = true;
         varrerCampos();
         formularioAjax();
         new dgCidadesEstados({
             cidade: $('#cidade').get(0),
             estado: $('#estado').get(0)
         });
+        $("#cidade").chosen();
 
         $('#estado').val("<?php echo $this->estado ?>");
         $('#estado').change();
-        $('#cidade').val("<?php echo $this->cidade ?>");
+        $("#estado").chosen();
+        $('#estado').change(function() {
+            setTimeout(function() {
+                if (!flag) {
+                    $("#cidade").val('').trigger("chosen:updated");
+                }
+            }, "200");
+        });
+        $('#cidade').val("<?php echo $this->cidade ?>").trigger("chosen:updated");
+        flag = false;
     });
 </script>

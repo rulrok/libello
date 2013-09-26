@@ -224,13 +224,16 @@ class Menu {
         return $codigo;
     }
 
-    public static function montarCaixaSelecaoTiposCurso($required = false, $class = null, $name = null) {
+    public static function montarCaixaSelecaoTiposCurso($required = false, $class = null, $id = null, $name = null) {
         $codigo = "<select ";
         if ($required) {
             $codigo .= "required ";
         }
         if ($class != null) {
             $codigo .= " class = \"" . $class . "\" ";
+        }
+        if ($id != null) {
+            $codigo .= " id = \"" . $id . "\" ";
         }
         if ($name != null) {
             $codigo .= " name = \"" . $name . "\"";
@@ -245,13 +248,16 @@ class Menu {
         return $codigo;
     }
 
-    public static function montarCaixaSelecaoCursos($required = false, $class = null, $name = null) {
+    public static function montarCaixaSelecaoCursos($required = false, $class = null, $id = null, $name = null) {
         $codigo = "<select ";
         if ($required) {
             $codigo .= "required ";
         }
         if ($class != null) {
             $codigo .= " class = \"" . $class . "\" ";
+        }
+        if ($id != null) {
+            $codigo .= " id = \"" . $id . "\" ";
         }
         if ($name != null) {
             $codigo .= " name = \"" . $name . "\"";
@@ -271,13 +277,16 @@ class Menu {
         return $codigo;
     }
 
-    public static function montarCaixaSelecaoPolos($required = false, $class = null, $name = null) {
+    public static function montarCaixaSelecaoPolos($required = false, $class = null,$id = null, $name = null) {
         $codigo = "<select ";
         if ($required) {
             $codigo .= "required ";
         }
         if ($class != null) {
             $codigo .= " class = \"" . $class . "\" ";
+        }
+        if ($id != null) {
+            $codigo .= " id = \"" . $id . "\" ";
         }
         if ($name != null) {
             $codigo .= " name = \"" . $name . "\"";
@@ -297,7 +306,7 @@ class Menu {
         return $codigo;
     }
 
-    public static function montarSelecaoPassageiros($required = false, $class = null, $name = null) {
+    public static function montarSelecaoPassageiros($required = false, $class = null, $id = null, $name = null) {
         $codigo = "<select multiple='multiple' size='7'";
         if ($required) {
             $codigo .= "required ";
@@ -305,18 +314,25 @@ class Menu {
         if ($class != null) {
             $codigo .= " class = \"" . $class . "\" ";
         }
+        if ($id != null) {
+            $codigo .= " id = \"" . $id . "\" ";
+        }
         if ($name != null) {
             $codigo .= " name = \"" . $name . "\"";
         }
-        $codigo .= " style='display: table-cell'>\n";
-
-        $usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome) as Nome,email");
-        if (sizeof($usuarios) == 0) {
-            $codigo .="";
-        } else {
+        $codigo .= " style='display: table-cell;'>\n";
+        for ($i = 1; $i <= Papel::__length; $i++) {
+            $usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome) as Nome,email", "idPapel = " . $i);
+            if (sizeof($usuarios) == 0) {
+                continue;
+            } else {
+                $nomePapel = papelDAO::obterNomePapel($i);
 //            $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
-            for ($i = 0; $i < sizeof($usuarios); $i++) {
-                $codigo .= "<option value=\"" . fnEncrypt($usuarios[$i]['idUsuario']) . "\">" . $usuarios[$i]['Nome'] ." (".$usuarios[$i]['email']. ")</option>\n";
+                $codigo .= "<optgroup label='$nomePapel'>\n";
+                for ($j = 0; $j < sizeof($usuarios); $j++) {
+                    $codigo .= "<option value=\"" . fnEncrypt($usuarios[$j]['idUsuario']) . "\">" . $usuarios[$j]['Nome'] . " (" . $usuarios[$j]['email'] . ")</option>\n";
+                }
+                $codigo .= "</optgroup>\n";
             }
         }
         $codigo .= "</select>\n";

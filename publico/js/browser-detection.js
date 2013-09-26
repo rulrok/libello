@@ -5,7 +5,7 @@
  * Visit us at: www.devslide.com/labs
  */
 
-var notSupportedBrowsers = [];
+var notSupportedBrowsers = [{'os': 'Any', 'browser': 'MSIE', 'version': 8}, {'os': 'Any', 'browser': 'Firefox', 'version': 25}, {'os': 'Any', 'browser': 'Chrome', 'version': 25}, {'os': 'Mac', 'browser': 'Safari', 'version': 5}, {'os': 'Any', 'browser': 'Opera', 'version': 14}];
 var displayPoweredBy = false;
 var noticeLang = 'custom';
 var noticeLangCustom = {
@@ -209,8 +209,9 @@ var BrowserDetection = {
         this.browser = '';
         this.browserVersion = 0;
 
-        if (/Opera[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
+        if (/(Opera|OPR)[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {
             this.browser = 'Opera';
+            this.browserVersion = new Number(RegExp.$2);
         } else if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) {
             this.browser = 'MSIE';
         } else if (/Navigator[\/\s](\d+\.\d+)/.test(navigator.userAgent)) {

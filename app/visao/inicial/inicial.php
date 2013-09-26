@@ -26,7 +26,21 @@
         <link type="text/css" rel="stylesheet" href="publico/css/mainStyle.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.dataTables_themeroller.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.datepick.css"/> 
-        <link rel="stylesheet" type="text/css" media="screen" href="publico/css/browser-detection.css" />
+        <link type="text/css" rel="stylesheet" href="publico/css/jquery.chosen.css"/> 
+        <link type="text/css" rel="stylesheet" media="screen" href="publico/css/browser-detection.css" />
+        <style>
+            .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+            .ui-timepicker-div dl { text-align: left; }
+            .ui-timepicker-div dl dt { float: left; clear:left; padding: 0 0 0 5px; }
+            .ui-timepicker-div dl dd { margin: 0 10px 10px 40%; }
+            .ui-timepicker-div td { font-size: 90%; }
+            .ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+
+            .ui-timepicker-rtl{ direction: rtl; }
+            .ui-timepicker-rtl dl { text-align: right; padding: 0 5px 0 0; }
+            .ui-timepicker-rtl dl dt{ float: right; clear: right; }
+            .ui-timepicker-rtl dl dd { margin: 0 40% 10px 10px; }
+        </style>
 
         <!-- Fim ESTILOS -->
         <!-- PRE SCRIPTS -->
@@ -34,9 +48,10 @@
 
         <script src="publico/js/jquery/jquery-1.9.1.js"></script>
         <script src="publico/js/jquery/jquery.ba-hashchange.js"></script>
-        <script src="publico/js/mainScript.js"></script>
-        <script type="text/javascript" src="publico/js/validarCampos.js"></script>
         <script src="publico/js/jquery/jquery.form.js"></script>
+        <script src="publico/js/jquery/jquery.chosen.js"></script>
+        <script src="publico/js/mainScript.js"></script>
+        <script src="publico/js/validarCampos.js"></script>
         <script src="publico/js/ajaxForms.js"></script> 
         <script src="publico/js/oTable.js" ></script>
         <script src='publico/js/teste.js' type='text/javascript'></script>
@@ -184,7 +199,25 @@
             $.datepick.setDefaults({
                 dateFormat: 'dd/mm/yyyy'
             });
-
+            //Configura pequena função para criar limiter em textareas
+            (function($) {
+                $.fn.extend({
+                    limiter: function(limit, elem) {
+                        $(this).on("keyup focus", function() {
+                            setCount(this, elem);
+                        });
+                        function setCount(src, elem) {
+                            var chars = src.value.length;
+                            if (chars > limit) {
+                                src.value = src.value.substr(0, limit);
+                                chars = limit;
+                            }
+                            elem.html(limit - chars);
+                        }
+                        setCount($(this)[0], elem);
+                    }
+                });
+            })(jQuery);
             //Configura botão para tela cheia
 //                                $("#fullscreen-toggle").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
 //                                $("#fullscreen-off").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});

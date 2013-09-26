@@ -9,7 +9,8 @@
         </span>
         <div class="line">
             <label for="descricoes">Descrições</label>
-            <textarea type="textarea" rows="8" id="descricoes" name="descricoes" title="Descrições" data-content="Alguma característica do equipamento. Limite de 1000 caracteres." ></textarea>           
+            <textarea type="textarea" rows="8" id="descricoes" name="descricoes" class="input-xlarge" title="Descrições" data-content="Alguma característica do equipamento. Limite de 1000 caracteres." ></textarea>           
+            <div id="chars">1000</div>
         </div>
         <div class="line">
             <label>Data de entrada</label>
@@ -63,6 +64,8 @@
 </form>
 
 <script>
+                        var elem = $("#chars");
+                        $("#descricoes").limiter(1000, elem);
                         $(".line input").popover({trigger: 'focus', container: 'body'});
                         $(".line textarea").popover({trigger: 'focus', container: 'body'});
                         var quantidadePatrimonios = 1;

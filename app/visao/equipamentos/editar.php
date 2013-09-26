@@ -10,7 +10,8 @@
         </span>
         <div class="line">
             <label for="descricao">Descrições</label>
-            <textarea type="textarea" rows="8" id="descricao" name="descricao" title="Descrições" data-content="Limite de 1000 caracteres." placeholder="Sem descrição" ><?php echo $this->descricao; ?></textarea>           
+            <textarea type="textarea" rows="8" id="descricao" name="descricao" class="input-xlarge" title="Descrições" data-content="Limite de 1000 caracteres." placeholder="Sem descrição" ><?php echo $this->descricao; ?></textarea>           
+            <div id="chars">1000</div>
         </div>
         <div class="line">
             <label>Data de entrada</label>
@@ -57,6 +58,8 @@
 
 <script>
     $(document).ready(function() {
+        var elem = $("#chars");
+        $("#descricao").limiter(1000, elem);
         varrerCampos();
         formularioAjax();
         $("#dataEntrada").datepick();

@@ -1,18 +1,5 @@
 <title>Nova viagem</title>
 <!-- Início da página -->
-<style>
-    .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
-    .ui-timepicker-div dl { text-align: left; }
-    .ui-timepicker-div dl dt { float: left; clear:left; padding: 0 0 0 5px; }
-    .ui-timepicker-div dl dd { margin: 0 10px 10px 40%; }
-    .ui-timepicker-div td { font-size: 90%; }
-    .ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
-
-    .ui-timepicker-rtl{ direction: rtl; }
-    .ui-timepicker-rtl dl { text-align: right; padding: 0 5px 0 0; }
-    .ui-timepicker-rtl dl dt{ float: right; clear: right; }
-    .ui-timepicker-rtl dl dd { margin: 0 40% 10px 10px; }
-</style>
 <form class="table centered" id="ajaxForm" method="post" action="index.php?c=viagens&a=verificarnova">
     <fieldset>
         <legend>Dados da viagem</legend>
@@ -21,8 +8,8 @@
             <label for='curso'>Curso vinculado</label>
             <?php echo $this->cursos ?>
         </div>
-        <div class="line" for='polo'>
-            <label>Polo destino</label>
+        <div class="line" >
+            <label for='polo'>Polo destino</label>
             <?php echo $this->polos ?>
         </div>
         <hr>
@@ -58,57 +45,68 @@
         </div>
         <div class="line">
             <label for='diarias'>Diárias</label>
-            <input type="number" min="0.5" step="0.5" id="diarias" class=" input-large" name="diarias" value='0.5' title='Quantidade de diárias' data-content="Valores como 0.5, 1, 1.5, 2, 2.5 etc">
+            <input required type="number" min="0.5" step="0.5" id="diarias" class=" input-large" name="diarias" value='0.5' title='Quantidade de diárias' data-content="Valores como 0.5, 1, 1.5, 2, 2.5 etc">
         </div>
         <hr>
         <fieldset>
             <legend>Passageiros</legend>
-            <div class="line" style='display: table'>
-                <!--<label for='nome'>Passageiros</label>-->
-                <?php echo $this->passageiros ?>
-                <div class='btn-toolbar' style='display: table-cell'>
-                    <div class='btn-group-vertical' style="display: inline-block;">
-                        <a type="button" class="btn" id="add" ><i class='icon-arrow-right'></i></a>
-                        <a type="button" class="btn disabled" ><i class=''></i></a>
-                        <a type="button" class="btn" id="rem"><i class='icon-arrow-left'></i></a>
-                    </div>
-                </div>
-                <select required size="7" multiple="multiple" class="passageiros selecaoPassageiros" name="passageiros[]" style='display: table-cell'>
-                </select>
-            </div>
-            <div class='alert alert-info' style="margin: 0">
-                <span class='label label-info'>Dica </span> &nbsp;&nbsp;Você pode escolher vários passageiros ao mesmo tempo segurando CTRL
+            <div class='alert alert-info'>
+                <span class='label label-info'>Dica </span> Escolha vários passageiros ao mesmo tempo segurando a tecla <span class="badge" id="tecla"></span>
                 <a class="close" data-dismiss="alert" href="#">&times;</a>
             </div>
+            <div class="line" style='display: table'>
+                <!--<label for='passageiros'>Passageiros</label>-->
+                <?php echo $this->passageiros ?>
+            </div>
+            <br/>
         </fieldset>
     </fieldset>
     <input class="btn btn-large" type="reset" value="Limpar">
     <input class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit" value="Cadastrar">
 
 </form>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
 <script src='publico/js/jquery/jquery-ui-timepicker-addon.js' type='text/javascript'></script>
 
 <script>
     $(document).ready(function() {
-        b();
-        $('#add').click(function() {
-            $('.passageirosPossiveis option:selected').each(function() {
-                $('.passageiros').append('<option selected="selected" value="' + $(this).val() + '">' + $(this).text() + '</option>');
-                $(this).remove();
-            });
-        });
 
-        $('#rem').click(function() {
-            $('.passageiros option:selected').each(function() {
-                $('.passageirosPossiveis').append('<option value="' + $(this).val() + '">' + $(this).text() + '</option>');
-                $(this).remove();
-                $(".passageiros option").each(function() {
-                    $(this).attr({selected: 'selected'});
-                });
-            });
-        });
-        $(".line input").popover({trigger: 'focus', container: 'body'});
+//        var tecla = document.createElement("p");
+        var teclaSpan = document.getElementById("tecla");
+        if (OSName === "MacOS") {
+            var texto = document.createTextNode("Command " + String.fromCharCode(8984));
+        } else {
+            texto = document.createTextNode("CTRL");
+        }
+        teclaSpan.appendChild(texto);
+        b();
         varrerCampos();
+        $("#passageiros").chosen({display_disabled_options: false, display_selected_options: false, placeholder_text_multiple: "Selecione os passageiros", width: "650px"});
+        $("select").not("#passageiros").chosen();
+//        $("div .line:has('select.campoErrado')").addClass("campoErrado")
+//        
+//        $('#add').click(function() {
+//            $('.passageirosPossiveis option:selected').each(function() {
+//                $('.passageiros').append('<option selected="selected" value="' + $(this).val() + '">' + $(this).text() + '</option>');
+//                $(this).remove();
+//            });
+//        });
+//
+//        $('#rem').click(function() {
+//            $('.passageiros option:selected').each(function() {
+//                $('.passageirosPossiveis').append('<option value="' + $(this).val() + '">' + $(this).text() + '</option>');
+//                $(this).remove();
+//                $(".passageiros option").each(function() {
+//                    $(this).attr({selected: 'selected'});
+//                });
+//            });
+//        });
+        $(".line input").popover({trigger: 'focus', container: 'body'});
         formularioAjax();
     });
 </script>
