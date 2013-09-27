@@ -153,6 +153,7 @@ $(document).ready(function() {
 
     //Manter o menu 'colado' no topo da página quando ela desce muito
     $(window).bind("scroll", acoplarMenu);
+
 });
 
 //----------------------------------------------------------------------//
@@ -281,7 +282,7 @@ function acoplarMenu() {
     var windowPosition = $(window).scrollTop();
     if (!window.menuHadUpped && windowPosition >= menuPosition) {
         window.menuHadUpped = true;
-        //console.debug("Fixou o menu");
+        /*  MENU FIXADO  */
         hideSubMenu(400);
         $("#barra_superior").show(800);
         var divMenu = $(".menuContainer");
@@ -292,17 +293,43 @@ function acoplarMenu() {
         divMenu.css('width', '100%');
         var divContent = $(".content");
         divContent.css('padding-top', menuHeight + 'px');
+
+        //Trata div do popup
+        var popup = $(".popUp");
+        var alturaMenu = $(".menu").height();
+        $(popup).css('position', 'fixed');
+        $(popup).css('left', '10px');
+        $(popup).css('top', alturaMenu + 40 + 'px');
+
+        $(".menuContainer").hover(function() {
+            showSubMenu(100)
+        }, function() {
+            hideSubMenu(20)
+        });
+        $(".subMenu").mouseenter(function() {
+            $(".menuContainer").css('background','url("publico/imagens/backgroundMenu.png")')
+        })
     } else if (window.menuHadUpped && windowPosition < menuPosition) {
         window.menuHadUpped = false;
         $("#barra_superior").hide(500);
         showSubMenu();
-        //console.debug("Retornou ao normal");
+        /*  MENU NORMAL  */
         var divMenu = $(".menuContainer");
         divMenu.removeClass("fixedMenu");
         divMenu.css('position', 'relative');
         divMenu.css('top', '0px');
         var divContent = $(".content");
         divContent.css('padding-top', '0px');
+
+        //Trata div do popup
+        var popup = $(".popUp");
+        var alturaMenu = $(".menu").height();
+        var alturaHeader = $("header").height();
+        $(popup).css('position', 'absolute');
+        $(popup).css('left', '10px');
+        $(popup).css('top', alturaMenu + alturaHeader + 40 + "px");
+
+        $(".menuContainer").unbind("mouseenter mouseleave")
     }
 }
 /**

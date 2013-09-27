@@ -108,5 +108,9 @@
 //        });
         $(".line input").popover({trigger: 'focus', container: 'body'});
         formularioAjax();
+
+        $("input[type=reset]").bind("click", function() {
+            $("select").val('').trigger("chosen:updated");
+        });
     });
 </script>

@@ -4,27 +4,47 @@
  * tem seu conteúdo alterado.
  * 
  */
+function a() {
+    console.log("disparou");
+}
 function varrerCampos() {
-    var camposObrigatorios = $("input[required],select[required]").not(".ignorar").not(".campoVarrido");
+    var camposObrigatorios = $("input:required,select:required,textarea:required").not(".ignorar").not(".campoVarrido");
     if (camposObrigatorios.length > 0) {
+        $(camposObrigatorios).each(function() {
 
-        $(camposObrigatorios).after("<img src=\"publico/imagens/icones/campo_obrigatorio.png\">");
-        $(camposObrigatorios).addClass("campoVarrido");
-        $(camposObrigatorios).bind('change', function() {
-            liberarCadastro();
-        });
-        $(camposObrigatorios).bind('blur', function() {
-            liberarCadastro();
-        });
-        $("input[type=reset]").bind('click', function() {
-            setTimeout(liberarCadastro, "100");
+            $(this).after("<img src=\"publico/imagens/icones/campo_obrigatorio.png\">");
+            $(this).addClass("campoVarrido");
+//            $(this).bind('keyup', liberarCadastro);
+            var tempoDigitando;                //timer identifier
+            var intervaloDigitacao = 500;  //time in ms, 5 second for example
+
+
+            $(this).bind("keyup", function() {
+                clearTimeout(tempoDigitando);
+                if ($(this).val != "") {
+                    tempoDigitando = setTimeout(liberarCadastro, intervaloDigitacao);
+                }
+            });
+
+//            $(this).keyup(function() {
+//                tempoDigitando = setTimeout(liberarCadastro, intervaloDigitacao);
+//            });
+//
+//            $(this).keydown(function() {
+//                clearTimeout(tempoDigitando);
+//            });
+
+
+            $(this).bind('blur', liberarCadastro);
         });
 
-        $("input[type=submit],input[value~='Atualizar']").bind("mouseover", function() {
-            liberarCadastro();
-        });
-        trataCamposData();
+        $("input[type=reset]").bind('click', setTimeout(liberarCadastro, "100"));
+
+        $("input[type=submit]").bind("mouseover", liberarCadastro);
     }
+    trataCamposData();
+    var camposComuns = $("input:not(:required),select:not(:required),textarea:not(:required)").not("[hidden],[type=submit],[type=reset]");
+    $(camposComuns).bind("blur", liberarCadastro);
 }
 
 /**
@@ -58,13 +78,9 @@ function trataCamposData() {
  * 
  * @returns {undefined}
  */
-function liberarCadastro(element) {
-    var campos;
-    if (element !== undefined) {
-        campos = $(this);
-    } else {
-        campos = $("input[required],select[required]").not(".ignorar");
-    }
+function liberarCadastro() {
+    $("input[type=submit]").prop('disabled', true);
+    var campos = $("input:required,select:required,textarea:required").not(".ignorar");
     var patter = null;
     var senhaLida = "";
     var tudoCerto = true;
@@ -72,6 +88,8 @@ function liberarCadastro(element) {
     var letrasacentuadas = "a-zA-ZÀ-ú";
     var letras = "a-zA-Z";
     var letrasnumeros = letras + "0-9";
+    //setup before functions
+
 
 
     for (var i = 0; i < campos.length; i++) {
@@ -139,10 +157,10 @@ function liberarCadastro(element) {
                 patter = new RegExp(".{3,}");
                 break;
             case "combobox":
-                //Rejeita campos com o valor 'default' (uma ER que NEGA uma palavra)
+                //Rejeita campos com o valor 'default'
                 patter = new RegExp("^((?!default).)*$");
                 break;
-            case "diarias":
+            case "diarias": //Página de cadastro de viagens
                 patter = new RegExp("(?!^0$)^[0-9]+?(\.[05])?$");
                 break;
             default:
@@ -165,7 +183,7 @@ function liberarCadastro(element) {
         if (!patter.test(campos[i].value)) {
             tudoCerto = false;
             $(campos[i]).addClass("campoErrado");
-            //break;
+//            break;
         } else {
             $(campos[i]).removeClass("campoErrado");
             //window.alert("Campo correto: "+campos[i].value );
@@ -178,9 +196,8 @@ function liberarCadastro(element) {
         tudoCerto = false;
     }
     if (tudoCerto) {
-        $("input[type=submit],input[value~='Atualizar']").attr('disabled', false);
-
+        $("input[type=submit]").prop('disabled', false);
     } else {
-        $("input[type=submit],input[value~='Atualizar']").attr('disabled', true);
+        $("input[type=submit]").prop('disabled', true);
     }
 }

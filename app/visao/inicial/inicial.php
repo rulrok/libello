@@ -67,7 +67,7 @@
         <title class="tituloFixo"><?php echo $this->titulo ?></title>
     </head>
     <body>
-        <nav>
+        <div id="frameConteudo">
             <hr id="barra_superior">
             <header>
                 <figure>
@@ -96,6 +96,8 @@
                     </div>
                 </div>
             </header>
+
+            <!-- Conteúdos auxiliares, como modais e etc -->
             <div class="shaderFrame"></div>
             <div class="shaderFrameContent">
                 <div class="shaderFrameContentWrap centered">
@@ -116,22 +118,28 @@
                     <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
                 </div>
             </div>
-            <hr id="menuPosition" >
-            <div class="menuContainer">
 
-                <?php echo $this->menu ?>
-
-                <div class="popUp table" style="display: none;">
-                    <div class="botao_fechar" onclick="hidePopUp();"></div>
-                    <p class="popUpContent centeredText "></p>
-                </div>
-
-                <div id="esconderHeader"></div>
-
+            <div class="popUp table" style="display: none;">
+                <div class="botao_fechar" onclick="hidePopUp();"></div>
+                <p class="popUpContent centeredText "></p>
             </div>
+
+            <!-- Fim dos conteúdos auxiliares -->
+
+            <hr id="menuPosition" >
+            <nav>
+                <div class="menuContainer">
+
+                    <?php echo $this->menu ?>
+
+
+
+                    <div id="esconderHeader"></div>
+
+                </div>
+            </nav>
             <div class="content centered">
-                <center>
-                </center>
+
                 <div class="contentWrap centered">
                     <?php
                     if (isset($this->conteudo)) {
@@ -140,32 +148,34 @@
                     ?>
                 </div>
             </div>
-        </nav>
+        </div>
         <footer>
             <span class="arrow-up" onclick="showFooter();"></span>
             <div class="footerWrap">
                 <span class="arrow-down" onclick="hideFooter();"></span>
                 <center>
-                    <div class="footerLinks" id="links-rapidos">
-                        <ul><lt>Links rápidos</lt>
-                            <li><a href="http://cead.unifal-mg.edu.br" target="_blank">Cead - portal</a></li>
-                            <li><a href="http://virtual.unifal-mg.edu.br" target="_blank">Moodle</a></li>
-                            <li><a href="http://www.unifal-mg.edu.br" target="_blank">Unifal</a></li>
-                        </ul>
-                    </div>
-                    <div class="footerLinks" id="informacoes">
-                        <ul><lt>Informações</lt>
-                            <li><p>Este site é corretamente visualizado no <a href="http://www.google.com/chrome/" target="_blank">Google Chrome</a>, <a href="http://www.mozilla.org/pt-BR/firefox/fx/" target="_blank">Firefox</a> ou <a href="http://www.opera.com/download" target="_blank">Opera</a>.
-                                    <br>
-                                    <i><b>Não há garantias de funcionar com o Internet Explorer nem com o Safari.</b></i></p>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="footerLinks" id="suporte">
-                        <ul><lt>Suporte</lt>
-                            <li>reuel@bcc.unifal-mg.edu.br</li>
-                        </ul>
-                    </div>
+                    <nav>
+                        <div class="footerLinks" id="links-rapidos">
+                            <ul><lt>Links rápidos</lt>
+                                <li><a href="http://cead.unifal-mg.edu.br" target="_blank">Cead - portal</a></li>
+                                <li><a href="http://virtual.unifal-mg.edu.br" target="_blank">Moodle</a></li>
+                                <li><a href="http://www.unifal-mg.edu.br" target="_blank">Unifal</a></li>
+                            </ul>
+                        </div>
+                        <div class="footerLinks" id="informacoes">
+                            <ul><lt>Informações</lt>
+                                <li><p>Este site é corretamente visualizado no <a href="http://www.google.com/chrome/" target="_blank">Google Chrome</a>, <a href="http://www.mozilla.org/pt-BR/firefox/fx/" target="_blank">Firefox</a> ou <a href="http://www.opera.com/download" target="_blank">Opera</a>.
+                                        <br>
+                                        <i><b>Não há garantias de funcionar com o Internet Explorer nem com o Safari.</b></i></p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="footerLinks" id="suporte">
+                            <ul><lt>Suporte</lt>
+                                <li>reuel@bcc.unifal-mg.edu.br</li>
+                            </ul>
+                        </div>
+                    </nav>
                 </center>
             </div>
         </footer>

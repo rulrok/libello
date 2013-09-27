@@ -33,11 +33,15 @@
             });
             $("#estado").chosen();
             $("#cidade").chosen();
+
+            $("input[type=reset]").bind("click", function() {
+                $("select").val('').trigger("chosen:updated");
+            });
         });
 
         $('#estado').change(function() {
             setTimeout(function() {
-                
+
                 $("#cidade").val('').trigger("chosen:updated");
             }, "200");
         });

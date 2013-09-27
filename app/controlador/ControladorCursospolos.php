@@ -56,7 +56,7 @@ class ControladorCursospolos extends Controlador {
     public function acaoEditarCurso() {
         if (isset($_GET['cursoID']) || isset($_POST['cursoID'])) {
             $this->visao->comboArea = ComboBoxAreas::montarTodasAsAreas();
-            $this->visao->comboTipoCurso = ComboBoxTipoCurso::montarTodosOsTipos();
+            $this->visao->comboTipoCurso = ComboBoxCurso::montarTodosOsTipos();
             $cursoID = fnDecrypt($_REQUEST['cursoID']);
             $this->visao->cursoID = $_REQUEST['cursoID'];
             $curso = cursoDAO::recuperarCurso($cursoID);
