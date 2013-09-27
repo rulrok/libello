@@ -17,13 +17,13 @@
             <label for='dataIda'>Data ida</label>
             <input type="text" readonly required id="dataIda" class=" input-large campoData" placeholder="Clique para escolher" name="dataIda" >
             <label for='horaIda'>Hora ida</label>
-            <input type="text" readonly required id="horaIda" class=" input-large campoHora" placeholder="Clique para escolher" name="horaIda" value='00:00'>
+            <input type="text" readonly required id="horaIda" class=" input-large campoHora" placeholder="Clique para escolher" name="horaIda" >
         </div>
         <div class="line">
             <label for='dataVolta'>Data volta</label>
             <input type="text" readonly required id="dataVolta" class=" input-large campoData" placeholder="Clique para escolher" name="dataVolta" >
             <label for='horaVolta'>Hora volta</label>
-            <input type="text" readonly required id="horaVolta" class=" input-large campoHora" placeholder="Clique para escolher" name="horaVolta" value='00:00' >
+            <input type="text" readonly required id="horaVolta" class=" input-large campoHora" placeholder="Clique para escolher" name="horaVolta"  >
         </div>
         <hr>
         <div class="line">
@@ -40,12 +40,13 @@
         <div class="line">
             <label for='estado'>Estado da viagem</label>
             <select required id="estado" class="input-xlarge" name="estado">
+                <option value="default">-- Escolha uma opção --</option>
                 <option value="planejada">Planejada</option>
             </select>
         </div>
         <div class="line">
             <label for='diarias'>Diárias</label>
-            <input required type="number" min="0.5" step="0.5" id="diarias" class=" input-large" name="diarias" value='0.5' title='Quantidade de diárias' data-content="Valores como 0.5, 1, 1.5, 2, 2.5 etc">
+            <input required type="number" min="0.5" step="0.5" id="diarias" class=" input-large" name="diarias"  title='Quantidade de diárias' data-content="Valores como 0.5, 1, 1.5, 2, 2.5 etc">
         </div>
         <hr>
         <fieldset>
@@ -71,12 +72,11 @@
 <br/>
 <br/>
 <br/>
-<script src='publico/js/jquery/jquery-ui-timepicker-addon.js' type='text/javascript'></script>
-
+<script src='publico/js/datasComRange.js' type='text/javascript'></script>
 <script>
     $(document).ready(function() {
 
-//        var tecla = document.createElement("p");
+        //Descobre o SO para exibir texto correto sobre tecla CTRL ou Command (Mac)
         var teclaSpan = document.getElementById("tecla");
         if (OSName === "MacOS") {
             var texto = document.createTextNode("Command " + String.fromCharCode(8984));
@@ -84,10 +84,12 @@
             texto = document.createTextNode("CTRL");
         }
         teclaSpan.appendChild(texto);
-        b();
+
+
+        configurarCamposDataHora('#dataIda', '#dataVolta');
         varrerCampos();
         $("#passageiros").chosen({display_disabled_options: false, display_selected_options: false, placeholder_text_multiple: "Selecione os passageiros", width: "650px"});
-        $("select").not("#passageiros").chosen();
+//        $("select").not("#passageiros").chosen();
 //        $("div .line:has('select.campoErrado')").addClass("campoErrado")
 //        
 //        $('#add').click(function() {
@@ -111,6 +113,8 @@
 
         $("input[type=reset]").bind("click", function() {
             $("select").val('').trigger("chosen:updated");
+            $("div.chosen-container li.search-choice").remove();
+            $("div.chosen-container li.search-field").addClass("default");
         });
     });
 </script>

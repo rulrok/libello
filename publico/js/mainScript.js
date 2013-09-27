@@ -38,17 +38,16 @@ $(document).ready(function() {
             document.ignorarHashChange = false;
             return;
         }
-//        if (document.paginaAlterada) {
-//            var ignorarMudancas = confirm("Modificações não salvas. Continuar?");
-//            if (!ignorarMudancas) {
-//                var antigaURL = e.originalEvent.oldURL;
-//                location.href = antigaURL;
-////                history.
-//                document.ignorarHashChange = true;
-//                return false;
-//            }
-//        }
-        document.paginaAlterada = false;
+        if (document.paginaAlterada) {
+            var ignorarMudancas = confirm("Modificações não salvas. Continuar?");
+            if (!ignorarMudancas) {
+                var antigaURL = e.originalEvent.oldURL;
+                location.href = antigaURL;
+//                history.
+                document.ignorarHashChange = true;
+                return false;
+            }
+        }
         try {
             var url = location.hash;
         } catch (ex) {
@@ -68,7 +67,9 @@ $(document).ready(function() {
                 $(this).bind("click", confirmarDadosNaoSalvos);
                 $(this).bind("click", requererPaginaAtual);
             }
+//        alert("teste");
         });
+        document.paginaAlterada = false;
     });
 
     // Since the event is only triggered when the hash changes, we need to trigger
@@ -176,9 +177,10 @@ function confirmarDadosNaoSalvos(evt) {
         var ignorarMudancas = confirm("Modificações não salvas. Continuar?");
         if (!ignorarMudancas) {
             evt.preventDefault();
-            return;
+            return false;
         } else {
             document.paginaAlterada = false;
+            return true;
         }
     }
 }
@@ -307,7 +309,7 @@ function acoplarMenu() {
             hideSubMenu(20)
         });
         $(".subMenu").mouseenter(function() {
-            $(".menuContainer").css('background','url("publico/imagens/backgroundMenu.png")')
+            $(".menuContainer").css('background', 'url("publico/imagens/backgroundMenu.png")')
         })
     } else if (window.menuHadUpped && windowPosition < menuPosition) {
         window.menuHadUpped = false;
@@ -490,7 +492,7 @@ function ajax(link, place, hidePop, async) {
 
         //TODO encontrar uma forma de tratar os campos somente leitura dos datapickers, pois quando
         //é escolhida uma data através do jquery, o evento change não é acionado.
-        $("input, select").not('.ignorar').not('.dataTables_filter input').not('.dataTables_length *').change(function() {
+        $("input, select").not('.ignorar').not('.dataTables_filter input').not('.dataTables_length *').keyup(function() {
             document.paginaAlterada = true;
         });
 
@@ -755,6 +757,7 @@ function showPopUp(data, type) {
         $(".botao_fechar").show(100, function() {
             $(".popUp").css("display", "table");
         });
+        $(this).effect("shake", {}, 500);
     });
 }
 

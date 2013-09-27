@@ -38,7 +38,7 @@ function varrerCampos() {
             $(this).bind('blur', liberarCadastro);
         });
 
-        $("input[type=reset]").bind('click', setTimeout(liberarCadastro, "100"));
+        $("input[type=reset]").bind('mouseup', function(){setTimeout(liberarCadastro, "300")});
 
         $("input[type=submit]").bind("mouseover", liberarCadastro);
     }

@@ -9,7 +9,7 @@
             'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
         dayNames: ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'],
         dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
-        dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+        dayNamesMin: ['T', 'S', 'T', 'Q', 'Q', 'S', 'S'],
         dateFormat: 'dd/mm/yyyy', firstDay: 0,
         renderer: $.datepick.defaultRenderer,
         prevText: '&lt;Anterior', prevStatus: 'Mostra o mês anterior',

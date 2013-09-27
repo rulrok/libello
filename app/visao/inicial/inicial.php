@@ -52,13 +52,22 @@
         <script src="publico/js/jquery/jquery.chosen.js"></script>
         <script src="publico/js/mainScript.js"></script>
         <script src="publico/js/validarCampos.js"></script>
-        <script src="publico/js/ajaxForms.js"></script> 
-        <script src="publico/js/oTable.js" ></script>
-        <script src='publico/js/teste.js' type='text/javascript'></script>
+        <script src="publico/js/ajaxForms.js"></script>
         <script>
-            window.onbeforeunload = function(evt) {
-                if (document.paginaAlterada)
-                    return 'Modificações não salvas. Continuar?';
+            window.onbeforeunload = function(e) {
+                if (document.paginaAlterada) {
+                    e = e || window.event;
+
+                    var msg = "Modificações não salvas. Continuar?";
+
+                    // For IE and Firefox prior to version 4
+                    if (e) {
+                        e.returnValue = msg;
+                    }
+
+                    // For Safari
+                    return msg;
+                }
             };
         </script>
 
@@ -184,6 +193,8 @@
         <script src="publico/js/jquery/jquery.dataTables.js"></script>
         <script src="publico/js/jquery/jquery.datepick.js"></script>
         <script src="publico/js/jquery/jquery.datepick-pt-BR.js"></script>
+        <script src='publico/js/jquery/jquery-ui-timepicker-addon.js'></script> 
+        <script src="publico/js/oTable.js" ></script>
         <script src="publico/js/bootstrap.js"></script> 
         <script>
             //Configurações globais para dataTables
@@ -209,6 +220,45 @@
             $.datepick.setDefaults({
                 dateFormat: 'dd/mm/yyyy'
             });
+            $.datepick.setDefaults($.datepick.regional['pt-BR']);
+            $.datepicker.regional['pt-BR'] = {
+                closeText: 'Fechar',
+                prevText: 'Anterior',
+                nextText: 'Próximo',
+                currentText: 'Atual',
+                monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+                    'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+                    'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                weekHeader: 'Semana',
+                dateFormat: 'dd/mm/yy',
+                firstDay: 1,
+                isRTL: false,
+                showMonthAfterYear: true,
+                yearSuffix: ''
+            };
+            $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
+
+            $.timepicker.regional['pt-BR'] = {
+                timeOnlyTitle: 'Apenas tempo',
+                timeText: 'Tempo',
+                hourText: 'Hora',
+                minuteText: 'Minuto',
+                secondText: 'Segundo',
+                millisecText: 'Milisegundo',
+                timezoneText: 'Região',
+                currentText: 'Agora',
+                closeText: 'OK',
+                timeFormat: 'HH:mm',
+                amNames: ['AM', 'A'],
+                pmNames: ['PM', 'P'],
+                isRTL: false
+            };
+            $.timepicker.setDefaults($.timepicker.regional['pt-BR']);
+
             //Configura pequena função para criar limiter em textareas
             (function($) {
                 $.fn.extend({
