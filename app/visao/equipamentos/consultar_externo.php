@@ -10,7 +10,7 @@
     </thead>
     <tbody>
         <?php
-        foreach ($this->equipamentosForaCead as $value) {
+        foreach ($this->equipamentosExternos as $value) {
             echo '<tr>';
             for ($i = 0; $i < sizeof($value) / 2; $i++) {
                 echo '<td>';

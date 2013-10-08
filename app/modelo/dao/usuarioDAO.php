@@ -72,7 +72,7 @@ class usuarioDAO extends abstractDAO {
         return $resultado;
     }
 
-    public static function remover($email) {
+    public static function desativar($email) {
         if ($email !== null) {
             if (is_array($email)) {
                 $email = $email['email'];

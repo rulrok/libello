@@ -51,7 +51,7 @@ class ControladorUsuarios extends Controlador {
         $this->renderizar();
     }
 
-    public function acaoRemover() {
+    public function acaoDesativar() {
         $this->renderizar();
     }
 

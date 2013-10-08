@@ -49,7 +49,7 @@ class sistemaDAO extends abstractDAO {
      * @param type $idUsuarioAlvo Usuário que está sendo editado.
      * @return boolean True em caso de sucesso, False em caso contrário.
      */
-    public static function registrarExclusaoUsuario($idUsuarioFonte, $idUsuarioAlvo) {
+    public static function registrarDesativacaoUsuario($idUsuarioFonte, $idUsuarioAlvo) {
         $quote = "\"";
         $tipo = TipoEventoSistema::REMOCAO_USUARIO;
         $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES ";

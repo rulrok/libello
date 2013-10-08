@@ -2,6 +2,7 @@
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/biblioteca/Mvc/Controlador.php';
 require_once APP_LOCATION . "modelo/ComboBoxPapeis.php";
+require_once APP_LOCATION . "modelo/ComboBoxUsuarios.php";
 require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
 
 class ControladorEquipamentos extends Controlador {
@@ -22,13 +23,13 @@ class ControladorEquipamentos extends Controlador {
         $this->renderizar();
     }
 
-    public function acaoConsultar_nocead() {
-        $this->visao->equipamentosNoCead = equipamentoDAO::consultar("nomeEquipamento,quantidade,dataEntrada,numeroPatrimonio");
+    public function acaoConsultar_interno() {
+        $this->visao->equipamentosInternos = equipamentoDAO::consultar("nomeEquipamento,quantidade,dataEntrada,numeroPatrimonio");
         $this->renderizar();
     }
 
-    public function acaoConsultar_foracead() {
-        $this->visao->equipamentosForaCead = equipamentoDAO::consultarSaidas("nomeEquipamento,quantidadeSaida,dataEntrada,numeroPatrimonio");
+    public function acaoConsultar_externo() {
+        $this->visao->equipamentosExternos = equipamentoDAO::consultarSaidas("nomeEquipamento,quantidadeSaida,dataEntrada,numeroPatrimonio");
         $this->renderizar();
     }
 
@@ -49,9 +50,10 @@ class ControladorEquipamentos extends Controlador {
 
     public function acaoEditar() {
         if (isset($_GET['equipamentoID']) || isset($_POST['equipamentoID'])) {
-            $idSaida = fnDecrypt($_REQUEST['equipamentoID']);
+            $idEquipamento = fnDecrypt($_REQUEST['equipamentoID']);
+            $this->visao->equipamentoEditavel = equipamentoDAO::equipamentoPodeTerTipoAlterado($idEquipamento);
             $this->visao->equipamentoID = $_REQUEST['equipamentoID'];
-            $equipamento = equipamentoDAO::recuperarEquipamento($idSaida);
+            $equipamento = equipamentoDAO::recuperarEquipamento($idEquipamento);
 
             $this->visao->descricao = $equipamento->get_descricao();
             $this->visao->equipamento = $equipamento->get_nomeEquipamento();
@@ -96,6 +98,7 @@ class ControladorEquipamentos extends Controlador {
             $this->visao->equipamentoID = fnEncrypt($equipamentoID);
             $this->visao->equipamento = $equipamento;
             $this->visao->quantidadeMaxima = $saida['quantidadeSaida'];
+            $this->visao->dataSaida = $saida['data'];
             $this->renderizar();
         } else {
             die("Acesso indevido");
@@ -121,6 +124,7 @@ class ControladorEquipamentos extends Controlador {
             $this->visao->comboboxPapeis = ComboBoxPapeis::montarComboBoxPadrao();
             $this->visao->equipamento = equipamentoDAO::recuperarEquipamento(fnDecrypt($_GET['equipamentoID']));
             $this->visao->equipamentoID = fnEncrypt($this->visao->equipamento->get_idEquipamento());
+            $this->visao->responsavel = ComboBoxUsuarios::montarResponsavelViagem();
             $this->renderizar();
         } else {
             die("Acesso indevido.");

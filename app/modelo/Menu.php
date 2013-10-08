@@ -277,7 +277,7 @@ class Menu {
         return $codigo;
     }
 
-    public static function montarCaixaSelecaoPolos($required = false, $class = null,$id = null, $name = null) {
+    public static function montarCaixaSelecaoPolos($required = false, $class = null, $id = null, $name = null) {
         $codigo = "<select ";
         if ($required) {
             $codigo .= "required ";
@@ -306,8 +306,12 @@ class Menu {
         return $codigo;
     }
 
-    public static function montarSelecaoPassageiros($required = false, $class = null, $id = null, $name = null) {
-        $codigo = "<select multiple='multiple' size='7'";
+    public static function montarSelecaoUsuarios($required = false, $class = null, $id = null, $name = null, $multiple = false) {
+        if ($multiple) {
+            $codigo = "<select multiple='multiple' size='7'";
+        } else {
+            $codigo = "<select size='7'";
+        }
         if ($required) {
             $codigo .= "required ";
         }

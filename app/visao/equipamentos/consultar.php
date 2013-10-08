@@ -1,8 +1,8 @@
 <title>Consultar equipamentos</title>
 <!-- Início da página -->
 <ul class="nav nav-tabs" id="abas">
-    <li><a href="javascript:void(0)" onclick="ajax('index.php?c=equipamentos&a=consultar_nocead', '#resultado_consulta', false);" data-toggle="tab">No CEAD</a></li>
-    <li><a href="javascript:void(0)" onclick="ajax('index.php?c=equipamentos&a=consultar_foracead', '#resultado_consulta', false);" data-toggle="tab">Fora do CEAD</a></li>
+    <li><a href="javascript:void(0)" onclick="ajax('index.php?c=equipamentos&a=consultar_interno', '#resultado_consulta', false);" data-toggle="tab">Interno</a></li>
+    <li><a href="javascript:void(0)" onclick="ajax('index.php?c=equipamentos&a=consultar_externo', '#resultado_consulta', false);" data-toggle="tab">Externo</a></li>
     <li><a href="javascript:void(0)" onclick="ajax('index.php?c=equipamentos&a=consultar_embaixa', '#resultado_consulta', false);" data-toggle="tab">Baixa</a></li>
 </ul>
 <div id="resultado_consulta">
@@ -15,10 +15,10 @@ if (isset($_GET['l'])) {
         case "baixa":
             $local = 2;
             break;
-        case "saida":
+        case "externo":
             $local = 1;
             break;
-        case "cead":
+        case "interno":
             $local = 0;
             break;
         default :
@@ -33,17 +33,17 @@ if (isset($_GET['l'])) {
 
             $('#abas a').on('click', function() {
                 switch (this.innerHTML.toLowerCase()) {
-                    case "no cead":
-                        local = "cead";
+                    case "interno":
+                        local = "interno";
                         break;
-                    case "fora do cead":
-                        local = "saida";
+                    case "externo":
+                        local = "externo";
                         break;
                     case "baixa":
                         local = "baixa";
                         break;
                     default:
-                        local = "cead";
+                        local = "interno";
                 }
                 history.replaceState(null, null, "#!equipamentos|consultar&l=" + local)
             });

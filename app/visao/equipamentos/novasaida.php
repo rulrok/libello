@@ -25,15 +25,19 @@
         <br/>
         <fieldset>
             <legend>Responsável</legend>
+            <!--            <div class="line">
+                            <label>Tipo</label>
+            <?php //echo $this->comboboxPapeis ?>
+                        </div>
+                        <div class="line">
+                            <label>Usuário</label>
+                            <select class="input-xlarge cb_usuarios" id="cb_usuarios" name="responsavel" required>
+                                <option value="default">-- Escolha um tipo de usuário --</option>
+                            </select>
+                        </div>-->
             <div class="line">
-                <label>Tipo</label>
-                <?php echo $this->comboboxPapeis ?>
-            </div>
-            <div class="line">
-                <label>Usuário</label>
-                <select class="input-xlarge cb_usuarios" id="cb_usuarios" name="responsavel" required>
-                    <option value="default">-- Escolha um tipo de usuário --</option>
-                </select>
+                <label for="responsavel">Responsável</label>
+                <?php echo $this->responsavel; ?>
             </div>
         </fieldset>
 
@@ -66,23 +70,24 @@
         varrerCampos();
     });
 
-    function buscarUsuarios(idPapel) {
-        document.paginaAlterada = false;
-        var retorno = ajax("index.php?c=equipamentos&a=listarUsuarios&idPapel=" + idPapel, null, false, false);
-        document.paginaAlterada = true;
-        var json = extrairJSON(retorno);
-        var cb;
-        if (json.length > 0) {
-            cb = '<option value="default">-- Selecione um usuário --</option>';
-            for (var i = 0; i < json.length; i++) {
-//            console.log(retorno[i]);
-                cb += '\n<option value="' + json[i].idUsuario + '">' + (i + 1) + ": " + json[i].Nome + '</option>';
-            }
-        } else {
-            cb = '<option value="default">-- Não existem usuários desse tipo --</option>';
-        }
-//        console.log(cb);
-        $("#cb_usuarios").empty();
-        $("#cb_usuarios").append(cb);
-    }
+//    function buscarUsuarios(idPapel) {
+//        document.paginaAlterada = false;
+//        var retorno = ajax("index.php?c=equipamentos&a=listarUsuarios&idPapel=" + idPapel, null, false, false);
+//        document.paginaAlterada = true;
+//        var json = extrairJSON(retorno);
+//        var cb;
+//        if (json.length > 0) {
+//            cb = '<option value="default">-- Selecione um usuário --</option>';
+//            for (var i = 0; i < json.length; i++) {
+////            console.log(retorno[i]);
+//                cb += '\n<option value="' + json[i].idUsuario + '">' + (i + 1) + ": " + json[i].Nome + '</option>';
+//            }
+//        } else {
+//            cb = '<option value="default">-- Não existem usuários desse tipo --</option>';
+//        }
+////        console.log(cb);
+//        $("#cb_usuarios").empty();
+//        $("#cb_usuarios").append(cb);
+//    }
+    $("#responsavel").chosen({display_disabled_options: false, display_selected_options: true, inherit_select_classes: true, placeholder_text_multiple: "Selecione o responsavel pela saída", width: "450px"});
 </script>

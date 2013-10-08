@@ -12,9 +12,14 @@ class ControladorViagens extends Controlador {
         $this->visao->cursos = ComboBoxCurso::montarTodosOsCursos();
         $this->visao->polos = ComboBoxPolo::montarTodosOsPolos();
         $this->visao->passageiros = ComboBoxUsuarios::montarPassageiros();
+        $this->visao->responsavel = ComboBoxUsuarios::montarResponsavelViagem();
         $this->renderizar();
     }
 
+    public function acaoVerificarnova(){
+        $this->renderizar();
+    }
+    
     public function acaoGerenciar() {
         $this->renderizar();
     }

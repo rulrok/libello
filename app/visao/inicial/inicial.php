@@ -86,7 +86,7 @@
                     <img class="logo" src="publico/imagens/cead.png" usemap="#logoMap">
                 </figure>
                 <div class="headerWrap">
-                    <h1>Controle CEAD <sup>(versão alpha)</sup></h1>
+                    <h1>Controle CEAD <sup>(versão <?php echo APP_VERSION; ?>)</sup></h1>
                 </div>
                 <div class="userInfoWrap">
                     <p>Logado como: <b><?php echo $this->usuario ?></b> (<?php echo $this->papel ?>)</p>

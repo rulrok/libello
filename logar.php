@@ -50,7 +50,7 @@ if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION[
                         <input hidden type="text" id="alvo" name="alvo" />
                         <div class="line">
                             <label>Email</label>
-                            <input required type="text" name="login">
+                            <input required type="email" name="login">
                         </div>
                         <div class="line">
                             <label>Senha</label>
@@ -80,7 +80,7 @@ if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION[
                 <div id="capes"></div>
             </div>
             <div id="footer" >
-                <p class="centeredText">Copyright &copy; 2012 - 2013 | Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a></label>
+                <p class="centeredText">Copyright &copy; 2012 - 2013 | Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a> | Versão <?php echo APP_VERSION; ?></p>
             </div>
         <?php endif; ?>
         <script>

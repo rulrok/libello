@@ -20,10 +20,22 @@ class verificarEdicao extends verificadorFormularioAjax {
             if ($equipamentoNome != "") {
                 $equipamento = equipamentoDAO::recuperarEquipamento($equipamentoID);
 
+                $numPatrimonio = $equipamento->get_numeroPatrimonio();
+                
+//                $this->mensagem->set_mensagem(print_r($equipamento,true));
+//                return;
                 if ($tipoEquipamento === "custeio") {
+                    if (($numPatrimonio != "") && !equipamentoDAO::equipamentoPodeTerTipoAlterado($equipamentoID)) {
+                        $this->mensagem->set_mensagem("Não é possível alterar o tipo")->set_status(Mensagem::ERRO);
+                        return;
+                    }
                     //É um item de custeio
                     $numeroPatrimonio = null;
                 } else {
+                    if ($numPatrimonio === "NULL" && !equipamentoDAO::equipamentoPodeTerTipoAlterado($equipamentoID)) {
+                        $this->mensagem->set_mensagem("Não é possível alterar o tipo")->set_status(Mensagem::ERRO);
+                        return;
+                    }
                     //É um patrimônio
                     $quantidade = 1;
                 }

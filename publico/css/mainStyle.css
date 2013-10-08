@@ -324,7 +324,7 @@ input[type=search]{
 /* CONTENT */
 .content {
     overflow:auto;
-    padding-bottom: 150px;
+    padding-bottom: 180px;
     width: 80%;
     position: relative;
     margin: auto;
@@ -332,7 +332,6 @@ input[type=search]{
     padding-left: 50px;
     padding-right: 50px;
 
-    padding-bottom: 30px;
     display: block;
 }
 
@@ -951,6 +950,8 @@ li[id$=Link]:before{
     top: 8px;
     display: table-cell;
     opacity: 0.8;
+    alignment-baseline: middle;
+    vertical-align: top;
 }
 
 .table .line label:first-letter{

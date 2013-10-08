@@ -199,13 +199,70 @@ class equipamentoDAO extends abstractDAO {
         }
     }
 
-    public static function cadastrarBaixa($idEquipamento, $dataBaixa, $quantidade, $observacoes = "NULL", $idSaida = "'NULL'") {
+    public static function cadastrarBaixa($idEquipamento, $dataBaixa, $quantidade, $observacoes = "NULL", $idSaida = "NULL") {
         $observacoes = parent::quote($observacoes);
         $dataBaixa = parent::quote($dataBaixa);
         $sql = "INSERT INTO equipamento_baixa(equipamento,saida,dataBaixa,quantidadeBaixa,observacoes) VALUES " .
                 "($idEquipamento,$idSaida,$dataBaixa,$quantidade,$observacoes)";
         try {
             parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Esta função verifica se um equipamento pode ter o seu tipo alterado, ou seja, se ele
+     * pode ser alterado de equipamento de custeio para equipamento com patrimônio. Isso apenas acontece para
+     * situações de erro na hora de cadastrar, pois, logo após que um equipamento tenho tido qualquer saída, e
+     * consequentemente algum retorno ou baixa, ele não pode mais então ser editado.
+     * @param type $idEquipamento
+     */
+    public static function equipamentoPodeTerTipoAlterado($idEquipamento) {
+        try {
+            //  Verifica se tem saída
+            $sql = "SELECT count(equipamento) as qtdSaidas FROM equipamento_saida WHERE equipamento = :equipamento";
+            $stmt = parent::getConexao()->prepare($sql);
+            $stmt->bindValue(":equipamento", $idEquipamento, PDO::PARAM_INT);
+            $stmt->execute();
+            $resultado = $stmt->fetch();
+            if (is_array($resultado)) {
+                $resultado = $resultado['qtdSaidas'];
+            } else {
+                $stmt->closeCursor();
+            }
+            if ((int) $resultado > 0) {
+                return false;
+            }
+            //  Verifica se tem baixa
+            $sql = "SELECT count(equipamento) as qtdBaixas FROM equipamento_baixa WHERE equipamento = :equipamento";
+            $stmt = parent::getConexao()->prepare($sql);
+            $stmt->bindValue(":equipamento", $idEquipamento, PDO::PARAM_INT);
+            $stmt->execute();
+            $resultado = $stmt->fetch();
+            if (is_array($resultado)) {
+                $resultado = $resultado['qtdBaixas'];
+            } else {
+                $stmt->closeCursor();
+            }
+            if ((int) $resultado > 0) {
+                return false;
+            }
+            //  Verifica se tem retorno
+            $sql = "SELECT count(equipamento) as qtdSaidas FROM equipamento_saida WHERE equipamento = :equipamento";
+            $stmt = parent::getConexao()->prepare($sql);
+            $stmt->bindValue(":equipamento", $idEquipamento, PDO::PARAM_INT);
+            $stmt->execute();
+            $resultado = $stmt->fetch();
+            if (is_array($resultado)) {
+                $resultado = $resultado['qtdSaidas'];
+            } else {
+                $stmt->closeCursor();
+            }
+            if ((int) $resultado > 0) {
+                return false;
+            }
             return true;
         } catch (Exception $e) {
             return false;

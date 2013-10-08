@@ -107,6 +107,7 @@
                             quantidadePatrimonios = 1;
                             removerPatrimonioAdicionado();
                             liberarCadastro();
+                            $("#chars").text("1000");
                         }
 
                         $(document).ready(function() {

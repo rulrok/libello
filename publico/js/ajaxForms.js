@@ -16,8 +16,19 @@
  * @param {Function} completeFn Função para ser ativada com o evento <code>complete</code>
  * do ajax.
  * @param {Function} successFn Função para ser ativada com um evento de sucesso.
+ * @param {Function} alwaysFn Função que sempre será executada.
  */
-function formularioAjax(idFormulario, recipient, completeFn, successFn) {
+function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn) {
+
+    if (typeof idFormulario == "object") {
+        recipient = idFormulario['recipient'];
+        completeFn = idFormulario['completeFn'];
+        successFn = idFormulario['successFn'];
+        alwaysFn = idFormulario['alwaysFn'];
+        idFormulario = idFormulario['idFormulario'];
+    }
+    
+
 
     if (idFormulario === undefined) {
         idFormulario = $("form").prop("id");
@@ -29,6 +40,7 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn) {
         //Do the AJAX post
         var post = $.post($("#" + idFormulario).attr("action"), $("#" + idFormulario).serialize(), function(data) {
             if (data !== null && data !== undefined) {
+                console.log(data);
                 data = extrairJSON(data);
 
                 if (data.status !== undefined && data.mensagem !== undefined) {
@@ -60,6 +72,12 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn) {
                 completeFn();
             }
         });
+
+        post.always(function() {
+            if (alwaysFn !== undefined && isFunction(alwaysFn)) {
+                alwaysFn();
+            }
+        })
         //Important. Stop the normal POST
         e.preventDefault();
     });

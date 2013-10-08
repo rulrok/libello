@@ -4,7 +4,7 @@
     <fieldset>
         <legend>Baixa de equipamento</legend>
         <input hidden="true" readonly="true" type="text" class="input-small" id="equipamentoID" name="equipamentoID" value="<?php echo $this->equipamentoID ?>" />
-        <input hidden="true" readonly="true" type="text" class="input-small" id="equipamentoID" name="saidaID" value="<?php echo $this->saidaID ?>" />
+        <input hidden="true" readonly="true" type="text" class="input-small" id="saidaID" name="saidaID" value="<?php echo $this->saidaID ?>" />
         <input hidden="true" readonly="true" type="text" class="input-small" id="quantidadeMaxima" name="quantidadeMaxima" value="<?php echo $this->quantidadeMaxima ?>" />
         <div class="line">
             <label>Equipamento</label>
@@ -22,6 +22,7 @@
         <div class="line">
             <label for="observacoes">Observações</label>
             <textarea type="textarea" rows="8" id="observacoes" name="observacoes" title="Observacoes" data-content="Registre algo que seja importante, como o estado em que o equipamento se encontrava." ></textarea>
+            <div id="chars">1000</div>
         </div>
     </fieldset>
     <input disabled class="btn btn-large btn-success btn-primary btn-right" type="submit" disabled value="Cadastrar">
@@ -30,6 +31,8 @@
 
 <script>
     $(document).ready(function() {
+        var elem = $("#chars");
+        $("#observacoes").limiter(1000, elem);
         $("#dataSaida").datepick();
         $(".line input").popover({trigger: 'focus', container: 'body'});
         $(".line textarea").popover({trigger: 'focus', container: 'body'});
@@ -38,6 +41,7 @@
                     $("input[type=submit]").prop("disabled", true);
                 },
                 function() {
+                    document.paginaAlterada = false;
                     setTimeout(function() {
                         history.back();
                     }, 1000);
