@@ -7,16 +7,16 @@
         <input hidden="true" readonly="true" type="text" class="input-small" id="saidaID" name="saidaID" value="<?php echo $this->saidaID ?>" />
         <input hidden="true" readonly="true" type="text" class="input-small" id="quantidadeMaxima" name="quantidadeMaxima" value="<?php echo $this->quantidadeMaxima ?>" />
         <div class="line">
-            <label>Equipamento</label>
+            <label for="equipamento">Equipamento</label>
             <input required readonly type="text" class="input-xlarge ignorar" id="equipamento" name="equipamento" value="<?php echo $this->equipamento->get_nomeEquipamento(); ?>" />
         </div>
         <hr/>
         <div class="line">
-            <label>Data de baixa</label>
+            <label for="dataSaida">Data de baixa</label>
             <input type="text"  required id="dataSaida" on class="campoData" name="dataBaixa" />
         </div>
         <div class="line">
-            <label>Quantidade</label>
+            <label for="quantidade">Quantidade</label>
             <input required type="number" min="1" max="<?php echo $this->quantidadeMaxima; ?>" class="input-medium" id="quantidade" name="quantidade" title="Quantidade a dar baixa" data-content="Máximo: <?php echo $this->quantidadeMaxima; ?>" value="1">
         </div>
         <div class="line">

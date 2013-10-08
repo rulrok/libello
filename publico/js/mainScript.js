@@ -492,8 +492,22 @@ function ajax(link, place, hidePop, async) {
 
         //TODO encontrar uma forma de tratar os campos somente leitura dos datapickers, pois quando
         //é escolhida uma data através do jquery, o evento change não é acionado.
-        $("input, select").not('.ignorar').not('.dataTables_filter input').not('.dataTables_length *').keyup(function() {
+        var camposAlteraveis = $("input, select, textarea").not('.ignorar').not('.dataTables_filter input').not('.dataTables_length *').not("[hidden]").not("[readonly]");
+
+        $(camposAlteraveis).bind("keyup", function() {
             document.paginaAlterada = true;
+        });
+        $(camposAlteraveis).bind("change", function() {
+            document.paginaAlterada = true;
+        });
+        var camposData = $(".campoData").not(".ignorar");
+
+        $(camposData).on("mousedown", function(e) {
+            $(document).on("mouseup", function() {
+                setTimeout(function() {
+                    document.paginaAlterada = true;
+                }, 300);
+            });
         });
 
         if (hidePop === undefined) {

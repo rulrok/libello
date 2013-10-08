@@ -12,7 +12,7 @@ class registrarSaida extends verificadorFormularioAjax {
             $dataSaida = $_POST['dataSaida'];
             $destino = $_POST['destino'];
             $quantidade = (int) $_POST['quantidade'];
-            $responsavel = $_POST['responsavel'];
+            $responsavel = fnDecrypt($_POST['responsavel']);
 
 
             if ($equipamentoID >= 0 && $dataSaida !== "" && $destino !== "" && $quantidade > 0 && $responsavel >= 0) {
