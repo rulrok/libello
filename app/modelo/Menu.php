@@ -119,18 +119,16 @@ class Menu {
                         switch ($permissao_ferramenta['idPermissao']) {
                             case Permissao::ADMINISTRADOR:
                             case Permissao::GESTOR:
-                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=documentos&a=gerenciar')\">" . "\n";
+                                $subMenuCode .= "<a href=\"#!documentos|historico\"\">" . "\n";
                                 $subMenuCode .= "<li>Gerenciar histórico</li></a>" . "\n";
                             case Permissao::ESCRITA:
                                 $subMenuCode .= "<a href=\"#!documentos|gerarOficio\"\">" . "\n";
                                 $subMenuCode .= "<li>Gerar ofício</li></a>" . "\n";
                                 $subMenuCode .= "<a href=\"#!documentos|gerarMemorando\"\">" . "\n";
                                 $subMenuCode .= "<li>Gerar memorando</li></a>" . "\n";
-//                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=documentos&a=gerarRelatorio')\">" . "\n";
-//                                $subMenuCode .= "<li>Gerar relatório</li></a>" . "\n";
+                                $subMenuCode .= "<a href=\"#!documentos|gerarRelatorio\"\">" . "\n";
+                                $subMenuCode .= "<li>Gerar relatório</li></a>" . "\n";
                             case Permissao::CONSULTA:
-                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=documentos&a=consultar')\">" . "\n";
-                                $subMenuCode .= "<li>Consultar histórico</li></a>" . "\n";
                         }
                     }
                     break;
