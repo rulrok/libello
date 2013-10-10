@@ -1,10 +1,17 @@
 <?php
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/biblioteca/Mvc/Controlador.php';
+include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
+include_once BIBLIOTECA_DIR . 'seguranca/criptografia.php';
+include_once ROOT . 'app/modelo/ComboBoxCurso.php';
+include_once ROOT . 'app/modelo/ComboBoxPolo.php';
+include_once ROOT . 'app/modelo/ComboBoxUsuarios.php';
 
 class ControladorViagens extends Controlador {
 
     public function acaoNova() {
+        $this->visao->cursos = ComboBoxCurso::montarTodosOsCursos();
+        $this->visao->polos = ComboBoxPolo::montarTodosOsPolos();
+        $this->visao->passageiros = ComboBoxUsuarios::montarPassageiros();
         $this->renderizar();
     }
 

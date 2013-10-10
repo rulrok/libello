@@ -1,5 +1,5 @@
 <title>Homepage</title>
-<div class="hero-unit">
+<div class="hero-unit" style="margin: 50px;margin-top: 0px;">
     <?php if (isset($this->usuario)) : ?>
         <h1><?php echo $this->usuario ?></h1>
     <?php else : ?>

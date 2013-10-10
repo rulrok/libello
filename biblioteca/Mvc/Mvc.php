@@ -1,13 +1,6 @@
 <?php
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
 require_once ROOT . 'biblioteca/configuracoes.php';
-//if (file_exists(ROOT . 'biblioteca/seguranca/seguranca.php')) {
-//    require ROOT . 'biblioteca/seguranca/seguranca.php';
-//} else {
-//    exit;
-//}
 require_once BIBLIOTECA_DIR . 'seguranca/seguranca.php';
 
 class Mvc {
@@ -58,16 +51,18 @@ class Mvc {
     }
 
     public function rodar() {
-        $usuario = new Usuario();
-        if (!isset($_SESSION['usuario'])) {
-            expulsaVisitante();
-        }
-        $usuario->set_email($_SESSION['usuario']->get_email());
-        $usuario->set_senha($_SESSION['usuario']->get_senha());
-        BIBLIOTECA_DIR . 'seguranca/seguranca.php' . autenticaUsuario($usuario);
+//        $usuario = new Usuario();
+//        session_start();
+//        if (!isset($_SESSION['usuario'])) {
+//            expulsaVisitante();
+//        }
+//        $usuario->set_email($_SESSION['usuario']->get_email());
+//        $usuario->set_senha($_SESSION['usuario']->get_senha());
+//        BIBLIOTECA_DIR . 'seguranca/seguranca.php' . autenticaUsuario($usuario);
 
-        
-        if (isset($_SESSION['iniciada']) && $_SESSION['autenticado'] === true) {
+
+        if (sessaoIniciada()) {
+//            sleep(4);
             //pega o modulo, controlador e acao
             $controlador = isset($_GET['c']) ? $_GET['c'] : 'inicial';
             $acao = isset($_GET['a']) ? $_GET['a'] : 'inicial';
@@ -85,7 +80,7 @@ class Mvc {
                     $controladorObjeto = new $nomeClasseControlador;
 
                     //verifica se o metodo existe
-                    if (method_exists($controladorObjeto, $nomeAcao)) {                
+                    if (method_exists($controladorObjeto, $nomeAcao)) {
                         $controladorObjeto->$nomeAcao();
                         return true;
                     } else {

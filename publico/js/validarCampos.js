@@ -4,32 +4,64 @@
  * tem seu conteúdo alterado.
  * 
  */
+function a() {
+    console.log("disparou");
+}
 function varrerCampos() {
-    var camposObrigatorios = $("input[required],select[required]").not(".campoVarrido").not("input[readonly]");
+    var camposObrigatorios = $("input:required,select:required,textarea:required").not(".ignorar").not(".campoVarrido");
     if (camposObrigatorios.length > 0) {
-//document.head.children[document.head.children.length] = "<script src=\"publico/js/validarCampos.js\"></script>";
-        //$("head").append("<script src=\"publico/js/validarCampos.js\"></script>");
-//        for (i = 0; i < camposObrigatorios.length; i++) {
-//            $(camposObrigatorios[i]).after("<img src=\"publico/imagens/icones/campo_obrigatorio.png\">");
-//            //$(camposObrigatorios[i]).on('blur',liberarCadastro());
-//            //$(camposObrigatorios[i]).append(liberarCadastro());
-//        }
-        $(camposObrigatorios).after("<img src=\"publico/imagens/icones/campo_obrigatorio.png\">");
-        $(camposObrigatorios).addClass("campoVarrido");
-        $(camposObrigatorios).on('change', function() {
-            liberarCadastro();
-        });
-        $(camposObrigatorios).on('blur', function() {
-            liberarCadastro();
-        });
-//    $('input').not("input[required],select[required]").on('change', function() {
-//        $("input[type=submit],input[value~='Atualizar']").attr('disabled', false);
-//    });
+        $(camposObrigatorios).each(function() {
+
+            $(this).after("<img src=\"publico/imagens/icones/campo_obrigatorio.png\">");
+            $(this).addClass("campoVarrido");
+//            $(this).bind('keyup', liberarCadastro);
+            var tempoDigitando;                //timer identifier
+            var intervaloDigitacao = 500;  //time in ms, 5 second for example
+
+
+            $(this).bind("keyup", function() {
+                clearTimeout(tempoDigitando);
+                if ($(this).val != "") {
+                    tempoDigitando = setTimeout(liberarCadastro, intervaloDigitacao);
+                }
+            });
+
+//            $(this).keyup(function() {
+//                tempoDigitando = setTimeout(liberarCadastro, intervaloDigitacao);
+//            });
 //
-//    $('input[readonly]').on('blur', function() {
-//        $("input[type=submit],input[value~='Atualizar'],input[value~='Cadastrar'").attr('disabled', false);
-//    });
+//            $(this).keydown(function() {
+//                clearTimeout(tempoDigitando);
+//            });
+
+
+            $(this).bind('blur', liberarCadastro);
+        });
+
+        $("input[type=reset]").bind('mouseup', function(){setTimeout(liberarCadastro, "300")});
+
+        $("input[type=submit]").bind("mouseover", liberarCadastro);
     }
+    trataCamposData();
+    var camposComuns = $("input:not(:required),select:not(:required),textarea:not(:required)").not("[hidden],[type=submit],[type=reset]");
+    $(camposComuns).bind("blur", liberarCadastro);
+}
+
+/**
+ * Função especialmente feita para tratar os campos de data, para quando o usuário escolhe uma data e sai do campo.
+ * Ela foi necessária, pois a função onchange não é ativada por causa do campo estar
+ * definido como readonly e a inserção da data no campo pelo javascript não ativava a função.
+ * 
+ * @returns {undefined}
+ */
+function trataCamposData() {
+    var camposData = $(".campoData").not(".ignorar");
+
+    $(camposData).on("mousedown", function(e) {
+        $(document).on("mouseup", function() {
+            setTimeout(liberarCadastro, 300);
+        });
+    });
 }
 
 /**
@@ -41,10 +73,14 @@ function varrerCampos() {
  * desses componentes deve começar obrigatoriamente com a palavra 'cb_';
  * Se nenhuma regra de nome for casada, a opção padrão de validação será selecionada, que no caso,
  * apenas exige que o campo não esteja vazio.
+ * 
+ * @author Reuel 
+ * 
  * @returns {undefined}
  */
 function liberarCadastro() {
-    var campos = $("input[required],select[required]");
+    $("input[type=submit]").prop('disabled', true);
+    var campos = $("input:required,select:required,textarea:required").not(".ignorar");
     var patter = null;
     var senhaLida = "";
     var tudoCerto = true;
@@ -52,6 +88,8 @@ function liberarCadastro() {
     var letrasacentuadas = "a-zA-ZÀ-ú";
     var letras = "a-zA-Z";
     var letrasnumeros = letras + "0-9";
+    //setup before functions
+
 
 
     for (var i = 0; i < campos.length; i++) {
@@ -74,7 +112,8 @@ function liberarCadastro() {
                 break;
             case "quantidade":
             case "quantidadePatrimonios":
-                patter = new RegExp("[0-9]+");
+                patter = new RegExp("(^[1-9]([0-9]*)?)");
+                campos[i].value = campos[i].value.replace(campos[i].value.match("^0*"), ""); //Elimina 0s a esquerda.
                 break;
             case "login":
                 //Apenas letras minúsculas, com no mínimo 3
@@ -118,8 +157,11 @@ function liberarCadastro() {
                 patter = new RegExp(".{3,}");
                 break;
             case "combobox":
-                //Rejeita campos com o valor 'default' (uma ER que NEGA uma palavra)
+                //Rejeita campos com o valor 'default'
                 patter = new RegExp("^((?!default).)*$");
+                break;
+            case "diarias": //Página de cadastro de viagens
+                patter = new RegExp("(?!^0$)^[0-9]+?(\.[05])?$");
                 break;
             default:
                 patter = new RegExp(".+");
@@ -127,14 +169,21 @@ function liberarCadastro() {
         }
 
         //window.alert("Vai testar: " + campos[i].value+"\nPattern: "+patter);
-        if (campos[i].value != "") {
+//        if (nome != "combobox") {
+//        console.log(campos[i].value)
+        if (campos[i].value != "" && campos[i].value != "default") {
             todosEmBranco = false;
         }
+//        } else {
+//            if (campos[i].value != "default") {
+//                todosEmBranco = false;
+//            }
+//        }
 
         if (!patter.test(campos[i].value)) {
             tudoCerto = false;
             $(campos[i]).addClass("campoErrado");
-            //break;
+//            break;
         } else {
             $(campos[i]).removeClass("campoErrado");
             //window.alert("Campo correto: "+campos[i].value );
@@ -143,12 +192,12 @@ function liberarCadastro() {
 
     if (todosEmBranco) {
         $(".campoErrado").removeClass("campoErrado");
+        document.paginaAlterada = false;
         tudoCerto = false;
     }
     if (tudoCerto) {
-        $("input[type=submit],input[value~='Atualizar']").attr('disabled', false);
-
+        $("input[type=submit]").prop('disabled', false);
     } else {
-        $("input[type=submit],input[value~='Atualizar']").attr('disabled', true);
+        $("input[type=submit]").prop('disabled', true);
     }
 }

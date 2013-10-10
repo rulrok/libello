@@ -2,7 +2,7 @@
 <!-- Início da página -->
 <div class="btn-toolbar">
     <div class="btn-group">
-        <button class="btn btn-adicionar"><i class="icon-plus"></i> Adicionar novo</button>
+        <a href="#!cursospolos|novocurso" class="btn btn-adicionar"><i class="icon-plus"></i> Adicionar novo</a>
         <button class="btn btn-editar" href="#"><i class="icon-edit"></i> Editar</button>
         <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
     </div>
@@ -32,7 +32,7 @@
 </table>
 <div class="btn-toolbar">
     <div class="btn-group">
-        <button class="btn btn-adicionar"><i class="icon-plus"></i> Adicionar novo</button>
+        <a href="#!cursospolos|novocurso" class="btn btn-adicionar"><i class="icon-plus"></i> Adicionar novo</a>
         <button class="btn btn-editar" href="#"><i class="icon-edit"></i> Editar</button>
         <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
     </div>
@@ -42,8 +42,7 @@
     $(document).ready(function() {
         configurarTabela({
             idTabela: 'gerenciar_curso',
-            adicionar: 'index.php?c=cursospolos&a=novocurso',
-            editar: 'index.php?c=cursospolos&a=editarcurso&cursoID=',
+            editar: '#!cursospolos|editarcurso&cursoID=',
             deletar: 'index.php?c=cursospolos&a=removerCurso&cursoID='
         });
     });

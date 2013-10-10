@@ -1,3 +1,5 @@
 <?php
-header("Location: index.php?c=sistema&a=sair");
+require_once './biblioteca/seguranca/seguranca.php';
+expulsaVisitante();
+//header("Location: index.php");
 ?>

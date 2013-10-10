@@ -1,8 +1,6 @@
 <?php
 
-require_once APP_LOCATION . "modelo/Mensagem.php";
-
-$id = $_GET['poloID'];
+$id = fnDecrypt($_GET['poloID']);
 $mensagem = new Mensagem();
 
 if (poloDAO::remover($id)) {

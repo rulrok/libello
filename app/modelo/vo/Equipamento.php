@@ -9,9 +9,9 @@ class Equipamento {
 
     var $idEquipamento;
     var $nomeEquipamento;
-    var $dataEntrada = null;
     var $quantidade;
-//    var $tipo;
+    var $descricao;
+    var $dataEntrada;
     var $numeroPatrimonio;
 
     public function get_idEquipamento() {
@@ -29,25 +29,18 @@ class Equipamento {
 
     public function set_nomeEquipamento($equipamento) {
         if ($equipamento == null || $equipamento == "") {
-            throw new Exception("Nome do equipamento inválido.");
+            die("Nome do equipamento inválido.");
         }
         $this->nomeEquipamento = $equipamento;
         return $this;
     }
 
     public function get_dataEntrada() {
-        if ($this->dataEntrada == "NULL") {
-            return null;
-        }
         return $this->dataEntrada;
     }
 
     public function set_dataEntrada($dataEntrada) {
-        if ($dataEntrada == null || $dataEntrada == "") {
-            $this->dataEntrada = "NULL";
-        } else {
-            $this->dataEntrada = $dataEntrada;
-        }
+        $this->dataEntrada = $dataEntrada;
         return $this;
     }
 
@@ -55,27 +48,27 @@ class Equipamento {
         return (int) $this->quantidade;
     }
 
-    public function set_quantidadde($quantidadde) {
+    public function set_quantidade($quantidadde) {
         $this->quantidade = (int) $quantidadde;
         return $this;
     }
 
-//    public function get_tipo() {
-//        return $this->tipo;
-//    }
-//
-//    public function set_tipo($tipo) {
-//        $this->tipo = $tipo;
-//        return $this;
-//    }
+    public function get_descricao() {
+        return $this->descricao;
+    }
+
+    public function set_descricao($descricao) {
+        $this->descricao = $descricao;
+        return $this;
+    }
 
     public function get_numeroPatrimonio() {
         return $this->numeroPatrimonio;
     }
 
     public function set_numeroPatrimonio($numeroPatrimonio) {
-        if ($numeroPatrimonio === ""){
-            throw new Exception("Código de patrimônio inválido.");
+        if ($numeroPatrimonio === "") {
+            die("Código de patrimônio inválido.");
         }
         if ($numeroPatrimonio == null) {
             $this->numeroPatrimonio = "NULL";
@@ -85,19 +78,6 @@ class Equipamento {
         return $this;
     }
 
-    
-//    public function __clone() {
-//        $ret = new Equipamento();
-//        $ret->quantidadde = $this->quantidadde;
-//        $ret->dataEntrada = $this->dataEntrada;
-//        $ret->idEquipamento = $this->idEquipamento;
-//        $ret->numeroPatrimonio = $this->numeroPatrimonio;
-//        $ret->nomeEquipamento = $this->nomeEquipamento;
-//        
-//        return $ret;
-//    }
-    
-    
 }
 
 ?>

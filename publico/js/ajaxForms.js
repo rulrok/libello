@@ -11,8 +11,13 @@
  * @author Reuel
  * 
  * @param {String} idFormulario O nome do id, sem "#"no início, do formulário.
+ * @param {String} recipient Lugar onde a resposta será colocada. Caso <code>undefined</code>,
+ * nada será alterado na página.
+ * @param {Function} completeFn Função para ser ativada com o evento <code>complete</code>
+ * do ajax.
+ * @param {Function} successFn Função para ser ativada com um evento de sucesso.
  */
-function formularioAjax(idFormulario) {
+function formularioAjax(idFormulario, recipient, completeFn, successFn) {
 
     if (idFormulario === undefined) {
         idFormulario = $("form").prop("id");
@@ -22,8 +27,7 @@ function formularioAjax(idFormulario) {
     }
     $("#" + idFormulario).submit(function(e) {
         //Do the AJAX post
-        $.post($("#" + idFormulario).attr("action"), $("#" + idFormulario).serialize(), function(data) {
-
+        var post = $.post($("#" + idFormulario).attr("action"), $("#" + idFormulario).serialize(), function(data) {
             if (data !== null && data !== undefined) {
                 data = extrairJSON(data);
 
@@ -31,6 +35,9 @@ function formularioAjax(idFormulario) {
                     showPopUp(data.mensagem, data.status);
                     if (data.status.toLowerCase() === "sucesso") {
                         $("input[type=reset]").click();
+                        if (successFn !== undefined && isFunction(successFn)) {
+                            successFn();
+                        }
                     }
                 } else {
                     showPopUp("Houve algum problema na resposta do servidor.", "erro");
@@ -38,9 +45,27 @@ function formularioAjax(idFormulario) {
             } else {
                 showPopUp("Houve algum problema na resposta do servidor.", "erro");
             }
+
+        });
+
+        document.paginaAlterada = false;
+
+        post.complete(function(data) {
+            if (recipient !== undefined) {
+
+                $(recipient).empty();
+                $(recipient).html(data.responseText);
+            }
+            if (completeFn !== undefined && isFunction(completeFn)) {
+                completeFn();
+            }
         });
         //Important. Stop the normal POST
-        document.paginaAlterada = false;
         e.preventDefault();
     });
+}
+
+function isFunction(functionToCheck) {
+    var getType = {};
+    return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
 }
