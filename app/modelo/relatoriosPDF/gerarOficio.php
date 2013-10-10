@@ -10,7 +10,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/seguranca/se
 //require_once '../seguranca.php';
 //-------------------
 //definindo variaveis
-$idUsuario = $_SESSION['idUsuario'];
+$idUsuario = $_SESSION['usuario']->get_id();
 $numOficio = $_POST['i_numOficio'];
 $tipoSigla = $_POST['sigla'];
 $dia = $_POST['dia'];

@@ -8,7 +8,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/app/controlador/Control
 require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/seguranca/seguranca.php");
 //-------------------
 //definindo variaveis
-$idUsuario = $_SESSION['idUsuario'];
+$idUsuario = $_SESSION['usuario']->get_id();
 $numMemorando = $_POST['i_numMemorando'];
 $tipoSigla = $_POST['sigla'];
 $dia = $_POST['dia'];

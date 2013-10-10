@@ -6,14 +6,13 @@ require_once $_SERVER['DOCUMENT_ROOT'] . "/controle-cead/app/modelo/vo/Memorando
 
 class documentoDAO extends abstractDAO {
    
-    public static function consultar($documento = "oficio",  $condicao = null, $colunas="*"){
+    public static function consultar($documento = "oficio",  $condicao = null){
         try {
-            $sql = "SELECT ".$colunas . " FROM " . $documento;            
+            $sql = "SELECT * FROM " . $documento;            
             if ($condicao != null) {
                 $sql .=" WHERE ". $condicao;
             }
             $stmt = parent::getConexao()->query($sql);
-            
             $documentos = array();     
             $tipo = ucfirst($documento);
             for ($i = 0; $i < $stmt->rowCount(); $i++) {
@@ -24,7 +23,7 @@ class documentoDAO extends abstractDAO {
             }
             return $documentos;
         } catch (PDOException $ex) {
-            echo "Erro: " . $ex->getMessage();
+            echo "Erro: " . $ex->getMessage(); die();
         }
     }
     
@@ -35,7 +34,7 @@ class documentoDAO extends abstractDAO {
                 parent::getConexao()->query($sql);
                 return true;
             } catch (Exception $e) {
-                return false;
+                echo "Erro: " . $e->getMessage();die();
             }
     }
 
@@ -46,7 +45,7 @@ class documentoDAO extends abstractDAO {
                 parent::getConexao()->query($sql);
                 return true;
             } catch (Exception $e) {
-                return false;
+                 echo "Erro: " . $e->getMessage();die();
             }
     }
 
@@ -56,7 +55,7 @@ class documentoDAO extends abstractDAO {
                 parent::getConexao()->query($sql);
                 return true;
             } catch (Exception $e) {
-                return false;
+                 echo "Erro: " . $e->getMessage();die();
             }
     }
 
@@ -66,7 +65,7 @@ class documentoDAO extends abstractDAO {
                 parent::getConexao()->query($sql);
                 return true;
             } catch (Exception $e) {
-                return false;
+                 echo "Erro: " . $e->getMessage();die();
             }
     }
     
@@ -78,7 +77,7 @@ class documentoDAO extends abstractDAO {
                 parent::getConexao()->query($sql);
                 return true;
             } catch (Exception $e) {
-                return false;
+                 echo "Erro: " . $e->getMessage();die();
             }
 }
 
@@ -89,41 +88,8 @@ function inserirMemorando($idusuario, $numMemorando, $tipoSigla, $data, $tratame
                 parent::getConexao()->query($sql);
                 return true;
             } catch (Exception $e) {
-                return false;
+                 echo "Erro: " . $e->getMessage();die();
             }
-//    $sql = "INSERT INTO memorando(
-//        idUsuario, 
-//        assunto,
-//        data,
-//        tipoSigla,
-//        numMemorando,
-//        estadoEdicao,
-//        tratamento,
-//        cargo_destino,
-//        corpo,
-//        remetente,
-//        remetente2,
-//        cargo_remetente,
-//        cargo_remetente2)
-//        VALUES (".$idusuario.",'"
-//            .$assunto. "','"
-//            .$data. "','"
-//            .$tipoSigla. "', "
-//            .$numMemorando. ", "
-//            .$estadoEdicao. ",'"
-//            .$tratamento. "','"
-//            .$cargo_destino. "','"
-//            .$corpo. "','"
-//            .$remetente. "', '"
-//            .$remetente2. "','"
-//            .$cargo_remetente. "', '"
-//            .$cargo_remetente2. "')";
-//    try {
-//                parent::getConexao()->query($sql);
-//                return true;
-//            } catch (Exception $e) {
-//                return $e;
-//            }
 }
 
 function update_memorandoSalvo($idmemorando, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao){
@@ -134,7 +100,7 @@ function update_memorandoSalvo($idmemorando, $numMemorando, $tipoSigla, $data, $
                 parent::getConexao()->query($sql);
                 return true;
             } catch (Exception $e) {
-                return false;
+                 echo "Erro: " . $e->getMessage();die();
             }  
 }
 
@@ -145,7 +111,7 @@ function update_invalidarMemorando($idmemorando){
                 parent::getConexao()->query($sql);
                 return true;
             } catch (Exception $e) {
-                return false;
+                 echo "Erro: " . $e->getMessage();die();
             }   
 }
     

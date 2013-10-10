@@ -143,7 +143,7 @@ class Oficio {
        $this->cargo_remetente = $cargo_remetente ;
    }
    
-   public function getCargo_rementente2(){
+   public function getCargo_remetente2(){
        return $this->cargo_remetente2 ;
    }
     

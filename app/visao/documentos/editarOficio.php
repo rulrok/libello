@@ -1,5 +1,7 @@
 <?php
 $controladorAux = new ControladorDocumentos();
+
+$ofc = documentoDAO::consultar('oficio', 'idOficio = ' . $_GET['id']);
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -11,56 +13,66 @@ $controladorAux = new ControladorDocumentos();
 
     $(document).ready(function() {
         $("#corpo").jqte();
-
+        if ($("#remetente2").val() != "" && $("#cargo_remetente2").val() != "") {
+            $("#div_remetente2").show();
+            $("#add_rem").hide();
+            $("#i_remetente").val("1");
+        }
+        var sigla = $("#i_sigla");
+        $("#sigla").val(sigla.val());
     });
 
     function confirmaAcao(acao) {
         bloqueia();
         if (acao == 'gerar') {
             $('#form1').attr("target", "_blank");
-            $('#form1').attr({action: 'app/modelo/relatoriosPDF/gerarOficio.php?booledit=0'});//'../../modelo/relatoriosPDF/gerarOficio.php?booledit=0'});
+            $('#form1').attr({action: 'app/modelo/relatoriosPDF/gerarOficio.php?booledit=1'});//'../../modelo/relatoriosPDF/gerarOficio.php?booledit=0'});
             var conf = confirm('Atenção, o ofício será gerado e registrado permanentemente! Tem certeza?');
-            if(conf){
+            if (conf) {
                 capturaNumOficio();
                 alert('Ofício gerado com sucesso.');
-            }else{
+            } else {
                 desbloqueia();
             }
         } else {
             if (acao == 'salvar') {
                 var conf = confirm('Atenção, o ofício será salvo! Tem certeza?');
-                if(conf){
+                if (conf) {
                     salvar();
                     alert('Oficio salvo com sucesso!');
-                }else{
+                } else {
                     desbloqueia();
                 }
             }
         }
     }
 
-    function salvar(){
-        $.getJSON("publico/ajax/documentos/acoes.php?acao=salvarOficio&booledit=0",
-                        {assunto: $('#assunto').val(),
-                            corpo: $('#corpo').val(),
-                            destino: $("#destino").val(),
-                            referencia: $("#referencia").val(),
-                            dia: $("#dia").val(),
-                            mes: $("#mes").val(),
-                            sigla: $("#sigla").val(),
-                            remetente: $("#remetente").val(),
-                            cargo_remetente: $("#cargo_remetente").val(),
-                            i_remetente: $("#i_remetente").val(),
-                            remetente2: $("#remetente2").val(),
-                            cargo_remetente2: $("#cargo_remetente2").val(),
-                            tratamento: $("#tratamento").val(),
-                            cargo_destino: $("#cargo_destino").val() }, function(j) {
-                    
-                        document.paginaAlterada = false;
-                        ajax('index.php?c=documentos&a=gerarOficio');
-                    $('html, body').animate({scrollTop: 0},'slow');
-                });
+    function salvar() {
+        $.getJSON("publico/ajax/documentos/acoes.php?acao=salvarOficio&booledit=1",
+                {assunto: $('#assunto').val(),
+                    corpo: $('#corpo').val(),
+                    destino: $("#destino").val(),
+                    referencia: $("#referencia").val(),
+                    dia: $("#dia").val(),
+                    mes: $("#mes").val(),
+                    sigla: $("#sigla").val(),
+                    remetente: $("#remetente").val(),
+                    cargo_remetente: $("#cargo_remetente").val(),
+                    i_remetente: $("#i_remetente").val(),
+                    remetente2: $("#remetente2").val(),
+                    cargo_remetente2: $("#cargo_remetente2").val(),
+                    tratamento: $("#tratamento").val(),
+                    cargo_destino: $("#cargo_destino").val(),
+                    i_idoficio: $('#i_idoficio').val()}, function(j) {
+
+            document.paginaAlterada = false;
+            ajax('index.php?c=documentos&a=gerarOficio');
+            $('html, body').animate({scrollTop: 0}, 'slow');
+        });
     }
+
+
+
 
     function bloqueia() {
         $('#tratamento').attr({readonly: 'true'});
@@ -128,7 +140,7 @@ $controladorAux = new ControladorDocumentos();
             $("#form1").submit();
             document.paginaAlterada = false;
             ajax('index.php?c=documentos&a=gerarOficio');
-            $('html, body').animate({scrollTop: 0},'fast');
+            $('html, body').animate({scrollTop: 0}, 'fast');
         });
     }
 
@@ -184,36 +196,36 @@ $controladorAux = new ControladorDocumentos();
         <tr height="40"><td></td></tr>
         <tr height="10">
             <td>
-                <input type="text" id="tratamento" name="tratamento" onkeyup="liberarCadastro()" size="15"/><span class="classeExemploOficio"> Ex: Ao Sr.</span>
+                <input type="text" id="tratamento" name="tratamento" onkeyup="liberarCadastro()" value="<?php echo $ofc[0]->getTratamento(); ?>" size="15"/><span class="classeExemploOficio"> Ex: Ao Sr.</span>
             </td>
         </tr>
         <tr height="10">
             <td>
-                <input type="text" id="destino" name="destino" onkeyup="liberarCadastro()" size="30"/><span class="classeExemploOficio"> Ex: Paulo Márcio de Faria e Silva</span>
+                <input type="text" id="destino" name="destino" onkeyup="liberarCadastro()" value="<?php echo $ofc[0]->getDestino(); ?>" size="30"/><span class="classeExemploOficio"> Ex: Paulo Márcio de Faria e Silva</span>
             </td>
         </tr>
         <tr height="10">
             <td>
-                <input type="text" id="cargo_destino" name="cargo_destino" onkeyup="liberarCadastro()" size="40"/><span class="classeExemploOficio"> Ex: Reitor da Universidade Federal de Alfenas</span>
+                <input type="text" id="cargo_destino" name="cargo_destino" onkeyup="liberarCadastro()" value="<?php echo $ofc[0]->getCargo_destino(); ?>" size="40"/><span class="classeExemploOficio"> Ex: Reitor da Universidade Federal de Alfenas</span>
             </td>
         </tr>
         <tr height="40"><td></td></tr>
         <tr height="30">
             <td>
-                Assunto: <input type="text" id="assunto" name="assunto" onkeyup="liberarCadastro()" size="50"/><span class="classeExemploOficio"> Ex: Indicação de nome para... </span>
+                Assunto: <input type="text" id="assunto" name="assunto" onkeyup="liberarCadastro()" value="<?php echo $ofc[0]->getAssunto(); ?>" size="50"/><span class="classeExemploOficio"> Ex: Indicação de nome para... </span>
             </td>
         </tr>
         <tr height="40"><td></td></tr>
         <tr height="30">
             <td align="left">
-                <input type="text" id="referencia" name="referencia" onkeyup="liberarCadastro()" size="25"/><span class="classeExemploOficio"> Ex: Magnífico Reitor, </span>
+                <input type="text" id="referencia" name="referencia" onkeyup="liberarCadastro()" value="<?php echo $ofc[0]->getReferencia(); ?>" size="25"/><span class="classeExemploOficio"> Ex: Magnífico Reitor, </span>
             </td>
         </tr>
         <tr height="40"><td></td></tr>
         <tr height="30">
             <td align="left">
                 <div >
-                    <textarea style="max-height: 500px;min-height: 200px;max-width: 625px;min-width: 625px" id="corpo" value="" name="corpo" onkeyup="liberarCadastro()">Corpo do Ofício</textarea>
+                    <textarea style="max-height: 500px;min-height: 200px;max-width: 625px;min-width: 625px" id="corpo" value="" name="corpo" onkeyup="liberarCadastro()" value="<?php echo $ofc[0]->getCorpo(); ?>">Corpo do Ofício</textarea>
                 </div>
             </td>
         </tr>
@@ -235,12 +247,12 @@ $controladorAux = new ControladorDocumentos();
                         </tr>
                         <tr height="20">
                             <td align="center">
-                                <input type="text" id="remetente" name="remetente" onkeyup="liberarCadastro()" size="50" style="margin-left: 125px"/><span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>
+                                <input type="text" id="remetente" name="remetente" onkeyup="liberarCadastro()" value="<?php echo $ofc[0]->getRemetente(); ?>" size="50" style="margin-left: 125px"/><span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>
                             </td>
                         </tr>
                         <tr height="20">
                             <td align="center">
-                                <input type="text" id="cargo_remetente" name="cargo_remetente" onkeyup="liberarCadastro()" size="25" style="margin-left: 110px"/><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
+                                <input type="text" id="cargo_remetente" name="cargo_remetente" onkeyup="liberarCadastro()" value="<?php echo $ofc[0]->getCargo_remetente(); ?>" size="25" style="margin-left: 110px"/><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
                             </td>
                             <td>
                                 <a title="Adicionar Remetente" id=""  onclick="adicionarRemetente();" class="btn" href="javascript:void(0);" ><i class="icon-plus"></i></a>
@@ -258,12 +270,12 @@ $controladorAux = new ControladorDocumentos();
                         </tr>
                         <tr height="20">
                             <td align="center">
-                                <input type="text" id="remetente2" name="remetente2" onkeyup="liberarCadastro()" size="50" style="margin-left: 125px"/><span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>
+                                <input type="text" id="remetente2" name="remetente2" onkeyup="liberarCadastro()" value="<?php echo $ofc[0]->getRemetente2(); ?>" size="50" style="margin-left: 125px"/><span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>
                             </td>
                         </tr>
                         <tr height="20">
                             <td align="center">
-                                <input type="text" id="cargo_remetente2" name="cargo_remetente2" onkeyup="liberarCadastro()" size="25" style="margin-left: 110px"/><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
+                                <input type="text" id="cargo_remetente2" name="cargo_remetente2" onkeyup="liberarCadastro()" value="<?php echo $ofc[0]->getCargo_remetente2(); ?>" size="25" style="margin-left: 110px"/><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
                             </td>
                             <td>
                                 <a  title="Remover Remetente" id="" href="javascript:void(0);" onclick="removerRemetente();" class="btn" ><i class="icon-minus"></i></a>
@@ -284,12 +296,14 @@ $controladorAux = new ControladorDocumentos();
 <!--                                        <input type="button" class="btn" value="Voltar" name="b_voltar" name="b_voltar" onclick=""/>-->
             </td>
         </tr>
-        
+
         </tr>
         <tr>
             <td>
                 <input type="hidden" name="i_numOficio" id="i_numOficio"/>
+                <input type="hidden" name="i_idoficio" id="i_idoficio" value="<?php echo $ofc[0]->getIdOficio(); ?>"/>
                 <input type="hidden" name="i_remetente" id="i_remetente" value="0"/>
+                <input type="hidden" name="i_sigla" id="i_sigla" value="<?php echo($ofc[0]->getSigla()); ?>"/>
             </td>
         </tr>
         <tr height="30"><td></td></tr>

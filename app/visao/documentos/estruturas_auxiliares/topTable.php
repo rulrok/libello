@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 ?>
-<table id="historico" class="tabelaDeEdicao">
+<table id="" class="tabelaDeEdicao">
     <thead>
         <tr>
-            <!--<th hidden>id</th>-->
+            <th hidden>id</th>
             <th>Assunto</th>
             <th>Destino</th>
             <th>Numeração</th> 

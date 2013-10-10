@@ -7,7 +7,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/seguranca/se
 $cont = new ControladorDocumentos();
 
 if ($_GET['acao'] == "salvarOficio") {
-    $idusuario = $_SESSION['idUsuario'];
+    $idusuario = $_SESSION['usuario']->get_id();
     $assunto = $_REQUEST['assunto'];
     $corpo = $_REQUEST['corpo'];
     $destino = $_REQUEST['destino'];
@@ -40,45 +40,43 @@ if ($_GET['acao'] == "salvarOficio") {
     //header("Location: ../menu.php");
 }
 
-if ($_GET['acao'] == "invalidarOficio") {
-    $idoficio = $_POST['i_idOficio'];
+if ($_GET['acao'] == "invalidaroficio") {
+    $idoficio = $_REQUEST['i_idoficio'];
     $resp = $cont->invalidarOficio($idoficio);
     echo json_encode($resp);
-    header("Location: ../paginasAdm/gerenciarHistorico.php");
 }
 
-if ($_GET['acao'] == "deletarOficio") {
-    $idoficio = $_POST['i_idOficio'];
+if ($_GET['acao'] == "deletaroficio") {
+    $idoficio = $_REQUEST['i_idoficio'];
     $cont->deletarOficio($idoficio);
-    header("Location: ../paginasAdm/gerenciarHistorico.php");
+    echo json_encode('sucesso');
 }
 
-if ($_GET['acao'] == "aproveitarOficio") {
-    $idoficio = $_POST['i_idOficio'];
+if ($_GET['acao'] == "aproveitaroficio") {
+    $idoficio = $_POST['i_idoficio'];
     $controleAproveitar = $_POST['i_controleAproveitar'];
-    header("Location: ../paginasAdm/aproveitarOficio.php?idoficio=" . $idoficio . "&ctrl=" . $controleAproveitar);
+    //header("Location: ../paginasAdm/aproveitarOficio.php?idoficio=" . $idoficio . "&ctrl=" . $controleAproveitar);
 }
 
 if ($_GET['acao'] == "invalidarMemorando") {
     $idmemorando = $_POST['i_idMemorando'];
     invalidarMemorando($idmemorando);
-    header("Location: ../paginasAdm/gerenciarHistorico.php");
 }
 
 if ($_GET['acao'] == "deletarMemorando") {
     $idmemorando = $_POST['i_idMemorando'];
     $cont->deletarMemorando($idmemorando);
-    header("Location: ../paginasAdm/gerenciarHistorico.php");
+    echo json_encode('sucesso');
 }
 
 if ($_GET['acao'] == "aproveitarMemorando") {
     $idmemorando= $_POST['i_idMemorando'];    
     $controleAproveitar = $_POST['i_controleAproveitarMem'];
-    header("Location: ../paginasAdm/aproveitarMemorando.php?idmemorando=" . $idmemorando . "&ctrl=" . $controleAproveitar);
+    //header("Location: ../paginasAdm/aproveitarMemorando.php?idmemorando=" . $idmemorando . "&ctrl=" . $controleAproveitar);
 }
 
 if ($_GET['acao'] == "salvarMemorando") {
-    $idusuario = $_SESSION['idUsuario'];
+    $idusuario = $_SESSION['usuario']->get_id();
     $numMemorando = -1;
     $tipoSigla = $_REQUEST['sigla'];
     $data = $_REQUEST['dia'] . '/' . $_REQUEST['mes'] . '/' . date('Y');

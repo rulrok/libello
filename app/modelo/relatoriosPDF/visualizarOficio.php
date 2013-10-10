@@ -1,30 +1,33 @@
 <?php
 
-define('ROOT_PATH', $_SERVER['DOCUMENT_ROOT']);
+
+//define('ROOT_PATH', $_SERVER['DOCUMENT_ROOT']);
 //incluindo o arquivo do fpdf
-require_once("../dompdf/dompdf_config.inc.php");
-require_once '../../documentos/controller/ControllerDoc.php';
+require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/configuracoes.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/dompdf/dompdf_config.inc.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/app/modelo/dao/documentoDAO.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/seguranca/seguranca.php");
 //require_once '../seguranca.php';
 //-------------------
 //definindo variaveis
 $id = $_GET['id'];
-$oficio = mysql_fetch_array(getOficio($id));
-$numOficio = $oficio["numOficio"];
-$tipoSigla = $oficio["tipoSigla"];
-$data = explode('/', $oficio["data"]);
+$oficio = documentoDAO::consultar('oficio','idOficio = '.$id);
+$numOficio = $oficio[0]->getNumOficio();
+$tipoSigla = $oficio[0]->getTipoSigla();
+$data = explode('/', $oficio[0]->getData());
 $dia = $data[0];
 $mes = $data[1];
 $ano = $data[2];
-$tratamento = $oficio["tratamento"];
-$destino = $oficio["destino"];
-$cargo_destino = $oficio["cargo_destino"];
-$assunto = $oficio["assunto"];
-$referencia = $oficio["referencia"];
-$corpo = $oficio["corpo"];
-$remetente = $oficio["remetente"];
-$cargo_remetente = $oficio["cargo_remetente"];
-$remetente2 = $oficio["remetente2"];
-$cargo_remetente2 = $oficio["cargo_remetente2"];
+$tratamento = $oficio[0]->getTratamento();
+$destino = $oficio[0]->getDestino();
+$cargo_destino = $oficio[0]->getCargo_destino();
+$assunto = $oficio[0]->getAssunto();
+$referencia = $oficio[0]->getReferencia();
+$corpo = $oficio[0]->getCorpo();
+$remetente = $oficio[0]->getRemetente();
+$cargo_remetente = $oficio[0]->getCargo_remetente();
+$remetente2 = $oficio[0]->getRemetente2();
+$cargo_remetente2 = $oficio[0]->getCargo_remetente2();
 
 if ($remetente2 != '' && $cargo_remetente2 != '') {
     $i_remetente = '1';
@@ -60,7 +63,7 @@ $document = '<<<EOF
             <table class="tabela">
                 <tr>
                     <td style="width: 597px" align="center">
-                        <img src="../images/cabecalho.jpg"></img>
+                        <img src="../../../publico/imagens/oficio/cabecalho.jpg"></img>
                     </td>
                 </tr>
                 <tr><td style="height: 30px;"></td></tr>

@@ -1,29 +1,29 @@
 <?php
 
-define('ROOT_PATH', $_SERVER['DOCUMENT_ROOT']);
 //incluindo o arquivo do fpdf
-require_once("../dompdf/dompdf_config.inc.php");
-require_once '../../documentos/controller/ControllerDoc.php';
-require_once '../seguranca.php';
+require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/configuracoes.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/dompdf/dompdf_config.inc.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/app/modelo/dao/documentoDAO.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/seguranca/seguranca.php");
 
 //-------------------
 //definindo variaveis
 $id = $_GET['id'];
-$memorando = mysql_fetch_array(getMemorando($id));
-$numMemorando = $memorando["numMemorando"];
-$tipoSigla = $memorando["tipoSigla"];
-$data = explode('/', $memorando["data"]);
+$memorando = documentoDAO::consultar('memorando','idMemorando = '.$id);
+$numMemorando = $memorando[0]->getNumMemorando();
+$tipoSigla = $memorando[0]->getTipoSigla();
+$data = explode('/', $memorando[0]->getData());
 $dia = $data[0];
 $mes = $data[1];
 $ano = $data[2];
-$tratamento = $memorando["tratamento"];
-$cargo_destino = $memorando["cargo_destino"];
-$assunto = $memorando["assunto"];
-$corpo = $memorando["corpo"];
-$remetente = $memorando["remetente"];
-$cargo_remetente = $memorando["cargo_remetente"];
-$remetente2 = $memorando["remetente2"];
-$cargo_remetente2 = $memorando["cargo_remetente2"];
+$tratamento = $memorando[0]->getTratamento();
+$cargo_destino = $memorando[0]->getCargo_destino();
+$assunto = $memorando[0]->getAssunto();
+$corpo = $memorando[0]->getCorpo();
+$remetente = $memorando[0]->getRemetente();
+$cargo_remetente = $memorando[0]->getCargo_remetente();
+$remetente2 = $memorando[0]->getRemetente2();
+$cargo_remetente2 = $memorando[0]->getCargo_remetente2();
 
 if($remetente2 != '' && $cargo_remetente2 != ''){
     $i_remetente = '1';
@@ -59,7 +59,7 @@ $document = '<<<EOF
             <table class="tabela">
                 <tr>
                     <td style="width: 580px" align="center">
-                        <img src="../images/cabecalho.jpg"></img>
+                       <img src="../../../publico/imagens/oficio/cabecalho.jpg"></img>
                     </td>
                 </tr>
                 <tr><td style="height: 30px;"></td></tr>
