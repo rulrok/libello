@@ -1,7 +1,6 @@
 
 <?php
 $controladorAux = new ControladorDocumentos();
-
 ?>
 <script src="publico/js/jquery/jquery.dataTables.js"></script>
 
@@ -56,13 +55,13 @@ $controladorAux = new ControladorDocumentos();
         <?php require 'estruturas_auxiliares/bottomTable.php'; ?>
         <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
     </div>
-   
-    
+
+
 
 </div>
 <div id="tabela2" class="tabelaConteudo" style="display: none;">
 
-    
+
     <div id="memorandosValidos" >
         <button class="btn btn-visualizar"><i class="icon-search"></i> Visualizar</button>
         <?php require 'estruturas_auxiliares/topTable.php'; ?>
@@ -72,12 +71,15 @@ $controladorAux = new ControladorDocumentos();
         <?php require 'estruturas_auxiliares/bottomTable.php'; ?>
         <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
     </div>
-    
-    
+
+
 </div>
+<form id="form_visualizar" target="_blank" method="post" action="">
+    <input type="hidden" id="idv" name="idv" />
+</form>
 <script type="text/javascript">
         var tab_todosValidos,
-                  tab_memorandosValidos;
+                tab_memorandosValidos;
 
 
         function mostraOpcao(opcao) {
@@ -100,13 +102,13 @@ $controladorAux = new ControladorDocumentos();
                 $(this).parent().parent().find('tr.row_selected').removeClass('row_selected');
                 $(this).addClass('row_selected');
                 var selectedElement = this;
-               
+
             });
         }
 
 
         $(document).ready(function() {
-        
+
             //configurarTabela({idTabela:'tabelaTodosOficios',editar:'',deletar:'',adicionar:''});
             $('#oficiosValidos .tabelaDeEdicao').attr('id', 'tabelaOficiosValidos');
             $('#memorandosValidos .tabelaDeEdicao').attr('id', 'tabelaMemorandosValidos');
@@ -123,35 +125,41 @@ $controladorAux = new ControladorDocumentos();
                     $(this).removeClass('row_selected');
                 });
                 var selectedElement = $($('#' + tab.attr('id') + ' tr')[1]).addClass('row_selected');
-                
+
             }
 
             $('.btn-visualizar').on('click', function() {
-                if ($('#tabela1').css('display') != 'none')
-                    window.open('app/modelo/relatoriosPDF/visualizarOficio.php?id=' + $('.row_selected td.campoID').text());
-                else if ($('#tabela2').css('display') != 'none') {
-                    window.open('app/modelo/relatoriosPDF/visualizarMemorando.php?id=' + $('.row_selected td.campoID').text());
+                if ($('#tabela1').css('display') != 'none') {
+                    $('#form_visualizar').attr('action','app/modelo/relatoriosPDF/visualizarOficio.php');
+                    $('#idv').val($('.row_selected td.campoID').text());
+                    $('#form_visualizar').submit();
+                    //window.open('app/modelo/relatoriosPDF/visualizarOficio.php');
                 }
-            });   
+                else if ($('#tabela2').css('display') != 'none') {
+                    $('#form_visualizar').attr('action','app/modelo/relatoriosPDF/visualizarMemorando.php');
+                    $('#idv').val($('.row_selected td.campoID').text());
+                    $('#form_visualizar').submit();
+                }
+            });
 
         });
 
 
 </script>
 <?php
-if(isset($_GET['doc']) && isset($_GET['tipo'])){
-?>
-<script>
-    var doc_select = <?php echo '"'.$_GET['doc'].'"';?>;
-    var tipo_select = <?php echo '"'.$_GET['tipo'].'"';?>;
-    $(document).ready(function(){
-        $('.btn_'+doc_select).click();
-        $('#option_'+doc_select+'_default').removeAttr('selected');
-        $('#option_'+doc_select+'_'+tipo_select).attr('selected','selected');
-        var temp = doc_select.charAt(0).toUpperCase() + doc_select.slice(1);
-        $('#combo'+temp+'Tipo').trigger('change');
-    });
-</script>
-<?php
+if (isset($_GET['doc']) && isset($_GET['tipo'])) {
+    ?>
+    <script>
+        var doc_select = <?php echo '"' . $_GET['doc'] . '"'; ?>;
+        var tipo_select = <?php echo '"' . $_GET['tipo'] . '"'; ?>;
+        $(document).ready(function() {
+            $('.btn_' + doc_select).click();
+            $('#option_' + doc_select + '_default').removeAttr('selected');
+            $('#option_' + doc_select + '_' + tipo_select).attr('selected', 'selected');
+            var temp = doc_select.charAt(0).toUpperCase() + doc_select.slice(1);
+            $('#combo' + temp + 'Tipo').trigger('change');
+        });
+    </script>
+    <?php
 }
 ?>

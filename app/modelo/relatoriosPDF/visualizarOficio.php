@@ -10,7 +10,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/seguranca/se
 //require_once '../seguranca.php';
 //-------------------
 //definindo variaveis
-$id = $_GET['id'];
+$id = $_REQUEST['idv'];
 $oficio = documentoDAO::consultar('oficio','idOficio = '.$id);
 $numOficio = $oficio[0]->getNumOficio();
 $tipoSigla = $oficio[0]->getTipoSigla();

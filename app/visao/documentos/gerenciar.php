@@ -229,6 +229,9 @@ $controladorAux = new ControladorDocumentos();
         <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
     </div>
 </div>
+<form id="form_visualizar" target="_blank" method="post" action="">
+    <input type="hidden" id="idv" name="idv" />
+</form>
 <script type="text/javascript">
         var tab_todosOficios, tab_todosValidos, tab_todosInvalidos,
                 tab_todosAberto, tab_todosMemorando, tab_memorandosValidos, tab_memorandosInvalidos, tab_memorandosAberto;
@@ -382,10 +385,16 @@ $controladorAux = new ControladorDocumentos();
             });
 
             $('.btn-visualizar').on('click', function() {
-                if ($('#tabela1').css('display') != 'none')
-                    window.open('app/modelo/relatoriosPDF/visualizarOficio.php?id=' + $('.row_selected td.campoID').text());
+                if ($('#tabela1').css('display') != 'none') {
+                    $('#form_visualizar').attr('action','app/modelo/relatoriosPDF/visualizarOficio.php');
+                    $('#idv').val($('.row_selected td.campoID').text());
+                    $('#form_visualizar').submit();
+                    //window.open('app/modelo/relatoriosPDF/visualizarOficio.php');
+                }
                 else if ($('#tabela2').css('display') != 'none') {
-                    window.open('app/modelo/relatoriosPDF/visualizarMemorando.php?id=' + $('.row_selected td.campoID').text());
+                    $('#form_visualizar').attr('action','app/modelo/relatoriosPDF/visualizarMemorando.php');
+                    $('#idv').val($('.row_selected td.campoID').text());
+                    $('#form_visualizar').submit();
                 }
             });
 
