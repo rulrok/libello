@@ -1,29 +1,29 @@
-<title>Gerenciar equipamentos</title>
+<title>Gerenciar baixas e saídas</title>
 <!-- Início da páginas -->
-<div class="alert alert-block alert-info" id="aviso"><span class="label label-info">Dica: </span> Duplo clique na linha mostra a descrição do equipamento<a class="close" data-dismiss="alert" href="#">&times;</a></div>
+<div class="alert alert-block alert-info" id="aviso"><span class="label label-info">Dica: </span> Duplo clique na linha mostra as observações da baixa<a class="close" data-dismiss="alert" href="#">&times;</a></div>
 <div class="btn-toolbar">
     <div class="btn-group">
-        <a href="#!equipamentos|novo" class="btn btn-adicionar"><i class="icon-plus"></i> Adicionar novo</a>
-        <button class="btn btn-editar disabled" href="#"><i class="icon-edit"></i> Editar</button>
-        <button class="btn btn-saida disabled btn-success" href="#"><i class="icon-arrow-left"></i> Registrar saída</button>
-        <button class="btn btn-baixa disabled btn-info" href="#"><i class="icon-arrow-down"></i> Registrar Baixa</button>
+        <!--<a href="#!equipamentos|novo" class="btn btn-adicionar"><i class="icon-plus"></i> Adicionar novo</a>-->
+        <!--<button class="btn btn-editar disabled" href="#"><i class="icon-edit"></i> Editar</button>-->
+        <!--<button class="btn btn-saida disabled btn-success" href="#"><i class="icon-arrow-left"></i> Registrar saída</button>-->
+        <!--<button class="btn btn-baixa disabled btn-info" href="#"><i class="icon-arrow-down"></i> Registrar Baixa</button>-->
         <button class="btn btn-danger disabled btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
     </div>
 </div>
-<table id="gerenciar_equipamento" class="tabelaDeEdicao">
+<table id="gerenciar_baixas" class="tabelaDeEdicao">
     <thead>
         <tr>
             <th hidden>id</th>
-            <th>Nome</th>
+            <th>Equipamento</th>
+            <th>Data da baixa</th>
             <th>Qtd</th>
-            <th>Data de entrada</th>
-            <th>Patrimônio</th>
+            <th>Saída</th>
             <th hidden>Descrição</th>
         </tr>
     </thead>
     <tbody>
         <?php
-        foreach ($this->equipamentos as $value) {
+        foreach ($this->baixas as $value) {
             echo '<tr>';
             for ($i = 0; $i < sizeof($value) / 2; $i++) {
                 if ($i == 0) {
@@ -47,10 +47,10 @@
 </table>
 <div class="btn-toolbar">
     <div class="btn-group">
-        <a href="#!equipamentos|novo" class="btn btn-adicionar"><i class="icon-plus"></i> Adicionar novo</a>
-        <button class="btn btn-editar disabled" href="#"><i class="icon-edit"></i> Editar</button>
-        <button class="btn btn-saida disabled btn-success" href="#"><i class="icon-arrow-left"></i> Registrar saída</button>
-        <button class="btn btn-baixa disabled btn-info" href="#"><i class="icon-arrow-down"></i> Registrar Baixa</button>
+        <!--<a href="#!equipamentos|novo" class="btn btn-adicionar"><i class="icon-plus"></i> Adicionar novo</a>-->
+        <!--<button class="btn btn-editar disabled" href="#"><i class="icon-edit"></i> Editar</button>-->
+        <!--<button class="btn btn-saida disabled btn-success" href="#"><i class="icon-arrow-left"></i> Registrar saída</button>-->
+        <!--<button class="btn btn-baixa disabled btn-info" href="#"><i class="icon-arrow-down"></i> Registrar Baixa</button>-->
         <button class="btn btn-deletar disabled btn-danger" href="#"><i class="icon-remove"></i> Excluir</button>
     </div>
 </div>
@@ -59,11 +59,11 @@
     $(document).ready(function() {
 
         configurarTabela({
-            idTabela: 'gerenciar_equipamento',
-            editar: '#!equipamentos|editar&equipamentoID=',
-            deletar: 'index.php?c=equipamentos&a=remover&equipamentoID=',
-            saida: '#!equipamentos|novasaida&equipamentoID=',
-            baixa: "#!equipamentos|novabaixa&equipamentoID=",
+            idTabela: 'gerenciar_baixas',
+//            editar: '#!equipamentos|editar&equipamentoID=',
+            deletar: 'index.php?c=equipamentos&a=remover&baixaID=',
+//            saida: '#!equipamentos|novasaida&equipamentoID=',
+//            baixa: "#!equipamentos|novabaixa&equipamentoID=",
             detalhes: true,
             detalhesIndice: "6",
             defs: {

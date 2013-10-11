@@ -38,7 +38,7 @@
                             </div>
                             <br/>
                             <a href="logar.php" class="btn">Voltar</a>
-                            <button class="btn btn-info" name="identificacao" type="submit">Enviar</button>
+                            <button class="btn btn-info btn-right" name="identificacao" type="submit">Enviar</button>
                         </fieldset>
                         <!--<a href="#"><p class="centeredText">Esqueci minha senha</p></a>-->
                     </form>

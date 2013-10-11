@@ -82,7 +82,7 @@ class ControladorEquipamentos extends Controlador {
         foreach ($this->visao->saidas as $value) {
             $value[0] = fnEncrypt($value[0]);
             $this->visao->saidas[$i++] = $value;
-            }
+        }
         $this->renderizar();
     }
 
@@ -146,7 +146,7 @@ class ControladorEquipamentos extends Controlador {
             $equipamento = equipamentoDAO::recuperarEquipamento(fnDecrypt($_GET['equipamentoID']));
             $this->visao->equipamento = $equipamento;
             $this->visao->dataMinima = $equipamento->get_dataEntrada();
-            if ($this->visao->dataMinima == ""){
+            if ($this->visao->dataMinima == "") {
                 $this->visao->dataMinima = "01/01/1900";
             }
             $this->visao->equipamentoID = fnEncrypt($this->visao->equipamento->get_idEquipamento());
@@ -167,6 +167,16 @@ class ControladorEquipamentos extends Controlador {
     }
 
     public function acaoRegistrarbaixa() {
+        $this->renderizar();
+    }
+
+    public function acaoGerenciarbaixasesaidas() {
+        $this->visao->baixas = equipamentoDAO::consultarBaixas("idBaixa,nomeEquipamento,dataBaixa,quantidadeBaixa,saida,observacoes");
+        $i = 0;
+        foreach ($this->visao->baixas as $value) {
+            $value[0] = fnEncrypt($value[0]);
+            $this->visao->baixas[$i++] = $value;
+        }
         $this->renderizar();
     }
 
