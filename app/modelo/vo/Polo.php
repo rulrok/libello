@@ -2,7 +2,7 @@
 
 class Polo {
     var $idPolo;
-    var $nome;
+    var $nomePolo;
     var $cidade;
     var $estado;
     
@@ -15,11 +15,11 @@ class Polo {
     }
 
     public function get_nome() {
-        return $this->nome;
+        return $this->nomePolo;
     }
 
     public function set_nome($nome) {
-        $this->nome = $nome;
+        $this->nomePolo = $nome;
     }
 
     public function get_cidade() {

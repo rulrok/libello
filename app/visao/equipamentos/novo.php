@@ -58,9 +58,9 @@
         </span>
 
     </fieldset>
-    <input class="btn btn-large" type="reset" value="Limpar" onclick="botaoLimpar();" >
+    <button class="btn btn-large" type="reset" onclick="botaoLimpar();" >Limpar</button>
 
-    <input class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit" value="Cadastrar">
+    <button class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit">Cadastrar</button>
 </form>
 
 <script>

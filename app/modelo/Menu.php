@@ -31,8 +31,8 @@ class Menu {
                         $subMenuCode .="<ul class=\"hiddenSubMenuLink usuariosSubMenu\">" . "\n";
                         switch ($permissao_ferramenta['idPermissao']) {
                             case Permissao::ADMINISTRADOR:
-//                                $subMenuCode .= "   <a href=\"#!usuarios|restaurar\">" . "\n";
-//                                $subMenuCode .= "<li>Verificar usuários excluídos</li></a>" . "\n";
+                                $subMenuCode .= "<a href=\"#!usuarios|restaurar\" style=\"color: red;\"\">" . "\n";
+                                $subMenuCode .= "<li>Verificar usuários excluídos</li></a>" . "\n";
                             case Permissao::GESTOR:
                                 $subMenuCode .= "   <a href=\"#!usuarios|gerenciar\">" . "\n";
                                 $subMenuCode .= "<li>Gerenciar usuários</li></a>" . "\n";
@@ -94,6 +94,8 @@ class Menu {
                         $permissao = $permissao_ferramenta['idPermissao'];
                         switch ($permissao) {
                             case Permissao::ADMINISTRADOR:
+                                $subMenuCode .= "<a href=\"#!equipamentos|gerenciarbaixasesaidas\" style=\"color: red;\"\">" . "\n";
+                                $subMenuCode .= "<li>Gerenciar baixas e saídas</li></a>" . "\n";
                             case Permissao::GESTOR:
                                 $subMenuCode .= "<a href=\"#!equipamentos|gerenciar\"\">" . "\n";
                                 $subMenuCode .= "<li>Gerenciar equipamentos</li></a>" . "\n";
@@ -298,10 +300,12 @@ class Menu {
             $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem polos cadastrados --</option>\n";
         } else {
             $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
+            $codigo .= "<optgroup label='Polos'>\n";
             for ($i = 0; $i < sizeof($polos); $i++) {
-                $codigo .= "<option value=\"" . fnEncrypt($polos[$i]['idPolo']) . "\">" . $polos[$i]['nome'] . "</option>\n";
+                $codigo .= "<option value=\"" . fnEncrypt($polos[$i]['idPolo']) . "\">" . $polos[$i]['nomePolo'] . "</option>\n";
             }
         }
+        $codigo .= "</optgroup>\n";
         $codigo .= "</select>\n";
         return $codigo;
     }

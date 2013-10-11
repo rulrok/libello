@@ -77,7 +77,7 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn
             if (alwaysFn !== undefined && isFunction(alwaysFn)) {
                 alwaysFn();
             }
-        })
+        });
         //Important. Stop the normal POST
         e.preventDefault();
     });

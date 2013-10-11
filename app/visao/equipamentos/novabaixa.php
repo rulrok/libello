@@ -12,8 +12,8 @@
         </div>
         <hr/>
         <div class="line">
-            <label for="dataSaida">Data de baixa</label>
-            <input type="text"  required id="dataSaida" on class="campoData" name="dataBaixa" />
+            <label for="dataBaixa">Data de baixa</label>
+            <input type="text"  required id="dataBaixa" on class="campoData" name="dataBaixa" />
         </div>
         <div class="line">
             <label for="quantidade">Quantidade</label>
@@ -25,7 +25,7 @@
             <div id="chars">1000</div>
         </div>
     </fieldset>
-    <input disabled class="btn btn-large btn-success btn-primary btn-right" type="submit" disabled value="Cadastrar">
+    <button disabled class="btn btn-large btn-success btn-primary btn-right" type="submit" disabled>Cadastrar</button>
 
 </form>
 
@@ -33,7 +33,13 @@
     $(document).ready(function() {
         var elem = $("#chars");
         $("#observacoes").limiter(1000, elem);
-        $("#dataSaida").datepick();
+        var dataMinima = "<?php echo $this->dataMinima; ?>";
+        dataMinima = dataMinima.split("/");
+        dataMinima = dataMinima[1] + "/" + dataMinima[0] + "/" + dataMinima[2];
+        $("#dataBaixa").datepick({
+            dateFormat: 'dd/mm/yyyy',
+            minDate: new Date(dataMinima)
+        });
         $(".line input").popover({trigger: 'focus', container: 'body'});
         $(".line textarea").popover({trigger: 'focus', container: 'body'});
         formularioAjax("ajaxForm", undefined,
@@ -41,8 +47,8 @@
                     $("input[type=submit]").prop("disabled", true);
                 },
                 function() {
-                    document.paginaAlterada = false;
                     setTimeout(function() {
+                        document.paginaAlterada = false;
                         history.back();
                     }, 1000);
                 }

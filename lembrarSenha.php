@@ -38,7 +38,7 @@
                             </div>
                             <br/>
                             <a href="logar.php" class="btn">Voltar</a>
-                            <input class="btn btn-info" name="identificacao" type="submit" value="Enviar" >
+                            <button class="btn btn-info" name="identificacao" type="submit">Enviar</button>
                         </fieldset>
                         <!--<a href="#"><p class="centeredText">Esqueci minha senha</p></a>-->
                     </form>
@@ -55,7 +55,7 @@
                             <span id="voltarPaginaInicial" >
                                 <a href="logar.php" class="btn">&LeftArrow; Voltar</a>
                             </span>
-                            <input disabled id="botaoEnviarNovaSenha" class="btn btn-info" name="identificacao" type="submit" value="Enviar"  />
+                            <button disabled id="botaoEnviarNovaSenha" class="btn btn-info" name="identificacao" type="submit">Enviar</button>
                         </fieldset>
                         <!--<a href="#"><p class="centeredText">Esqueci minha senha</p></a>-->
                     </form>

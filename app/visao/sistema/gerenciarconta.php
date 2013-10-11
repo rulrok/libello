@@ -39,18 +39,23 @@
         <hr>
         <div class="line">
             <label>Senha atual</label>
-            <input required name="senhaAtual"  type="password">
+            <input required id="senhaAtual" name="senhaAtual"  type="password">
         </div>
     </fieldset>
 
-    <input class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit" value="Atualizar"/>
+    <button class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit">Atualizar</button>
 
 </form>
 
 <script>
                     $(document).ready(function() {
                         varrerCampos();
-                        formularioAjax();
+                        formularioAjax({
+                            idFormulario: "ajaxForm",
+                            alwaysFn: function() {
+                                document.getElementById("senhaAtual").value = "";
+                            }
+                        });
                         $("#dataNascimento").datepick();
                     });
 </script>

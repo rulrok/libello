@@ -83,7 +83,7 @@ class equipamentoDAO extends abstractDAO {
         } else {
             $condicao = "WHERE " . $condicao . " AND quantidadeSaida > 0";
         }
-        $sql = "SELECT " . $colunas . " FROM `equipamento_saida` AS `es` JOIN `equipamento` AS `e` ON `es`.`equipamento` = `e`.idEquipamento JOIN `usuario` AS `u` ON `es`.`responsavel` = `u`.`idUsuario`" . $condicao;
+        $sql = "SELECT " . $colunas . " FROM `equipamento_saida` AS `es` JOIN `equipamento` AS `e` ON `es`.`equipamento` = `e`.idEquipamento JOIN `usuario` AS `u` ON `es`.`responsavel` = `u`.`idUsuario` LEFT JOIN `polo` AS `p` ON `es`.`poloDestino` = `p`.`idPolo` " . $condicao;
         try {
             $resultado = parent::getConexao()->query($sql)->fetchAll();
         } catch (Exception $e) {
@@ -172,16 +172,18 @@ class equipamentoDAO extends abstractDAO {
         }
     }
 
-    public static function cadastrarSaida($idEquipamento, $idResponsavel, $destino, $quantidade, $data = "NULL") {
-        $destino = parent::quote($destino);
+    public static function cadastrarSaida($idEquipamento, $idResponsavel, $destino, $destinoAlternativo, $quantidade, $data = "NULL") {
+        $destino = $destino;
         $data = parent::quote($data);
-        $sql = "INSERT INTO equipamento_saida(equipamento,responsavel,destino,quantidadeSaida,quantidadeSaidaOriginal,data) VALUES " .
-                "($idEquipamento,$idResponsavel,$destino,$quantidade,$quantidade,$data)";
+        $destinoAlternativo = parent::quote($destinoAlternativo);
+        $sql = "INSERT INTO equipamento_saida(equipamento,responsavel,destino,quantidadeSaida,quantidadeSaidaOriginal,data,PoloDestino) VALUES " .
+                "($idEquipamento,$idResponsavel,$destinoAlternativo,$quantidade,$quantidade,$data,$destino)";
 
         try {
             parent::getConexao()->query($sql);
             return true;
         } catch (Exception $e) {
+            print_r($e);
             return false;
         }
     }

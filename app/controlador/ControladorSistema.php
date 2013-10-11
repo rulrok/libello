@@ -26,7 +26,7 @@ class ControladorSistema extends Controlador {
             $this->visao->email = $_SESSION['usuario']->get_email();
             $this->visao->dataNascimento = $_SESSION['usuario']->get_dataNascimento();
 
-            
+
 
             $this->visao->papel = usuarioDAO::consultarPapel($_SESSION['usuario']->get_email());
         } else {

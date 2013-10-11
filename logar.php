@@ -57,7 +57,7 @@ if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION[
                             <input required type="password" name="senha" >
                         </div>
                         <br/>
-                        <input class="btn btn-right btn-info" name="identificacao" type="submit" value="Entrar" >
+                        <button class="btn btn-right btn-info" name="identificacao" type="submit">Entrar</button>
                             <?php if ($ocultarDetalhes): ?>
                                 <a class="btn"href="lembrarSenha.php">Esqueci a senha</a>
                             <?php endif; ?>

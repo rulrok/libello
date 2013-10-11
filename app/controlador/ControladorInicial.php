@@ -20,6 +20,8 @@ class ControladorInicial extends Controlador {
     public function acaoHomepage() {
         $usuario = obterUsuarioSessao();
         $this->visao->usuario = $usuario->get_PNome();
+//        $this->visao->papel = usuarioDAO::consultarPapel($usuario->get_email());
+        $this->visao->papel = (int) $usuario->get_papel();
         $this->renderizar();
     }
 

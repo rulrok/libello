@@ -4,9 +4,6 @@
  * tem seu conteúdo alterado.
  * 
  */
-function a() {
-    console.log("disparou");
-}
 function varrerCampos() {
     var camposObrigatorios = $("input:required,select:required,textarea:required").not(".ignorar").not(".campoVarrido");
     if (camposObrigatorios.length > 0) {
@@ -35,7 +32,7 @@ function varrerCampos() {
 //            });
 
 
-            $(this).bind('blur', liberarCadastro);
+            $(this).bind('change', liberarCadastro);
         });
 
         $("input[type=reset]").bind('mouseup', function(){setTimeout(liberarCadastro, "300")});
@@ -196,8 +193,8 @@ function liberarCadastro() {
         tudoCerto = false;
     }
     if (tudoCerto) {
-        $("input[type=submit]").prop('disabled', false);
+        $("button[type=submit]").prop('disabled', false);
     } else {
-        $("input[type=submit]").prop('disabled', true);
+        $("button[type=submit]").prop('disabled', true);
     }
 }

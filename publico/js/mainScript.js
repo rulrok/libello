@@ -492,20 +492,19 @@ function ajax(link, place, hidePop, async) {
 
         //TODO encontrar uma forma de tratar os campos somente leitura dos datapickers, pois quando
         //é escolhida uma data através do jquery, o evento change não é acionado.
-        var camposAlteraveis = $("input, select, textarea").not('.ignorar').not('.dataTables_filter input').not('.dataTables_length *').not("[hidden]").not("[readonly]");
-
+        var camposAlteraveis = $("input, select, textarea").not('.ignorar').not("[hidden]").not("[readonly]");
         $(camposAlteraveis).bind("keyup", function() {
-            document.paginaAlterada = true;
+            conteudoAlterado();
         });
         $(camposAlteraveis).bind("change", function() {
-            document.paginaAlterada = true;
+            conteudoAlterado();
         });
         var camposData = $(".campoData").not(".ignorar");
 
         $(camposData).on("mousedown", function(e) {
-            $(document).on("mouseup", function() {
+            $(camposData).on("mouseup", function() {
                 setTimeout(function() {
-                    document.paginaAlterada = true;
+                    conteudoAlterado();
                 }, 300);
             });
         });
@@ -528,6 +527,11 @@ function ajax(link, place, hidePop, async) {
 
 
     return sucesso.responseText;
+}
+
+//funcao temporaria para debug
+function conteudoAlterado() {
+    document.paginaAlterada = true;
 }
 //TODO verificar porque a tela cheia não funciona, através desse método, do mesmo
 //modo que apertando F11 (ou botão apropriado para exibir em tela cheia) no navegador.

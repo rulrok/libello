@@ -26,7 +26,7 @@
         </div>
 
     </fieldset>
-    <input disabled class="btn btn-large btn-success btn-primary btn-right" type="submit" disabled value="Cadastrar retorno" />
+    <button disabled class="btn btn-large btn-success btn-primary btn-right" type="submit" disabled >Cadastrar retorno</button>
 
 </form>
 

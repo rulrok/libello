@@ -10,18 +10,24 @@ class registrarSaida extends verificadorFormularioAjax {
             $_SERVER['REQUEST_METHOD'] = null;
             $equipamentoID = fnDecrypt($_POST['equipamentoID']);
             $dataSaida = $_POST['dataSaida'];
-            $destino = $_POST['destino'];
+            if (!isset($_POST['destinoManual'])) {
+                $destino = fnDecrypt($_POST['polo']);
+                $destinoAlternativo = "NULL";
+            } else {
+                $destino = "NULL";
+                $destinoAlternativo = $_POST['destinoManual'];
+            }
             $quantidade = (int) $_POST['quantidade'];
             $responsavel = fnDecrypt($_POST['responsavel']);
 
 
-            if ($equipamentoID >= 0 && $dataSaida !== "" && $destino !== "" && $quantidade > 0 && $responsavel >= 0) {
-                if (equipamentoDAO::cadastrarSaida($equipamentoID, $responsavel, $destino, $quantidade, $dataSaida)) {
+            if ($equipamentoID >= 0 && $dataSaida !== "" && (($destino != "NULL" && $destino != "" && $destinoAlternativo === "NULL") || ($destino === "NULL" && $destinoAlternativo !== "")) && $quantidade > 0 && $responsavel >= 0) {
+                if (equipamentoDAO::cadastrarSaida($equipamentoID, $responsavel, $destino, $destinoAlternativo, $quantidade, $dataSaida)) {
                     $this->mensagem->set_mensagem("Saída registrada");
                     $this->mensagem->set_status(Mensagem::SUCESSO);
                 } else {
                     $this->mensagem->set_mensagem("Erro ao cadastrar no banco");
-                $this->mensagem->set_status(Mensagem::ERRO);
+                    $this->mensagem->set_status(Mensagem::ERRO);
                 }
             } else {
                 $this->mensagem->set_mensagem("Dados inválidos");

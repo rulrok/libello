@@ -66,8 +66,8 @@
             <br/>
         </fieldset>
     </fieldset>
-    <input class="btn btn-large" type="reset" value="Limpar">
-    <input class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit" value="Cadastrar">
+    <button class="btn btn-large" type="reset">Limpar</button>
+    <button class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit">Cadastrar</button>
 
 </form>
 <script src='publico/js/datasComRange.js' type='text/javascript'></script>
@@ -119,16 +119,16 @@
         var campoPolo = document.getElementById("polo");
         optg = document.createElement("optgroup");
         optg.title = "outro";
-        optg.label = "";
+        optg.label = "Outro";
         opt = document.createElement("option");
-        opt.value = "informarManualmente";
-        opt.text = "Informar manualmente";
+        opt.value = "outro";
+        opt.text = "Outro destino";
         optg.appendChild(opt);
         campoPolo.appendChild(optg);
         document.viagens_campoDestinoAlternativo = false;
 
         $("#polo").on('change', function() {
-            if ($("#polo option:selected").prop("value") === "informarManualmente") {
+            if ($("#polo option:selected").prop("value") === "outro") {
                 $($(".line")[1]).after("<div class='line'><label for='destinoManual'>Nome do destino</label><input type='text' required id='destinoManual' class='input-xlarge' name='destinoManual'/></div>")
                 varrerCampos();
                 document.viagens_campoDestinoAlternativo = true;
