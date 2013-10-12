@@ -76,6 +76,21 @@ class equipamentoDAO extends abstractDAO {
         return $saida;
     }
 
+    public static function removerBaixa($baixaID) {
+        if (is_array($baixaID)) {
+            $equipamentoID = $equipamentoID['baixaID'];
+        }
+
+        $sql = "DELETE from equipamento_baixa WHERE idBaixa = " . $baixaID;
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+//            print_r($e);
+            return false;
+        }
+    }
+
     public static function consultarSaidas($colunas = "*", $condicao = null) {
 
         if ($condicao == null) {

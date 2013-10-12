@@ -65,7 +65,6 @@ class sistemaDAO extends abstractDAO {
         }
     }
 
-
     public static function registrarExclusaoCurso($idUsuarioFonte) {
         $quote = "\"";
         $tipo = TipoEventoSistema::REMOCAO_CURSO;
@@ -81,7 +80,7 @@ class sistemaDAO extends abstractDAO {
             return false;
         }
     }
-    
+
     public static function registrarExclusaoPolo($idUsuarioFonte) {
         $quote = "\"";
         $tipo = TipoEventoSistema::REMOCAO_POLO;
@@ -97,8 +96,8 @@ class sistemaDAO extends abstractDAO {
             return false;
         }
     }
-    
-        public static function registrarExclusaoEquipamento($idUsuarioFonte) {
+
+    public static function registrarExclusaoEquipamento($idUsuarioFonte) {
         $quote = "\"";
         $tipo = TipoEventoSistema::REMOCAO_EQUIPAMENTO;
         $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES ";
