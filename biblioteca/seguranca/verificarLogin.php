@@ -1,6 +1,6 @@
 <?php
-
-require_once BIBLIOTECA_DIR . "seguranca/seguranca.php";
+require_once '../configuracoes.php';
+require_once BIBLIOTECA_DIR . "/seguranca/seguranca.php";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['fazendo_login'])) {

@@ -1,5 +1,6 @@
 <?php
 ob_start();
+require_once './biblioteca/configuracoes.php';
 if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION['autenticado'] === TRUE) {
     header("Location: index.php");
 } else {
@@ -46,8 +47,8 @@ if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION[
             <div id="loginArea">
                 <form class="table centered" name="identificacao" action="./biblioteca/seguranca/verificarLogin.php" method="post">
                     <fieldset>
-                        <input hidden type="checkbox" id="fazendo_login" name="fazendo_login" checked/>
-                        <input hidden type="text" id="alvo" name="alvo" />
+                        <input hidden="true" type="checkbox" id="fazendo_login" name="fazendo_login" checked>
+                        <input hidden="true" type="text" id="alvo" name="alvo" >
                         <div class="line">
                             <label>Email</label>
                             <input required type="email" name="login">
