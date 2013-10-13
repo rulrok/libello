@@ -15,6 +15,7 @@
     </head>
     <body>
         <?php
+        require_once './biblioteca/configuracoes.php';
 //        require_once './biblioteca/seguranca/seguranca.php';
 ////        session_start();
 //        if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION['autenticado'] === TRUE) {

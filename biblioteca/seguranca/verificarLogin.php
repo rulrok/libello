@@ -25,5 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header("Location: " . WEB_SERVER_ADDRESS);
         }
     }
+} else {
+   header("Location: " . WEB_SERVER_ADDRESS);
 }
 ?>
