@@ -1,14 +1,12 @@
 <?php
-
+require_once 'Evento_Log.php';
 /**
  * Simular classe de enumeração
  */
-final class TipoEventoSistema {
+final class TipoEventoSistema extends Evento_Log{
 
-    const __default = self::DESCONHECIDO;
+    const __table = "eventoSistema";
     const __length = 9;
-    
-    const DESCONHECIDO = 0;
     
     const CADASTRO_USUARIO = 1;
     const REMOCAO_USUARIO = 2;
@@ -21,9 +19,5 @@ final class TipoEventoSistema {
     const CADASTRO_CURSO = 7;
     const REMOCAO_CURSO = 8;
     const ALTERACAO_CURSO = 9;
-    
-    const CADASTRO_EQUIPAMENTO = 10;
-    const REMOCAO_EQUIPAMENTO = 11;
-    const ALTERACAO_EQUIPAMENTO = 12;
 }
 ?>

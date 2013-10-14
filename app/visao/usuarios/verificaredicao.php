@@ -41,7 +41,7 @@ class verificarEdicaoUsuario extends verificadorFormularioAjax {
 
                 usuarioDAO::atualizarPermissoes($usuario, $permissoes);
                 $usuario = usuarioDAO::recuperarUsuario($usuario->get_email());
-                sistemaDAO::registrarAlteracaoUsuario($_SESSION['usuario']->get_id(), $usuario->get_id());
+                sistemaDAO::registrarAlteracaoUsuario(obterUsuarioSessao()->get_id(), $usuario->get_id());
 
 //                $this->visao->permissoes = usuarioDAO::obterPermissoes(usuarioDAO::recuperarUsuario($email)->get_id());
                 $this->mensagem->set_mensagem("Atualização concluída");

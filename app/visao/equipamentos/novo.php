@@ -24,7 +24,7 @@
                     <a class="btn btn-info" id="custeio"  value="custeio" checked><i class="icon-headphones"></i> Custeio</a>
                     <a class="btn" id="patrimonio"  value="patrimonio"><i class="icon-briefcase"></i> Patrimônio</a>
                 </div>
-                <div hidden>
+                <div class="hidden">
                     <input type="radio" name="tipo" id="radioCusteio" value="custeio" checked/>
                     <input type="radio" name="tipo" id="radioPatrimonio" value="patrimonio"/>
                 </div>
@@ -40,7 +40,7 @@
         </span>
 
         <!-- Patrimonios -->
-        <span class="patrimonios" hidden>
+        <span class="patrimonios hidden" hidden>
             <span class="line">
                 <span class="btn-group" id="controlePatrimonio">
                     <button disabled="true" type="button" class="btn btn-danger disabled" id="removerPatrimonio" onclick="removerPatrimonioAdicionado();" style="display: table-cell;"> <i class="icon-white icon-minus-sign"></i> </button>
@@ -127,7 +127,8 @@
                                 $("input[id^=numeroPatrimonio]").prop("required", false);
                                 $("input[id^=numeroPatrimonio]").prop("readonly", true);
                                 $(".patrimonios").prop("hidden", true);
-                                $(".custeio").prop("hidden", false);
+                                $(".patrimonios").addClass("hidden");
+                                $(".custeio").removeClass("hidden");
                                 $(".custeio input").prop("required", true);
                                 $(".patrimonios input").prop("required", false);
                                 $("input[id^=numeroPatrimonio]").removeClass("campoErrado")
@@ -146,8 +147,8 @@
 
                                 $("input[id^=numeroPatrimonio]").prop("required", true);
                                 $("input[id^=numeroPatrimonio]").prop("readonly", false);
-                                $(".patrimonios").prop("hidden", false);
-                                $(".custeio").prop("hidden", true);
+                                $(".patrimonios").removeClass("hidden");
+                                $(".custeio").addClass("hidden");
                                 $(".custeio input").prop("required", false);
                                 $(".patrimonios input").prop("required", true);
                                 $("input[id^=numeroPatrimonio]").removeClass("campoErrado");

@@ -33,7 +33,8 @@ class verificarnovo extends verificadorFormularioAjax {
                     $numeroPatrimonio = $_POST['numeroPatrimonio-' . ($i + 1)];
                     $colecaoEquipamentos[$i] = $aux->set_numeroPatrimonio($numeroPatrimonio)->set_quantidade(1);
                     try {
-                        equipamentoDAO::cadastrarEquipamento($aux);
+                        $id = equipamentoDAO::cadastrarEquipamento($aux);
+                        equipamentoDAO::registrarInsercaoEquipamento($id);
                         $patrimoniosValidos .= $numeroPatrimonio . "<br/>";
                     } catch (Exception $e) {
                         $patrimoniosInvalidos .= "<li>" . $numeroPatrimonio . "</li>";
@@ -53,7 +54,8 @@ class verificarnovo extends verificadorFormularioAjax {
                     $equipamento->set_numeroPatrimonio(null);
                     //Vai tentar cadastrar
                     try {
-                        equipamentoDAO::cadastrarEquipamento($equipamento);
+                        $id = equipamentoDAO::cadastrarEquipamento($equipamento);
+                        equipamentoDAO::registrarInsercaoEquipamento($id);
                         $this->mensagem->set_mensagem("Cadastrado com sucesso.")->set_status(Mensagem::SUCESSO);
                     } catch (Exception $e) {
                         $this->mensagem->set_mensagem("Erro ao cadastrar no banco de dados.")->set_status(Mensagem::ERRO);

@@ -16,6 +16,7 @@ if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION[
         <link rel='stylesheet' href='publico/css/login.css' />
         <title class="tituloFixo">Autenticação</title>
         <link rel="stylesheet" type="text/css" media="screen" href="publico/css/browser-detection.css" />
+<!--        <script src="http://ie.microsoft.com/testdrive/HTML5/CompatInspector/inspector.js"></script>-->
         <script src="publico/js/jquery/jquery-1.9.1.js"></script>
         <script>
             jQuery.fn.center = function() {
@@ -47,8 +48,8 @@ if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION[
             <div id="loginArea">
                 <form class="table centered" name="identificacao" action="./biblioteca/seguranca/verificarLogin.php" method="post">
                     <fieldset>
-                        <input hidden="true" type="checkbox" id="fazendo_login" name="fazendo_login" checked>
-                        <input hidden="true" type="text" id="alvo" name="alvo" >
+                        <input hidden type="checkbox" class="hidden" id="fazendo_login" name="fazendo_login" checked>
+                        <input hidden type="text" class="hidden" id="alvo" name="alvo" >
                         <div class="line">
                             <label>Email</label>
                             <input required type="email" name="login">

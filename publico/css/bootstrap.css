@@ -6164,3 +6164,13 @@ a.badge:focus {
 .affix {
   position: fixed;
 }
+
+/*
+Classe hidden para Internet Explorer
+*/
+.hidden {
+  display: none!important;
+  visibility: hidden!important;
+  width: 0!important;
+  height: 0!important;
+}

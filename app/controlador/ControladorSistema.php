@@ -21,14 +21,14 @@ class ControladorSistema extends Controlador {
     public function acaoGerenciarconta($erro = false) {
         if ($erro == false) {
 //            $this->visao->mensagem_usuario = null;
-            $this->visao->nome = $_SESSION['usuario']->get_PNome();
-            $this->visao->sobrenome = $_SESSION['usuario']->get_UNome();
-            $this->visao->email = $_SESSION['usuario']->get_email();
-            $this->visao->dataNascimento = $_SESSION['usuario']->get_dataNascimento();
+            $this->visao->nome = obterUsuarioSessao()->get_PNome();
+            $this->visao->sobrenome = obterUsuarioSessao()->get_UNome();
+            $this->visao->email = obterUsuarioSessao()->get_email();
+            $this->visao->dataNascimento = obterUsuarioSessao()->get_dataNascimento();
 
 
 
-            $this->visao->papel = usuarioDAO::consultarPapel($_SESSION['usuario']->get_email());
+            $this->visao->papel = usuarioDAO::consultarPapel(obterUsuarioSessao()->get_email());
         } else {
             if ($this->visao->mensagem_usuario == NULL || $this->visao->mensagem_usuario == "") {
                 $this->visao->mensagem_usuario = "Informações inválidas.";
@@ -40,6 +40,9 @@ class ControladorSistema extends Controlador {
     }
 
     public function acaoValidarAlteracoesConta() {
+        $this->renderizar();
+    }
+    public function acaoAdministracao(){
         $this->renderizar();
     }
 

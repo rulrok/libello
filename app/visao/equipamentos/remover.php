@@ -9,6 +9,7 @@ $novosDados->set_quantidade(0);
 $novosDados->set_numeroPatrimonio(null);
 if (equipamentoDAO::atualizar($id, $novosDados)) {
     $mensagem->set_mensagem("Equipamento removido com sucesso.")->set_status(Mensagem::SUCESSO);
+    equipamentoDAO::registrarExclusaoEquipamento($id);
 } else {
     $mensagem->set_mensagem("Erro ao excluir")->set_status(Mensagem::ERRO);
 }

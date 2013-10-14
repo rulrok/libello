@@ -29,7 +29,7 @@
                 if ($i == 0) {
                     echo '<td hidden class="campoID">';
                 } else if ($i == 4) {
-                    if (($value[$i] != "")) {
+                    if (($value[$i] == "")) {
                         echo "<td>Equipamento</td>";
                     } else {
                         echo "<td>Saída</td>";

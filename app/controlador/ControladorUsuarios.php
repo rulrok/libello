@@ -20,7 +20,7 @@ class ControladorUsuarios extends Controlador {
     public function acaoEditar() {
         if (isset($_GET['userID'])) {
             $userID = fnDecrypt($_GET['userID']);
-            if ($userID != $_SESSION['usuario']->get_id()) { //!!! Impede que o usuário edite o próprio perfil, alterando assim sua permissões e papel. Uma violação de segurança.
+            if ($userID != obterUsuarioSessao()->get_id()) { //!!! Impede que o usuário edite o próprio perfil, alterando assim sua permissões e papel. Uma violação de segurança.
                 $this->visao->comboPermissoes = ComboBoxPermissoes::montarComboBoxPadrao();
                 $email = usuarioDAO::descobrirEmail($userID);
                 $usuario = usuarioDAO::recuperarUsuario($email);
@@ -56,7 +56,7 @@ class ControladorUsuarios extends Controlador {
     }
 
     public function acaoGerenciar() {
-        $this->visao->usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,dataNascimento,nome", "idUsuario <> " . $_SESSION['usuario']->get_id());
+        $this->visao->usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,dataNascimento,nome", "idUsuario <> " . obterUsuarioSessao()->get_id());
         $i = 0;
         foreach ($this->visao->usuarios as $value) {
             $value[0] = fnEncrypt($value[0]);

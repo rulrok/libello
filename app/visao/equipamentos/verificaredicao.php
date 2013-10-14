@@ -43,6 +43,7 @@ class verificarEdicao extends verificadorFormularioAjax {
                     $equipamento->set_nomeEquipamento($equipamentoNome)->set_dataEntrada($dataEntrada)->set_numeroPatrimonio($numeroPatrimonio)->set_quantidade($quantidade)->set_descricao($descricao);
 
                     if (equipamentoDAO::atualizar($equipamentoID, $equipamento)) {
+                        equipamentoDAO::registrarAlteracaoEquipamento($equipamentoID);
                         $this->mensagem->set_mensagem("Atualizado com sucesso");
                         $this->mensagem->set_status(Mensagem::SUCESSO);
                     } else {

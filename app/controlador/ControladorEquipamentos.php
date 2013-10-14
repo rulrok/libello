@@ -77,7 +77,7 @@ class ControladorEquipamentos extends Controlador {
     }
 
     public function acaoRetorno() {
-        $this->visao->saidas = equipamentoDAO::consultarSaidas("idSaida, nomeEquipamento, numeroPatrimonio, concat(PNome,' ',UNome) AS `responsavel`,destino,nomePolo,quantidadeSaida,data");
+        $this->visao->saidas = equipamentoDAO::consultarSaidas("idSaida, nomeEquipamento, numeroPatrimonio, concat(PNome,' ',UNome) AS `responsavel`,destino,nomePolo,quantidadeSaida,dataSaida");
         $i = 0;
         foreach ($this->visao->saidas as $value) {
             $value[0] = fnEncrypt($value[0]);
@@ -99,7 +99,7 @@ class ControladorEquipamentos extends Controlador {
             $this->visao->equipamentoID = fnEncrypt($equipamentoID);
             $this->visao->equipamento = $equipamento;
             $this->visao->quantidadeMaxima = $saida['quantidadeSaida'];
-            $this->visao->dataSaida = $saida['data'];
+            $this->visao->dataSaida = $saida['dataSaida'];
             $this->renderizar();
         } else {
             die("Acesso indevido");
@@ -155,7 +155,7 @@ class ControladorEquipamentos extends Controlador {
             $this->renderizar();
         } else if (isset($_GET['saidaID'])) {
             $saida = equipamentoDAO::recuperarSaidaEquipamento(fnDecrypt($_GET['saidaID']));
-            $this->visao->dataMinima = $saida['data'];
+            $this->visao->dataMinima = $saida['dataSaida'];
             $this->visao->equipamento = equipamentoDAO::recuperarEquipamento($saida['equipamento']);
             $this->visao->equipamentoID = fnEncrypt($this->visao->equipamento->get_idEquipamento());
             $this->visao->quantidadeMaxima = $saida['quantidadeSaida'];
@@ -186,6 +186,19 @@ class ControladorEquipamentos extends Controlador {
     }
     
     public function acaoRemover_baixa(){
+        $this->renderizar();
+    }
+    public function acaoGerenciar_saidas() {
+        $this->visao->saidas = equipamentoDAO::consultarSaidas("idSaida,nomeEquipamento,dataSaida,quantidadeSaidaOriginal,concat(PNome,' ',UNome) as `responsavel`");
+        $i = 0;
+        foreach ($this->visao->saidas as $value) {
+            $value[0] = fnEncrypt($value[0]);
+            $this->visao->saidas[$i++] = $value;
+        }
+        $this->renderizar();
+    }
+    
+    public function acaoRemover_saida(){
         $this->renderizar();
     }
 

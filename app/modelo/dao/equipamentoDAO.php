@@ -2,6 +2,7 @@
 
 require_once 'abstractDAO.php';
 require_once APP_LOCATION . "modelo/vo/Equipamento.php";
+require_once APP_LOCATION . 'modelo/enumeracao/TipoEventoEquipamento.php';
 
 class equipamentoDAO extends abstractDAO {
 
@@ -28,7 +29,11 @@ class equipamentoDAO extends abstractDAO {
 
         $values = "($nome,$quantidade,$descricao,$dataEntrada,$numeroPatrimonio)";
         try {
-            parent::getConexao()->query($sql . $values);
+            $stmt = parent::getConexao()->prepare($sql . $values);
+            $stmt->execute();
+            $id = parent::getConexao()->lastInsertId();
+            return $id;
+//            print_r($id);
         } catch (Exception $e) {
             throw new Exception("Erro");
         }
@@ -82,6 +87,21 @@ class equipamentoDAO extends abstractDAO {
         }
 
         $sql = "DELETE from equipamento_baixa WHERE idBaixa = " . $baixaID;
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+//            print_r($e);
+            return false;
+        }
+    }
+
+    public static function removerSaida($saidaID) {
+        if (is_array($saidaID)) {
+            $equipamentoID = $equipamentoID['saidaID'];
+        }
+
+        $sql = "DELETE from equipamento_saida WHERE idSaida = " . $saidaID;
         try {
             parent::getConexao()->query($sql);
             return true;
@@ -162,7 +182,8 @@ class equipamentoDAO extends abstractDAO {
         $sql = "UPDATE equipamento SET nomeEquipamento = '" . $nome . "' ,quantidade = " . $quantidade . " ,dataEntrada = '" . $dataEntrada . "' ,numeroPatrimonio = " . $numeroPatrimonio . " ,descricao=" . $descricao;
         $sql .= $condicao;
         try {
-            parent::getConexao()->query($sql);
+            $stmt = parent::getConexao()->prepare($sql);
+            $stmt->execute();
             return true;
         } catch (Exception $e) {
             echo $e;
@@ -191,11 +212,13 @@ class equipamentoDAO extends abstractDAO {
         $destino = $destino;
         $data = parent::quote($data);
         $destinoAlternativo = parent::quote($destinoAlternativo);
-        $sql = "INSERT INTO equipamento_saida(equipamento,responsavel,destino,quantidadeSaida,quantidadeSaidaOriginal,data,PoloDestino) VALUES " .
+        $sql = "INSERT INTO equipamento_saida(equipamento,responsavel,destino,quantidadeSaida,quantidadeSaidaOriginal,dataSaida,PoloDestino) VALUES " .
                 "($idEquipamento,$idResponsavel,$destinoAlternativo,$quantidade,$quantidade,$data,$destino)";
 
         try {
             parent::getConexao()->query($sql);
+            $id = parent::getConexao()->lastInsertId();
+            equipamentoDAO::registrarCadastroSaida($id);
             return true;
         } catch (Exception $e) {
             print_r($e);
@@ -206,10 +229,12 @@ class equipamentoDAO extends abstractDAO {
     public static function cadastrarRetorno($idSaida, $data, $quantidade, $observacoes = "NULL") {
         $observacoes = parent::quote($observacoes);
         $data = parent::quote($data);
-        $sql = "INSERT INTO equipamento_retorno(saida,data,quantidadeRetorno,observacoes) VALUES " .
+        $sql = "INSERT INTO equipamento_retorno(saida,dataRetorno,quantidadeRetorno,observacoes) VALUES " .
                 "($idSaida,$data,$quantidade,$observacoes)";
         try {
             parent::getConexao()->query($sql);
+            $id = parent::getConexao()->lastInsertId();
+            equipamentoDAO::registrarRetorno($id);
             return true;
         } catch (Exception $e) {
             return false;
@@ -223,6 +248,8 @@ class equipamentoDAO extends abstractDAO {
                 "($idEquipamento,$idSaida,$dataBaixa,$quantidade,$observacoes)";
         try {
             parent::getConexao()->query($sql);
+            $idBaixa = parent::getConexao()->lastInsertId();
+            equipamentoDAO::registrarCadastroBaixa($idBaixa);
             return true;
         } catch (Exception $e) {
             return false;
@@ -282,6 +309,143 @@ class equipamentoDAO extends abstractDAO {
             }
             return true;
         } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    /////////////////// REGISTRO DE EVENTOS PARA LOG ///////////////////////////
+
+    public static function registrarExclusaoEquipamento($idEquipamento) {
+        $quote = "\"";
+        $tipo = TipoEventoEquipamento::REMOCAO_EQUIPAMENTO;
+        $usuarioID = obterUsuarioSessao()->get_id();
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,equipamento,data,hora) VALUES ";
+        $sql .= " ($tipo,$usuarioID,$idEquipamento,<data>,<hora>)";
+        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
+        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            print_r($e);
+            return false;
+        }
+    }
+
+    public static function registrarInsercaoEquipamento($idEquipamento) {
+        $quote = "\"";
+        $tipo = TipoEventoEquipamento::CADASTRO_EQUIPAMENTO;
+        $usuarioID = obterUsuarioSessao()->get_id();
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,equipamento,data,hora) VALUES ";
+        $sql .= " ($tipo,$usuarioID,$idEquipamento,<data>,<hora>)";
+        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
+        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            print_r($e);
+            return false;
+        }
+    }
+
+    public static function registrarAlteracaoEquipamento($idEquipamento) {
+        $quote = "\"";
+        $tipo = TipoEventoEquipamento::ALTERACAO_EQUIPAMENTO;
+        $usuarioID = obterUsuarioSessao()->get_id();
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,equipamento,data,hora) VALUES ";
+        $sql .= " ($tipo,$usuarioID,$idEquipamento,<data>,<hora>)";
+        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
+        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            print_r($e);
+            return false;
+        }
+    }
+
+    public static function registrarCadastroBaixa($idBaixa) {
+        $quote = "\"";
+        $tipo = TipoEventoEquipamento::CADASTRO_BAIXA;
+        $usuarioID = obterUsuarioSessao()->get_id();
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,baixa,data,hora) VALUES ";
+        $sql .= " ($tipo,$usuarioID,$idBaixa,<data>,<hora>)";
+        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
+        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            print_r($e);
+            return false;
+        }
+    }
+
+    public static function registrarRemocaoBaixa($idBaixa) {
+        $quote = "\"";
+        $tipo = TipoEventoEquipamento::REMOCAO_BAIXA;
+        $usuarioID = obterUsuarioSessao()->get_id();
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,baixa,data,hora) VALUES ";
+        $sql .= " ($tipo,$usuarioID,$idBaixa,<data>,<hora>)";
+        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
+        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            print_r($e);
+            return false;
+        }
+    }
+    
+    public static function registrarCadastroSaida($idSaida) {
+        $quote = "\"";
+        $tipo = TipoEventoEquipamento::CADASTRO_SAIDA;
+        $usuarioID = obterUsuarioSessao()->get_id();
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,saida,data,hora) VALUES ";
+        $sql .= " ($tipo,$usuarioID,$idSaida,<data>,<hora>)";
+        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
+        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            print_r($e);
+            return false;
+        }
+    }
+    public static function registrarRemocaoSaida($idSaida) {
+        $quote = "\"";
+        $tipo = TipoEventoEquipamento::REMOCAO_SAIDA;
+        $usuarioID = obterUsuarioSessao()->get_id();
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,saida,data,hora) VALUES ";
+        $sql .= " ($tipo,$usuarioID,$idSaida,<data>,<hora>)";
+        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
+        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            print_r($e);
+            return false;
+        }
+    }
+    
+    public static function registrarRetorno($idRetorno) {
+        $quote = "\"";
+        $tipo = TipoEventoEquipamento::CADASTRO_RETORNO;
+        $usuarioID = obterUsuarioSessao()->get_id();
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,retorno,data,hora) VALUES ";
+        $sql .= " ($tipo,$usuarioID,$idRetorno,<data>,<hora>)";
+        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
+        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            print_r($e);
             return false;
         }
     }
