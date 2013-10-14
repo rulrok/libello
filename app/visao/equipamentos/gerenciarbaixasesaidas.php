@@ -1,80 +1,58 @@
 <title>Gerenciar baixas e saídas</title>
-<!-- Início da páginas -->
-<div class="alert alert-block alert-info" id="aviso"><span class="label label-info">Dica: </span> Duplo clique na linha mostra as observações da baixa<a class="close" data-dismiss="alert" href="#">&times;</a></div>
-<div class="btn-toolbar">
-    <div class="btn-group">
-        <!--<a href="#!equipamentos|novo" class="btn btn-adicionar"><i class="icon-plus"></i> Adicionar novo</a>-->
-        <!--<button class="btn btn-editar disabled" href="#"><i class="icon-edit"></i> Editar</button>-->
-        <!--<button class="btn btn-saida disabled btn-success" href="#"><i class="icon-arrow-left"></i> Registrar saída</button>-->
-        <!--<button class="btn btn-baixa disabled btn-info" href="#"><i class="icon-arrow-down"></i> Registrar Baixa</button>-->
-        <button class="btn btn-danger disabled btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
-    </div>
+<!-- Início da página -->
+<ul class="nav nav-tabs" id="abas">
+    <li><a href="javascript:void(0)" onclick="ajax('index.php?c=equipamentos&a=gerenciar_baixas', '#resultado_consulta', false);" data-toggle="tab">Baixas</a></li>
+    <li><a href="javascript:void(0)" onclick="ajax('index.php?c=equipamentos&a=gerenciar_saidas', '#resultado_consulta', false);" data-toggle="tab">Saídas</a></li>
+    <!--<li><a href="javascript:void(0)" onclick="ajax('index.php?c=equipamentos&a=consultar_embaixa', '#resultado_consulta', false);" data-toggle="tab">Baixa</a></li>-->
+</ul>
+<div id="resultado_consulta">
+
 </div>
-<table id="gerenciar_baixas" class="tabelaDeEdicao">
-    <thead>
-        <tr>
-            <th hidden>id</th>
-            <th>Equipamento</th>
-            <th>Data da baixa</th>
-            <th>Qtd</th>
-            <th>Saída</th>
-            <th hidden>Descrição</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        foreach ($this->baixas as $value) {
-            echo '<tr>';
-            for ($i = 0; $i < sizeof($value) / 2; $i++) {
-                if ($i == 0) {
-                    echo '<td hidden class="campoID">';
-                } else if ($i == 5) {
-                    echo '<td hidden>';
-                    if ($value[$i] == "") {
-                        echo "Nenhuma</td>";
-                        continue;
-                    }
-                } else {
-                    echo '<td>';
+<?php
+if (isset($_GET['l'])) {
+    $local = $_GET['l'];
+    switch ($local) {
+//        case "baixa":
+//            $local = 2;
+//            break;
+        case "saidas":
+            $local = 1;
+            break;
+        case "baixas":
+            $local = 0;
+            break;
+        default :
+            $local = 0;
+    }
+} else {
+    $local = 0;
+}
+?>
+<script id="pos_script">
+        $(document).ready(function() {
+
+            $('#abas a').on('click', function() {
+                switch (this.innerHTML.toLowerCase()) {
+                    case "baixas":
+                        local = "baixas";
+                        break;
+                    case "saídas":
+                        local = "saidas";
+                        break;
+//                    case "baixa":
+//                        local = "baixa";
+//                        break;
+                    default:
+                        local = "baixas";
                 }
-                echo $value[$i];
-                echo '</td>';
-            }
-            echo '</tr>';
-        }
-        ?>
-    </tbody>
-</table>
-<div class="btn-toolbar">
-    <div class="btn-group">
-        <!--<a href="#!equipamentos|novo" class="btn btn-adicionar"><i class="icon-plus"></i> Adicionar novo</a>-->
-        <!--<button class="btn btn-editar disabled" href="#"><i class="icon-edit"></i> Editar</button>-->
-        <!--<button class="btn btn-saida disabled btn-success" href="#"><i class="icon-arrow-left"></i> Registrar saída</button>-->
-        <!--<button class="btn btn-baixa disabled btn-info" href="#"><i class="icon-arrow-down"></i> Registrar Baixa</button>-->
-        <button class="btn btn-deletar disabled btn-danger" href="#"><i class="icon-remove"></i> Excluir</button>
-    </div>
-</div>
-<script>
-    //Este script configura as ações para os botões da página.
-    $(document).ready(function() {
+                history.replaceState(null, null, "#!equipamentos|gerenciarbaixasesaidas&l=" + local)
+            });
+            var i = <?php echo $local; ?>;
+            var local;
+            //Script necessário para as abas
+            var aba = $('#abas a')[i];
+            $(aba).tab('show');
+            $(aba).click();
 
-        configurarTabela({
-            idTabela: 'gerenciar_baixas',
-//            editar: '#!equipamentos|editar&equipamentoID=',
-            deletar: 'index.php?c=equipamentos&a=remover&baixaID=',
-//            saida: '#!equipamentos|novasaida&equipamentoID=',
-//            baixa: "#!equipamentos|novabaixa&equipamentoID=",
-            detalhes: true,
-            detalhesIndice: "6",
-            defs: {
-                "aoColumnDefs": [
-                    {"bSortable": false, "aTargets": [0, 1]},
-                    {"bSearchable": false, "aTargets": [0, 1]}
-                ],
-                "aaSorting": [[2, 'asc']]
-            }
         });
-//        showPopUp("Duplo clique nas linhas <br/>mostra a descrição<br/>do equipamento","Info")
-    });
-
 </script>

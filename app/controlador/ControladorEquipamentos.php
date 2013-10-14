@@ -155,7 +155,7 @@ class ControladorEquipamentos extends Controlador {
             $this->renderizar();
         } else if (isset($_GET['saidaID'])) {
             $saida = equipamentoDAO::recuperarSaidaEquipamento(fnDecrypt($_GET['saidaID']));
-            $this->visao->dataMinima = $saida['data '];
+            $this->visao->dataMinima = $saida['data'];
             $this->visao->equipamento = equipamentoDAO::recuperarEquipamento($saida['equipamento']);
             $this->visao->equipamentoID = fnEncrypt($this->visao->equipamento->get_idEquipamento());
             $this->visao->quantidadeMaxima = $saida['quantidadeSaida'];
@@ -171,12 +171,21 @@ class ControladorEquipamentos extends Controlador {
     }
 
     public function acaoGerenciarbaixasesaidas() {
+
+        $this->renderizar();
+    }
+
+    public function acaoGerenciar_baixas() {
         $this->visao->baixas = equipamentoDAO::consultarBaixas("idBaixa,nomeEquipamento,dataBaixa,quantidadeBaixa,saida,observacoes");
         $i = 0;
         foreach ($this->visao->baixas as $value) {
             $value[0] = fnEncrypt($value[0]);
             $this->visao->baixas[$i++] = $value;
         }
+        $this->renderizar();
+    }
+    
+    public function acaoRemover_baixa(){
         $this->renderizar();
     }
 
