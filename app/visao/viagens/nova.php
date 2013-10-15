@@ -110,10 +110,13 @@
         $(".line input").popover({trigger: 'focus', container: 'body'});
         formularioAjax();
 
-        $("input[type=reset]").bind("click", function() {
+        $("button[type=reset]").bind("click", function() {
             $("select").val('').trigger("chosen:updated");
             $("div.chosen-container li.search-choice").remove();
             $("div.chosen-container li.search-field").addClass("default");
+            setTimeout(function() {
+                liberarCadastro();
+            }, "200");
         });
 
         var campoPolo = document.getElementById("polo");

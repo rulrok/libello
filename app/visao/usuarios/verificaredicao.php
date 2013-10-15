@@ -31,14 +31,20 @@ class verificarEdicaoUsuario extends verificadorFormularioAjax {
 
                 usuarioDAO::atualizar($email, $usuario);
 
-                $permissoes = new PermissoesFerramenta();
-                $permissoes->set_controleCursos($_POST['permissoes_controle_de_cursos_e_polos']);
-                $permissoes->set_controleDocumentos($_POST['permissoes_controle_de_documentos']);
-                $permissoes->set_controleEquipamentos($_POST['permissoes_controle_de_equipamentos']);
-                $permissoes->set_controleLivros($_POST['permissoes_controle_de_livros']);
-                $permissoes->set_controleUsuarios($_POST['permissoes_controle_de_usuarios']);
-                $permissoes->set_controleViagens($_POST['permissoes_controle_de_viagens']);
-
+                try {
+                    $permissoes = new PermissoesFerramenta();
+                    $teste = print_r($_POST, true);
+                    $permissoes->set_controleCursos($_POST['permissoes_controle_de_cursos_e_polos']);
+                    $permissoes->set_controleDocumentos($_POST['permissoes_controle_de_documentos']);
+                    $permissoes->set_controleEquipamentos($_POST['permissoes_controle_de_equipamentos']);
+                    $permissoes->set_controleLivros($_POST['permissoes_controle_de_livros']);
+                    $permissoes->set_controleUsuarios($_POST['permissoes_controle_de_usuarios']);
+                    $permissoes->set_controleViagens($_POST['permissoes_controle_de_viagens']);
+                    $permissoes->set_tarefas($_POST['permissoes_tarefas']);
+                    $permissoes->set_controlePagamentos($_POST['permissoes_controle_de_pagamentos']);
+                } catch (Exception $e) {
+                    die($e);
+                }
                 usuarioDAO::atualizarPermissoes($usuario, $permissoes);
                 $usuario = usuarioDAO::recuperarUsuario($usuario->get_email());
                 sistemaDAO::registrarAlteracaoUsuario(obterUsuarioSessao()->get_id(), $usuario->get_id());

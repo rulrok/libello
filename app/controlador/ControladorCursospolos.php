@@ -89,7 +89,7 @@ class ControladorCursospolos extends Controlador {
             $polo = poloDAO::recuperarPolo($poloID);
             $this->visao->polo = $polo->get_nome();
             $this->visao->cidade = $polo->get_cidade();
-            $this->visao->estado = $polo->get_estado();
+            $this->visao->estadoViagem = $polo->get_estado();
         } else {
             die("Acesso indevido");
         }

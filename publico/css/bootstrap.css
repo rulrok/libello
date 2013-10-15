@@ -1304,9 +1304,6 @@ textarea::-webkit-input-placeholder {
 .input-xxlarge {
   width: 530px;
 }
-.input-xxzlarge {
-  width: 590px;
-}
 
 input[class*="span"],
 select[class*="span"],
@@ -3579,10 +3576,6 @@ input[type="submit"].btn.btn-mini {
   *padding-bottom: 1px;
 }
 
-button.btn-right,
-input[type="submit"].btn-right {
-    float: right;
-}
 
 .btn-link,
 .btn-link:active,
@@ -6163,14 +6156,4 @@ a.badge:focus {
 
 .affix {
   position: fixed;
-}
-
-/*
-Classe hidden para Internet Explorer
-*/
-.hidden {
-  display: none!important;
-  visibility: hidden!important;
-  width: 0!important;
-  height: 0!important;
 }

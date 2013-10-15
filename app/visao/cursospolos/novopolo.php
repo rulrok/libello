@@ -43,6 +43,7 @@
             setTimeout(function() {
 
                 $("#cidade").val('').trigger("chosen:updated");
+                liberarCadastro();
             }, "200");
         });
 </script>

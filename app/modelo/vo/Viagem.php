@@ -11,7 +11,7 @@ class Viagem {
     var $dataVolta;
     var $horaVolta;
     var $motivo;
-    var $estado;
+    var $estadoViagem;
     var $diarias;
     var $passageiros;
     var $destinoAlternativo;
@@ -98,11 +98,11 @@ class Viagem {
     }
 
     public function get_estado() {
-        return $this->estado;
+        return $this->estadoViagem;
     }
 
     public function set_estado($estado) {
-        $this->estado = $estado;
+        $this->estadoViagem = $estado;
         return $this;
     }
 

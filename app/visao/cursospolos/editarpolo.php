@@ -46,7 +46,7 @@
         });
         $("#cidade").chosen();
 
-        $('#estado').val("<?php echo $this->estado ?>");
+        $('#estado').val("<?php echo $this->estadoViagem ?>");
         $('#estado').change();
         $("#estado").chosen();
         $('#estado').change(function() {

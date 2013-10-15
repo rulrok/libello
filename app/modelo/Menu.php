@@ -157,6 +157,40 @@ class Menu {
                         }
                     }
                     break;
+                case Ferramenta::TAREFAS:
+                    if ($permissao_ferramenta['idPermissao'] != Permissao::SEM_ACESSO) {
+                        $menuCode .= "<a><li class=\"menuLink\" id=\"tarefasLink\">Tarefas</li></a>" . "\n";
+                        $subMenuCode .="<ul class=\"hiddenSubMenuLink tarefasSubMenu\">" . "\n";
+                        switch ($permissao_ferramenta['idPermissao']) {
+                            case Permissao::ADMINISTRADOR:
+                            case Permissao::GESTOR:
+                                $subMenuCode .= "<a href=\"#!tarefas|gerenciar\"\">" . "\n";
+                                $subMenuCode .= "<li>Gerenciar Tarefas</li></a>" . "\n";
+                            case Permissao::ESCRITA:
+                                $subMenuCode .= "<a href=\"#!tarefas|nova\"\">" . "\n";
+                                $subMenuCode .= "<li>Nova Tarefa</li></a>" . "\n";
+                            case Permissao::CONSULTA:
+                        }
+                    }
+                    break;
+                case Ferramenta::CONTROLE_PAGAMENTOS:
+                    if ($permissao_ferramenta['idPermissao'] != Permissao::SEM_ACESSO) {
+                        $menuCode .= "<a><li class=\"menuLink\" id=\"pagamentosLink\">Pagamentos</li></a>" . "\n";
+                        $subMenuCode .="<ul class=\"hiddenSubMenuLink pagamentosSubMenu\">" . "\n";
+                        switch ($permissao_ferramenta['idPermissao']) {
+                            case Permissao::ADMINISTRADOR:
+                            case Permissao::GESTOR:
+                                $subMenuCode .= "<a href=\"#!pagamentos|gerenciar\"\">" . "\n";
+                                $subMenuCode .= "<li>Gerenciar Pagamentos</li></a>" . "\n";
+                            case Permissao::ESCRITA:
+                                $subMenuCode .= "<a href=\"#!pagamentos|nova\"\">" . "\n";
+                                $subMenuCode .= "<li>Nova Ordem de Pagamento</li></a>" . "\n";
+                            case Permissao::CONSULTA:
+                                $subMenuCode .= "<a href=\"#!pagamentos|consultar\"\">" . "\n";
+                                $subMenuCode .= "<li>Verificar Pagamentos</li></a>" . "\n";
+                        }
+                    }
+                    break;
             }
 //            $subMenuCode .= "<a class =\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/imagens/icones/go-up.png\"></li></a>" . "\n";
             $subMenuCode .= "</ul>" . "\n";

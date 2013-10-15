@@ -647,6 +647,12 @@ header .userInfoWrap [id=gerenciarConta]:before{
     #viagensLink:before{
         content: url("../imagens/icones/viagens_22.png");
     }
+    #tarefasLink:before{
+        content: url("../imagens/icones/tarefas_22.png");
+    }
+    #pagamentosLink:before{
+        content: url("../imagens/icones/pagamentos_22.png");
+    }
 }
 @media (min-width:800px ){
 
@@ -672,6 +678,12 @@ header .userInfoWrap [id=gerenciarConta]:before{
     }
     #viagensLink:before{
         content: url("../imagens/icones/viagens.png");
+    }
+    #tarefasLink:before{
+        content: url("../imagens/icones/tarefas.png");
+    }
+    #pagamentosLink:before{
+        content: url("../imagens/icones/pagamentos.png");
     }
 }
 /* Links do menu */
@@ -999,4 +1011,26 @@ select:disabled{
     display: table-cell;
 }
 /* FIM Forms alinhados sem tabela */
+/*================================================*/
+/*  BOOTSTRAP FIXES */
+
+/*
+Classe hidden para Internet Explorer
+*/
+.hidden {
+  display: none!important;
+  visibility: hidden!important;
+  width: 0!important;
+  height: 0!important;
+}
+
+button.btn-right,
+input[type="submit"].btn-right {
+    float: right;
+}
+
+.input-xxzlarge {
+  width: 590px;
+}
+/*  FIM BOOTSTRAP FIXES */
 /*================================================*/

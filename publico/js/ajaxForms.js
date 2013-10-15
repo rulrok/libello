@@ -20,6 +20,9 @@
  */
 function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn) {
 
+    var botaoAcao = $("#" + idFormulario + " button[type=submit]");
+    desabilitarBotaoAcao(botaoAcao);
+
     if (typeof idFormulario == "object") {
         recipient = idFormulario['recipient'];
         completeFn = idFormulario['completeFn'];
@@ -27,7 +30,7 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn
         alwaysFn = idFormulario['alwaysFn'];
         idFormulario = idFormulario['idFormulario'];
     }
-    
+
 
 
     if (idFormulario === undefined) {
@@ -46,7 +49,7 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn
                 if (data.status !== undefined && data.mensagem !== undefined) {
                     showPopUp(data.mensagem, data.status);
                     if (data.status.toLowerCase() === "sucesso") {
-                        $("input[type=reset]").click();
+                        $("input[type=reset],button[type=reset]").click();
                         if (successFn !== undefined && isFunction(successFn)) {
                             successFn();
                         }
@@ -86,4 +89,17 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn
 function isFunction(functionToCheck) {
     var getType = {};
     return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+}
+
+/**
+ * Desabilita um botão assim que ele é acionado para enviar um formulário, evitando 
+ * que a pessoa mande duas vezes os mesmo formulário para o servidor.
+ * 
+ * @param {type} botao DOM do botão
+ * @returns {undefined}
+ */
+function desabilitarBotaoAcao(botao) {
+    $(botao).on("mouseup", function() {
+        $(this).prop("enabled",false);
+    });
 }

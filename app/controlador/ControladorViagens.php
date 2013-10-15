@@ -21,12 +21,16 @@ class ControladorViagens extends Controlador {
     }
 
     public function acaoGerenciar() {
-        $this->visao->viagens = viagemDAO::consultar("idViagem,nomeCurso,concat(dataIda,' - ',horaIda) as ida,concat(dataVolta,' - ',horaVolta) as volta,motivo,estado,diarias,nomePolo,outroDestino");
+        $this->visao->viagens = viagemDAO::consultar("idViagem,nomeCurso,concat(dataIda,' - ',horaIda) as ida,concat(dataVolta,' - ',horaVolta) as volta,motivo,estado,diarias,concat(IFNULL(nomePolo,''),IFNULL(outroDestino,'')) as destino");
         $i = 0;
         foreach ($this->visao->viagens as $value) {
             $value[0] = fnEncrypt($value[0]);
             $this->visao->viagens[$i++] = $value;
         }
+        $this->renderizar();
+    }
+    
+    public function acaoEditar(){
         $this->renderizar();
     }
 

@@ -16,8 +16,8 @@
         </div>
         <div class="line">
             <label>E-mail</label>
-            <input required type="email" id="email" class="input-large" placeholder="email@dominio.com" name="email" data-content="O email será usado como login.">
-        </div>
+                <input required type="email" id="email" class="input-large" placeholder="email@dominio.com" name="email" data-content="O email será usado como login.">
+            </div>
         <div class="line">
             <label>Data de nascimento</label>
             <input type="text" readonly id="dataNascimento" class=" input-large campoData" placeholder="Clique para escolher" name="dataNascimento" >

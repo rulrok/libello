@@ -17,8 +17,8 @@
             <th>Motivo</th>
             <th>Estado</th>
             <th>Diárias</th>
-            <th>Polo</th>
             <th>Destino</th>
+            <!--<th>Destino</th>-->
         </tr>
     </thead>
     <tbody>
@@ -58,10 +58,10 @@
 //            detalhesIndice: "6",
             defs: {
                 "aoColumnDefs": [
-                    {"bSortable": false, "aTargets": [0, 1]},
+                    {"bSortable": false, "aTargets": [0]},
                     {"bSearchable": false, "aTargets": [0, 1]}
                 ],
-                "aaSorting": [[2, 'asc']]
+                "aaSorting": [[1, 'asc']]
             }
         });
 //        showPopUp("Duplo clique nas linhas <br/>mostra a descrição<br/>do viagem","Info")

@@ -11,6 +11,8 @@ class PermissoesFerramenta {
     var $controleEquipamentos = null;
     var $controleDocumentos = null;
     var $controleViagens = null;
+    var $tarefas = null;
+//    var $controlePagamentos = null;
 
     public function get_permissao($ferramenta) {
 
@@ -33,6 +35,12 @@ class PermissoesFerramenta {
                 break;
             case Ferramenta::CONTROLE_VIAGENS:
                 return $this->controleViagens;
+                break;
+            case Ferramenta::TAREFAS:
+                return $this->tarefas;
+                break;
+            case Ferramenta::CONTROLE_PAGAMENTOS:
+                return $this->controlePagamentos;
                 break;
             default :
                 return null;
@@ -86,6 +94,24 @@ class PermissoesFerramenta {
     public function set_controleViagens($controleViagens) {
         $this->controleViagens = $controleViagens;
     }
+    
+    public function get_tarefas() {
+        return $this->tarefas;
+    }
+
+    public function set_tarefas($tarefas) {
+        $this->tarefas = $tarefas;
+    }
+
+    public function get_controlePagamentos() {
+        return $this->controlePagamentos;
+    }
+
+    public function set_controlePagamentos($controlePagamentos) {
+        $this->controlePagamentos = $controlePagamentos;
+    }
+
+
 
 }
 
