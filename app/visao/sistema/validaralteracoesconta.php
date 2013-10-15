@@ -45,7 +45,7 @@ class validarAlteracoesConta extends verificadorFormularioAjax {
 
                     //Se não quer alterar a senha
                     if (UsuarioDAO::atualizar(obterUsuarioSessao()->get_email(), $usuario)) {
-                        obterUsuarioSessao() = $usuario;
+                        $_SESSION['usuario'] = $usuario;
                         $this->mensagem->set_mensagem("Alteração concluída com sucesso");
                         $this->mensagem->set_status(Mensagem::SUCESSO);
                         //TODO arrumar um modo de atualizar o nome do usuário na parte superior direita do site quando ele altera o nome.

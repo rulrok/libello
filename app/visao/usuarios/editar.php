@@ -51,6 +51,7 @@
 
         var obj = <?php echo json_encode($this->permissoes) ?>;
         var nome, idFerramenta, idPermissao, element;
+        console.log(obj);
         for (var i = 0; i < obj.length; i++) {
             element = obj[i];
             nome = element['nome'].toLowerCase();

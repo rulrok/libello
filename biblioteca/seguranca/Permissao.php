@@ -8,10 +8,10 @@ final class Permissao {
     const __length = 5;
     
     const SEM_ACESSO = 1;
-    const CONSULTA = 2;
-    const ESCRITA = 3;
-    const GESTOR = 4;
-    const ADMINISTRADOR = 5;
+    const CONSULTA = 10;
+    const ESCRITA = 20;
+    const GESTOR = 30;
+    const ADMINISTRADOR = 40;
 
 }
 

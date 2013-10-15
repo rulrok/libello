@@ -217,10 +217,10 @@ class Menu {
         $codigo = "<select " . ($required === true ? "required " : " ") . ($class !== null ? "class=\"" . $class . "\"" : " ") . ($name !== null ? "name =\"" . $name . "\"" : " ") . ">";
         $codigo .= "\n<option value=\"default\"> -- Selecione uma opção -- </option>";
         $codigo .= "\n<option value=\"1\">Sem acesso</option>";
-        $codigo .= "\n<option value=\"2\">Consulta</option>";
-        $codigo .= "\n<option value=\"3\">Escrita</option>";
-        $codigo .= "\n<option value=\"4\">Gestor</option>";
-        $codigo .= "\n<option value=\"5\">Administrador</option>";
+        $codigo .= "\n<option value=\"10\">Consulta</option>";
+        $codigo .= "\n<option value=\"20\">Escrita</option>";
+        $codigo .= "\n<option value=\"30\">Gestor</option>";
+        $codigo .= "\n<option value=\"40\">Administrador</option>";
         $codigo .= "</select>";
         return $codigo;
     }

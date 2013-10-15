@@ -3,7 +3,7 @@
 <form class="table centered" id="ajaxForm" method="post" action="index.php?c=sistema&a=validaralteracoesconta">
     <fieldset>
         <legend>Dados</legend>
-        <p class="centered centeredText boldedText">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png"> são obrigatórios</label>
+        <p class="centered centeredText boldedText">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png"> são obrigatórios</p>
         <div class="line">
             <label>Nome</label>
             <input required name="nome"  type="text" value="<?php echo $this->nome ?>"/>
@@ -26,7 +26,7 @@
         </div>
         <br/>
         <fieldset>
-            <legend>Atualizar senha (opcional) </legend>
+            <legend>Atualizar senha (opcional)</legend>
             <div class="line">
                 <label>Nova senha</label>
                 <input onblur="querMudarSenha()" name="senha" type="password"/>
@@ -39,7 +39,7 @@
         <hr>
         <div class="line">
             <label>Senha atual</label>
-            <input required id="senhaAtual" name="senhaAtual"  type="password">
+            <input required id="senhaAtual" name="senhaAtual"  type="password"/>
         </div>
     </fieldset>
 

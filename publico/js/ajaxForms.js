@@ -20,8 +20,8 @@
  */
 function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn) {
 
-    var botaoAcao = $("#" + idFormulario + " button[type=submit]");
-    desabilitarBotaoAcao(botaoAcao);
+//    var botaoAcao = $("#" + idFormulario.toString() + " button[type=submit]");
+//    desabilitarBotaoAcao(botaoAcao);
 
     if (typeof idFormulario == "object") {
         recipient = idFormulario['recipient'];
