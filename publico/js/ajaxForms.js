@@ -20,8 +20,6 @@
  */
 function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn) {
 
-//    var botaoAcao = $("#" + idFormulario.toString() + " button[type=submit]");
-//    desabilitarBotaoAcao(botaoAcao);
 
     if (typeof idFormulario == "object") {
         recipient = idFormulario['recipient'];
@@ -39,6 +37,9 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn
             return;
         }
     }
+    var aux = "#" + idFormulario + " button[type=submit]";
+    var botaoAcao = $(aux);
+    desabilitarBotaoAcao(botaoAcao);
     $("#" + idFormulario).submit(function(e) {
         //Do the AJAX post
         var post = $.post($("#" + idFormulario).attr("action"), $("#" + idFormulario).serialize(), function(data) {
@@ -100,6 +101,6 @@ function isFunction(functionToCheck) {
  */
 function desabilitarBotaoAcao(botao) {
     $(botao).on("mouseup", function() {
-        $(this).prop("enabled",false);
+        $(this).prop("enabled", false);
     });
 }
