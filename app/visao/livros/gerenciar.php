@@ -1,16 +1,16 @@
-<title>Gerenciar equipamentos</title>
+<title>Gerenciar livros</title>
 <!-- Início da páginas -->
-<div class="alert alert-block alert-info" id="aviso"><span class="label label-info">Dica: </span> Duplo clique na linha mostra a descrição do equipamento<a class="close" data-dismiss="alert" href="#">&times;</a></div>
+<div class="alert alert-block alert-info" id="aviso"><span class="label label-info">Dica: </span> Duplo clique na linha mostra a descrição do livro<a class="close" data-dismiss="alert" href="#">&times;</a></div>
 <div class="btn-toolbar">
     <div class="btn-group">
-        <a href="#!equipamentos|novo" class="btn btn-adicionar"><i class="icon-headphones"></i> Adicionar novo</a>
+        <a href="#!livros|novo" class="btn btn-adicionar"><i class="icon-book"></i> Adicionar novo</a>
         <button class="btn btn-editar disabled" href="#"><i class="icon-edit"></i> Editar</button>
         <button class="btn btn-saida disabled btn-success" href="#"><i class="icon-arrow-left"></i> Registrar saída</button>
         <button class="btn btn-baixa disabled btn-info" href="#"><i class="icon-arrow-down"></i> Registrar Baixa</button>
         <button class="btn btn-danger disabled btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
     </div>
 </div>
-<table id="gerenciar_equipamento" class="tabelaDeEdicao">
+<table id="gerenciar_livro" class="tabelaDeEdicao">
     <thead>
         <tr>
             <th hidden>id</th>
@@ -23,7 +23,7 @@
     </thead>
     <tbody>
         <?php
-        foreach ($this->equipamentos as $value) {
+        foreach ($this->livros as $value) {
             echo '<tr>';
             for ($i = 0; $i < sizeof($value) / 2; $i++) {
                 if ($i == 0) {
@@ -47,7 +47,7 @@
 </table>
 <div class="btn-toolbar">
     <div class="btn-group">
-        <a href="#!equipamentos|novo" class="btn btn-adicionar"><i class="icon-headphones"></i> Adicionar novo</a>
+        <a href="#!livros|novo" class="btn btn-adicionar"><i class="icon-book"></i> Adicionar novo</a>
         <button class="btn btn-editar disabled" href="#"><i class="icon-edit"></i> Editar</button>
         <button class="btn btn-saida disabled btn-success" href="#"><i class="icon-arrow-left"></i> Registrar saída</button>
         <button class="btn btn-baixa disabled btn-info" href="#"><i class="icon-arrow-down"></i> Registrar Baixa</button>
@@ -59,11 +59,11 @@
     $(document).ready(function() {
 
         configurarTabela({
-            idTabela: 'gerenciar_equipamento',
-            editar: '#!equipamentos|editar&equipamentoID=',
-            deletar: 'index.php?c=equipamentos&a=remover&equipamentoID=',
-            saida: '#!equipamentos|novasaida&equipamentoID=',
-            baixa: "#!equipamentos|novabaixa&equipamentoID=",
+            idTabela: 'gerenciar_livro',
+            editar: '#!livros|editar&livroID=',
+            deletar: 'index.php?c=livros&a=remover&livroID=',
+            saida: '#!livros|novasaida&livroID=',
+            baixa: "#!livros|novabaixa&livroID=",
             detalhes: true,
             detalhesIndice: "6",
             defs: {
@@ -74,7 +74,7 @@
                 "aaSorting": [[2, 'asc']]
             }
         });
-//        showPopUp("Duplo clique nas linhas <br/>mostra a descrição<br/>do equipamento","Info")
+//        showPopUp("Duplo clique nas linhas <br/>mostra a descrição<br/>do livro","Info")
     });
 
 </script>
