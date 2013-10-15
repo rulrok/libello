@@ -53,11 +53,11 @@ class Mvc {
     public function rodar() {
 //        $usuario = new Usuario();
 //        session_start();
-//        if (!isset($_SESSION['usuario'])) {
+//        if (!isset(obterUsuarioSessao())) {
 //            expulsaVisitante();
 //        }
-//        $usuario->set_email($_SESSION['usuario']->get_email());
-//        $usuario->set_senha($_SESSION['usuario']->get_senha());
+//        $usuario->set_email(obterUsuarioSessao()->get_email());
+//        $usuario->set_senha(obterUsuarioSessao()->get_senha());
 //        BIBLIOTECA_DIR . 'seguranca/seguranca.php' . autenticaUsuario($usuario);
 
 
@@ -92,6 +92,7 @@ class Mvc {
             } catch (Exception $e) {
                 $_GET['c'] = "Inicial";
                 $_GET['a'] = "404";
+//                print_r($e);
                 $this->rodar();
             }
         } else {

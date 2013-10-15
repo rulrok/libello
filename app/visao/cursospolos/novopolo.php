@@ -18,7 +18,7 @@
     </fieldset>
     <input class="btn btn-large" type="reset" value="Limpar" onclick="$('#estado').val(0);
             liberarCadastro();">
-    <input class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit" value="Cadastrar">
+    <button class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit">Cadastrar</button>
 </form>
 
 
@@ -43,6 +43,7 @@
             setTimeout(function() {
 
                 $("#cidade").val('').trigger("chosen:updated");
+                liberarCadastro();
             }, "200");
         });
 </script>

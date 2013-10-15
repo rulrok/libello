@@ -34,7 +34,7 @@ class ControladorCursospolos extends Controlador {
     }
 
     public function acaoGerenciarcursos() {
-        $this->visao->cursos = cursoDAO::consultar("idCurso,nome,nomeArea,nomeTipoCurso");
+        $this->visao->cursos = cursoDAO::consultar("idCurso,nomeCurso,nomeArea,nomeTipoCurso");
         $i = 0;
         foreach ($this->visao->cursos as $value) {
             $value[0] = fnEncrypt($value[0]);
@@ -44,7 +44,7 @@ class ControladorCursospolos extends Controlador {
     }
 
     public function acaoGerenciarpolos() {
-        $this->visao->polos = poloDAO::consultar("idPolo,nome,cidade,estado");
+        $this->visao->polos = poloDAO::consultar("idPolo,nomePolo,cidade,estado");
         $i = 0;
         foreach ($this->visao->polos as $value) {
             $value[0] = fnEncrypt($value[0]);
@@ -89,7 +89,7 @@ class ControladorCursospolos extends Controlador {
             $polo = poloDAO::recuperarPolo($poloID);
             $this->visao->polo = $polo->get_nome();
             $this->visao->cidade = $polo->get_cidade();
-            $this->visao->estado = $polo->get_estado();
+            $this->visao->estadoViagem = $polo->get_estado();
         } else {
             die("Acesso indevido");
         }

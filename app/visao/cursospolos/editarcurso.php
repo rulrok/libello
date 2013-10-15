@@ -21,7 +21,7 @@
             </span>
 
     </fieldset>
-    <input disabled class=" btn btn-primary btn-right" type="submit" disabled value="Atualizar dados">
+    <button disabled class=" btn btn-primary btn-right" type="submit" disabled >Atualizar Dados</button>
 
 </form>
 

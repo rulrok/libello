@@ -26,25 +26,42 @@
         </div>
 
     </fieldset>
-    <input disabled class="btn btn-large btn-success btn-primary btn-right" type="submit" disabled value="Cadastrar retorno" />
+    <button disabled class="btn btn-large btn-success btn-primary btn-right" type="submit" disabled >Cadastrar retorno</button>
 
 </form>
 
 <script>
     $(document).ready(function() {
-        $("#dataRetorno").datepick();
+        var dataMinima = "<?php echo $this->dataSaida; ?>";
+        dataMinima = dataMinima.split("/");
+        dataMinima = dataMinima[1] + "/" + dataMinima[0] + "/" + dataMinima[2];
+        $("#dataRetorno").datepick({
+            dateFormat: 'dd/mm/yyyy',
+            minDate: new Date(dataMinima)
+        });
         $(".line input").popover({trigger: 'focus', container: 'body'});
         $(".line textarea").popover({trigger: 'focus', container: 'body'});
-        formularioAjax("ajaxForm", undefined,
-                function() {
-                    $("input[type=submit]").prop("disabled", true);
-                },
-                function() {
-                    setTimeout(function() {
-                        history.back();
-                    }, 1000);
-                }
-        );
+        formularioAjax({
+            alwaysFn: function() {
+                $("input[type=submit]").prop("disabled", true);
+            },
+            successFn: function() {
+                setTimeout(function() {
+                    document.paginaAlterada = false;
+                    history.back();
+                }, 1000);
+            }
+        });
+//        formularioAjax("ajaxForm", undefined,
+//                function() {
+//                    $("input[type=submit]").prop("disabled", true);
+//                },
+//                function() {
+//                    setTimeout(function() {
+//                        history.back();
+//                    }, 1000);
+//                }
+//        );
         varrerCampos();
     });
 </script>

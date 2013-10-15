@@ -2,6 +2,7 @@
 
 require_once 'abstractDAO.php';
 require_once APP_LOCATION . "modelo/vo/Equipamento.php";
+require_once APP_LOCATION . 'modelo/enumeracao/TipoEventoEquipamento.php';
 
 class equipamentoDAO extends abstractDAO {
 
@@ -28,7 +29,11 @@ class equipamentoDAO extends abstractDAO {
 
         $values = "($nome,$quantidade,$descricao,$dataEntrada,$numeroPatrimonio)";
         try {
-            parent::getConexao()->query($sql . $values);
+            $stmt = parent::getConexao()->prepare($sql . $values);
+            $stmt->execute();
+            $id = parent::getConexao()->lastInsertId();
+            return $id;
+//            print_r($id);
         } catch (Exception $e) {
             throw new Exception("Erro");
         }
@@ -76,6 +81,36 @@ class equipamentoDAO extends abstractDAO {
         return $saida;
     }
 
+    public static function removerBaixa($baixaID) {
+        if (is_array($baixaID)) {
+            $equipamentoID = $equipamentoID['baixaID'];
+        }
+
+        $sql = "DELETE from equipamento_baixa WHERE idBaixa = " . $baixaID;
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+//            print_r($e);
+            return false;
+        }
+    }
+
+    public static function removerSaida($saidaID) {
+        if (is_array($saidaID)) {
+            $equipamentoID = $equipamentoID['saidaID'];
+        }
+
+        $sql = "DELETE from equipamento_saida WHERE idSaida = " . $saidaID;
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+//            print_r($e);
+            return false;
+        }
+    }
+
     public static function consultarSaidas($colunas = "*", $condicao = null) {
 
         if ($condicao == null) {
@@ -83,7 +118,7 @@ class equipamentoDAO extends abstractDAO {
         } else {
             $condicao = "WHERE " . $condicao . " AND quantidadeSaida > 0";
         }
-        $sql = "SELECT " . $colunas . " FROM `equipamento_saida` AS `es` JOIN `equipamento` AS `e` ON `es`.`equipamento` = `e`.idEquipamento JOIN `usuario` AS `u` ON `es`.`responsavel` = `u`.`idUsuario`" . $condicao;
+        $sql = "SELECT " . $colunas . " FROM `equipamento_saida` AS `es` JOIN `equipamento` AS `e` ON `es`.`equipamento` = `e`.idEquipamento JOIN `usuario` AS `u` ON `es`.`responsavel` = `u`.`idUsuario` LEFT JOIN `polo` AS `p` ON `es`.`poloDestino` = `p`.`idPolo` " . $condicao;
         try {
             $resultado = parent::getConexao()->query($sql)->fetchAll();
         } catch (Exception $e) {
@@ -147,7 +182,8 @@ class equipamentoDAO extends abstractDAO {
         $sql = "UPDATE equipamento SET nomeEquipamento = '" . $nome . "' ,quantidade = " . $quantidade . " ,dataEntrada = '" . $dataEntrada . "' ,numeroPatrimonio = " . $numeroPatrimonio . " ,descricao=" . $descricao;
         $sql .= $condicao;
         try {
-            parent::getConexao()->query($sql);
+            $stmt = parent::getConexao()->prepare($sql);
+            $stmt->execute();
             return true;
         } catch (Exception $e) {
             echo $e;
@@ -172,16 +208,20 @@ class equipamentoDAO extends abstractDAO {
         }
     }
 
-    public static function cadastrarSaida($idEquipamento, $idResponsavel, $destino, $quantidade, $data = "NULL") {
-        $destino = parent::quote($destino);
+    public static function cadastrarSaida($idEquipamento, $idResponsavel, $destino, $destinoAlternativo, $quantidade, $data = "NULL") {
+        $destino = $destino;
         $data = parent::quote($data);
-        $sql = "INSERT INTO equipamento_saida(equipamento,responsavel,destino,quantidadeSaida,quantidadeSaidaOriginal,data) VALUES " .
-                "($idEquipamento,$idResponsavel,$destino,$quantidade,$quantidade,$data)";
+        $destinoAlternativo = parent::quote($destinoAlternativo);
+        $sql = "INSERT INTO equipamento_saida(equipamento,responsavel,destino,quantidadeSaida,quantidadeSaidaOriginal,dataSaida,PoloDestino) VALUES " .
+                "($idEquipamento,$idResponsavel,$destinoAlternativo,$quantidade,$quantidade,$data,$destino)";
 
         try {
             parent::getConexao()->query($sql);
+            $id = parent::getConexao()->lastInsertId();
+            equipamentoDAO::registrarCadastroSaida($id);
             return true;
         } catch (Exception $e) {
+            print_r($e);
             return false;
         }
     }
@@ -189,25 +229,223 @@ class equipamentoDAO extends abstractDAO {
     public static function cadastrarRetorno($idSaida, $data, $quantidade, $observacoes = "NULL") {
         $observacoes = parent::quote($observacoes);
         $data = parent::quote($data);
-        $sql = "INSERT INTO equipamento_retorno(saida,data,quantidadeRetorno,observacoes) VALUES " .
+        $sql = "INSERT INTO equipamento_retorno(saida,dataRetorno,quantidadeRetorno,observacoes) VALUES " .
                 "($idSaida,$data,$quantidade,$observacoes)";
         try {
             parent::getConexao()->query($sql);
+            $id = parent::getConexao()->lastInsertId();
+            equipamentoDAO::registrarRetorno($id);
             return true;
         } catch (Exception $e) {
             return false;
         }
     }
 
-    public static function cadastrarBaixa($idEquipamento, $dataBaixa, $quantidade, $observacoes = "NULL", $idSaida = "'NULL'") {
+    public static function cadastrarBaixa($idEquipamento, $dataBaixa, $quantidade, $observacoes = "NULL", $idSaida = "NULL") {
         $observacoes = parent::quote($observacoes);
         $dataBaixa = parent::quote($dataBaixa);
         $sql = "INSERT INTO equipamento_baixa(equipamento,saida,dataBaixa,quantidadeBaixa,observacoes) VALUES " .
                 "($idEquipamento,$idSaida,$dataBaixa,$quantidade,$observacoes)";
         try {
             parent::getConexao()->query($sql);
+            $idBaixa = parent::getConexao()->lastInsertId();
+            equipamentoDAO::registrarCadastroBaixa($idBaixa);
             return true;
         } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Esta função verifica se um equipamento pode ter o seu tipo alterado, ou seja, se ele
+     * pode ser alterado de equipamento de custeio para equipamento com patrimônio. Isso apenas acontece para
+     * situações de erro na hora de cadastrar, pois, logo após que um equipamento tenho tido qualquer saída, e
+     * consequentemente algum retorno ou baixa, ele não pode mais então ser editado.
+     * @param type $idEquipamento
+     */
+    public static function equipamentoPodeTerTipoAlterado($idEquipamento) {
+        try {
+            //  Verifica se tem saída
+            $sql = "SELECT count(equipamento) as qtdSaidas FROM equipamento_saida WHERE equipamento = :equipamento";
+            $stmt = parent::getConexao()->prepare($sql);
+            $stmt->bindValue(":equipamento", $idEquipamento, PDO::PARAM_INT);
+            $stmt->execute();
+            $resultado = $stmt->fetch();
+            if (is_array($resultado)) {
+                $resultado = $resultado['qtdSaidas'];
+            } else {
+                $stmt->closeCursor();
+            }
+            if ((int) $resultado > 0) {
+                return false;
+            }
+            //  Verifica se tem baixa
+            $sql = "SELECT count(equipamento) as qtdBaixas FROM equipamento_baixa WHERE equipamento = :equipamento";
+            $stmt = parent::getConexao()->prepare($sql);
+            $stmt->bindValue(":equipamento", $idEquipamento, PDO::PARAM_INT);
+            $stmt->execute();
+            $resultado = $stmt->fetch();
+            if (is_array($resultado)) {
+                $resultado = $resultado['qtdBaixas'];
+            } else {
+                $stmt->closeCursor();
+            }
+            if ((int) $resultado > 0) {
+                return false;
+            }
+            //  Verifica se tem retorno
+            $sql = "SELECT count(equipamento) as qtdSaidas FROM equipamento_saida WHERE equipamento = :equipamento";
+            $stmt = parent::getConexao()->prepare($sql);
+            $stmt->bindValue(":equipamento", $idEquipamento, PDO::PARAM_INT);
+            $stmt->execute();
+            $resultado = $stmt->fetch();
+            if (is_array($resultado)) {
+                $resultado = $resultado['qtdSaidas'];
+            } else {
+                $stmt->closeCursor();
+            }
+            if ((int) $resultado > 0) {
+                return false;
+            }
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    /////////////////// REGISTRO DE EVENTOS PARA LOG ///////////////////////////
+
+    public static function registrarExclusaoEquipamento($idEquipamento) {
+        $quote = "\"";
+        $tipo = TipoEventoEquipamento::REMOCAO_EQUIPAMENTO;
+        $usuarioID = obterUsuarioSessao()->get_id();
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,equipamento,data,hora) VALUES ";
+        $sql .= " ($tipo,$usuarioID,$idEquipamento,<data>,<hora>)";
+        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
+        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            print_r($e);
+            return false;
+        }
+    }
+
+    public static function registrarInsercaoEquipamento($idEquipamento) {
+        $quote = "\"";
+        $tipo = TipoEventoEquipamento::CADASTRO_EQUIPAMENTO;
+        $usuarioID = obterUsuarioSessao()->get_id();
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,equipamento,data,hora) VALUES ";
+        $sql .= " ($tipo,$usuarioID,$idEquipamento,<data>,<hora>)";
+        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
+        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            print_r($e);
+            return false;
+        }
+    }
+
+    public static function registrarAlteracaoEquipamento($idEquipamento) {
+        $quote = "\"";
+        $tipo = TipoEventoEquipamento::ALTERACAO_EQUIPAMENTO;
+        $usuarioID = obterUsuarioSessao()->get_id();
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,equipamento,data,hora) VALUES ";
+        $sql .= " ($tipo,$usuarioID,$idEquipamento,<data>,<hora>)";
+        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
+        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            print_r($e);
+            return false;
+        }
+    }
+
+    public static function registrarCadastroBaixa($idBaixa) {
+        $quote = "\"";
+        $tipo = TipoEventoEquipamento::CADASTRO_BAIXA;
+        $usuarioID = obterUsuarioSessao()->get_id();
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,baixa,data,hora) VALUES ";
+        $sql .= " ($tipo,$usuarioID,$idBaixa,<data>,<hora>)";
+        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
+        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            print_r($e);
+            return false;
+        }
+    }
+
+    public static function registrarRemocaoBaixa($idBaixa) {
+        $quote = "\"";
+        $tipo = TipoEventoEquipamento::REMOCAO_BAIXA;
+        $usuarioID = obterUsuarioSessao()->get_id();
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,baixa,data,hora) VALUES ";
+        $sql .= " ($tipo,$usuarioID,$idBaixa,<data>,<hora>)";
+        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
+        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            print_r($e);
+            return false;
+        }
+    }
+    
+    public static function registrarCadastroSaida($idSaida) {
+        $quote = "\"";
+        $tipo = TipoEventoEquipamento::CADASTRO_SAIDA;
+        $usuarioID = obterUsuarioSessao()->get_id();
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,saida,data,hora) VALUES ";
+        $sql .= " ($tipo,$usuarioID,$idSaida,<data>,<hora>)";
+        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
+        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            print_r($e);
+            return false;
+        }
+    }
+    public static function registrarRemocaoSaida($idSaida) {
+        $quote = "\"";
+        $tipo = TipoEventoEquipamento::REMOCAO_SAIDA;
+        $usuarioID = obterUsuarioSessao()->get_id();
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,saida,data,hora) VALUES ";
+        $sql .= " ($tipo,$usuarioID,$idSaida,<data>,<hora>)";
+        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
+        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            print_r($e);
+            return false;
+        }
+    }
+    
+    public static function registrarRetorno($idRetorno) {
+        $quote = "\"";
+        $tipo = TipoEventoEquipamento::CADASTRO_RETORNO;
+        $usuarioID = obterUsuarioSessao()->get_id();
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,retorno,data,hora) VALUES ";
+        $sql .= " ($tipo,$usuarioID,$idRetorno,<data>,<hora>)";
+        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
+        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            print_r($e);
             return false;
         }
     }

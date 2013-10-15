@@ -1,10 +1,14 @@
 <?php
 
+//Manter essas duas linhas durante a fase de desenvolvimento
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
+
 if (!defined("APP_CONFIGS")) {
     define("APP_CONFIGS", "SETTED");
 
+    define("APP_VERSION", "Alpha");
+    
     define("ROOT", $_SERVER['DOCUMENT_ROOT'] . "/controle-cead/");
     define("APP_LOCATION", ROOT . "app/");
 

@@ -2075,8 +2075,8 @@
 			
 			var sSearchStr = oSettings.oLanguage.sSearch;
 			sSearchStr = (sSearchStr.indexOf('_INPUT_') !== -1) ?
-			  sSearchStr.replace('_INPUT_', '<input type="search" results="5"/>') :
-			  sSearchStr==="" ? '<input type="search" results="5" />' : sSearchStr+' <input type="search" results="5"/>';
+			  sSearchStr.replace('_INPUT_', '<input class="ignorar" type="search" results="5"/>') :
+			  sSearchStr==="" ? '<input class="ignorar" type="search" results="5" />' : sSearchStr+' <input class="ignorar" type="search" results="5"/>';
 			
 			var nFilter = document.createElement( 'div' );
 			nFilter.className = oSettings.oClasses.sFilter;
@@ -2741,7 +2741,7 @@
 			
 			/* This can be overruled by not using the _MENU_ var/macro in the language variable */
 			var sName = 'name="'+oSettings.sTableId+'_length"';
-			var sStdMenu = '<select size="1" '+sName+'>';
+			var sStdMenu = '<select class="ignorar" size="1" '+sName+'>';
 			var i, iLen;
 			var aLengthMenu = oSettings.aLengthMenu;
 			

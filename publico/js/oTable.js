@@ -112,7 +112,7 @@ function configurarTabela(parametros) {
          * rather it is done here
          */
         $('#' + idTabela + ' tbody td img').on('click', function() {
-            console.log($(this).parents('tr')[0])
+//            console.log($(this).parents('tr')[0])
             var nTr = $(this).parents('tr')[0];
             if (oTable.fnIsOpen(nTr))
             {

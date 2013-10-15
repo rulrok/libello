@@ -5,7 +5,7 @@ require_once 'abstractDAO.php';
 class poloDAO extends abstractDAO {
 
     public static function cadastrarPolo(Polo $polo) {
-        $sql = "INSERT INTO polo(nome,cidade,estado) VALUES ";
+        $sql = "INSERT INTO polo(nomePolo,cidade,estado) VALUES ";
         $nome = parent::quote($polo->get_nome());
         $cidade = parent::quote($polo->get_cidade());
         $estado = parent::quote($polo->get_estado());
@@ -22,7 +22,7 @@ class poloDAO extends abstractDAO {
         $nome = parent::quote($polo->get_nome());
         $cidade = parent::quote($polo->get_cidade());
         $estado = parent::quote($polo->get_estado());
-        $condicao = "nome = $nome AND cidade=$cidade AND estado = $estado";
+        $condicao = "nomePolo = $nome AND cidade=$cidade AND estado = $estado";
         try {
             $resultado = parent::getConexao()->query($sql . $condicao)->fetch();
         } catch (Exception $e) {
@@ -74,7 +74,7 @@ class poloDAO extends abstractDAO {
         }
 
 
-        $sql = "UPDATE polo SET nome = '" . $nome . "' ,cidade = '" . $cidade . "' ,estado = '" . $estado."'";
+        $sql = "UPDATE polo SET nomePolo = '" . $nome . "' ,cidade = '" . $cidade . "' ,estado = '" . $estado."'";
         $sql .= $condicao;
         try {
             parent::getConexao()->query($sql);

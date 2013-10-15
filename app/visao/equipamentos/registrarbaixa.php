@@ -8,8 +8,14 @@ class registrarBaixa extends verificadorFormularioAjax {
     public function _validar() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') :
             $_SERVER['REQUEST_METHOD'] = null;
-            $saidaID = fnDecrypt($_POST['saidaID']);
-            $equipamentoID = fnDecrypt($_POST['equipamentoID']);
+            $saidaID = $_POST['saidaID'];
+            if ($saidaID !== "") {
+                $saidaID = fnDecrypt($_POST['saidaID']);
+            }
+            $equipamentoID = $_POST['equipamentoID'];
+            if ($equipamentoID !== "") {
+                $equipamentoID = fnDecrypt($_POST['equipamentoID']);
+            }
             $dataBaixa = $_POST['dataBaixa'];
             $observacoes = $_POST['observacoes'];
             $quantidade = (int) $_POST['quantidade'];

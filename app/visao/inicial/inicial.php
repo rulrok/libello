@@ -2,11 +2,6 @@
 <html>
     <head>
         <meta charset="UTF-8"/>
-        <!--[if !IE 7]>
-        <style type="text/css">
-                nav {display:table;height:100%}
-        </style>
-        <![endif]-->
 
         <!-- META TAGS -->
 
@@ -41,11 +36,15 @@
             .ui-timepicker-rtl dl dt{ float: right; clear: right; }
             .ui-timepicker-rtl dl dd { margin: 0 40% 10px 10px; }
         </style>
-
+        <!--[if !IE 7]>
+        <style type="text/css">
+                nav {display:table;height:100%}
+        </style>
+        <![endif]-->
         <!-- Fim ESTILOS -->
         <!-- PRE SCRIPTS -->
 
-
+<!--<script src="http://ie.microsoft.com/testdrive/HTML5/CompatInspector/inspector.js"></script>-->
         <script src="publico/js/jquery/jquery-1.9.1.js"></script>
         <script src="publico/js/jquery/jquery.ba-hashchange.js"></script>
         <script src="publico/js/jquery/jquery.form.js"></script>
@@ -86,10 +85,10 @@
                     <img class="logo" src="publico/imagens/cead.png" usemap="#logoMap">
                 </figure>
                 <div class="headerWrap">
-                    <h1>Controle CEAD <sup>(versão alpha)</sup></h1>
+                    <h1>Controle CEAD <sup>(versão <?php echo APP_VERSION; ?>)</sup></h1>
                 </div>
                 <div class="userInfoWrap">
-                    <p>Logado como: <b><?php echo $this->usuario ?></b> (<?php echo $this->papel ?>)</p>
+                    <p>Logado como: <b><?php echo $this->nomeUsuario ?></b> (<?php echo $this->papel ?>)</p>
                     <div class="btn-toolbar" id="configuracoesSite">
                         <div id="botoesSuperiores" class="centered btn-group">
 
@@ -100,6 +99,10 @@
                     $('.visited').removeClass('visited');
                     $('.actualTool').removeClass('actualTool');
                 }"><i class="icon-cog"></i> Gerenciar Conta</a>
+
+                            <?php if ($this->administrador): ?>
+                                <a class="btn btn-small" href="#!sistema|administracao"><i class="icon-fire"></i> Administração</a>
+                            <?php endif; ?>
                             <a class="btn btn-small" href="sair.php"><i class="icon-off"></i> Sair</a>
                         </div>
                     </div>

@@ -13,7 +13,7 @@ class Menu {
 
     public static function montarMenuNavegacao() {
 
-        $permissoes = usuarioDAO::obterPermissoes($_SESSION['usuario']->get_id());
+        $permissoes = usuarioDAO::obterPermissoes(obterUsuarioSessao()->get_id());
 
         $menuCode = "<div class=\"menu\">" . "\n";
         $menuCode .= "<menu class=\"centered\">" . "\n";
@@ -31,14 +31,14 @@ class Menu {
                         $subMenuCode .="<ul class=\"hiddenSubMenuLink usuariosSubMenu\">" . "\n";
                         switch ($permissao_ferramenta['idPermissao']) {
                             case Permissao::ADMINISTRADOR:
-//                                $subMenuCode .= "   <a href=\"#!usuarios|restaurar\">" . "\n";
-//                                $subMenuCode .= "<li>Verificar usuários excluídos</li></a>" . "\n";
+                                $subMenuCode .= "<a href=\"#!usuarios|restaurar\" style=\"color: red;\"\">" . "\n";
+                                $subMenuCode .= "<li>Usuários inativos</li></a>" . "\n";
                             case Permissao::GESTOR:
                                 $subMenuCode .= "   <a href=\"#!usuarios|gerenciar\">" . "\n";
                                 $subMenuCode .= "<li>Gerenciar usuários</li></a>" . "\n";
                             case Permissao::ESCRITA:
                                 $subMenuCode .= "   <a href=\"#!usuarios|novo\">" . "\n";
-                                $subMenuCode .= "<li>Inserir novo usuário</li></a>" . "\n";
+                                $subMenuCode .= "<li>Novo usuário</li></a>" . "\n";
                             case Permissao::CONSULTA:
                                 $subMenuCode .= "   <a href=\"#!usuarios|consultar\">" . "\n";
                                 $subMenuCode .= "<li>Consultar usuários</li></a>" . "\n";
@@ -58,9 +58,9 @@ class Menu {
                                 $subMenuCode .= "<li>Gerenciar polos</li></a>" . "\n";
                             case Permissao::ESCRITA:
                                 $subMenuCode .= "<a href=\"#!cursospolos|novocurso\"\">" . "\n";
-                                $subMenuCode .= "<li>Inserir novo curso</li></a>" . "\n";
+                                $subMenuCode .= "<li>Cadastrar curso</li></a>" . "\n";
                                 $subMenuCode .= "<a href=\"#!cursospolos|novopolo\"\">" . "\n";
-                                $subMenuCode .= "<li>Inserir novo polo</li></a>" . "\n";
+                                $subMenuCode .= "<li>Cadastrar polo</li></a>" . "\n";
                             case Permissao::CONSULTA:
                         }
                     }
@@ -69,19 +69,26 @@ class Menu {
                     if ($permissao_ferramenta['idPermissao'] != Permissao::SEM_ACESSO) {
                         $menuCode .= "<a><li class=\"menuLink\" id=\"livrosLink\">Livros</li></a>" . "\n";
                         $subMenuCode .="<ul class=\"hiddenSubMenuLink livrosSubMenu\">" . "\n";
+                        $permissao = $permissao_ferramenta['idPermissao'];
                         switch ($permissao_ferramenta['idPermissao']) {
                             case Permissao::ADMINISTRADOR:
+                                $subMenuCode .= "<a href=\"#!livros|gerenciarbaixasesaidas\" style=\"color: red;\"\">" . "\n";
+                                $subMenuCode .= "<li>Administrar baixas e saídas</li></a>" . "\n";
                             case Permissao::GESTOR:
                                 $subMenuCode .= "<a href=\"#!livros|gerenciar\"\">" . "\n";
                                 $subMenuCode .= "<li>Gerenciar livros</li></a>" . "\n";
-                                $subMenuCode .= "<a href=\"#!livros|saida\"\">" . "\n";
-                                $subMenuCode .= "<li>Registrar saída</li></a>" . "\n";
+                            case Permissao::ESCRITA:
                                 $subMenuCode .= "<a href=\"#!livros|retorno\"\">" . "\n";
                                 $subMenuCode .= "<li>Registrar retorno</li></a>" . "\n";
-                            case Permissao::ESCRITA:
+                                if ($permissao === Permissao::GESTOR) {
+                                    $subMenuCode .= "<a href=\"#!livros|saida\"\">" . "\n";
+                                    $subMenuCode .= "<li>Registrar saída</li></a>" . "\n";
+                                }
                                 $subMenuCode .= '<a href="#!livros|novo">';
-                                $subMenuCode .= "<li>Inserir novo registro</li></a>" . "\n";
+                                $subMenuCode .= "<li>Cadastrar livro</li></a>" . "\n";
                             case Permissao::CONSULTA:
+                                $subMenuCode .= "<a href=\"#!livros|consultar\"\">" . "\n";
+                                $subMenuCode .= "<li>Consultar livros</li></a>" . "\n";
                                 $subMenuCode .= "<a href=\"#!livros|relatorios\"\">" . "\n";
                                 $subMenuCode .= "<li>Gerar relatórios</li></a>" . "\n";
                         }
@@ -94,6 +101,8 @@ class Menu {
                         $permissao = $permissao_ferramenta['idPermissao'];
                         switch ($permissao) {
                             case Permissao::ADMINISTRADOR:
+                                $subMenuCode .= "<a href=\"#!equipamentos|gerenciarbaixasesaidas\" style=\"color: red;\"\">" . "\n";
+                                $subMenuCode .= "<li>Administrar baixas e saídas</li></a>" . "\n";
                             case Permissao::GESTOR:
                                 $subMenuCode .= "<a href=\"#!equipamentos|gerenciar\"\">" . "\n";
                                 $subMenuCode .= "<li>Gerenciar equipamentos</li></a>" . "\n";
@@ -105,7 +114,7 @@ class Menu {
                                 $subMenuCode .= "<a href=\"#!equipamentos|retorno\"\">" . "\n";
                                 $subMenuCode .= "<li>Registrar retorno</li></a>" . "\n";
                                 $subMenuCode .= "<a href=\"#!equipamentos|novo\"\">" . "\n";
-                                $subMenuCode .= "<li>Registrar novo equipamento</li></a>" . "\n";
+                                $subMenuCode .= "<li>Novo equipamento</li></a>" . "\n";
                             case Permissao::CONSULTA:
                                 $subMenuCode .= "<a href=\"#!equipamentos|consultar\"\">" . "\n";
                                 $subMenuCode .= "<li>Consultar equipamentos</li></a>" . "\n";
@@ -150,6 +159,40 @@ class Menu {
                         }
                     }
                     break;
+                case Ferramenta::TAREFAS:
+                    if ($permissao_ferramenta['idPermissao'] != Permissao::SEM_ACESSO) {
+                        $menuCode .= "<a><li class=\"menuLink\" id=\"tarefasLink\">Tarefas</li></a>" . "\n";
+                        $subMenuCode .="<ul class=\"hiddenSubMenuLink tarefasSubMenu\">" . "\n";
+                        switch ($permissao_ferramenta['idPermissao']) {
+                            case Permissao::ADMINISTRADOR:
+                            case Permissao::GESTOR:
+                                $subMenuCode .= "<a href=\"#!tarefas|gerenciar\"\">" . "\n";
+                                $subMenuCode .= "<li>Gerenciar Tarefas</li></a>" . "\n";
+                            case Permissao::ESCRITA:
+                                $subMenuCode .= "<a href=\"#!tarefas|nova\"\">" . "\n";
+                                $subMenuCode .= "<li>Nova Tarefa</li></a>" . "\n";
+                            case Permissao::CONSULTA:
+                        }
+                    }
+                    break;
+                case Ferramenta::CONTROLE_PAGAMENTOS:
+                    if ($permissao_ferramenta['idPermissao'] != Permissao::SEM_ACESSO) {
+                        $menuCode .= "<a><li class=\"menuLink\" id=\"pagamentosLink\">Pagamentos</li></a>" . "\n";
+                        $subMenuCode .="<ul class=\"hiddenSubMenuLink pagamentosSubMenu\">" . "\n";
+                        switch ($permissao_ferramenta['idPermissao']) {
+                            case Permissao::ADMINISTRADOR:
+                            case Permissao::GESTOR:
+                                $subMenuCode .= "<a href=\"#!pagamentos|gerenciar\"\">" . "\n";
+                                $subMenuCode .= "<li>Gerenciar Pagamentos</li></a>" . "\n";
+                            case Permissao::ESCRITA:
+                                $subMenuCode .= "<a href=\"#!pagamentos|nova\"\">" . "\n";
+                                $subMenuCode .= "<li>Nova Ordem de Pagamento</li></a>" . "\n";
+                            case Permissao::CONSULTA:
+                                $subMenuCode .= "<a href=\"#!pagamentos|consultar\"\">" . "\n";
+                                $subMenuCode .= "<li>Verificar Pagamentos</li></a>" . "\n";
+                        }
+                    }
+                    break;
             }
 //            $subMenuCode .= "<a class =\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/imagens/icones/go-up.png\"></li></a>" . "\n";
             $subMenuCode .= "</ul>" . "\n";
@@ -176,10 +219,10 @@ class Menu {
         $codigo = "<select " . ($required === true ? "required " : " ") . ($class !== null ? "class=\"" . $class . "\"" : " ") . ($name !== null ? "name =\"" . $name . "\"" : " ") . ">";
         $codigo .= "\n<option value=\"default\"> -- Selecione uma opção -- </option>";
         $codigo .= "\n<option value=\"1\">Sem acesso</option>";
-        $codigo .= "\n<option value=\"2\">Consulta</option>";
-        $codigo .= "\n<option value=\"3\">Escrita</option>";
-        $codigo .= "\n<option value=\"4\">Gestor</option>";
-        $codigo .= "\n<option value=\"5\">Administrador</option>";
+        $codigo .= "\n<option value=\"10\">Consulta</option>";
+        $codigo .= "\n<option value=\"20\">Escrita</option>";
+        $codigo .= "\n<option value=\"30\">Gestor</option>";
+        $codigo .= "\n<option value=\"40\">Administrador</option>";
         $codigo .= "</select>";
         return $codigo;
     }
@@ -205,13 +248,16 @@ class Menu {
         return $codigo;
     }
 
-    public static function montarCaixaSelecaoAreas($required = false, $class = null, $name = null) {
+    public static function montarCaixaSelecaoAreas($required = false, $class = null, $id = null, $name = null) {
         $codigo = "<select ";
         if ($required) {
             $codigo .= "required ";
         }
         if ($class != null) {
             $codigo .= " class = \"" . $class . "\" ";
+        }
+        if ($id != null) {
+            $codigo .= " id = \"" . $id . "\" ";
         }
         if ($name != null) {
             $codigo .= " name = \"" . $name . "\"";
@@ -272,14 +318,14 @@ class Menu {
         } else {
             $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
             for ($i = 0; $i < sizeof($cursos); $i++) {
-                $codigo .= "<option value=\"" . fnEncrypt($cursos[$i]['idCurso']) . "\">" . $cursos[$i]['nome'] . "</option>\n";
+                $codigo .= "<option value=\"" . fnEncrypt($cursos[$i]['idCurso']) . "\">" . $cursos[$i]['nomeCurso'] . "</option>\n";
             }
         }
         $codigo .= "</select>\n";
         return $codigo;
     }
 
-    public static function montarCaixaSelecaoPolos($required = false, $class = null,$id = null, $name = null) {
+    public static function montarCaixaSelecaoPolos($required = false, $class = null, $id = null, $name = null) {
         $codigo = "<select ";
         if ($required) {
             $codigo .= "required ";
@@ -300,16 +346,22 @@ class Menu {
             $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem polos cadastrados --</option>\n";
         } else {
             $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
+            $codigo .= "<optgroup label='Polos'>\n";
             for ($i = 0; $i < sizeof($polos); $i++) {
-                $codigo .= "<option value=\"" . fnEncrypt($polos[$i]['idPolo']) . "\">" . $polos[$i]['nome'] . "</option>\n";
+                $codigo .= "<option value=\"" . fnEncrypt($polos[$i]['idPolo']) . "\">" . $polos[$i]['nomePolo'] . "</option>\n";
             }
         }
+        $codigo .= "</optgroup>\n";
         $codigo .= "</select>\n";
         return $codigo;
     }
 
-    public static function montarSelecaoPassageiros($required = false, $class = null, $id = null, $name = null) {
-        $codigo = "<select multiple='multiple' size='7'";
+    public static function montarSelecaoUsuarios($required = false, $class = null, $id = null, $name = null, $multiple = false) {
+        if ($multiple) {
+            $codigo = "<select multiple='multiple' size='7'";
+        } else {
+            $codigo = "<select size='7'";
+        }
         if ($required) {
             $codigo .= "required ";
         }

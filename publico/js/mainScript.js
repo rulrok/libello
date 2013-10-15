@@ -492,8 +492,21 @@ function ajax(link, place, hidePop, async) {
 
         //TODO encontrar uma forma de tratar os campos somente leitura dos datapickers, pois quando
         //é escolhida uma data através do jquery, o evento change não é acionado.
-        $("input, select").not('.ignorar').not('.dataTables_filter input').not('.dataTables_length *').keyup(function() {
-            document.paginaAlterada = true;
+        var camposAlteraveis = $("input, select, textarea").not('.ignorar').not("[hidden]").not("[readonly]");
+        $(camposAlteraveis).bind("keyup", function() {
+            conteudoAlterado();
+        });
+        $(camposAlteraveis).bind("change", function() {
+            conteudoAlterado();
+        });
+        var camposData = $(".campoData").not(".ignorar");
+
+        $(camposData).on("mousedown", function(e) {
+            $(camposData).on("mouseup", function() {
+                setTimeout(function() {
+                    conteudoAlterado();
+                }, 300);
+            });
         });
 
         if (hidePop === undefined) {
@@ -514,6 +527,11 @@ function ajax(link, place, hidePop, async) {
 
 
     return sucesso.responseText;
+}
+
+//funcao temporaria para debug
+function conteudoAlterado() {
+    document.paginaAlterada = true;
 }
 //TODO verificar porque a tela cheia não funciona, através desse método, do mesmo
 //modo que apertando F11 (ou botão apropriado para exibir em tela cheia) no navegador.
@@ -673,12 +691,12 @@ function hideFooter() {
             marginTop: "-20px"
         }, 500);
         $(".content").animate({
-            paddingBottom: "30px"
-        }, 700, function() {
+//            paddingBottom: "30px"
+        }, 300, function() {
             $(".arrow-up").show();
             $(".arrow-up").animate({
                 opacity: 1
-            }, 200);
+            }, 400);
         });
     }
 }
@@ -957,26 +975,4 @@ function extrairJSON(string) {
             json = '{"status":"Informacao","mensagem":"Ocorreu algum erro no processamento da resposta do servidor.<br/>Verifique manualmente se o dado foi cadastrado."}';
     }
     return json;
-}
-
-function b() {
-    $("*").each(function() {
-        var t = $(this).css("font-size");
-        t = t.substr(0, t.lastIndexOf("px"))
-        if (t > 0) {
-            t = t * 1.1;
-            $(this).css("font-size", t);
-        }
-    });
-}
-
-function c() {
-    $("*").not("menu").each(function() {
-        var t = $(this).css("font-size");
-        t = t.substr(0, t.lastIndexOf("px"))
-        if (t > 0) {
-            t = t / 1.1;
-            $(this).css("font-size", t);
-        }
-    });
 }

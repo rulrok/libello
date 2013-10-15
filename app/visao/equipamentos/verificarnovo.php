@@ -4,7 +4,7 @@ include APP_LOCATION . "modelo/Mensagem.php";
 require_once APP_LOCATION . "modelo/vo/Equipamento.php";
 include APP_LOCATION . "visao/verificadorFormularioAjax.php";
 
-class verificarnovo extends verificadorFormularioAjax {
+class verificarnovoequipamento extends verificadorFormularioAjax {
 
     public function _validar() {
         $nomeEquipamento = $_POST['equipamento'];
@@ -31,9 +31,10 @@ class verificarnovo extends verificadorFormularioAjax {
                     //TODO Verificar uma forma
                     $aux = clone $equipamento;
                     $numeroPatrimonio = $_POST['numeroPatrimonio-' . ($i + 1)];
-                    $colecaoEquipamentos[$i] = $aux->set_numeroPatrimonio($numeroPatrimonio)->set_quantidade(1);
+                    /* $colecaoLivros[$i] = */$aux->set_numeroPatrimonio($numeroPatrimonio)->set_quantidade(1);
                     try {
-                        equipamentoDAO::cadastrarEquipamento($aux);
+                        $id = equipamentoDAO::cadastrarEquipamento($aux);
+                        equipamentoDAO::registrarInsercaoEquipamento($id);
                         $patrimoniosValidos .= $numeroPatrimonio . "<br/>";
                     } catch (Exception $e) {
                         $patrimoniosInvalidos .= "<li>" . $numeroPatrimonio . "</li>";
@@ -53,7 +54,8 @@ class verificarnovo extends verificadorFormularioAjax {
                     $equipamento->set_numeroPatrimonio(null);
                     //Vai tentar cadastrar
                     try {
-                        equipamentoDAO::cadastrarEquipamento($equipamento);
+                        $id = equipamentoDAO::cadastrarEquipamento($equipamento);
+                        equipamentoDAO::registrarInsercaoEquipamento($id);
                         $this->mensagem->set_mensagem("Cadastrado com sucesso.")->set_status(Mensagem::SUCESSO);
                     } catch (Exception $e) {
                         $this->mensagem->set_mensagem("Erro ao cadastrar no banco de dados.")->set_status(Mensagem::ERRO);
@@ -71,6 +73,6 @@ class verificarnovo extends verificadorFormularioAjax {
 
 }
 
-$verificar = new verificarnovo();
+$verificar = new verificarnovoequipamento();
 $verificar->verificar();
 ?>

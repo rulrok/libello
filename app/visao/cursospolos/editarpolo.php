@@ -21,7 +21,7 @@
             </span>
 
     </fieldset>
-    <input disabled class=" btn btn-primary btn-right" type="submit" disabled value="Atualizar dados">
+    <button disabled class=" btn btn-primary btn-right" type="submit" disabled >Atualizar dados</button>
 
 </form>
 <br/>
@@ -46,7 +46,7 @@
         });
         $("#cidade").chosen();
 
-        $('#estado').val("<?php echo $this->estado ?>");
+        $('#estado').val("<?php echo $this->estadoViagem ?>");
         $('#estado').change();
         $("#estado").chosen();
         $('#estado').change(function() {

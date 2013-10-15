@@ -1304,9 +1304,6 @@ textarea::-webkit-input-placeholder {
 .input-xxlarge {
   width: 530px;
 }
-.input-xxzlarge {
-  width: 590px;
-}
 
 input[class*="span"],
 select[class*="span"],
@@ -3579,9 +3576,6 @@ input[type="submit"].btn.btn-mini {
   *padding-bottom: 1px;
 }
 
-input[type="submit"].btn-right {
-    float: right;
-}
 
 .btn-link,
 .btn-link:active,

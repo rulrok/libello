@@ -2,6 +2,8 @@
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/biblioteca/Mvc/Controlador.php';
 require_once APP_LOCATION . "modelo/ComboBoxPapeis.php";
+require_once APP_LOCATION . "modelo/ComboBoxUsuarios.php";
+include_once APP_LOCATION . 'modelo/ComboBoxPolo.php';
 require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
 
 class ControladorEquipamentos extends Controlador {
@@ -22,13 +24,13 @@ class ControladorEquipamentos extends Controlador {
         $this->renderizar();
     }
 
-    public function acaoConsultar_nocead() {
-        $this->visao->equipamentosNoCead = equipamentoDAO::consultar("nomeEquipamento,quantidade,dataEntrada,numeroPatrimonio");
+    public function acaoConsultar_interno() {
+        $this->visao->equipamentosInternos = equipamentoDAO::consultar("nomeEquipamento,quantidade,dataEntrada,numeroPatrimonio");
         $this->renderizar();
     }
 
-    public function acaoConsultar_foracead() {
-        $this->visao->equipamentosForaCead = equipamentoDAO::consultarSaidas("nomeEquipamento,quantidadeSaida,dataEntrada,numeroPatrimonio");
+    public function acaoConsultar_externo() {
+        $this->visao->equipamentosExternos = equipamentoDAO::consultarSaidas("nomeEquipamento,quantidadeSaida,dataEntrada,numeroPatrimonio");
         $this->renderizar();
     }
 
@@ -49,9 +51,10 @@ class ControladorEquipamentos extends Controlador {
 
     public function acaoEditar() {
         if (isset($_GET['equipamentoID']) || isset($_POST['equipamentoID'])) {
-            $idSaida = fnDecrypt($_REQUEST['equipamentoID']);
+            $idEquipamento = fnDecrypt($_REQUEST['equipamentoID']);
+            $this->visao->equipamentoEditavel = equipamentoDAO::equipamentoPodeTerTipoAlterado($idEquipamento);
             $this->visao->equipamentoID = $_REQUEST['equipamentoID'];
-            $equipamento = equipamentoDAO::recuperarEquipamento($idSaida);
+            $equipamento = equipamentoDAO::recuperarEquipamento($idEquipamento);
 
             $this->visao->descricao = $equipamento->get_descricao();
             $this->visao->equipamento = $equipamento->get_nomeEquipamento();
@@ -74,7 +77,7 @@ class ControladorEquipamentos extends Controlador {
     }
 
     public function acaoRetorno() {
-        $this->visao->saidas = equipamentoDAO::consultarSaidas("idSaida, nomeEquipamento, numeroPatrimonio, concat(PNome,' ',UNome) AS `responsavel`,destino,quantidadeSaida,data");
+        $this->visao->saidas = equipamentoDAO::consultarSaidas("idSaida, nomeEquipamento, numeroPatrimonio, concat(PNome,' ',UNome) AS `responsavel`,destino,nomePolo,quantidadeSaida,dataSaida");
         $i = 0;
         foreach ($this->visao->saidas as $value) {
             $value[0] = fnEncrypt($value[0]);
@@ -96,6 +99,7 @@ class ControladorEquipamentos extends Controlador {
             $this->visao->equipamentoID = fnEncrypt($equipamentoID);
             $this->visao->equipamento = $equipamento;
             $this->visao->quantidadeMaxima = $saida['quantidadeSaida'];
+            $this->visao->dataSaida = $saida['dataSaida'];
             $this->renderizar();
         } else {
             die("Acesso indevido");
@@ -121,6 +125,8 @@ class ControladorEquipamentos extends Controlador {
             $this->visao->comboboxPapeis = ComboBoxPapeis::montarComboBoxPadrao();
             $this->visao->equipamento = equipamentoDAO::recuperarEquipamento(fnDecrypt($_GET['equipamentoID']));
             $this->visao->equipamentoID = fnEncrypt($this->visao->equipamento->get_idEquipamento());
+            $this->visao->responsavel = ComboBoxUsuarios::montarResponsavelViagem();
+            $this->visao->polos = ComboBoxPolo::montarTodosOsPolos();
             $this->renderizar();
         } else {
             die("Acesso indevido.");
@@ -139,12 +145,17 @@ class ControladorEquipamentos extends Controlador {
         if (isset($_GET['equipamentoID'])) {
             $equipamento = equipamentoDAO::recuperarEquipamento(fnDecrypt($_GET['equipamentoID']));
             $this->visao->equipamento = $equipamento;
+            $this->visao->dataMinima = $equipamento->get_dataEntrada();
+            if ($this->visao->dataMinima == "") {
+                $this->visao->dataMinima = "01/01/1900";
+            }
             $this->visao->equipamentoID = fnEncrypt($this->visao->equipamento->get_idEquipamento());
             $this->visao->quantidadeMaxima = $equipamento->get_quantidade();
             $this->visao->saidaID = '';
             $this->renderizar();
         } else if (isset($_GET['saidaID'])) {
             $saida = equipamentoDAO::recuperarSaidaEquipamento(fnDecrypt($_GET['saidaID']));
+            $this->visao->dataMinima = $saida['dataSaida'];
             $this->visao->equipamento = equipamentoDAO::recuperarEquipamento($saida['equipamento']);
             $this->visao->equipamentoID = fnEncrypt($this->visao->equipamento->get_idEquipamento());
             $this->visao->quantidadeMaxima = $saida['quantidadeSaida'];
@@ -156,6 +167,38 @@ class ControladorEquipamentos extends Controlador {
     }
 
     public function acaoRegistrarbaixa() {
+        $this->renderizar();
+    }
+
+    public function acaoGerenciarbaixasesaidas() {
+
+        $this->renderizar();
+    }
+
+    public function acaoGerenciar_baixas() {
+        $this->visao->baixas = equipamentoDAO::consultarBaixas("idBaixa,nomeEquipamento,dataBaixa,quantidadeBaixa,saida,observacoes");
+        $i = 0;
+        foreach ($this->visao->baixas as $value) {
+            $value[0] = fnEncrypt($value[0]);
+            $this->visao->baixas[$i++] = $value;
+        }
+        $this->renderizar();
+    }
+    
+    public function acaoRemover_baixa(){
+        $this->renderizar();
+    }
+    public function acaoGerenciar_saidas() {
+        $this->visao->saidas = equipamentoDAO::consultarSaidas("idSaida,nomeEquipamento,dataSaida,quantidadeSaidaOriginal,concat(PNome,' ',UNome) as `responsavel`");
+        $i = 0;
+        foreach ($this->visao->saidas as $value) {
+            $value[0] = fnEncrypt($value[0]);
+            $this->visao->saidas[$i++] = $value;
+        }
+        $this->renderizar();
+    }
+    
+    public function acaoRemover_saida(){
         $this->renderizar();
     }
 

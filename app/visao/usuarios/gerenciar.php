@@ -3,7 +3,7 @@
     <div class="btn-group">
         <a href="#!usuarios|novo" class="btn btn-adicionar"><i class="icon-user"></i> Adicionar novo</a>
         <button class="btn btn-editar" href="#"><i class="icon-edit"></i> Editar</button>
-        <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
+        <button class="btn btn-danger btn-deletar" href="#"><i class="icon-ban-circle"></i> Desativar</button>
     </div>
 </div>
 <table id="gerenciar_usuario" class="tabelaDeEdicao">
@@ -36,7 +36,7 @@
     <div class="btn-group">
         <a href="#!usuarios|novo" class="btn btn-adicionar"><i class="icon-user"></i> Adicionar novo</a>
         <button class="btn btn-editar" href="#"><i class="icon-edit"></i> Editar</button>
-        <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
+        <button class="btn btn-danger btn-deletar" href="#"><i class="icon-ban-circle"></i> Desativar</button>
     </div>
 </div>
 <script>
@@ -45,7 +45,7 @@
         configurarTabela({
             idTabela: 'gerenciar_usuario',
             editar: '#!usuarios|editar&userID=',
-            deletar: 'index.php?c=usuarios&a=remover&userID='
+            deletar: 'index.php?c=usuarios&a=desativar&userID='
         });
     });
 

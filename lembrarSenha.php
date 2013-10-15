@@ -15,6 +15,7 @@
     </head>
     <body>
         <?php
+        require_once './biblioteca/configuracoes.php';
 //        require_once './biblioteca/seguranca/seguranca.php';
 ////        session_start();
 //        if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION['autenticado'] === TRUE) {
@@ -38,7 +39,7 @@
                             </div>
                             <br/>
                             <a href="logar.php" class="btn">Voltar</a>
-                            <input class="btn btn-info" name="identificacao" type="submit" value="Enviar" >
+                            <button class="btn btn-info btn-right" name="identificacao" type="submit">Enviar</button>
                         </fieldset>
                         <!--<a href="#"><p class="centeredText">Esqueci minha senha</p></a>-->
                     </form>
@@ -55,7 +56,7 @@
                             <span id="voltarPaginaInicial" >
                                 <a href="logar.php" class="btn">&LeftArrow; Voltar</a>
                             </span>
-                            <input disabled id="botaoEnviarNovaSenha" class="btn btn-info" name="identificacao" type="submit" value="Enviar"  />
+                            <button disabled id="botaoEnviarNovaSenha" class="btn btn-info" name="identificacao" type="submit">Enviar</button>
                         </fieldset>
                         <!--<a href="#"><p class="centeredText">Esqueci minha senha</p></a>-->
                     </form>
@@ -75,7 +76,7 @@
             <div id="capes"></div>
         </div>
         <div id="footer" >
-            <p class="centeredText">Copyright &copy; 2012 - 2013 | Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a></label>
+            <p class="centeredText">Copyright &copy; 2012 - 2013 | Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a> | Versão <?php echo APP_VERSION; ?></p>
         </div>
         <script>
             formularioAjax("ajaxForm", "#erroWrap");

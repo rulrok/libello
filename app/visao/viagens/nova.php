@@ -6,11 +6,15 @@
         <p class="centered centeredText boldedText">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png"> são obrigatórios</label>
         <div class="line">
             <label for='curso'>Curso vinculado</label>
-            <?php echo $this->cursos ?>
+            <?php echo $this->cursos; ?>
         </div>
         <div class="line" >
             <label for='polo'>Polo destino</label>
-            <?php echo $this->polos ?>
+            <?php echo $this->polos; ?>
+        </div>
+        <div class="line">
+            <label for="responsavel">Responsável</label>
+            <?php echo $this->responsavel; ?>
         </div>
         <hr>
         <div class="line">
@@ -62,16 +66,10 @@
             <br/>
         </fieldset>
     </fieldset>
-    <input class="btn btn-large" type="reset" value="Limpar">
-    <input class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit" value="Cadastrar">
+    <button class="btn btn-large" type="reset">Limpar</button>
+    <button class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit">Cadastrar</button>
 
 </form>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
 <script src='publico/js/datasComRange.js' type='text/javascript'></script>
 <script>
     $(document).ready(function() {
@@ -88,7 +86,8 @@
 
         configurarCamposDataHora('#dataIda', '#dataVolta');
         varrerCampos();
-        $("#passageiros").chosen({display_disabled_options: false, display_selected_options: false, placeholder_text_multiple: "Selecione os passageiros", width: "650px"});
+        $("#responsavel").chosen({display_disabled_options: false, display_selected_options: true, inherit_select_classes: true, placeholder_text_multiple: "Selecione o responsavel pela viagem", width: "450px"});
+        $("#passageiros").chosen({display_disabled_options: false, display_selected_options: false, inherit_select_classes: true, placeholder_text_multiple: "Selecione os passageiros", width: "750px"});
 //        $("select").not("#passageiros").chosen();
 //        $("div .line:has('select.campoErrado')").addClass("campoErrado")
 //        
@@ -111,10 +110,35 @@
         $(".line input").popover({trigger: 'focus', container: 'body'});
         formularioAjax();
 
-        $("input[type=reset]").bind("click", function() {
+        $("button[type=reset]").bind("click", function() {
             $("select").val('').trigger("chosen:updated");
             $("div.chosen-container li.search-choice").remove();
             $("div.chosen-container li.search-field").addClass("default");
+            setTimeout(function() {
+                liberarCadastro();
+            }, "200");
+        });
+
+        var campoPolo = document.getElementById("polo");
+        optg = document.createElement("optgroup");
+        optg.title = "outro";
+        optg.label = "Outro";
+        opt = document.createElement("option");
+        opt.value = "outro";
+        opt.text = "Outro destino";
+        optg.appendChild(opt);
+        campoPolo.appendChild(optg);
+        document.viagens_campoDestinoAlternativo = false;
+
+        $("#polo").on('change', function() {
+            if ($("#polo option:selected").prop("value") === "outro") {
+                $($(".line")[1]).after("<div class='line'><label for='destinoManual'>Nome do destino</label><input type='text' required id='destinoManual' class='input-xlarge' name='destinoManual'/></div>")
+                varrerCampos();
+                document.viagens_campoDestinoAlternativo = true;
+            } else if (document.viagens_campoDestinoAlternativo) {
+                document.viagens_campoDestinoAlternativo = false;
+                $($(".line")[2]).remove();
+            }
         });
     });
 </script>

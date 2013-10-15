@@ -1,5 +1,4 @@
 <?php
-
 require_once '../configuracoes.php';
 require_once BIBLIOTECA_DIR . "/seguranca/seguranca.php";
 
@@ -16,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $usuario->set_senha($senha);
 
             if (autenticaUsuario($usuario)) {
-                sistemaDAO::registrarAccesso($_SESSION['usuario']->get_id());
+                sistemaDAO::registrarAccesso(obterUsuarioSessao()->get_id());
                 header("Location: " . WEB_SERVER_ADDRESS . $_POST['alvo']);
             } else {
                 // O usuário e/ou a senha são inválidos, manda de volta pro form de login
@@ -26,5 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header("Location: " . WEB_SERVER_ADDRESS);
         }
     }
+} else {
+   header("Location: " . WEB_SERVER_ADDRESS);
 }
 ?>

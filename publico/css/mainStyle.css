@@ -324,7 +324,7 @@ input[type=search]{
 /* CONTENT */
 .content {
     overflow:auto;
-    padding-bottom: 150px;
+    padding-bottom: 180px;
     width: 80%;
     position: relative;
     margin: auto;
@@ -332,7 +332,6 @@ input[type=search]{
     padding-left: 50px;
     padding-right: 50px;
 
-    padding-bottom: 30px;
     display: block;
 }
 
@@ -648,6 +647,12 @@ header .userInfoWrap [id=gerenciarConta]:before{
     #viagensLink:before{
         content: url("../imagens/icones/viagens_22.png");
     }
+    #tarefasLink:before{
+        content: url("../imagens/icones/tarefas_22.png");
+    }
+    #pagamentosLink:before{
+        content: url("../imagens/icones/pagamentos_22.png");
+    }
 }
 @media (min-width:800px ){
 
@@ -673,6 +678,12 @@ header .userInfoWrap [id=gerenciarConta]:before{
     }
     #viagensLink:before{
         content: url("../imagens/icones/viagens.png");
+    }
+    #tarefasLink:before{
+        content: url("../imagens/icones/tarefas.png");
+    }
+    #pagamentosLink:before{
+        content: url("../imagens/icones/pagamentos.png");
     }
 }
 /* Links do menu */
@@ -951,6 +962,8 @@ li[id$=Link]:before{
     top: 8px;
     display: table-cell;
     opacity: 0.8;
+    alignment-baseline: middle;
+    vertical-align: top;
 }
 
 .table .line label:first-letter{
@@ -998,4 +1011,26 @@ select:disabled{
     display: table-cell;
 }
 /* FIM Forms alinhados sem tabela */
+/*================================================*/
+/*  BOOTSTRAP FIXES */
+
+/*
+Classe hidden para Internet Explorer
+*/
+.hidden {
+  display: none!important;
+  visibility: hidden!important;
+  width: 0!important;
+  height: 0!important;
+}
+
+button.btn-right,
+input[type="submit"].btn-right {
+    float: right;
+}
+
+.input-xxzlarge {
+  width: 590px;
+}
+/*  FIM BOOTSTRAP FIXES */
 /*================================================*/

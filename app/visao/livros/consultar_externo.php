@@ -1,8 +1,10 @@
-<title>Consultar equipamentos | Fora CEAD</title>
-<table id="consulta-equipamento_foracead" class="tabelaDeSelecao">
+<title>Consultar livros | Fora CEAD</title>
+<table id="consulta-livro_foracead" class="tabelaDeSelecao">
     <thead>
         <tr>
-            <th>Nome</th>
+            <th>Livro</th>
+            <th>Gráfica</th>
+            <th>Área</th>
             <th>Qtd</th>
             <th>Data de entrada</th>
             <th>Patrimônio</th>
@@ -10,7 +12,7 @@
     </thead>
     <tbody>
         <?php
-        foreach ($this->equipamentosForaCead as $value) {
+        foreach ($this->livrosExternos as $value) {
             echo '<tr>';
             for ($i = 0; $i < sizeof($value) / 2; $i++) {
                 echo '<td>';
@@ -26,7 +28,7 @@
 <script id="pos_script">
     $(document).ready(function() {
         configurarTabela({
-            idTabela: "consulta-equipamento_foracead",
+            idTabela: "consulta-livro_foracead",
             defs: {"aaSorting": [[0, "desc"]]}
         });
     });

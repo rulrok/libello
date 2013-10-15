@@ -36,10 +36,17 @@ class Equipamento {
     }
 
     public function get_dataEntrada() {
-        return $this->dataEntrada;
+        if ($this->dataEntrada != "NULL")
+            return $this->dataEntrada;
+        else {
+            return "";
+        }
     }
 
     public function set_dataEntrada($dataEntrada) {
+        if ($dataEntrada == "") {
+            $dataEntrada = "NULL";
+        }
         $this->dataEntrada = $dataEntrada;
         return $this;
     }

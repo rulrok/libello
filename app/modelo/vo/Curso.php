@@ -2,7 +2,7 @@
 
 class Curso {
     var $idCurso;
-    var $nome;
+    var $nomeCurso;
     var $area;
     var $tipo;
     
@@ -15,11 +15,11 @@ class Curso {
     }
 
     public function get_nome() {
-        return $this->nome;
+        return $this->nomeCurso;
     }
 
     public function set_nome($nome) {
-        $this->nome = $nome;
+        $this->nomeCurso = $nome;
     }
 
     public function get_area() {

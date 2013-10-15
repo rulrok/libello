@@ -1,5 +1,6 @@
 <?php
 ob_start();
+require_once './biblioteca/configuracoes.php';
 if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION['autenticado'] === TRUE) {
     header("Location: index.php");
 } else {
@@ -15,6 +16,7 @@ if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION[
         <link rel='stylesheet' href='publico/css/login.css' />
         <title class="tituloFixo">Autenticação</title>
         <link rel="stylesheet" type="text/css" media="screen" href="publico/css/browser-detection.css" />
+<!--        <script src="http://ie.microsoft.com/testdrive/HTML5/CompatInspector/inspector.js"></script>-->
         <script src="publico/js/jquery/jquery-1.9.1.js"></script>
         <script>
             jQuery.fn.center = function() {
@@ -46,18 +48,18 @@ if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION[
             <div id="loginArea">
                 <form class="table centered" name="identificacao" action="./biblioteca/seguranca/verificarLogin.php" method="post">
                     <fieldset>
-                        <input hidden type="checkbox" id="fazendo_login" name="fazendo_login" checked/>
-                        <input hidden type="text" id="alvo" name="alvo" />
+                        <input hidden type="checkbox" class="hidden" id="fazendo_login" name="fazendo_login" checked>
+                        <input hidden type="text" class="hidden" id="alvo" name="alvo" >
                         <div class="line">
                             <label>Email</label>
-                            <input required type="text" name="login">
+                            <input required type="email" name="login">
                         </div>
                         <div class="line">
                             <label>Senha</label>
                             <input required type="password" name="senha" >
                         </div>
                         <br/>
-                        <input class="btn btn-right btn-info" name="identificacao" type="submit" value="Entrar" >
+                        <button class="btn btn-right btn-info" name="identificacao" type="submit">Entrar</button>
                             <?php if ($ocultarDetalhes): ?>
                                 <a class="btn"href="lembrarSenha.php">Esqueci a senha</a>
                             <?php endif; ?>
@@ -80,7 +82,7 @@ if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION[
                 <div id="capes"></div>
             </div>
             <div id="footer" >
-                <p class="centeredText">Copyright &copy; 2012 - 2013 | Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a></label>
+                <p class="centeredText">Copyright &copy; 2012 - 2013 | Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a> | Versão <?php echo APP_VERSION; ?></p>
             </div>
         <?php endif; ?>
         <script>

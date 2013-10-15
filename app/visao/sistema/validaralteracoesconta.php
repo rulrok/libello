@@ -12,14 +12,14 @@ class validarAlteracoesConta extends verificadorFormularioAjax {
             $sobreNome = $_POST['sobrenome'];
 
             //!!! Garantir que o usuario nao burlou o JS da página e alterou o email do campo apenas leitura
-            $email = $_SESSION['usuario']->get_email();
+            $email = obterUsuarioSessao()->get_email();
 
             $novaSenha = $_POST['senha'] == "" ? "" : md5($_POST['senha']);
             $confSenha = $_POST['confSenha'] == "" ? "" : md5($_POST['confSenha']);
             $senha = md5($_POST['senhaAtual']);
             $dataNascimento = $_POST['dataNascimento'];
 
-            $usuario = usuarioDAO::recuperarUsuario($_SESSION['usuario']->get_email());
+            $usuario = usuarioDAO::recuperarUsuario(obterUsuarioSessao()->get_email());
 //            $this->visao->papel = usuarioDao::consultarPapel($_SESSION['email']);
 
             if ($usuario->get_senha() == $senha) {
@@ -44,7 +44,7 @@ class validarAlteracoesConta extends verificadorFormularioAjax {
                     $usuario->set_dataNascimento($dataNascimento);
 
                     //Se não quer alterar a senha
-                    if (UsuarioDAO::atualizar($_SESSION['usuario']->get_email(), $usuario)) {
+                    if (UsuarioDAO::atualizar(obterUsuarioSessao()->get_email(), $usuario)) {
                         $_SESSION['usuario'] = $usuario;
                         $this->mensagem->set_mensagem("Alteração concluída com sucesso");
                         $this->mensagem->set_status(Mensagem::SUCESSO);

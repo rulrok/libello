@@ -13,7 +13,7 @@
             <th>Equipamento</th>
             <th>Patrimônio</th>
             <th>Responsável</th>
-            <th>Destino</th>
+            <th>Local</th>
             <th>Qtd</th>
             <th>Data Saída</th>
         </tr>
@@ -23,7 +23,16 @@
         foreach ($this->saidas as $value) {
             echo '<tr>';
             for ($i = 0; $i < sizeof($value) / 2; $i++) {
-                echo $i == 0 ? '<td hidden class="campoID">' : '<td>';
+                if ($i === 0) {
+                    echo '<td hidden class="campoID">';
+                    } elseif ($i === 4 && $value[$i] == "") {
+                    continue;
+                    } elseif ($i === 5 && $value[$i] == "") {
+                    
+                } else {
+                    echo "<td>";
+                }
+//                echo $i == 0 ? '<td hidden class="campoID">' : '<td>';
                 echo $value[$i];
                 echo '</td>';
             }

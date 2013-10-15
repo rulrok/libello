@@ -18,41 +18,57 @@
             <input type="text" readonly id="dataEntrada" class="campoData" name="dataEntrada" value="<?php echo $this->dataEntrada ?>"/>
         </div>
         <hr/>
-        <div class="line">
-            <label>Tipo</label>
-            <div class="btn-toolbar" style="position:relative;left:15px;margin-bottom: 5px;">
-                <div class="btn-group">
-                    <a class="btn btn-info" id="custeio"  value="custeio" checked><i class="icon-headphones"></i> Custeio</a>
-                    <a class="btn" id="patrimonio"  value="patrimonio"><i class="icon-briefcase"></i> Patrimônio</a>
+        <?php if ($this->equipamentoEditavel): ?>
+            <div class="line">
+                <label>Tipo</label>
+                <div class="btn-toolbar" style="position:relative;left:15px;margin-bottom: 5px;">
+                    <div class="btn-group">
+                        <a class="btn btn-info" id="custeio"  value="custeio" checked><i class="icon-headphones"></i> Custeio</a>
+                        <a class="btn" id="patrimonio"  value="patrimonio"><i class="icon-briefcase"></i> Patrimônio</a>
+                    </div>
+                    <div hidden>
+                        <input type="radio" name="tipo" id="radioCusteio" value="custeio" checked/>
+                        <input type="radio" name="tipo" id="radioPatrimonio" value="patrimonio"/>
+                    </div>
                 </div>
-                <div hidden>
-                    <input type="radio" name="tipo" id="radioCusteio" value="custeio" checked/>
-                    <input type="radio" name="tipo" id="radioPatrimonio" value="patrimonio"/>
-                </div>
+            <?php else: ?>
+                <div class="alert alert-info"><i class="icon-warning-sign"> </i> O tipo não pode ser alterado pois já houve algum <br/>registro de baixa, saída ou retorno.</div>
+                <div class="line">  
+                    <label>Tipo</label>
+                    <div class="btn-toolbar"  style="position:relative;left:15px;margin-bottom: 5px;" > 
+                        <div class="btn-group">
+                            <a class="btn btn-info disabled" id="custeio"  value="custeio" checked data-content="asdasd"><i class="icon-headphones"></i> Custeio</a>
+                            <a class="btn disabled" id="patrimonio"  value="patrimonio" data-content="asdasd"><i class="icon-briefcase"></i> Patrimônio</a>
+                        </div>
+                    </div>
+                    <div hidden>
+                        <input type="radio" name="tipo" id="radioCusteio" value="custeio" checked/>
+                        <input type="radio" name="tipo" id="radioPatrimonio" value="patrimonio"/>
+                    </div>
+                <?php endif; ?>
             </div>
-        </div>
-        <br/>
-        <!-- custeio -->
-        <span class="custeio">
-            <span class="line">
-                <label>Quantidade</label>
-                <input required type="number" min="1" class="input-medium" id="quantidade" name="quantidade" value="<?php echo $this->quantidade ?>"/>
-            </span>
-        </span>
-
-        <!-- Patrimonios -->
-        <span class="patrimonios" hidden>
-
-            <div id="linhasPatrimonios">
-                <span class="line patrimonio-1">
-                    <label>Código Patrimônio</label>
-                    <input readonly type="text" class="input-medium" id="numeroPatrimonio" name="numeroPatrimonio" value="<?php echo $this->numeroPatrimonio ?>"/>
+            <br/>
+            <!-- custeio -->
+            <span class="custeio">
+                <span class="line">
+                    <label>Quantidade</label>
+                    <input required type="number" min="1" class="input-medium" id="quantidade" name="quantidade" value="<?php echo $this->quantidade ?>"/>
                 </span>
-            </div>
-        </span>
+            </span>
+
+            <!-- Patrimonios -->
+            <span class="patrimonios" hidden>
+
+                <div id="linhasPatrimonios">
+                    <span class="line patrimonio-1">
+                        <label>Código Patrimônio</label>
+                        <input readonly type="text" class="input-medium" id="numeroPatrimonio" name="numeroPatrimonio" value="<?php echo $this->numeroPatrimonio ?>"/>
+                    </span>
+                </div>
+            </span>
 
     </fieldset>
-    <input disabled class=" btn btn-primary btn-right" type="submit" disabled value="Atualizar dados">
+    <button disabled class=" btn btn-primary btn-right" type="submit" disabled>Atualizar dados</button>
 
 </form>
 
@@ -111,6 +127,12 @@
             $("#custeio").click();
         } else {
             $("#patrimonio").click();
+        }
+        var editavel;
+        editavel = <?php echo "'" . $this->equipamentoEditavel . "'"; ?>;
+        if (!editavel) {
+            $("#custeio").unbind("click");
+            $("#patrimonio").unbind("click");
         }
 
     });

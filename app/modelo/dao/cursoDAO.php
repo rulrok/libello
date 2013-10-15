@@ -18,7 +18,7 @@ class cursoDAO extends abstractDAO {
 
     public static function obterIdCurso($nomeCurso) {
 
-        $sql = "SELECT idTipoCurso FROM tipoCurso WHERE nome = '" . $nomeCurso . "'";
+        $sql = "SELECT idTipoCurso FROM tipoCurso WHERE nomeCurso = '" . $nomeCurso . "'";
         try {
             $resultado = parent::getConexao()->query($sql)->fetch();
         } catch (Exception $e) {
@@ -28,7 +28,7 @@ class cursoDAO extends abstractDAO {
     }
 
     public static function cadastrarCurso(Curso $curso) {
-        $sql = "INSERT INTO curso(nome,area,tipo) VALUES ";
+        $sql = "INSERT INTO curso(nomeCurso,area,tipo) VALUES ";
         $nome = parent::quote($curso->get_nome());
         $area = parent::quote($curso->get_area());
         $tipocurso = parent::quote($curso->get_tipo());
@@ -45,7 +45,7 @@ class cursoDAO extends abstractDAO {
         $nome = parent::quote($curso->get_nome());
         $area = parent::quote($curso->get_area());
         $tipocurso = parent::quote($curso->get_tipo());
-        $condicao = "nome = $nome AND area=$area AND tipo = $tipocurso";
+        $condicao = "nomeCurso = $nome AND area=$area AND tipo = $tipocurso";
         try {
             $resultado = parent::getConexao()->query($sql . $condicao)->fetch();
         } catch (Exception $e) {
@@ -87,7 +87,7 @@ class cursoDAO extends abstractDAO {
         }
         
 
-        $sql = "UPDATE curso SET nome = '".$nome."' ,area = ".$area." ,tipo = ".$tipocurso ;
+        $sql = "UPDATE curso SET nomeCurso = '".$nome."' ,area = ".$area." ,tipo = ".$tipocurso ;
         $sql .= $condicao;
         try {
             parent::getConexao()->query($sql);

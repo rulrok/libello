@@ -1,16 +1,19 @@
-<title>Consultar equipamentos | Em estoque</title>
-<table id="consulta-equipamento_nocead" class="tabelaDeSelecao">
+<title>Consultar livros | Baixa</title>
+<table id="consulta-livro_embaixa" class="tabelaDeSelecao">
     <thead>
         <tr>
-            <th>Nome</th>
+            <th>Livro</th>
+            <th>Gráfica</th>
+            <th>Área</th>
             <th>Qtd</th>
-            <th>Data de entrada</th>
+            <th>Data da baixa</th>
             <th>Patrimônio</th>
+            <th>Obs</th>
         </tr>
     </thead>
     <tbody>
         <?php
-        foreach ($this->equipamentosNoCead as $value) {
+        foreach ($this->livrosBaixa as $value) {
             echo '<tr>';
             for ($i = 0; $i < sizeof($value) / 2; $i++) {
                 echo '<td>';
@@ -26,7 +29,7 @@
 <script id="pos_script">
     $(document).ready(function() {
         configurarTabela({
-            idTabela: "consulta-equipamento_nocead",
+            idTabela: "consulta-livro_embaixa",
             defs: {"aaSorting": [[0, "desc"]]}
         });
     });

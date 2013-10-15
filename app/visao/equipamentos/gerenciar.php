@@ -1,8 +1,9 @@
 <title>Gerenciar equipamentos</title>
 <!-- Início da páginas -->
+<div class="alert alert-block alert-info" id="aviso"><span class="label label-info">Dica: </span> Duplo clique na linha mostra a descrição do equipamento<a class="close" data-dismiss="alert" href="#">&times;</a></div>
 <div class="btn-toolbar">
     <div class="btn-group">
-        <a href="#!equipamentos|novo" class="btn btn-adicionar"><i class="icon-plus"></i> Adicionar novo</a>
+        <a href="#!equipamentos|novo" class="btn btn-adicionar"><i class="icon-headphones"></i> Adicionar novo</a>
         <button class="btn btn-editar disabled" href="#"><i class="icon-edit"></i> Editar</button>
         <button class="btn btn-saida disabled btn-success" href="#"><i class="icon-arrow-left"></i> Registrar saída</button>
         <button class="btn btn-baixa disabled btn-info" href="#"><i class="icon-arrow-down"></i> Registrar Baixa</button>
@@ -17,7 +18,7 @@
             <th>Qtd</th>
             <th>Data de entrada</th>
             <th>Patrimônio</th>
-            <th hidden>Descricao</th>
+            <th hidden>Descrição</th>
         </tr>
     </thead>
     <tbody>
@@ -46,7 +47,7 @@
 </table>
 <div class="btn-toolbar">
     <div class="btn-group">
-        <a href="#!equipamentos|novo" class="btn btn-adicionar"><i class="icon-plus"></i> Adicionar novo</a>
+        <a href="#!equipamentos|novo" class="btn btn-adicionar"><i class="icon-headphones"></i> Adicionar novo</a>
         <button class="btn btn-editar disabled" href="#"><i class="icon-edit"></i> Editar</button>
         <button class="btn btn-saida disabled btn-success" href="#"><i class="icon-arrow-left"></i> Registrar saída</button>
         <button class="btn btn-baixa disabled btn-info" href="#"><i class="icon-arrow-down"></i> Registrar Baixa</button>
@@ -73,6 +74,7 @@
                 "aaSorting": [[2, 'asc']]
             }
         });
+//        showPopUp("Duplo clique nas linhas <br/>mostra a descrição<br/>do equipamento","Info")
     });
 
 </script>
