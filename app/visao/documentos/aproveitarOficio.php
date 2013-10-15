@@ -1,7 +1,7 @@
 <?php
 $controladorAux = new ControladorDocumentos();
 
-$ofc = documentoDAO::consultar('oficio', 'idOficio = ' . $_GET['id']);
+$ofc = documentoDAO::consultar('oficio', 'idOficio = ' . fnDecrypt($_GET['id']));
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -48,7 +48,7 @@ $ofc = documentoDAO::consultar('oficio', 'idOficio = ' . $_GET['id']);
     }
 
     function salvar() {
-        $.getJSON("publico/ajax/documentos/acoes.php?acao=salvarOficio&booledit=0",
+        $.getJSON("app/visao/documentos/acoes.php?acao=salvarOficio&booledit=0",
                 {assunto: $('#assunto').val(),
                     corpo: $('#corpo').val(),
                     destino: $("#destino").val(),
@@ -134,7 +134,7 @@ $ofc = documentoDAO::consultar('oficio', 'idOficio = ' . $_GET['id']);
 
     function capturaNumOficio() {
 
-        $.getJSON('app/modelo/valores.ajax.php', {valor: 1, ajax: 'true'}, function(j) {
+        $.getJSON('app/visao/documentos/valores.ajax.php', {valor: 1, ajax: 'true'}, function(j) {
             $('#i_numOficio').val(j);
 
             $("#form1").submit();

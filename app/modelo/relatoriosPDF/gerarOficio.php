@@ -39,7 +39,7 @@ $cont = new ControladorDocumentos();
 //salvando ou atualizando oficio no banco
 $booledit = $_GET['booledit'];
 if ($booledit == '1') {
-    $idoficio = $_POST['i_idoficio'];
+    $idoficio = fnDecrypt($_POST['i_idoficio']);
     $cont->atualizarOficio($idoficio, $assunto, $corpo, $tratamento, $destino, $cargo_destino, $data, $estadoEdicao, $tipoSigla, $referencia, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $numOficio);
 
 } else {

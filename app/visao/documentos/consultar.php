@@ -147,17 +147,12 @@ $controladorAux = new ControladorDocumentos();
 
 </script>
 <?php
-if (isset($_GET['doc']) && isset($_GET['tipo'])) {
+if (isset($_GET['doc'])) {
     ?>
     <script>
         var doc_select = <?php echo '"' . $_GET['doc'] . '"'; ?>;
-        var tipo_select = <?php echo '"' . $_GET['tipo'] . '"'; ?>;
         $(document).ready(function() {
             $('.btn_' + doc_select).click();
-            $('#option_' + doc_select + '_default').removeAttr('selected');
-            $('#option_' + doc_select + '_' + tipo_select).attr('selected', 'selected');
-            var temp = doc_select.charAt(0).toUpperCase() + doc_select.slice(1);
-            $('#combo' + temp + 'Tipo').trigger('change');
         });
     </script>
     <?php

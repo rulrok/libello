@@ -5,10 +5,11 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/configuracoe
 require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/dompdf/dompdf_config.inc.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/app/modelo/dao/documentoDAO.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/seguranca/seguranca.php");
+require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
 
 //-------------------
 //definindo variaveis
-$id = $_GET['id'];
+$id = fnDecrypt($_GET['id']);
 $memorando = documentoDAO::consultar('memorando','idMemorando = '.$id);
 $numMemorando = $memorando[0]->getNumMemorando();
 $tipoSigla = $memorando[0]->getTipoSigla();

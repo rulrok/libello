@@ -1,11 +1,21 @@
 <?php
 
+
 include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/biblioteca/Mvc/Controlador.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/app/modelo/dao/documentoDAO.php';
+require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
 
 class ControladorDocumentos extends Controlador {
 
     public function acaoGerenciar() {
+        $this->visao->todosOficios = $this->listarOficios();
+        $this->visao->oficiosValidos = $this->listarOficios('validos');
+        $this->visao->oficiosInvalidos= $this->listarOficios('invalidos');
+        $this->visao->oficiosEmAberto= $this->listarOficios('emAberto');
+        $this->visao->todosMemorandos = $this->listarMemorandos();
+        $this->visao->memorandosValidos = $this->listarMemorandos('validos');
+        $this->visao->memorandosInvalidos = $this->listarMemorandos('invalidos');
+        $this->visao->memorandosEmAberto = $this->listarMemorandos('emAberto');
         $this->renderizar();
     }
     
@@ -38,6 +48,12 @@ class ControladorDocumentos extends Controlador {
     }
     
     public function acaoAproveitarMemorando(){
+        $mem = documentoDAO::consultar('memorando', 'idMemorando = ' . fnDecrypt($_GET['id']));
+        
+        $this->visao->memorando = $mem[0];
+        
+        $this->visao->controlador = new ControladorDocumentos();
+        
         $this->renderizar();
     }
     
@@ -202,33 +218,36 @@ class ControladorDocumentos extends Controlador {
                 //se eh documento invalido
                 if ($oficios[$i]->getEstadoValidacao() == 0 && $tipo != 'validos') {
                     $retorno.= "<tr tipo='".$tipo."' doc='oficio'>";
-                    $retorno.="<td hidden class='campoID'>" . $oficios[$i]->getIdOficio() . '</td>';
-                    $retorno.="<td width='30%' id='assunto'>" . $oficios[$i]->getAssunto() . "</td>";
-                    $retorno.="<td width='30%' id='destino'>" . $oficios[$i]->getDestino() . "</td>";
-                    $retorno.="<td width='10%' id='numeracao' align='center'>" . $oficios[$i]->getNumOficio() . "</td>";
-                    $retorno.="<td width='15%' id='data' align='center'>" . $oficios[$i]->getData() . "</td>";
-                    $retorno.="<td width='10%' id='validacao' align='center'>" . "Inválido" . "</td>";
+                    $retorno.="<td hidden class='campoID'>" . fnEncrypt($oficios[$i]->getIdOficio()) . '</td>';
+                   // $retorno.="<td hidden class='campoID'>" . $oficios[$i]->getIdOficio() . '</td>';
+                    $retorno.="<td width='30%' class='assunto'>" . $oficios[$i]->getAssunto() . "</td>";
+                    $retorno.="<td width='30%' class='destino'>" . $oficios[$i]->getDestino() . "</td>";
+                    $retorno.="<td width='10%' class='numeracao' align='center'>" . $oficios[$i]->getNumOficio() . "</td>";
+                    $retorno.="<td  class='data' align='center'>" . $oficios[$i]->getData() . "</td>";
+                    $retorno.="<td  class='validacao' align='center'>" . "Inválido" . "</td>";
                     $retorno.="</tr>";
                     //se eh valido
                 } else if ($oficios[$i]->getEstadoValidacao() != 0 && $tipo != 'invalidos') {
                     $retorno.="<tr tipo='".$tipo."' doc='oficio'>";
-                    $retorno.="<td hidden class='campoID'>" . $oficios[$i]->getIdOficio() . '</td>';
-                    $retorno.="<td width='30%' id='assunto'>" . $oficios[$i]->getAssunto() . "</td>";
-                    $retorno.="<td width='30%' id='destino'>" . $oficios[$i]->getDestino() . "</td>";
-                    $retorno.="<td width='10%' id='numeracao' align='center'>" . $oficios[$i]->getNumOficio() . "</td>";
-                    $retorno.="<td width='15%' id='data' align='center'>" . $oficios[$i]->getData() . "</td>";
-                    $retorno.="<td width='10%' id='validacao' align='center'>" . "Válido" . "</td>";
+                    $retorno.="<td hidden class='campoID'>" . fnEncrypt($oficios[$i]->getIdOficio()) . '</td>';
+                    //$retorno.="<td hidden class='campoID'>" . $oficios[$i]->getIdOficio() . '</td>';
+                    $retorno.="<td width='30%' class='assunto'>" . $oficios[$i]->getAssunto() . "</td>";
+                    $retorno.="<td width='30%' class='destino'>" . $oficios[$i]->getDestino() . "</td>";
+                    $retorno.="<td width='10%' class='numeracao' align='center'>" . $oficios[$i]->getNumOficio() . "</td>";
+                    $retorno.="<td  class='data' align='center'>" . $oficios[$i]->getData() . "</td>";
+                    $retorno.="<td  class='validacao' align='center'>" . "Válido" . "</td>";
                     $retorno.="</tr>";
                 }
             } else if (($oficios[$i]->getEstadoEdicao() != 0) && ($tipo == 'emAberto' || $tipo == 'todos')) {
                 if ($oficios[$i]->getIdUsuario() == $_SESSION['usuario']->get_id()) {
                     $retorno.="<tr tipo='".$tipo."' doc='oficio'>";
-                    $retorno.="<td hidden class='campoID'>" . $oficios[$i]->getIdOficio() . '</td>';
-                    $retorno.="<td width='30%' id='assunto'>" . $oficios[$i]->getAssunto() . "</td>";
-                    $retorno.="<td width='30%' id='destino'>" . $oficios[$i]->getDestino() . "</td>";
-                    $retorno.="<td width='10%' id='numeracao' align='center'>" . "Em aberto" . "</td>";
-                    $retorno.="<td width='15%' id='data' align='center'>" . $oficios[$i]->getData() . "</td>";
-                    $retorno.="<td width='10%' id='validacao' align='center'>" . "Válido" . "</td>";
+                    $retorno.="<td hidden class='campoID'>" . fnEncrypt($oficios[$i]->getIdOficio()) . '</td>';
+                    //$retorno.="<td hidden class='campoID'>" . $oficios[$i]->getIdOficio() . '</td>';
+                    $retorno.="<td  class='assunto'>" . $oficios[$i]->getAssunto() . "</td>";
+                    $retorno.="<td  class='destino'>" . $oficios[$i]->getDestino() . "</td>";
+                    $retorno.="<td  class='numeracao' align='center'>" . "Em aberto" . "</td>";
+                    $retorno.="<td  class='data' align='center'>" . $oficios[$i]->getData() . "</td>";
+                    $retorno.="<td  class='validacao' align='center'>" . "Válido" . "</td>";
                     $retorno.="</tr>";
                 }
             }
@@ -248,33 +267,35 @@ class ControladorDocumentos extends Controlador {
                 //se eh documento invalido
                 if ($oficios[$i]->getEstadoValidacao() == 0 && $tipo !='validos') {
                     $retorno.= "<tr tipo='".$tipo."' doc='memorando'>";
-                    $retorno.= "<td hidden class='campoID'>" . $oficios[$i]->getIdMemorando() . '</td>';
-                    $retorno.= "<td width='30%' id='assunto'>" . $oficios[$i]->getAssunto() . "</td>";
-                    $retorno.="<td width='30%' id='destino'>" . $oficios[$i]->getCargo_destino() . "</td>";
-                    $retorno.= "<td width='10%' id='numeracao' align='center'>" . $oficios[$i]->getNumMemorando() . "</td>";
-                    $retorno.= "<td width='15%' id='data' align='center'>" . $oficios[$i]->getData() . "</td>";
-                    $retorno.= "<td width='10%' id='validacao' align='center'>" . "Inválido" . "</td>";
+                    $retorno.= "<td hidden class='campoID'>" . fnEncrypt($oficios[$i]->getIdMemorando()) . '</td>';
+                    //$retorno.= "<td hidden class='campoID'>" . $oficios[$i]->getIdMemorando() . '</td>';
+                    $retorno.= "<td  class='assunto'>" . $oficios[$i]->getAssunto() . "</td>";
+                    $retorno.= "<td  class='destino'>" . $oficios[$i]->getCargo_destino() . "</td>";
+                    $retorno.= "<td  class='numeracao' align='center'>" . $oficios[$i]->getNumMemorando() . "</td>";
+                    $retorno.= "<td  class='data' align='center'>" . $oficios[$i]->getData() . "</td>";
+                    $retorno.= "<td  class='validacao' align='center'>" . "Inválido" . "</td>";
                     //se eh valido
                     $retorno.= '</tr>';
                 } else if ($oficios[$i]->getEstadoValidacao() != 0 && $tipo !='invalidos'){
                     $retorno.= "<tr tipo='".$tipo."' doc='memorando'>";
-                    $retorno.= "<td hidden class='campoID'>" . $oficios[$i]->getIdMemorando() . '</td>';
-                    $retorno.= "<td width='30%' id='assunto'>" . $oficios[$i]->getAssunto() . "</td>";
-                    $retorno.= "<td width='30%' id='destino'>" . $oficios[$i]->getCargo_destino() . "</td>";
-                    $retorno.= "<td width='10%' id='numeracao' align='center'>" . $oficios[$i]->getNumMemorando() . "</td>";
-                    $retorno.= "<td width='15%' id='data' align='center'>" . $oficios[$i]->getData() . "</td>";
-                    $retorno.= "<td width='10%' id='validacao' align='center'>" . "Válido" . "</td>";
+                    $retorno.= "<td hidden class='campoID'>" . fnEncrypt($oficios[$i]->getIdMemorando()) . '</td>';
+                    $retorno.= "<td  class='assunto'>" . $oficios[$i]->getAssunto() . "</td>";
+                    $retorno.= "<td  class='destino'>" . $oficios[$i]->getCargo_destino() . "</td>";
+                    $retorno.= "<td  class='numeracao' align='center'>" . $oficios[$i]->getNumMemorando() . "</td>";
+                    $retorno.= "<td  class='data' align='center'>" . $oficios[$i]->getData() . "</td>";
+                    $retorno.= "<td  class='validacao' align='center'>" . "Válido" . "</td>";
                     $retorno.= '</tr>';
                 }
             } else if (($oficios[$i]->getEstadoEdicao() != 0) && ($tipo =='emAberto' || $tipo== 'todos')) {
                 if ($oficios[$i]->getIdUsuario() == $_SESSION['usuario']->get_id()) {
                     $retorno.= "<tr tipo='".$tipo."' doc='memorando'>";
-                    $retorno.= "<td hidden class='campoID'>" . $oficios[$i]->getIdMemorando() . '</td>';
-                    $retorno.= "<td width='30%' id='assunto'>" . $oficios[$i]->getAssunto() . "</td>";
-                    $retorno.= "<td width='30%' id='destino'>" . $oficios[$i]->getCargo_destino() . "</td>";
-                    $retorno.= "<td width='10%' id='numeracao' align='center'>" . "Em aberto" . "</td>";
-                    $retorno.= "<td width='15%' id='data' align='center'>" . $oficios[$i]->getData() . "</td>";
-                    $retorno.= "<td width='10%' id='validacao' align='center'>" . "Válido" . "</td>";
+                    $retorno.= "<td hidden class='campoID'>" . fnEncrypt($oficios[$i]->getIdMemorando()) . '</td>';
+                    //$retorno.= "<td hidden class='campoID'>" . $oficios[$i]->getIdMemorando() . '</td>';
+                    $retorno.= "<td  class='assunto'>" . $oficios[$i]->getAssunto() . "</td>";
+                    $retorno.= "<td  class='destino'>" . $oficios[$i]->getCargo_destino() . "</td>";
+                    $retorno.= "<td  class='numeracao' align='center'>" . "Em aberto" . "</td>";
+                    $retorno.= "<td  class='data' align='center'>" . $oficios[$i]->getData() . "</td>";
+                    $retorno.= "<td  class='validacao' align='center'>" . "Válido" . "</td>";
                     $retorno.= '</tr>';
                 }
             }

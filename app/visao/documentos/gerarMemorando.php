@@ -20,7 +20,7 @@ $controlador = new ControladorDocumentos();
         if (acao == 'gerar') {
             $('#form1').attr("target", "_blank");
             $('#form1').attr({action: 'app/modelo/relatoriosPDF/gerarMemorando.php?booledit=0'});
-            var conf = confirm();
+            var conf = confirm('Atenção, o memorando será gerado e registrado permanentemente! Tem certeza?');
             if(conf){
                 capturaNumMemorando();
                 alert('Memorando gerado com sucesso.');
@@ -29,7 +29,7 @@ $controlador = new ControladorDocumentos();
             }
         } else {
             if (acao == 'salvar') {
-                var conf = confirm();
+                var conf = confirm('Atenção, o memorando será salvo! Tem certeza?');
                 if(conf){
                     salvar();
                     alert('Memorando salvo com sucesso.');
@@ -41,7 +41,7 @@ $controlador = new ControladorDocumentos();
     }
 
     function salvar(){
-        $.getJSON("publico/ajax/documentos/acoes.php?acao=salvarMemorando&booledit=0",
+        $.getJSON("app/visao/documentos/acoes.php?acao=salvarMemorando&booledit=0",
                         {assunto: $('#assunto').val(),
                             corpo: $('#corpo').val(),
                             dia: $("#dia").val(),
@@ -118,7 +118,7 @@ $controlador = new ControladorDocumentos();
     }
 
     function capturaNumMemorando() {
-        $.getJSON('app/modelo/valores.ajax.php', {valor: 2, ajax: 'true'}, function(j) {
+        $.getJSON('app/visao/documentos/valores.ajax.php', {valor: 2, ajax: 'true'}, function(j) {
             $('#i_numMemorando').val(j);
             $("#form1").submit();
             document.paginaAlterada = false;

@@ -31,7 +31,7 @@ if ($_GET['acao'] == "salvarOficio") {
     $numOficio = -1;  
     $booledit = $_GET['booledit'];
     if ($booledit == '1') {
-        $idoficio = $_REQUEST['i_idoficio'];
+        $idoficio = fnDecrypt($_REQUEST['i_idoficio']);
         $cont->atualizarOficio($idoficio, $assunto, $corpo, $tratamento, $destino, $cargo_destino, $data, $estadoEdicao, $tipoSigla, $referencia, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $numOficio);
     } else {
         $cont->salvarOficio($idusuario, $assunto, $corpo, $tratamento, $destino, $cargo_destino, $data, $estadoEdicao, $tipoSigla, $referencia, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $numOficio);
@@ -41,38 +41,27 @@ if ($_GET['acao'] == "salvarOficio") {
 }
 
 if ($_GET['acao'] == "invalidaroficio") {
-    $idoficio = $_REQUEST['i_idoficio'];
+    $idoficio = fnDecrypt($_REQUEST['i_idoficio']);
     $resp = $cont->invalidarOficio($idoficio);
     echo json_encode($resp);
 }
 
 if ($_GET['acao'] == "deletaroficio") {
-    $idoficio = $_REQUEST['i_idoficio'];
+    $idoficio = fnDecrypt($_REQUEST['i_idoficio']);
     $cont->deletarOficio($idoficio);
     echo json_encode('sucesso');
 }
 
-if ($_GET['acao'] == "aproveitaroficio") {
-    $idoficio = $_POST['i_idoficio'];
-    $controleAproveitar = $_POST['i_controleAproveitar'];
-    //header("Location: ../paginasAdm/aproveitarOficio.php?idoficio=" . $idoficio . "&ctrl=" . $controleAproveitar);
-}
-
-if ($_GET['acao'] == "invalidarMemorando") {
-    $idmemorando = $_POST['i_idMemorando'];
-    invalidarMemorando($idmemorando);
-}
-
-if ($_GET['acao'] == "deletarMemorando") {
-    $idmemorando = $_POST['i_idMemorando'];
-    $cont->deletarMemorando($idmemorando);
+if ($_GET['acao'] == "invalidarmemorando") {
+    $idmemorando = fnDecrypt($_REQUEST['i_idmemorando']);
+    $cont->invalidarMemorando($idmemorando);
     echo json_encode('sucesso');
 }
 
-if ($_GET['acao'] == "aproveitarMemorando") {
-    $idmemorando= $_POST['i_idMemorando'];    
-    $controleAproveitar = $_POST['i_controleAproveitarMem'];
-    //header("Location: ../paginasAdm/aproveitarMemorando.php?idmemorando=" . $idmemorando . "&ctrl=" . $controleAproveitar);
+if ($_GET['acao'] == "deletarmemorando") {
+    $idmemorando = fnDecrypt($_REQUEST['i_idmemorando']);
+    $cont->deletarMemorando($idmemorando);
+    echo json_encode('sucesso');
 }
 
 if ($_GET['acao'] == "salvarMemorando") {
@@ -98,7 +87,7 @@ if ($_GET['acao'] == "salvarMemorando") {
     $estadoEdicao = 1;
     $booledit = $_GET['booledit'];
     if ($booledit == '1') {        
-        $idmemorando = $_REQUEST['i_idmemorando'];
+        $idmemorando = fnDecrypt($_REQUEST['i_idmemorando']);
         $cont->atualizarMemorando($idmemorando, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao);
     } else {
         $cont->salvarMemorando($idusuario, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao);

@@ -1,7 +1,7 @@
 <?php
 $controlador = new ControladorDocumentos();
 
-$mem = documentoDAO::consultar('memorando', 'idMemorando = ' . $_GET['id']);
+$mem = documentoDAO::consultar('memorando', 'idMemorando = ' . fnDecrypt($_GET['id']));
 //consultar o mamorando desejado
 //para preencher os campos a serem editados
 ?>
@@ -30,7 +30,7 @@ $mem = documentoDAO::consultar('memorando', 'idMemorando = ' . $_GET['id']);
         if (acao == 'gerar') {
             $('#form1').attr("target", "_blank");
             $('#form1').attr({action: 'app/modelo/relatoriosPDF/gerarMemorando.php?booledit=1'});
-            var conf = confirm();
+            var conf = confirm('Atenção, o memorando será gerado e registrado permanentemente! Tem certeza?');
             if (conf) {
                 capturaNumMemorando();
                 alert('Memorando gerado com sucesso.');
@@ -39,7 +39,7 @@ $mem = documentoDAO::consultar('memorando', 'idMemorando = ' . $_GET['id']);
             }
         } else {
             if (acao == 'salvar') {
-                var conf = confirm();
+                var conf = confirm('Atenção, o ofício será salvo! Tem certeza?');
                 if (conf) {
                     salvar();
                     alert('Memorando salvo com sucesso.');
@@ -51,12 +51,8 @@ $mem = documentoDAO::consultar('memorando', 'idMemorando = ' . $_GET['id']);
     }
 
     function salvar() {
-//            $('#form1').attr("target", "_blank");
-//            $('#form1').attr({action: 'publico/ajax/documentos/acoes.php?acao=salvarMemorando&booledit=1'});
-//            $('#form1').submit();
-//            document.paginaAlterada = false;
-//            ajax('index.php?c=documentos&a=editarMemorando&id='+$('#i_idmemorando').val());
-        $.getJSON("publico/ajax/documentos/acoes.php?acao=salvarMemorando&booledit=1",
+
+        $.getJSON("app/visao/documentos/acoes.php?acao=salvarMemorando&booledit=1",
                 {assunto: $('#assunto').val(),
                     corpo: $('#corpo').val(),
                     dia: $("#dia").val(),
@@ -134,7 +130,7 @@ $mem = documentoDAO::consultar('memorando', 'idMemorando = ' . $_GET['id']);
     }
 
     function capturaNumMemorando() {
-        $.getJSON('app/modelo/valores.ajax.php', {valor: 2, ajax: 'true'}, function(j) {
+        $.getJSON('app/visao/documentos/valores.ajax.php', {valor: 2, ajax: 'true'}, function(j) {
             $('#i_numMemorando').val(j);
             $("#form1").submit();
             document.paginaAlterada = false;

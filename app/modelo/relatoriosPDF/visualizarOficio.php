@@ -7,10 +7,11 @@ require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/configuracoe
 require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/dompdf/dompdf_config.inc.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/app/modelo/dao/documentoDAO.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/seguranca/seguranca.php");
+require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
 //require_once '../seguranca.php';
 //-------------------
 //definindo variaveis
-$id = $_REQUEST['idv'];
+$id = fnDecrypt($_REQUEST['idv']);
 $oficio = documentoDAO::consultar('oficio','idOficio = '.$id);
 $numOficio = $oficio[0]->getNumOficio();
 $tipoSigla = $oficio[0]->getTipoSigla();

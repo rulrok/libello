@@ -1,10 +1,4 @@
-<?php
-$controlador = new ControladorDocumentos();
 
-$mem = documentoDAO::consultar('memorando', 'idMemorando = ' . $_GET['id']);
-//consultar o mamorando desejado
-//para preencher os campos a serem editados
-?>
 
 
 <script src="publico/js/jquery/jquery-te-1.0.5.min.js" type="text/javascript"></script>
@@ -51,12 +45,7 @@ $mem = documentoDAO::consultar('memorando', 'idMemorando = ' . $_GET['id']);
     }
 
     function salvar() {
-//            $('#form1').attr("target", "_blank");
-//            $('#form1').attr({action: 'publico/ajax/documentos/acoes.php?acao=salvarMemorando&booledit=1'});
-//            $('#form1').submit();
-//            document.paginaAlterada = false;
-//            ajax('index.php?c=documentos&a=editarMemorando&id='+$('#i_idmemorando').val());
-        $.getJSON("publico/ajax/documentos/acoes.php?acao=salvarMemorando&booledit=0",
+        $.getJSON("app/visao/documentos/acoes.php?acao=salvarMemorando&booledit=0",
                 {assunto: $('#assunto').val(),
                     corpo: $('#corpo').val(),
                     dia: $("#dia").val(),
@@ -134,7 +123,7 @@ $mem = documentoDAO::consultar('memorando', 'idMemorando = ' . $_GET['id']);
     }
 
     function capturaNumMemorando() {
-        $.getJSON('app/modelo/valores.ajax.php', {valor: 2, ajax: 'true'}, function(j) {
+        $.getJSON('app/visao/documentos/valores.ajax.php', {valor: 2, ajax: 'true'}, function(j) {
             $('#i_numMemorando').val(j);
             $("#form1").submit();
             document.paginaAlterada = false;
@@ -166,7 +155,13 @@ $mem = documentoDAO::consultar('memorando', 'idMemorando = ' . $_GET['id']);
             </td>
         </tr>
     </table>
-    <table style='width: 794px; height: 1123px; font-family:"Times New Roman",Georgia,Serif; font-size: 15px; background-color: #FFF;' border="0" align="center">
+    <table style='width: 794px; 
+           height: 1123px; 
+           font-family:"Times New Roman",Georgia,Serif; 
+           font-size: 15px; 
+           background-color: #FFF;' 
+           border="0" 
+           align="center">
         <tr height="189">
             <td width="113" rowspan="20"></td>
             <td width="625" align="center">
@@ -187,31 +182,56 @@ $mem = documentoDAO::consultar('memorando', 'idMemorando = ' . $_GET['id']);
         </tr>
         <tr height="30">
             <td align="right">
-                Em <?php $controlador->comboDia(); ?> de <?php $controlador->comboMes(); ?> de <?php echo date("Y"); ?>
+                Em <?php $this->controlador->comboDia(); ?> de <?php $this->controlador->comboMes(); ?> de <?php echo date("Y"); ?>
             </td>
         </tr>
         <tr height="40"><td></td></tr>
         <tr height="10">
             <td>
-                <input type="text" id="tratamento" value="<?php echo $mem[0]->getTratamento(); ?>" name="tratamento" onkeyup="liberarCadastro()" size="15"/><span class="classeExemploOficio"> Ex: Ao Sr.</span>
+                <input type="text" 
+                       id="tratamento" 
+                       value="<?php echo $this->memorando->getTratamento(); ?>" 
+                       name="tratamento" 
+                       onkeyup="liberarCadastro()" 
+                       size="15"/>
+                <span class="classeExemploOficio"> Ex: Ao Sr.</span>
             </td>
         </tr>                                
         <tr height="10">
             <td>
-                <input type="text" id="cargo_destino" name="cargo_destino" onkeyup="liberarCadastro()" value="<?php echo $mem[0]->getCargo_destino(); ?>" size="40"/><span class="classeExemploOficio"> Ex: Chefe do departamento de Administração</span>
+                <input type="text"
+                       id="cargo_destino"
+                       name="cargo_destino"
+                       onkeyup="liberarCadastro()"
+                       value="<?php echo $this->memorando->getCargo_destino(); ?>"
+                       size="40"/>
+                <span class="classeExemploOficio"> Ex: Chefe do departamento de Administração</span>
             </td>
         </tr>
         <tr height="40"><td></td></tr>
         <tr height="30">
             <td>
-                Assunto: <input type="text" id="assunto" name="assunto" onkeyup="liberarCadastro()" value="<?php echo $mem[0]->getAssunto(); ?>" size="50"/><span class="classeExemploOficio"> Ex: Administração. Instalação de microcomputadores </span>
+                Assunto: <input type="text" 
+                                id="assunto"
+                                name="assunto"
+                                onkeyup="liberarCadastro()"
+                                value="<?php echo $this->memorando->getAssunto(); ?>"
+                                size="50"/>
+                <span class="classeExemploOficio"> Ex: Administração. Instalação de microcomputadores </span>
             </td>
         </tr>
         <tr height="40"><td></td></tr>
         <tr height="30">
             <td align="left">
                 <div align="">
-                    <textarea style="max-height: 500px;min-height: 200px;max-width: 625px;min-width: 625px" id="corpo" name="corpo" onkeyup="liberarCadastro()" value="<?php $mem[0]->getCorpo(); ?>">Corpo do Memorando</textarea>
+                    <textarea style="max-height: 500px;
+                                    min-height: 200px;
+                                    max-width: 625px;
+                                    min-width: 625px"
+                              id="corpo"
+                              name="corpo"
+                              onkeyup="liberarCadastro()"
+                              value="<?php $this->memorando->getCorpo(); ?>">Corpo do Memorando</textarea>
                 </div>
             </td>
         </tr>
@@ -233,15 +253,34 @@ $mem = documentoDAO::consultar('memorando', 'idMemorando = ' . $_GET['id']);
                         </tr>
                         <tr height="20">
                             <td align="center">
-                                <input type="text" id="remetente" name="remetente" onkeyup="liberarCadastro()" value="<?php echo $mem[0]->getRemetente(); ?>" size="50" style="margin-left: 125px"/><span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>
+                                <input type="text"
+                                       id="remetente"
+                                       name="remetente"
+                                       onkeyup="liberarCadastro()"
+                                       value="<?php echo $this->memorando->getRemetente(); ?>"
+                                       size="50" 
+                                       style="margin-left: 125px"/>
+                                <span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>
                             </td>
                         </tr>
                         <tr height="20">
                             <td align="center">
-                                <input type="text" id="cargo_remetente" name="cargo_remetente" onkeyup="liberarCadastro()" value="<?php echo $mem[0]->getCargo_remetente();?>" size="25" style="margin-left: 110px"/><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
+                                <input type="text"
+                                       id="cargo_remetente"
+                                       name="cargo_remetente" 
+                                       onkeyup="liberarCadastro()" 
+                                       value="<?php echo $this->memorando->getCargo_remetente();?>" 
+                                       size="25" 
+                                       style="margin-left: 110px"/>
+                                <span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
                             </td>
                             <td>
-                                <a id="add_rem" title="Adicionar Remetente" href="javascript:void(0);" value="" onclick="adicionarRemetente();" class="btn" >
+                                <a id="add_rem" 
+                                   title="Adicionar Remetente" 
+                                   href="javascript:void(0);" 
+                                   value="" 
+                                   onclick="adicionarRemetente();" 
+                                   class="btn" >
                                     <i class="icon-plus"></i>
                                 </a>
                             </td>
@@ -258,15 +297,33 @@ $mem = documentoDAO::consultar('memorando', 'idMemorando = ' . $_GET['id']);
                         </tr>
                         <tr height="20">
                             <td align="center">
-                                <input type="text" id="remetente2" name="remetente2" onkeyup="liberarCadastro()" value="<?php echo $mem[0]->getRemetente2(); ?>" size="50" style="margin-left: 125px"/><span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>
+                                <input type="text"
+                                       id="remetente2" 
+                                       name="remetente2" 
+                                       onkeyup="liberarCadastro()" 
+                                       value="<?php echo $this->memorando->getRemetente2(); ?>" 
+                                       size="50" 
+                                       style="margin-left: 125px"/>
+                                <span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>
                             </td>
                         </tr>
                         <tr height="20">
                             <td align="center">
-                                <input type="text" id="cargo_remetente2" name="cargo_remetente2" onkeyup="liberarCadastro()" value="<?php echo $mem[0]->getCargo_remetente2(); ?>" size="25" style="margin-left: 110px"/><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
+                                <input type="text" 
+                                       id="cargo_remetente2" 
+                                       name="cargo_remetente2" 
+                                       onkeyup="liberarCadastro()" 
+                                       value="<?php echo $this->memorando->getCargo_remetente2(); ?>" 
+                                       size="25" 
+                                       style="margin-left: 110px"/>
+                                <span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
                             </td>
                             <td>
-                                <a title="Remover Remetente" href="javascript:void(0);" value="" onclick="removerRemetente();" class="btn" >
+                                <a title="Remover Remetente"
+                                   href="javascript:void(0);" 
+                                   value="" 
+                                   onclick="removerRemetente();" 
+                                   class="btn" >
                                     <i class="icon-minus"></i>
                                 </a>
                             </td>
@@ -280,8 +337,20 @@ $mem = documentoDAO::consultar('memorando', 'idMemorando = ' . $_GET['id']);
         <tr height="30"><td></td></tr>
         <tr>
             <td align="center" colspan="2">
-                <input class="btn" type="button" value="Gerar" disabled="true" name="b_gerar" id="b_gerar" onclick="confirmaAcao('gerar');"/>
-                <input class="btn" type="button" value="Salvar" disabled="true" name="b_salvar" id="b_salvar" onclick="confirmaAcao('salvar');"/>
+                <input class="btn"
+                       type="button" 
+                       value="Gerar" 
+                       disabled="true" 
+                       name="b_gerar" 
+                       id="b_gerar" 
+                       onclick="confirmaAcao('gerar');"/>
+                <input class="btn" 
+                       type="button" 
+                       value="Salvar" 
+                       disabled="true" 
+                       name="b_salvar" 
+                       id="b_salvar" 
+                       onclick="confirmaAcao('salvar');"/>
 <!--                                        <input class="btn" type="button" value="Voltar" name="b_voltar" id="b_voltar" onclick=""/>-->
             </td>
         </tr>
@@ -290,7 +359,7 @@ $mem = documentoDAO::consultar('memorando', 'idMemorando = ' . $_GET['id']);
             <td>
                 <input type="hidden" name="i_numMemorando" id="i_numMemorando"/>
                 <input type="hidden" name="i_remetente" id="i_remetente" value="0"/>
-                <input type="hidden" name="i_sigla" id="i_sigla" value="<?php echo($mem[0]->getSigla()); ?>"/>
+                <input type="hidden" name="i_sigla" id="i_sigla" value="<?php echo($this->memorando->getSigla()); ?>"/>
             </td>
         </tr>
         <tr height="30"><td></td></tr>
