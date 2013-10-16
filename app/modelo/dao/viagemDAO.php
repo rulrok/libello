@@ -5,6 +5,24 @@ require_once APP_LOCATION . 'modelo/vo/Viagem.php';
 
 class viagemDAO extends abstractDAO {
 
+        /**
+     * Retorna a lista com todos as viagens, com base nas colunas especificadas e nas condições de seleção.
+     * @param String $colunas Colunas a serem retornadas, por padrão, retorna
+     * @param String $condicao A string que precede WHERE na cláusula SQL. Não é necessário escrever a palavra WHERE.
+     * @return Array A tabela com o resultado da consulta.
+     */
+    public static function consultar($colunas = "*", $condicao = null) {
+
+        if ($condicao == null) {
+            $condicao = "";
+        } else {
+            $condicao = "WHERE " . $condicao;
+        }
+        $sql = "SELECT " . $colunas . " FROM `viagem` AS `v` NATURAL LEFT JOIN `polo` AS `p` NATURAL JOIN `curso` AS `c` JOIN `usuario` AS `u` ON `u`.`idUsuario` = `responsavel` " . $condicao;
+        $resultado = parent::getConexao()->query($sql)->fetchAll();
+        return $resultado;
+    }
+    
     public static function inserir(Viagem $valueObject) {
         $s = "','";
         $idCurso = $valueObject->get_idCurso();

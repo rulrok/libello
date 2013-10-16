@@ -34,7 +34,7 @@ class ControladorCursospolos extends Controlador {
     }
 
     public function acaoGerenciarcursos() {
-        $this->visao->cursos = cursoDAO::consultar("idCurso,nome,nomeArea,nomeTipoCurso");
+        $this->visao->cursos = cursoDAO::consultar("idCurso,nomeCurso,nomeArea,nomeTipoCurso");
         $i = 0;
         foreach ($this->visao->cursos as $value) {
             $value[0] = fnEncrypt($value[0]);

@@ -90,6 +90,7 @@ class Mvc {
                     throw new Exception('Controlador nao existente.');
                 }
             } catch (Exception $e) {
+                print_r($e);
                 $_GET['c'] = "Inicial";
                 $_GET['a'] = "404";
                 $this->rodar();

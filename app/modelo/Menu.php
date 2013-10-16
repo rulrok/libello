@@ -282,7 +282,7 @@ class Menu {
         } else {
             $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
             for ($i = 0; $i < sizeof($cursos); $i++) {
-                $codigo .= "<option value=\"" . fnEncrypt($cursos[$i]['idCurso']) . "\">" . $cursos[$i]['nome'] . "</option>\n";
+                $codigo .= "<option value=\"" . fnEncrypt($cursos[$i]['idCurso']) . "\">" . $cursos[$i]['nomeCurso'] . "</option>\n";
             }
         }
         $codigo .= "</select>\n";
