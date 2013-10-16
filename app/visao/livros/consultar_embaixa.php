@@ -2,8 +2,10 @@
 <table id="consulta-livro_embaixa" class="tabelaDeSelecao">
     <thead>
         <tr>
-            <th>Nome</th>
-            <th>Qtd Baixa</th>
+            <th>Livro</th>
+            <th>Gráfica</th>
+            <th>Área</th>
+            <th>Qtd</th>
             <th>Data da baixa</th>
             <th>Patrimônio</th>
             <th>Obs</th>

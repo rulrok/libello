@@ -1,10 +1,10 @@
 <?php
 
 include APP_LOCATION . "modelo/Mensagem.php";
-require_once APP_LOCATION . "modelo/vo/livro.php";
+require_once APP_LOCATION . "modelo/vo/Livro.php";
 include APP_LOCATION . "visao/verificadorFormularioAjax.php";
 
-class verificarnovo extends verificadorFormularioAjax {
+class verificarnovolivro extends verificadorFormularioAjax {
 
     public function _validar() {
         $nomelivro = $_POST['livro'];
@@ -12,6 +12,8 @@ class verificarnovo extends verificadorFormularioAjax {
         $dataEntrada = $_POST['dataEntrada'];
         $quantidade = $_POST['quantidade'];
         $tipo = $_POST['tipo'];
+        $grafica = $_POST['grafica'];
+        $area = $_POST['area'];
         $numeroPatrimonio;
 
         //Vai validar os dados
@@ -28,10 +30,9 @@ class verificarnovo extends verificadorFormularioAjax {
                 $patrimoniosValidos = 'Patrimônios ';
                 $patrimoniosInvalidos = '';
                 for ($i = 0; $i < $quantidade; $i++) {
-                    //TODO Verificar uma forma
                     $aux = clone $livro;
                     $numeroPatrimonio = $_POST['numeroPatrimonio-' . ($i + 1)];
-                    $colecaolivros[$i] = $aux->set_numeroPatrimonio($numeroPatrimonio)->set_quantidade(1);
+                    /*$colecaolivros[$i] = */$aux->set_numeroPatrimonio($numeroPatrimonio)->set_quantidade(1)->set_grafica($grafica)->set_area($area);
                     try {
                         $id = livroDAO::cadastrarlivro($aux);
                         livroDAO::registrarInsercaolivro($id);
@@ -52,6 +53,8 @@ class verificarnovo extends verificadorFormularioAjax {
                     //É do tipo custeio
                     $livro->set_quantidade($quantidade);
                     $livro->set_numeroPatrimonio(null);
+                    $livro->set_grafica($grafica);
+                    $livro->set_area($area);
                     //Vai tentar cadastrar
                     try {
                         $id = livroDAO::cadastrarlivro($livro);
@@ -73,6 +76,6 @@ class verificarnovo extends verificadorFormularioAjax {
 
 }
 
-$verificar = new verificarnovo();
+$verificar = new verificarnovolivro();
 $verificar->verificar();
 ?>

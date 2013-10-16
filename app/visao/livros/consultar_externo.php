@@ -2,7 +2,9 @@
 <table id="consulta-livro_foracead" class="tabelaDeSelecao">
     <thead>
         <tr>
-            <th>Nome</th>
+            <th>Livro</th>
+            <th>Gráfica</th>
+            <th>Área</th>
             <th>Qtd</th>
             <th>Data de entrada</th>
             <th>Patrimônio</th>

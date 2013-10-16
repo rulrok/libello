@@ -147,6 +147,7 @@
 
                                 $("input[id^=numeroPatrimonio]").prop("required", true);
                                 $("input[id^=numeroPatrimonio]").prop("readonly", false);
+                                $(".patrimonios").prop("hidden", false);
                                 $(".patrimonios").removeClass("hidden");
                                 $(".custeio").addClass("hidden");
                                 $(".custeio input").prop("required", false);

@@ -13,7 +13,8 @@ class Livro {
     var $descricao;
     var $dataEntrada;
     var $numeroPatrimonio;
-    
+    var $area;
+    var $grafica;
 
     public function get_idLivro() {
         return (int) $this->idLivro;
@@ -83,6 +84,24 @@ class Livro {
         } else {
             $this->numeroPatrimonio = $numeroPatrimonio;
         }
+        return $this;
+    }
+
+    public function get_area() {
+        return (int) $this->area;
+    }
+
+    public function set_area($area) {
+        $this->area = (int) $area;
+        return $this;
+    }
+
+    public function get_grafica() {
+        return $this->grafica;
+    }
+
+    public function set_grafica($grafica) {
+        $this->grafica = $grafica;
         return $this;
     }
 

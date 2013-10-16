@@ -7,7 +7,7 @@ require_once APP_LOCATION . 'modelo/enumeracao/TipoEventoLivro.php';
 class livroDAO extends abstractDAO {
 
     public static function cadastrarLivro(Livro $livro) {
-        $sql = "INSERT INTO livro(nomeLivro,quantidade,descricao,dataEntrada,numeroPatrimonio) VALUES ";
+        $sql = "INSERT INTO livro(nomeLivro,quantidade,descricao,dataEntrada,numeroPatrimonio,area,grafica) VALUES ";
         $nome = parent::quote($livro->get_nomeLivro());
         $quantidade = $livro->get_quantidade();
 
@@ -26,15 +26,29 @@ class livroDAO extends abstractDAO {
         }
         $descricao = parent::quote($descricao);
 
+        $grafica = $livro->get_grafica();
+        if ($grafica === "" | $grafica === null) {
+            $grafica = "NULL";
+        }
+        $grafica = parent::quote($grafica);
 
-        $values = "($nome,$quantidade,$descricao,$dataEntrada,$numeroPatrimonio)";
+        $area = $livro->get_area();
+        if ($area === "" | $area === null) {
+            $area = "NULL";
+        }
+//        $area = parent::quote($area);
+
+
+        $values = "($nome,$quantidade,$descricao,$dataEntrada,$numeroPatrimonio,$area,$grafica)";
         try {
+            echo $sql . $values;
             $stmt = parent::getConexao()->prepare($sql . $values);
             $stmt->execute();
             $id = parent::getConexao()->lastInsertId();
             return $id;
 //            print_r($id);
         } catch (Exception $e) {
+            print_r($e);
             throw new Exception("Erro");
         }
     }
@@ -52,7 +66,7 @@ class livroDAO extends abstractDAO {
         } else {
             $condicao = "WHERE " . $condicao . " AND quantidade > 0";
         }
-        $sql = "SELECT " . $colunas . " FROM livro " . $condicao;
+        $sql = "SELECT " . $colunas . " FROM livro JOIN area ON area = idArea " . $condicao;
         $resultado = parent::getConexao()->query($sql)->fetchAll();
         return $resultado;
     }
@@ -118,7 +132,7 @@ class livroDAO extends abstractDAO {
         } else {
             $condicao = "WHERE " . $condicao . " AND quantidadeSaida > 0";
         }
-        $sql = "SELECT " . $colunas . " FROM `livro_saida` AS `ls` JOIN `livro` AS `l` ON `ls`.`livro` = `l`.idLivro JOIN `usuario` AS `u` ON `ls`.`responsavel` = `u`.`idUsuario` LEFT JOIN `polo` AS `p` ON `ls`.`poloDestino` = `p`.`idPolo` " . $condicao;
+        $sql = "SELECT " . $colunas . " FROM `livro_saida` AS `ls` JOIN `livro` AS `l` ON `ls`.`livro` = `l`.idLivro JOIN `usuario` AS `u` ON `ls`.`responsavel` = `u`.`idUsuario` LEFT JOIN `polo` AS `p` ON `ls`.`poloDestino` = `p`.`idPolo` JOIN `area` AS `a` ON `l`.`area` = `a`.`idArea` " . $condicao;
         try {
             $resultado = parent::getConexao()->query($sql)->fetchAll();
         } catch (Exception $e) {
@@ -134,7 +148,7 @@ class livroDAO extends abstractDAO {
         } else {
             $condicao = "WHERE " . $condicao;
         }
-        $sql = "SELECT " . $colunas . " FROM `livro_baixa` AS `lb` JOIN `livro` AS `l` ON `lb`.`livro` = `l`.idLivro" . $condicao;
+        $sql = "SELECT " . $colunas . " FROM `livro_baixa` AS `lb` JOIN `livro` AS `l` ON `lb`.`livro` = `l`.`idLivro` JOIN `area` AS `a` ON `l`.`area` = `a`.`idArea`" . $condicao;
         try {
             $resultado = parent::getConexao()->query($sql)->fetchAll();
         } catch (Exception $e) {
@@ -179,7 +193,17 @@ class livroDAO extends abstractDAO {
         $descricao = $novosDados->get_descricao();
         $descricao = parent::quote($descricao);
 
-        $sql = "UPDATE livro SET nomeLivro = '" . $nome . "' ,quantidade = " . $quantidade . " ,dataEntrada = '" . $dataEntrada . "' ,numeroPatrimonio = " . $numeroPatrimonio . " ,descricao=" . $descricao;
+        $grafica = $novosDados->get_grafica();
+        if ($grafica == null) {
+            $grafica = $dadosAntigos->get_grafica();
+        }
+
+        $area = $novosDados->get_area();
+        if ($area === null) {
+            $area = $dadosAntigos->get_area();
+        }
+
+        $sql = "UPDATE livro SET nomeLivro = '" . $nome . "' ,quantidade = " . $quantidade . " ,dataEntrada = '" . $dataEntrada . "' ,numeroPatrimonio = " . $numeroPatrimonio . " ,descricao=" . $descricao . ", grafica='" . $grafica . "', area=" . $area;
         $sql .= $condicao;
         try {
             $stmt = parent::getConexao()->prepare($sql);
@@ -212,7 +236,7 @@ class livroDAO extends abstractDAO {
         $destino = $destino;
         $data = parent::quote($data);
         $destinoAlternativo = parent::quote($destinoAlternativo);
-        $sql = "INSERT INTO livro_saida(livro,responsavel,destino,quantidadeSaida,quantidadeSaidaOriginal,dataSaida,PoloDestino) VALUES " .
+        $sql = "INSERT INTO livro_saida(livro,responsavel,destino,quantidadeSaida,quantidadeSaidaOriginal,dataSaida,poloDestino) VALUES " .
                 "($idLivro,$idResponsavel,$destinoAlternativo,$quantidade,$quantidade,$data,$destino)";
 
         try {
@@ -221,7 +245,7 @@ class livroDAO extends abstractDAO {
             livroDAO::registrarCadastroSaida($id);
             return true;
         } catch (Exception $e) {
-            print_r($e);
+            print_r($e . $sql);
             return false;
         }
     }
@@ -399,7 +423,7 @@ class livroDAO extends abstractDAO {
             return false;
         }
     }
-    
+
     public static function registrarCadastroSaida($idSaida) {
         $quote = "\"";
         $tipo = TipoEventoLivro::CADASTRO_SAIDA;
@@ -416,6 +440,7 @@ class livroDAO extends abstractDAO {
             return false;
         }
     }
+
     public static function registrarRemocaoSaida($idSaida) {
         $quote = "\"";
         $tipo = TipoEventoLivro::REMOCAO_SAIDA;
@@ -432,7 +457,7 @@ class livroDAO extends abstractDAO {
             return false;
         }
     }
-    
+
     public static function registrarRetorno($idRetorno) {
         $quote = "\"";
         $tipo = TipoEventoLivro::CADASTRO_RETORNO;

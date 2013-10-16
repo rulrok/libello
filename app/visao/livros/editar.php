@@ -5,8 +5,12 @@
         <legend>Alterar dados do livro</legend>
         <input hidden="true" readonly="true" type="text" class="input-small" id="livroID" name="livroID" value="<?php echo $this->livroID ?>" />
         <span class="line">
-            <label>Livro</label>
+            <label>Nome do Livro</label>
             <input required type="text" class="input-xlarge" id="livro" name="livro" value="<?php echo $this->livro ?>" />
+        </span>
+        <span class="line">
+            <label for="grafica">Nome da Gráfica</label>
+            <input required type="text" class="input-xlarge" id="grafica" name="grafica" value="<?php echo $this->grafica ?>" />
         </span>
         <div class="line">
             <label for="descricao">Descrições</label>
@@ -14,8 +18,12 @@
             <div id="chars">1000</div>
         </div>
         <div class="line">
-            <label>Data de entrada</label>
+            <label for="dataEntrada">Data de entrada</label>
             <input type="text" readonly id="dataEntrada" class="campoData" name="dataEntrada" value="<?php echo $this->dataEntrada ?>"/>
+        </div>
+        <div class="line">
+            <label for="area">Área</label>
+            <?php echo $this->comboBoxAreas; ?>
         </div>
         <hr/>
         <?php if ($this->livroEditavel): ?>
@@ -76,6 +84,10 @@
     $(document).ready(function() {
         var elem = $("#chars");
         $("#descricao").limiter(1000, elem);
+        var area;
+        //Gambiarra master
+        area = <?php echo "'" . $this->area . "'"; ?>;
+        $("#area").val(area);
         varrerCampos();
         formularioAjax();
         $("#dataEntrada").datepick();
@@ -134,6 +146,8 @@
             $("#custeio").unbind("click");
             $("#patrimonio").unbind("click");
         }
+
+
 
     });
 </script>

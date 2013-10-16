@@ -4,6 +4,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/biblioteca/Mvc/Controla
 require_once APP_LOCATION . "modelo/ComboBoxPapeis.php";
 require_once APP_LOCATION . "modelo/ComboBoxUsuarios.php";
 include_once APP_LOCATION . 'modelo/ComboBoxPolo.php';
+include_once APP_LOCATION . 'modelo/ComboBoxAreas.php';
 require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
 
 class ControladorLivros extends Controlador {
@@ -12,6 +13,7 @@ class ControladorLivros extends Controlador {
 
     public function acaoNovo() {
 
+        $this->visao->comboBoxAreas = ComboBoxAreas::montarTodasAsAreas();
         $this->renderizar();
     }
 
@@ -25,22 +27,22 @@ class ControladorLivros extends Controlador {
     }
 
     public function acaoConsultar_interno() {
-        $this->visao->livrosInternos = livroDAO::consultar("nomelivro,quantidade,dataEntrada,numeroPatrimonio");
+        $this->visao->livrosInternos = livroDAO::consultar("nomelivro,grafica,nomeArea,quantidade,dataEntrada,numeroPatrimonio");
         $this->renderizar();
     }
 
     public function acaoConsultar_externo() {
-        $this->visao->livrosExternos = livroDAO::consultarSaidas("nomelivro,quantidadeSaida,dataEntrada,numeroPatrimonio");
+        $this->visao->livrosExternos = livroDAO::consultarSaidas("nomelivro,grafica,nomeArea,quantidadeSaida,dataEntrada,numeroPatrimonio");
         $this->renderizar();
     }
 
     public function acaoConsultar_embaixa() {
-        $this->visao->livrosBaixa = livroDAO::consultarBaixas("nomelivro,quantidadeBaixa,dataBaixa,numeroPatrimonio,observacoes");
+        $this->visao->livrosBaixa = livroDAO::consultarBaixas("nomelivro,grafica,nomeArea,quantidadeBaixa,dataBaixa,numeroPatrimonio,observacoes");
         $this->renderizar();
     }
 
     public function acaoGerenciar() {
-        $this->visao->livros = livroDAO::consultar("idlivro,nomelivro,quantidade,dataEntrada,numeroPatrimonio,descricao");
+        $this->visao->livros = livroDAO::consultar("idLivro,nomelivro,grafica,nomeArea,quantidade,dataEntrada,numeroPatrimonio,descricao");
         $i = 0;
         foreach ($this->visao->livros as $value) {
             $value[0] = fnEncrypt($value[0]);
@@ -55,12 +57,15 @@ class ControladorLivros extends Controlador {
             $this->visao->livroEditavel = livroDAO::livroPodeTerTipoAlterado($idlivro);
             $this->visao->livroID = $_REQUEST['livroID'];
             $livro = livroDAO::recuperarlivro($idlivro);
+            $this->visao->comboBoxAreas = ComboBoxAreas::montarTodasAsAreas();
 
             $this->visao->descricao = $livro->get_descricao();
             $this->visao->livro = $livro->get_nomelivro();
             $this->visao->quantidade = $livro->get_quantidade();
             $this->visao->dataEntrada = $livro->get_dataEntrada();
             $this->visao->numeroPatrimonio = $livro->get_numeroPatrimonio();
+            $this->visao->grafica = $livro->get_grafica();
+            $this->visao->area = $livro->get_area();
         } else {
             die("Acesso indevido");
         }
@@ -124,7 +129,7 @@ class ControladorLivros extends Controlador {
         if (isset($_GET['livroID'])) {
             $this->visao->comboboxPapeis = ComboBoxPapeis::montarComboBoxPadrao();
             $this->visao->livro = livroDAO::recuperarlivro(fnDecrypt($_GET['livroID']));
-            $this->visao->livroID = fnEncrypt($this->visao->livro->get_idlivro());
+            $this->visao->livroID = fnEncrypt($this->visao->livro->get_idLivro());
             $this->visao->responsavel = ComboBoxUsuarios::montarResponsavelViagem();
             $this->visao->polos = ComboBoxPolo::montarTodosOsPolos();
             $this->renderizar();
@@ -202,6 +207,9 @@ class ControladorLivros extends Controlador {
         $this->renderizar();
     }
 
+    public function acaoRelatorios(){
+        $this->renderizar();
+    }
 }
 
 ?>

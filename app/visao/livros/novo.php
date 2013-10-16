@@ -3,9 +3,14 @@
 <form class="table centered" id="ajaxForm" method="post" action="index.php?c=livros&a=verificarnovo">
     <fieldset>
         <legend>Registro de novo livro</legend>
+
         <span class="line">
-            <label>Livro</label>
-            <input required type="text" class="input-xlarge" id="livro" name="livro" title="livro" data-content="O nome do livro apenas" />
+            <label>Nome do Livro</label>
+            <input required type="text" class="input-xlarge" id="livro" name="livro" title="Livro" data-content="O nome do livro apenas" />
+        </span>
+        <span class="line">
+            <label for="grafica">Nome da Gráfica</label>
+            <input required type="text" class="input-xlarge" id="grafica" name="grafica" />
         </span>
         <div class="line">
             <label for="descricoes">Descrições</label>
@@ -13,8 +18,12 @@
             <div id="chars">1000</div>
         </div>
         <div class="line">
-            <label>Data de entrada</label>
+            <label for="dataEntrada">Data de entrada</label>
             <input type="text" readonly id="dataEntrada" class="campoData" name="dataEntrada" />
+        </div>
+        <div class="line">
+            <label for="area">Área</label>
+            <?php echo $this->comboBoxAreas; ?>
         </div>
         <hr/>
         <div class="line">
@@ -131,7 +140,7 @@
                                 $(".custeio").removeClass("hidden");
                                 $(".custeio input").prop("required", true);
                                 $(".patrimonios input").prop("required", false);
-                                $("input[id^=numeroPatrimonio]").removeClass("campoErrado")
+                                $("input[id^=numeroPatrimonio]").removeClass("campoErrado");
 //                                $(".obrigatorio").remove(); //remove a imagem do asterisco de todos os campos
 
                                 $("#radioCusteio").click();
@@ -147,6 +156,7 @@
 
                                 $("input[id^=numeroPatrimonio]").prop("required", true);
                                 $("input[id^=numeroPatrimonio]").prop("readonly", false);
+                                $(".patrimonios").prop("hidden", false);
                                 $(".patrimonios").removeClass("hidden");
                                 $(".custeio").addClass("hidden");
                                 $(".custeio input").prop("required", false);

@@ -14,9 +14,11 @@
     <thead>
         <tr>
             <th hidden>id</th>
-            <th>Nome</th>
+            <th>Livro</th>
+            <th>Gráfica</th>
+            <th>Área</th>
             <th>Qtd</th>
-            <th>Data de entrada</th>
+            <th>Entrada</th>
             <th>Patrimônio</th>
             <th hidden>Descrição</th>
         </tr>
@@ -28,7 +30,7 @@
             for ($i = 0; $i < sizeof($value) / 2; $i++) {
                 if ($i == 0) {
                     echo '<td hidden class="campoID">';
-                } else if ($i == 5) {
+                } else if ($i == 7) {
                     echo '<td hidden>';
                     if ($value[$i] == "") {
                         echo "Nenhuma</td>";
@@ -65,7 +67,7 @@
             saida: '#!livros|novasaida&livroID=',
             baixa: "#!livros|novabaixa&livroID=",
             detalhes: true,
-            detalhesIndice: "6",
+            detalhesIndice: "8",
             defs: {
                 "aoColumnDefs": [
                     {"bSortable": false, "aTargets": [0, 1]},

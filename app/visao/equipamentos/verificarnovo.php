@@ -4,7 +4,7 @@ include APP_LOCATION . "modelo/Mensagem.php";
 require_once APP_LOCATION . "modelo/vo/Equipamento.php";
 include APP_LOCATION . "visao/verificadorFormularioAjax.php";
 
-class verificarnovo extends verificadorFormularioAjax {
+class verificarnovoequipamento extends verificadorFormularioAjax {
 
     public function _validar() {
         $nomeEquipamento = $_POST['equipamento'];
@@ -31,7 +31,7 @@ class verificarnovo extends verificadorFormularioAjax {
                     //TODO Verificar uma forma
                     $aux = clone $equipamento;
                     $numeroPatrimonio = $_POST['numeroPatrimonio-' . ($i + 1)];
-                    $colecaoEquipamentos[$i] = $aux->set_numeroPatrimonio($numeroPatrimonio)->set_quantidade(1);
+                    /* $colecaoLivros[$i] = */$aux->set_numeroPatrimonio($numeroPatrimonio)->set_quantidade(1);
                     try {
                         $id = equipamentoDAO::cadastrarEquipamento($aux);
                         equipamentoDAO::registrarInsercaoEquipamento($id);
@@ -73,6 +73,6 @@ class verificarnovo extends verificadorFormularioAjax {
 
 }
 
-$verificar = new verificarnovo();
+$verificar = new verificarnovoequipamento();
 $verificar->verificar();
 ?>

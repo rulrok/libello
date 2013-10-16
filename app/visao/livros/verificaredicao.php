@@ -16,12 +16,14 @@ class verificarEdicao extends verificadorFormularioAjax {
             $descricao = $_POST['descricao'];
             $numeroPatrimonio = $_POST['numeroPatrimonio'];
             $tipolivro = $_POST['tipo'];
+            $grafica = $_POST['grafica'];
+            $area = $_POST['area'];
 
             if ($livroNome != "") {
                 $livro = livroDAO::recuperarlivro($livroID);
 
                 $numPatrimonio = $livro->get_numeroPatrimonio();
-                
+
 //                $this->mensagem->set_mensagem(print_r($livro,true));
 //                return;
                 if ($tipolivro === "custeio") {
@@ -40,7 +42,7 @@ class verificarEdicao extends verificadorFormularioAjax {
                     $quantidade = 1;
                 }
                 if ($quantidade > 0) {
-                    $livro->set_nomelivro($livroNome)->set_dataEntrada($dataEntrada)->set_numeroPatrimonio($numeroPatrimonio)->set_quantidade($quantidade)->set_descricao($descricao);
+                    $livro->set_nomelivro($livroNome)->set_dataEntrada($dataEntrada)->set_numeroPatrimonio($numeroPatrimonio)->set_quantidade($quantidade)->set_descricao($descricao)->set_grafica($grafica)->set_area($area);
 
                     if (livroDAO::atualizar($livroID, $livro)) {
                         livroDAO::registrarAlteracaolivro($livroID);
