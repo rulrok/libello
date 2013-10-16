@@ -9,7 +9,7 @@ require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
 
 //-------------------
 //definindo variaveis
-$id = fnDecrypt($_GET['id']);
+$id = fnDecrypt($_REQUEST['idv']);
 $memorando = documentoDAO::consultar('memorando','idMemorando = '.$id);
 $numMemorando = $memorando[0]->getNumMemorando();
 $tipoSigla = $memorando[0]->getTipoSigla();

@@ -55,7 +55,7 @@ $controlador = new ControladorDocumentos();
                             tratamento: $("#tratamento").val(),
                             cargo_destino: $("#cargo_destino").val() }, function(j) {
                         document.paginaAlterada = false;
-                        ajax('index.php?c=documentos&a=gerarMemorando');
+                        document.location.href='#!documentos|gerarMemorando';
                     $('html, body').animate({scrollTop: 0},'fast');
                 });
     }
@@ -118,11 +118,12 @@ $controlador = new ControladorDocumentos();
     }
 
     function capturaNumMemorando() {
+        
         $.getJSON('app/visao/documentos/valores.ajax.php', {valor: 2, ajax: 'true'}, function(j) {
             $('#i_numMemorando').val(j);
             $("#form1").submit();
             document.paginaAlterada = false;
-            ajax('index.php?c=documentos&a=gerarMemorando');
+            document.location.href='#!documentos|gerarMemorando';
             $('html, body').animate({scrollTop: 0}, 'fast');
         });
     }

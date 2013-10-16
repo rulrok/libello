@@ -57,7 +57,8 @@ $controladorAux = new ControladorDocumentos();
                             cargo_destino: $("#cargo_destino").val() }, function(j) {
                     
                         document.paginaAlterada = false;
-                        ajax('index.php?c=documentos&a=gerarOficio');
+                        document.ignorarHashChange = false;
+                        document.location.href='#!documentos|gerarOficio';
                     $('html, body').animate({scrollTop: 0},'slow');
                 });
     }
@@ -121,13 +122,13 @@ $controladorAux = new ControladorDocumentos();
     }
 
     function capturaNumOficio() {
-
+        //window.open('app/visao/documentos/valores.ajax.php?valor=1');
         $.getJSON('app/visao/documentos/valores.ajax.php', {valor: 1, ajax: 'true'}, function(j) {
             $('#i_numOficio').val(j);
-
             $("#form1").submit();
             document.paginaAlterada = false;
-            document.location.href='#!documentos|gerarOficio';
+            document.ignorarHashChange = false;
+            document.location.hash='#!documentos|gerarOficio';
             //ajax('index.php?c=documentos&a=gerarOficio');
             $('html, body').animate({scrollTop: 0},'fast');
         });

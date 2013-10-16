@@ -861,6 +861,7 @@ function makeSubMenu(originMenu) {
 
     menuName = menuName.substring(0, menuName.lastIndexOf("Link"));
     menuName = menuName.concat("SubMenu");
+    //alert(menuName);
     var subMenus = $(".subMenu menu ul");
 
     for (var i = 0; i < subMenus.length; i++) {

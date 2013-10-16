@@ -20,6 +20,8 @@ class ControladorDocumentos extends Controlador {
     }
     
     public function acaoConsultar(){
+        $this->visao->oficios = $this->listarOficios('validos');
+        $this->visao->memorandos = $this->listarMemorandos('validos');
         $this->renderizar();
     }
 
@@ -162,7 +164,6 @@ class ControladorDocumentos extends Controlador {
             $numOficio = $busca[0];
             $num = ($numOficio->getNumOficio() + 1);
         } else {
-            //erro
             $num = 1;
         }
         return $num;

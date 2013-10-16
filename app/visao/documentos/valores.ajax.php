@@ -1,6 +1,7 @@
 <?php
 
-require_once ROOT.'app/controlador/ControladorDocumentos.php';
+require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/configuracoes.php");
+require_once $_SERVER['DOCUMENT_ROOT'] .'/controle-cead/app/controlador/ControladorDocumentos.php';
 
 header('Cache-Control: no-cache');
 header('Content-type: application/xml; charset="utf-8"', true);

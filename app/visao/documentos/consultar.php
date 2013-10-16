@@ -1,8 +1,5 @@
 
-<?php
-$controladorAux = new ControladorDocumentos();
-?>
-<script src="publico/js/jquery/jquery.dataTables.js"></script>
+
 
 <style>
     .btn_oficio{
@@ -49,7 +46,7 @@ $controladorAux = new ControladorDocumentos();
         <?php require 'estruturas_auxiliares/topTable.php'; ?>
 
         <?php
-        echo $controladorAux->listarOficios('validos');
+        echo $this->oficios;
         ?>
 
         <?php require 'estruturas_auxiliares/bottomTable.php'; ?>
@@ -66,7 +63,7 @@ $controladorAux = new ControladorDocumentos();
         <button class="btn btn-visualizar"><i class="icon-search"></i> Visualizar</button>
         <?php require 'estruturas_auxiliares/topTable.php'; ?>
         <?php
-        echo $controladorAux->listarMemorandos('validos');
+        echo $this->memorandos;
         ?>
         <?php require 'estruturas_auxiliares/bottomTable.php'; ?>
         <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
@@ -77,6 +74,7 @@ $controladorAux = new ControladorDocumentos();
 <form id="form_visualizar" target="_blank" method="post" action="">
     <input type="hidden" id="idv" name="idv" />
 </form>
+
 <script type="text/javascript">
         var tab_todosValidos,
                 tab_memorandosValidos;
@@ -109,7 +107,6 @@ $controladorAux = new ControladorDocumentos();
 
         $(document).ready(function() {
 
-            //configurarTabela({idTabela:'tabelaTodosOficios',editar:'',deletar:'',adicionar:''});
             $('#oficiosValidos .tabelaDeEdicao').attr('id', 'tabelaOficiosValidos');
             $('#memorandosValidos .tabelaDeEdicao').attr('id', 'tabelaMemorandosValidos');
 
