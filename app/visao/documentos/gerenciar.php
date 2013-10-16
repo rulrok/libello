@@ -398,7 +398,6 @@
                     $('.btn-invalidar').on('click', function() {
                         var r = confirm("Tem certeza? O documento será permanentemente invalidado!");
                         if (r) {
-                            var tipo = $('tr.row_selected').attr('tipo');
                             var doc = $('tr.row_selected').attr('doc');
                             var id = $('tr.row_selected .campoID').text();
                             $.getJSON("app/visao/documentos/acoes.php?acao=invalidar" + doc + "&i_id" + doc + "=" + id,
@@ -416,7 +415,6 @@
                         var r = confirm("Tem certeza? O documento será permanentemente excluido!");
                         if (r) {
                             var id = $('tr.row_selected .campoID').text();
-                            var tipo = $('tr.row_selected').attr('tipo');
                             var doc = $('tr.row_selected').attr('doc');
                             $.getJSON("app/visao/documentos/acoes.php?acao=deletar" + doc + "&i_id" + doc + "=" + id,
                                     function(data) {

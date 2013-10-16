@@ -12,6 +12,7 @@ $controlador = new ControladorDocumentos();
 
     $(document).ready(function() {
         $("#corpo").jqte();
+        $('html, body').animate({scrollTop: 0},'fast');
     });
 
 
@@ -56,7 +57,7 @@ $controlador = new ControladorDocumentos();
                             cargo_destino: $("#cargo_destino").val() }, function(j) {
                         document.paginaAlterada = false;
                         document.location.reload();
-                    $('html, body').animate({scrollTop: 0},'fast');
+                    
                 });
     }
 
@@ -123,7 +124,7 @@ $controlador = new ControladorDocumentos();
             $('#i_numMemorando').val(j);
             $("#form1").submit();
             document.paginaAlterada = false;
-            document.loaction.reload();
+            document.location.reload();
             $('html, body').animate({scrollTop: 0}, 'fast');
         });
     }

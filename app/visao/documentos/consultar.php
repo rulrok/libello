@@ -79,22 +79,35 @@
         var tab_todosValidos,
                 tab_memorandosValidos;
 
+        var url_inicial = '#!documentos|consultar';
+        var doc = null;
 
-        function mostraOpcao(opcao) {
+
+        function mostraOpcao(opcao) {//acao dos botoes que mostra ou oficio ou memorando
             if (opcao == 'oficio') {
                 $('#b_oficio').addClass('active');
                 $('#b_memorando').removeClass('active');
                 $('#tabela1').show();
                 $('#tabela2').hide();
+                if (doc != 'oficio') {
+                    doc = 'oficio';
+                    document.ignorarHashChange = true;
+                    document.location.hash = url_inicial + '&doc=' + doc;
+                }
             } else if (opcao == 'memorando') {
                 $('#b_memorando').addClass('active');
                 $('#b_oficio').removeClass('active');
                 $('#tabela1').hide();
                 $('#tabela2').show();
+                if (doc != 'memorando') {
+                    doc = 'memorando';
+                    document.ignorarHashChange = true;
+                    document.location.hash = url_inicial + '&doc=' + doc;
+                }
             }
         }
-//
-        function mouseTabela(tab) {
+        
+        function mouseTabela(tab) {//funcao que atribui o evento de click as linhas de alguma data table
             tab.$('tr').mousedown(function(e) {
 
                 $(this).parent().parent().find('tr.row_selected').removeClass('row_selected');
@@ -127,13 +140,13 @@
 
             $('.btn-visualizar').on('click', function() {
                 if ($('#tabela1').css('display') != 'none') {
-                    $('#form_visualizar').attr('action','app/modelo/relatoriosPDF/visualizarOficio.php');
+                    $('#form_visualizar').attr('action', 'app/modelo/relatoriosPDF/visualizarOficio.php');
                     $('#idv').val($('.row_selected td.campoID').text());
                     $('#form_visualizar').submit();
                     //window.open('app/modelo/relatoriosPDF/visualizarOficio.php');
                 }
                 else if ($('#tabela2').css('display') != 'none') {
-                    $('#form_visualizar').attr('action','app/modelo/relatoriosPDF/visualizarMemorando.php');
+                    $('#form_visualizar').attr('action', 'app/modelo/relatoriosPDF/visualizarMemorando.php');
                     $('#idv').val($('.row_selected td.campoID').text());
                     $('#form_visualizar').submit();
                 }
@@ -149,6 +162,7 @@ if (isset($_GET['doc'])) {
     <script>
         var doc_select = <?php echo '"' . $_GET['doc'] . '"'; ?>;
         $(document).ready(function() {
+            doc = doc_select;
             $('.btn_' + doc_select).click();
         });
     </script>
