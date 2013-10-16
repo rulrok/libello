@@ -1,17 +1,12 @@
-<?php
-$controladorAux = new ControladorDocumentos();
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-?>
+
 <script src="publico/js/jquery/jquery-te-1.0.5.min.js" type="text/javascript"></script>
 <link href='publico/css/jquery-te-Style.css' rel='stylesheet' type="text/css"/>
+
 <script type="text/javascript">
 
     $(document).ready(function() {
         $("#corpo").jqte();
-
+        $('html, body').animate({scrollTop: 0},'fast');
     });
 
     function confirmaAcao(acao) {
@@ -57,8 +52,7 @@ $controladorAux = new ControladorDocumentos();
                             cargo_destino: $("#cargo_destino").val() }, function(j) {
                     
                         document.paginaAlterada = false;
-                        document.ignorarHashChange = false;
-                        document.location.href='#!documentos|gerarOficio';
+                        document.location.reload();
                     $('html, body').animate({scrollTop: 0},'slow');
                 });
     }
@@ -127,10 +121,9 @@ $controladorAux = new ControladorDocumentos();
             $('#i_numOficio').val(j);
             $("#form1").submit();
             document.paginaAlterada = false;
-            document.ignorarHashChange = false;
-            document.location.hash='#!documentos|gerarOficio';
+            document.location.reload();
             //ajax('index.php?c=documentos&a=gerarOficio');
-            $('html, body').animate({scrollTop: 0},'fast');
+            
         });
     }
 
@@ -159,6 +152,7 @@ $controladorAux = new ControladorDocumentos();
             </td>
         </tr>
     </table>
+    
     <table style='width: 794px; height: 1123px; font-family:"Times New Roman",Georgia,Serif; font-size: 15px; background-color: #FFF;' border="0" align="center">
         <tr height="189">
             <td width="113" rowspan="20"></td>
@@ -180,7 +174,7 @@ $controladorAux = new ControladorDocumentos();
         </tr>
         <tr height="30">
             <td align="right">
-                Alfenas, <?php $controladorAux->comboDia(); ?> de <?php $controladorAux->comboMes(); ?> de <?php echo date("Y"); ?>
+                Alfenas, <?php echo $this->comboDia ?> de <?php echo $this->comboMes ?> de <?php echo date("Y"); ?>
             </td>
         </tr>
         <tr height="40"><td></td></tr>

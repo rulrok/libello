@@ -60,7 +60,7 @@
                     cargo_destino: $("#cargo_destino").val(),
                 i_idmemorando:$('#i_idmemorando').val()}, function(j) {
             document.paginaAlterada = false;
-            ajax('index.php?c=documentos&a=gerarMemorando');
+            document.location.href = '#!documentos|gerarMemorando';
             $('html, body').animate({scrollTop: 0}, 'fast');
         });
     }
@@ -127,7 +127,7 @@
             $('#i_numMemorando').val(j);
             $("#form1").submit();
             document.paginaAlterada = false;
-            ajax('index.php?c=documentos&a=gerarMemorando');
+            document.location.href = '#!documentos|gerarMemorando';
             $('html, body').animate({scrollTop: 0}, 'fast');
         });
     }
@@ -182,7 +182,7 @@
         </tr>
         <tr height="30">
             <td align="right">
-                Em <?php $this->controlador->comboDia(); ?> de <?php $this->controlador->comboMes(); ?> de <?php echo date("Y"); ?>
+                Em <?php echo $this->comboDia ?> de <?php echo $this->comboMes; ?> de <?php echo date("Y"); ?>
             </td>
         </tr>
         <tr height="40"><td></td></tr>
@@ -190,7 +190,7 @@
             <td>
                 <input type="text" 
                        id="tratamento" 
-                       value="<?php echo $this->memorando->getTratamento(); ?>" 
+                       value="<?php echo $this->tratamento; ?>" 
                        name="tratamento" 
                        onkeyup="liberarCadastro()" 
                        size="15"/>
@@ -203,7 +203,7 @@
                        id="cargo_destino"
                        name="cargo_destino"
                        onkeyup="liberarCadastro()"
-                       value="<?php echo $this->memorando->getCargo_destino(); ?>"
+                       value="<?php echo $this->cargo_destino; ?>"
                        size="40"/>
                 <span class="classeExemploOficio"> Ex: Chefe do departamento de Administração</span>
             </td>
@@ -215,7 +215,7 @@
                                 id="assunto"
                                 name="assunto"
                                 onkeyup="liberarCadastro()"
-                                value="<?php echo $this->memorando->getAssunto(); ?>"
+                                value="<?php echo $this->assunto; ?>"
                                 size="50"/>
                 <span class="classeExemploOficio"> Ex: Administração. Instalação de microcomputadores </span>
             </td>
@@ -231,7 +231,7 @@
                               id="corpo"
                               name="corpo"
                               onkeyup="liberarCadastro()"
-                              value="<?php $this->memorando->getCorpo(); ?>">Corpo do Memorando</textarea>
+                              value="<?php $this->corpo; ?>">Corpo do Memorando</textarea>
                 </div>
             </td>
         </tr>
@@ -257,7 +257,7 @@
                                        id="remetente"
                                        name="remetente"
                                        onkeyup="liberarCadastro()"
-                                       value="<?php echo $this->memorando->getRemetente(); ?>"
+                                       value="<?php echo $this->remetente; ?>"
                                        size="50" 
                                        style="margin-left: 125px"/>
                                 <span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>
@@ -269,7 +269,7 @@
                                        id="cargo_remetente"
                                        name="cargo_remetente" 
                                        onkeyup="liberarCadastro()" 
-                                       value="<?php echo $this->memorando->getCargo_remetente();?>" 
+                                       value="<?php echo $this->cargo_remetente;?>" 
                                        size="25" 
                                        style="margin-left: 110px"/>
                                 <span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
@@ -301,7 +301,7 @@
                                        id="remetente2" 
                                        name="remetente2" 
                                        onkeyup="liberarCadastro()" 
-                                       value="<?php echo $this->memorando->getRemetente2(); ?>" 
+                                       value="<?php echo $this->remetente2; ?>" 
                                        size="50" 
                                        style="margin-left: 125px"/>
                                 <span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>
@@ -313,7 +313,7 @@
                                        id="cargo_remetente2" 
                                        name="cargo_remetente2" 
                                        onkeyup="liberarCadastro()" 
-                                       value="<?php echo $this->memorando->getCargo_remetente2(); ?>" 
+                                       value="<?php echo $this->cargo_remetente2; ?>" 
                                        size="25" 
                                        style="margin-left: 110px"/>
                                 <span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
@@ -359,7 +359,7 @@
             <td>
                 <input type="hidden" name="i_numMemorando" id="i_numMemorando"/>
                 <input type="hidden" name="i_remetente" id="i_remetente" value="0"/>
-                <input type="hidden" name="i_sigla" id="i_sigla" value="<?php echo($this->memorando->getSigla()); ?>"/>
+                <input type="hidden" name="i_sigla" id="i_sigla" value="<?php echo($this->sigla); ?>"/>
             </td>
         </tr>
         <tr height="30"><td></td></tr>

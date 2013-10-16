@@ -26,14 +26,55 @@ class ControladorDocumentos extends Controlador {
     }
 
     public function acaoGeraroficio() {
+        $this->visao->comboDia = $this->comboDia();
+        $this->visao->comboMes = $this->comboMes();
         $this->renderizar();
     }
 
     public function acaoAproveitarOficio(){
+        $ofc = documentoDAO::consultar('oficio', 'idOficio = ' . fnDecrypt($_GET['id']));
+        
+        $temp = $ofc[0];
+        
+        $this->visao->tratamento = $temp->getTratamento();
+        $this->visao->destino = $temp->getDestino();
+        $this->visao->cargo_destino = $temp->getCargo_destino();
+        $this->visao->referencia = $temp->getReferencia();
+        $this->visao->assunto = $temp->getAssunto();
+        $this->visao->corpo = $temp->getCorpo();
+        $this->visao->remetente = $temp->getRemetente();
+        $this->visao->cargo_remetente = $temp->getCargo_remetente();
+        $this->visao->remetente2 = $temp->getRemetente2();
+        $this->visao->cargo_remetente2 = $temp->getCargo_remetente2();
+        $this->visao->sigla = $temp->getTipoSigla();
+        
+        $this->visao->comboDia = $this->comboDia();
+        $this->visao->comboMes = $this->comboMes();
+        
         $this->renderizar();
     }
     
     public function acaoEditarOficio(){
+        $ofc = documentoDAO::consultar('oficio', 'idOficio = ' . fnDecrypt($_GET['id']));
+        
+        $temp = $ofc[0];
+        
+        $this->visao->idoficio = $temp->getIdOficio();
+        $this->visao->tratamento = $temp->getTratamento();
+        $this->visao->destino = $temp->getDestino();
+        $this->visao->cargo_destino = $temp->getCargo_destino();
+        $this->visao->referencia = $temp->getReferencia();
+        $this->visao->assunto = $temp->getAssunto();
+        $this->visao->corpo = $temp->getCorpo();
+        $this->visao->remetente = $temp->getRemetente();
+        $this->visao->cargo_remetente = $temp->getCargo_remetente();
+        $this->visao->remetente2 = $temp->getRemetente2();
+        $this->visao->cargo_remetente2 = $temp->getCargo_remetente2();
+        $this->visao->sigla = $temp->getTipoSigla();
+        
+        $this->visao->comboDia = $this->comboDia();
+        $this->visao->comboMes = $this->comboMes();
+        
         $this->renderizar();
     }
     
@@ -42,30 +83,60 @@ class ControladorDocumentos extends Controlador {
     }
 
     public function acaoGerarMemorando() {
+        
+        $this->visao->comboDia = $this->comboDia();
+        $this->visao->comboMes = $this->comboMes();
+        
         $this->renderizar();
     }
     
     public function acaoEditarMemorando(){
+        $mem = documentoDAO::consultar('memorando', 'idMemorando = ' . fnDecrypt($_GET['id']));
+        
+        $temp = $mem[0];
+        
+        $this->visao->idmemorando = $temp->getIdMemorando();
+        $this->visao->tratamento = $temp->getTratamento();
+        $this->visao->cargo_destino = $temp->getCargo_destino();
+        $this->visao->assunto = $temp->getAssunto();
+        $this->visao->corpo = $temp->getCorpo();
+        $this->visao->remetente = $temp->getRemetente();
+        $this->visao->cargo_remetente = $temp->getCargo_remetente();
+        $this->visao->remetente2 = $temp->getRemetente2();
+        $this->visao->cargo_remetente2 = $temp->getCargo_remetente2();
+        $this->visao->sigla = $temp->getTipoSigla();
+        
+        $this->visao->comboDia = $this->comboDia();
+        $this->visao->comboMes = $this->comboMes();
+        
         $this->renderizar();
     }
     
     public function acaoAproveitarMemorando(){
         $mem = documentoDAO::consultar('memorando', 'idMemorando = ' . fnDecrypt($_GET['id']));
         
-        $this->visao->memorando = $mem[0];
+        $temp = $mem[0];
         
-        $this->visao->controlador = new ControladorDocumentos();
+        $this->visao->tratamento = $temp->getTratamento();
+        $this->visao->cargo_destino = $temp->getCargo_destino();
+        $this->visao->assunto = $temp->getAssunto();
+        $this->visao->corpo = $temp->getCorpo();
+        $this->visao->remetente = $temp->getRemetente();
+        $this->visao->cargo_remetente = $temp->getCargo_remetente();
+        $this->visao->remetente2 = $temp->getRemetente2();
+        $this->visao->cargo_remetente2 = $temp->getCargo_remetente2();
+        $this->visao->sigla = $temp->getTipoSigla();
+                
+        $this->visao->comboDia = $this->comboDia();
+        $this->visao->comboMes = $this->comboMes();
         
         $this->renderizar();
     }
     
-    public function acaoTeste(){
-        $this->renderizar();
-    }
     //comboDia() e comboMes() sao relativos a GerarOficio e Gerar Memorando
     //combo dia
     function comboDia() {
-        echo "<select id='dia' name='dia'>
+        return "<select id='dia' name='dia'>
                 <option value='01'>01</option>
                 <option value='02'>02</option>
                 <option value='03'>03</option>
@@ -102,7 +173,7 @@ class ControladorDocumentos extends Controlador {
 
     //combo mês
     function comboMes() {
-        echo "<select id='mes' name='mes'>
+        return "<select id='mes' name='mes'>
                 <option value='01'>janeiro</option>
                 <option value='02'>fevereiro</option>
                 <option value='03'>março</option>

@@ -191,8 +191,6 @@
                                 document.location.hash = url_inicial + '&doc=' + doc + tipo_oficio;
                             }
                         }
-                        //   }
-                        //document.ignorarHashChange = false;
 
                     } else if (opcao == 'memorando') {
                         $('#b_memorando').addClass('active');
@@ -406,7 +404,9 @@
                             $.getJSON("app/visao/documentos/acoes.php?acao=invalidar" + doc + "&i_id" + doc + "=" + id,
                                     function(data) {
                                         //document.ignorarHashChange = false;
-                                        document.location.href = '#!documentos|gerenciar&doc=' + doc + '&tipo=' + tipo;
+                                        document.paginaAlterada = false;
+                                        document.location.reload();
+                                        //document.location.href = '#!documentos|gerenciar&doc=' + doc + '&tipo=' + tipo;
                                     }
                             );
                         }
@@ -421,7 +421,9 @@
                             $.getJSON("app/visao/documentos/acoes.php?acao=deletar" + doc + "&i_id" + doc + "=" + id,
                                     function(data) {
                                         //document.ignorarHashChange = false;
-                                        document.location.href = '#!documentos|gerenciar&doc=' + doc + '&tipo=' + tipo;
+                                        document.paginaAlterada = false;
+                                        document.location.reload();
+                                        //document.location.href = '#!documentos|gerenciar&doc=' + doc + '&tipo=' + tipo;
                                     }
                             );
                         }

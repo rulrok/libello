@@ -1,12 +1,4 @@
-<?php
-$controladorAux = new ControladorDocumentos();
 
-$ofc = documentoDAO::consultar('oficio', 'idOficio = ' . fnDecrypt($_GET['id']));
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-?>
 <script src="publico/js/jquery/jquery-te-1.0.5.min.js" type="text/javascript"></script>
 <link href='publico/css/jquery-te-Style.css' rel='stylesheet' type="text/css"/>
 <script type="text/javascript">
@@ -66,7 +58,7 @@ $ofc = documentoDAO::consultar('oficio', 'idOficio = ' . fnDecrypt($_GET['id']))
                     }, function(j) {
 
             document.paginaAlterada = false;
-            ajax('index.php?c=documentos&a=gerarOficio');
+            document.location.href = '#!documentos|gerarOficio';
             $('html, body').animate({scrollTop: 0}, 'slow');
         });
     }
@@ -139,7 +131,7 @@ $ofc = documentoDAO::consultar('oficio', 'idOficio = ' . fnDecrypt($_GET['id']))
 
             $("#form1").submit();
             document.paginaAlterada = false;
-            ajax('index.php?c=documentos&a=gerarOficio');
+            document.location.href = '#!documentos|gerarOficio';
             $('html, body').animate({scrollTop: 0}, 'fast');
         });
     }
@@ -169,7 +161,15 @@ $ofc = documentoDAO::consultar('oficio', 'idOficio = ' . fnDecrypt($_GET['id']))
             </td>
         </tr>
     </table>
-    <table style='width: 794px; height: 1123px; font-family:"Times New Roman",Georgia,Serif; font-size: 15px; background-color: #FFF;' border="0" align="center">
+    <table 
+        style='width: 794px; 
+        height: 1123px; 
+        font-family:"Times New Roman",Georgia,Serif; 
+        font-size: 15px; 
+        background-color: #FFF;' 
+        border="0" 
+        align="center"
+        >
         <tr height="189">
             <td width="113" rowspan="20"></td>
             <td width="625" align="center">
@@ -190,42 +190,92 @@ $ofc = documentoDAO::consultar('oficio', 'idOficio = ' . fnDecrypt($_GET['id']))
         </tr>
         <tr height="30">
             <td align="right">
-                Alfenas, <?php $controladorAux->comboDia(); ?> de <?php $controladorAux->comboMes(); ?> de <?php echo date("Y"); ?>
+                Alfenas, <?php echo $this->comboDia; ?> de <?php echo $this->comboMes; ?> de <?php echo date("Y"); ?>
             </td>
         </tr>
         <tr height="40"><td></td></tr>
         <tr height="10">
             <td>
-                <input type="text" id="tratamento" name="tratamento" onkeyup="liberarCadastro()" value="<?php echo $ofc[0]->getTratamento(); ?>" size="15"/><span class="classeExemploOficio"> Ex: Ao Sr.</span>
+                <input 
+                    type="text" 
+                    id="tratamento" 
+                    name="tratamento" 
+                    onkeyup="liberarCadastro()" 
+                    value="<?php echo $this->tratamento; ?>" 
+                    size="15"
+                    />
+                <span class="classeExemploOficio"> Ex: Ao Sr.</span>
             </td>
         </tr>
         <tr height="10">
             <td>
-                <input type="text" id="destino" name="destino" onkeyup="liberarCadastro()" value="<?php echo $ofc[0]->getDestino(); ?>" size="30"/><span class="classeExemploOficio"> Ex: Paulo Márcio de Faria e Silva</span>
+                <input 
+                    type="text" 
+                    id="destino" 
+                    name="destino" 
+                    onkeyup="liberarCadastro()" 
+                    value="<?php echo $this->destino; ?>" 
+                    size="30"
+                    />
+                <span class="classeExemploOficio"> Ex: Paulo Márcio de Faria e Silva</span>
             </td>
         </tr>
         <tr height="10">
             <td>
-                <input type="text" id="cargo_destino" name="cargo_destino" onkeyup="liberarCadastro()" value="<?php echo $ofc[0]->getCargo_destino(); ?>" size="40"/><span class="classeExemploOficio"> Ex: Reitor da Universidade Federal de Alfenas</span>
+                <input 
+                    type="text" 
+                    id="cargo_destino" 
+                    name="cargo_destino" 
+                    onkeyup="liberarCadastro()" 
+                    value="<?php echo $this->cargo_destino; ?>" 
+                    size="40"
+                    />
+                <span class="classeExemploOficio"> Ex: Reitor da Universidade Federal de Alfenas</span>
             </td>
         </tr>
         <tr height="40"><td></td></tr>
         <tr height="30">
             <td>
-                Assunto: <input type="text" id="assunto" name="assunto" onkeyup="liberarCadastro()" value="<?php echo $ofc[0]->getAssunto(); ?>" size="50"/><span class="classeExemploOficio"> Ex: Indicação de nome para... </span>
+                Assunto: <input 
+                            type="text" 
+                            id="assunto" 
+                            name="assunto" 
+                            onkeyup="liberarCadastro()" 
+                            value="<?php echo $this->assunto; ?>" 
+                            size="50"
+                            />
+                <span class="classeExemploOficio"> Ex: Indicação de nome para... </span>
             </td>
         </tr>
         <tr height="40"><td></td></tr>
         <tr height="30">
             <td align="left">
-                <input type="text" id="referencia" name="referencia" onkeyup="liberarCadastro()" value="<?php echo $ofc[0]->getReferencia(); ?>" size="25"/><span class="classeExemploOficio"> Ex: Magnífico Reitor, </span>
+                <input 
+                    type="text" 
+                    id="referencia" 
+                    name="referencia" 
+                    onkeyup="liberarCadastro()" 
+                    value="<?php echo $this->referencia; ?>" 
+                    size="25"
+                    />
+                <span class="classeExemploOficio"> Ex: Magnífico Reitor, </span>
             </td>
         </tr>
         <tr height="40"><td></td></tr>
         <tr height="30">
             <td align="left">
                 <div >
-                    <textarea style="max-height: 500px;min-height: 200px;max-width: 625px;min-width: 625px" id="corpo" value="" name="corpo" onkeyup="liberarCadastro()" value="<?php echo $ofc[0]->getCorpo(); ?>">Corpo do Ofício</textarea>
+                    <textarea 
+                        style="max-height: 500px;
+                                min-height: 200px;
+                                max-width: 625px;
+                                min-width: 625px" 
+                        id="corpo" 
+                        value="" 
+                        name="corpo" 
+                        onkeyup="liberarCadastro()" 
+                        value="<?php echo $this->corpo; ?>"
+                        >Corpo do Ofício</textarea>
                 </div>
             </td>
         </tr>
@@ -247,15 +297,38 @@ $ofc = documentoDAO::consultar('oficio', 'idOficio = ' . fnDecrypt($_GET['id']))
                         </tr>
                         <tr height="20">
                             <td align="center">
-                                <input type="text" id="remetente" name="remetente" onkeyup="liberarCadastro()" value="<?php echo $ofc[0]->getRemetente(); ?>" size="50" style="margin-left: 125px"/><span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>
+                                <input 
+                                    type="text" 
+                                    id="remetente" 
+                                    name="remetente" 
+                                    onkeyup="liberarCadastro()" 
+                                    value="<?php echo $this->remetente; ?>" 
+                                    size="50" 
+                                    style="margin-left: 125px"
+                                    />
+                                <span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>
                             </td>
                         </tr>
                         <tr height="20">
                             <td align="center">
-                                <input type="text" id="cargo_remetente" name="cargo_remetente" onkeyup="liberarCadastro()" value="<?php echo $ofc[0]->getCargo_remetente(); ?>" size="25" style="margin-left: 110px"/><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
+                                <input 
+                                    type="text" 
+                                    id="cargo_remetente" 
+                                    name="cargo_remetente" 
+                                    onkeyup="liberarCadastro()" 
+                                    value="<?php echo $this->cargo_remetente; ?>" 
+                                    size="25" 
+                                    style="margin-left: 110px"
+                                    />
+                                <span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
                             </td>
                             <td>
-                                <a title="Adicionar Remetente" id=""  onclick="adicionarRemetente();" class="btn" href="javascript:void(0);" ><i class="icon-plus"></i></a>
+                                <a
+                                    title="Adicionar Remetente" 
+                                    id=""  
+                                    onclick="adicionarRemetente();" 
+                                    class="btn" href="javascript:void(0);" 
+                                    ><i class="icon-plus"></i></a>
                             </td>
                         </tr>
                     </table>
@@ -270,15 +343,38 @@ $ofc = documentoDAO::consultar('oficio', 'idOficio = ' . fnDecrypt($_GET['id']))
                         </tr>
                         <tr height="20">
                             <td align="center">
-                                <input type="text" id="remetente2" name="remetente2" onkeyup="liberarCadastro()" value="<?php echo $ofc[0]->getRemetente2(); ?>" size="50" style="margin-left: 125px"/><span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>
+                                <input 
+                                    type="text" 
+                                    id="remetente2" 
+                                    name="remetente2" 
+                                    onkeyup="liberarCadastro()" 
+                                    value="<?php echo $this->remetente2; ?>" 
+                                    size="50" 
+                                    style="margin-left: 125px"
+                                    />
+                                <span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>
                             </td>
                         </tr>
                         <tr height="20">
                             <td align="center">
-                                <input type="text" id="cargo_remetente2" name="cargo_remetente2" onkeyup="liberarCadastro()" value="<?php echo $ofc[0]->getCargo_remetente2(); ?>" size="25" style="margin-left: 110px"/><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
+                                <input 
+                                    type="text" 
+                                    id="cargo_remetente2" 
+                                    name="cargo_remetente2" 
+                                    onkeyup="liberarCadastro()" 
+                                    value="<?php echo $this->cargo_remetente2; ?>" 
+                                    size="25" 
+                                    style="margin-left: 110px"
+                                    />
+                                <span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
                             </td>
                             <td>
-                                <a  title="Remover Remetente" id="" href="javascript:void(0);" onclick="removerRemetente();" class="btn" ><i class="icon-minus"></i></a>
+                                <a  
+                                    title="Remover Remetente" 
+                                    id="" 
+                                    href="javascript:void(0);" 
+                                    onclick="removerRemetente();" 
+                                    class="btn" ><i class="icon-minus"></i></a>
                             </td>
                         </tr>
                     </table>
@@ -302,7 +398,7 @@ $ofc = documentoDAO::consultar('oficio', 'idOficio = ' . fnDecrypt($_GET['id']))
             <td>
                 <input type="hidden" name="i_numOficio" id="i_numOficio"/>
                 <input type="hidden" name="i_remetente" id="i_remetente" value="0"/>
-                <input type="hidden" name="i_sigla" id="i_sigla" value="<?php echo($ofc[0]->getSigla()); ?>"/>
+                <input type="hidden" name="i_sigla" id="i_sigla" value="<?php echo($this->sigla); ?>"/>
             </td>
         </tr>
         <tr height="30"><td></td></tr>

@@ -55,7 +55,7 @@ $controlador = new ControladorDocumentos();
                             tratamento: $("#tratamento").val(),
                             cargo_destino: $("#cargo_destino").val() }, function(j) {
                         document.paginaAlterada = false;
-                        document.location.href='#!documentos|gerarMemorando';
+                        document.location.reload();
                     $('html, body').animate({scrollTop: 0},'fast');
                 });
     }
@@ -123,7 +123,7 @@ $controlador = new ControladorDocumentos();
             $('#i_numMemorando').val(j);
             $("#form1").submit();
             document.paginaAlterada = false;
-            document.location.href='#!documentos|gerarMemorando';
+            document.loaction.reload();
             $('html, body').animate({scrollTop: 0}, 'fast');
         });
     }
@@ -172,7 +172,7 @@ $controlador = new ControladorDocumentos();
         </tr>
         <tr height="30">
             <td align="right">
-                Em <?php $controlador->comboDia(); ?> de <?php $controlador->comboMes(); ?> de <?php echo date("Y"); ?>
+                Em <?php echo $this->comboDia ?> de <?php echo $this->comboMes ?> de <?php echo date("Y"); ?>
             </td>
         </tr>
         <tr height="40"><td></td></tr>
