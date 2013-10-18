@@ -34,12 +34,12 @@
 
 
 <div style="text-align:center;">
-    <button class="btn btn_oficio"
+    <button class="btn btn_oficio ignorar"
             id="b_oficio" 
             onclick="mostraOpcao('oficio')" 
             style="height: 30px; width: 150px;"
             >Ofícios</button>
-    <button class="btn btn_memorando" 
+    <button class="btn btn_memorando ignorar" 
             id="b_memorando" 
             onclick="mostraOpcao('memorando')" 
             style="height: 30px; width: 150px;"
@@ -52,7 +52,7 @@
     <div style="text-align:center;cursor:default;" >
         <div align="right" style="" class="label_oficio_memorando">Visualizar: </div>
         <label style="text-align:center;display:inline-block;">
-            <select id="comboOficioTipo" name="comboOficioTipo">
+            <select id="comboOficioTipo" name="comboOficioTipo" class="ignorar">
                 <option id="option_oficio_default" value="default" selected="selected" >--Selecione uma opção--</option>
                 <option id="option_oficio_todos" value="todos">Todos</option>
                 <option id="option_oficio_validos" value="validos">Válidos</option>
@@ -114,7 +114,7 @@
     <div style="text-align:center;cursor:default;" >
         <div align="right" style="" class="label_oficio_memorando">Visualizar: </div>
         <label style="text-align:center;display:inline-block;">
-            <select id="comboMemorandoTipo" name="comboMemorandoTipo">
+            <select id="comboMemorandoTipo" name="comboMemorandoTipo" class="ignorar">
                 <option id="option_memorando_default" value="default" selected="selected" >--Selecione uma opção--</option>
                 <option id="option_memorando_todos" value="todos">Todos</option>
                 <option id="option_memorando_validos" value="validos">Válidos</option>
@@ -169,8 +169,8 @@
 
 <script type="text/javascript">
                 var tab_todosOficios, tab_todosValidos, tab_todosInvalidos,
-                    tab_todosAberto, tab_todosMemorando, tab_memorandosValidos, 
-                    tab_memorandosInvalidos, tab_memorandosAberto;
+                        tab_todosAberto, tab_todosMemorando, tab_memorandosValidos,
+                        tab_memorandosInvalidos, tab_memorandosAberto;
                 var url_inicial = '#!documentos|gerenciar';
                 var doc = null, tipo_oficio = null, tipo_memorando = null;
 
@@ -305,7 +305,7 @@
                                 select(tab_todosValidos);
                                 $('#oficiosValidos').show();
                                 if (tipo_oficio != '&tipo=validos') {
-                                tipo_oficio = '&tipo=validos';
+                                    tipo_oficio = '&tipo=validos';
                                     document.ignorarHashChange = true;
                                     document.location.hash = url_inicial + '&doc=' + doc + tipo_oficio;
                                 }
@@ -314,7 +314,7 @@
                                     select(tab_todosInvalidos);
                                     $('#oficiosInvalidos').show();
                                     if (tipo_oficio != '&tipo=invalidos') {
-                                    tipo_oficio = '&tipo=invalidos';
+                                        tipo_oficio = '&tipo=invalidos';
                                         document.ignorarHashChange = true;
                                         document.location.hash = url_inicial + '&doc=' + doc + tipo_oficio;
                                     }
@@ -323,7 +323,7 @@
                                         select(tab_todosAberto);
                                         $('#oficiosEmAberto').show();
                                         if (tipo_oficio != '&tipo=aberto') {
-                                        tipo_oficio = '&tipo=aberto';
+                                            tipo_oficio = '&tipo=aberto';
                                             document.ignorarHashChange = true;
                                             document.location.hash = url_inicial + '&doc=' + doc + tipo_oficio;
                                         }
@@ -344,8 +344,8 @@
                         if (valor == "todos") {
                             select(tab_todosMemorandos);
                             $('#todosMemorandos').show();
-                            if (tipo_memorando!='&tipo=todos') {
-                            tipo_memorando = '&tipo=todos';
+                            if (tipo_memorando != '&tipo=todos') {
+                                tipo_memorando = '&tipo=todos';
                                 document.ignorarHashChange = true;
                                 document.location.hash = url_inicial + '&doc=' + doc + tipo_memorando;
                             }
@@ -354,7 +354,7 @@
                                 select(tab_memorandosValidos);
                                 $('#memorandosValidos').show();
                                 if (tipo_memorando != '&tipo=validos') {
-                                tipo_memorando = '&tipo=validos';
+                                    tipo_memorando = '&tipo=validos';
                                     document.ignorarHashChange = true;
                                     document.location.hash = url_inicial + '&doc=' + doc + tipo_memorando;
                                 }
@@ -362,8 +362,8 @@
                                 if (valor == 'invalidos') {
                                     select(tab_memorandosInvalidos);
                                     $('#memorandosInvalidos').show();
-                                    if (tipo_memorando!='&tipo=invalidos') {
-                                    tipo_memorando = '&tipo=invalidos';
+                                    if (tipo_memorando != '&tipo=invalidos') {
+                                        tipo_memorando = '&tipo=invalidos';
                                         document.ignorarHashChange = true;
                                         document.location.hash = url_inicial + '&doc=' + doc + tipo_memorando;
                                     }
@@ -371,7 +371,7 @@
                                     if (valor == 'aberto') {
                                         select(tab_memorandosAberto);
                                         $('#memorandosEmAberto').show();
-                                        if (tipo_memorando!='&tipo=aberto') {
+                                        if (tipo_memorando != '&tipo=aberto') {
                                             tipo_memorando = '&tipo=aberto';
                                             document.ignorarHashChange = true;
                                             document.location.hash = url_inicial + '&doc=' + doc + tipo_memorando;
@@ -440,7 +440,7 @@
                         var id = $('tr.row_selected .campoID').text();
                         document.location.href = '#!documentos|aproveitar' + temp + '&id=' + id;
                     });
-                    
+
                 });
 
 
@@ -462,10 +462,10 @@ if (isset($_GET['tipo'])) {
     <script>
         var tipo_select = <?php echo '"' . $_GET['tipo'] . '"'; ?>;
         $(document).ready(function() {
-            if(doc=='oficio'){
-                tipo_oficio = '&tipo='+tipo_select;
-            }else if(doc='memorando'){
-                tipo_memorando = '&tipo='+tipo_select;
+            if (doc == 'oficio') {
+                tipo_oficio = '&tipo=' + tipo_select;
+            } else if (doc = 'memorando') {
+                tipo_memorando = '&tipo=' + tipo_select;
             }
             $('#option_' + doc_select + '_default').removeAttr('selected');
             $('#option_' + doc_select + '_' + tipo_select).attr('selected', 'selected');
