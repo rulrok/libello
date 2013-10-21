@@ -29,9 +29,18 @@
                 if ($i == 0) {
                     echo '<td hidden class="campoID">';
                 } else {
-                    echo '<td>';
+                    echo '<td align="center">';
                 }
-                echo $value[$i];
+                if($i == 5){
+                    echo '<select class="status">';
+                    echo $value[$i] == 'Planejada'? '<option selected="selected" value="Planejada">Planejada</option>':'<option value="Planejada">Planejada</option>';
+                    echo $value[$i] == 'Confirmada'? '<option selected="selected" value="Confirmada">Confirmada</option>':'<option value="Confirmada">Confirmada</option>';
+                    echo $value[$i] == 'Executada'? '<option selected="selected" value="Executada">Executada</option>':'<option value="Executada">Executada</option>';
+                    echo $value[$i] == 'Cancelada'? '<option selected="selected" value="Cancelada">Cancelada</option>':'<option value="Cancelada">Cancelada</option>';
+                    echo '</select>';
+                }else{
+                    echo $value[$i];
+                }
                 echo '</td>';
             }
             echo '</tr>';
@@ -49,7 +58,17 @@
 <script>
     //Este script configura as ações para os botões da página.
     $(document).ready(function() {
-
+        
+        $('.status').change(function(){
+                    var id = $('.campoID', $(this).parent().parent()).text();
+                    var estado = $('option:selected',$(this)).val();
+                     $.getJSON("app/visao/viagens/acoes.php?acao=alterarEstado&idViagem="+id+"&estadoViagem="+estado,
+                                    function(data) {
+                                        document.paginaAlterada = false;
+                                    }
+                            );
+        });
+        
         configurarTabela({
             idTabela: 'gerenciar_viagem',
             editar: '#!viagens|editar&viagemID=',

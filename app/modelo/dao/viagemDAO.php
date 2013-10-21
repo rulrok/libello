@@ -11,6 +11,17 @@ class viagemDAO extends abstractDAO {
      * @param String $condicao A string que precede WHERE na cláusula SQL. Não é necessário escrever a palavra WHERE.
      * @return Array A tabela com o resultado da consulta.
      */
+    public static function atualizarEstadoViagem($id, $estado) {
+        $sql = "UPDATE viagem SET estadoViagem='" . $estado . "' WHERE idViagem = $id";
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            print_r($e);
+            return false;
+        }
+    }
+
     public static function consultar($colunas = "*", $condicao = null) {
 
         if ($condicao == null) {
