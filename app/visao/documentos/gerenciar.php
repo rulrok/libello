@@ -180,7 +180,6 @@
                         $('#b_memorando').removeClass('active');
                         $('#tabela1').show();
                         $('#tabela2').hide();
-
                         if (doc != 'oficio') {
                             doc = 'oficio';
                             document.ignorarHashChange = true;
@@ -246,6 +245,8 @@
                     $('#memorandosInvalidos .tabelaDeEdicao').attr('id', 'tabelaMemorandosInvalidos');
                     $('#memorandosEmAberto .tabelaDeEdicao').attr('id', 'tabelaMemorandosEmAberto');
 
+                    //$('#todosOficios').show();
+
                     tab_todosOficios = $('#tabelaTodosOficios').dataTable({"aaSorting": [[1, "asc"]]});
                     tab_todosValidos = $('#tabelaOficiosValidos').dataTable({"aaSorting": [[1, "asc"]]});
                     tab_todosInvalidos = $('#tabelaOficiosInvalidos').dataTable({"aaSorting": [[1, "asc"]]});
@@ -254,6 +255,10 @@
                     tab_memorandosValidos = $('#tabelaMemorandosValidos').dataTable({"aaSorting": [[1, "asc"]]});
                     tab_memorandosInvalidos = $('#tabelaMemorandosInvalidos').dataTable({"aaSorting": [[1, "asc"]]});
                     tab_memorandosAberto = $('#tabelaMemorandosEmAberto').dataTable({"aaSorting": [[1, "asc"]]});
+
+                    //$('#tabela1').hide();
+                    //$('#tabela2').hide();
+//                    $('#todosOficios').hide();
 
                     mouseTabela(tab_todosOficios);
                     mouseTabela(tab_todosValidos);
@@ -295,6 +300,7 @@
                         if (valor == "todos") {
                             select(tab_todosOficios);
                             $('#todosOficios').show();
+                            tab_todosOficios.fnAdjustColumnSizing();                        
                             if (tipo_oficio != '&tipo=todos') {
                                 tipo_oficio = '&tipo=todos';
                                 document.ignorarHashChange = true;
@@ -304,6 +310,7 @@
                             if (valor == 'validos') {
                                 select(tab_todosValidos);
                                 $('#oficiosValidos').show();
+                                tab_todosValidos.fnAdjustColumnSizing();
                                 if (tipo_oficio != '&tipo=validos') {
                                     tipo_oficio = '&tipo=validos';
                                     document.ignorarHashChange = true;
@@ -313,6 +320,7 @@
                                 if (valor == 'invalidos') {
                                     select(tab_todosInvalidos);
                                     $('#oficiosInvalidos').show();
+                                    tab_todosInvalidos.fnAdjustColumnSizing();
                                     if (tipo_oficio != '&tipo=invalidos') {
                                         tipo_oficio = '&tipo=invalidos';
                                         document.ignorarHashChange = true;
@@ -322,6 +330,7 @@
                                     if (valor == 'aberto') {
                                         select(tab_todosAberto);
                                         $('#oficiosEmAberto').show();
+                                        tab_todosAberto.fnAdjustColumnSizing();
                                         if (tipo_oficio != '&tipo=aberto') {
                                             tipo_oficio = '&tipo=aberto';
                                             document.ignorarHashChange = true;
@@ -344,6 +353,7 @@
                         if (valor == "todos") {
                             select(tab_todosMemorandos);
                             $('#todosMemorandos').show();
+                            tab_todosMemorandos.fnAdjustColumnSizing();
                             if (tipo_memorando != '&tipo=todos') {
                                 tipo_memorando = '&tipo=todos';
                                 document.ignorarHashChange = true;
@@ -353,6 +363,7 @@
                             if (valor == 'validos') {
                                 select(tab_memorandosValidos);
                                 $('#memorandosValidos').show();
+                                tab_memorandosValidos.fnAdjustColumnSizing();
                                 if (tipo_memorando != '&tipo=validos') {
                                     tipo_memorando = '&tipo=validos';
                                     document.ignorarHashChange = true;
@@ -362,6 +373,7 @@
                                 if (valor == 'invalidos') {
                                     select(tab_memorandosInvalidos);
                                     $('#memorandosInvalidos').show();
+                                    tab_memorandosInvalidos.fnAdjustColumnSizing();
                                     if (tipo_memorando != '&tipo=invalidos') {
                                         tipo_memorando = '&tipo=invalidos';
                                         document.ignorarHashChange = true;
@@ -371,6 +383,7 @@
                                     if (valor == 'aberto') {
                                         select(tab_memorandosAberto);
                                         $('#memorandosEmAberto').show();
+                                        tab_memorandosAberto.fnAdjustColumnSizing();
                                         if (tipo_memorando != '&tipo=aberto') {
                                             tipo_memorando = '&tipo=aberto';
                                             document.ignorarHashChange = true;

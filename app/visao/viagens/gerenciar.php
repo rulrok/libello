@@ -65,6 +65,7 @@
                      $.getJSON("app/visao/viagens/acoes.php?acao=alterarEstado&idViagem="+id+"&estadoViagem="+estado,
                                     function(data) {
                                         document.paginaAlterada = false;
+                                        showPopUp('Estado alterado com sucesso!', 'sucesso');
                                     }
                             );
         });
