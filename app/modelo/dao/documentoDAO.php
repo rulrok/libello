@@ -1,8 +1,8 @@
 <?php
 
 require_once 'abstractDAO.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . "/controle-cead/app/modelo/vo/Oficio.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/controle-cead/app/modelo/vo/Memorando.php";
+require_once APP_LOCATION . "modelo/vo/Oficio.php";
+require_once APP_LOCATION . "modelo/vo/Memorando.php";
 
 class documentoDAO extends abstractDAO {
    

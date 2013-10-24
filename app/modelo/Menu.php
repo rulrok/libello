@@ -1,8 +1,8 @@
 <?php
 
-include_once ROOT . 'app/modelo/vo/Usuario.php';
-include_once ROOT . 'app/modelo/dao/usuarioDAO.php';
-include_once ROOT . 'app/modelo/dao/areaDAO.php';
+include_once APP_LOCATION . 'modelo/vo/Usuario.php';
+include_once APP_LOCATION . 'modelo/dao/usuarioDAO.php';
+include_once APP_LOCATION . 'modelo/dao/areaDAO.php';
 require_once 'enumeracao/Ferramenta.php';
 require_once 'enumeracao/Area.php';
 require_once 'enumeracao/TipoCurso.php';

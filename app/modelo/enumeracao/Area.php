@@ -1,6 +1,6 @@
 <?php
 
-require_once ROOT . "app/modelo/dao/papelDAO.php";
+require_once APP_LOCATION . "modelo/dao/papelDAO.php";
 
 final class Area {
 

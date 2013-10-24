@@ -728,13 +728,14 @@ li[id$=Link]:before{
 }
 .menuContainer:hover{
     opacity: 1;
-    /*    min-height: 56px;
-        background: url("../imagens/backgroundMenu.png");*/
+        min-height: 56px;
+        background: url("../imagens/backgroundMenu.png");
 
 }
 .menuContainer div.menu:hover{
     opacity: 1;
     min-height: 56px;
+    max-height: 600px; /* Correção para quando o menu cola e fica quebrado em mais de uma linha*/
     background: url("../imagens/backgroundMenu.png");
 
 }

@@ -1,8 +1,8 @@
 <?php
 
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/biblioteca/Mvc/Controlador.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/app/modelo/dao/documentoDAO.php';
+include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
+include_once APP_LOCATION . 'modelo/dao/documentoDAO.php';
 require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
 
 class ControladorDocumentos extends Controlador {

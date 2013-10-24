@@ -1,8 +1,8 @@
 <?php
 
 include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
-include_once ROOT . 'app/modelo/ComboBoxPermissoes.php';
-include_once ROOT . 'app/modelo/ComboBoxPapeis.php';
+include_once APP_LOCATION . 'modelo/ComboBoxPermissoes.php';
+include_once APP_LOCATION . 'modelo/ComboBoxPapeis.php';
 require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
 
 class ControladorUsuarios extends Controlador {

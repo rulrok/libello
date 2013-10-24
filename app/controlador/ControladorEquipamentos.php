@@ -1,6 +1,6 @@
 <?php
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/biblioteca/Mvc/Controlador.php';
+include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
 require_once APP_LOCATION . "modelo/ComboBoxPapeis.php";
 require_once APP_LOCATION . "modelo/ComboBoxUsuarios.php";
 include_once APP_LOCATION . 'modelo/ComboBoxPolo.php';

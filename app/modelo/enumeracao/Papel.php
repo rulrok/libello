@@ -1,5 +1,6 @@
 <?php
-require_once ROOT."app/modelo/dao/papelDAO.php";
+
+require_once APP_LOCATION . "modelo/dao/papelDAO.php";
 
 final class Papel {
 
@@ -10,13 +11,13 @@ final class Papel {
     const GESTOR = 2;
     const PROFESSOR = 3;
     const ALUNO = 4;
-    
-    public static function get_nome_papel($papelID){
+
+    public static function get_nome_papel($papelID) {
         $retorno = papelDAO::obterNomePapel($papelID);
         return $retorno;
     }
-    
-    public static function get_id_papel($nomePapel){
+
+    public static function get_id_papel($nomePapel) {
         $retorno = papelDAO::obterIdPapel($nomePapel);
         return $retorno;
     }

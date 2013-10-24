@@ -13,12 +13,12 @@ if (!defined("APP_CONFIGS")) {
     define("APP_LOCATION", ROOT . "app/");
 
     define("WEB_SERVER_FOLDER","controle-cead/");
-    define("WEB_SERVER_ADDRESS", "http://localhost/".WEB_SERVER_FOLDER);
+    define("WEB_SERVER_ADDRESS", "http://172.16.11.1:8888/".WEB_SERVER_FOLDER);
 
     define("DATABASE_SERVER_IP", "127.0.0.1");
     define("DATABASE_SERVER_DBNAME", "novo_controle_cead");
     define("DATABASE_SERVER_USER", "root");
-    define("DATABASE_SERVER_PASSWORD", "");
+    define("DATABASE_SERVER_PASSWORD", "root");
 
     define("SMTP_SERVER_IP", "200.131.224.99");
     define("SMTP_SERVER_PORT", "587");

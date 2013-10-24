@@ -2,9 +2,9 @@
 
 include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
 include_once BIBLIOTECA_DIR . 'seguranca/criptografia.php';
-include_once ROOT . 'app/modelo/ComboBoxCurso.php';
-include_once ROOT . 'app/modelo/ComboBoxPolo.php';
-include_once ROOT . 'app/modelo/ComboBoxUsuarios.php';
+include_once APP_LOCATION . 'modelo/ComboBoxCurso.php';
+include_once APP_LOCATION . 'modelo/ComboBoxPolo.php';
+include_once APP_LOCATION . 'modelo/ComboBoxUsuarios.php';
 
 class ControladorViagens extends Controlador {
 
@@ -21,7 +21,7 @@ class ControladorViagens extends Controlador {
     }
 
     public function acaoGerenciar() {
-        $this->visao->viagens = viagemDAO::consultar("idViagem,nomeCurso,concat(dataIda,' - ',horaIda) as ida,concat(dataVolta,' - ',horaVolta) as volta,motivo,estado,diarias,concat(IFNULL(nomePolo,''),IFNULL(outroDestino,'')) as destino");
+        $this->visao->viagens = viagemDAO::consultar("idViagem,nomeCurso,concat(dataIda,' - ',horaIda) as ida,concat(dataVolta,' - ',horaVolta) as volta,motivo,estadoViagem,diarias,concat(IFNULL(nomePolo,''),IFNULL(outroDestino,'')) as destino");
         $i = 0;
         foreach ($this->visao->viagens as $value) {
             $value[0] = fnEncrypt($value[0]);

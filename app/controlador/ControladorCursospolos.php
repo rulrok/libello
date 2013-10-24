@@ -1,9 +1,9 @@
 <?php
 
-include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/biblioteca/Mvc/Controlador.php';
+include_once BIBLIOTECA_DIR.'Mvc/Controlador.php';
 include_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
-include_once ROOT . 'app/modelo/ComboBoxAreas.php';
-include_once ROOT . 'app/modelo/ComboBoxCurso.php';
+include_once APP_LOCATION . 'modelo/ComboBoxAreas.php';
+include_once APP_LOCATION . 'modelo/ComboBoxCurso.php';
 
 require_once APP_LOCATION . "modelo/Mensagem.php";
 require_once APP_LOCATION . "modelo/vo/Polo.php";

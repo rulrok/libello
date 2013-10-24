@@ -1,5 +1,6 @@
 <?php
-require_once ROOT."app/modelo/dao/ferramentaDAO.php";
+
+require_once APP_LOCATION . "modelo/dao/ferramentaDAO.php";
 
 final class Ferramenta {
 
@@ -14,8 +15,8 @@ final class Ferramenta {
     const CONTROLE_VIAGENS = 6;
     const TAREFAS = 7;
     const CONTROLE_PAGAMENTOS = 8;
-    
-    public static function get_nome_ferramenta($ferramentaID){
+
+    public static function get_nome_ferramenta($ferramentaID) {
         $retorno = ferramentaDAO::obterNomeFerramenta($ferramentaID);
         return $retorno;
     }
