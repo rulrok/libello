@@ -189,18 +189,6 @@ class ControladorDocumentos extends Controlador {
             </select>";
     }
 
-    function menuGerenciar() {
-        $menu = " <div class=\"btn-toolbar\">
-                    <div class=\"btn-group\">
-                        <button class=\"btn btn-adicionar\"><i class=\"icon-user\"></i> Adicionar novo</button>
-                        <button class=\"btn btn-editar\" href=\"#\"><i class=\"icon-edit\"></i> Editar</button>
-                        <button class=\"btn btn-danger btn-deletar\" href=\"#\"><i class=\"icon-remove\"></i> Excluir</button>
-                    </div>
-                </div>";
-
-        return $menu;
-    }
-
     function novoOficio($idusuario, $assunto, $corpo, $tratamento, $destino, $cargo_destino, $data, $estadoEdicao, $tipoSigla, $referencia, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $numOficio) {
         $dao = new documentoDAO();
         $dao->inserirOficio($idusuario, $assunto, $corpo, $tratamento, $destino, $cargo_destino, $data, $estadoEdicao, $tipoSigla, $referencia, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $numOficio);

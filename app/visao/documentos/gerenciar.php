@@ -235,7 +235,6 @@
 
                 $(document).ready(function() {
 
-
                     $('#todosOficios .tabelaDeEdicao').attr('id', 'tabelaTodosOficios');
                     $('#oficiosValidos .tabelaDeEdicao').attr('id', 'tabelaOficiosValidos');
                     $('#oficiosInvalidos .tabelaDeEdicao').attr('id', 'tabelaOficiosInvalidos');
@@ -245,8 +244,6 @@
                     $('#memorandosInvalidos .tabelaDeEdicao').attr('id', 'tabelaMemorandosInvalidos');
                     $('#memorandosEmAberto .tabelaDeEdicao').attr('id', 'tabelaMemorandosEmAberto');
 
-                    //$('#todosOficios').show();
-
                     tab_todosOficios = $('#tabelaTodosOficios').dataTable({"aaSorting": [[1, "asc"]]});
                     tab_todosValidos = $('#tabelaOficiosValidos').dataTable({"aaSorting": [[1, "asc"]]});
                     tab_todosInvalidos = $('#tabelaOficiosInvalidos').dataTable({"aaSorting": [[1, "asc"]]});
@@ -255,10 +252,6 @@
                     tab_memorandosValidos = $('#tabelaMemorandosValidos').dataTable({"aaSorting": [[1, "asc"]]});
                     tab_memorandosInvalidos = $('#tabelaMemorandosInvalidos').dataTable({"aaSorting": [[1, "asc"]]});
                     tab_memorandosAberto = $('#tabelaMemorandosEmAberto').dataTable({"aaSorting": [[1, "asc"]]});
-
-                    //$('#tabela1').hide();
-                    //$('#tabela2').hide();
-//                    $('#todosOficios').hide();
 
                     mouseTabela(tab_todosOficios);
                     mouseTabela(tab_todosValidos);

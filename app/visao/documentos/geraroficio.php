@@ -1,4 +1,4 @@
-
+<title>Gerar Oficio</title>
 <script src="publico/js/jquery/jquery-te-1.0.5.min.js" type="text/javascript"></script>
 <link href='publico/css/jquery-te-Style.css' rel='stylesheet' type="text/css"/>
 
@@ -6,7 +6,9 @@
 
     $(document).ready(function() {
         $("#corpo").jqte();
-        $('html, body').animate({scrollTop: 0},'fast');
+        $('html, body').animate({scrollTop: 0}, 'fast');
+        varrerCampos();
+        formularioAjax();
     });
 
     function confirmaAcao(acao) {
@@ -15,46 +17,46 @@
             $('#form1').attr("target", "_blank");
             $('#form1').attr({action: 'app/modelo/relatoriosPDF/gerarOficio.php?booledit=0'});//'../../modelo/relatoriosPDF/gerarOficio.php?booledit=0'});
             var conf = confirm('Atenção, o ofício será gerado e registrado permanentemente! Tem certeza?');
-            if(conf){
+            if (conf) {
                 capturaNumOficio();
                 alert('Ofício gerado com sucesso.');
-            }else{
+            } else {
                 desbloqueia();
             }
         } else {
             if (acao == 'salvar') {
                 var conf = confirm('Atenção, o ofício será salvo! Tem certeza?');
-                if(conf){
+                if (conf) {
                     salvar();
                     alert('Oficio salvo com sucesso!');
-                }else{
+                } else {
                     desbloqueia();
                 }
             }
         }
     }
 
-    function salvar(){
+    function salvar() {
         $.getJSON("app/visao/documentos/acoes.php?acao=salvarOficio&booledit=0",
-                        {assunto: $('#assunto').val(),
-                            corpo: $('#corpo').val(),
-                            destino: $("#destino").val(),
-                            referencia: $("#referencia").val(),
-                            dia: $("#dia").val(),
-                            mes: $("#mes").val(),
-                            sigla: $("#sigla").val(),
-                            remetente: $("#remetente").val(),
-                            cargo_remetente: $("#cargo_remetente").val(),
-                            i_remetente: $("#i_remetente").val(),
-                            remetente2: $("#remetente2").val(),
-                            cargo_remetente2: $("#cargo_remetente2").val(),
-                            tratamento: $("#tratamento").val(),
-                            cargo_destino: $("#cargo_destino").val() }, function(j) {
-                    
-                        document.paginaAlterada = false;
-                        document.location.reload();
-                    $('html, body').animate({scrollTop: 0},'slow');
-                });
+                {assunto: $('#assunto').val(),
+                    corpo: $('#corpo').val(),
+                    destino: $("#destino").val(),
+                    referencia: $("#referencia").val(),
+                    dia: $("#dia").val(),
+                    mes: $("#mes").val(),
+                    sigla: $("#sigla").val(),
+                    remetente: $("#remetente").val(),
+                    cargo_remetente: $("#cargo_remetente").val(),
+                    i_remetente: $("#i_remetente").val(),
+                    remetente2: $("#remetente2").val(),
+                    cargo_remetente2: $("#cargo_remetente2").val(),
+                    tratamento: $("#tratamento").val(),
+                    cargo_destino: $("#cargo_destino").val()}, function(j) {
+
+            document.paginaAlterada = false;
+            document.location.reload();
+            $('html, body').animate({scrollTop: 0}, 'slow');
+        });
     }
 
     function bloqueia() {
@@ -123,7 +125,7 @@
             document.paginaAlterada = false;
             document.location.reload();
             //ajax('index.php?c=documentos&a=gerarOficio');
-            
+
         });
     }
 
@@ -143,7 +145,7 @@
 
 </script>
 
-<form id="form1" name="form1" method="post" target="_blank" >
+<form id="ajaxForm" name="form1" method="post" target="_blank" >
     <table align="center">
 
         <tr>
@@ -152,7 +154,7 @@
             </td>
         </tr>
     </table>
-    
+
     <table style='width: 794px; height: 1123px; font-family:"Times New Roman",Georgia,Serif; font-size: 15px; background-color: #FFF;' border="0" align="center">
         <tr height="189">
             <td width="113" rowspan="20"></td>
@@ -180,29 +182,29 @@
         <tr height="40"><td></td></tr>
         <tr height="10">
             <td>
-                <input type="text" id="tratamento" name="tratamento" onkeyup="liberarCadastro()" size="15"/><span class="classeExemploOficio"> Ex: Ao Sr.</span>
+                <input type="text" required id="tratamento" name="tratamento" onkeyup="liberarCadastro()" size="15"/><span class="classeExemploOficio"> Ex: Ao Sr.</span>
             </td>
         </tr>
         <tr height="10">
             <td>
-                <input type="text" id="destino" name="destino" onkeyup="liberarCadastro()" size="30"/><span class="classeExemploOficio"> Ex: Paulo Márcio de Faria e Silva</span>
+                <input type="text" required id="destino" name="destino" onkeyup="liberarCadastro()" size="30"/><span class="classeExemploOficio"> Ex: Paulo Márcio de Faria e Silva</span>
             </td>
         </tr>
         <tr height="10">
             <td>
-                <input type="text" id="cargo_destino" name="cargo_destino" onkeyup="liberarCadastro()" size="40"/><span class="classeExemploOficio"> Ex: Reitor da Universidade Federal de Alfenas</span>
+                <input type="text" required id="cargo_destino" name="cargo_destino" onkeyup="liberarCadastro()" size="40"/><span class="classeExemploOficio"> Ex: Reitor da Universidade Federal de Alfenas</span>
             </td>
         </tr>
         <tr height="40"><td></td></tr>
         <tr height="30">
             <td>
-                Assunto: <input type="text" id="assunto" name="assunto" onkeyup="liberarCadastro()" size="50"/><span class="classeExemploOficio"> Ex: Indicação de nome para... </span>
+                Assunto: <input type="text" required id="assunto" name="assunto" onkeyup="liberarCadastro()" size="50"/><span class="classeExemploOficio"> Ex: Indicação de nome para... </span>
             </td>
         </tr>
         <tr height="40"><td></td></tr>
         <tr height="30">
             <td align="left">
-                <input type="text" id="referencia" name="referencia" onkeyup="liberarCadastro()" size="25"/><span class="classeExemploOficio"> Ex: Magnífico Reitor, </span>
+                <input type="text" required id="referencia" name="referencia" onkeyup="liberarCadastro()" size="25"/><span class="classeExemploOficio"> Ex: Magnífico Reitor, </span>
             </td>
         </tr>
         <tr height="40"><td></td></tr>
@@ -231,12 +233,12 @@
                         </tr>
                         <tr height="20">
                             <td align="center">
-                                <input type="text" id="remetente" name="remetente" onkeyup="liberarCadastro()" size="50" style="margin-left: 125px"/><span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>
+                                <input type="text" required id="remetente" name="remetente" onkeyup="liberarCadastro()" size="50" style="margin-left: 125px"/><span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>
                             </td>
                         </tr>
                         <tr height="20">
                             <td align="center">
-                                <input type="text" id="cargo_remetente" name="cargo_remetente" onkeyup="liberarCadastro()" size="25" style="margin-left: 110px"/><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
+                                <input type="text" required id="cargo_remetente" name="cargo_remetente" onkeyup="liberarCadastro()" size="25" style="margin-left: 110px"/><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
                             </td>
                             <td>
                                 <a title="Adicionar Remetente" id=""  onclick="adicionarRemetente();" class="btn" href="javascript:void(0);" ><i class="icon-plus"></i></a>
@@ -280,7 +282,7 @@
 <!--                                        <input type="button" class="btn" value="Voltar" name="b_voltar" name="b_voltar" onclick=""/>-->
             </td>
         </tr>
-        
+
         </tr>
         <tr>
             <td>

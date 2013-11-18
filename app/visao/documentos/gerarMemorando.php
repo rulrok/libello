@@ -1,10 +1,4 @@
-<?php
-$controlador = new ControladorDocumentos();
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-?>
+<title>Gerar Memorando</title>
 <script src="publico/js/jquery/jquery-te-1.0.5.min.js" type="text/javascript"></script>
 <link href='publico/css/jquery-te-Style.css' rel='stylesheet' type="text/css"/>
 <script type="text/javascript">
