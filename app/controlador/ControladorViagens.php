@@ -29,8 +29,8 @@ class ControladorViagens extends Controlador {
         }
         $this->renderizar();
     }
-    
-    public function acaoEditar(){
+
+    public function acaoEditar() {
         $this->renderizar();
     }
 
