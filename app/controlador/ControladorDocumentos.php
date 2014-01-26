@@ -3,11 +3,14 @@
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/biblioteca/Mvc/Controlador.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/app/modelo/dao/documentoDAO.php';
+require_once APP_LOCATION."modelo/enumeracao/Ferramenta.php";
 require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
+require_once BIBLIOTECA_DIR . "seguranca/Permissao.php";
 
 class ControladorDocumentos extends Controlador {
 
     public function acaoGerenciar() {
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->visao->todosOficios = $this->listarOficios();
         $this->visao->oficiosValidos = $this->listarOficios('validos');
         $this->visao->oficiosInvalidos= $this->listarOficios('invalidos');
@@ -20,18 +23,21 @@ class ControladorDocumentos extends Controlador {
     }
     
     public function acaoConsultar(){
+        $this->visao->acessoMinimo = Permissao::CONSULTA;
         $this->visao->oficios = $this->listarOficios('validos');
         $this->visao->memorandos = $this->listarMemorandos('validos');
         $this->renderizar();
     }
 
     public function acaoGeraroficio() {
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->visao->comboDia = $this->comboDia();
         $this->visao->comboMes = $this->comboMes();
         $this->renderizar();
     }
 
     public function acaoAproveitarOficio(){
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         $ofc = documentoDAO::consultar('oficio', 'idOficio = ' . fnDecrypt($_GET['id']));
         
         $temp = $ofc[0];
@@ -55,6 +61,7 @@ class ControladorDocumentos extends Controlador {
     }
     
     public function acaoEditarOficio(){
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $ofc = documentoDAO::consultar('oficio', 'idOficio = ' . fnDecrypt($_GET['id']));
         
         $temp = $ofc[0];
@@ -79,11 +86,12 @@ class ControladorDocumentos extends Controlador {
     }
     
     public function acaoGerarRelatorio() {
+        $this->visao->acessoMinimo = Permissao::CONSULTA;
         $this->renderizar();
     }
 
     public function acaoGerarMemorando() {
-        
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->visao->comboDia = $this->comboDia();
         $this->visao->comboMes = $this->comboMes();
         
@@ -91,6 +99,7 @@ class ControladorDocumentos extends Controlador {
     }
     
     public function acaoEditarMemorando(){
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $mem = documentoDAO::consultar('memorando', 'idMemorando = ' . fnDecrypt($_GET['id']));
         
         $temp = $mem[0];
@@ -113,6 +122,7 @@ class ControladorDocumentos extends Controlador {
     }
     
     public function acaoAproveitarMemorando(){
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         $mem = documentoDAO::consultar('memorando', 'idMemorando = ' . fnDecrypt($_GET['id']));
         
         $temp = $mem[0];
@@ -202,32 +212,38 @@ class ControladorDocumentos extends Controlador {
     }
 
     function novoOficio($idusuario, $assunto, $corpo, $tratamento, $destino, $cargo_destino, $data, $estadoEdicao, $tipoSigla, $referencia, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $numOficio) {
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         $dao = new documentoDAO();
         $dao->inserirOficio($idusuario, $assunto, $corpo, $tratamento, $destino, $cargo_destino, $data, $estadoEdicao, $tipoSigla, $referencia, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $numOficio);
     }
 
     function salvarOficio($idusuario, $assunto, $corpo, $tratamento, $destino, $cargo_destino, $data, $estadoEdicao, $tipoSigla, $referencia, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $numOficio) {
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         $dao = new documentoDAO();
         $dao->inserirOficio($idusuario, $assunto, $corpo, $tratamento, $destino, $cargo_destino, $data, $estadoEdicao, $tipoSigla, $referencia, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $numOficio);
     }
     
     function deletarOficio($idoficio) {
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $dao = new documentoDAO();
         $retorno = $dao->deleteOficio($idoficio);
         return $retorno;
     }
 
     function invalidarOficio($idoficio){
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $dao = new documentoDAO();
         $dao->update_invalidarOficio($idoficio);
     }
     
     function atualizarOficio($idoficio, $assunto, $corpo, $tratamento, $destino, $cargo_destino, $data, $estadoEdicao, $tipoSigla, $referencia, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $numOficio) {
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $dao = new documentoDAO();
         $dao->update_oficioSalvo($idoficio, $assunto, $corpo, $tratamento, $destino, $cargo_destino, $data, $estadoEdicao, $tipoSigla, $referencia, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $numOficio);
     }
 
     function retornaNumOficio() {
+        $this->visao->acessoMinimo = Permissao::CONSULTA;
         //$busca = selectMaxNumOficio();
         // $dao = new documentoDAO();
         $busca = documentoDAO::consultar("oficio", "idOficio = (SELECT idOficio FROM oficio WHERE numOficio = (SELECT max(numOficio) FROM oficio WHERE numOficio > (-1)))");
@@ -241,6 +257,7 @@ class ControladorDocumentos extends Controlador {
     }
 
     function retornaNumMemorando() {
+        $this->visao->acessoMinimo = Permissao::CONSULTA;
         $busca = documentoDAO::consultar("memorando", "idMemorando = (SELECT idMemorando FROM memorando WHERE numMemorando = (SELECT max(numMemorando) FROM memorando WHERE numMemorando > (-1)))");
         if ($busca != null) {
             $numMem = $busca[0];
@@ -253,11 +270,13 @@ class ControladorDocumentos extends Controlador {
     }
 
     function salvarMemorando($idusuario, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao) {
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         $dao = new documentoDAO();
         $dao->inserirMemorando($idusuario, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao);
     }
 
     function novoMemorando($idusuario, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao) {
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         $dao = new documentoDAO();
         $retorno = $dao->inserirMemorando($idusuario, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao);
 
@@ -265,22 +284,26 @@ class ControladorDocumentos extends Controlador {
     }
 
     function invalidarMemorando($idmemorando) {
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $dao = new documentoDAO();
         $dao->update_invalidarMemorando($idmemorando);
     }
 
     function deletarMemorando($idmemorando) {
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $dao = new documentoDAO();
         $retorno = $dao->deleteMemorando($idmemorando);
         return $retorno;
     }
 
     function atualizarMemorando($idmemorando, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao) {
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $dao = new documentoDAO();
         $dao->update_memorandoSalvo($idmemorando, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao);
     }
 
     function listarOficios($tipo = 'todos') {
+        $this->visao->acessoMinimo = Permissao::CONSULTA;
         $oficios = documentoDAO::consultar();
         $num_linhas = count($oficios);
         $retorno = '';
@@ -328,6 +351,7 @@ class ControladorDocumentos extends Controlador {
     }
 
     function listarMemorandos($tipo = 'todos') {
+        $this->visao->acessoMinimo = Permissao::CONSULTA;
         $oficios = documentoDAO::consultar('memorando');
         $num_linhas = count($oficios);
         
@@ -375,7 +399,9 @@ class ControladorDocumentos extends Controlador {
         return $retorno;
     }
 
-   
+    public function idFerramentaAssociada() {
+        return Ferramenta::CONTROLE_DOCUMENTOS;
+    }
 
 }
 

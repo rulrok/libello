@@ -2,6 +2,7 @@
 
 include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
 include_once BIBLIOTECA_DIR . 'seguranca/seguranca.php';
+include_once BIBLIOTECA_DIR . 'seguranca/Permissao.php';
 include_once __DIR__ . '/../modelo/dao/usuarioDAO.php';
 
 class ControladorSistema extends Controlador {
@@ -43,7 +44,12 @@ class ControladorSistema extends Controlador {
         $this->renderizar();
     }
     public function acaoAdministracao(){
+        $this->visao->acessoMinimo = Permissao::ADMINISTRADOR;
         $this->renderizar();
+    }
+
+    public function idFerramentaAssociada() {
+        return Ferramenta::DESCONHECIDO;
     }
 
 }

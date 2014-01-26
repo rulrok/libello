@@ -42,6 +42,48 @@ if (preg_match("#.*" . WEB_SERVER_FOLDER . "?.*#", $_SERVER['REQUEST_URI'])) {
         }
     }
 
+//
+//    function carregarVisao($classe) {
+//        $arquivo =  $classe . ".php";
+//        echo $arquivo;
+//        if (file_exists($arquivo)){
+//            require $arquivo;
+//        }
+//    }
+//
+//    spl_autoload_register("carregarVisao");
+
+    function usuarioAutorizado(Usuario $usuario, $acessoMinimo) {
+        $diretorio = strtolower(Mvc::pegarInstancia()->pegarControlador());
+        $arquivo = strtolower(Mvc::pegarInstancia()->pegarAcao());
+
+        $nomeClasseControlador = 'Controlador' . ucfirst($diretorio);
+        $controlador = new $nomeClasseControlador;
+
+        if ($controlador instanceof ControladorInicial) {
+            return true;
+        }
+
+        $idFerramentaAssociada = $controlador->idFerramentaAssociada();
+        $permissoes = usuarioDAO::obterPermissoes($usuario->get_id());
+        foreach ($permissoes as $permissao_ferramenta) { //Procura pela ferramenta
+            if ($permissao_ferramenta['idFerramenta'] == $idFerramentaAssociada) {
+                //Achou a ferramenta
+                if ($permissao_ferramenta['idPermissao'] != Permissao::SEM_ACESSO) {
+                    //TODO verificar granularidade do acesso
+                    if ($permissao_ferramenta['idPermissao'] >= $acessoMinimo) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false; //Não tem nem acesso à ferramenta, trivial
+                }
+            }
+        }
+        return false;
+    }
+
     /**
      * Encerra a sessão e todos os seus dados.
      */

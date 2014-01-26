@@ -29,30 +29,30 @@ if (isset($_GET['l'])) {
 }
 ?>
 <script id="pos_script">
-        $(document).ready(function() {
+    $(document).ready(function() {
 
-            $('#abas a').on('click', function() {
-                switch (this.innerHTML.toLowerCase()) {
-                    case "interno":
-                        local = "interno";
-                        break;
-                    case "externo":
-                        local = "externo";
-                        break;
-                    case "baixa":
-                        local = "baixa";
-                        break;
-                    default:
-                        local = "interno";
-                }
-                history.replaceState(null, null, "#!equipamentos|consultar&l=" + local)
-            });
-            var i = <?php echo $local; ?>;
-            var local;
-            //Script necessário para as abas
-            var aba = $('#abas a')[i];
-            $(aba).tab('show');
-            $(aba).click();
-
+        $('#abas a').on('click', function() {
+            switch (this.innerHTML.toLowerCase()) {
+                case "interno":
+                    local = "interno";
+                    break;
+                case "externo":
+                    local = "externo";
+                    break;
+                case "baixa":
+                    local = "baixa";
+                    break;
+                default:
+                    local = "interno";
+            }
+            history.replaceState(null, null, "#!equipamentos|consultar&l=" + local);
         });
+        var i = <?php echo $local; ?>;
+        var local;
+        //Script necessário para as abas
+        var aba = $('#abas a')[i];
+        $(aba).tab('show');
+        $(aba).click();
+
+    });
 </script>

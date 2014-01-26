@@ -1,5 +1,4 @@
 <?php
-
 class Usuario {
 
     var $idUsuario;

@@ -2,6 +2,7 @@
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/biblioteca/Mvc/Controlador.php';
 include_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
+include_once BIBLIOTECA_DIR . "seguranca/Permissao.php";
 include_once ROOT . 'app/modelo/ComboBoxAreas.php';
 include_once ROOT . 'app/modelo/ComboBoxCurso.php';
 
@@ -13,27 +14,29 @@ require_once APP_LOCATION . "visao/verificadorFormularioAjax.php";
 class ControladorCursospolos extends Controlador {
 
     public function acaoNovoPolo() {
-
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->renderizar();
     }
 
     public function acaoVerificarNovoPolo() {
-
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->renderizar();
     }
 
     public function acaoNovoCurso() {
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->visao->comboArea = ComboBoxAreas::montarTodasAsAreas();
         $this->visao->comboTipoCurso = ComboBoxCurso::montarTodosOsTipos();
         $this->renderizar();
     }
 
     public function acaoVerificarNovoCurso() {
-
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->renderizar();
     }
 
     public function acaoGerenciarcursos() {
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->visao->cursos = cursoDAO::consultar("idCurso,nomeCurso,nomeArea,nomeTipoCurso");
         $i = 0;
         foreach ($this->visao->cursos as $value) {
@@ -44,6 +47,7 @@ class ControladorCursospolos extends Controlador {
     }
 
     public function acaoGerenciarpolos() {
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->visao->polos = poloDAO::consultar("idPolo,nomePolo,cidade,estado");
         $i = 0;
         foreach ($this->visao->polos as $value) {
@@ -54,6 +58,7 @@ class ControladorCursospolos extends Controlador {
     }
 
     public function acaoEditarCurso() {
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         if (isset($_GET['cursoID']) || isset($_POST['cursoID'])) {
             $this->visao->comboArea = ComboBoxAreas::montarTodasAsAreas();
             $this->visao->comboTipoCurso = ComboBoxCurso::montarTodosOsTipos();
@@ -71,18 +76,22 @@ class ControladorCursospolos extends Controlador {
     }
 
     public function acaoVerificarEdicaoCurso() {
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }
 
     public function acaoRemoverCurso() {
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }
 
     public function acaoRemoverPolo() {
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }
 
     public function acaoEditarPolo() {
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         if (isset($_GET['poloID']) || isset($_POST['poloID'])) {
             $poloID = fnDecrypt($_REQUEST['poloID']);
             $this->visao->poloID = $_REQUEST['poloID'];
@@ -98,7 +107,12 @@ class ControladorCursospolos extends Controlador {
     }
 
     public function acaoVerificarEdicaoPolo() {
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
+    }
+
+    public function idFerramentaAssociada() {
+        return Ferramenta::CURSOS_E_POLOS;
     }
 
 }

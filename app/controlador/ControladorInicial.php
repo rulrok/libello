@@ -23,7 +23,7 @@ class ControladorInicial extends Controlador {
         $this->renderizar();
     }
 
-    public function acaoHomepage() {
+    public function acaoHomepage() {;
         $usuario = obterUsuarioSessao();
         $this->visao->usuario = $usuario->get_PNome();
 //        $this->visao->papel = usuarioDAO::consultarPapel($usuario->get_email());
@@ -33,6 +33,16 @@ class ControladorInicial extends Controlador {
 
     public function acao404() {
         $this->renderizar();
+        exit;
+    }
+    
+//    public function acaoAcessoProibido(){
+//        $this->renderizar();
+//        exit;
+//    }
+
+    public function idFerramentaAssociada() {
+        return Ferramenta::DESCONHECIDO;
     }
 
 }
