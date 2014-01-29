@@ -16,6 +16,7 @@ abstract class Controlador {
         $arquivo = strtolower(Mvc::pegarInstancia()->pegarAcao()) . ".php";
         $this->visao->renderizar($diretorio, $arquivo);
     }
+    
 
     public abstract function idFerramentaAssociada();
 }

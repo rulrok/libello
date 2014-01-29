@@ -1,114 +1,87 @@
 <title>Nova viagem</title>
 <!-- Início da página -->
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=viagens&a=verificarnova">
+<div id="showimg"> </div>
+<!--<form class="table centered" id="upload-image-form" >
     <fieldset>
-        <legend>Dados da viagem</legend>
+        <legend>Imagem</legend>
+         Inicio do carregador de imagem 
+        
+
+        <div class="cell lastcell">
+            <input type="submit" value="Submit Form" class="submit-btn">
+        </div>
+         Final do carregador de imagem 
+    </fieldset>-->
+<!--</form>-->
+<form class="table centered" id="upload-image-form-ajax" method="post" action="index.php?c=imagens&a=verificarnova">
+    <fieldset>
+        <div class="cell">
+            <div class="row requiredRow">
+                <label id="image-upload-ariaLabel" for="picture">Select Image:</label>
+                <input type="file" size="40" name="image-upload" id="image-upload"> 
+                <button id="remove-image-upload">
+                    <img src="publico/imagens/cross.png" /> Remove
+                </button>
+            </div>
+        </div>
+
+        <div class="cell">
+            <h2>Generated Image Thumbnail:</h2>
+            <div id="image_preview_wrap">
+                <!--<img class="loading" alt="loading..." src="publico/imagens/loading.gif">-->
+                <img alt="picture" src="publico/imagens/350x150.jpg" id="image_preview">
+            </div>
+        </div>
+
+        <div class="cell">
+            <h2>Saved Original Image:</h2>
+            <div id="image_original_wrap">
+                <!--<img class="loading" alt="loading..." src="publico/imagens/loading.gif">-->
+                <img alt="The original uploaded image will appear here..." src="" id="image_original">
+            </div>
+        </div>
+
+    </fieldset>
+    <fieldset>
+        <legend>Dados da imagem</legend>
         <p class="centered centeredText boldedText">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png"> são obrigatórios</label>
         <div class="line">
-            <label for='curso'>Curso vinculado</label>
-            <?php echo $this->cursos; ?>
+            <label for='nome'>Nome da imagem</label>
+            <input required type="text" id="nome" name="nome" class="input-large" placeholder="Nome da imagem">
+        </div>
+        <div class="line">
+            <label for='curso'>Categoria</label>
+            <?php // echo $this->cursos;   ?>
+            <select>
+                <option>Logos</option>
+                <option>Ilustrações</option>
+                <option>Comemorativos</option>
+                <option>Oficiais</option>
+            </select>
         </div>
         <div class="line" >
-            <label for='polo'>Polo destino</label>
-            <?php echo $this->polos; ?>
+            <label for='polo'>Subcategoria 1</label>
+            <?php // echo $this->polos;   ?>
         </div>
-        <div class="line">
-            <label for="responsavel">Responsável</label>
-            <?php echo $this->responsavel; ?>
+        <div class="line" >
+            <label for='polo'>Subcategoria 2</label>
+            <?php // echo $this->polos;   ?>
         </div>
-        <hr>
-        <div class="line">
-            <label for='dataIda'>Data ida</label>
-            <input type="text" readonly required id="dataIda" class=" input-large campoData" placeholder="Clique para escolher" name="dataIda" >
-            <label for='horaIda'>Hora ida</label>
-            <input type="text" readonly required id="horaIda" class=" input-large campoHora" placeholder="Clique para escolher" name="horaIda" >
-        </div>
-        <div class="line">
-            <label for='dataVolta'>Data volta</label>
-            <input type="text" readonly required id="dataVolta" class=" input-large campoData" placeholder="Clique para escolher" name="dataVolta" >
-            <label for='horaVolta'>Hora volta</label>
-            <input type="text" readonly required id="horaVolta" class=" input-large campoHora" placeholder="Clique para escolher" name="horaVolta"  >
-        </div>
-        <hr>
-        <div class="line">
-            <label for='motivo'>Motivo da viagem</label>
-            <select required id="motivo" class="input-xlarge" name="motivo">
-                <option value="default" selected>-- Escolha um motivo --</option>
-                <option value="acompanhamento">Acompanhamento</option>
-                <option value="aula">Aula</option>
-                <option value="avaliação">Avaliação</option>
-                <option value="revisão">Revisão</option>
-                <option value="outro">Outro</option>
-            </select>
-        </div>
-        <div class="line">
-            <label for='estado'>Estado da viagem</label>
-            <select required id="estado" class="input-xlarge" name="estado">
-                <option value="default">-- Escolha uma opção --</option>
-                <option value="planejada">Planejada</option>
-            </select>
-        </div>
-        <div class="line">
-            <label for='diarias'>Diárias</label>
-            <input required type="number" min="0.5" step="0.5" id="diarias" class=" input-large" name="diarias"  title='Quantidade de diárias' data-content="Valores como 0.5, 1, 1.5, 2, 2.5 etc">
-        </div>
-        <hr>
-        <fieldset>
-            <legend>Passageiros</legend>
-            <div class='alert alert-info'>
-                <span class='label label-info'>Dica </span> Escolha vários passageiros ao mesmo tempo segurando a tecla <span class="badge" id="tecla"></span>
-                <a class="close" data-dismiss="alert" href="#">&times;</a>
-            </div>
-            <div class="line" style='display: table'>
-                <!--<label for='passageiros'>Passageiros</label>-->
-                <?php echo $this->passageiros ?>
-            </div>
-            <br/>
-        </fieldset>
     </fieldset>
     <button class="btn btn-large" type="reset">Limpar</button>
     <button class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit">Cadastrar</button>
 
 </form>
-<script src='publico/js/datasComRange.js' type='text/javascript'></script>
+<script src="publico/js/carregarImagem/jquery-ajax-image-upload.js"></script>
 <script>
     $(document).ready(function() {
 
-        //Descobre o SO para exibir texto correto sobre tecla CTRL ou Command (Mac)
-        var teclaSpan = document.getElementById("tecla");
-        if (OSName === "MacOS") {
-            var texto = document.createTextNode("Command " + String.fromCharCode(8984));
-        } else {
-            texto = document.createTextNode("CTRL");
-        }
-        teclaSpan.appendChild(texto);
 
 
-        configurarCamposDataHora('#dataIda', '#dataVolta');
         varrerCampos();
-        $("#responsavel").chosen({display_disabled_options: false, display_selected_options: true, inherit_select_classes: true, placeholder_text_multiple: "Selecione o responsavel pela viagem", width: "450px"});
-        $("#passageiros").chosen({display_disabled_options: false, display_selected_options: false, inherit_select_classes: true, placeholder_text_multiple: "Selecione os passageiros", width: "750px"});
-//        $("select").not("#passageiros").chosen();
-//        $("div .line:has('select.campoErrado')").addClass("campoErrado")
-//        
-//        $('#add').click(function() {
-//            $('.passageirosPossiveis option:selected').each(function() {
-//                $('.passageiros').append('<option selected="selected" value="' + $(this).val() + '">' + $(this).text() + '</option>');
-//                $(this).remove();
-//            });
-//        });
-//
-//        $('#rem').click(function() {
-//            $('.passageiros option:selected').each(function() {
-//                $('.passageirosPossiveis').append('<option value="' + $(this).val() + '">' + $(this).text() + '</option>');
-//                $(this).remove();
-//                $(".passageiros option").each(function() {
-//                    $(this).attr({selected: 'selected'});
-//                });
-//            });
-//        });
+
         $(".line input").popover({trigger: 'focus', container: 'body'});
-        formularioAjax();
+        formularioAjax("upload-image-form");
 
         $("button[type=reset]").bind("click", function() {
             $("select").val('').trigger("chosen:updated");
@@ -119,26 +92,26 @@
             }, "200");
         });
 
-        var campoPolo = document.getElementById("polo");
-        optg = document.createElement("optgroup");
-        optg.title = "outro";
-        optg.label = "Outro";
-        opt = document.createElement("option");
-        opt.value = "outro";
-        opt.text = "Outro destino";
-        optg.appendChild(opt);
-        campoPolo.appendChild(optg);
-        document.viagens_campoDestinoAlternativo = false;
-
-        $("#polo").on('change', function() {
-            if ($("#polo option:selected").prop("value") === "outro") {
-                $($(".line")[1]).after("<div class='line'><label for='destinoManual'>Nome do destino</label><input type='text' required id='destinoManual' class='input-xlarge' name='destinoManual'/></div>")
-                varrerCampos();
-                document.viagens_campoDestinoAlternativo = true;
-            } else if (document.viagens_campoDestinoAlternativo) {
-                document.viagens_campoDestinoAlternativo = false;
-                $($(".line")[2]).remove();
-            }
-        });
+//        var campoPolo = document.getElementById("polo");
+//        optg = document.createElement("optgroup");
+//        optg.title = "outro";
+//        optg.label = "Outro";
+//        opt = document.createElement("option");
+//        opt.value = "outro";
+//        opt.text = "Outro destino";
+//        optg.appendChild(opt);
+//        campoPolo.appendChild(optg);
+//        document.viagens_campoDestinoAlternativo = false;
+//
+//        $("#polo").on('change', function() {
+//            if ($("#polo option:selected").prop("value") === "outro") {
+//                $($(".line")[1]).after("<div class='line'><label for='destinoManual'>Nome do destino</label><input type='text' required id='destinoManual' class='input-xlarge' name='destinoManual'/></div>")
+//                varrerCampos();
+//                document.viagens_campoDestinoAlternativo = true;
+//            } else if (document.viagens_campoDestinoAlternativo) {
+//                document.viagens_campoDestinoAlternativo = false;
+//                $($(".line")[2]).remove();
+//            }
+//        });
     });
 </script>

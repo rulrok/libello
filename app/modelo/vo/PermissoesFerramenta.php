@@ -12,7 +12,8 @@ class PermissoesFerramenta {
     var $controleDocumentos = null;
     var $controleViagens = null;
     var $tarefas = null;
-//    var $controlePagamentos = null;
+    var $controlePagamentos = null;
+    var $galeriaImagens = null;
 
     public function get_permissao($ferramenta) {
 
@@ -41,6 +42,8 @@ class PermissoesFerramenta {
                 break;
             case Ferramenta::CONTROLE_PAGAMENTOS:
                 return $this->controlePagamentos;
+            case Ferramenta::GALERIA_IMAGENS:
+                return $this->galeriaImagens;
                 break;
             default :
                 return null;
@@ -94,7 +97,7 @@ class PermissoesFerramenta {
     public function set_controleViagens($controleViagens) {
         $this->controleViagens = $controleViagens;
     }
-    
+
     public function get_tarefas() {
         return $this->tarefas;
     }
@@ -111,7 +114,13 @@ class PermissoesFerramenta {
         $this->controlePagamentos = $controlePagamentos;
     }
 
+    public function set_galeriaImagens($galeriaImagens) {
+        $this->galeriaImagens = $galeriaImagens;
+    }
 
+    public function get_galeriaImagens() {
+        return $this->galeriaImagens;
+    }
 
 }
 

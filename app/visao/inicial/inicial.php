@@ -46,13 +46,16 @@
 
 <!--<script src="http://ie.microsoft.com/testdrive/HTML5/CompatInspector/inspector.js"></script>-->
         <script src="publico/js/jquery/jquery-1.9.1.js"></script>
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
         <script src="publico/js/jquery/jquery.ba-hashchange.js"></script>
         <script src="publico/js/jquery/jquery.form.js"></script>
         <script src="publico/js/jquery/jquery.chosen.js"></script>
         <script src="publico/js/mainScript.js"></script>
         <script src="publico/js/validarCampos.js"></script>
         <script src="publico/js/ajaxForms.js"></script>
-        <script>
+        <script src="publico/js/carregarImagem/libs/modernizr-2.5.3.min.js"></script>
+        <script src="publico/js/carregarImagem/plugins.js"></script>
+                <script>
             window.onbeforeunload = function(e) {
                 if (document.paginaAlterada) {
                     e = e || window.event;

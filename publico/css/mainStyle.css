@@ -653,6 +653,9 @@ header .userInfoWrap [id=gerenciarConta]:before{
     #pagamentosLink:before{
         content: url("../imagens/icones/pagamentos_22.png");
     }
+    #imagensLink:before{
+        content: url("../imagens/icones/imagens_22.png");
+    }
 }
 @media (min-width:800px ){
 
@@ -684,6 +687,9 @@ header .userInfoWrap [id=gerenciarConta]:before{
     }
     #pagamentosLink:before{
         content: url("../imagens/icones/pagamentos.png");
+    }
+    #imagensLink:before{
+        content: url("../imagens/icones/imagens.png");
     }
 }
 /* Links do menu */

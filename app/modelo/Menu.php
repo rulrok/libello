@@ -193,6 +193,26 @@ class Menu {
                         }
                     }
                     break;
+                case Ferramenta::GALERIA_IMAGENS:
+                    if ($permissao_ferramenta['idPermissao'] != Permissao::SEM_ACESSO) {
+                        $menuCode .= "<a><li class=\"menuLink\" id=\"imagensLink\">Imagens</li></a>" . "\n";
+                        $subMenuCode .="<ul class=\"hiddenSubMenuLink imagensSubMenu\">" . "\n";
+                        switch ($permissao_ferramenta['idPermissao']) {
+                            case Permissao::ADMINISTRADOR:
+                            case Permissao::GESTOR:
+                                $subMenuCode .= "<a href=\"#!imagens|categorias\"\">" . "\n";
+                                $subMenuCode .= "<li>Categorias</li></a>" . "\n";
+                                $subMenuCode .= "<a href=\"#!imagens|gerenciar\"\">" . "\n";
+                                $subMenuCode .= "<li>Gerenciar Galerias</li></a>" . "\n";
+                            case Permissao::ESCRITA:
+                                $subMenuCode .= "<a href=\"#!imagens|cadastrar\"\">" . "\n";
+                                $subMenuCode .= "<li>Cadastrar imagem</li></a>" . "\n";
+                            case Permissao::CONSULTA:
+                                $subMenuCode .= "<a href=\"#!imagens|consultar\"\">" . "\n";
+                                $subMenuCode .= "<li>Consultar galerias</li></a>" . "\n";
+                        }
+                    }
+                    break;
             }
 //            $subMenuCode .= "<a class =\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/imagens/icones/go-up.png\"></li></a>" . "\n";
             $subMenuCode .= "</ul>" . "\n";
