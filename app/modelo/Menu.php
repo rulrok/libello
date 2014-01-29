@@ -80,7 +80,7 @@ class Menu {
                             case Permissao::ESCRITA:
                                 $subMenuCode .= "<a href=\"#!livros|retorno\"\">" . "\n";
                                 $subMenuCode .= "<li>Registrar retorno</li></a>" . "\n";
-                                if ($permissao === Permissao::GESTOR) {
+                                if ($permissao == Permissao::GESTOR) {
                                     $subMenuCode .= "<a href=\"#!livros|saida\"\">" . "\n";
                                     $subMenuCode .= "<li>Registrar saída</li></a>" . "\n";
                                 }

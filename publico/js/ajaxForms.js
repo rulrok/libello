@@ -52,7 +52,7 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn
                     if (data.status.toLowerCase() === "sucesso") {
                         $("input[type=reset],button[type=reset]").click();
                         if (successFn !== undefined && isFunction(successFn)) {
-                            successFn();
+                            successFn(data);
                         }
                     }
                 } else {

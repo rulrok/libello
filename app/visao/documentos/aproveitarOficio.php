@@ -12,59 +12,40 @@
         }
         var sigla = $("#i_sigla");
         $("#sigla").val(sigla.val());
+        varrerCampos();
     });
 
     function confirmaAcao(acao) {
         bloqueia();
         if (acao == 'gerar') {
-            $('#form1').attr("target", "_blank");
-            $('#form1').attr({action: 'app/modelo/relatoriosPDF/gerarOficio.php?booledit=0'});//'../../modelo/relatoriosPDF/gerarOficio.php?booledit=0'});
+            $('#ajaxForm').attr('target', '_blank');
+            formularioAjax(undefined, undefined, function(i) {
+            }, function(i) {
+                window.open('app/modelo/documentos/visualizarOficio.php?idv=' + i.id, '_blank');
+                document.paginaAlterada = false;
+                document.location.reload();
+            });
             var conf = confirm('Atenção, o ofício será gerado e registrado permanentemente! Tem certeza?');
             if (conf) {
                 capturaNumOficio();
-                alert('Ofício gerado com sucesso.');
-            } else {
-                desbloqueia();
             }
+            desbloqueia();
         } else {
             if (acao == 'salvar') {
+                formularioAjax(undefined, undefined, null, function(i) {
+                    document.paginaAlterada = false;
+                    document.location.reload();
+                });
                 var conf = confirm('Atenção, o ofício será salvo! Tem certeza?');
                 if (conf) {
-                    salvar();
-                    alert('Oficio salvo com sucesso!');
-                } else {
-                    desbloqueia();
+                    $('#i_numOficio').val('-1');
+                    $('#ajaxForm').submit();
                 }
+
+                desbloqueia();
             }
         }
     }
-
-    function salvar() {
-        $.getJSON("app/visao/documentos/acoes.php?acao=salvarOficio&booledit=0",
-                {assunto: $('#assunto').val(),
-                    corpo: $('#corpo').val(),
-                    destino: $("#destino").val(),
-                    referencia: $("#referencia").val(),
-                    dia: $("#dia").val(),
-                    mes: $("#mes").val(),
-                    sigla: $("#sigla").val(),
-                    remetente: $("#remetente").val(),
-                    cargo_remetente: $("#cargo_remetente").val(),
-                    i_remetente: $("#i_remetente").val(),
-                    remetente2: $("#remetente2").val(),
-                    cargo_remetente2: $("#cargo_remetente2").val(),
-                    tratamento: $("#tratamento").val(),
-                    cargo_destino: $("#cargo_destino").val()
-                    }, function(j) {
-
-            document.paginaAlterada = false;
-            document.location.href = '#!documentos|gerarOficio';
-            $('html, body').animate({scrollTop: 0}, 'slow');
-        });
-    }
-
-
-
 
     function bloqueia() {
         $('#tratamento').attr({readonly: 'true'});
@@ -126,13 +107,10 @@
 
     function capturaNumOficio() {
 
-        $.getJSON('app/visao/documentos/valores.ajax.php', {valor: 1, ajax: 'true'}, function(j) {
+        $.getJSON('app/modelo/documentos/capturarNumDocumento.php', {valor: 1}, function(j) {
             $('#i_numOficio').val(j);
+            $("#ajaxForm").submit();
 
-            $("#form1").submit();
-            document.paginaAlterada = false;
-            document.location.href = '#!documentos|gerarOficio';
-            $('html, body').animate({scrollTop: 0}, 'fast');
         });
     }
 
@@ -152,7 +130,7 @@
 
 </script>
 
-<form id="form1" name="form1" method="post" target="_blank" >
+<form id="ajaxForm" name="form1" action='index.php?c=documentos&a=verificarnovooficio' method="post" target="_blank" >
     <table align="center">
 
         <tr>
@@ -237,13 +215,13 @@
         <tr height="30">
             <td>
                 Assunto: <input 
-                            type="text" 
-                            id="assunto" 
-                            name="assunto" 
-                            onkeyup="liberarCadastro()" 
-                            value="<?php echo $this->assunto; ?>" 
-                            size="50"
-                            />
+                    type="text" 
+                    id="assunto" 
+                    name="assunto" 
+                    onkeyup="liberarCadastro()" 
+                    value="<?php echo $this->assunto; ?>" 
+                    size="50"
+                    />
                 <span class="classeExemploOficio"> Ex: Indicação de nome para... </span>
             </td>
         </tr>
@@ -267,9 +245,9 @@
                 <div >
                     <textarea 
                         style="max-height: 500px;
-                                min-height: 200px;
-                                max-width: 625px;
-                                min-width: 625px" 
+                        min-height: 200px;
+                        max-width: 625px;
+                        min-width: 625px" 
                         id="corpo" 
                         value="" 
                         name="corpo" 
@@ -387,6 +365,7 @@
         <tr height="30"><td></td></tr>
         <tr>
             <td align="center" colspan="2">
+                <button class="btn" type="reset">Limpar</button>
                 <input type="button" class="btn" value="Gerar" disabled="true" name="b_gerar" id="b_gerar" onclick="confirmaAcao('gerar');"/>
                 <input type="button" class="btn" value="Salvar" disabled="true" name="b_salvar" id="b_salvar" onclick="confirmaAcao('salvar');"/>
 <!--                                        <input type="button" class="btn" value="Voltar" name="b_voltar" name="b_voltar" onclick=""/>-->

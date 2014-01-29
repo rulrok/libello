@@ -8,56 +8,38 @@
         $("#corpo").jqte();
         $('html, body').animate({scrollTop: 0}, 'fast');
         varrerCampos();
-        formularioAjax();
     });
 
     function confirmaAcao(acao) {
         bloqueia();
         if (acao == 'gerar') {
-            $('#form1').attr("target", "_blank");
-            $('#form1').attr({action: 'app/modelo/relatoriosPDF/gerarOficio.php?booledit=0'});//'../../modelo/relatoriosPDF/gerarOficio.php?booledit=0'});
+            $('#ajaxForm').attr('target', '_blank');
+            formularioAjax(undefined, undefined, function(i){document.paginaAlterada = false;
+                        document.location.reload();}, function(i) {
+                window.open('app/modelo/documentos/visualizarOficio.php?idv='+i.id, '_blank');
+            });
             var conf = confirm('Atenção, o ofício será gerado e registrado permanentemente! Tem certeza?');
             if (conf) {
                 capturaNumOficio();
-                alert('Ofício gerado com sucesso.');
-            } else {
-                desbloqueia();
+
             }
+            desbloqueia();
         } else {
             if (acao == 'salvar') {
+                formularioAjax(undefined, undefined,function(i){document.paginaAlterada = false;
+                        document.location.reload();},null);
                 var conf = confirm('Atenção, o ofício será salvo! Tem certeza?');
                 if (conf) {
-                    salvar();
-                    alert('Oficio salvo com sucesso!');
-                } else {
-                    desbloqueia();
+                    $('#ajaxForm').submit();
+                    
                 }
+
+                desbloqueia();
             }
         }
     }
 
-    function salvar() {
-        $.getJSON("app/visao/documentos/acoes.php?acao=salvarOficio&booledit=0",
-                {assunto: $('#assunto').val(),
-                    corpo: $('#corpo').val(),
-                    destino: $("#destino").val(),
-                    referencia: $("#referencia").val(),
-                    dia: $("#dia").val(),
-                    mes: $("#mes").val(),
-                    sigla: $("#sigla").val(),
-                    remetente: $("#remetente").val(),
-                    cargo_remetente: $("#cargo_remetente").val(),
-                    i_remetente: $("#i_remetente").val(),
-                    remetente2: $("#remetente2").val(),
-                    cargo_remetente2: $("#cargo_remetente2").val(),
-                    tratamento: $("#tratamento").val(),
-                    cargo_destino: $("#cargo_destino").val()}, function(j) {
 
-            document.paginaAlterada = false;
-            document.location.reload();
-            $('html, body').animate({scrollTop: 0}, 'slow');
-        });
-    }
 
     function bloqueia() {
         $('#tratamento').attr({readonly: 'true'});
@@ -119,14 +101,13 @@
 
     function capturaNumOficio() {
         //window.open('app/visao/documentos/valores.ajax.php?valor=1');
-        $.getJSON('app/visao/documentos/valores.ajax.php', {valor: 1, ajax: 'true'}, function(j) {
+        $.getJSON('app/modelo/documentos/capturarNumDocumento.php', {valor: 1}, function(j) {
             $('#i_numOficio').val(j);
-            $("#form1").submit();
-            document.paginaAlterada = false;
-            document.location.reload();
+            $("#ajaxForm").submit();
             //ajax('index.php?c=documentos&a=gerarOficio');
 
         });
+            
     }
 
     function adicionarRemetente() {
@@ -145,7 +126,7 @@
 
 </script>
 
-<form id="ajaxForm" name="form1" method="post" target="_blank" >
+<form id="ajaxForm" name="form1" method="post" action='index.php?c=documentos&a=verificarnovooficio' target="_blank" >
     <table align="center">
 
         <tr>
@@ -176,7 +157,7 @@
         </tr>
         <tr height="30">
             <td align="right">
-                Alfenas, <?php echo $this->comboDia ?> de <?php echo $this->comboMes ?> de <?php echo date("Y"); ?>
+                Alfenas, <?php echo $this->comboDia; ?> de <?php echo $this->comboMes; ?> de <?php echo date("Y"); ?>
             </td>
         </tr>
         <tr height="40"><td></td></tr>
@@ -277,6 +258,7 @@
         <tr height="30"><td></td></tr>
         <tr>
             <td align="center" colspan="2">
+                <button class="btn" type="reset">Limpar</button>
                 <input type="button" class="btn" value="Gerar" disabled="true" name="b_gerar" id="b_gerar" onclick="confirmaAcao('gerar');"/>
                 <input type="button" class="btn" value="Salvar" disabled="true" name="b_salvar" id="b_salvar" onclick="confirmaAcao('salvar');"/>
 <!--                                        <input type="button" class="btn" value="Voltar" name="b_voltar" name="b_voltar" onclick=""/>-->
@@ -286,7 +268,7 @@
         </tr>
         <tr>
             <td>
-                <input type="hidden" name="i_numOficio" id="i_numOficio"/>
+                <input type="hidden" name="i_numOficio" id="i_numOficio" value='-1'/>
                 <input type="hidden" name="i_remetente" id="i_remetente" value="0"/>
             </td>
         </tr>

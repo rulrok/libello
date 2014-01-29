@@ -3,10 +3,14 @@
 class Visao {
 
     public function renderizar($diretorio, $arquivo) {
-        $local = 'app/visao/';
-        if (file_exists(ROOT . $local . $diretorio . '/' . $arquivo)) {
-            require ROOT . $local . $diretorio . '/' . $arquivo;
-        } else {
+        $local = array('app/visao/', 'app/modelo/');
+        if (file_exists(ROOT . $local[0] . $diretorio . '/' . $arquivo)) {
+            require ROOT . $local[0] . $diretorio . '/' . $arquivo;
+        }else if(file_exists(ROOT . $local[1] . $diretorio . '/' . $arquivo)){
+            require ROOT . $local[1] . $diretorio . '/' . $arquivo;
+            
+        }else {
+        
             require ROOT."app/visao/paginaInexistente.php";
         }
     }
