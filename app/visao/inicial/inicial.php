@@ -102,9 +102,9 @@
                     $('.actualTool').removeClass('actualTool');
                 }"><i class="icon-cog"></i> Gerenciar Conta</a>
 
-                            <?php if ($this->administrador): ?>
-                                <a class="btn btn-small" href="#!sistema|administracao"><i class="icon-fire"></i> Administração</a>
-                            <?php endif; ?>
+                            <?php // if ($this->administrador): ?>
+                                <!--<a class="btn btn-small" href="#!sistema|administracao"><i class="icon-fire"></i> Administração</a>-->
+                            <?php // endif; ?>
                             <a class="btn btn-small" href="sair.php"><i class="icon-off"></i> Sair</a>
                         </div>
                     </div>

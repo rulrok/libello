@@ -62,7 +62,6 @@ class Mvc {
 
 
         if (sessaoIniciada()) {
-//            sleep(4);
             //pega o modulo, controlador e acao
             $controlador = isset($_GET['c']) ? $_GET['c'] : 'inicial';
             $acao = isset($_GET['a']) ? $_GET['a'] : 'inicial';
@@ -81,8 +80,17 @@ class Mvc {
 
                     //verifica se o metodo existe
                     if (method_exists($controladorObjeto, $nomeAcao)) {
-                        $controladorObjeto->$nomeAcao();
-                        return true;
+//                        if (usuarioAutorizado(obterUsuarioSessao(), $controladorObjeto, $nomeAcao)) {
+                            $controladorObjeto->$nomeAcao();
+                            return true;
+//                        } else {
+//                            //Carrega uma página de acesso proibido
+//                            $controladorObjeto = new ControladorInicial();
+//                            $this->controlador = "Inicial";
+//                            $this->acao = "acessoProibido";
+//                            $controladorObjeto->acaoAcessoProibido();
+//                            return true;
+//                        }
                     } else {
                         throw new Exception('Acao nao existente.');
                     }
@@ -92,7 +100,6 @@ class Mvc {
             } catch (Exception $e) {
                 $_GET['c'] = "Inicial";
                 $_GET['a'] = "404";
-//                print_r($e);
                 $this->rodar();
             }
         } else {

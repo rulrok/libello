@@ -79,6 +79,7 @@ class ControladorDocumentos extends Controlador {
     }
 
     public function acaoAproveitarOficio(){
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         $ofc = documentoDAO::consultar('oficio', 'idOficio = ' . fnDecrypt($_GET['id']));
         
         $temp = $ofc[0];
@@ -102,6 +103,7 @@ class ControladorDocumentos extends Controlador {
     }
     
     public function acaoEditarOficio(){
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $ofc = documentoDAO::consultar('oficio', 'idOficio = ' . fnDecrypt($_GET['id']));
         
         $temp = $ofc[0];
@@ -126,6 +128,7 @@ class ControladorDocumentos extends Controlador {
     }
     
     public function acaoGerarRelatorio() {
+        $this->visao->acessoMinimo = Permissao::CONSULTA;
         $this->renderizar();
     }
 
@@ -138,6 +141,7 @@ class ControladorDocumentos extends Controlador {
     }
     
     public function acaoEditarMemorando(){
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $mem = documentoDAO::consultar('memorando', 'idMemorando = ' . fnDecrypt($_GET['id']));
         
         $temp = $mem[0];
@@ -160,6 +164,7 @@ class ControladorDocumentos extends Controlador {
     }
     
     public function acaoAproveitarMemorando(){
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         $mem = documentoDAO::consultar('memorando', 'idMemorando = ' . fnDecrypt($_GET['id']));
         
         $temp = $mem[0];
