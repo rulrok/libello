@@ -79,6 +79,10 @@ class ControladorUsuarios extends Controlador {
         $this->renderizar();
     }
 
+    public function idFerramentaAssociada() {
+        return Ferramenta::CONTROLE_USUARIOS;
+    }
+
 }
 
 ?>

@@ -9,6 +9,7 @@ include_once APP_LOCATION . 'modelo/ComboBoxUsuarios.php';
 class ControladorViagens extends Controlador {
 
     public function acaoNova() {
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->visao->cursos = ComboBoxCurso::montarTodosOsCursos();
         $this->visao->polos = ComboBoxPolo::montarTodosOsPolos();
         $this->visao->passageiros = ComboBoxUsuarios::montarPassageiros();
@@ -17,10 +18,12 @@ class ControladorViagens extends Controlador {
     }
 
     public function acaoVerificarnova() {
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->renderizar();
     }
 
     public function acaoGerenciar() {
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->visao->viagens = viagemDAO::consultar("idViagem,nomeCurso,concat(dataIda,' - ',horaIda) as ida,concat(dataVolta,' - ',horaVolta) as volta,motivo,estadoViagem,diarias,concat(IFNULL(nomePolo,''),IFNULL(outroDestino,'')) as destino");
         $i = 0;
         foreach ($this->visao->viagens as $value) {
@@ -31,7 +34,12 @@ class ControladorViagens extends Controlador {
     }
 
     public function acaoEditar() {
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
+    }
+
+    public function idFerramentaAssociada() {
+        return Ferramenta::CONTROLE_VIAGENS;
     }
 
 }
