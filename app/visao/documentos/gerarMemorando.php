@@ -1,67 +1,54 @@
-<?php
-$controlador = new ControladorDocumentos();
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-?>
+<title>Gerar Memorando</title>
 <script src="publico/js/jquery/jquery-te-1.0.5.min.js" type="text/javascript"></script>
 <link href='publico/css/jquery-te-Style.css' rel='stylesheet' type="text/css"/>
 <script type="text/javascript">
-
+function capturaNumMemorando() {
+        
+        $.getJSON('index.php?c=documentos&a=capturarNumDocumento', {valor: 2}, function(j) {
+            $('#i_numMemorando').val(j);
+            $("#ajaxForm").submit();
+            
+        });
+    }
 
     $(document).ready(function() {
         $("#corpo").jqte();
         $('html, body').animate({scrollTop: 0},'fast');
+         varrerCampos();
+        
+            
+            $('#b_gerar').on('click',function(){
+                bloqueia();
+                 if (confirm('Atenção, o memorando será gerado e registrado permanentemente! Tem certeza?')) {
+                formularioAjax(undefined, undefined, null, function(i) {
+                window.open('index.php?c=documentos&a=visualizarMemorando&idv='+i.id, '_blank');
+                document.paginaAlterada = false;
+                        document.location.reload();
+            });
+            
+                capturaNumMemorando();
+            }
+            desbloqueia();
+            });
+            
+            $('#b_salvar').on('click',function(){
+            bloqueia();
+                  if (confirm('Atenção, o memorando será salvo! Tem certeza?')) {
+                    formularioAjax(undefined, undefined,null,function(i){
+                    document.paginaAlterada = false;
+                        document.location.reload();
+                });
+                    $('#i_numMemorando').val('-1');
+                    $('#ajaxForm').submit();
+                    
+                }
+
+                desbloqueia();
+            });
     });
 
 
-    function confirmaAcao(acao) {
-        bloqueia();
-        if (acao == 'gerar') {
-            $('#form1').attr("target", "_blank");
-            $('#form1').attr({action: 'app/modelo/relatoriosPDF/gerarMemorando.php?booledit=0'});
-            var conf = confirm('Atenção, o memorando será gerado e registrado permanentemente! Tem certeza?');
-            if(conf){
-                capturaNumMemorando();
-                alert('Memorando gerado com sucesso.');
-            }else{
-                desbloqueia();
-            }
-        } else {
-            if (acao == 'salvar') {
-                var conf = confirm('Atenção, o memorando será salvo! Tem certeza?');
-                if(conf){
-                    salvar();
-                    alert('Memorando salvo com sucesso.');
-                }else{
-                    desbloqueia();
-                }
-            }
-        }
-    }
-
-    function salvar(){
-        $.getJSON("app/visao/documentos/acoes.php?acao=salvarMemorando&booledit=0",
-                        {assunto: $('#assunto').val(),
-                            corpo: $('#corpo').val(),
-                            dia: $("#dia").val(),
-                            mes: $("#mes").val(),
-                            sigla: $("#sigla").val(),
-                            remetente: $("#remetente").val(),
-                            cargo_remetente: $("#cargo_remetente").val(),
-                            i_remetente: $("#i_remetente").val(),
-                            remetente2: $("#remetente2").val(),
-                            cargo_remetente2: $("#cargo_remetente2").val(),
-                            tratamento: $("#tratamento").val(),
-                            cargo_destino: $("#cargo_destino").val() }, function(j) {
-                        document.paginaAlterada = false;
-                        document.location.reload();
-                    
-                });
-    }
-
-    
+     
 
     function bloqueia() {
         $('#tratamento').attr({readonly: 'true'});
@@ -118,16 +105,7 @@ $controlador = new ControladorDocumentos();
         }
     }
 
-    function capturaNumMemorando() {
-        
-        $.getJSON('app/visao/documentos/valores.ajax.php', {valor: 2, ajax: 'true'}, function(j) {
-            $('#i_numMemorando').val(j);
-            $("#form1").submit();
-            document.paginaAlterada = false;
-            document.location.reload();
-            $('html, body').animate({scrollTop: 0}, 'fast');
-        });
-    }
+    
 
     function adicionarRemetente() {
         $("#div_remetente2").show();
@@ -143,7 +121,7 @@ $controlador = new ControladorDocumentos();
 
 </script>
 
-<form  id="form1" name="form1" target="_blank" method="post">
+<form  id="ajaxForm" name="form1" target="_blank" action='index.php?c=documentos&a=verificarnovomemorando' method="post">
     <table align="center">
 
         <tr>
@@ -266,8 +244,9 @@ $controlador = new ControladorDocumentos();
         <tr height="30"><td></td></tr>
         <tr>
             <td align="center" colspan="2">
-                <input class="btn" type="button" value="Gerar" disabled="true" name="b_gerar" id="b_gerar" onclick="confirmaAcao('gerar');"/>
-                <input class="btn" type="button" value="Salvar" disabled="true" name="b_salvar" id="b_salvar" onclick="confirmaAcao('salvar');"/>
+                <button class="btn" type="reset">Limpar</button>
+                <input  class="btn" type="button" value="Gerar" disabled="true" name="b_gerar" id="b_gerar"/>
+                <input class="btn" type="button" value="Salvar" disabled="true" name="b_salvar" id="b_salvar" />
 <!--                                        <input class="btn" type="button" value="Voltar" name="b_voltar" id="b_voltar" onclick=""/>-->
             </td>
         </tr>

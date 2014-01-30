@@ -42,7 +42,6 @@ class verificarEdicaoUsuario extends verificadorFormularioAjax {
                     $permissoes->set_controleViagens($_POST['permissoes_controle_de_viagens']);
                     $permissoes->set_tarefas($_POST['permissoes_tarefas']);
                     $permissoes->set_controlePagamentos($_POST['permissoes_controle_de_pagamentos']);
-                    $permissoes->set_galeriaImagens($_POST['permissoes_galeria_de_imagens']);
                 } catch (Exception $e) {
                     die($e);
                 }

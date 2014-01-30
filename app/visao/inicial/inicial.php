@@ -74,7 +74,9 @@
         </script>
 
         <!-- FIM PRE SCRIPTS -->
-
+        
+        <link rel="icon" type="image/png" href="publico/imagens/cead.png" /><!-- logo CEAD favicon -->
+        
         <title class="tituloFixo"><?php echo $this->titulo ?></title>
     </head>
     <body>

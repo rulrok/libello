@@ -16,57 +16,41 @@
         }
         var sigla = $("#i_sigla");
         $("#sigla").val(sigla.val());
+        varrerCampos();
     });
 
 
     function confirmaAcao(acao) {
         bloqueia();
         if (acao == 'gerar') {
-            $('#form1').attr("target", "_blank");
-            $('#form1').attr({action: 'app/modelo/relatoriosPDF/gerarMemorando.php?booledit=0'});
-            var conf = confirm();
+            $('#ajaxForm').attr('target', '_blank');
+            formularioAjax(undefined, undefined, null, function(i) {
+                window.open('app/modelo/documentos/visualizarMemorando.php?idv='+i.id, '_blank');
+                document.paginaAlterada = false;
+                        document.location.reload();
+            });
+            var conf = confirm('Atenção, o memorando será gerado e registrado permanentemente! Tem certeza?');
             if (conf) {
                 capturaNumMemorando();
-                alert('Memorando gerado com sucesso.');
-            } else {
-                desbloqueia();
+
             }
+            desbloqueia();
         } else {
             if (acao == 'salvar') {
-                var conf = confirm();
+                formularioAjax(undefined, undefined,null,function(i){document.paginaAlterada = false;
+                        document.location.reload();});
+                var conf = confirm('Atenção, o memorando será salvo! Tem certeza?');
                 if (conf) {
-                    salvar();
-                    alert('Memorando salvo com sucesso.');
-                } else {
-                    desbloqueia();
+                    $('#i_numMemorando').val('-1');
+                    $('#ajaxForm').submit();
+                    
                 }
+
+                desbloqueia();
             }
         }
     }
-
-    function salvar() {
-        $.getJSON("app/visao/documentos/acoes.php?acao=salvarMemorando&booledit=0",
-                {assunto: $('#assunto').val(),
-                    corpo: $('#corpo').val(),
-                    dia: $("#dia").val(),
-                    mes: $("#mes").val(),
-                    sigla: $("#sigla").val(),
-                    remetente: $("#remetente").val(),
-                    cargo_remetente: $("#cargo_remetente").val(),
-                    i_remetente: $("#i_remetente").val(),
-                    remetente2: $("#remetente2").val(),
-                    cargo_remetente2: $("#cargo_remetente2").val(),
-                    tratamento: $("#tratamento").val(),
-                    cargo_destino: $("#cargo_destino").val(),
-                i_idmemorando:$('#i_idmemorando').val()}, function(j) {
-            document.paginaAlterada = false;
-            document.location.href = '#!documentos|gerarMemorando';
-            $('html, body').animate({scrollTop: 0}, 'fast');
-        });
-    }
-
-
-
+    
     function bloqueia() {
         $('#tratamento').attr({readonly: 'true'});
         $('#cargo_destino').attr({readonly: 'true'});
@@ -123,12 +107,10 @@
     }
 
     function capturaNumMemorando() {
-        $.getJSON('app/visao/documentos/valores.ajax.php', {valor: 2, ajax: 'true'}, function(j) {
+        $.getJSON('app/modelo/documentos/capturarNumDocumento.php', {valor: 2}, function(j) {
             $('#i_numMemorando').val(j);
-            $("#form1").submit();
-            document.paginaAlterada = false;
-            document.location.href = '#!documentos|gerarMemorando';
-            $('html, body').animate({scrollTop: 0}, 'fast');
+            $("#ajaxForm").submit();
+            
         });
     }
 
@@ -146,7 +128,7 @@
 
 </script>
 
-<form  id="form1" name="form1" target="_blank" method="post">
+<form  id="ajaxForm" action='index.php?c=documentos&a=verificarnovomemorando' name="form1" target="_blank" method="post">
     <table align="center">
 
         <tr>
@@ -337,6 +319,7 @@
         <tr height="30"><td></td></tr>
         <tr>
             <td align="center" colspan="2">
+                <button class="btn" type="reset">Limpar</button>
                 <input class="btn"
                        type="button" 
                        value="Gerar" 

@@ -1,4 +1,4 @@
-
+<title>Gerar Oficio</title>
 <script src="publico/js/jquery/jquery-te-1.0.5.min.js" type="text/javascript"></script>
 <link href='publico/css/jquery-te-Style.css' rel='stylesheet' type="text/css"/>
 
@@ -6,56 +6,41 @@
 
     $(document).ready(function() {
         $("#corpo").jqte();
-        $('html, body').animate({scrollTop: 0},'fast');
+        $('html, body').animate({scrollTop: 0}, 'fast');
+        varrerCampos();
+        $('#b_gerar').on('click',function(){
+                bloqueia();
+                 if (confirm('Atenção, o ofício será gerado e registrado permanentemente! Tem certeza?')) {
+                formularioAjax(undefined, undefined, null, function(i) {
+                window.open('index.php?c=documentos&a=visualizarOficio&idv='+i.id, '_blank');
+                document.paginaAlterada = false;
+                        document.location.reload();
+            });
+            
+                capturaNumMemorando();
+            }
+            desbloqueia();
+            });
+            
+            $('#b_salvar').on('click',function(){
+            bloqueia();
+                  if (confirm('Atenção, o ofício será salvo! Tem certeza?')) {
+                    formularioAjax(undefined, undefined,null,function(i){
+                    document.paginaAlterada = false;
+                        document.location.reload();
+                });
+                    $('#i_numOficio').val('-1');
+                    $('#ajaxForm').submit();
+                    
+                }
+
+                desbloqueia();
+            });
     });
 
-    function confirmaAcao(acao) {
-        bloqueia();
-        if (acao == 'gerar') {
-            $('#form1').attr("target", "_blank");
-            $('#form1').attr({action: 'app/modelo/relatoriosPDF/gerarOficio.php?booledit=0'});//'../../modelo/relatoriosPDF/gerarOficio.php?booledit=0'});
-            var conf = confirm('Atenção, o ofício será gerado e registrado permanentemente! Tem certeza?');
-            if(conf){
-                capturaNumOficio();
-                alert('Ofício gerado com sucesso.');
-            }else{
-                desbloqueia();
-            }
-        } else {
-            if (acao == 'salvar') {
-                var conf = confirm('Atenção, o ofício será salvo! Tem certeza?');
-                if(conf){
-                    salvar();
-                    alert('Oficio salvo com sucesso!');
-                }else{
-                    desbloqueia();
-                }
-            }
-        }
-    }
+   
 
-    function salvar(){
-        $.getJSON("app/visao/documentos/acoes.php?acao=salvarOficio&booledit=0",
-                        {assunto: $('#assunto').val(),
-                            corpo: $('#corpo').val(),
-                            destino: $("#destino").val(),
-                            referencia: $("#referencia").val(),
-                            dia: $("#dia").val(),
-                            mes: $("#mes").val(),
-                            sigla: $("#sigla").val(),
-                            remetente: $("#remetente").val(),
-                            cargo_remetente: $("#cargo_remetente").val(),
-                            i_remetente: $("#i_remetente").val(),
-                            remetente2: $("#remetente2").val(),
-                            cargo_remetente2: $("#cargo_remetente2").val(),
-                            tratamento: $("#tratamento").val(),
-                            cargo_destino: $("#cargo_destino").val() }, function(j) {
-                    
-                        document.paginaAlterada = false;
-                        document.location.reload();
-                    $('html, body').animate({scrollTop: 0},'slow');
-                });
-    }
+
 
     function bloqueia() {
         $('#tratamento').attr({readonly: 'true'});
@@ -117,14 +102,13 @@
 
     function capturaNumOficio() {
         //window.open('app/visao/documentos/valores.ajax.php?valor=1');
-        $.getJSON('app/visao/documentos/valores.ajax.php', {valor: 1, ajax: 'true'}, function(j) {
+        $.getJSON('app/modelo/documentos/capturarNumDocumento.php', {valor: 1}, function(j) {
             $('#i_numOficio').val(j);
-            $("#form1").submit();
-            document.paginaAlterada = false;
-            document.location.reload();
+            $("#ajaxForm").submit();
             //ajax('index.php?c=documentos&a=gerarOficio');
-            
+
         });
+            
     }
 
     function adicionarRemetente() {
@@ -143,7 +127,7 @@
 
 </script>
 
-<form id="form1" name="form1" method="post" target="_blank" >
+<form id="ajaxForm" name="form1" method="post" action='index.php?c=documentos&a=verificarnovooficio' target="_blank" >
     <table align="center">
 
         <tr>
@@ -152,7 +136,7 @@
             </td>
         </tr>
     </table>
-    
+
     <table style='width: 794px; height: 1123px; font-family:"Times New Roman",Georgia,Serif; font-size: 15px; background-color: #FFF;' border="0" align="center">
         <tr height="189">
             <td width="113" rowspan="20"></td>
@@ -174,35 +158,35 @@
         </tr>
         <tr height="30">
             <td align="right">
-                Alfenas, <?php echo $this->comboDia ?> de <?php echo $this->comboMes ?> de <?php echo date("Y"); ?>
+                Alfenas, <?php echo $this->comboDia; ?> de <?php echo $this->comboMes; ?> de <?php echo date("Y"); ?>
             </td>
         </tr>
         <tr height="40"><td></td></tr>
         <tr height="10">
             <td>
-                <input type="text" id="tratamento" name="tratamento" onkeyup="liberarCadastro()" size="15"/><span class="classeExemploOficio"> Ex: Ao Sr.</span>
+                <input type="text" required id="tratamento" name="tratamento" onkeyup="liberarCadastro()" size="15"/><span class="classeExemploOficio"> Ex: Ao Sr.</span>
             </td>
         </tr>
         <tr height="10">
             <td>
-                <input type="text" id="destino" name="destino" onkeyup="liberarCadastro()" size="30"/><span class="classeExemploOficio"> Ex: Paulo Márcio de Faria e Silva</span>
+                <input type="text" required id="destino" name="destino" onkeyup="liberarCadastro()" size="30"/><span class="classeExemploOficio"> Ex: Paulo Márcio de Faria e Silva</span>
             </td>
         </tr>
         <tr height="10">
             <td>
-                <input type="text" id="cargo_destino" name="cargo_destino" onkeyup="liberarCadastro()" size="40"/><span class="classeExemploOficio"> Ex: Reitor da Universidade Federal de Alfenas</span>
+                <input type="text" required id="cargo_destino" name="cargo_destino" onkeyup="liberarCadastro()" size="40"/><span class="classeExemploOficio"> Ex: Reitor da Universidade Federal de Alfenas</span>
             </td>
         </tr>
         <tr height="40"><td></td></tr>
         <tr height="30">
             <td>
-                Assunto: <input type="text" id="assunto" name="assunto" onkeyup="liberarCadastro()" size="50"/><span class="classeExemploOficio"> Ex: Indicação de nome para... </span>
+                Assunto: <input type="text" required id="assunto" name="assunto" onkeyup="liberarCadastro()" size="50"/><span class="classeExemploOficio"> Ex: Indicação de nome para... </span>
             </td>
         </tr>
         <tr height="40"><td></td></tr>
         <tr height="30">
             <td align="left">
-                <input type="text" id="referencia" name="referencia" onkeyup="liberarCadastro()" size="25"/><span class="classeExemploOficio"> Ex: Magnífico Reitor, </span>
+                <input type="text" required id="referencia" name="referencia" onkeyup="liberarCadastro()" size="25"/><span class="classeExemploOficio"> Ex: Magnífico Reitor, </span>
             </td>
         </tr>
         <tr height="40"><td></td></tr>
@@ -231,12 +215,12 @@
                         </tr>
                         <tr height="20">
                             <td align="center">
-                                <input type="text" id="remetente" name="remetente" onkeyup="liberarCadastro()" size="50" style="margin-left: 125px"/><span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>
+                                <input type="text" required id="remetente" name="remetente" onkeyup="liberarCadastro()" size="50" style="margin-left: 125px"/><span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>
                             </td>
                         </tr>
                         <tr height="20">
                             <td align="center">
-                                <input type="text" id="cargo_remetente" name="cargo_remetente" onkeyup="liberarCadastro()" size="25" style="margin-left: 110px"/><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
+                                <input type="text" required id="cargo_remetente" name="cargo_remetente" onkeyup="liberarCadastro()" size="25" style="margin-left: 110px"/><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
                             </td>
                             <td>
                                 <a title="Adicionar Remetente" id=""  onclick="adicionarRemetente();" class="btn" href="javascript:void(0);" ><i class="icon-plus"></i></a>
@@ -275,16 +259,17 @@
         <tr height="30"><td></td></tr>
         <tr>
             <td align="center" colspan="2">
-                <input type="button" class="btn" value="Gerar" disabled="true" name="b_gerar" id="b_gerar" onclick="confirmaAcao('gerar');"/>
-                <input type="button" class="btn" value="Salvar" disabled="true" name="b_salvar" id="b_salvar" onclick="confirmaAcao('salvar');"/>
+                <button class="btn" type="reset">Limpar</button>
+                <input type="button" class="btn" value="Gerar" disabled="true" name="b_gerar" id="b_gerar" />
+                <input type="button" class="btn" value="Salvar" disabled="true" name="b_salvar" id="b_salvar" />
 <!--                                        <input type="button" class="btn" value="Voltar" name="b_voltar" name="b_voltar" onclick=""/>-->
             </td>
         </tr>
-        
+
         </tr>
         <tr>
             <td>
-                <input type="hidden" name="i_numOficio" id="i_numOficio"/>
+                <input type="hidden" name="i_numOficio" id="i_numOficio" value='-1'/>
                 <input type="hidden" name="i_remetente" id="i_remetente" value="0"/>
             </td>
         </tr>

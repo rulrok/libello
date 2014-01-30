@@ -1,48 +1,42 @@
 <?php
-
-//define('ROOT_PATH', $_SERVER['DOCUMENT_ROOT']);
+ob_clean();
 //incluindo o arquivo do fpdf
 require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/configuracoes.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/dompdf/dompdf_config.inc.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/app/controlador/ControladorDocumentos.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/app/modelo/dao/documentoDAO.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/seguranca/seguranca.php");
+require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
+
 //-------------------
 //definindo variaveis
-$idUsuario = $_SESSION['usuario']->get_id();
-$numMemorando = $_POST['i_numMemorando'];
-$tipoSigla = $_POST['sigla'];
-$dia = $_POST['dia'];
-$mes = $_POST['mes'];
-$ano = date('Y');
+$id = fnDecrypt($_REQUEST['idv']);
+$memorando = documentoDAO::consultar('memorando','idMemorando = '.$id);
+$numMemorando = $memorando[0]->getNumMemorando();
+$tipoSigla = $memorando[0]->getTipoSigla();
+$data = explode('/', $memorando[0]->getData());
+$dia = $data[0];
+$mes = $data[1];
+$ano = $data[2];
+$tratamento = $memorando[0]->getTratamento();
+$cargo_destino = $memorando[0]->getCargo_destino();
+$assunto = $memorando[0]->getAssunto();
+$corpo = $memorando[0]->getCorpo();
+$remetente = $memorando[0]->getRemetente();
+$cargo_remetente = $memorando[0]->getCargo_remetente();
+$remetente2 = $memorando[0]->getRemetente2();
+$cargo_remetente2 = $memorando[0]->getCargo_remetente2();
+
+if($remetente2 != '' && $cargo_remetente2 != ''){
+    $i_remetente = '1';
+}
+else{
+    $i_remetente = '0';
+}
+
+//$mes = retornaMes($mes);
+setlocale(LC_ALL, 'portuguese-brazilian', 'ptb', 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8');
+$mes =$monthName = date("F", mktime(0, 0, 0, $mes, 10));
 $data = $dia . '/' . $mes . '/' . date('Y');
-$tratamento = $_POST['tratamento'];
-$cargo_destino = $_POST['cargo_destino'];
-$assunto = $_POST['assunto'];
-$corpo = $_POST['corpo'];
-$remetente = $_POST['remetente'];
-$cargo_remetente = $_POST['cargo_remetente'];
-//Verifica se possui mais de um remetente e pega seu valor
-$remetente2 = '';
-$cargo_remetente2 = '';
-$i_remetente = $_POST['i_remetente'];
-if ($i_remetente == '1') {
-    $remetente2 = $_POST['remetente2'];
-    $cargo_remetente2 = $_POST['cargo_remetente2'];
-}
-//estadoEdicao - se for salvar 1, senão 0
-$estadoEdicao = 0;
-//salvando ou atualizando oficio no banco
-$booledit = $_GET['booledit'];
-$controlador = new ControladorDocumentos();
-if ($booledit == '1') {
-    $idmemorando = $_POST['i_idmemorando'];
-    $controlador->atualizarMemorando($idmemorando, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao);
-} else {
-    $controlador->novoMemorando($idUsuario, $numMemorando, $tipoSigla, $data, $tratamento, $cargo_destino, $assunto, $corpo, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $estadoEdicao);
-
-   //print_r($retorno);die();
-}
-
 //-------------------
 $document = '<<<EOF
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -68,7 +62,7 @@ $document = '<<<EOF
             <table class="tabela">
                 <tr>
                     <td style="width: 580px" align="center">
-                        <img src="../../../publico/imagens/oficio/cabecalho.jpg"></img>
+                       <img src="publico/imagens/oficio/cabecalho.jpg"></img>
                     </td>
                 </tr>
                 <tr><td style="height: 30px;"></td></tr>
@@ -103,7 +97,7 @@ $document = '<<<EOF
                 <tr><td style="height: 40px;"></td></tr>
                 <tr>
                     <td align="left">
-                        <div>
+                        <div align="center">
                             <span style="max-height: 500px;min-height: 200px;max-width: 625px;min-width: 625px">' . $corpo . '</span>
                         </div>
                     </td>
@@ -173,5 +167,45 @@ $options = array(
     'Attachment' => 0
 );
 $dompdf->stream($ano." - Memorando n".$numMemorando, $options);
+
+function retornaMes($mes) {
+    if ($mes == '01'){        
+        return 'janeiro';
+    }
+    if ($mes == '02'){        
+        return 'fevereiro';
+    }
+    if ($mes == '03'){        
+        return 'março';
+    }
+    if ($mes == '04'){        
+        return 'abril';
+    }
+    if ($mes == '05'){        
+        return 'maio';
+    }
+    if ($mes == '06'){        
+        return 'junho';
+    }
+    if ($mes == '07'){        
+        return 'julho';
+    }
+    if ($mes == '08'){        
+        return 'agosto';
+    }
+    if ($mes == '09'){        
+        return 'setembro';
+    }
+    if ($mes == '10'){        
+        return 'outubro';
+    }
+    if ($mes == '11'){        
+        return 'novembro';
+    }
+    if ($mes == '12'){        
+        return 'dezembro';
+    }        
+}
+
 ?>
     

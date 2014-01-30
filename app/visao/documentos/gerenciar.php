@@ -36,12 +36,12 @@
 <div style="text-align:center;">
     <button class="btn btn_oficio ignorar"
             id="b_oficio" 
-            onclick="mostraOpcao('oficio')" 
+            onclick="mostraOpcao('oficio');" 
             style="height: 30px; width: 150px;"
             >Ofícios</button>
     <button class="btn btn_memorando ignorar" 
             id="b_memorando" 
-            onclick="mostraOpcao('memorando')" 
+            onclick="mostraOpcao('memorando');" 
             style="height: 30px; width: 150px;"
             >Memorandos</button>
 </div>
@@ -235,7 +235,6 @@
 
                 $(document).ready(function() {
 
-
                     $('#todosOficios .tabelaDeEdicao').attr('id', 'tabelaTodosOficios');
                     $('#oficiosValidos .tabelaDeEdicao').attr('id', 'tabelaOficiosValidos');
                     $('#oficiosInvalidos .tabelaDeEdicao').attr('id', 'tabelaOficiosInvalidos');
@@ -245,8 +244,6 @@
                     $('#memorandosInvalidos .tabelaDeEdicao').attr('id', 'tabelaMemorandosInvalidos');
                     $('#memorandosEmAberto .tabelaDeEdicao').attr('id', 'tabelaMemorandosEmAberto');
 
-                    //$('#todosOficios').show();
-
                     tab_todosOficios = $('#tabelaTodosOficios').dataTable({"aaSorting": [[1, "asc"]]});
                     tab_todosValidos = $('#tabelaOficiosValidos').dataTable({"aaSorting": [[1, "asc"]]});
                     tab_todosInvalidos = $('#tabelaOficiosInvalidos').dataTable({"aaSorting": [[1, "asc"]]});
@@ -255,10 +252,6 @@
                     tab_memorandosValidos = $('#tabelaMemorandosValidos').dataTable({"aaSorting": [[1, "asc"]]});
                     tab_memorandosInvalidos = $('#tabelaMemorandosInvalidos').dataTable({"aaSorting": [[1, "asc"]]});
                     tab_memorandosAberto = $('#tabelaMemorandosEmAberto').dataTable({"aaSorting": [[1, "asc"]]});
-
-                    //$('#tabela1').hide();
-                    //$('#tabela2').hide();
-//                    $('#todosOficios').hide();
 
                     mouseTabela(tab_todosOficios);
                     mouseTabela(tab_todosValidos);
@@ -300,7 +293,7 @@
                         if (valor == "todos") {
                             select(tab_todosOficios);
                             $('#todosOficios').show();
-                            tab_todosOficios.fnAdjustColumnSizing();                        
+                            tab_todosOficios.fnAdjustColumnSizing();
                             if (tipo_oficio != '&tipo=todos') {
                                 tipo_oficio = '&tipo=todos';
                                 document.ignorarHashChange = true;
@@ -397,14 +390,17 @@
 
                     $('.btn-visualizar').on('click', function() {
                         if ($('#tabela1').css('display') != 'none') {
-                            $('#form_visualizar').attr('action', 'app/modelo/relatoriosPDF/visualizarOficio.php');
-                            $('#idv').val($('.row_selected td.campoID').text());
-                            $('#form_visualizar').submit();
+//                            $('#form_visualizar').attr('action', 'app/modelo/documentos/visualizarOficio.php');
+//                            $('#idv').val($('.row_selected td.campoID').text());
+//                            $('#form_visualizar').submit();
+                            window.open('index.php?c=documentos&a=visualizarOficio&idv='+$('.row_selected td.campoID').text());
+//                            carregarPagina('#!documentos|visualizarOficio&idv='+$('.row_selected td.campoID').text());
                         }
                         else if ($('#tabela2').css('display') != 'none') {
-                            $('#form_visualizar').attr('action', 'app/modelo/relatoriosPDF/visualizarMemorando.php');
-                            $('#idv').val($('.row_selected td.campoID').text());
-                            $('#form_visualizar').submit();
+                            window.open('index.php?c=documentos&a=visualizarMemorando&idv='+$('.row_selected td.campoID').text());
+//                            $('#form_visualizar').attr('action', 'app/modelo/documentos/visualizarMemorando.php');
+//                            $('#idv').val($('.row_selected td.campoID').text());
+//                            $('#form_visualizar').submit();
                         }
                     });
 
@@ -413,14 +409,27 @@
                         if (r) {
                             var doc = $('tr.row_selected').attr('doc');
                             var id = $('tr.row_selected .campoID').text();
-                            $.getJSON("app/visao/documentos/acoes.php?acao=invalidar" + doc + "&i_id" + doc + "=" + id,
-                                    function(data) {
-                                        //document.ignorarHashChange = false;
+                            var acaoDeletar = "index.php?c=documentos&a=invalidar" + doc + "&i_id" + doc + "=";
+//                            window.open("#!documentos|invalidar" + doc + "&i_id" + doc + "=" + id);
+//                            ajax("#!documentos|invalidar" + doc + "&i_id" + doc + "=" + id, null, false, false);
+                            //var id = $("tr.row_selected>.campoID").html();
+                            var data = ajax(acaoDeletar + id, null, false, false);
+                            if (data !== null && data !== undefined) {
+                                data = extrairJSON(data);
+
+                                if (data.status !== undefined && data.mensagem !== undefined) {
+                                    showPopUp(data.mensagem, data.status);
+                                    if (data.status.toLowerCase() === "sucesso") {
                                         document.paginaAlterada = false;
                                         document.location.reload();
-                                        //document.location.href = '#!documentos|gerenciar&doc=' + doc + '&tipo=' + tipo;
                                     }
-                            );
+                                } else {
+                                    showPopUp("Houve algum problema na resposta do servidor.1", "erro");
+                                }
+                            } else {
+                                showPopUp("Houve algum problema na resposta do servidor.", "erro");
+                            }
+
                         }
                     });
 
@@ -429,14 +438,26 @@
                         if (r) {
                             var id = $('tr.row_selected .campoID').text();
                             var doc = $('tr.row_selected').attr('doc');
-                            $.getJSON("app/visao/documentos/acoes.php?acao=deletar" + doc + "&i_id" + doc + "=" + id,
-                                    function(data) {
-                                        //document.ignorarHashChange = false;
+                            var acaoDeletar = "index.php?c=documentos&a=deletar" + doc + "&i_id" + doc + "=";
+//                            window.open("#!documentos|invalidar" + doc + "&i_id" + doc + "=" + id);
+//                            ajax("#!documentos|invalidar" + doc + "&i_id" + doc + "=" + id, null, false, false);
+                            //var id = $("tr.row_selected>.campoID").html();
+                            var data = ajax(acaoDeletar + id, null, false, false);
+                            if (data !== null && data !== undefined) {
+                                data = extrairJSON(data);
+
+                                if (data.status !== undefined && data.mensagem !== undefined) {
+                                    showPopUp(data.mensagem, data.status);
+                                    if (data.status.toLowerCase() === "sucesso") {
                                         document.paginaAlterada = false;
                                         document.location.reload();
-                                        //document.location.href = '#!documentos|gerenciar&doc=' + doc + '&tipo=' + tipo;
                                     }
-                            );
+                                } else {
+                                    showPopUp("Houve algum problema na resposta do servidor.1", "erro");
+                                }
+                            } else {
+                                showPopUp("Houve algum problema na resposta do servidor.", "erro");
+                            }
                         }
                     });
 

@@ -1,55 +1,46 @@
 <?php
+ob_clean();
 
 //define('ROOT_PATH', $_SERVER['DOCUMENT_ROOT']);
 //incluindo o arquivo do fpdf
 require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/configuracoes.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/dompdf/dompdf_config.inc.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/app/controlador/ControladorDocumentos.php");
+require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/app/modelo/dao/documentoDAO.php");
 require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/seguranca/seguranca.php");
-//require_once '../controller/ControllerDoc.php';
+require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
 //require_once '../seguranca.php';
 //-------------------
 //definindo variaveis
-$idUsuario = $_SESSION['usuario']->get_id();
-$numOficio = $_POST['i_numOficio'];
-$tipoSigla = $_POST['sigla'];
-$dia = $_POST['dia'];
-$mes = $_POST['mes'];
-$ano = date('Y');
-$data = $dia . '/' . $mes . '/' . date('Y');
-$tratamento = $_POST['tratamento'];
-$destino = $_POST['destino'];
-$cargo_destino = $_POST['cargo_destino'];
-$assunto = $_POST['assunto'];
-$referencia = $_POST['referencia'];
-$corpo = $_POST['corpo'];
-$remetente = $_POST['remetente'];
-$cargo_remetente = $_POST['cargo_remetente'];
-//Verifica se possui mais de um remetente e pega seu valor
-$remetente2 = '';
-$cargo_remetente2 = '';
-$i_remetente = $_POST['i_remetente'];
-if ($i_remetente == '1') {
-    $remetente2 = $_POST['remetente2'];
-    $cargo_remetente2 = $_POST['cargo_remetente2'];
-}
-//estadoEdicao - se for salvar 1, senão 0
-$estadoEdicao = 0;
-$cont = new ControladorDocumentos();
-//salvando ou atualizando oficio no banco
-$booledit = $_GET['booledit'];
-if ($booledit == '1') {
-    $idoficio = fnDecrypt($_POST['i_idoficio']);
-    $cont->atualizarOficio($idoficio, $assunto, $corpo, $tratamento, $destino, $cargo_destino, $data, $estadoEdicao, $tipoSigla, $referencia, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $numOficio);
+$id = fnDecrypt($_REQUEST['idv']);
+$oficio = documentoDAO::consultar('oficio','idOficio = '.$id);
+$numOficio = $oficio[0]->getNumOficio();
+$tipoSigla = $oficio[0]->getTipoSigla();
+$data = explode('/', $oficio[0]->getData());
+$dia = $data[0];
+$ano = $data[2];
+$tratamento = $oficio[0]->getTratamento();
+$destino = $oficio[0]->getDestino();
+$cargo_destino = $oficio[0]->getCargo_destino();
+$assunto = $oficio[0]->getAssunto();
+$referencia = $oficio[0]->getReferencia();
+$corpo = $oficio[0]->getCorpo();
+$remetente = $oficio[0]->getRemetente();
+$cargo_remetente = $oficio[0]->getCargo_remetente();
+$remetente2 = $oficio[0]->getRemetente2();
+$cargo_remetente2 = $oficio[0]->getCargo_remetente2();
 
+if ($remetente2 != '' && $cargo_remetente2 != '') {
+    $i_remetente = '1';
 } else {
-    $cont->novoOficio($idUsuario, $assunto, $corpo, $tratamento, $destino, $cargo_destino, $data, $estadoEdicao, $tipoSigla, $referencia, $remetente, $cargo_remetente, $remetente2, $cargo_remetente2, $numOficio);
+    $i_remetente = '0';
 }
-$mes = retornaMes($_POST['mes']);
-$data = $dia . '/' . $mes . '/' . date('Y');
+
+setlocale(LC_ALL, 'portuguese-brazilian', 'ptb', 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8','pt-BR');
+$mes = strftime("%B", mktime(0, 0, 0,$data[1], 10));
+$data = $dia . '/' . $mes . '/' . $ano;
+
 //-------------------
-//montando o documento
-$document = '<<<EOF
+$document = '
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br">       
         <head>
@@ -73,7 +64,7 @@ $document = '<<<EOF
             <table class="tabela">
                 <tr>
                     <td style="width: 597px" align="center">
-                        <img src="../../../publico/imagens/oficio/cabecalho.jpg"></img>
+                        <img src="publico/imagens/oficio/cabecalho.jpg"></img>
                     </td>
                 </tr>
                 <tr><td style="height: 30px;"></td></tr>
@@ -85,7 +76,7 @@ $document = '<<<EOF
                 <tr><td style="height: 40px;"></td></tr>
                 <tr >
                     <td align="right">
-                        Alfenas, ' . $dia . ' de ' . $mes . ' de ' . date("Y") . '
+                        Alfenas, ' . $dia . ' de ' . $mes . ' de ' . $ano . '
                     </td>
                 </tr>
                 <tr><td style="height: 40px;"></td></tr>
@@ -119,7 +110,7 @@ $document = '<<<EOF
                 <tr><td style="height: 20px;"></td></tr>
                 <tr>
                     <td align="left">
-                        <div>
+                        <div align="center">
                             <span style="max-height: 500px;min-height: 200px;max-width: 625px;min-width: 625px">' . $corpo . '</span>
                         </div>
                     </td>
@@ -190,46 +181,7 @@ $options = array(
 );
 $dompdf->stream($ano." - Oficio n".$numOficio, $options);
 
-return "algo";
 
-function retornaMes($mes) {
-    if ($mes == '01') {
-        return 'janeiro';
-    }
-    if ($mes == '02') {
-        return 'fevereiro';
-    }
-    if ($mes == '03') {
-        return 'março';
-    }
-    if ($mes == '04') {
-        return 'abril';
-    }
-    if ($mes == '05') {
-        return 'maio';
-    }
-    if ($mes == '06') {
-        return 'junho';
-    }
-    if ($mes == '07') {
-        return 'julho';
-    }
-    if ($mes == '08') {
-        return 'agosto';
-    }
-    if ($mes == '09') {
-        return 'setembro';
-    }
-    if ($mes == '10') {
-        return 'outubro';
-    }
-    if ($mes == '11') {
-        return 'novembro';
-    }
-    if ($mes == '12') {
-        return 'dezembro';
-    }
-}
 
 ?>
     
