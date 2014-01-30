@@ -120,7 +120,7 @@ class usuarioDAO extends abstractDAO {
         $UNome = $valueObject->get_UNome();
         $email = $valueObject->get_email();
         $nasc = $valueObject->get_dataNascimento();
-        $idPapel = $valueObject->get_papel() + 1;
+        $idPapel = $valueObject->get_papel() ;
         $sql = "INSERT INTO usuario(idPapel,senha,PNome, UNome, email, dataNascimento)";
         $sql .= " VALUES (" . $idPapel . ",'" . $senha . $s . $PNome . $s . $UNome . $s . $email . $s . $nasc . "')";
         //    echo $sql;

@@ -4,13 +4,14 @@
 include_once $_SERVER['DOCUMENT_ROOT'] . '/controle-cead/biblioteca/Mvc/Controlador.php';
 include_once APP_LOCATION . 'modelo/dao/documentoDAO.php';
 include_once APP_LOCATION . 'modelo/ComboBoxDocumentos.php';
+include_once APP_LOCATION . 'modelo/enumeracao/Ferramenta.php';
 require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
 require_once APP_LOCATION.'modelo/documentos/listarDocumentos.php';
+require_once BIBLIOTECA_DIR . "seguranca/Permissao.php";
 
 class ControladorDocumentos extends Controlador {
     
     public function acaoSalvar() {
-
         $this->renderizar();
     }
     
@@ -55,6 +56,7 @@ class ControladorDocumentos extends Controlador {
     }
     
     public function acaoGerenciar() {
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->visao->todosOficios = listarOficios();
         $this->visao->oficiosValidos = listarOficios('validos');
         $this->visao->oficiosInvalidos= listarOficios('invalidos');
@@ -67,12 +69,14 @@ class ControladorDocumentos extends Controlador {
     }
     
     public function acaoConsultar(){
+        $this->visao->acessoMinimo = Permissao::CONSULTA;
         $this->visao->oficios = listarOficios('validos');
         $this->visao->memorandos = listarMemorandos('validos');
         $this->renderizar();
     }
 
     public function acaoGeraroficio() {
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->visao->comboDia = ComboBoxDocumentos::comboDia();
         $this->visao->comboMes = ComboBoxDocumentos::comboMes();
         $this->renderizar();
@@ -133,7 +137,7 @@ class ControladorDocumentos extends Controlador {
     }
 
     public function acaoGerarMemorando() {
-        
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->visao->comboDia = ComboBoxDocumentos::comboDia();
         $this->visao->comboMes = ComboBoxDocumentos::comboMes();
         
@@ -183,6 +187,10 @@ class ControladorDocumentos extends Controlador {
         $this->visao->comboMes = ComboBoxDocumentos::comboMes();
         
         $this->renderizar();
+    }
+
+    public function idFerramentaAssociada() {
+        return Ferramenta::CONTROLE_DOCUMENTOS;
     }
 
 }
