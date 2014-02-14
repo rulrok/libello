@@ -21,16 +21,17 @@
             </span>
 
     </fieldset>
-    <button disabled class=" btn btn-primary btn-right" type="submit" disabled >Atualizar Dados</button>
+    <button disabled class=" btn btn-primary btn-right" type="submit" >Atualizar Dados</button>
+    <button class=" btn btn-left" type="button" onclick="history.back();">Voltar</button>
 
 </form>
 
 <script>
-    $(document).ready(function() {
-        varrerCampos();
-        formularioAjax();
-        $('[name=area]').val("<?php echo $this->idArea ?>");
-        $('[name=tipocurso]').val("<?php echo $this->idTipoCurso ?>");
-    });
+        $(document).ready(function() {
+            varrerCampos();
+            formularioAjax();
+            $('[name=area]').val("<?php echo $this->idArea ?>");
+            $('[name=tipocurso]').val("<?php echo $this->idTipoCurso ?>");
+        });
 
 </script>

@@ -175,24 +175,24 @@ class Menu {
                         }
                     }
                     break;
-                case Ferramenta::CONTROLE_PAGAMENTOS:
-                    if ($permissao_ferramenta['idPermissao'] != Permissao::SEM_ACESSO) {
-                        $menuCode .= "<a><li class=\"menuLink\" id=\"pagamentosLink\">Pagamentos</li></a>" . "\n";
-                        $subMenuCode .="<ul class=\"hiddenSubMenuLink pagamentosSubMenu\">" . "\n";
-                        switch ($permissao_ferramenta['idPermissao']) {
-                            case Permissao::ADMINISTRADOR:
-                            case Permissao::GESTOR:
-                                $subMenuCode .= "<a href=\"#!pagamentos|gerenciar\"\">" . "\n";
-                                $subMenuCode .= "<li>Gerenciar Pagamentos</li></a>" . "\n";
-                            case Permissao::ESCRITA:
-                                $subMenuCode .= "<a href=\"#!pagamentos|nova\"\">" . "\n";
-                                $subMenuCode .= "<li>Nova Ordem de Pagamento</li></a>" . "\n";
-                            case Permissao::CONSULTA:
-                                $subMenuCode .= "<a href=\"#!pagamentos|consultar\"\">" . "\n";
-                                $subMenuCode .= "<li>Verificar Pagamentos</li></a>" . "\n";
-                        }
-                    }
-                    break;
+//                case Ferramenta::CONTROLE_PAGAMENTOS:
+//                    if ($permissao_ferramenta['idPermissao'] != Permissao::SEM_ACESSO) {
+//                        $menuCode .= "<a><li class=\"menuLink\" id=\"pagamentosLink\">Pagamentos</li></a>" . "\n";
+//                        $subMenuCode .="<ul class=\"hiddenSubMenuLink pagamentosSubMenu\">" . "\n";
+//                        switch ($permissao_ferramenta['idPermissao']) {
+//                            case Permissao::ADMINISTRADOR:
+//                            case Permissao::GESTOR:
+//                                $subMenuCode .= "<a href=\"#!pagamentos|gerenciar\"\">" . "\n";
+//                                $subMenuCode .= "<li>Gerenciar Pagamentos</li></a>" . "\n";
+//                            case Permissao::ESCRITA:
+//                                $subMenuCode .= "<a href=\"#!pagamentos|nova\"\">" . "\n";
+//                                $subMenuCode .= "<li>Nova Ordem de Pagamento</li></a>" . "\n";
+//                            case Permissao::CONSULTA:
+//                                $subMenuCode .= "<a href=\"#!pagamentos|consultar\"\">" . "\n";
+//                                $subMenuCode .= "<li>Verificar Pagamentos</li></a>" . "\n";
+//                        }
+//                    }
+//                    break;
                 case Ferramenta::GALERIA_IMAGENS:
                     if ($permissao_ferramenta['idPermissao'] != Permissao::SEM_ACESSO) {
                         $menuCode .= "<a><li class=\"menuLink\" id=\"imagensLink\">Imagens</li></a>" . "\n";
@@ -200,12 +200,12 @@ class Menu {
                         switch ($permissao_ferramenta['idPermissao']) {
                             case Permissao::ADMINISTRADOR:
                             case Permissao::GESTOR:
-                                $subMenuCode .= "<a href=\"#!imagens|categorias\"\">" . "\n";
-                                $subMenuCode .= "<li>Categorias</li></a>" . "\n";
-                                $subMenuCode .= "<a href=\"#!imagens|gerenciar\"\">" . "\n";
-                                $subMenuCode .= "<li>Gerenciar Galerias</li></a>" . "\n";
+                                $subMenuCode .= "<a href=\"#!imagens|categoriaseafins\"\">" . "\n";
+                                $subMenuCode .= "<li>Categorias e Subcategorias</li></a>" . "\n";
+//                                $subMenuCode .= "<a href=\"#!imagens|gerenciarGalerias\"\">" . "\n";
+//                                $subMenuCode .= "<li>Gerenciar Galerias</li></a>" . "\n";
                             case Permissao::ESCRITA:
-                                $subMenuCode .= "<a href=\"#!imagens|cadastrar\"\">" . "\n";
+                                $subMenuCode .= "<a href=\"#!imagens|novaImagem\"\">" . "\n";
                                 $subMenuCode .= "<li>Cadastrar imagem</li></a>" . "\n";
                             case Permissao::CONSULTA:
                                 $subMenuCode .= "<a href=\"#!imagens|consultar\"\">" . "\n";
@@ -369,6 +369,72 @@ class Menu {
             $codigo .= "<optgroup label='Polos'>\n";
             for ($i = 0; $i < sizeof($polos); $i++) {
                 $codigo .= "<option value=\"" . fnEncrypt($polos[$i]['idPolo']) . "\">" . $polos[$i]['nomePolo'] . "</option>\n";
+            }
+        }
+        $codigo .= "</optgroup>\n";
+        $codigo .= "</select>\n";
+        return $codigo;
+    }
+
+    public static function montarCaixaSelecaoSubcategorias($required = false, $class = null, $id = null, $name = null, $idCategoriaPai = null) {
+        if ($idCategoriaPai != null) {
+            $codigo = "<select ";
+            if ($required) {
+                $codigo .= "required ";
+            }
+            if ($class != null) {
+                $codigo .= " class = \"" . $class . "\" ";
+            }
+            if ($id != null) {
+                $codigo .= " id = \"" . $id . "\" ";
+            }
+            if ($name != null) {
+                $codigo .= " name = \"" . $name . "\"";
+            }
+            $codigo .= ">\n";
+
+            $subcategorias = imagensDAO::consultarSubcategorias("*", "categoriaPai = $idCategoriaPai");
+            if (sizeof($subcategorias) == 0) {
+                $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem subcategorias cadastradas --</option>\n";
+            } else {
+                $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
+                $codigo .= "<optgroup label='Subcategorias'>\n";
+                for ($i = 0; $i < sizeof($subcategorias); $i++) {
+                    $codigo .= "<option value=\"" . fnEncrypt($subcategorias[$i]['idSubcategoria']) . "\">" . $subcategorias[$i]['nomeSubcategoria'] . "</option>\n";
+                }
+            }
+            $codigo .= "</optgroup>\n";
+            $codigo .= "</select>\n";
+            return $codigo;
+        } else {
+            return "<p>Categoria pai não informada.</p>";
+        }
+    }
+
+    public static function montarCaixaSelecaoCategorias($required = false, $class = null, $id = null, $name = null) {
+        $codigo = "<select ";
+        if ($required) {
+            $codigo .= "required ";
+        }
+        if ($class != null) {
+            $codigo .= " class = \"" . $class . "\" ";
+        }
+        if ($id != null) {
+            $codigo .= " id = \"" . $id . "\" ";
+        }
+        if ($name != null) {
+            $codigo .= " name = \"" . $name . "\"";
+        }
+        $codigo .= ">\n";
+
+        $categorias = imagensDAO::consultarCategorias();
+        if (sizeof($categorias) == 0) {
+            $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem categorias cadastradas --</option>\n";
+        } else {
+            $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
+            $codigo .= "<optgroup label='Categorias'>\n";
+            for ($i = 0; $i < sizeof($categorias); $i++) {
+                $codigo .= "<option value=\"" . fnEncrypt($categorias[$i]['idCategoria']) . "\">" . $categorias[$i]['nomeCategoria'] . "</option>\n";
             }
         }
         $codigo .= "</optgroup>\n";

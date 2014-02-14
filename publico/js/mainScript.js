@@ -61,13 +61,11 @@ $(document).ready(function() {
 
         carregarPagina(url);
         $("a[href^=#]").each(function(index) {
-//            console.log(this.confirmarDados)
             if (this.confirmarDados === undefined) {
                 this.confirmarDados = true;
                 $(this).bind("click", confirmarDadosNaoSalvos);
                 $(this).bind("click", requererPaginaAtual);
             }
-//        alert("teste");
         });
         document.paginaAlterada = false;
     });
@@ -422,9 +420,10 @@ function esconderShader() {
  * @param {boolean} hidePop Determina se, caso um pop-up esteja sendo exibido no canto da tela do usuário,
  * se ele deve ser escondido ou permanecer sendo exibido.
  * @param {boolean} async Especifíca se o carregamento deve ser assíncrono ou não. Por padrão, essa opção é falsa.
+ * @param {boolean} ignorePageChanges Faz a chamada sem perguntar se o usuário deseja sair, caso tenho feito alguma alteração no documento.
  * @returns O retorno da página requisitada, caso ela retorne algum.
  */
-function ajax(link, place, hidePop, async) {
+function ajax(link, place, hidePop, async, ignorePageChanges) {
     if (place === undefined) {
         place = ".contentWrap";
     }
@@ -458,10 +457,12 @@ function ajax(link, place, hidePop, async) {
 
     var sucesso = request.success(function(data) {
 
-        if (document.paginaAlterada) {
-            var ignorarMudancas = confirm("Modificações não salvas. Continuar?");
-            if (!ignorarMudancas) {
-                return false;
+        if (ignorePageChanges === undefined || ignorePageChanges === false) {
+            if (document.paginaAlterada) {
+                var ignorarMudancas = confirm("Modificações não salvas. Continuar?");
+                if (!ignorarMudancas) {
+                    return false;
+                }
             }
         }
         document.paginaAlterada = false;
@@ -493,18 +494,21 @@ function ajax(link, place, hidePop, async) {
         //TODO encontrar uma forma de tratar os campos somente leitura dos datapickers, pois quando
         //é escolhida uma data através do jquery, o evento change não é acionado.
         var camposAlteraveis = $("input, select, textarea").not('.ignorar').not("[hidden]").not("[readonly]");
-        $(camposAlteraveis).bind("keyup", function() {
-            conteudoAlterado();
+        $(camposAlteraveis).bind("keyup", function(param) {
+            if (param.keyCode != 13)
+                conteudoAlterado();
         });
-        $(camposAlteraveis).bind("change", function() {
-            conteudoAlterado();
+        $(camposAlteraveis).bind("change", function(param) {
+            if (param.keyCode != 13)
+                conteudoAlterado();
         });
         var camposData = $(".campoData").not(".ignorar");
 
         $(camposData).on("mousedown", function(e) {
-            $(camposData).on("mouseup", function() {
+            $(camposData).on("mouseup", function(param) {
                 setTimeout(function() {
-                    conteudoAlterado();
+                    if (param.keyCode != 13)
+                        conteudoAlterado();
                 }, 300);
             });
         });
@@ -946,7 +950,7 @@ function mudarTitulo(titulo, ignorarTituloPadrao) {
     if (titulo !== undefined) {
         var tituloPadrao = ignorarTituloPadrao ? "" : "Controle CEAD";
         $("title").empty();
-        $("title").append(tituloPadrao + " | " + titulo);
+        $("title").append(titulo + " | " + tituloPadrao);
     } else {
         $("title").empty();
         $("title").append(tituloPadrao);

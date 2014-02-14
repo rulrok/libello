@@ -68,7 +68,8 @@
             </span>
 
     </fieldset>
-    <button disabled class=" btn btn-primary btn-right" type="submit" disabled>Atualizar dados</button>
+    <button class=" btn btn-left" type="button" onclick="history.back();">Voltar</button>
+    <button disabled class=" btn btn-primary btn-right" type="submit">Atualizar dados</button>
 
 </form>
 

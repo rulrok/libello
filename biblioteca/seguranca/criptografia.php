@@ -3,8 +3,8 @@
 require_once __DIR__ . '/../configuracoes.php';
 
 function fnEncrypt($sValue, $sSecretKey = SECRET) {
-    $Rsalt = "@ILH987" . time();
-    $Lsalt = rand(0, 100) . "789HLI@";
+    $Rsalt = "@ILH987"; // . time();
+    $Lsalt = /* rand(0, 100) . */ "789HLI@";
     $fValue = $Lsalt . $sValue . $Rsalt;
 //    $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
 //    $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
@@ -29,7 +29,7 @@ function fnDecrypt($sValue, $sSecretKey = SECRET) {
         }
         return $fValue;
     } else {
-        die ("Código inválido");
+        die("Código inválido");
     }
 }
 

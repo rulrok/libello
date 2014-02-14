@@ -1,6 +1,5 @@
 <?php
 
-//check user is logged in...
 require_once __DIR__.'/../../../biblioteca/configuracoes.php';
 
 $error = $filename = $filesize = $fileloc = $thumb_name = '';

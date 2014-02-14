@@ -6,7 +6,7 @@ abstract class Controlador {
 
     protected $visao;
     var $ferramenta;
-
+    
     public function __construct() {
         $this->visao = new Visao();
     }

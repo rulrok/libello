@@ -46,6 +46,7 @@
 
 <!--<script src="http://ie.microsoft.com/testdrive/HTML5/CompatInspector/inspector.js"></script>-->
         <script src="publico/js/jquery/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
         <!--<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>-->
         <script src="publico/js/jquery/jquery.ba-hashchange.js"></script>
         <script src="publico/js/jquery/jquery.form.js"></script>
@@ -132,7 +133,7 @@
                     <p>One fine body…</p>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+                    <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Fechar</button>
                 </div>
             </div>
 

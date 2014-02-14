@@ -194,7 +194,7 @@ class ControladorLivros extends Controlador {
     }
 
     public function acaoGerenciarbaixasesaidas() {
-$this->visao->acessoMinimo = Permissao::GESTOR;
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }
 

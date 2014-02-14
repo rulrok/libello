@@ -76,78 +76,79 @@
             </span>
 
     </fieldset>
-    <button disabled class=" btn btn-primary btn-right" type="submit" disabled>Atualizar dados</button>
+    <button class=" btn btn-left" type="button" onclick="history.back();">Voltar</button>
+    <button disabled class=" btn btn-primary btn-right" type="submit">Atualizar dados</button>
 
 </form>
 
 <script>
-    $(document).ready(function() {
-        var elem = $("#chars");
-        $("#descricao").limiter(1000, elem);
-        var area;
-        //Gambiarra master
-        area = <?php echo "'" . $this->area . "'"; ?>;
-        $("#area").val(area);
-        varrerCampos();
-        formularioAjax();
-        $("#dataEntrada").datepick();
-        $(".line input").popover({trigger: 'focus', container: 'body'});
-        $(".line textarea").popover({trigger: 'focus', container: 'body'});
-
-        $("#custeio").on("click", function() {
-            if (!$(this).hasClass("btn-info")) {
-                $(this).toggleClass("btn-info");
-                $("#patrimonio").toggleClass("btn-info");
-            }
-
-            $("input[id^=numeroPatrimonio]").prop("required", false);
-            $("input[id^=numeroPatrimonio]").prop("readonly", true);
-            $(".patrimonios").prop("hidden", true);
-            $(".custeio").prop("hidden", false);
-            $(".custeio input").prop("required", true);
-            $(".patrimonios input").prop("required", false);
-            $("input[id^=numeroPatrimonio]").removeClass("campoErrado")
-
-            $("#radioCusteio").click();
-            liberarCadastro();
-        });
-
-        $("#patrimonio").on("click", function() {
-
-            if (!$(this).hasClass("btn-info")) {
-                $(this).toggleClass("btn-info");
-                $("#custeio").toggleClass("btn-info");
-            }
-
-            $("input[id^=numeroPatrimonio]").prop("required", true);
-            $("input[id^=numeroPatrimonio]").prop("readonly", false);
-            $(".patrimonios").prop("hidden", false);
-            $(".custeio").prop("hidden", true);
-            $(".custeio input").prop("required", false);
-            $(".patrimonios input").prop("required", true);
-            $("input[id^=numeroPatrimonio]").removeClass("campoErrado");
-
-            $("#radioPatrimonio").click();
-            $("#submit").prop("disabled", true);
+        $(document).ready(function() {
+            var elem = $("#chars");
+            $("#descricao").limiter(1000, elem);
+            var area;
+            //Gambiarra master
+            area = <?php echo "'" . $this->area . "'"; ?>;
+            $("#area").val(area);
             varrerCampos();
+            formularioAjax();
+            $("#dataEntrada").datepick();
+            $(".line input").popover({trigger: 'focus', container: 'body'});
+            $(".line textarea").popover({trigger: 'focus', container: 'body'});
+
+            $("#custeio").on("click", function() {
+                if (!$(this).hasClass("btn-info")) {
+                    $(this).toggleClass("btn-info");
+                    $("#patrimonio").toggleClass("btn-info");
+                }
+
+                $("input[id^=numeroPatrimonio]").prop("required", false);
+                $("input[id^=numeroPatrimonio]").prop("readonly", true);
+                $(".patrimonios").prop("hidden", true);
+                $(".custeio").prop("hidden", false);
+                $(".custeio input").prop("required", true);
+                $(".patrimonios input").prop("required", false);
+                $("input[id^=numeroPatrimonio]").removeClass("campoErrado")
+
+                $("#radioCusteio").click();
+                liberarCadastro();
+            });
+
+            $("#patrimonio").on("click", function() {
+
+                if (!$(this).hasClass("btn-info")) {
+                    $(this).toggleClass("btn-info");
+                    $("#custeio").toggleClass("btn-info");
+                }
+
+                $("input[id^=numeroPatrimonio]").prop("required", true);
+                $("input[id^=numeroPatrimonio]").prop("readonly", false);
+                $(".patrimonios").prop("hidden", false);
+                $(".custeio").prop("hidden", true);
+                $(".custeio input").prop("required", false);
+                $(".patrimonios input").prop("required", true);
+                $("input[id^=numeroPatrimonio]").removeClass("campoErrado");
+
+                $("#radioPatrimonio").click();
+                $("#submit").prop("disabled", true);
+                varrerCampos();
+            });
+
+            var numeroPatrimonio;
+            //Gambiarra master
+            numeroPatrimonio = <?php echo "'" . $this->numeroPatrimonio . "'"; ?>;
+            if (numeroPatrimonio == "") {
+                $("#custeio").click();
+            } else {
+                $("#patrimonio").click();
+            }
+            var editavel;
+            editavel = <?php echo "'" . $this->livroEditavel . "'"; ?>;
+            if (!editavel) {
+                $("#custeio").unbind("click");
+                $("#patrimonio").unbind("click");
+            }
+
+
+
         });
-
-        var numeroPatrimonio;
-        //Gambiarra master
-        numeroPatrimonio = <?php echo "'" . $this->numeroPatrimonio . "'"; ?>;
-        if (numeroPatrimonio == "") {
-            $("#custeio").click();
-        } else {
-            $("#patrimonio").click();
-        }
-        var editavel;
-        editavel = <?php echo "'" . $this->livroEditavel . "'"; ?>;
-        if (!editavel) {
-            $("#custeio").unbind("click");
-            $("#patrimonio").unbind("click");
-        }
-
-
-
-    });
 </script>

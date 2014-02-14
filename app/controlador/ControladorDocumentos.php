@@ -6,7 +6,7 @@ include_once APP_LOCATION . 'modelo/dao/documentoDAO.php';
 include_once APP_LOCATION . 'modelo/ComboBoxDocumentos.php';
 include_once APP_LOCATION . 'modelo/enumeracao/Ferramenta.php';
 require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
-require_once APP_LOCATION.'modelo/documentos/listarDocumentos.php';
+require_once APP_LOCATION.'modelo/ferramentas/documentos/listarDocumentos.php';
 require_once BIBLIOTECA_DIR . "seguranca/Permissao.php";
 
 class ControladorDocumentos extends Controlador {
@@ -144,7 +144,7 @@ class ControladorDocumentos extends Controlador {
         $this->renderizar();
     }
 
-    public function acaoGerarMemorando() {
+    public function acaoGerarmemorando() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->visao->comboDia = ComboBoxDocumentos::comboDia();
         $this->visao->comboMes = ComboBoxDocumentos::comboMes();

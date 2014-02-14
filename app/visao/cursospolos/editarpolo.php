@@ -21,7 +21,8 @@
             </span>
 
     </fieldset>
-    <button disabled class=" btn btn-primary btn-right" type="submit" disabled >Atualizar dados</button>
+    <button class=" btn btn-left" type="button" onclick="history.back();">Voltar</button>
+    <button disabled class=" btn btn-primary btn-right" type="submit" >Atualizar dados</button>
 
 </form>
 <br/>
@@ -36,27 +37,27 @@
 <br/>
 <script src="publico/js/cidades-estados.js"></script>
 <script>
-    $(document).ready(function() {
-        var flag = true;
-        varrerCampos();
-        formularioAjax();
-        new dgCidadesEstados({
-            cidade: $('#cidade').get(0),
-            estado: $('#estado').get(0)
-        });
-        $("#cidade").chosen();
+        $(document).ready(function() {
+            var flag = true;
+            varrerCampos();
+            formularioAjax();
+            new dgCidadesEstados({
+                cidade: $('#cidade').get(0),
+                estado: $('#estado').get(0)
+            });
+            $("#cidade").chosen();
 
-        $('#estado').val("<?php echo $this->estadoViagem ?>");
-        $('#estado').change();
-        $("#estado").chosen();
-        $('#estado').change(function() {
-            setTimeout(function() {
-                if (!flag) {
-                    $("#cidade").val('').trigger("chosen:updated");
-                }
-            }, "200");
+            $('#estado').val("<?php echo $this->estadoViagem ?>");
+            $('#estado').change();
+            $("#estado").chosen();
+            $('#estado').change(function() {
+                setTimeout(function() {
+                    if (!flag) {
+                        $("#cidade").val('').trigger("chosen:updated");
+                    }
+                }, "200");
+            });
+            $('#cidade').val("<?php echo $this->cidade ?>").trigger("chosen:updated");
+            flag = false;
         });
-        $('#cidade').val("<?php echo $this->cidade ?>").trigger("chosen:updated");
-        flag = false;
-    });
 </script>

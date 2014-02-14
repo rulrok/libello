@@ -5,27 +5,28 @@ require_once BIBLIOTECA_DIR . "seguranca/Permissao.php";
 
 class Visao {
 
-//    var $acessoMinimo = Permissao::CONSULTA;
-
     public function renderizar($diretorio, $arquivo) {
-        $local = array('app/visao/', 'app/modelo/');
+        $local = array('app/visao/', 'app/modelo/ferramentas/');
         if (isset($this->acessoMinimo)) {
             //Caso haja algum nível mínimo de acesso, verifica se o atual usuário logado pode realizar tal operação
             if (!usuarioAutorizado(obterUsuarioSessao(), $this->acessoMinimo)) {
                 require APP_LOCATION . "visao/acessoproibido.php";
-                exit;
+                die("Não autorizado");
             }
         }
-        
-        if (file_exists(ROOT . $local[0] . $diretorio . '/' . $arquivo)) {
-            require ROOT . $local[0] . $diretorio . '/' . $arquivo;
-        }else if(file_exists(ROOT . $local[1] . $diretorio . '/' . $arquivo)){
-            require ROOT . $local[1] . $diretorio . '/' . $arquivo;
-            
-        }else {
+
+        $encontrou = false;
+        for ($i = 0; $i < sizeof($local); $i++) {
+            if (file_exists(ROOT . $local[$i] . $diretorio . '/' . $arquivo)) {
+                require ROOT . $local[$i] . $diretorio . '/' . $arquivo;
+                $encontrou = true;
+                break;
+            }
+        }
+
+        if (!$encontrou) {
             require APP_LOCATION . "visao/paginaConstrucao.php";
         }
-        
     }
 
 }

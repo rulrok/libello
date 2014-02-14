@@ -21,30 +21,22 @@ class PermissoesFerramenta {
         switch ($ferramenta) {
             case Ferramenta::CONTROLE_USUARIOS:
                 return $this->controleUsuarios;
-                break;
             case Ferramenta::CURSOS_E_POLOS:
                 return $this->controleCursos;
-                break;
             case Ferramenta::CONTROLE_LIVROS:
                 return $this->controleLivros;
-                break;
             case Ferramenta::CONTROLE_EQUIPAMENTOS:
                 return $this->controleEquipamentos;
-                break;
             case Ferramenta::CONTROLE_DOCUMENTOS:
                 return $this->controleDocumentos;
-                break;
             case Ferramenta::CONTROLE_VIAGENS:
                 return $this->controleViagens;
-                break;
             case Ferramenta::TAREFAS:
                 return $this->tarefas;
-                break;
             case Ferramenta::CONTROLE_PAGAMENTOS:
                 return $this->controlePagamentos;
             case Ferramenta::GALERIA_IMAGENS:
                 return $this->galeriaImagens;
-                break;
             default :
                 return null;
         }

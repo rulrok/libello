@@ -218,10 +218,10 @@ function configurarTabela(parametros) {
                     showPopUp(data.mensagem, data.status);
                     if (data.status.toLowerCase() === "sucesso") {
                         $("input[type=reset]").click(); //Limpar o formulário depois de cadastrado com sucesso.
+                        var pos = oTable.fnGetPosition(selectedElement);
+                        oTable.fnDeleteRow(pos);
+                        $($("tr.odd")[0]).addClass("row_selected");
                     }
-                    var pos = oTable.fnGetPosition(selectedElement);
-                    oTable.fnDeleteRow(pos);
-                    $($("tr.odd")[0]).addClass("row_selected");
                 } else {
                     showPopUp("Houve algum problema na resposta do servidor.", "erro");
                 }
