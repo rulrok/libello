@@ -102,8 +102,8 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn
         , success: sucesso  // post-submit callback 
         , complete: completeFn
         , aways: alwaysFn
-        , url: $("#" + idFormulario).attr("action")         // override for form's 'action' attribute 
-        , type: $("#" + idFormulario).attr("method")        // 'get' or 'post', override for form's 'method' attribute 
+        , url: $("#" + idFormulario).prop("action")         // override for form's 'action' attribute 
+        , type: $("#" + idFormulario).prop("method")        // 'get' or 'post', override for form's 'method' attribute 
 //        , dataType: 'json'        // 'xml', 'script', or 'json' (expected server response type) 
         , clearForm: false      // clear all form fields after successful submit 
         , resetForm: false      // reset the form after successful submit 

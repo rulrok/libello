@@ -3,7 +3,7 @@
 <form class="table centered" id="ajaxForm" method="post" action="index.php?c=viagens&a=verificarnova">
     <fieldset>
         <legend>Dados da viagem</legend>
-        <p class="centered centeredText boldedText">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png"> são obrigatórios</label>
+        <p class="centered centeredText boldedText">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png"> são obrigatórios</p>
         <div class="line">
             <label for='curso'>Curso vinculado</label>
             <?php echo $this->cursos; ?>
@@ -103,7 +103,7 @@
 //                $('.passageirosPossiveis').append('<option value="' + $(this).val() + '">' + $(this).text() + '</option>');
 //                $(this).remove();
 //                $(".passageiros option").each(function() {
-//                    $(this).attr({selected: 'selected'});
+//                    $(this).prop({selected: 'selected'});
 //                });
 //            });
 //        });

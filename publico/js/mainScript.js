@@ -373,7 +373,7 @@ function carregarPagina(link) {
     if (menu === "inicial" || menu === undefined) {
         menu = "home";
     }
-    var ferramentaAtual = $(".actualTool").attr("id");
+    var ferramentaAtual = $(".actualTool").prop("id");
     try {
         if (ferramentaAtual.lastIndexOf(menu) === -1) {
             $(".actualTool").removeClass("actualTool");

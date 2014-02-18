@@ -3,7 +3,7 @@
 <form class="table centered" id="ajaxForm" method="post" action="index.php?c=imagens&a=verificaredicaocategoria">
     <fieldset>
         <legend>Dados</legend>
-        <p class="centered centeredText boldedText">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png"> são obrigatórios</label>
+        <p class="centered centeredText boldedText">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png"> são obrigatórios</p>
             <br/>
             <input hidden="true" readonly="true" type="text" class="input-small" id="categoriaID" name="categoriaID" value="<?php echo $this->categoriaID ?>" />
 

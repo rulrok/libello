@@ -90,9 +90,9 @@
                 var a = $(this).val();
 //                console.debug(a.length);
                 if (a.length >= 6) {
-                    $("#botaoEnviarNovaSenha").attr('disabled', false);
+                    $("#botaoEnviarNovaSenha").prop('disabled', false);
                 } else {
-                    $("#botaoEnviarNovaSenha").attr('disabled', true);
+                    $("#botaoEnviarNovaSenha").prop('disabled', true);
                 }
             });
         </script>

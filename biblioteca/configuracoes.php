@@ -27,6 +27,8 @@ if (!defined("APP_CONFIGS")) {
     define("SMTP_SERVER_EMAIL", "cead-noreply@unifal-mg.edu.br");
 
     define("BIBLIOTECA_DIR", ROOT . "biblioteca/");
+    
+    define("APP_TEMP_DIR","privado/temp/");
 
     define("SECRET", md5("controleCEAD@2013"));
 }

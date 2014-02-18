@@ -32,7 +32,7 @@ class ControladorImagens extends Controlador {
         $this->renderizar();
     }
 
-    public function acaoProcessarimagem() {
+    public function acaoCriarthumb() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->renderizar();
     }

@@ -3,7 +3,7 @@
 <form class="table centered" id="ajaxForm2" method="post" action="index.php?c=cursospolos&a=verificaredicaocurso">
     <fieldset>
         <legend>Dados</legend>
-        <p class="centered centeredText boldedText">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png"> são obrigatórios</label>
+        <p class="centered centeredText boldedText">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png"> são obrigatórios</p>
             <br/>
             <input hidden="true" readonly="true" type="text" class="input-small" id="cursoID" name="cursoID" value="<?php echo $this->cursoID ?>" />
 

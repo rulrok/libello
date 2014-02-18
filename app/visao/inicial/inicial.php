@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8"/>
-
         <!-- META TAGS -->
 
+        <meta charset="UTF-8"/>
         <meta name="description" content="Ferramenta para controle interno do CEAD">
         <meta name="keywords" content="cead, gerenciamento">
         <meta name="robots" content="noindex, nofollow">
-        <meta name="copyright" content="CEAD 2012 - 2013">
+        <meta name="copyright" content="CEAD 2012 - 2014">
         <meta name="language" content="PT">
         <meta name="distribution" content="local">
         <meta name="rating" content="general">
 
         <!-- FIM META TAGS -->
+
         <!-- ESTILOS -->
 
         <link type="text/css" rel="stylesheet" href="publico/css/jquery-ui.css" />
@@ -42,20 +42,20 @@
         </style>
         <![endif]-->
         <!-- Fim ESTILOS -->
+
         <!-- PRE SCRIPTS -->
 
-<!--<script src="http://ie.microsoft.com/testdrive/HTML5/CompatInspector/inspector.js"></script>-->
+        <!--<script src="http://ie.microsoft.com/testdrive/HTML5/CompatInspector/inspector.js"></script>-->
+        <!--<script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>-->
+
         <script src="publico/js/jquery/jquery-1.9.1.js"></script>
-<!--<script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>-->
-        <!--<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>-->
+        <script src="publico/js/browser-detection.js" />
         <script src="publico/js/jquery/jquery.ba-hashchange.js"></script>
         <script src="publico/js/jquery/jquery.form.js"></script>
         <script src="publico/js/jquery/jquery.chosen.js"></script>
         <script src="publico/js/mainScript.js"></script>
         <script src="publico/js/validarCampos.js"></script>
         <script src="publico/js/ajaxForms.js"></script>
-        <!--<script src="publico/js/carregarImagem/libs/modernizr-2.5.3.min.js"></script>-->
-        <!--<script src="publico/js/carregarImagem/plugins.js"></script>-->
         <script>
             window.onbeforeunload = function(e) {
                 if (document.paginaAlterada) {
@@ -130,7 +130,7 @@
                                     <h3 id="myModalLabel">Modal header</h3>
                                 </div>-->
                 <div class="modal-body">
-                    <p>One fine body…</p>
+                    <!-- CORPO -->
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Fechar</button>
@@ -295,7 +295,7 @@
                         $("#botoesSuperiores").children(":first-child").before('<a id="fullscreen-toggle" title="Modo tela cheia" class="btn btn-small" href="javascript:void(0)" onclick="toggleFullScreen();"><i class="icon-fullscreen"></i></a>');
                     }
         </script>
-        <script src="publico/js/browser-detection.js" />
+
         <!-- FIM POS SCRIPTS -->
     </body>
 </html>

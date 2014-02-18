@@ -87,7 +87,7 @@ if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION[
         <?php endif; ?>
         <script>
             $(document).ready(function() {
-                $("#alvo").attr("value", location.hash);
+                $("#alvo").prop("value", location.hash);
             });
         </script>
     </body>
