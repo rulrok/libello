@@ -9,7 +9,7 @@
 
             <span class="line">
                 <label>Curso</label>
-                <input required type="text" class="input-xlarge" id="nomecurso" name="nomecurso" value="<?php echo $this->curso ?>" />
+                <input required autofocus type="text" class="input-xlarge" id="nomecurso" name="nomecurso" value="<?php echo $this->curso ?>" />
             </span>
             <span class="line">
                 <label>Área</label>

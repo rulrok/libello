@@ -13,7 +13,7 @@
         <hr/>
         <div class="line">
             <label for="dataBaixa">Data de baixa</label>
-            <input type="text"  required id="dataBaixa" on class="campoData" name="dataBaixa" />
+            <input type="text" required autofocus id="dataBaixa" on class="campoData" name="dataBaixa" />
         </div>
         <div class="line">
             <label for="quantidade">Quantidade</label>

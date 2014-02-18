@@ -5,7 +5,7 @@
         <legend>Inserir nova categoria</legend>
         <span class="line">
             <label for="categoria">Nome da categoria</label>
-            <input required type="text" class="input-xlarge" id="categoria" name="categoria" />
+            <input required autofocus type="text" class="input-xlarge" id="categoria" name="categoria" />
         </span>
 <!--        <span class="line">
             <label>Área</label>

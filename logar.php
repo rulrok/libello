@@ -49,46 +49,46 @@ if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION[
                 <form class="table centered" name="identificacao" action="./biblioteca/seguranca/verificarLogin.php" method="post">
                     <fieldset>
                         <input hidden type="checkbox" class="hidden" id="fazendo_login" name="fazendo_login" checked>
-                        <input hidden type="text" class="hidden" id="alvo" name="alvo" >
-                        <div class="line">
-                            <label>Email</label>
-                            <input required type="email" name="login">
-                        </div>
-                        <div class="line">
-                            <label>Senha</label>
-                            <input required type="password" name="senha" >
-                        </div>
-                        <br/>
-                        <button class="btn btn-right btn-info" name="identificacao" type="submit">Entrar</button>
-                            <?php if ($ocultarDetalhes): ?>
-                                <a class="btn"href="lembrarSenha.php">Esqueci a senha</a>
-                            <?php endif; ?>
-                    </fieldset>
+                            <input hidden type="text" class="hidden" id="alvo" name="alvo" >
+                                <div class="line">
+                                    <label for="email">Email</label>
+                                    <input autofocus="true" required type="email" id="email" name="login">
+                                </div>
+                                <div class="line">
+                                    <label for="password">Senha</label>
+                                    <input required type="password" id="password" name="senha" >
+                                </div>
+                                <br/>
+                                <button class="btn btn-right btn-info" name="identificacao" type="submit">Entrar</button>
+                                <?php if ($ocultarDetalhes): ?>
+                                    <a href="lembrarSenha.php" style="text-decoration: underline;color: #0088cc; cursor: help;">Esqueci a senha</a>
+                                <?php endif; ?>
+                                </fieldset>
 
-                </form>
-            </div>
-            <div class="error centeredText">
-                <?php
-                if (isset($_GET['m'])) {
-                    echo $_GET['m'];
-                }
-                ?>
-            </div>
-        </div>
-        <?php if ($ocultarDetalhes): ?>
-            <div id="apoio">
-                <h3>Apoio:</h3>
-                <div id="uab"></div>
-                <div id="capes"></div>
-            </div>
-            <div id="footer" >
-                <p class="centeredText">Copyright &copy; 2012 - 2013 | Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a> | Versão <?php echo APP_VERSION; ?></p>
-            </div>
-        <?php endif; ?>
-        <script>
+                                </form>
+                                </div>
+                                <div class="error centeredText">
+                                    <?php
+                                    if (isset($_GET['m'])) {
+                                        echo $_GET['m'];
+                                    }
+                                    ?>
+                                </div>
+                                </div>
+                                <?php if ($ocultarDetalhes): ?>
+                                    <div id="apoio">
+                                        <h3>Apoio:</h3>
+                                        <a href="http://www.uab.capes.gov.br/" target="_blank"><div id="uab"></div></a>
+                                        <a href="http://www.capes.gov.br/" target="_blank"><div id="capes"></div></a>
+                                    </div>
+                                    <div id="footer" >
+                                        <p class="centeredText">Copyright &copy; 2012 - 2014 | Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a> | Versão <?php echo APP_VERSION; ?></p>
+                                    </div>
+                                <?php endif; ?>
+                                <script>
             $(document).ready(function() {
                 $("#alvo").prop("value", location.hash);
             });
-        </script>
-    </body>
-</html>
+                                </script>
+                                </body>
+                                </html>

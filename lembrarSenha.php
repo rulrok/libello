@@ -34,8 +34,8 @@
                     <form class="table centered" id="ajaxForm" name="identificacao" action="./biblioteca/seguranca/lembrarSenha.php" method="post">
                         <fieldset>
                             <div class="line">
-                                <label>Email</label>
-                                <input required type="text" name="email">
+                                <label for="email">Email</label>
+                                <input required autofocus type="text" id="email" name="email">
                             </div>
                             <br/>
                             <a href="logar.php" class="btn">Voltar</a>
@@ -72,11 +72,11 @@
         </div>
         <div id="apoio">
             <h3>Apoio:</h3>
-            <div id="uab"></div>
-            <div id="capes"></div>
+            <a href="http://www.uab.capes.gov.br/" target="_blank"><div id="uab"></div></a>
+            <a href="http://www.capes.gov.br/" target="_blank"><div id="capes"></div></a>
         </div>
         <div id="footer" >
-            <p class="centeredText">Copyright &copy; 2012 - 2013 | Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a> | Versão <?php echo APP_VERSION; ?></p>
+            <p class="centeredText">Copyright &copy; 2012 - 2014 | Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a> | Versão <?php echo APP_VERSION; ?></p>
         </div>
         <script>
             formularioAjax("ajaxForm", "#erroWrap");

@@ -5,7 +5,7 @@
         <legend>Inserir novo curso</legend>
         <span class="line">
             <label>Curso</label>
-            <input required type="text" class="input-xlarge" id="nomecurso" name="nomecurso" />
+            <input required autofocus type="text" class="input-xlarge" id="nomecurso" name="nomecurso" />
         </span>
         <span class="line">
             <label>Área</label>

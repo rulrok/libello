@@ -6,7 +6,7 @@
         <input hidden="true" readonly="true" type="text" class="input-small" id="equipamentoID" name="equipamentoID" value="<?php echo $this->equipamentoID ?>" />
         <span class="line">
             <label>Equipamento</label>
-            <input required type="text" class="input-xlarge" id="equipamento" name="equipamento" value="<?php echo $this->equipamento ?>" />
+            <input required autofocus type="text" class="input-xlarge" id="equipamento" name="equipamento" value="<?php echo $this->equipamento ?>" />
         </span>
         <div class="line">
             <label for="descricao">Descrições</label>

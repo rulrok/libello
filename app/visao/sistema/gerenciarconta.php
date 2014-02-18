@@ -6,7 +6,7 @@
         <p class="centered centeredText boldedText">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png"> são obrigatórios</p>
         <div class="line">
             <label>Nome</label>
-            <input required name="nome"  type="text" value="<?php echo $this->nome ?>"/>
+            <input required autofocus name="nome"  type="text" value="<?php echo $this->nome ?>"/>
         </div>
         <div class="line">
             <label>Sobrenome</label>

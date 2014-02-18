@@ -11,7 +11,7 @@
         <hr/>
         <div class="line">
             <label for="dataSaida">Data de saída</label>
-            <input type="text"  required id="dataSaida" on class="campoData" name="dataSaida" />
+            <input type="text" autofocus required id="dataSaida" on class="campoData" name="dataSaida" />
         </div>
         <div class="line">
             <label for="polo">Polo de Destino</label>

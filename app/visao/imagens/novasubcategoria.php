@@ -9,7 +9,7 @@
         </span>
         <span class="line">
             <label for="subcategoria">Nome da subcategoria</label>
-            <input required type="text" class="input-xlarge" id="subcategoria" name="subcategoria" />
+            <input required autofocus type="text" class="input-xlarge" id="subcategoria" name="subcategoria" />
         </span>
     </fieldset>
     <button class="btn btn-large" type="reset">Limpar</button>

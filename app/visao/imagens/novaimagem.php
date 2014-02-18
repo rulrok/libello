@@ -8,7 +8,7 @@
         <p class="centered centeredText boldedText">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png"> são obrigatórios</p>
         <div class="line">
             <label for='nome'>Título</label>
-            <input required type="text" id="nome" name="nome" class="input-xlarge" placeholder="Nome da imagem">
+            <input required autofocus type="text" id="nome" name="nome" class="input-xlarge" placeholder="Nome da imagem">
         </div>
         <div class="line">
             <label for='nome'>Ano</label>

@@ -5,7 +5,7 @@
         <legend>Inserir novo polo</legend>
         <span class="line">
             <label>Nome</label>
-            <input required type="text" class="input-xlarge" id="nomepolo" name="nomepolo" />
+            <input required autofocus type="text" class="input-xlarge" id="nomepolo" name="nomepolo" />
         </span>
         <span class="line">
             <label>Estado</label>

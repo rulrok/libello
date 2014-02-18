@@ -13,7 +13,7 @@
         <hr/>
         <div class="line">
             <label for="dataRetorno">Data de retorno</label>
-            <input type="text"  required id="dataRetorno" on class="campoData" name="dataRetorno" />
+            <input type="text" autofocus required id="dataRetorno" on class="campoData" name="dataRetorno" />
         </div>
         <div class="line">
             <label for="observacoes">Observações</label>

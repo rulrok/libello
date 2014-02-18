@@ -9,7 +9,7 @@
 
             <span class="line">
                 <label>Polo</label>
-                <input required type="text" class="input-xlarge" id="nomepolo" name="nomepolo" value="<?php echo $this->polo ?>" />
+                <input required autofocus type="text" class="input-xlarge" id="nomepolo" name="nomepolo" value="<?php echo $this->polo ?>" />
             </span>
             <span class="line">
                 <label>Estado</label>

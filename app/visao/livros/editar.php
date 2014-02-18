@@ -6,7 +6,7 @@
         <input hidden="true" readonly="true" type="text" class="input-small" id="livroID" name="livroID" value="<?php echo $this->livroID ?>" />
         <span class="line">
             <label>Nome do Livro</label>
-            <input required type="text" class="input-xlarge" id="livro" name="livro" value="<?php echo $this->livro ?>" />
+            <input required autofocus type="text" class="input-xlarge" id="livro" name="livro" value="<?php echo $this->livro ?>" />
         </span>
         <span class="line">
             <label for="grafica">Nome da Gráfica</label>

@@ -6,7 +6,7 @@
 
         <span class="line">
             <label>Nome do Livro</label>
-            <input required type="text" class="input-xlarge" id="livro" name="livro" title="Livro" data-content="O nome do livro apenas" />
+            <input required autofocus type="text" class="input-xlarge" id="livro" name="livro" title="Livro" data-content="O nome do livro apenas" />
         </span>
         <span class="line">
             <label for="grafica">Nome da Gráfica</label>

@@ -5,7 +5,7 @@
         <legend>Registro de novo equipamento</legend>
         <span class="line">
             <label>Equipamento</label>
-            <input required type="text" class="input-xlarge" id="equipamento" name="equipamento" title="Equipamento" data-content="O nome do equipamento apenas" />
+            <input required autofocus type="text" class="input-xlarge" id="equipamento" name="equipamento" title="Equipamento" data-content="O nome do equipamento apenas" />
         </span>
         <div class="line">
             <label for="descricoes">Descrições</label>

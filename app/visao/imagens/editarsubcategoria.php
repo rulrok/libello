@@ -10,7 +10,7 @@
 
             <span class="line">
                 <label for="subcategoria">Nome</label>
-                <input required type="text" class="input-xlarge" id="subcategoria" name="subcategoria" value="<?php echo $this->subcategoria ?>" />
+                <input required autofocus type="text" class="input-xlarge" id="subcategoria" name="subcategoria" value="<?php echo $this->subcategoria ?>" />
             </span>
             <span class="line">
                 <label for="categoriapai">Categoria Pai</label>

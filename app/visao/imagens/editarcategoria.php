@@ -9,7 +9,7 @@
 
             <span class="line">
                 <label>Nome</label>
-                <input required type="text" class="input-xlarge" id="categoria" name="categoria" value="<?php echo $this->categoria ?>" />
+                <input required autofocus type="text" class="input-xlarge" id="categoria" name="categoria" value="<?php echo $this->categoria ?>" />
             </span>
     </fieldset>
     <button class=" btn btn-left" type="button" onclick="history.back();">Voltar</button>
