@@ -23,19 +23,8 @@
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.datepick.css"/> 
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.chosen.css"/> 
         <link type="text/css" rel="stylesheet" media="screen" href="publico/css/browser-detection.css" />
-        <style>
-            .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
-            .ui-timepicker-div dl { text-align: left; }
-            .ui-timepicker-div dl dt { float: left; clear:left; padding: 0 0 0 5px; }
-            .ui-timepicker-div dl dd { margin: 0 10px 10px 40%; }
-            .ui-timepicker-div td { font-size: 90%; }
-            .ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+        <link type="text/css" rel="stylesheet" media="screen" href="publico/css/jquery-ui-timepicker-addon.css" />
 
-            .ui-timepicker-rtl{ direction: rtl; }
-            .ui-timepicker-rtl dl { text-align: right; padding: 0 5px 0 0; }
-            .ui-timepicker-rtl dl dt{ float: right; clear: right; }
-            .ui-timepicker-rtl dl dd { margin: 0 40% 10px 10px; }
-        </style>
         <!--[if !IE 7]>
         <style type="text/css">
                 nav {display:table;height:100%}
@@ -203,6 +192,7 @@
         <script src="publico/js/jquery/jquery.datepick.js"></script>
         <script src="publico/js/jquery/jquery.datepick-pt-BR.js"></script>
         <script src='publico/js/jquery/jquery-ui-timepicker-addon.js'></script> 
+        <script src='publico/js/jquery/jquery-ui-sliderAccess.js'></script> 
         <script src='publico/js/jquery/jquery.mask.min.js'></script> 
         <script src="publico/js/oTable.js" ></script>
         <script src="publico/js/bootstrap.js"></script> 
