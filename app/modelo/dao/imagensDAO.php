@@ -6,6 +6,27 @@ require_once APP_LOCATION . 'modelo/enumeracao/TipoEventoImagens.php';
 
 class imagensDAO extends abstractDAO {
 
+    public static function consultarGaleria($nomeGaleria) {
+        $nomeGaleria = parent::quote($nomeGaleria);
+        $sql = "SELECT idGaleria FROM imagens_galeria WHERE nomeGaleria LIKE " . $nomeGaleria;
+
+        $resultado = parent::getConexao()->query($sql)->fetchAll();
+        return $resultado;
+    }
+
+    public static function cadastrarGaleria($nomeGaleria) {
+        $nomeGaleria = parent::quote($nomeGaleria);
+        $data = parent::quote(date('Y-m-j'));
+        $sql = "INSERT INTO imagens_galeria(nomeGaleria,qtdFotos,dataCriacao) VALUES ($nomeGaleria,0,$data)";
+
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
     public static function consultarCategorias($colunas = "*", $condicao = null, $condicaoJuncao = null) {
 
         if ($condicao == null) {
@@ -67,16 +88,28 @@ class imagensDAO extends abstractDAO {
     }
 
     public static function cadastrarImagem(Imagem $imagem) {
-//        $sql = "INSERT INTO polo(nomePolo,cidade,estado) VALUES ";
-//        $nome = parent::quote($polo->get_nome());
-//        $cidade = parent::quote($polo->get_cidade());
-//        $estado = parent::quote($polo->get_estado());
-//        $values = "($nome,$cidade,$estado)";
-//        try {
-//            parent::getConexao()->query($sql . $values);
-//        } catch (Exception $e) {
-//            echo $e;
-//        }
+        $sql = "INSERT INTO imagens_imagem(idGaleria,idSubcategoria,titulo,observacoes,descritor1,descritor2,descritor3,dificuldade,cpfAutor,ano,nomeArquivo,nomeArquivoMiniatura,nomeArquivoVetorial) VALUES ";
+        $idGaleria = (int) $imagem->get_idGaleria();
+        $idSubcategoria = (int) $imagem->get_idSubcategoria();
+        $titulo = parent::quote($imagem->get_titulo());
+        $observacoes = parent::quote($imagem->get_observacoes());
+        $descritor1 = parent::quote($imagem->get_descritor1());
+        $descritor2 = parent::quote($imagem->get_descritor2());
+        $descritor3 = parent::quote($imagem->get_descritor3());
+        $dificuldade = parent::quote($imagem->get_dificuldade());
+        $cpfAutor = parent::quote($imagem->get_cpfAutor());
+        $ano = parent::quote($imagem->get_ano());
+        $nomeArquivo = parent::quote($imagem->get_nomeArquivo());
+        $nomeArquivoMiniatura = parent::quote($imagem->get_nomeArquivoMiniatura());
+        $nomeArquivoVetorial = parent::quote($imagem->get_nomeArquivoVetorial());
+        $values = "($idGaleria,$idSubcategoria,$titulo,$observacoes,$descritor1,$descritor2,$descritor3,$dificuldade,$cpfAutor,$ano,$nomeArquivo,$nomeArquivoMiniatura,$nomeArquivoVetorial)";
+        try {
+            parent::getConexao()->query($sql . $values);
+            return true;
+        } catch (Exception $e) {
+            echo $e;
+            return false;
+        }
     }
 
     public static function consultarImagem(Imagem $imagem) {
@@ -112,6 +145,7 @@ class imagensDAO extends abstractDAO {
             }
         }
     }
+
     public static function removerSubcategoria($idSubcategoria) {
         if ($idSubcategoria !== null) {
             if (is_array($idSubcategoria)) {
@@ -361,6 +395,23 @@ class imagensDAO extends abstractDAO {
         $usuarioID = obterUsuarioSessao()->get_id();
         $sql = "INSERT INTO imagens_evento(tipoEvento,usuario,subcategoria,data,hora) VALUES ";
         $sql .= " ($tipo,$usuarioID,$idSubcategoria,<data>,<hora>)";
+        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
+        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
+        try {
+            parent::getConexao()->query($sql);
+            return true;
+        } catch (Exception $e) {
+            print_r($e);
+            return false;
+        }
+    }
+
+    public static function registrarCadastroImagem($idImagem) {
+        $quote = "\"";
+        $tipo = TipoEventoImagens::CADASTRO_IMAGEM;
+        $usuarioID = obterUsuarioSessao()->get_id();
+        $sql = "INSERT INTO imagens_evento(tipoEvento,usuario,imagem,data,hora) VALUES ";
+        $sql .= " ($tipo,$usuarioID,$idImagem,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
         $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
         try {

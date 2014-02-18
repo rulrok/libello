@@ -3,13 +3,23 @@
 class Imagem {
 
     var $idImagem;
+    var $idGaleria;
+    var $idSubcategoria;
     var $titulo;
-    var $descricoes;
+    var $observacoes;
     var $descritor1;
     var $descritor2;
     var $descritor3;
     var $dificuldade;
     var $caminhoImagem;
+    var $cpfAutor;
+    var $ano;
+    var $utilizadoAvaliacao;
+    var $avaliacao;
+    var $anoAvaliacao;
+    var $nomeArquivo;
+    var $nomeArquivoMiniatura;
+    var $nomeArquivoVetorial;
 
     public function get_idImagem() {
         return $this->idImagem;
@@ -17,6 +27,24 @@ class Imagem {
 
     public function set_idImagem($idImagem) {
         $this->idImagem = $idImagem;
+        return $this;
+    }
+
+    public function get_idGaleria() {
+        return $this->idGaleria;
+    }
+
+    public function get_idSubcategoria() {
+        return $this->idSubcategoria;
+    }
+
+    public function set_idGaleria($idGaleria) {
+        $this->idGaleria = $idGaleria;
+        return $this;
+    }
+
+    public function set_idSubcategoria($idSubcategoria) {
+        $this->idSubcategoria = $idSubcategoria;
         return $this;
     }
 
@@ -29,12 +57,12 @@ class Imagem {
         return $this;
     }
 
-    public function get_descricoes() {
-        return $this->descricoes;
+    public function get_observacoes() {
+        return $this->observacoes;
     }
 
-    public function set_descricoes($descricoes) {
-        $this->descricoes = $descricoes;
+    public function set_observacoes($descricoes) {
+        $this->observacoes = $descricoes;
         return $this;
     }
 
@@ -80,6 +108,78 @@ class Imagem {
 
     public function set_caminhoImagem($caminhoImagem) {
         $this->caminhoImagem = $caminhoImagem;
+        return $this;
+    }
+
+    public function get_cpfAutor() {
+        return $this->cpfAutor;
+    }
+
+    public function get_ano() {
+        return $this->ano;
+    }
+
+    public function get_utilizadoAvaliacao() {
+        return $this->utilizadoAvaliacao;
+    }
+
+    public function get_avaliacao() {
+        return $this->avaliacao;
+    }
+
+    public function get_nomeArquivo() {
+        return $this->nomeArquivo;
+    }
+
+    public function get_nomeArquivoMiniatura() {
+        return $this->nomeArquivoMiniatura;
+    }
+
+    public function set_cpfAutor($cpfAutor) {
+        $this->cpfAutor = $cpfAutor;
+        return $this;
+    }
+
+    public function set_ano($ano) {
+        $this->ano = $ano;
+        return $this;
+    }
+
+    public function set_utilizadoAvaliacao($utilizadoAvaliacao) {
+        $this->utilizadoAvaliacao = $utilizadoAvaliacao;
+        return $this;
+    }
+
+    public function set_avaliacao($avaliacao) {
+        $this->avaliacao = $avaliacao;
+        return $this;
+    }
+
+    public function get_anoAvaliacao() {
+        return $this->anoAvaliacao;
+    }
+
+    public function set_anoAvaliacao($anoAvaliacao) {
+        $this->anoAvaliacao = $anoAvaliacao;
+        return $this;
+    }
+
+    public function set_nomeArquivo($nomeArquivo) {
+        $this->nomeArquivo = $nomeArquivo;
+        return $this;
+    }
+
+    public function set_nomeArquivoMiniatura($nomeArquivoMiniatura) {
+        $this->nomeArquivoMiniatura = $nomeArquivoMiniatura;
+        return $this;
+    }
+
+    public function get_nomeArquivoVetorial() {
+        return $this->nomeArquivoVetorial;
+    }
+
+    public function set_nomeArquivoVetorial($nomeArquivoVetorial) {
+        $this->nomeArquivoVetorial = $nomeArquivoVetorial;
         return $this;
     }
 

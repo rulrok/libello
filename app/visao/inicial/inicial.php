@@ -46,7 +46,7 @@
 
 <!--<script src="http://ie.microsoft.com/testdrive/HTML5/CompatInspector/inspector.js"></script>-->
         <script src="publico/js/jquery/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+<!--<script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>-->
         <!--<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>-->
         <script src="publico/js/jquery/jquery.ba-hashchange.js"></script>
         <script src="publico/js/jquery/jquery.form.js"></script>
@@ -54,9 +54,9 @@
         <script src="publico/js/mainScript.js"></script>
         <script src="publico/js/validarCampos.js"></script>
         <script src="publico/js/ajaxForms.js"></script>
-        <script src="publico/js/carregarImagem/libs/modernizr-2.5.3.min.js"></script>
-        <script src="publico/js/carregarImagem/plugins.js"></script>
-                <script>
+        <!--<script src="publico/js/carregarImagem/libs/modernizr-2.5.3.min.js"></script>-->
+        <!--<script src="publico/js/carregarImagem/plugins.js"></script>-->
+        <script>
             window.onbeforeunload = function(e) {
                 if (document.paginaAlterada) {
                     e = e || window.event;
@@ -75,9 +75,9 @@
         </script>
 
         <!-- FIM PRE SCRIPTS -->
-        
+
         <link rel="icon" type="image/png" href="publico/imagens/cead.png" /><!-- logo CEAD favicon -->
-        
+
         <title class="tituloFixo"><?php echo $this->titulo ?></title>
     </head>
     <body>
@@ -100,11 +100,11 @@
 
 
                             <a class="btn btn-small" href="#!sistema|gerenciarconta" onclick="
-                if (!document.paginaAlterada) {
-                    hideSubMenu(150);
-                    $('.visited').removeClass('visited');
-                    $('.actualTool').removeClass('actualTool');
-                }"><i class="icon-cog"></i> Gerenciar Conta</a>
+                                    if (!document.paginaAlterada) {
+                                        hideSubMenu(150);
+                                        $('.visited').removeClass('visited');
+                                        $('.actualTool').removeClass('actualTool');
+                                    }"><i class="icon-cog"></i> Gerenciar Conta</a>
 
                             <?php // if ($this->administrador): ?>
                                 <!--<a class="btn btn-small" href="#!sistema|administracao"><i class="icon-fire"></i> Administração</a>-->
@@ -203,96 +203,97 @@
         <script src="publico/js/jquery/jquery.datepick.js"></script>
         <script src="publico/js/jquery/jquery.datepick-pt-BR.js"></script>
         <script src='publico/js/jquery/jquery-ui-timepicker-addon.js'></script> 
+        <script src='publico/js/jquery/jquery.mask.min.js'></script> 
         <script src="publico/js/oTable.js" ></script>
         <script src="publico/js/bootstrap.js"></script> 
         <script>
-            //Configurações globais para dataTables
-            $.extend($.fn.dataTable.defaults, {
-                "bFilter": true,
-                "bSort": true,
-                "aaSorting": [[1, "desc"]],
-                "bJQueryUI": true,
-                "sPaginationType": "full_numbers",
-                "oLanguage": {
-                    "sUrl": "publico/js/jquery/dataTables.portugues.txt"
-                },
-                //Scrol horizontal
-                "sScrollX": "100%",
-                "sScrollXInner": "110%",
-                "bScrollCollapse": true,
-                // Salva o estado da tabela para ser exibida como da última vez
-                //Um pouco de cuidado com essa opção, ela parece ter em certas
-                //situações, efeitos negativos ao uso da datatable
-                "bStateSave": true,
-                "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
-            });
-            $.datepick.setDefaults({
-                dateFormat: 'dd/mm/yyyy'
-            });
-            $.datepick.setDefaults($.datepick.regional['pt-BR']);
-            $.datepicker.regional['pt-BR'] = {
-                closeText: 'Fechar',
-                prevText: 'Anterior',
-                nextText: 'Próximo',
-                currentText: 'Atual',
-                monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-                    'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-                monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
-                    'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-                dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
-                dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
-                dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-                weekHeader: 'Semana',
-                dateFormat: 'dd/mm/yy',
-                firstDay: 1,
-                isRTL: false,
-                showMonthAfterYear: true,
-                yearSuffix: ''
-            };
-            $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
+                    //Configurações globais para dataTables
+                    $.extend($.fn.dataTable.defaults, {
+                        "bFilter": true,
+                        "bSort": true,
+                        "aaSorting": [[1, "desc"]],
+                        "bJQueryUI": true,
+                        "sPaginationType": "full_numbers",
+                        "oLanguage": {
+                            "sUrl": "publico/js/jquery/dataTables.portugues.txt"
+                        },
+                        //Scrol horizontal
+                        "sScrollX": "100%",
+                        "sScrollXInner": "110%",
+                        "bScrollCollapse": true,
+                        // Salva o estado da tabela para ser exibida como da última vez
+                        //Um pouco de cuidado com essa opção, ela parece ter em certas
+                        //situações, efeitos negativos ao uso da datatable
+                        "bStateSave": true,
+                        "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
+                    });
+                    $.datepick.setDefaults({
+                        dateFormat: 'dd/mm/yyyy'
+                    });
+                    $.datepick.setDefaults($.datepick.regional['pt-BR']);
+                    $.datepicker.regional['pt-BR'] = {
+                        closeText: 'Fechar',
+                        prevText: 'Anterior',
+                        nextText: 'Próximo',
+                        currentText: 'Atual',
+                        monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+                            'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                        monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+                            'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                        dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                        dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                        dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                        weekHeader: 'Semana',
+                        dateFormat: 'dd/mm/yy',
+                        firstDay: 1,
+                        isRTL: false,
+                        showMonthAfterYear: true,
+                        yearSuffix: ''
+                    };
+                    $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
 
-            $.timepicker.regional['pt-BR'] = {
-                timeOnlyTitle: 'Apenas tempo',
-                timeText: 'Tempo',
-                hourText: 'Hora',
-                minuteText: 'Minuto',
-                secondText: 'Segundo',
-                millisecText: 'Milisegundo',
-                timezoneText: 'Região',
-                currentText: 'Agora',
-                closeText: 'OK',
-                timeFormat: 'HH:mm',
-                amNames: ['AM', 'A'],
-                pmNames: ['PM', 'P'],
-                isRTL: false
-            };
-            $.timepicker.setDefaults($.timepicker.regional['pt-BR']);
+                    $.timepicker.regional['pt-BR'] = {
+                        timeOnlyTitle: 'Apenas tempo',
+                        timeText: 'Tempo',
+                        hourText: 'Hora',
+                        minuteText: 'Minuto',
+                        secondText: 'Segundo',
+                        millisecText: 'Milisegundo',
+                        timezoneText: 'Região',
+                        currentText: 'Agora',
+                        closeText: 'OK',
+                        timeFormat: 'HH:mm',
+                        amNames: ['AM', 'A'],
+                        pmNames: ['PM', 'P'],
+                        isRTL: false
+                    };
+                    $.timepicker.setDefaults($.timepicker.regional['pt-BR']);
 
-            //Configura pequena função para criar limiter em textareas
-            (function($) {
-                $.fn.extend({
-                    limiter: function(limit, elem) {
-                        $(this).on("keyup focus", function() {
-                            setCount(this, elem);
-                        });
-                        function setCount(src, elem) {
-                            var chars = src.value.length;
-                            if (chars > limit) {
-                                src.value = src.value.substr(0, limit);
-                                chars = limit;
+                    //Configura pequena função para criar limiter em textareas
+                    (function($) {
+                        $.fn.extend({
+                            limiter: function(limit, elem) {
+                                $(this).on("keyup focus", function() {
+                                    setCount(this, elem);
+                                });
+                                function setCount(src, elem) {
+                                    var chars = src.value.length;
+                                    if (chars > limit) {
+                                        src.value = src.value.substr(0, limit);
+                                        chars = limit;
+                                    }
+                                    elem.html(limit - chars);
+                                }
+                                setCount($(this)[0], elem);
                             }
-                            elem.html(limit - chars);
-                        }
-                        setCount($(this)[0], elem);
-                    }
-                });
-            })(jQuery);
-            //Configura botão para tela cheia
+                        });
+                    })(jQuery);
+                    //Configura botão para tela cheia
 //                                $("#fullscreen-toggle").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
 //                                $("#fullscreen-off").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
-            if (canToggleFullScreen()) {
-                $("#botoesSuperiores").children(":first-child").before('<a id="fullscreen-toggle" title="Modo tela cheia" class="btn btn-small" href="javascript:void(0)" onclick="toggleFullScreen();"><i class="icon-fullscreen"></i></a>');
-            }
+                    if (canToggleFullScreen()) {
+                        $("#botoesSuperiores").children(":first-child").before('<a id="fullscreen-toggle" title="Modo tela cheia" class="btn btn-small" href="javascript:void(0)" onclick="toggleFullScreen();"><i class="icon-fullscreen"></i></a>');
+                    }
         </script>
         <script src="publico/js/browser-detection.js" />
         <!-- FIM POS SCRIPTS -->

@@ -16,6 +16,7 @@ abstract class verificadorFormularioAjax {
      * @var Mensagem
      * @example new Mensagem()->set_mensagem("Uma mensagem qualquer")->set_status(Mensagem::Info)
      */
+    //TODO Mudar visibilidade para privado e fazer todos os formulários usarem apenas os métodos de mensagens públicos.
     public $mensagem;
 
     /**
@@ -27,19 +28,37 @@ abstract class verificadorFormularioAjax {
     public abstract function _validar();
 
     public function verificar() {
-        //Verifica se uma requisição via Ajax está sendo feita.
-//        print_r($_SERVER);
-//        exit;
+        //Verifica se uma requisição via post está sendo feita.
         if (!empty($_SERVER['REQUEST_METHOD']) && strtolower($_SERVER['REQUEST_METHOD']) == 'post') {
 
             $this->mensagem = new Mensagem();
             $this->mensagem->set_mensagem("Mensagem padrão do validador.")->set_status(Mensagem::INFO);
             $this->_validar();
-            echo json_encode($this->mensagem);
+            $this->retornar();
         } else {
             //Caso a página seja acessada diretamente
             expulsaVisitante("Não é permitido o acesso a esta página diretamente.");
         }
+    }
+
+    public function mensagemSucesso($mensagem) {
+        $this->mensagem->set_mensagem($mensagem)->set_status(Mensagem::SUCESSO);
+        $this->retornar();
+    }
+
+    public function mensagemErro($mensagem) {
+        $this->mensagem->set_mensagem($mensagem)->set_status(Mensagem::ERRO);
+        $this->retornar();
+    }
+
+    public function mensagemAviso($mensagem) {
+        $this->mensagem->set_mensagem($mensagem)->set_status(Mensagem::INFO);
+        $this->retornar();
+    }
+
+    private function retornar() {
+        echo json_encode($this->mensagem);
+        exit;
     }
 
 }

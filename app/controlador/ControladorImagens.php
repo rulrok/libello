@@ -2,6 +2,7 @@
 
 include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
 require_once APP_LOCATION . "modelo/ComboBoxCategoriasAfins.php";
+require_once APP_LOCATION . "modelo/ComboBoxDificuldades.php";
 require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
 
 class ControladorImagens extends Controlador {
@@ -16,11 +17,12 @@ class ControladorImagens extends Controlador {
 
     public function acaoNovaImagem() {
         $this->visao->comboBoxCategorias = ComboBoxCategoriasAfins::montarTodasAsCategorias();
+        $this->visao->comboBoxDificuldades = ComboBoxDificuldades::montarTodasAsDificuldades();
         $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->renderizar();
     }
 
-    public function acaoVerificarnova() {
+    public function acaoVerificarnovaimagem() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->renderizar();
     }

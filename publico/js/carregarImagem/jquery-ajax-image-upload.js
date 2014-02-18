@@ -32,9 +32,9 @@ function configurar_upload_imagem(id_preview, id_lugar_imagem, id_formulario, ur
         settings:
                 {
                     formId: ''
-                            , uploadImageUrl: ''
-                            , preview_wrap_id: ''
-                            , original_warp_id: ''
+                    , uploadImageUrl: ''
+                    , preview_wrap_id: ''
+                    , original_warp_id: ''
                 },
         cache:
                 {
@@ -65,7 +65,7 @@ function configurar_upload_imagem(id_preview, id_lugar_imagem, id_formulario, ur
             {
                 e.preventDefault();
                 console.log('removing image...');
-                $('#image-upload').show();
+                $('#image-upload-line').show();
                 _this.removeImage();
             });
 
@@ -108,7 +108,7 @@ function configurar_upload_imagem(id_preview, id_lugar_imagem, id_formulario, ur
                             $("#master_info").html("<p>Dimensões: " + data.master.w + "x" + data.master.h + "</p><p>Tamanho: " + data.master.size + "</p>");
 //                            _this.cache.$imgOriginal.after('<div class="img-data">' + $.objToString(data.master) + '</div>');
                             $('#remove-image-upload').show();
-                            $('#image-upload').hide();
+                            $('#image-upload-line').hide();
 
                         },
                         error: function(xhr, textStatus, errorThrown)
@@ -137,7 +137,8 @@ function configurar_upload_imagem(id_preview, id_lugar_imagem, id_formulario, ur
 
             $("#thumb_info").empty();
             $("#master_info").empty();
-
+            $("#image-info").hide();
+            
             $("[type=file]").each(function() {
                 $(this).val("");
             });

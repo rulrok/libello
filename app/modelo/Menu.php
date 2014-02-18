@@ -3,6 +3,7 @@
 include_once APP_LOCATION . 'modelo/vo/Usuario.php';
 include_once APP_LOCATION . 'modelo/dao/usuarioDAO.php';
 include_once APP_LOCATION . 'modelo/dao/areaDAO.php';
+require_once 'enumeracao/ImagensDificuldadeEnum.php';
 require_once 'enumeracao/Ferramenta.php';
 require_once 'enumeracao/Area.php';
 require_once 'enumeracao/TipoCurso.php';
@@ -435,6 +436,42 @@ class Menu {
             $codigo .= "<optgroup label='Categorias'>\n";
             for ($i = 0; $i < sizeof($categorias); $i++) {
                 $codigo .= "<option value=\"" . fnEncrypt($categorias[$i]['idCategoria']) . "\">" . $categorias[$i]['nomeCategoria'] . "</option>\n";
+            }
+        }
+        $codigo .= "</optgroup>\n";
+        $codigo .= "</select>\n";
+        return $codigo;
+    }
+
+    public static function montarCaixaSelecaoDificuldades($required = false, $class = null, $id = null, $name = null) {
+        $codigo = "<select ";
+        if ($required) {
+            $codigo .= "required ";
+        }
+        if ($class != null) {
+            $codigo .= " class = \"" . $class . "\" ";
+        }
+        if ($id != null) {
+            $codigo .= " id = \"" . $id . "\" ";
+        }
+        if ($name != null) {
+            $codigo .= " name = \"" . $name . "\"";
+        }
+        $codigo .= ">\n";
+
+        //Não há necessidade de cadastrar no banco por enquanto, então fica um processo manual aqui
+        $dificuldades = array(
+            0 => array(ImagensDificuldadeEnum::SIMPLES, "Simples")
+            , 1 => array(ImagensDificuldadeEnum::MEDIA, "Média")
+            , 2 => array(ImagensDificuldadeEnum::COMPLEXA, "Complexa")
+            , 3 => array(ImagensDificuldadeEnum::ALTA_COMPLEXIDADE, "Alta complexidade"));
+        if (sizeof($dificuldades) == 0) {
+            $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem dificuldades cadastradas --</option>\n";
+        } else {
+            $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
+            $codigo .= "<optgroup label='Categorias'>\n";
+            for ($i = 0; $i < sizeof($dificuldades); $i++) {
+                $codigo .= "<option value=\"" . fnEncrypt($dificuldades[$i][0]) . "\">" . $dificuldades[$i][1] . "</option>\n";
             }
         }
         $codigo .= "</optgroup>\n";
