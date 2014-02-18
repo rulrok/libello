@@ -8,7 +8,7 @@
         <p class="centered centeredText boldedText">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png"> são obrigatórios</p>
         <div class="line">
             <label for='nome'>Título</label>
-            <input required autofocus type="text" id="nome" name="nome" class="input-xlarge" placeholder="Nome da imagem">
+            <input required autofocus type="text" id="nome" name="nome" class="input-xlarge" placeholder="Nome da imagem" data-content="Título da imagem">
         </div>
         <div class="line">
             <label for='nome'>Ano</label>
@@ -16,7 +16,7 @@
         </div>
         <div class="line">
             <label for='nome'>CPF (autor)</label>
-            <input required type="text" maxlength="11" id="cpfautor" name="cpfautor" class="input-xlarge" placeholder="CPF do autor dos direitos da figura">
+            <input required type="text" maxlength="11" id="cpfautor" name="cpfautor" class="input-xlarge" placeholder="___.___.___-__" data-content="CPF do autor dos direitos autorais da figura. Insira um CPF válido.">
         </div>
         <div class="line">
             <label for="observacoes">Observações</label>
@@ -42,7 +42,7 @@
         <div class="line">
             <label for='subcategoria'>Sub-categoria</label>
             <span id="subcategorias_wrap">
-                <select>
+                <select required>
                     <option>-- Escolha uma categoria --</option>
                 </select>
             </span>
@@ -60,7 +60,7 @@
             <div class="line" style="line-height: 45px;">
                 <label for="raw-image-upload">Arquivo vetorizado da imagem</label>
                 <input type="hidden" name="MAX_FILE_SIZE" value="3000000" />
-                <input required type="file" accept="imagem/svg+xml,image/cdr" name="raw-image-upload" id="raw-image-upload" class="btn btn-small btn-warning"> 
+                <input required type="file" accept=".svg,.cdr,imagem/svg+xml" name="raw-image-upload" id="raw-image-upload" class="btn btn-small btn-warning"> 
             </div>
 
             <div class="line" id="image-upload-line" style="line-height: 45px;">
@@ -217,11 +217,11 @@
         var elem = $("#chars");
         $("#descricoes").limiter(1000, elem);
         //Aplica mascara campo CPF
-        $('#cpfautor').mask('000.000.000-00', {reverse: true});
+        $('#cpfautor').mask('999.999.999-99');
         $("#mostrar_original").on("click", function() {
             alternar_exibir_original();
         });
-        $(".line input").popover({trigger: 'focus', container: 'body'});
+        $(".line input,.line textearea").popover({trigger: 'focus', container: 'body'});
         $("button[type=reset]").bind("click", function() {
 //            $("select").val('').trigger("chosen:updated");
 //            $("div.chosen-container li.search-choice").remove();

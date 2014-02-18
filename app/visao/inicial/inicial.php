@@ -193,7 +193,8 @@
         <script src="publico/js/jquery/jquery.datepick-pt-BR.js"></script>
         <script src='publico/js/jquery/jquery-ui-timepicker-addon.js'></script> 
         <script src='publico/js/jquery/jquery-ui-sliderAccess.js'></script> 
-        <script src='publico/js/jquery/jquery.mask.min.js'></script> 
+        <!--<script src='publico/js/jquery/jquery.mask.min.js'></script>--> 
+        <script src='publico/js/jquery/jquery.maskedinput.js'></script> 
         <script src="publico/js/oTable.js" ></script>
         <script src="publico/js/bootstrap.js"></script> 
         <script>

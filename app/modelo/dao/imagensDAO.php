@@ -108,6 +108,7 @@ class imagensDAO extends abstractDAO {
             return true;
         } catch (Exception $e) {
             echo $e;
+            echo $sql . $values;
             return false;
         }
     }

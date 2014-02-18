@@ -10,7 +10,9 @@ class verificarnovaimagem extends verificadorFormularioAjax {
         define("MAX_SIZE", "2000");
         define("LARGURA_THUMB", "350");
         define("ALTURA_THUMB", "150");
-        $img_base_dir = "privado/galerias";
+        $formatosPermitidosImagens = array("jpg", "jpeg", "png");
+        $formatosPermitidosVetoriais = array("svg", "cdr");
+        $galerias_dir = "privado/galerias";
 
         $tamanhoMaximo = filter_input(INPUT_POST, 'MAX_FILE_SIZE');
         $arquivoImagem = "image-upload";
@@ -42,7 +44,8 @@ class verificarnovaimagem extends verificadorFormularioAjax {
 
             $tipoImagem = strtolower($this->getExtension($nomeImagem));
 
-            if ($tipoImagem != "jpg" && $tipoImagem != "jpeg" && $tipoImagem != "png") {
+
+            if (!in_array($tipoImagem, $formatosPermitidosImagens)) {
                 $this->mensagemErro("Tipo de imagem inválido.<br/>Utilize apenas arquivos jpg/jpeg ou png.");
             }
 
@@ -50,8 +53,8 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             $tipoImagemVetorial = strtolower($this->getExtension($nomeImagemVetorial));
 
             //TODO Verificar quais serão os tipos válidos
-            if ($tipoImagemVetorial != "svg") {
-                $this->mensagemErro("Arquivo vetorial inválido");
+            if (!in_array($tipoImagemVetorial, $formatosPermitidosVetoriais)) {
+                $this->mensagemErro("Arquivo vetorial inválido.");
             }
 
             $tamanhoImagem = filesize($_FILES[$arquivoImagem]['tmp_name']);
@@ -62,7 +65,13 @@ class verificarnovaimagem extends verificadorFormularioAjax {
 //            $dimensoesImagem = getimagesize($_FILES[$arquivoImagem]['tmp_img']);
             $nomeFinalArquivoImagem = $this->montarNome(array($ano, $dificuldade, $categoria, $subcategoria));
 
-            $destinoImagem = $img_base_dir . DIRECTORY_SEPARATOR . $nomeFinalArquivoImagem . "." . $tipoImagem;
+            $timestamp = time();
+
+            if (!file_exists($galerias_dir . "/$cpfAutor/")) {
+                mkdir($galerias_dir . "/$cpfAutor/");
+            }
+
+            $destinoImagem = $galerias_dir . "/$cpfAutor/" . $nomeFinalArquivoImagem . "_$timestamp." . $tipoImagem;
 
             $copiado = copy($_FILES[$arquivoImagem]['tmp_name'], $destinoImagem);
 
@@ -71,14 +80,17 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             }
 
 
-            $destinoImagemVetorial = $img_base_dir . DIRECTORY_SEPARATOR . $nomeFinalArquivoImagem . "-vetorial." . $tipoImagemVetorial;
+            $destinoImagemVetorial = $galerias_dir . "/$cpfAutor/" . $nomeFinalArquivoImagem . "_vetorial_$timestamp." . $tipoImagemVetorial;
 
             $copiado = copy($_FILES[$arquivoVetorial]['tmp_name'], $destinoImagemVetorial);
             if (!$copiado) {
                 $this->mensagemErro("Erro ao mover arquivo vetorial para a pasta do servidor<br/>" . print_r($copiado, true));
             }
 
-            $destinoImagemMiniatura = $img_base_dir . DIRECTORY_SEPARATOR . $nomeFinalArquivoImagem . "-thumb." . $tipoImagem;
+            if (!file_exists($galerias_dir . "/miniaturas/$cpfAutor/")) {
+                mkdir($galerias_dir . "/miniaturas/$cpfAutor/");
+            }
+            $destinoImagemMiniatura = $galerias_dir . "/miniaturas/$cpfAutor/" . $nomeFinalArquivoImagem . "_thumb_$timestamp." . $tipoImagem;
             $this->make_thumb($destinoImagem, $destinoImagemMiniatura, LARGURA_THUMB, ALTURA_THUMB);
 
             if (!file_exists($destinoImagem)) {
@@ -87,23 +99,26 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             $imagemVO = new Imagem();
 
 
-            $galeria = imagensDAO::consultarGaleria($cpfAutor);
-            if (empty($galeria)) {
+            $idGaleria = imagensDAO::consultarGaleria($cpfAutor);
+            if (empty($idGaleria)) {
                 if (!imagensDAO::cadastrarGaleria($cpfAutor)) {
                     $this->mensagemErro("Problema ao criar galeria");
                 } else {
-                    $galeria = imagensDAO::consultarGaleria($cpfAutor);
+                    $idGaleria = imagensDAO::consultarGaleria($cpfAutor);
                 }
             }
-            $imagemVO->set_idGaleria($galeria)->set_idSubcategoria($subcategoria);
+            $idGaleria = $idGaleria[0][0];
+            $imagemVO->set_idGaleria($idGaleria)->set_idSubcategoria($subcategoria);
 
             $imagemVO->set_titulo($titulo)->set_observacoes($observacoes)->set_descritor1($descritor1)->set_descritor2($descritor2)->set_descritor3($descritor3)->set_dificuldade($dificuldade);
             $imagemVO->set_cpfAutor($cpfAutor)->set_ano($ano);
 
             $imagemVO->set_utilizadoAvaliacao(0)->set_avaliacao(null)->set_anoAvaliacao(null);
 
-            $imagemVO->set_nomeArquivo($nomeFinalArquivoImagem . "." . $tipoImagem)->set_nomeArquivoMiniatura($nomeFinalArquivoImagem . "-thumb." . $tipoImagem);
-            $imagemVO->set_nomeArquivoVetorial($nomeFinalArquivoImagem . "-vetorial." . $tipoImagemVetorial);
+//            $imagemVO->set_nomeArquivo($nomeFinalArquivoImagem . "." . $tipoImagem)->set_nomeArquivoMiniatura($nomeFinalArquivoImagem . "-thumb." . $tipoImagem);
+//            $imagemVO->set_nomeArquivoVetorial($nomeFinalArquivoImagem . "-vetorial." . $tipoImagemVetorial);
+            $imagemVO->set_nomeArquivo($destinoImagem)->set_nomeArquivoMiniatura($destinoImagemMiniatura);
+            $imagemVO->set_nomeArquivoVetorial($destinoImagemVetorial);
 
             try {
                 if (imagensDAO::cadastrarImagem($imagemVO)) {

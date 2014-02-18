@@ -16,8 +16,8 @@
         </div>
         <div class="line">
             <label>E-mail</label>
-                <input required type="email" id="email" class="input-large" placeholder="email@dominio.com" name="email" data-content="O email será usado como login.">
-            </div>
+            <input required type="email" id="email" class="input-large" placeholder="email@dominio.com" name="email" data-content="O email será usado como login.">
+        </div>
         <div class="line">
             <label>Data de nascimento</label>
             <input type="text" readonly id="dataNascimento" class=" input-large campoData" placeholder="Clique para escolher" name="dataNascimento" >
@@ -31,7 +31,11 @@
             <label>Confirmar Senha</label>
             <input required type="password" class="input-large" name="confsenha" >
         </div>
-
+        <div class="line">
+            <label for="sugestaoInteligente">Sugestão inteligente</label>
+            <input id="sugestaoInteligente" type="checkbox"  checked value="" style="margin: 10px 10px 0;">
+            <a id="ajuda" href="javascript:void(0)" data-toggle="Dica" title="Ao escolher um papel, as permissões são definidas automaticamente de acordo com o papel selecionado." ><i class="icon-question-sign"></i></a>
+        </div>
         <div class="line">
             <label>Papel</label>
             <?php echo $this->comboPapeis ?>
@@ -47,10 +51,47 @@
 
 </form>
 <script>
+    function preconfigurarPermissoes() {
+        if (!$("#sugestaoInteligente").prop('checked')) {
+            return false;
+        }
+        var valorEscolhido = $(this).context.value;
+        try {
+            var nome = $(this).children()[valorEscolhido].text;
+        } catch (e) {
+            nome = "";
+        }
+
+        var escolha;
+        switch (nome) {
+            case "Aluno":
+                escolha = 10;
+                break;
+            case "Professor":
+                escolha = 20;
+                break;
+            case "Gestor":
+                escolha = 30;
+                break;
+            case "Administrador":
+                escolha = 40;
+                break;
+            default:
+                escolha = 0;
+                break;
+        }
+
+        $("[name ^= 'permissoes']").each(function() {
+            $(this).val(escolha);
+        });
+    }
     $(document).ready(function() {
         $("#dataNascimento").datepick();
         $(".line input").popover({trigger: 'focus', container: 'body'});
+        $("[name=papel]").on('change', preconfigurarPermissoes);
+
         varrerCampos();
         formularioAjax();
+        $("#ajuda").tooltip({placement: 'right'});
     });
 </script>
