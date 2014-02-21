@@ -18,6 +18,7 @@ class verificarNovoUsuario extends verificadorFormularioAjax {
             $papel = $_POST['papel'];
             $email = isset($_POST['email']) ? $_POST['email'] : "";
             $dataNascimento = isset($_POST['dataNascimento']) ? $_POST['dataNascimento'] : "";
+            $cpf = $_POST['cpf'];
 
             $usuario = new Usuario();
             $usuario->set_PNome($nome);
@@ -26,15 +27,14 @@ class verificarNovoUsuario extends verificadorFormularioAjax {
             $usuario->set_papel($papel);
             $usuario->set_email($email);
             $usuario->set_dataNascimento($dataNascimento);
+            $usuario->set_cpf($cpf);
 
             if ($senha != $confSenha) :
-                $this->mensagem->set_mensagem("Senhas não conferem");
-                $this->mensagem->set_status(Mensagem::ERRO);
+                $this->mensagemErro("Senhas não conferem");
             else:
                 if ($usuario->validarCampos()) :
                     if (count(usuarioDAO::consultar("email", "email = '" . $email . "'")) > 0):
-                        $this->mensagem->set_mensagem("Email <i>" . $email . "</i> já está em uso!");
-                        $this->mensagem->set_status(Mensagem::ERRO);
+                        $this->mensagemErro("Email <i>" . $email . "</i> já está em uso!");
                     elseif (usuarioDAO::inserir($usuario)):
                         $permissoes = new PermissoesFerramenta();
                         $permissoes->set_controleCursos($_POST['permissoes_controle_de_cursos_e_polos']);
@@ -43,18 +43,16 @@ class verificarNovoUsuario extends verificadorFormularioAjax {
                         $permissoes->set_controleLivros($_POST['permissoes_controle_de_livros']);
                         $permissoes->set_controleUsuarios($_POST['permissoes_controle_de_usuarios']);
                         $permissoes->set_controleViagens($_POST['permissoes_controle_de_viagens']);
+
                         usuarioDAO::cadastrarPermissoes($usuario, $permissoes);
                         $usuario = usuarioDAO::recuperarUsuario($usuario->get_email());
                         sistemaDAO::registrarCadastroUsuario($_SESSION['idUsuario'], $usuario->get_id());
-                        $this->mensagem->set_mensagem("Cadastro realizado com sucesso");
-                        $this->mensagem->set_status(Mensagem::SUCESSO);
+                        $this->mensagemSucesso("Cadastro realizado com sucesso");
                     else :
-                        $this->mensagem->set_mensagem("Algum erro ocorreu ao inserir no banco de dados!");
-                        $this->mensagem->set_status(Mensagem::ERRO);
+                        $this->mensagemErro("Algum erro ocorreu ao inserir no banco de dados!");
                     endif;
                 else:
-                    $this->mensagem->set_mensagem("Algum campo está inválido");
-                    $this->mensagem->set_status(Mensagem::ERRO);
+                    $this->mensagemErro("Algum campo está inválido");
                 endif;
             endif;
         endif;

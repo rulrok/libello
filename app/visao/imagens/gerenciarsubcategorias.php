@@ -1,9 +1,9 @@
 <title>Subcategorias de imagens</title>
 <!-- Início da página --><div class="btn-toolbar">
     <div class="btn-group">
-        <a href="#!imagens|novaSubcategoria" class="btn btn-adicionar"><i class="icon-user"></i> Adicionar nova</a>
+        <a href="#!imagens|novaSubcategoria" class="btn btn-adicionar"><i class="icon-star-empty"></i> Adicionar nova</a>
         <button class="btn btn-editar" href="#"><i class="icon-edit"></i> Editar</button>
-        <button class="btn btn-danger btn-deletar" href="#"><i class="icon-ban-circle"></i> Excluir</button>
+        <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
     </div>
 </div>
 <table id="gerenciar_subcategorias" class="tabelaDeEdicao">
@@ -30,9 +30,9 @@
 </table>
 <div class="btn-toolbar">
     <div class="btn-group">
-        <a href="#!imagens|novaSubcategoria" class="btn btn-adicionar"><i class="icon-user"></i> Adicionar nova</a>
+        <a href="#!imagens|novaSubcategoria" class="btn btn-adicionar"><i class="icon-star-empty"></i> Adicionar nova</a>
         <button class="btn btn-editar" href="#"><i class="icon-edit"></i> Editar</button>
-        <button class="btn btn-danger btn-deletar" href="#"><i class="icon-ban-circle"></i> Excluir</button>
+        <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
     </div>
 </div>
 <script>

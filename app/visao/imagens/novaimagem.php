@@ -7,17 +7,23 @@
         <legend>Dados da imagem</legend>
         <p class="centered centeredText boldedText">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png"> são obrigatórios</p>
         <div class="line">
-            <label for='nome'>Título</label>
-            <input required autofocus type="text" id="nome" name="nome" class="input-xlarge" placeholder="Nome da imagem" data-content="Título da imagem">
+            <label for='titulo'>Título</label>
+            <input required autofocus type="text" id="titulo" name="titulo" class="input-xlarge" placeholder="Nome da imagem" data-content="Título da imagem">
         </div>
         <div class="line">
-            <label for='nome'>Ano</label>
+            <label for='ano'>Ano</label>
             <input required type="text" id="ano" name="ano" class="input-xlarge" placeholder="Ano de criação da imagem">
         </div>
+        <hr>
         <div class="line">
-            <label for='nome'>CPF (autor)</label>
-            <input required type="text" maxlength="11" id="cpfautor" name="cpfautor" class="input-xlarge" placeholder="___.___.___-__" data-content="CPF do autor dos direitos autorais da figura. Insira um CPF válido.">
+            <label>CPF (autor)</label>
+            <input required readonly type="text" maxlength="11" id="cpfautor" name="cpfautor" class="input-xlarge" placeholder="___.___.___-__" data-content="Seu CPF cadastrado no sistema." value="<?php echo $this->cpfAutor; ?>">
         </div>
+        <div class="line">
+            <label for='iniciaisAutor'>Iniciais do autor</label>
+            <input required disabled type="text" maxlength="11" id="iniciaisAutor" name="iniciaisAutor" class="input-medium"  value="<?php echo $this->iniciaisAutor; ?>">
+        </div>
+        <hr>
         <div class="line">
             <label for="observacoes">Observações</label>
             <textarea rows="8" id="descricoes" name="observacoes" class="input-xlarge" title="Observações" data-content="Alguma característica da imagem ao qual o registro seja pertinente. Limite de 1000 caracteres." ></textarea>           
@@ -25,31 +31,51 @@
         </div>
         <div class="line">
             <label for='descritor1'>Descritor 1</label>
-            <input required type="text" id="descritor1" name="descritor1" class="input-large" placeholder="Descritor 1">
-        </div>
-        <div class="line">
-            <label for='descritor2'>Descritor 2</label>
-            <input required type="text" id="descritor2" name="descritor2" class="input-large" placeholder="Descritor 2">
-        </div>
-        <div class="line">
-            <label for='descritor3'>Descritor 3</label>
-            <input required type="text" id="descritor3" name="descritor3" class="input-large" placeholder="Descritor 3">
-        </div>
-        <div class="line">
-            <label for='categoria'>Categoria</label>
             <?php echo $this->comboBoxCategorias; ?>
         </div>
         <div class="line">
-            <label for='subcategoria'>Sub-categoria</label>
-            <span id="subcategorias_wrap">
-                <select required>
-                    <option>-- Escolha uma categoria --</option>
+            <label for='descritor2'>Descritor 2</label>
+            <span id="descritor2_wrap">
+                <select required id="descritor2" class="cb_descritor" numero="2">
+                    <option value="default">-- Escolha um descritor acima --</option>
                 </select>
             </span>
         </div>
         <div class="line">
-            <label for="dificuldade">Dificuldade</label>
-            <?php echo $this->comboBoxDificuldades; ?>
+            <label for='descritor3'>Descritor 3</label>
+            <span id="descritor3_wrap">
+                <select required id="descritor3" class="cb_descritor" numero="3">
+                    <option value="default">-- Escolha um descritor acima --</option>
+                </select>
+            </span>
+        </div>
+        <div class="line">
+            <label for='descritor4'>Descritor 4</label>
+            <span id="descritor4_wrap">
+                <select required id="descritor4" class="cb_descritor" numero="4">
+                    <option value="default">-- Escolha um descritor acima --</option>
+                </select>
+            </span>
+        </div>
+        <div class="line">
+            <label for="complexidade">Complexidade</label>
+            <div class="btn-toolbar" style="position:relative;left:15px;margin-bottom: 5px;">
+                <div id="complexidade_botoes" class="btn-group" data-toggle="buttons-radio">
+                    <button type="button" class="btn active" id="simples_botao">Baixa</button>
+                    <button type="button" class="btn" id="media_botao">Média</button>
+                    <button type="button" class="btn" id="alta_botao">Alta</button>
+                    <button type="button" class="btn" id="muitoalta_botao">Muito alta</button>
+                </div>
+                <img src="publico/imagens/icones/campo_obrigatorio.png" style="display: initial;">
+                <div class="hidden">
+                    <input type="radio" name="complexidade" id="simples_radio" value="A" checked/>
+                    <input type="radio" name="complexidade" id="media_radio" value="B"/>
+                    <input type="radio" name="complexidade" id="alta_radio" value="C"/>
+                    <input type="radio" name="complexidade" id="muitoalta_radio" value="D"/>
+                </div>
+            </div>
+
+            <?php // echo $this->comboBoxComplexidades; ?>
         </div>
         <br/>
     </fieldset>
@@ -81,7 +107,7 @@
                     <ul class="thumbnails">
                         <li class="span4">
                             <div class="thumbnail">
-                                <img alt="picture" src="publico/imagens/350x150.jpg" id="image_preview">
+                                <img class="img-polaroid" alt="picture" src="publico/imagens/350x150.jpg" id="image_preview">
                                 <div class="caption">
                                     <h3>Visualização</h3>
                                     <div id="thumb_info">
@@ -96,7 +122,7 @@
                 <hr>
                 <ul class="thumbnails" id="image_original_wrap">
                     <li>
-                        <img alt="Carregue uma imagem primeiro" src="" id="image_original">
+                        <img class="img-polaroid" alt="Carregue uma imagem primeiro" src="" id="image_original">
                         <div>
                             <h3>Imagem original</h3>
                             <div id="master_info">
@@ -111,7 +137,7 @@
     </fieldset>
 
     <button class="btn btn-large" type="reset">Limpar tudo</button>
-    <button class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit">Cadastrar</button>
+    <button class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit">Enviar</button>
 
 </form>
 <script>
@@ -208,8 +234,26 @@
         } else {
             alert('O seu navegador não suporta a API de arquivos.\nVisualizações estarão indisponíveis.');
         }
+
+        var botoes_radio_fake = $("#complexidade_botoes").children();
+        $.each(botoes_radio_fake, function() {
+            $(this).on('click', function() {
+                var id = this.id;
+                var limite = id.search("_");
+                id = id.substr(0, limite + 1) + "radio";
+                $("#" + id).trigger('click');
+//                liberarCadastro();
+            });
+        });
+
+        var cb_descritores = $(".cb_descritor");
+//        console.log(cb_descritores);
+        $.each(cb_descritores, function() {
+            atualizar_combobox(this);
+        });
         formularioAjax();
         varrerCampos();
+
         //Prepara elementos
         $("#image_original_wrap").toggle();
         $("#image-info").hide();
@@ -223,32 +267,47 @@
         });
         $(".line input,.line textearea").popover({trigger: 'focus', container: 'body'});
         $("button[type=reset]").bind("click", function() {
-//            $("select").val('').trigger("chosen:updated");
-//            $("div.chosen-container li.search-choice").remove();
-//            $("div.chosen-container li.search-field").addClass("default");
-            setTimeout(function() {
-                liberarCadastro();
-            }, "200");
-            $("[name=categoria]").trigger('change');
-//            $("#image_original_wrap").css("display", "none");
-//            $("#image-info").hide();
-            $("#remove-image-upload").click();
+//            $("[name=categoria]").trigger('change');
+//            $("#remove-image-upload").click();
+//            $("#simples_botao").click();
+//            for (var i = 4; i > 0; i--) {
+//                $("#descritor" + i).val('default').trigger('change');
+//            }
+//            setTimeout(function() {
+//                $("#cpfautor").mask('999.999.999-99');
+//                liberarCadastro();
+//            }, "200");
+            ajax("index.php?c=imagens&a=novaImagem", ".contentWrap", true, false, true);
         });
-        $("[name=categoria]").on('change', function() {
-            if ($(this).val() != "default") {
-                var $url = "index.php?c=imagens&a=obterSubcategorias&categoriaID=" + $(this).val();
-                $("#subcategorias_wrap").load($url, function(response, status, xhr) {
-                    if (status == "error") {
-                        var msg = "Problema ao recuperar subcategorias. Tente novamente. ";
-                        $("#subcategorias_wrap").html(msg + xhr.status + " " + xhr.statusText);
-                    } else if (status == "success") {
-                        varrerCampos();
-                    }
-                });
-            } else {
-                $("#subcategorias_wrap").load("index.php?c=imagens&a=obterSubcategorias");
-            }
 
-        });
+        function atualizar_combobox(combo_box) {
+            $(combo_box).on('change', function() {
+                var desnum = parseInt($(this).attr("numero"));
+                if (desnum > 0 && desnum < 4) {
+                    var wrap_id = "#descritor" + (desnum + 1) + "_wrap";
+//                console.log(wrap_id);
+                    if ($(this).val() != "default") {
+                        var $url = "index.php?c=imagens&a=obterDescritor&n=" + desnum + "&p=" + $(this).val();
+                        console.log($url);
+                        $(wrap_id).load($url, function(response, status, xhr) {
+                            if (status == "error") {
+                                $(this).val("default");
+//                        var msg = "Problema ao recuperar os descritores. Tente novamente. ";
+//                        $("#descritor2_wrap").html(msg + xhr.status + " " + xhr.statusText);
+                            } else if (status == "success") {
+//                                liberarCadastro();
+                                atualizar_combobox($("#descritor" + (desnum + 1)));
+                            }
+                        });
+                    } else {
+                        $(wrap_id).load("index.php?c=imagens&a=obterDescritor");
+                    }
+                }
+            });
+        }
+
+
+
+
     });
 </script>

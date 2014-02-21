@@ -13,29 +13,36 @@
             <input required id="sobrenome" name="sobrenome" class="campoObrigatorio" type="text" value="<?php echo $this->sobrenome ?>">
         </div>
         <div class="line">
-            <label for="email">email</label>
+            <label for="email">Email</label>
             <input readonly type="text" id="email" name="email" value="<?php echo $this->email ?>">
+        </div>
+        <div class="line">
+            <label for="cpf">CPF</label>
+            <input required type="text" id="cpf" class="input-large" placeholder="___.___.___-__" name="cpf" data-content="Um CPF válido do usuário." value="<?php echo $this->cpf; ?>">
         </div>
         <div class="line">
             <label for="dataNascimento">Data de nascimento</label>
             <input type="text" readonly id="dataNascimento" class="campoData" name="dataNascimento" value="<?php echo $this->dataNascimento ?>" >
         </div>
-        <div class="line">
-            <label for="sugestaoInteligente">Sugestão inteligente</label>
-            <input id="sugestaoInteligente" type="checkbox"  value="" style="margin: 10px 10px 0;">
-            <a id="ajuda" href="javascript:void(0)" data-toggle="Dica" title="Ao escolher um papel, as permissões são definidas automaticamente de acordo com o papel selecionado." ><i class="icon-question-sign"></i></a>
-        </div>
-        <div class="line">
-            <label for="papel">Papel no sistema</label>
-            <!--             <div>
-                            <label for="sugestaoInteligente" style="font-size: 10px;
-                                   line-height: 13px;
-                                   text-align: center;">Sugestão inteligente</label>
-                            <input id="sugestaoInteligente" type="checkbox" value="">
-                        </div>-->
-            <?php echo $this->comboPapel ?>
+        <br/>
+        <fieldset>
+            <div class="line">
+                <label for="sugestaoInteligente">Sugestão inteligente</label>
+                <input id="sugestaoInteligente" type="checkbox"  value="" style="margin: 10px 10px 0;">
+                <a id="ajuda" href="javascript:void(0)" data-toggle="Dica" title="Ao escolher um papel, as permissões são definidas automaticamente de acordo com o papel selecionado." ><i class="icon-question-sign"></i></a>
+            </div>
+            <div class="line">
+                <label for="papel">Papel no sistema</label>
+                <!--             <div>
+                                <label for="sugestaoInteligente" style="font-size: 10px;
+                                       line-height: 13px;
+                                       text-align: center;">Sugestão inteligente</label>
+                                <input id="sugestaoInteligente" type="checkbox" value="">
+                            </div>-->
+                <?php echo $this->comboPapel ?>
 
-        </div>
+            </div>
+        </fieldset>
         <br/>
         <fieldset>
             <legend>Permissões por ferramenta</legend>
@@ -88,6 +95,7 @@
     }
 
     $(document).ready(function() {
+        $('#cpf').mask('999.999.999-99');
         varrerCampos();
         formularioAjax();
         $("#ajuda").tooltip({placement: 'right'});
@@ -96,7 +104,7 @@
 
 
         $('[name=papel]').val("<?php echo $this->idPapel ?>");
-            $("[name=papel]").on('change', preconfigurarPermissoes);
+        $("[name=papel]").on('change', preconfigurarPermissoes);
 
         var obj = <?php echo json_encode($this->permissoes) ?>;
         var nome, idFerramenta, idPermissao, element;

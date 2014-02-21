@@ -16,7 +16,7 @@ class verificarnovasubcategoria extends verificadorFormularioAjax {
 
             $nomeSubcategoria = abstractDAO::quote($nomeSubcategoria);
 
-            $resultado = imagensDAO::consultarSubcategorias("*", "nomeSubcategoria LIKE $nomeSubcategoria AND categoriaPai = $subcategoria->categoriaPai");
+            $resultado = imagensDAO::consultarDescritoresFilhos("*", "nomeSubcategoria LIKE $nomeSubcategoria AND categoriaPai = $subcategoria->categoriaPai");
             if (sizeof($resultado) > 0) {
                 $this->mensagem->set_mensagem("Subcategoria já cadastrada")->set_status(Mensagem::ERRO);
             } else {

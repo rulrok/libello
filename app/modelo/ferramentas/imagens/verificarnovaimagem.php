@@ -2,6 +2,7 @@
 
 include APP_LOCATION . "modelo/Mensagem.php";
 require_once APP_LOCATION . "modelo/vo/Imagem.php";
+require_once APP_LOCATION . "modelo/validadorCPF.php";
 include APP_LOCATION . "visao/verificadorFormularioAjax.php";
 
 class verificarnovaimagem extends verificadorFormularioAjax {
@@ -27,16 +28,28 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             $this->mensagemErro("Arquivo vetorizado não pôde ser enviado.");
         } else {
 
-            $titulo = filter_input(INPUT_POST, 'nome');
+            $titulo = filter_input(INPUT_POST, 'titulo');
             $ano = filter_input(INPUT_POST, 'ano');
             $cpfAutor = filter_input(INPUT_POST, 'cpfautor');
+            if (!validadorCPF::validarCPF($cpfAutor)) {
+                $cpfAutor = obterUsuarioSessao()->get_cpf();
+                if (!validadorCPF::validarCPF($cpfAutor)) {
+                    $this->mensagemErro("CPF Inválido");
+                }
+            }
+            $cpfAutor = validadorCPF::normalizarCPF($cpfAutor);
+
+            $iniciais = obterUsuarioSessao()->get_iniciais();
+
             $observacoes = filter_input(INPUT_POST, 'observacoes');
-            $descritor1 = filter_input(INPUT_POST, 'descritor1');
-            $descritor2 = filter_input(INPUT_POST, 'descritor2');
-            $descritor3 = filter_input(INPUT_POST, 'descritor3');
-            $categoria = fnDecrypt(filter_input(INPUT_POST, 'categoria'));
-            $subcategoria = fnDecrypt(filter_input(INPUT_POST, 'subcategoria'));
-            $dificuldade = fnDecrypt(filter_input(INPUT_POST, 'dificuldade'));
+            $descritor1 = fnDecrypt(filter_input(INPUT_POST, 'descritor1'));
+            $descritor2 = fnDecrypt(filter_input(INPUT_POST, 'descritor2'));
+            $descritor3 = fnDecrypt(filter_input(INPUT_POST, 'descritor3'));
+            $descritor4 = fnDecrypt(filter_input(INPUT_POST, 'descritor4'));
+//            $categoria = fnDecrypt(filter_input(INPUT_POST, 'categoria'));
+//            $subcategoria = fnDecrypt(filter_input(INPUT_POST, 'subcategoria'));
+//            $dificuldade = fnDecrypt(filter_input(INPUT_POST, 'complexidade'));
+            $dificuldade = filter_input(INPUT_POST, 'complexidade');
 
             $nomeImagem = $_FILES[$arquivoImagem]['name'];
             //OBS $_FILES[arq]['type'] não verifica o tipo do arquivo pelo seu cabeçalho, apenas pela extensão, então extrair a extensão pelo o nome ou pelo
@@ -62,8 +75,12 @@ class verificarnovaimagem extends verificadorFormularioAjax {
                 $this->mensagemErro("Tamanho máximo permitido para a imagem: " . ($tamanhoMaximo / 1024) . " Kb.");
             }
 
+            $codigo_desc_1 = imagensDAO::consultarDescritor('rotulo', 'idDescritor = ' . $descritor1)[0][0];
+            $codigo_desc_2 = imagensDAO::consultarDescritor('rotulo', 'idDescritor = ' . $descritor2)[0][0];
+            $codigo_desc_3 = imagensDAO::consultarDescritor('rotulo', 'idDescritor = ' . $descritor3)[0][0];
+            $codigo_desc_4 = imagensDAO::consultarDescritor('rotulo', 'idDescritor = ' . $descritor4)[0][0];
 //            $dimensoesImagem = getimagesize($_FILES[$arquivoImagem]['tmp_img']);
-            $nomeFinalArquivoImagem = $this->montarNome(array($ano, $dificuldade, $categoria, $subcategoria));
+            $nomeFinalArquivoImagem = $this->montarNome(array($codigo_desc_1, $codigo_desc_2, $codigo_desc_3, $codigo_desc_4, $dificuldade, $iniciais));
 
             $timestamp = time();
 
@@ -99,7 +116,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             $imagemVO = new Imagem();
 
 
-            $idGaleria = imagensDAO::consultarGaleria($cpfAutor);
+            $idGaleria = imagensDAO::consultarGaleria($cpfAutor)[0][0];
             if (empty($idGaleria)) {
                 if (!imagensDAO::cadastrarGaleria($cpfAutor)) {
                     $this->mensagemErro("Problema ao criar galeria");
@@ -107,10 +124,10 @@ class verificarnovaimagem extends verificadorFormularioAjax {
                     $idGaleria = imagensDAO::consultarGaleria($cpfAutor);
                 }
             }
-            $idGaleria = $idGaleria[0][0];
-            $imagemVO->set_idGaleria($idGaleria)->set_idSubcategoria($subcategoria);
+//            $idGaleria = $idGaleria[0][0];
+            $imagemVO->set_idGaleria($idGaleria)->set_descritor1($descritor1)->set_descritor2($descritor2)->set_descritor3($descritor3)->set_descritor4($descritor4);
 
-            $imagemVO->set_titulo($titulo)->set_observacoes($observacoes)->set_descritor1($descritor1)->set_descritor2($descritor2)->set_descritor3($descritor3)->set_dificuldade($dificuldade);
+            $imagemVO->set_titulo($titulo)->set_observacoes($observacoes)->set_dificuldade($dificuldade);
             $imagemVO->set_cpfAutor($cpfAutor)->set_ano($ano);
 
             $imagemVO->set_utilizadoAvaliacao(0)->set_avaliacao(null)->set_anoAvaliacao(null);

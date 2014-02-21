@@ -13,6 +13,7 @@
             <th>Nome completo</th>
             <th>Email</th>
             <th>Data de nascimento</th>
+            <th>CPF</th>
             <th>Papel</th>
             <th>Permissões</th>
         </tr>

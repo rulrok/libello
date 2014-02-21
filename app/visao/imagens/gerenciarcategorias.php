@@ -1,9 +1,9 @@
-<title>Categorias de imagens</title>
+<title>Descritores</title>
 <!-- Início da página --><div class="btn-toolbar">
     <div class="btn-group">
         <a href="#!imagens|novaCategoria" class="btn btn-adicionar"><i class="icon-user"></i> Adicionar nova</a>
         <button class="btn btn-editar" href="#"><i class="icon-edit"></i> Editar</button>
-        <button class="btn btn-danger btn-deletar" href="#"><i class="icon-ban-circle"></i> Excluir</button>
+        <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
     </div>
 </div>
 <table id="gerenciar_categorias" class="tabelaDeEdicao">
@@ -31,7 +31,7 @@
     <div class="btn-group">
         <a href="#!imagens|novaCategoria" class="btn btn-adicionar"><i class="icon-user"></i> Adicionar nova</a>
         <button class="btn btn-editar" href="#"><i class="icon-edit"></i> Editar</button>
-        <button class="btn btn-danger btn-deletar" href="#"><i class="icon-ban-circle"></i> Excluir</button>
+        <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Excluir</button>
     </div>
 </div>
 <script>

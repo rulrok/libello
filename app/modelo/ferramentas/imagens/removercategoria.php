@@ -1,12 +1,12 @@
 <?php
 
 require_once APP_LOCATION . "modelo/Mensagem.php";
-require_once APP_LOCATION . "modelo/enumeracao/ImagensCategoriaEnum.php";
+require_once APP_LOCATION . "modelo/enumeracao/ImagensDescritor.php";
 
 $categoriaID = fnDecrypt($_GET['categoriaID']);
 $mensagem = new Mensagem();
 
-if ($categoriaID == ImagensCategoriaEnum::CATEGORIA_PADRAO_ID) {
+if ($categoriaID == ImagensDescritor::CATEGORIA_PADRAO_ID) {
     $mensagem->set_mensagem("Não é permitido remover a categoria padrão.<br/>Quando alguma categoria com subcategorias cadastradas é removida, todas elas são movidas para a categoria Padrão.")->set_status(Mensagem::INFO);
 } else {
     if (imagensDAO::removerCategoria($categoriaID)) {

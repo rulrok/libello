@@ -5,8 +5,8 @@ require_once "Menu.php";
 
 class ComboBoxDificuldades {
 
-    public static function montarTodasAsDificuldades($required = true, $class = "input-large", $id = "dificuldade", $name = "dificuldade") {
-        $code = Menu::montarCaixaSelecaoDificuldades($required, $class, $id, $name);
+    public static function montarTodasAsComplexidades($required = true, $class = "input-large", $id = "complexidade", $name = "complexidade") {
+        $code = Menu::montarCaixaSelecaoComplexidades($required, $class, $id, $name);
 
         return $code;
     }

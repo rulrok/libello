@@ -1,4 +1,5 @@
 <?php
+
 class Usuario {
 
     var $idUsuario;
@@ -9,6 +10,8 @@ class Usuario {
     var $UNome;
     var $email;
     var $dataNascimento;
+    var $iniciais;
+    var $cpf;
 
     public function get_id() {
         return $this->idUsuario;
@@ -74,18 +77,34 @@ class Usuario {
         $this->idPapel = (int) $papel;
     }
 
+    public function get_cpf() {
+        return $this->cpf;
+    }
+
+    public function set_cpf($cpf) {
+        $this->cpf = $cpf;
+        return $this;
+    }
+
+    public function get_iniciais() {
+        return $this->iniciais;
+    }
+
+    public function set_iniciais($iniciais) {
+        $this->iniciais = $iniciais;
+        return $this;
+    }
+
+    //TODO Retirar essas verificações da classe VO. Erros de quando o projeto ainda estava surgindo
     /**
      * Função auxiliar para verificar se os campos do objeto usuário que são requeridos para inserir no banco de dados não são vazios
      * 
      * @return boolean
      */
     public function validarCampos() {
-        if ($this->PNome !== null && $this->PNome !== "" 
-                && $this->UNome !== null && $this->UNome !== ""
+        if ($this->PNome !== null && $this->PNome !== "" && $this->UNome !== null && $this->UNome !== ""
 //                && $this->login !== null && $this->login !== ""
-                && $this->senha !== null && $this->senha !== ""
-                && $this->idPapel !== null
-                && $this->email !== null && $this->email !== "") {
+                && $this->senha !== null && $this->senha !== "" && $this->idPapel !== null && $this->email !== null && $this->email !== "" && $this->cpf !== null && $this->cpf !== "") {
             return true;
         }
         return false;

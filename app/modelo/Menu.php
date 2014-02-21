@@ -201,8 +201,8 @@ class Menu {
                         switch ($permissao_ferramenta['idPermissao']) {
                             case Permissao::ADMINISTRADOR:
                             case Permissao::GESTOR:
-                                $subMenuCode .= "<a href=\"#!imagens|categoriaseafins\"\">" . "\n";
-                                $subMenuCode .= "<li>Categorias e Subcategorias</li></a>" . "\n";
+                                $subMenuCode .= "<a href=\"#!imagens|descritores\"\">" . "\n";
+                                $subMenuCode .= "<li>Descritores</li></a>" . "\n";
 //                                $subMenuCode .= "<a href=\"#!imagens|gerenciarGalerias\"\">" . "\n";
 //                                $subMenuCode .= "<li>Gerenciar Galerias</li></a>" . "\n";
                             case Permissao::ESCRITA:
@@ -366,7 +366,7 @@ class Menu {
         if (sizeof($polos) == 0) {
             $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem polos cadastrados --</option>\n";
         } else {
-            $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
+            $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione um descritor --</option>\n";
             $codigo .= "<optgroup label='Polos'>\n";
             for ($i = 0; $i < sizeof($polos); $i++) {
                 $codigo .= "<option value=\"" . fnEncrypt($polos[$i]['idPolo']) . "\">" . $polos[$i]['nomePolo'] . "</option>\n";
@@ -377,7 +377,7 @@ class Menu {
         return $codigo;
     }
 
-    public static function montarCaixaSelecaoSubcategorias($required = false, $class = null, $id = null, $name = null, $idCategoriaPai = null) {
+    public static function montarCaixaSelecaoDescritorFilho($nivel, $required = false, $class = null, $id = null, $name = null, $idCategoriaPai = null) {
         if ($idCategoriaPai != null) {
             $codigo = "<select ";
             if ($required) {
@@ -392,27 +392,32 @@ class Menu {
             if ($name != null) {
                 $codigo .= " name = \"" . $name . "\"";
             }
-            $codigo .= ">\n";
+            $codigo .= " numero='$nivel'>\n";
 
-            $subcategorias = imagensDAO::consultarSubcategorias("*", "categoriaPai = $idCategoriaPai");
+            $subcategorias = imagensDAO::consultarDescritoresFilhos("*", "pai = $idCategoriaPai");
             if (sizeof($subcategorias) == 0) {
-                $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem subcategorias cadastradas --</option>\n";
+                $caminho = imagensDAO::consultarCaminhoDescritores($idCategoriaPai);
+                $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem descritores cadastrados --</option>\n";
+                $codigo .= "</select>\n";
+                $body = "Usuário: " . obterUsuarioSessao()->get_PNome() . " " . obterUsuarioSessao()->get_UNome() . " (" . obterUsuarioSessao()->get_email() . ")%0D%0A";
+                $body .= "Desejo cadastrar o descritor de nome <nome_do_descritor> em $caminho";
+                $codigo .="<a style=\"display: inline-block;\" target=\"_blank\" href=\"mailto:bei-bi@inep.gov.br?subject=Cadastro de descritor&body=$body\">Solicitar cadastro de novo descritor</a>";
             } else {
-                $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
-                $codigo .= "<optgroup label='Subcategorias'>\n";
+                $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione um descritor --</option>\n";
+//                $codigo .= "<optgroup label='Subcategorias'>\n";
                 for ($i = 0; $i < sizeof($subcategorias); $i++) {
-                    $codigo .= "<option value=\"" . fnEncrypt($subcategorias[$i]['idSubcategoria']) . "\">" . $subcategorias[$i]['nomeSubcategoria'] . "</option>\n";
+                    $codigo .= "<option value=\"" . fnEncrypt($subcategorias[$i]['idDescritor']) . "\">" . $subcategorias[$i]['nome'] . "</option>\n";
                 }
+//            $codigo .= "</optgroup>\n";
+                $codigo .= "</select>\n";
             }
-            $codigo .= "</optgroup>\n";
-            $codigo .= "</select>\n";
             return $codigo;
         } else {
-            return "<p>Categoria pai não informada.</p>";
+            return "<p>Descritor pai não informado.</p>";
         }
     }
 
-    public static function montarCaixaSelecaoCategorias($required = false, $class = null, $id = null, $name = null) {
+    public static function montarCaixaSelecaoDescritorPrimeiroNivel($required = false, $class = null, $id = null, $name = null) {
         $codigo = "<select ";
         if ($required) {
             $codigo .= "required ";
@@ -426,24 +431,28 @@ class Menu {
         if ($name != null) {
             $codigo .= " name = \"" . $name . "\"";
         }
-        $codigo .= ">\n";
+        $codigo .= " numero='1'>\n";
 
-        $categorias = imagensDAO::consultarCategorias();
+        $categorias = imagensDAO::consultarDescritoresPais();
         if (sizeof($categorias) == 0) {
-            $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem categorias cadastradas --</option>\n";
+            $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem descritores cadastrados --</option>\n";
+            $codigo .= "</select>\n";
+            $body = "Usuário: " . obterUsuarioSessao()->get_PNome() . " " . obterUsuarioSessao()->get_UNome() . " (" . obterUsuarioSessao()->get_email() . ")%0D%0A";
+            $body .= "Desejo cadastrar o descritor de nome <nome_do_descritor> em $caminho";
+            $codigo .="<a style=\"display: inline-block;\" target=\"_blank\" href=\"mailto:bei-bi@inep.gov.br?subject=Cadastro de descritor&body=$body\">Solicitar cadastro de novo descritor</a>";
         } else {
-            $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
-            $codigo .= "<optgroup label='Categorias'>\n";
+            $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione um descritor --</option>\n";
+//            $codigo .= "<optgroup label='Categorias'>\n";
             for ($i = 0; $i < sizeof($categorias); $i++) {
-                $codigo .= "<option value=\"" . fnEncrypt($categorias[$i]['idCategoria']) . "\">" . $categorias[$i]['nomeCategoria'] . "</option>\n";
+                $codigo .= "<option value=\"" . fnEncrypt($categorias[$i]['idDescritor']) . "\">" . $categorias[$i]['nome'] . "</option>\n";
             }
+//        $codigo .= "</optgroup>\n";
+            $codigo .= "</select>\n";
         }
-        $codigo .= "</optgroup>\n";
-        $codigo .= "</select>\n";
         return $codigo;
     }
 
-    public static function montarCaixaSelecaoDificuldades($required = false, $class = null, $id = null, $name = null) {
+    public static function montarCaixaSelecaoComplexidades($required = false, $class = null, $id = null, $name = null) {
         $codigo = "<select ";
         if ($required) {
             $codigo .= "required ";
@@ -465,16 +474,19 @@ class Menu {
             , 1 => array(ImagensDificuldadeEnum::MEDIA, "Média")
             , 2 => array(ImagensDificuldadeEnum::COMPLEXA, "Complexa")
             , 3 => array(ImagensDificuldadeEnum::ALTA_COMPLEXIDADE, "Alta complexidade"));
-        if (sizeof($dificuldades) == 0) {
-            $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem dificuldades cadastradas --</option>\n";
-        } else {
+        if (sizeof($dificuldades) > 0) {
+
             $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
-            $codigo .= "<optgroup label='Categorias'>\n";
+//            $codigo .= "<optgroup label='Categorias'>\n";
             for ($i = 0; $i < sizeof($dificuldades); $i++) {
                 $codigo .= "<option value=\"" . fnEncrypt($dificuldades[$i][0]) . "\">" . $dificuldades[$i][1] . "</option>\n";
             }
+        } else {
+            //Trecho desnecessário pelo fato das complexidades serem definidas estaticamente.
+            //Caso se crie um sistema dinâmico de complexidades, esse trecho terá utilidade
+            $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem complexidades cadastradas --</option>\n";
         }
-        $codigo .= "</optgroup>\n";
+//        $codigo .= "</optgroup>\n";
         $codigo .= "</select>\n";
         return $codigo;
     }

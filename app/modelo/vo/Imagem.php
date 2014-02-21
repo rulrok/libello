@@ -4,12 +4,9 @@ class Imagem {
 
     var $idImagem;
     var $idGaleria;
-    var $idSubcategoria;
+//    var $idSubcategoria;
     var $titulo;
     var $observacoes;
-    var $descritor1;
-    var $descritor2;
-    var $descritor3;
     var $dificuldade;
     var $caminhoImagem;
     var $cpfAutor;
@@ -20,6 +17,10 @@ class Imagem {
     var $nomeArquivo;
     var $nomeArquivoMiniatura;
     var $nomeArquivoVetorial;
+    var $descritor1;
+    var $descritor2;
+    var $descritor3;
+    var $descritor4;
 
     public function get_idImagem() {
         return $this->idImagem;
@@ -34,20 +35,19 @@ class Imagem {
         return $this->idGaleria;
     }
 
-    public function get_idSubcategoria() {
-        return $this->idSubcategoria;
-    }
-
     public function set_idGaleria($idGaleria) {
         $this->idGaleria = $idGaleria;
         return $this;
     }
 
-    public function set_idSubcategoria($idSubcategoria) {
-        $this->idSubcategoria = $idSubcategoria;
-        return $this;
-    }
+//    public function get_idSubcategoria() {
+//        return $this->idSubcategoria;
+//    }
 
+//    public function set_idSubcategoria($idSubcategoria) {
+//        $this->idSubcategoria = $idSubcategoria;
+//        return $this;
+//    }
     public function get_titulo() {
         return $this->titulo;
     }
@@ -63,33 +63,6 @@ class Imagem {
 
     public function set_observacoes($descricoes) {
         $this->observacoes = $descricoes;
-        return $this;
-    }
-
-    public function get_descritor1() {
-        return $this->descritor1;
-    }
-
-    public function set_descritor1($descritor1) {
-        $this->descritor1 = $descritor1;
-        return $this;
-    }
-
-    public function get_descritor2() {
-        return $this->descritor2;
-    }
-
-    public function set_descritor2($descritor2) {
-        $this->descritor2 = $descritor2;
-        return $this;
-    }
-
-    public function get_descritor3() {
-        return $this->descritor3;
-    }
-
-    public function set_descritor3($descritor3) {
-        $this->descritor3 = $descritor3;
         return $this;
     }
 
@@ -182,6 +155,44 @@ class Imagem {
         $this->nomeArquivoVetorial = $nomeArquivoVetorial;
         return $this;
     }
+    
+    public function get_descritor1() {
+        return $this->descritor1;
+    }
+
+    public function get_descritor2() {
+        return $this->descritor2;
+    }
+
+    public function get_descritor3() {
+        return $this->descritor3;
+    }
+
+    public function get_descritor4() {
+        return $this->descritor4;
+    }
+
+    public function set_descritor1($descritor1) {
+        $this->descritor1 = $descritor1;
+        return $this;
+    }
+
+    public function set_descritor2($descritor2) {
+        $this->descritor2 = $descritor2;
+        return $this;
+    }
+
+    public function set_descritor3($descritor3) {
+        $this->descritor3 = $descritor3;
+        return $this;
+    }
+
+    public function set_descritor4($descritor4) {
+        $this->descritor4 = $descritor4;
+        return $this;
+    }
+
+
 
 }
 

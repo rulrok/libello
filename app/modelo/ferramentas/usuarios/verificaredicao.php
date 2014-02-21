@@ -17,6 +17,7 @@ class verificarEdicaoUsuario extends verificadorFormularioAjax {
             $dataNascimento = $_POST['dataNascimento'];
 //            $this->visao->papel = Papel::get_nome_papel($_POST['papel']);
             $idPapel = (int) $_POST['papel'];
+            $cpf = $_POST['cpf'];
 
 
             $usuario = new Usuario();
@@ -26,6 +27,7 @@ class verificarEdicaoUsuario extends verificadorFormularioAjax {
             $usuario->set_email($email);
             $usuario->set_papel($idPapel);
             $usuario->set_senha(usuarioDAO::recuperarUsuario($email)->get_senha());
+            $usuario->set_cpf($cpf);
 
             if ($usuario->validarCampos()) {
 

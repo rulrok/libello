@@ -32,6 +32,7 @@ class ControladorUsuarios extends Controlador {
                 $this->visao->idPapel = (int) papelDAO::obterIdPapel($this->visao->papel);
                 $this->visao->comboPapel = ComboBoxPapeis::montarComboBoxPadrao();
                 $this->visao->permissoes = usuarioDAO::obterPermissoes($userID);
+                $this->visao->cpf = $usuario->get_cpf();
             } else {
                 die("Acesso indevido");
             }
@@ -56,7 +57,7 @@ class ControladorUsuarios extends Controlador {
     }
 
     public function acaoGerenciar() {
-        $this->visao->usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,dataNascimento,nome", "idUsuario <> " . obterUsuarioSessao()->get_id());
+        $this->visao->usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome),email,dataNascimento,cpf,nome", "idUsuario <> " . obterUsuarioSessao()->get_id());
         $i = 0;
         foreach ($this->visao->usuarios as $value) {
             $value[0] = fnEncrypt($value[0]);

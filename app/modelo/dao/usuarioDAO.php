@@ -41,8 +41,13 @@ class usuarioDAO extends abstractDAO {
         if ($dataNascimento == null) {
             $dataNascimento = $dadosAntigos->get_dataNascimento();
         }
+        
+        $cpf = $novosDados->get_cpf();
+        if ($cpf == null) {
+            $cpf = $dadosAntigos->get_cpf();
+        }
 
-        $sql = "UPDATE usuario SET idPapel = " . $papel . ", senha = '" . $senha . "', PNome='" . $nome . "', UNome = '" . $sobrenome . "', dataNascimento = '" . $dataNascimento . "'";
+        $sql = "UPDATE usuario SET idPapel = " . $papel . ", senha = '" . $senha . "', PNome='" . $nome . "', UNome = '" . $sobrenome . "', dataNascimento = '" . $dataNascimento . "', cpf = '$cpf'";
         $sql .= $condicao;
         try {
             parent::getConexao()->query($sql);
@@ -113,16 +118,16 @@ class usuarioDAO extends abstractDAO {
      * @return boolean
      */
     public static function inserir(Usuario $valueObject) {
-        $s = "','";
-//        $login = $valueObject->get_login();
-        $senha = $valueObject->get_senha();
-        $PNome = $valueObject->get_PNome();
-        $UNome = $valueObject->get_UNome();
-        $email = $valueObject->get_email();
-        $nasc = $valueObject->get_dataNascimento();
-        $idPapel = $valueObject->get_papel() ;
-        $sql = "INSERT INTO usuario(idPapel,senha,PNome, UNome, email, dataNascimento)";
-        $sql .= " VALUES (" . $idPapel . ",'" . $senha . $s . $PNome . $s . $UNome . $s . $email . $s . $nasc . "')";
+        $senha = parent::quote($valueObject->get_senha());
+        $PNome = parent::quote($valueObject->get_PNome());
+        $UNome = parent::quote($valueObject->get_UNome());
+        $email = parent::quote($valueObject->get_email());
+        $nasc = parent::quote($valueObject->get_dataNascimento());
+        $idPapel = $valueObject->get_papel();
+        $cpf = parent::quote($valueObject->get_cpf());
+        $cpf = str_replace(array('.', '-'), "", $cpf);
+        $sql = "INSERT INTO usuario(idPapel,senha,PNome, UNome, email, dataNascimento, cpf)";
+        $sql .= " VALUES (  $idPapel ,$senha , $PNome , $UNome , $email , $nasc ,$cpf )";
         //    echo $sql;
         try {
             parent::getConexao()->query($sql);
@@ -198,7 +203,7 @@ class usuarioDAO extends abstractDAO {
         } catch (Exception $e) {
             echo $e;
         }
-        if ($resultado === false){
+        if ($resultado === false) {
             throw new Exception("Tolken não encontrado");
         }
         if (is_array($resultado)) {

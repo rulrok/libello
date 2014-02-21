@@ -1,8 +1,10 @@
 <?php
 
 require_once 'abstractDAO.php';
-require_once APP_LOCATION . 'modelo/vo/ImagemCategoria.php';
+//require_once APP_LOCATION . 'modelo/vo/ImagemCategoria.php';
+require_once APP_LOCATION . 'modelo/vo/Descritor.php';
 require_once APP_LOCATION . 'modelo/enumeracao/TipoEventoImagens.php';
+require_once APP_LOCATION . 'modelo/enumeracao/ImagensDescritor.php';
 
 class imagensDAO extends abstractDAO {
 
@@ -27,25 +29,47 @@ class imagensDAO extends abstractDAO {
         }
     }
 
-    public static function consultarCategorias($colunas = "*", $condicao = null, $condicaoJuncao = null) {
+    public static function todasImagens($limit = "") {
+        $sql = "SELECT * FROM imagens_imagem ORDER BY idImagem $limit";
+        try {
+            $resultado = parent::getConexao()->query($sql)->fetchAll();
+        } catch (Exception $ex) {
+            $resultado = null;
+        }
+        return $resultado;
+    }
+
+    public static function pesquisarImagem($termoBusca, $limit = "") {
+        $termoBusca = parent::quote("%".$termoBusca."%");
+        $sql = "SELECT * from imagens_imagem WHERE titulo LIKE $termoBusca ORDER BY idImagem $limit";
+
+        try {
+            $resultado = parent::getConexao()->query($sql)->fetchAll();
+        } catch (Exception $ex) {
+            $resultado = null;
+        }
+        return $resultado;
+    }
+
+    public static function consultarDescritoresPais($colunas = "*", $condicao = null, $condicaoJuncao = null) {
 
         if ($condicao == null) {
-            $condicao = "";
+            $condicao = " WHERE pai = " . ImagensDescritor::RAIZ_ID;
         } else {
-            $condicao = " WHERE " . $condicao;
+            $condicao = " WHERE pai = " . ImagensDescritor::RAIZ_ID . " AND " . $condicao;
         }
 
         if ($condicaoJuncao == null) {
             $condicaoJuncao = "";
         }
 
-        $sql = "SELECT " . $colunas . " FROM imagens_categoria " . $condicaoJuncao . $condicao;
+        $sql = "SELECT " . $colunas . " FROM imagens_descritor " . $condicaoJuncao . $condicao;
 
         $resultado = parent::getConexao()->query($sql)->fetchAll();
         return $resultado;
     }
 
-    public static function consultarSubcategorias($colunas = "*", $condicao = null, $condicaoJuncao = null) {
+    public static function consultarDescritor($colunas = "*", $condicao = null, $condicaoJuncao = null) {
         if ($condicao == null) {
             $condicao = "";
         } else {
@@ -55,7 +79,46 @@ class imagensDAO extends abstractDAO {
         if ($condicaoJuncao == null) {
             $condicaoJuncao = "";
         }
-        $sql = "SELECT " . $colunas . " FROM imagens_subcategoria " . $condicaoJuncao . $condicao;
+
+        $sql = "SELECT " . $colunas . " FROM imagens_descritor " . $condicaoJuncao . $condicao;
+
+        $resultado = parent::getConexao()->query($sql)->fetchAll();
+        return $resultado;
+    }
+
+    public static function consultarCaminhoDescritores($idDescritorBase) {
+        $caminho = array();
+
+        $resultado = static::consultarDescritor('nome, pai', "idDescritor = $idDescritorBase");
+
+
+        while ($resultado[0]['pai'] != null) {
+            array_push($caminho, $resultado[0]['nome']);
+            $aux = (int) $resultado[0]['pai'];
+            $resultado = static::consultarDescritor('nome, pai', "idDescritor = $aux");
+        }
+
+
+
+        $endereco = "";
+        $i = sizeof($caminho);
+        for (; $i > 0; $i--) {
+            $endereco .= array_pop($caminho) . " > ";
+        }
+        return $endereco . "'Novo descritor'";
+    }
+
+    public static function consultarDescritoresFilhos($colunas = "*", $condicao = null, $condicaoJuncao = null) {
+        if ($condicao == null) {
+            $condicao = "";
+        } else {
+            $condicao = " WHERE " . $condicao;
+        }
+
+        if ($condicaoJuncao == null) {
+            $condicaoJuncao = "";
+        }
+        $sql = "SELECT " . $colunas . " FROM imagens_descritor " . $condicaoJuncao . $condicao;
         $resultado = parent::getConexao()->query($sql)->fetchAll();
         return $resultado;
     }
@@ -88,21 +151,22 @@ class imagensDAO extends abstractDAO {
     }
 
     public static function cadastrarImagem(Imagem $imagem) {
-        $sql = "INSERT INTO imagens_imagem(idGaleria,idSubcategoria,titulo,observacoes,descritor1,descritor2,descritor3,dificuldade,cpfAutor,ano,nomeArquivo,nomeArquivoMiniatura,nomeArquivoVetorial) VALUES ";
+        $sql = "INSERT INTO imagens_imagem(idGaleria,titulo,observacoes,dificuldade,cpfAutor,ano,nomeArquivo,nomeArquivoMiniatura,nomeArquivoVetorial,descritor1,descritor2,descritor3,descritor4) VALUES ";
         $idGaleria = (int) $imagem->get_idGaleria();
-        $idSubcategoria = (int) $imagem->get_idSubcategoria();
+//        $idSubcategoria = (int) $imagem->get_idSubcategoria();
         $titulo = parent::quote($imagem->get_titulo());
         $observacoes = parent::quote($imagem->get_observacoes());
-        $descritor1 = parent::quote($imagem->get_descritor1());
-        $descritor2 = parent::quote($imagem->get_descritor2());
-        $descritor3 = parent::quote($imagem->get_descritor3());
         $dificuldade = parent::quote($imagem->get_dificuldade());
         $cpfAutor = parent::quote($imagem->get_cpfAutor());
         $ano = parent::quote($imagem->get_ano());
         $nomeArquivo = parent::quote($imagem->get_nomeArquivo());
         $nomeArquivoMiniatura = parent::quote($imagem->get_nomeArquivoMiniatura());
         $nomeArquivoVetorial = parent::quote($imagem->get_nomeArquivoVetorial());
-        $values = "($idGaleria,$idSubcategoria,$titulo,$observacoes,$descritor1,$descritor2,$descritor3,$dificuldade,$cpfAutor,$ano,$nomeArquivo,$nomeArquivoMiniatura,$nomeArquivoVetorial)";
+        $des1 = $imagem->get_descritor1();
+        $des2 = $imagem->get_descritor2();
+        $des3 = $imagem->get_descritor3();
+        $des4 = $imagem->get_descritor4();
+        $values = "($idGaleria,$titulo,$observacoes,$dificuldade,$cpfAutor,$ano,$nomeArquivo,$nomeArquivoMiniatura,$nomeArquivoVetorial,$des1,$des2,$des3,$des4)";
         try {
             parent::getConexao()->query($sql . $values);
             return true;

@@ -19,6 +19,10 @@
             <input required type="email" id="email" class="input-large" placeholder="email@dominio.com" name="email" data-content="O email será usado como login.">
         </div>
         <div class="line">
+            <label for="cpf">CPF</label>
+            <input required type="text" id="cpf" class="input-large" placeholder="___.___.___-__" name="cpf" data-content="Um CPF válido do usuário.">
+        </div>
+        <div class="line">
             <label>Data de nascimento</label>
             <input type="text" readonly id="dataNascimento" class=" input-large campoData" placeholder="Clique para escolher" name="dataNascimento" >
         </div>
@@ -31,15 +35,18 @@
             <label>Confirmar Senha</label>
             <input required type="password" class="input-large" name="confsenha" >
         </div>
-        <div class="line">
-            <label for="sugestaoInteligente">Sugestão inteligente</label>
-            <input id="sugestaoInteligente" type="checkbox"  checked value="" style="margin: 10px 10px 0;">
-            <a id="ajuda" href="javascript:void(0)" data-toggle="Dica" title="Ao escolher um papel, as permissões são definidas automaticamente de acordo com o papel selecionado." ><i class="icon-question-sign"></i></a>
-        </div>
-        <div class="line">
-            <label>Papel</label>
-            <?php echo $this->comboPapeis ?>
-        </div>
+        <br/>
+        <fieldset>
+            <div class="line">
+                <label for="sugestaoInteligente">Sugestão inteligente</label>
+                <input id="sugestaoInteligente" type="checkbox"  checked value="" style="margin: 10px 10px 0;">
+                <a id="ajuda" href="javascript:void(0);" data-toggle="Dica" title="Ao escolher um papel, as permissões são definidas automaticamente de acordo com o papel selecionado." ><i class="icon-question-sign"></i></a>
+            </div>
+            <div class="line">
+                <label>Papel</label>
+                <?php echo $this->comboPapeis ?>
+            </div>
+        </fieldset>
         <br/>
         <fieldset>
             <legend>Permissões por ferramenta</legend>
@@ -89,9 +96,9 @@
         $("#dataNascimento").datepick();
         $(".line input").popover({trigger: 'focus', container: 'body'});
         $("[name=papel]").on('change', preconfigurarPermissoes);
-
+        $('#cpf').mask('999.999.999-99');
         varrerCampos();
         formularioAjax();
-        $("#ajuda").tooltip({placement: 'right'});
+    $("#ajuda").tooltip({placement: 'right'});
     });
 </script>

@@ -15,7 +15,7 @@ class verificarnovacategoria extends verificadorFormularioAjax {
 
             $nomeCategoria = abstractDAO::quote($nomeCategoria);
             
-            $resultado = imagensDAO::consultarCategorias("*", "nomeCategoria LIKE $nomeCategoria");
+            $resultado = imagensDAO::consultarDescritoresPais("*", "nomeCategoria LIKE $nomeCategoria");
             if (sizeof($resultado) > 0) {
                 $this->mensagem->set_mensagem("Categoria já cadastrada")->set_status(Mensagem::ERRO);
             } else {

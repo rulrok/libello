@@ -4,11 +4,59 @@ include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
 require_once APP_LOCATION . "modelo/ComboBoxCategoriasAfins.php";
 require_once APP_LOCATION . "modelo/ComboBoxDificuldades.php";
 require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
+require_once APP_LOCATION . "modelo/ferramentas/imagens/pesquisa.php";
 
 class ControladorImagens extends Controlador {
     /*
      * IMAGEM
      */
+
+    public function acaoBusca() {
+        $this->visao->acessoMinimo = Permissao::CONSULTA;
+
+        if (filter_has_var(INPUT_GET, 'q')) {
+            if (filter_has_var(INPUT_GET, 'p')) {
+                $pagina = filter_input(INPUT_GET, 'p');
+            } else {
+                $pagina = 1;
+            }
+            $termo = filter_input(INPUT_GET, 'q');
+            $pesquisa = new pesquisa();
+            if ($termo == "") {
+                $pesquisa->obterTodas($pagina);
+            } else {
+                $pesquisa->buscar($termo, $pagina);
+            }
+            if ($pesquisa->temResultados()) {
+                $this->visao->temResultados = true;
+                $this->visao->resultados = $pesquisa->obterResultados();
+                $this->visao->paginacao = $pesquisa->obterPaginacao();
+            } else {
+                $this->visao->temResultados = false;
+                $this->visao->resultados = array();
+                $this->visao->paginacao = null;
+            }
+        } else {
+            if (filter_has_var(INPUT_GET, 'p')) {
+                $pagina = filter_input(INPUT_GET, 'p');
+            } else {
+                $pagina = 1;
+            }
+            $termo = filter_input(INPUT_GET, 'q');
+            $pesquisa = new pesquisa();
+            $pesquisa->obterTodas($pagina);
+            if ($pesquisa->temResultados()) {
+                $this->visao->temResultados = true;
+                $this->visao->resultados = $pesquisa->obterResultados();
+                $this->visao->paginacao = $pesquisa->obterPaginacao();
+            } else {
+                $this->visao->temResultados = false;
+                $this->visao->resultados = array();
+                $this->visao->paginacao = null;
+            }
+        }
+        $this->renderizar();
+    }
 
     public function acaoConsultar() {
         $this->visao->acessoMinimo = Permissao::CONSULTA;
@@ -16,9 +64,11 @@ class ControladorImagens extends Controlador {
     }
 
     public function acaoNovaImagem() {
-        $this->visao->comboBoxCategorias = ComboBoxCategoriasAfins::montarTodasAsCategorias();
-        $this->visao->comboBoxDificuldades = ComboBoxDificuldades::montarTodasAsDificuldades();
         $this->visao->acessoMinimo = Permissao::ESCRITA;
+        $this->visao->cpfAutor = obterUsuarioSessao()->get_cpf();
+        $this->visao->iniciaisAutor = obterUsuarioSessao()->get_iniciais();
+        $this->visao->comboBoxCategorias = ComboBoxCategoriasAfins::montarDescritorPrimeiroNivel();
+//        $this->visao->comboBoxComplexidades = ComboBoxDificuldades::montarTodasAsComplexidades();
         $this->renderizar();
     }
 
@@ -46,6 +96,10 @@ class ControladorImagens extends Controlador {
         $this->renderizar();
     }
 
+    
+    public function acaoGerenciarDescritores(){
+        $this->renderizar();
+    }
     /*
      * CATEGORIAS
      */
@@ -55,14 +109,14 @@ class ControladorImagens extends Controlador {
         $this->renderizar();
     }
 
-    public function acaoCategoriaseafins() {
+    public function acaoDescritores() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }
 
     public function acaoGerenciarCategorias() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->visao->categorias = imagensDAO::consultarCategorias("idCategoria, nomeCategoria");
+        $this->visao->categorias = imagensDAO::consultarDescritoresPais("idCategoria, nomeCategoria");
         $i = 0;
         foreach ($this->visao->categorias as $value) {
             $value[0] = fnEncrypt($value[0]);
@@ -78,9 +132,9 @@ class ControladorImagens extends Controlador {
 
     public function acaoEditarcategoria() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
-        if (isset($_GET['categoriaID']) || isset($_POST['categoriaID'])) {
-            $categoriaID = fnDecrypt($_REQUEST['categoriaID']);
-            $this->visao->categoriaID = $_REQUEST['categoriaID'];
+        if (filter_has_var(INPUT_GET | INPUT_POST, 'categoriaID')) {
+            $categoriaID = fnDecrypt(filter_input(INPUT_GET | INPUT_POST, 'categoriaID'));
+            $this->visao->categoriaID = filter_input(INPUT_GET | INPUT_POST, 'categoriaID');
             $curso = imagensDAO::recuperarCategoria($categoriaID);
             $this->visao->categoria = $curso->get_nomeCategoria();
         } else {
@@ -103,20 +157,20 @@ class ControladorImagens extends Controlador {
      * SUB-CATEGORIAS
      */
 
-    public function acaoObterSubcategorias() {
+    public function acaoObterdescritor() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->renderizar();
     }
 
     public function acaoNovaSubcategoria() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->visao->comboBoxCategoriaPai = ComboBoxCategoriasAfins::montarTodasAsCategorias(true, 'input-large', 'categoriapai', 'categoriapai');
+        $this->visao->comboBoxCategoriaPai = ComboBoxCategoriasAfins::montarDescritorPrimeiroNivel(true, 'input-large', 'categoriapai', 'categoriapai');
         $this->renderizar();
     }
 
     public function acaoGerenciarSubcategorias() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->visao->subcategorias = imagensDAO::consultarSubcategorias("idSubcategoria, nomeSubcategoria, nomeCategoria", null, " JOIN imagens_categoria cat ON categoriaPai = cat.idCategoria");
+        $this->visao->subcategorias = imagensDAO::consultarDescritoresFilhos("idSubcategoria, nomeSubcategoria, nomeCategoria", null, " JOIN imagens_categoria cat ON categoriaPai = cat.idCategoria");
         $i = 0;
         foreach ($this->visao->subcategorias as $value) {
             $value[0] = fnEncrypt($value[0]);
@@ -132,13 +186,13 @@ class ControladorImagens extends Controlador {
 
     public function acaoEditarsubcategoria() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
-        if (isset($_GET['subcategoriaID']) || isset($_POST['subcategoriaID'])) {
-            $categoriaID = fnDecrypt($_REQUEST['subcategoriaID']);
-            $this->visao->subcategoriaID = $_REQUEST['subcategoriaID'];
+        if (filter_has_var(INPUT_GET | INPUT_POST, 'subcategoriaID')) {
+            $categoriaID = fnDecrypt(filter_input(INPUT_GET | INPUT_POST, 'subcategoriaID'));
+            $this->visao->subcategoriaID = filter_input(INPUT_GET | INPUT_POST, 'subcategoriaID');
             $curso = imagensDAO::recuperarSubcategoria($categoriaID);
             $this->visao->subcategoria = $curso->get_nomeSubcategoria();
             $this->visao->categoriapaiID = fnEncrypt((int) $curso->get_categoriaPai());
-            $this->visao->comboBoxCategoriaPai = ComboBoxCategoriasAfins::montarTodasAsCategorias(true, 'input-large', 'categoriapai', 'categoriapai');
+            $this->visao->comboBoxCategoriaPai = ComboBoxCategoriasAfins::montarDescritorPrimeiroNivel(true, 'input-large', 'categoriapai', 'categoriapai');
         } else {
             die("Acesso indevido");
         }
