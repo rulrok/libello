@@ -44,10 +44,11 @@ abstract class abstractDAO {
      * @param string $sqlQuery
      * @param boolean $retornarTodos
      * @param array $params Parâmetros para casar com os curingas '?'
-     * @return mixed PDOStatement, objeto da classe definida por $fetchClass ou null caso não haja resultados
+     * @return mixed PDOStatement, objeto da classe definida por $fetchClass, um array vazio caso não haja resultados ou null em caso de erros
      */
     public function executarSelect($sqlQuery, $params = null, $retornarTodos = true, $fetchClass = null) {
         try {
+            $retorno = null;
             $conn = $this->getConexao();
             $stmt = $conn->prepare($sqlQuery);
             if ($params !== null && is_array($params) && !empty($params)) {
@@ -60,19 +61,20 @@ abstract class abstractDAO {
             }
             $stmt->execute();
             if ($stmt->rowCount() == 0) {
-                return null;
+                $retorno = array();
             }
             if ($retornarTodos) {
-                return $stmt->fetchAll();
+                $retorno = $stmt->fetchAll();
             } else {
                 if ($fetchClass === null) {
-                    return $stmt->fetch()[0];
+                    $retorno = $stmt->fetch()[0];
                 } else {
                     $r = $stmt->fetchObject($fetchClass);
 //                    print_r($r);
-                    return $r;
+                    $retorno = $r;
                 }
             }
+            return $retorno;
         } catch (Exception $e) {
             print_r($e);
             return null;
@@ -101,6 +103,12 @@ abstract class abstractDAO {
             print_r($e);
             return false;
         }
+    }
+
+    public function obterUltimoIdInserido() {
+//        $sql = "SELECT LAST_INSERT_ID()";
+//        return $this->executarSelect($sql);
+        return $this->getConexao()->lastInsertId();
     }
 
     /*

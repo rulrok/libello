@@ -7,63 +7,99 @@
  */
 class Livro {
 
+    /**
+     *
+     * @var int 
+     */
     var $idLivro;
+
+    /**
+     *
+     * @var string 
+     */
     var $nomeLivro;
+
+    /**
+     *
+     * @var int 
+     */
     var $quantidade;
+
+    /**
+     *
+     * @var string 
+     */
     var $descricao;
+
+    /**
+     *
+     * @var string 
+     */
     var $dataEntrada;
+
+    /**
+     *
+     * @var string 
+     */
     var $numeroPatrimonio;
+
+    /**
+     *
+     * @var int 
+     */
     var $area;
+
+    /**
+     *
+     * @var string 
+     */
     var $grafica;
 
     public function get_idLivro() {
-        return (int) $this->idLivro;
-    }
-
-    public function set_idLivro($idLivro) {
-        $this->idLivro = (int) $idLivro;
-        return $this;
+        return $this->idLivro;
     }
 
     public function get_nomeLivro() {
         return $this->nomeLivro;
     }
 
-    public function set_nomeLivro($equipamento) {
-        if ($equipamento == null || $equipamento == "") {
-            die("Nome do equipamento inválido.");
-        }
-        $this->nomeLivro = $equipamento;
-        return $this;
-    }
-
-    public function get_dataEntrada() {
-        if ($this->dataEntrada != "NULL")
-            return $this->dataEntrada;
-        else {
-            return "";
-        }
-    }
-
-    public function set_dataEntrada($dataEntrada) {
-        if ($dataEntrada == "") {
-            $dataEntrada = "NULL";
-        }
-        $this->dataEntrada = $dataEntrada;
-        return $this;
-    }
-
     public function get_quantidade() {
-        return (int) $this->quantidade;
-    }
-
-    public function set_quantidade($quantidadde) {
-        $this->quantidade = (int) $quantidadde;
-        return $this;
+        return $this->quantidade;
     }
 
     public function get_descricao() {
         return $this->descricao;
+    }
+
+    public function get_dataEntrada() {
+        return $this->dataEntrada;
+    }
+
+    public function get_numeroPatrimonio() {
+        return $this->numeroPatrimonio;
+    }
+
+    public function get_area() {
+        return $this->area;
+    }
+
+    public function get_grafica() {
+        return $this->grafica;
+    }
+
+    public function set_idLivro($idLivro) {
+        $this->idLivro = $idLivro;
+        return $this;
+    }
+
+    public function set_nomeLivro($nomeLivro) {
+        $this->nomeLivro = $nomeLivro;
+        return $this;
+    }
+
+    public function set_quantidade($quantidade) {
+        $this->quantidade = $quantidade;
+        return $this;
     }
 
     public function set_descricao($descricao) {
@@ -71,33 +107,19 @@ class Livro {
         return $this;
     }
 
-    public function get_numeroPatrimonio() {
-        return $this->numeroPatrimonio;
+    public function set_dataEntrada($dataEntrada) {
+        $this->dataEntrada = $dataEntrada;
+        return $this;
     }
 
     public function set_numeroPatrimonio($numeroPatrimonio) {
-        if ($numeroPatrimonio === "") {
-            die("Código de patrimônio inválido.");
-        }
-        if ($numeroPatrimonio == null) {
-            $this->numeroPatrimonio = "NULL";
-        } else {
-            $this->numeroPatrimonio = $numeroPatrimonio;
-        }
+        $this->numeroPatrimonio = $numeroPatrimonio;
         return $this;
-    }
-
-    public function get_area() {
-        return (int) $this->area;
     }
 
     public function set_area($area) {
-        $this->area = (int) $area;
+        $this->area = $area;
         return $this;
-    }
-
-    public function get_grafica() {
-        return $this->grafica;
     }
 
     public function set_grafica($grafica) {

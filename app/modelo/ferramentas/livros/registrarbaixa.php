@@ -6,43 +6,51 @@ include_once APP_LOCATION . "visao/verificadorFormularioAjax.php";
 class registrarBaixa extends verificadorFormularioAjax {
 
     public function _validar() {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') :
-            $_SERVER['REQUEST_METHOD'] = null;
-            $saidaID = $_POST['saidaID'];
-            if ($saidaID !== "") {
-                $saidaID = fnDecrypt($_POST['saidaID']);
-            }
-            $livroID = $_POST['livroID'];
-            if ($livroID !== "") {
-                $livroID = fnDecrypt($_POST['livroID']);
-            }
-            $dataBaixa = $_POST['dataBaixa'];
-            $observacoes = $_POST['observacoes'];
-            $quantidade = (int) $_POST['quantidade'];
-            $quantidadeMaxima = (int) $_POST['quantidadeMaxima'];
+        $saidaID = filter_input(INPUT_POST, 'saidaID');
+        if ($saidaID !== "") {
+            $saidaID = fnDecrypt(filter_input(INPUT_POST, 'saidaID'));
+        }
+        $livroID = filter_input(INPUT_POST, 'livroID');
+        if ($livroID !== "") {
+            $livroID = fnDecrypt(filter_input(INPUT_POST, 'livroID'));
+        }
+        $dataBaixa = filter_input(INPUT_POST, 'dataBaixa');
+        $observacoes = filter_input(INPUT_POST, 'observacoes');
+        $quantidade = filter_input(INPUT_POST, 'quantidade', FILTER_VALIDATE_INT);
+        $quantidadeMaxima = filter_input(INPUT_POST, 'quantidadeMaxima', FILTER_VALIDATE_INT);
 
 
-
-            if ($livroID >= 0 && $dataBaixa !== "" && $quantidade > 0 && $quantidade <= $quantidadeMaxima) {
-                if ($saidaID !== "") {
-                    //É uma saída
-                    if (livroDAO::cadastrarBaixa($livroID, $dataBaixa, $quantidade, $observacoes, $saidaID)) {
-                        $this->mensagem->set_mensagem("Baixa realizada com sucesso")->set_status(Mensagem::SUCESSO);
-                    } else {
-                        $this->mensagem->set_mensagem("Erro ao cadastrar baixa")->set_status(Mensagem::ERRO);
-                    }
-                } else {
-                    //É um livro no CEAD
-                    if (livroDAO::cadastrarBaixa($livroID, $dataBaixa, $quantidade, $observacoes)) {
-                        $this->mensagem->set_mensagem("Baixa realizada com sucesso")->set_status(Mensagem::SUCESSO);
-                    } else {
-                        $this->mensagem->set_mensagem("Erro ao cadastrar baixa")->set_status(Mensagem::ERRO);
-                    }
-                }
+        $livroDAO = new livroDAO();
+        if ($dataBaixa == '') {
+            //TODO verificar se é uma data mesmo, ao invés de apenas verificar se não é uma string vazia
+            $this->mensagemErro('Data da baixa inválida');
+        }
+//        $recuperarBaixalivro = $livroDAO->recuperarBaixalivro($saidaID);
+//        if ($recuperarBaixalivro['quantidadeBaixa'] != $quantidadeMaxima) {
+//            $this->mensagemErro("Dados inconsistentes");
+//        }
+        if ($quantidade <= 0 || $quantidade > $quantidadeMaxima) {
+            $this->mensagemErro("Quantidade informada inválida");
+        }
+        if ($saidaID !== "") {
+            //É uma saída
+            if ($livroDAO->cadastrarBaixa($livroID, $dataBaixa, $quantidade, $observacoes, $saidaID)) {
+                $id = $livroDAO->obterUltimoIdInserido();
+                $livroDAO->registrarCadastroBaixa($id);
+                $this->mensagemSucesso("Baixa realizada com sucesso");
             } else {
-                $this->mensagem->set_mensagem("Dados inválidos")->set_status(Mensagem::ERRO);
+                $this->mensagemErro("Erro ao cadastrar baixa");
             }
-        endif;
+        } else {
+            //É um livro no CEAD
+            if ($livroDAO->cadastrarBaixa($livroID, $dataBaixa, $quantidade, $observacoes)) {
+                $id = $livroDAO->obterUltimoIdInserido();
+                $livroDAO->registrarCadastroBaixa($id);
+                $this->mensagemSucesso("Baixa realizada com sucesso");
+            } else {
+                $this->mensagemErro("Erro ao cadastrar baixa");
+            }
+        }
     }
 
 }

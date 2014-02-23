@@ -6,169 +6,183 @@ require_once APP_LOCATION . 'modelo/enumeracao/TipoEventoLivro.php';
 
 class livroDAO extends abstractDAO {
 
-    public static function cadastrarLivro(Livro $livro) {
+    /**
+     * 
+     * @param Livro $livro
+     * @return boolean
+     */
+    public function cadastrarLivro(Livro $livro) {
         $sql = "INSERT INTO livro(nomeLivro,quantidade,descricao,dataEntrada,numeroPatrimonio,area,grafica) VALUES ";
-        $nome = parent::quote($livro->get_nomeLivro());
-        $quantidade = $livro->get_quantidade();
+        $sql .= " (:nome, :quantidade, :descricao, :dataEntrada, :numeroPatrimonio, :area, :grafica)";
 
+        $nome = $livro->get_nomeLivro();
+        $quantidade = $livro->get_quantidade();
         $dataEntrada = $livro->get_dataEntrada();
         if ($dataEntrada === "" | $dataEntrada === null) {
             $dataEntrada = "NULL";
         }
-        $dataEntrada = parent::quote($dataEntrada);
 
-
-        $numeroPatrimonio = parent::quote($livro->get_numeroPatrimonio());
+        $numeroPatrimonio = $livro->get_numeroPatrimonio();
 
         $descricao = $livro->get_descricao();
         if ($descricao === "" | $descricao === null) {
             $descricao = "NULL";
         }
-        $descricao = parent::quote($descricao);
 
         $grafica = $livro->get_grafica();
         if ($grafica === "" | $grafica === null) {
             $grafica = "NULL";
         }
-        $grafica = parent::quote($grafica);
 
         $area = $livro->get_area();
         if ($area === "" | $area === null) {
             $area = "NULL";
         }
-//        $area = parent::quote($area);
 
+        $params = array(
+            ':nome' => [$nome, PDO::PARAM_STR]
+            , ':quantidade' => [$quantidade, PDO::PARAM_INT]
+            , ':descricao' => [$descricao, PDO::PARAM_STR]
+            , ':dataEntrada' => [$dataEntrada, PDO::PARAM_STR]
+            , ':numeroPatrimonio' => [$numeroPatrimonio, PDO::PARAM_STR] //TODO O nome número não condiz muito com o tipo do dado
+            , ':area' => [$area, PDO::PARAM_INT]
+            , ':grafica' => [$grafica, PDO::PARAM_STR]
+        );
 
-        $values = "($nome,$quantidade,$descricao,$dataEntrada,$numeroPatrimonio,$area,$grafica)";
-        try {
-            echo $sql . $values;
-            $stmt = parent::getConexao()->prepare($sql . $values);
-            $stmt->execute();
-            $id = parent::getConexao()->lastInsertId();
-            return $id;
-//            print_r($id);
-        } catch (Exception $e) {
-            print_r($e);
-            throw new Exception("Erro");
-        }
+        return $this->executarQuery($sql, $params);
     }
 
     /**
      * Retorna a lista com todos os livros, com base nas colunas especificadas e nas condições de seleção.
-     * @param String $colunas Colunas a serem retornadas, por padrão, retorna
-     * @param String $condicao A string que precede WHERE na cláusula SQL. Não é necessário escrever a palavra WHERE.
-     * @return Array A tabela com o resultado da consulta.
+     * @param string $colunas Colunas a serem retornadas, por padrão, retorna
+     * @param string $condicao A string que precede WHERE na cláusula SQL. Não é necessário escrever a palavra WHERE.
+     * @return array A tabela com o resultado da consulta.
      */
-    public static function consultar($colunas = "*", $condicao = null) {
+    public function consultar($colunas = "*", $condicao = null) {
 
         if ($condicao == null) {
             $condicao = "WHERE quantidade > 0";
         } else {
             $condicao = "WHERE " . $condicao . " AND quantidade > 0";
         }
-        $sql = "SELECT " . $colunas . " FROM livro JOIN area ON area = idArea " . $condicao;
-        $resultado = parent::getConexao()->query($sql)->fetchAll();
-        return $resultado;
+        $sql = "SELECT $colunas FROM livro JOIN area ON area = idArea " . $condicao;
+        return $this->executarSelect($sql);
     }
 
-    public static function recuperarLivro($livroID) {
-        if (is_array($livroID)) {
-            $livroID = $livroID['livroID'];
+    /**
+     * 
+     * @param int $idLivro
+     * @return \Livro ou null caso nenhum seja encontrado
+     */
+    public function recuperarLivro($idLivro) {
+        if (is_array($idLivro)) {
+            $idLivro = $idLivro['livroID'];
         }
 
-        $sql = "SELECT * from livro WHERE idLivro ='" . $livroID . "'";
-        try {
-            $stmt = parent::getConexao()->query($sql);
-            $stmt->setFetchMode(\PDO::FETCH_CLASS, 'Livro');
-            $saida = $stmt->fetch();
-        } catch (Exception $e) {
-            $saida = NULL;
-        }
-        return $saida;
+        $sql = "SELECT * from livro WHERE idLivro = :idLivro";
+        $params = array(
+            ':idLivro' => [$idLivro, PDO::PARAM_INT]
+        );
+        return $this->executarSelect($sql, $params, false, 'Livro');
     }
 
-    public static function recuperarSaidaLivro($saidaID) {
-        $saida = livroDAO::consultarSaidas("*", "ls.idSaida = " . $saidaID);
-        if (is_array($saida)) {
-            $saida = $saida[0];
-        }
-        return $saida;
+    /**
+     * 
+     * @param int $saidaID
+     * @return array
+     */
+    public function recuperarSaidaLivro($saidaID) {
+        return $this->consultarSaidas('*', "ls.idSaida = $saidaID")[0];
     }
 
-    public static function removerBaixa($baixaID) {
-        if (is_array($baixaID)) {
+    /**
+     * 
+     * @param int $idBaixa
+     * @return array
+     */
+    public function recuperarBaixaLivro($idBaixa) {
+        return $this->consultarBaixas('*', "lb.idBaixa = $idBaixa")[0];
+    }
+
+    /**
+     * 
+     * @param int $idBaixa
+     * @return boolean
+     */
+    public function removerBaixa($idBaixa) {
+        if (is_array($idBaixa)) {
             $livroID = $livroID['baixaID'];
         }
 
-        $sql = "DELETE from livro_baixa WHERE idBaixa = " . $baixaID;
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-//            print_r($e);
-            return false;
-        }
+        $sql = "DELETE from livro_baixa WHERE idBaixa = :idBaixa";
+        $params = array(
+            ':idBaixa' => [$idBaixa, PDO::PARAM_INT]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
-    public static function removerSaida($saidaID) {
-        if (is_array($saidaID)) {
+    /**
+     * 
+     * @param int $idSaida
+     * @return boolean
+     */
+    public function removerSaida($idSaida) {
+        if (is_array($idSaida)) {
             $livroID = $livroID['saidaID'];
         }
 
-        $sql = "DELETE from livro_saida WHERE idSaida = " . $saidaID;
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-//            print_r($e);
-            return false;
-        }
+        $sql = "DELETE from livro_saida WHERE idSaida = :idSaida";
+        $params = array(
+            ':idSaida' => [$idSaida, PDO::PARAM_INT]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
-    public static function consultarSaidas($colunas = "*", $condicao = null) {
+    /**
+     * 
+     * @param string $colunas
+     * @param string $condicao
+     * @return array
+     */
+    public function consultarSaidas($colunas = "*", $condicao = null) {
 
         if ($condicao == null) {
             $condicao = "WHERE quantidadeSaida > 0";
         } else {
-            $condicao = "WHERE " . $condicao . " AND quantidadeSaida > 0";
+            $condicao = "WHERE $condicao AND quantidadeSaida > 0";
         }
-        $sql = "SELECT " . $colunas . " FROM `livro_saida` AS `ls` JOIN `livro` AS `l` ON `ls`.`livro` = `l`.idLivro JOIN `usuario` AS `u` ON `ls`.`responsavel` = `u`.`idUsuario` LEFT JOIN `polo` AS `p` ON `ls`.`poloDestino` = `p`.`idPolo` JOIN `area` AS `a` ON `l`.`area` = `a`.`idArea` " . $condicao;
-        try {
-            $resultado = parent::getConexao()->query($sql)->fetchAll();
-        } catch (Exception $e) {
-            die($e);
-        }
-        return $resultado;
+        $sql = "SELECT $colunas FROM `livro_saida` AS `ls` JOIN `livro` AS `l` ON `ls`.`livro` = `l`.idLivro JOIN `usuario` AS `u` ON `ls`.`responsavel` = `u`.`idUsuario` LEFT JOIN `polo` AS `p` ON `ls`.`poloDestino` = `p`.`idPolo` JOIN `area` AS `a` ON `l`.`area` = `a`.`idArea` $condicao";
+        return $this->executarSelect($sql);
     }
 
-    public static function consultarBaixas($colunas = "*", $condicao = null) {
+    /**
+     * 
+     * @param string $colunas
+     * @param string $condicao
+     * @return array
+     */
+    public function consultarBaixas($colunas = "*", $condicao = null) {
 
         if ($condicao == null) {
             $condicao = "";
         } else {
-            $condicao = "WHERE " . $condicao;
+            $condicao = "WHERE $condicao";
         }
-        $sql = "SELECT " . $colunas . " FROM `livro_baixa` AS `lb` JOIN `livro` AS `l` ON `lb`.`livro` = `l`.`idLivro` JOIN `area` AS `a` ON `l`.`area` = `a`.`idArea`" . $condicao;
-        try {
-            $resultado = parent::getConexao()->query($sql)->fetchAll();
-        } catch (Exception $e) {
-            die($e);
-        }
-        return $resultado;
+        $sql = "SELECT $colunas FROM `livro_baixa` AS `lb` JOIN `livro` AS `l` ON `lb`.`livro` = `l`.`idLivro` JOIN `area` AS `a` ON `l`.`area` = `a`.`idArea` $condicao";
+        return $this->executarSelect($sql);
     }
 
     /**
      * Atualiza informações de um livro.
-     * @param int $livroID Usado para localizar livro no banco de dados.
-     * @param Curso $novosDados Objecto VO com as novas informações.
+     * @param int $idLivro Usado para localizar livro no banco de dados.
+     * @param \Curso $novosDados Objecto VO com as novas informações.
      * @return boolean
      */
-    public static function atualizar($livroID, Livro $novosDados) {
+    public function atualizar($idLivro, Livro $novosDados) {
 
-        $livroID = (int) $livroID;
-        $dadosAntigos = livroDAO::recuperarLivro($livroID);
+        $idLivro = (int) $idLivro;
+        $dadosAntigos = livroDAO::recuperarLivro($idLivro);
 
-        $condicao = " WHERE idLivro = " . $livroID;
 
         $nome = $novosDados->get_nomeLivro();
         if ($nome == null) {
@@ -186,12 +200,8 @@ class livroDAO extends abstractDAO {
         }
 
         $numeroPatrimonio = $novosDados->get_numeroPatrimonio();
-        if ($numeroPatrimonio !== "NULL") {
-            $numeroPatrimonio = parent::quote($numeroPatrimonio);
-        }
 
         $descricao = $novosDados->get_descricao();
-        $descricao = parent::quote($descricao);
 
         $grafica = $novosDados->get_grafica();
         if ($grafica == null) {
@@ -203,81 +213,103 @@ class livroDAO extends abstractDAO {
             $area = $dadosAntigos->get_idArea();
         }
 
-        $sql = "UPDATE livro SET nomeLivro = '" . $nome . "' ,quantidade = " . $quantidade . " ,dataEntrada = '" . $dataEntrada . "' ,numeroPatrimonio = " . $numeroPatrimonio . " ,descricao=" . $descricao . ", grafica='" . $grafica . "', area=" . $area;
-        $sql .= $condicao;
-        try {
-            $stmt = parent::getConexao()->prepare($sql);
-            $stmt->execute();
-            return true;
-        } catch (Exception $e) {
-            echo $e;
-            exit;
-            return false;
+        $sql = "UPDATE livro SET nomeLivro = :nome ,quantidade = :quantidade ,dataEntrada = :dataEntrada ,numeroPatrimonio = :numeroPatrimonio ,descricao= :descricao, grafica= :grafica, area= :area WHERE idLivro = :idLivro";
+        $params = array(
+            ':nome' => [$nome, PDO::PARAM_STR]
+            , ':quantidade' => [$quantidade, PDO::PARAM_INT]
+            , ':dataEntrada' => [$dataEntrada, $dataEntrada !== null ? PDO::PARAM_STR : PDO::PARAM_NULL]
+            , ':numeroPatrimonio' => [$numeroPatrimonio, $numeroPatrimonio !== null ? PDO::PARAM_STR : PDO::PARAM_NULL] //TODO mudar o nome da variável para algo mais intuitivo
+            , ':descricao' => [$descricao, $descricao !== null ? PDO::PARAM_STR : PDO::PARAM_NULL]
+            , ':grafica' => [$grafica, PDO::PARAM_STR]
+            , ':area' => [$area, PDO::PARAM_INT]
+            , ':idLivro' => [$idLivro, PDO::PARAM_INT]
+        );
+        return $this->executarQuery($sql, $params);
+    }
+
+    /**
+     * 
+     * @param int $idLivro
+     * @return boolean
+     */
+    public function remover($idLivro) {
+        if ($idLivro !== null) {
+            if (is_array($idLivro)) {
+                $idLivro = $idLivro['livroID'];
+            }
+            $idLivro = (int) $idLivro;
+            $sql = "DELETE FROM livro WHERE idLivro = :idLivro";
+            $params = array(
+                ':idLivro' => [$idLivro, PDO::PARAM_INT]
+            );
+            return $this->executarQuery($sql, $params);
         }
     }
 
-    public static function remover($livroID) {
-        if ($livroID !== null) {
-            if (is_array($livroID)) {
-                $livroID = $livroID['livroID'];
-            }
-            $livroID = (int) $livroID;
-            $sql = "DELETE FROM livro WHERE idLivro = " . $livroID;
-            try {
-                parent::getConexao()->query($sql);
-                return true;
-            } catch (Exception $e) {
-                return false;
-            }
-        }
-    }
-
-    public static function cadastrarSaida($idLivro, $idResponsavel, $destino, $destinoAlternativo, $quantidade, $data = "NULL") {
-        $destino = $destino;
-        $data = parent::quote($data);
-        $destinoAlternativo = parent::quote($destinoAlternativo);
+    /**
+     * 
+     * @param int $idLivro
+     * @param int $idResponsavel
+     * @param int $destino
+     * @param string $destinoAlternativo
+     * @param int $quantidade
+     * @param string $data
+     * @return boolean
+     */
+    public function cadastrarSaida($idLivro, $idResponsavel, $destino, $destinoAlternativo, $quantidade, $data = null) {
         $sql = "INSERT INTO livro_saida(livro,responsavel,destino,quantidadeSaida,quantidadeSaidaOriginal,dataSaida,poloDestino) VALUES " .
-                "($idLivro,$idResponsavel,$destinoAlternativo,$quantidade,$quantidade,$data,$destino)";
-
-        try {
-            parent::getConexao()->query($sql);
-            $id = parent::getConexao()->lastInsertId();
-            livroDAO::registrarCadastroSaida($id);
-            return true;
-        } catch (Exception $e) {
-            print_r($e . $sql);
-            return false;
-        }
+                "(:idLivro,:idResponsavel,:destinoAlternativo,:quantidade,:quantidade,:data,:destino)";
+        $params = array(
+            ':idLivro' => [$idLivro, PDO::PARAM_INT]
+            , ':idResponsavel' => [$idResponsavel, PDO::PARAM_INT]
+            , ':destinoAlternativo' => [$destinoAlternativo, PDO::PARAM_STR]
+            , ':quantidade' => [$quantidade, PDO::PARAM_INT]
+            , ':data' => [$data, $data !== null ? PDO::PARAM_STR : PDO::PARAM_NULL]
+            , ':destino' => [$destino, PDO::PARAM_INT]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
-    public static function cadastrarRetorno($idSaida, $data, $quantidade, $observacoes = "NULL") {
-        $observacoes = parent::quote($observacoes);
-        $data = parent::quote($data);
+    /**
+     * 
+     * @param int $idSaida
+     * @param string $data
+     * @param int $quantidade
+     * @param string $observacoes
+     * @return boolean
+     */
+    public function cadastrarRetorno($idSaida, $data, $quantidade, $observacoes = null) {
         $sql = "INSERT INTO livro_retorno(saida,dataRetorno,quantidadeRetorno,observacoes) VALUES " .
-                "($idSaida,$data,$quantidade,$observacoes)";
-        try {
-            parent::getConexao()->query($sql);
-            $id = parent::getConexao()->lastInsertId();
-            livroDAO::registrarRetorno($id);
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
+                "(:idSaida,:data,:quantidade,:observacoes)";
+        $params = array(
+            ':idSaida' => [$idSaida, PDO::PARAM_INT]
+            , ':data' => [$data, PDO::PARAM_STR]
+            , ':quantidade' => [$quantidade, PDO::PARAM_INT]
+            , ':observacoes' => [$observacoes, $observacoes !== null ? PDO::PARAM_STR : PDO::PARAM_NULL]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
-    public static function cadastrarBaixa($idLivro, $dataBaixa, $quantidade, $observacoes = "NULL", $idSaida = "NULL") {
-        $observacoes = parent::quote($observacoes);
-        $dataBaixa = parent::quote($dataBaixa);
+    /**
+     * 
+     * @param int $idLivro
+     * @param string $dataBaixa
+     * @param int $quantidade
+     * @param string $observacoes
+     * @param int $idSaida
+     * @return boolean
+     */
+    public function cadastrarBaixa($idLivro, $dataBaixa, $quantidade, $observacoes = null, $idSaida = null) {
         $sql = "INSERT INTO livro_baixa(livro,saida,dataBaixa,quantidadeBaixa,observacoes) VALUES " .
-                "($idLivro,$idSaida,$dataBaixa,$quantidade,$observacoes)";
-        try {
-            parent::getConexao()->query($sql);
-            $idBaixa = parent::getConexao()->lastInsertId();
-            livroDAO::registrarCadastroBaixa($idBaixa);
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
+                "(:idLivro,:idSaida,:dataBaixa,:quantidade,:observacoes)";
+        $params = array(
+            ':idLivro' => [$idLivro, PDO::PARAM_INT]
+            , ':idSaida' => [$idSaida, $idSaida !== null ? PDO::PARAM_INT : PDO::PARAM_NULL]
+            , ':dataBaixa' => [$dataBaixa, PDO::PARAM_STR]
+            , ':quantidade' => [$quantidade, PDO::PARAM_INT]
+            , ':observacoes' => [$observacoes, $observacoes !== null ? PDO::PARAM_STR : PDO::PARAM_NULL]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
     /**
@@ -287,192 +319,201 @@ class livroDAO extends abstractDAO {
      * consequentemente algum retorno ou baixa, ele não pode mais então ser editado.
      * @param type $idLivro
      */
-    public static function livroPodeTerTipoAlterado($idLivro) {
-        try {
-            //  Verifica se tem saída
-            $sql = "SELECT count(livro) as qtdSaidas FROM livro_saida WHERE livro = :livro";
-            $stmt = parent::getConexao()->prepare($sql);
-            $stmt->bindValue(":livro", $idLivro, PDO::PARAM_INT);
-            $stmt->execute();
-            $resultado = $stmt->fetch();
-            if (is_array($resultado)) {
-                $resultado = $resultado['qtdSaidas'];
-            } else {
-                $stmt->closeCursor();
-            }
-            if ((int) $resultado > 0) {
-                return false;
-            }
-            //  Verifica se tem baixa
-            $sql = "SELECT count(livro) as qtdBaixas FROM livro_baixa WHERE livro = :livro";
-            $stmt = parent::getConexao()->prepare($sql);
-            $stmt->bindValue(":livro", $idLivro, PDO::PARAM_INT);
-            $stmt->execute();
-            $resultado = $stmt->fetch();
-            if (is_array($resultado)) {
-                $resultado = $resultado['qtdBaixas'];
-            } else {
-                $stmt->closeCursor();
-            }
-            if ((int) $resultado > 0) {
-                return false;
-            }
-            //  Verifica se tem retorno
-            $sql = "SELECT count(livro) as qtdSaidas FROM livro_saida WHERE livro = :livro";
-            $stmt = parent::getConexao()->prepare($sql);
-            $stmt->bindValue(":livro", $idLivro, PDO::PARAM_INT);
-            $stmt->execute();
-            $resultado = $stmt->fetch();
-            if (is_array($resultado)) {
-                $resultado = $resultado['qtdSaidas'];
-            } else {
-                $stmt->closeCursor();
-            }
-            if ((int) $resultado > 0) {
-                return false;
-            }
-            return true;
-        } catch (Exception $e) {
+    public function livroPodeTerTipoAlterado($idLivro) {
+        //  Verifica se tem saída
+        $sql1 = "SELECT count(livro) as qtdSaidas FROM livro_saida WHERE livro = :livro LIMIT 1";
+        $params = array(
+            ':livro' => [$idLivro, PDO::PARAM_INT]
+        );
+        $resultado1 = $this->executarSelect($sql1, $params, false);
+
+        if (is_array($resultado1)) {
+            $resultado1 = $resultado1['qtdSaidas'];
+        }
+        if ((int) $resultado1 > 0) {
             return false;
         }
+        //  Verifica se tem baixa
+        $sql2 = "SELECT count(livro) as qtdBaixas FROM livro_baixa WHERE livro = :livro LIMIT 1";
+        $resultado2 = $this->executarSelect($sql2, $params, false);
+        if (is_array($resultado2)) {
+            $resultado2 = $resultado2['qtdBaixas'];
+        }
+        if ((int) $resultado2 > 0) {
+            return false;
+        }
+        //  Verifica se tem retorno
+        $sql3 = "SELECT count(livro) as qtdSaidas FROM livro_saida WHERE livro = :livro LIMIT 1";
+        $resultado3 = $this->executarSelect($sql3, $params, false);
+        if (is_array($resultado3)) {
+            $resultado3 = $resultado3['qtdSaidas'];
+        }
+        if ((int) $resultado3 > 0) {
+            return false;
+        }
+        return true;
     }
 
     /////////////////// REGISTRO DE EVENTOS PARA LOG ///////////////////////////
 
-    public static function registrarExclusaoLivro($idLivro) {
-        $quote = "\"";
+    /**
+     * 
+     * @param int $idLivro
+     * @return boolean
+     */
+    public function registrarExclusaoLivro($idLivro) {
         $tipo = TipoEventoLivro::REMOCAO_LIVRO;
-        $usuarioID = obterUsuarioSessao()->get_idUsuario();
-        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,livro,data,hora) VALUES ";
-        $sql .= " ($tipo,$usuarioID,$idLivro,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
+        $idUsuario = obterUsuarioSessao()->get_idUsuario();
+        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,livro,data,hora) VALUES (:tipo,:idUsuario,:idLivro,:data,:hora)";
+        $params = array(
+            ':tipo' => [$tipo, PDO::PARAM_INT]
+            , ':idUsuario' => [$idUsuario, PDO::PARAM_INT]
+            , ':idLivro' => [$idLivro, PDO::PARAM_INT]
+            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
+            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+        );
+
+        return $this->executarQuery($sql, $params);
     }
 
-    public static function registrarInsercaoLivro($idLivro) {
-        $quote = "\"";
+    /**
+     * 
+     * @param int $idLivro
+     * @return boolean
+     */
+    public function registrarInsercaoLivro($idLivro) {
         $tipo = TipoEventoLivro::CADASTRO_LIVRO;
-        $usuarioID = obterUsuarioSessao()->get_idUsuario();
-        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,livro,data,hora) VALUES ";
-        $sql .= " ($tipo,$usuarioID,$idLivro,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
+        $idUsuario = obterUsuarioSessao()->get_idUsuario();
+        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,livro,data,hora) VALUES (:tipo,:idUsuario,:idLivro,:data,:hora)";
+        $params = array(
+            ':tipo' => [$tipo, PDO::PARAM_INT]
+            , ':idUsuario' => [$idUsuario, PDO::PARAM_INT]
+            , ':idLivro' => [$idLivro, PDO::PARAM_INT]
+            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
+            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+        );
+
+        return $this->executarQuery($sql, $params);
     }
 
-    public static function registrarAlteracaoLivro($idLivro) {
-        $quote = "\"";
+    /**
+     * 
+     * @param type $idLivro
+     * @return boolean
+     */
+    public function registrarAlteracaoLivro($idLivro) {
         $tipo = TipoEventoLivro::ALTERACAO_LIVRO;
-        $usuarioID = obterUsuarioSessao()->get_idUsuario();
-        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,livro,data,hora) VALUES ";
-        $sql .= " ($tipo,$usuarioID,$idLivro,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
+        $idUsuario = obterUsuarioSessao()->get_idUsuario();
+        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,livro,data,hora) VALUES (:tipo,:idUsuario,:idLivro,:data,:hora)";
+        $params = array(
+            ':tipo' => [$tipo, PDO::PARAM_INT]
+            , ':idUsuario' => [$idUsuario, PDO::PARAM_INT]
+            , ':idLivro' => [$idLivro, PDO::PARAM_INT]
+            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
+            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+        );
+
+        return $this->executarQuery($sql, $params);
     }
 
-    public static function registrarCadastroBaixa($idBaixa) {
-        $quote = "\"";
+    /**
+     * 
+     * @param int $idBaixa
+     * @return boolean
+     */
+    public function registrarCadastroBaixa($idBaixa) {
         $tipo = TipoEventoLivro::CADASTRO_BAIXA;
-        $usuarioID = obterUsuarioSessao()->get_idUsuario();
-        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,baixa,data,hora) VALUES ";
-        $sql .= " ($tipo,$usuarioID,$idBaixa,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
+        $idUsuario = obterUsuarioSessao()->get_idUsuario();
+        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,baixa,data,hora) VALUES (:tipo,:idUsuario,:idBaixa,:data,:hora)";
+        $params = array(
+            ':tipo' => [$tipo, PDO::PARAM_INT]
+            , ':idUsuario' => [$idUsuario, PDO::PARAM_INT]
+            , ':idBaixa' => [$idBaixa, PDO::PARAM_INT]
+            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
+            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+        );
+
+        return $this->executarQuery($sql, $params);
     }
 
-    public static function registrarRemocaoBaixa($idBaixa) {
-        $quote = "\"";
+    /**
+     * 
+     * @param int $idBaixa
+     * @return boolean
+     */
+    public function registrarRemocaoBaixa($idBaixa) {
         $tipo = TipoEventoLivro::REMOCAO_BAIXA;
-        $usuarioID = obterUsuarioSessao()->get_idUsuario();
-        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,baixa,data,hora) VALUES ";
-        $sql .= " ($tipo,$usuarioID,$idBaixa,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
+        $idUsuario = obterUsuarioSessao()->get_idUsuario();
+        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,baixa,data,hora) VALUES (:tipo,:idUsuario,:idBaixa,:data,:hora)";
+        $params = array(
+            ':tipo' => [$tipo, PDO::PARAM_INT]
+            , ':idUsuario' => [$idUsuario, PDO::PARAM_INT]
+            , ':idBaixa' => [$idBaixa, PDO::PARAM_INT]
+            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
+            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+        );
+
+        return $this->executarQuery($sql, $params);
     }
 
-    public static function registrarCadastroSaida($idSaida) {
-        $quote = "\"";
+    /**
+     * 
+     * @param int $idSaida
+     * @return boolean
+     */
+    public function registrarCadastroSaida($idSaida) {
         $tipo = TipoEventoLivro::CADASTRO_SAIDA;
-        $usuarioID = obterUsuarioSessao()->get_idUsuario();
-        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,saida,data,hora) VALUES ";
-        $sql .= " ($tipo,$usuarioID,$idSaida,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
+        $idUsuario = obterUsuarioSessao()->get_idUsuario();
+        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,saida,data,hora) VALUES (:tipo,:idUsuario,:idSaida,:data,:hora)";
+        $params = array(
+            ':tipo' => [$tipo, PDO::PARAM_INT]
+            , ':idUsuario' => [$idUsuario, PDO::PARAM_INT]
+            , ':idSaida' => [$idSaida, PDO::PARAM_INT]
+            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
+            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+        );
+
+        return $this->executarQuery($sql, $params);
     }
 
-    public static function registrarRemocaoSaida($idSaida) {
-        $quote = "\"";
+    /**
+     * 
+     * @param int $idSaida
+     * @return boolean
+     */
+    public function registrarRemocaoSaida($idSaida) {
         $tipo = TipoEventoLivro::REMOCAO_SAIDA;
-        $usuarioID = obterUsuarioSessao()->get_idUsuario();
-        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,saida,data,hora) VALUES ";
-        $sql .= " ($tipo,$usuarioID,$idSaida,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
+        $idUsuario = obterUsuarioSessao()->get_idUsuario();
+        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,saida,data,hora) VALUES (:tipo,:idUsuario,:idSaida,:data,:hora)";
+        $params = array(
+            ':tipo' => [$tipo, PDO::PARAM_INT]
+            , ':idUsuario' => [$idUsuario, PDO::PARAM_INT]
+            , ':idSaida' => [$idSaida, PDO::PARAM_INT]
+            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
+            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+        );
+
+        return $this->executarQuery($sql, $params);
     }
 
-    public static function registrarRetorno($idRetorno) {
-        $quote = "\"";
+    /**
+     * 
+     * @param int $idRetorno
+     * @return boolean
+     */
+    public function registrarRetorno($idRetorno) {
         $tipo = TipoEventoLivro::CADASTRO_RETORNO;
-        $usuarioID = obterUsuarioSessao()->get_idUsuario();
-        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,retorno,data,hora) VALUES ";
-        $sql .= " ($tipo,$usuarioID,$idRetorno,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
+        $idUsuario = obterUsuarioSessao()->get_idUsuario();
+        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,retorno,data,hora) VALUES (:tipo,:idUsuario,:idRetorno,:data,:hora)";
+        $params = array(
+            ':tipo' => [$tipo, PDO::PARAM_INT]
+            , ':idUsuario' => [$idUsuario, PDO::PARAM_INT]
+            , ':idRetorno' => [$idRetorno, PDO::PARAM_INT]
+            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
+            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+        );
+
+        return $this->executarQuery($sql, $params);
     }
 
 }
