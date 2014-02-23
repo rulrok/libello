@@ -13,7 +13,7 @@ class verificarnovooficio extends verificadorFormularioAjax {
     
     public function _validar() {
         try{
-                $idusuario = $_SESSION['usuario']->get_id();
+                $idusuario = $_SESSION['usuario']->get_idUsuario();
                 $numOficio = $_REQUEST['i_numOficio'];
                 $assunto = $_REQUEST['assunto'];
                 $corpo = $_REQUEST['corpo'];

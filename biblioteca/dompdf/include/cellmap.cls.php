@@ -206,7 +206,7 @@ class Cellmap {
   //........................................................................
 
   function get_spanned_cells($frame) {
-    $key = $frame->get_id();
+    $key = $frame->get_idUsuario();
 
     if ( !isset($this->_frames[$key]) ) {
       throw new DOMPDF_Exception("Frame not found in cellmap");
@@ -217,14 +217,14 @@ class Cellmap {
   }
 
   function frame_exists_in_cellmap($frame) {
-    $key = $frame->get_id();
+    $key = $frame->get_idUsuario();
     return isset($this->_frames[$key]);
   }
   
   function get_frame_position($frame) {
     global $_dompdf_warnings;
 
-    $key = $frame->get_id();
+    $key = $frame->get_idUsuario();
 
     if ( !isset($this->_frames[$key]) ) {
       throw new DOMPDF_Exception("Frame not found in cellmap");
@@ -249,7 +249,7 @@ class Cellmap {
   }
 
   function get_frame_width($frame) {
-    $key = $frame->get_id();
+    $key = $frame->get_idUsuario();
 
     if ( !isset($this->_frames[$key]) ) {
       throw new DOMPDF_Exception("Frame not found in cellmap");
@@ -265,7 +265,7 @@ class Cellmap {
   }
 
   function get_frame_height($frame) {
-    $key = $frame->get_id();
+    $key = $frame->get_idUsuario();
 
     if ( !isset($this->_frames[$key]) ) {
       throw new DOMPDF_Exception("Frame not found in cellmap");

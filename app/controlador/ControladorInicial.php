@@ -8,17 +8,15 @@ require_once APP_LOCATION . 'modelo/enumeracao/Papel.php';
 class ControladorInicial extends Controlador {
 
     public function acaoInicial() {
-//        $seguranca = BIBLIOTECA_DIR . 'seguranca/seguranca.php';
         $usuario = obterUsuarioSessao();
-        if ($usuario->get_papel() == Papel::ADMINISTRADOR) {
+        if ($usuario->get_idPapel() == Papel::ADMINISTRADOR) {
             $this->visao->administrador = true;
         } else {
             $this->visao->administrador = false;
         }
         $this->visao->nomeUsuario = $usuario->get_PNome();
-        $this->visao->papel = usuarioDAO::consultarPapel($usuario->get_email());
+        $this->visao->papel = (new usuarioDAO())->consultarPapel($usuario->get_email());
         $this->visao->titulo = "Controle CEAD";
-//        $this->visao->conteudo = $_SERVER['DOCUMENT_ROOT'] . "/controle-cead/app/visao/inicial/homepage.php";
         $this->visao->menu = Menu::montarMenuNavegacao();
         $this->renderizar();
     }
@@ -26,8 +24,7 @@ class ControladorInicial extends Controlador {
     public function acaoHomepage() {
         $usuario = obterUsuarioSessao();
         $this->visao->usuario = $usuario->get_PNome();
-//        $this->visao->papel = usuarioDAO::consultarPapel($usuario->get_email());
-        $this->visao->papel = (int) $usuario->get_papel();
+        $this->visao->papel = (int) $usuario->get_idPapel();
         $this->renderizar();
     }
 
@@ -35,11 +32,6 @@ class ControladorInicial extends Controlador {
         $this->renderizar();
         exit;
     }
-    
-//    public function acaoAcessoProibido(){
-//        $this->renderizar();
-//        exit;
-//    }
 
     public function idFerramentaAssociada() {
         return Ferramenta::DESCONHECIDO;

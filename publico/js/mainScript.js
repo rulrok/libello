@@ -468,16 +468,17 @@ function ajax(link, place, hidePop, async, ignorePageChanges) {
         document.paginaAlterada = false;
         if (place !== null) {
             $(place).empty();
-            var tituloProprio = data.lastIndexOf("<title>");
+            var patt = new RegExp("<title>.*?</title>.*?");
+//            window.alert(data);
+//            var tituloProprio = data.lastIndexOf("<title>");
 
             //Trata páginas com títulos personalizados
-            if (tituloProprio !== -1) {
-                var fimTitulo = data.lastIndexOf("</title>");
-                var titulo = data.substr(tituloProprio + 7, fimTitulo);
-                mudarTitulo(titulo);
-                data = data.replace("<title>", "");
+            if (patt.test(data)) {
+                var titulo = patt.exec(data)[0];
                 data = data.replace(titulo, "");
-                data = data.replace("</title>", "");
+                titulo = titulo.replace("<title>", "");
+                titulo = titulo.replace("</title>", "");
+                mudarTitulo(titulo);
             } else {
                 //Volta o título para o padrão
                 mudarTitulo();

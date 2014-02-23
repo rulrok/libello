@@ -17,11 +17,6 @@ final class Ferramenta {
     const CONTROLE_PAGAMENTOS = 8;
     const GALERIA_IMAGENS = 9;
 
-    public static function get_nome_ferramenta($ferramentaID) {
-        $retorno = ferramentaDAO::obterNomeFerramenta($ferramentaID);
-        return $retorno;
-    }
-
     public static function get_codigo_ferramenta($nomeFerramenta) {
         $nomeFerramenta = strtolower($nomeFerramenta);
         $nomeFerramenta = str_ireplace("controle", "", $nomeFerramenta);

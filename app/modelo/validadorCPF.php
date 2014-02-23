@@ -2,6 +2,11 @@
 
 class validadorCPF {
 
+    /**
+     * 
+     * @param string $cpf
+     * @return boolean
+     */
     public static function validarCPF($cpf) {
         // Verifiva se o número digitado contém todos os digitos
         $cpf = static::normalizarCPF($cpf);
@@ -26,6 +31,11 @@ class validadorCPF {
         }
     }
 
+    /**
+     * 
+     * @param string $cpf
+     * @return string
+     */
     public static function normalizarCPF($cpf) {
         $cpf = preg_replace("/[.-]/", "", $cpf);
         $cpf = str_pad(preg_replace('[^0-9]', '', $cpf), 11, '0', STR_PAD_LEFT);

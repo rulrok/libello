@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['imagemURI'])) {
     // if it is not empty
     if ($image) {
 
-        $image_name = time() . obterUsuarioSessao()->get_id();
+        $image_name = time() . obterUsuarioSessao()->get_idUsuario();
         //TODO Mover esse tipo de comando para um arquivo de intalação
         if (!file_exists(APP_TEMP_DIR . 'masters/')) {
             mkdir(APP_TEMP_DIR . 'masters/');

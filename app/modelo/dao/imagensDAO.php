@@ -406,7 +406,7 @@ class imagensDAO extends abstractDAO {
     public static function registrarRemocaoCategoria() {
         $quote = "\"";
         $tipo = TipoEventoImagens::REMOCAO_CATEGORIA;
-        $usuarioID = obterUsuarioSessao()->get_id();
+        $usuarioID = obterUsuarioSessao()->get_idUsuario();
         $sql = "INSERT INTO imagens_evento(tipoEvento,usuario,data,hora) VALUES ";
         $sql .= " ($tipo,$usuarioID,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
@@ -423,7 +423,7 @@ class imagensDAO extends abstractDAO {
     public static function registrarRemocaoSubcategoria() {
         $quote = "\"";
         $tipo = TipoEventoImagens::REMOCAO_SUBCATEGORIA;
-        $usuarioID = obterUsuarioSessao()->get_id();
+        $usuarioID = obterUsuarioSesget_idUsuario>get_id();
         $sql = "INSERT INTO imagens_evento(tipoEvento,usuario,data,hora) VALUES ";
         $sql .= " ($tipo,$usuarioID,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
@@ -440,7 +440,7 @@ class imagensDAO extends abstractDAO {
     public static function registrarAlteracaoCategoria($idCategoria) {
         $quote = "\"";
         $tipo = TipoEventoImagens::ALTERACAO_CATEGORIA;
-        $usuarioID = obterUsuarioSessao()->get_id();
+        $usuarioID = obterUsuget_idUsuariossao()->get_id();
         $sql = "INSERT INTO imagens_evento(tipoEvento,usuario,categoria,data,hora) VALUES ";
         $sql .= " ($tipo,$usuarioID,$idCategoria,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
@@ -457,7 +457,7 @@ class imagensDAO extends abstractDAO {
     public static function registrarAlteracaoSubcategoria($idSubcategoria) {
         $quote = "\"";
         $tipo = TipoEventoImagens::ALTERACAO_CATEGORIA;
-        $usuarioID = obterUsuarioSessao()->get_id();
+        $usuarioID = oget_idUsuariouarioSessao()->get_id();
         $sql = "INSERT INTO imagens_evento(tipoEvento,usuario,subcategoria,data,hora) VALUES ";
         $sql .= " ($tipo,$usuarioID,$idSubcategoria,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
@@ -474,7 +474,7 @@ class imagensDAO extends abstractDAO {
     public static function registrarCadastroImagem($idImagem) {
         $quote = "\"";
         $tipo = TipoEventoImagens::CADASTRO_IMAGEM;
-        $usuarioID = obterUsuarioSessao()->get_id();
+        $usuariget_idUsuarioobterUsuarioSessao()->get_id();
         $sql = "INSERT INTO imagens_evento(tipoEvento,usuario,imagem,data,hora) VALUES ";
         $sql .= " ($tipo,$usuarioID,$idImagem,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);

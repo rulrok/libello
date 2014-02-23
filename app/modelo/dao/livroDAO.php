@@ -342,7 +342,7 @@ class livroDAO extends abstractDAO {
     public static function registrarExclusaoLivro($idLivro) {
         $quote = "\"";
         $tipo = TipoEventoLivro::REMOCAO_LIVRO;
-        $usuarioID = obterUsuarioSessao()->get_id();
+        $usuarioID = obterUsuarioSessao()->get_idUsuario();
         $sql = "INSERT INTO livro_evento(tipoEvento,usuario,livro,data,hora) VALUES ";
         $sql .= " ($tipo,$usuarioID,$idLivro,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
@@ -359,7 +359,7 @@ class livroDAO extends abstractDAO {
     public static function registrarInsercaoLivro($idLivro) {
         $quote = "\"";
         $tipo = TipoEventoLivro::CADASTRO_LIVRO;
-        $usuarioID = obterUsuarioSessao()->get_id();
+        $usuarioID = obterUsuarioSessao()->get_idUsuario();
         $sql = "INSERT INTO livro_evento(tipoEvento,usuario,livro,data,hora) VALUES ";
         $sql .= " ($tipo,$usuarioID,$idLivro,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
@@ -376,7 +376,7 @@ class livroDAO extends abstractDAO {
     public static function registrarAlteracaoLivro($idLivro) {
         $quote = "\"";
         $tipo = TipoEventoLivro::ALTERACAO_LIVRO;
-        $usuarioID = obterUsuarioSessao()->get_id();
+        $usuarioID = obterUsuarioSessao()->get_idUsuario();
         $sql = "INSERT INTO livro_evento(tipoEvento,usuario,livro,data,hora) VALUES ";
         $sql .= " ($tipo,$usuarioID,$idLivro,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
@@ -393,7 +393,7 @@ class livroDAO extends abstractDAO {
     public static function registrarCadastroBaixa($idBaixa) {
         $quote = "\"";
         $tipo = TipoEventoLivro::CADASTRO_BAIXA;
-        $usuarioID = obterUsuarioSessao()->get_id();
+        $usuarioID = obterUsuarioSessao()->get_idUsuario();
         $sql = "INSERT INTO livro_evento(tipoEvento,usuario,baixa,data,hora) VALUES ";
         $sql .= " ($tipo,$usuarioID,$idBaixa,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
@@ -410,7 +410,7 @@ class livroDAO extends abstractDAO {
     public static function registrarRemocaoBaixa($idBaixa) {
         $quote = "\"";
         $tipo = TipoEventoLivro::REMOCAO_BAIXA;
-        $usuarioID = obterUsuarioSessao()->get_id();
+        $usuarioID = obterUsuarioSessao()->get_idUsuario();
         $sql = "INSERT INTO livro_evento(tipoEvento,usuario,baixa,data,hora) VALUES ";
         $sql .= " ($tipo,$usuarioID,$idBaixa,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
@@ -427,7 +427,7 @@ class livroDAO extends abstractDAO {
     public static function registrarCadastroSaida($idSaida) {
         $quote = "\"";
         $tipo = TipoEventoLivro::CADASTRO_SAIDA;
-        $usuarioID = obterUsuarioSessao()->get_id();
+        $usuarioID = obterUsuarioSessao()->get_idUsuario();
         $sql = "INSERT INTO livro_evento(tipoEvento,usuario,saida,data,hora) VALUES ";
         $sql .= " ($tipo,$usuarioID,$idSaida,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
@@ -444,7 +444,7 @@ class livroDAO extends abstractDAO {
     public static function registrarRemocaoSaida($idSaida) {
         $quote = "\"";
         $tipo = TipoEventoLivro::REMOCAO_SAIDA;
-        $usuarioID = obterUsuarioSessao()->get_id();
+        $usuarioID = obterUsuarioSessao()->get_idUsuario();
         $sql = "INSERT INTO livro_evento(tipoEvento,usuario,saida,data,hora) VALUES ";
         $sql .= " ($tipo,$usuarioID,$idSaida,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
@@ -461,7 +461,7 @@ class livroDAO extends abstractDAO {
     public static function registrarRetorno($idRetorno) {
         $quote = "\"";
         $tipo = TipoEventoLivro::CADASTRO_RETORNO;
-        $usuarioID = obterUsuarioSessao()->get_id();
+        $usuarioID = obterUsuarioSessao()->get_idUsuario();
         $sql = "INSERT INTO livro_evento(tipoEvento,usuario,retorno,data,hora) VALUES ";
         $sql .= " ($tipo,$usuarioID,$idRetorno,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);

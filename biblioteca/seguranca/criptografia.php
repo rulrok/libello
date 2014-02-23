@@ -33,6 +33,11 @@ function fnDecrypt($sValue, $sSecretKey = SECRET) {
     }
 }
 
+function encriptarSenha($senha) {
+    //TODO Melhorar método de encriptação de senha. MD5 é fraco para isso. Ver: https://phpbestpractices.org/#passwords
+    return md5($senha);
+}
+
 //$inicial = time();
 //$crypt = fnEncrypt("20");
 //echo $crypt . "<br/>";

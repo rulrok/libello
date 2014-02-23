@@ -318,7 +318,7 @@ class equipamentoDAO extends abstractDAO {
     public static function registrarExclusaoEquipamento($idEquipamento) {
         $quote = "\"";
         $tipo = TipoEventoEquipamento::REMOCAO_EQUIPAMENTO;
-        $usuarioID = obterUsuarioSessao()->get_id();
+        $usuarioID = obterUsuarioSessao()->get_idUsuario();
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,equipamento,data,hora) VALUES ";
         $sql .= " ($tipo,$usuarioID,$idEquipamento,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
@@ -335,7 +335,7 @@ class equipamentoDAO extends abstractDAO {
     public static function registrarInsercaoEquipamento($idEquipamento) {
         $quote = "\"";
         $tipo = TipoEventoEquipamento::CADASTRO_EQUIPAMENTO;
-        $usuarioID = obterUsuarioSessao()->get_id();
+        $usuarioID = obterUsuarioSessao()->get_idUsuario();
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,equipamento,data,hora) VALUES ";
         $sql .= " ($tipo,$usuarioID,$idEquipamento,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
@@ -352,7 +352,7 @@ class equipamentoDAO extends abstractDAO {
     public static function registrarAlteracaoEquipamento($idEquipamento) {
         $quote = "\"";
         $tipo = TipoEventoEquipamento::ALTERACAO_EQUIPAMENTO;
-        $usuarioID = obterUsuarioSessao()->get_id();
+        $usuarioID = obterUsuarioSessao()->get_idUsuario();
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,equipamento,data,hora) VALUES ";
         $sql .= " ($tipo,$usuarioID,$idEquipamento,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
@@ -369,7 +369,7 @@ class equipamentoDAO extends abstractDAO {
     public static function registrarCadastroBaixa($idBaixa) {
         $quote = "\"";
         $tipo = TipoEventoEquipamento::CADASTRO_BAIXA;
-        $usuarioID = obterUsuarioSessao()->get_id();
+        $usuarioID = obterUsuarioSessao()->get_idUsuario();
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,baixa,data,hora) VALUES ";
         $sql .= " ($tipo,$usuarioID,$idBaixa,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
@@ -386,7 +386,7 @@ class equipamentoDAO extends abstractDAO {
     public static function registrarRemocaoBaixa($idBaixa) {
         $quote = "\"";
         $tipo = TipoEventoEquipamento::REMOCAO_BAIXA;
-        $usuarioID = obterUsuarioSessao()->get_id();
+        $usuarioID = obterUsuarioSessao()->get_idUsuario();
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,baixa,data,hora) VALUES ";
         $sql .= " ($tipo,$usuarioID,$idBaixa,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
@@ -403,7 +403,7 @@ class equipamentoDAO extends abstractDAO {
     public static function registrarCadastroSaida($idSaida) {
         $quote = "\"";
         $tipo = TipoEventoEquipamento::CADASTRO_SAIDA;
-        $usuarioID = obterUsuarioSessao()->get_id();
+        $usuarioID = obterUsuarioSessao()->get_idUsuario();
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,saida,data,hora) VALUES ";
         $sql .= " ($tipo,$usuarioID,$idSaida,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
@@ -419,7 +419,7 @@ class equipamentoDAO extends abstractDAO {
     public static function registrarRemocaoSaida($idSaida) {
         $quote = "\"";
         $tipo = TipoEventoEquipamento::REMOCAO_SAIDA;
-        $usuarioID = obterUsuarioSessao()->get_id();
+        $usuarioID = obterUsuarioSessao()->get_idUsuario();
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,saida,data,hora) VALUES ";
         $sql .= " ($tipo,$usuarioID,$idSaida,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
@@ -436,7 +436,7 @@ class equipamentoDAO extends abstractDAO {
     public static function registrarRetorno($idRetorno) {
         $quote = "\"";
         $tipo = TipoEventoEquipamento::CADASTRO_RETORNO;
-        $usuarioID = obterUsuarioSessao()->get_id();
+        $usuarioID = obterUsuarioSessao()->get_idUsuario();
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,retorno,data,hora) VALUES ";
         $sql .= " ($tipo,$usuarioID,$idRetorno,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);

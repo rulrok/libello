@@ -14,7 +14,7 @@ class Menu {
 
     public static function montarMenuNavegacao() {
 
-        $permissoes = usuarioDAO::obterPermissoes(obterUsuarioSessao()->get_id());
+        $permissoes = (new usuarioDAO())->obterPermissoes(obterUsuarioSessao()->get_idUsuario());
 
         $menuCode = "<div class=\"menu\">" . "\n";
         $menuCode .= "<menu class=\"centered\">" . "\n";
@@ -262,8 +262,9 @@ class Menu {
         $codigo .= ">\n";
 
         $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
+        $DAO = new papelDAO();
         for ($i = 1; $i <= Papel::__length; $i++) {
-            $codigo .= "<option value=\"$i\">" . papelDAO::obterNomePapel($i) . "</option>\n";
+            $codigo .= "<option value=\"$i\">" . $DAO->obterNomePapel($i) . "</option>\n";
         }
         $codigo .= "</select>\n";
         return $codigo;
@@ -510,12 +511,14 @@ class Menu {
             $codigo .= " name = \"" . $name . "\"";
         }
         $codigo .= " style='display: table-cell;'>\n";
+        $usuarioDAO = new usuarioDAO();
+        $papelDAO = new papelDAO();
         for ($i = 1; $i <= Papel::__length; $i++) {
-            $usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome) as Nome,email", "idPapel = " . $i);
+            $usuarios = $usuarioDAO->consultar("idUsuario,concat(PNome,' ',UNome) as Nome,email", "idPapel = :idPapel", array(':idPapel' => array($i, PDO::PARAM_INT)));
             if (sizeof($usuarios) == 0) {
                 continue;
             } else {
-                $nomePapel = papelDAO::obterNomePapel($i);
+                $nomePapel = $papelDAO->obterNomePapel($i);
 //            $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
                 $codigo .= "<optgroup label='$nomePapel'>\n";
                 for ($j = 0; $j < sizeof($usuarios); $j++) {

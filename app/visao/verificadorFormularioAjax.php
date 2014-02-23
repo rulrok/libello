@@ -17,6 +17,10 @@ abstract class verificadorFormularioAjax {
      * @example new Mensagem()->set_mensagem("Uma mensagem qualquer")->set_status(Mensagem::Info)
      */
     //TODO Mudar visibilidade para privado e fazer todos os formulários usarem apenas os métodos de mensagens públicos.
+    /**
+     *
+     * @var \Mensagem 
+     */
     public $mensagem;
 
     /**
@@ -32,7 +36,7 @@ abstract class verificadorFormularioAjax {
         if (!empty($_SERVER['REQUEST_METHOD']) && strtolower($_SERVER['REQUEST_METHOD']) == 'post') {
 
             $this->mensagem = new Mensagem();
-            $this->mensagem->set_mensagem("Mensagem padrão do validador.")->set_status(Mensagem::INFO);
+            $this->mensagem->set_mensagemInfo("Mensagem padrão do validador.");
             $this->_validar();
             $this->retornar();
         } else {
@@ -42,17 +46,17 @@ abstract class verificadorFormularioAjax {
     }
 
     public function mensagemSucesso($mensagem) {
-        $this->mensagem->set_mensagem($mensagem)->set_status(Mensagem::SUCESSO);
+        $this->mensagem->set_mensagemSucesso($mensagem);
         $this->retornar();
     }
 
     public function mensagemErro($mensagem) {
-        $this->mensagem->set_mensagem($mensagem)->set_status(Mensagem::ERRO);
+        $this->mensagem->set_mensagemErro($mensagem);
         $this->retornar();
     }
 
     public function mensagemAviso($mensagem) {
-        $this->mensagem->set_mensagem($mensagem)->set_status(Mensagem::INFO);
+        $this->mensagem->set_mensagemInfo($mensagem);
         $this->retornar();
     }
 

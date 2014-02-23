@@ -7,8 +7,8 @@ include APP_LOCATION . "visao/verificadorFormularioAjax.php";
 class verificarnovasubcategoria extends verificadorFormularioAjax {
 
     public function _validar() {
-        $categoriaPai = $_POST['categoriapai'];
-        $nomeSubcategoria = $_POST['subcategoria'];
+        $categoriaPai = filter_input(INPUT_POST, 'categoriapai');
+        $nomeSubcategoria = filter_input(INPUT_POST, 'subcategoria');
         //Vai validar os dados
         try {
             $subcategoria = new ImagemSubcategoria();
@@ -18,12 +18,12 @@ class verificarnovasubcategoria extends verificadorFormularioAjax {
 
             $resultado = imagensDAO::consultarDescritoresFilhos("*", "nomeSubcategoria LIKE $nomeSubcategoria AND categoriaPai = $subcategoria->categoriaPai");
             if (sizeof($resultado) > 0) {
-                $this->mensagem->set_mensagem("Subcategoria já cadastrada")->set_status(Mensagem::ERRO);
+                $this->mensagem->set_mensagemErro("Subcategoria já cadastrada");
             } else {
                 if (imagensDAO::cadastrarSubcategoria($subcategoria)) {
-                    $this->mensagem->set_mensagem("Cadastrado com sucesso")->set_status(Mensagem::SUCESSO);
+                    $this->mensagem->set_mensagemSucesso("Cadastrado com sucesso");
                 } else {
-                    $this->mensagem->set_mensagem("Erro ao cadastrar no banco de dados")->set_status(Mensagem::ERRO);
+                    $this->mensagem->set_mensagemErro("Erro ao cadastrar no banco de dados");
                 }
             }
         } catch (Exception $e) {

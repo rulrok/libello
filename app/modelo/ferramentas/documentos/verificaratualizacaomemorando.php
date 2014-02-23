@@ -21,7 +21,7 @@ class verificaratualizacaomemorando extends verificadorFormularioAjax {
     public function _validar() {
         try {
 
-            $idusuario = $_SESSION['usuario']->get_id();
+            $idusuario = $_SESSION['usuario']->get_idUsuario();
             $numMemorando = $_REQUEST['i_numMemorando'];
             $idMemorando = $_REQUEST['i_idmemorando'];
             $assunto = $_REQUEST['assunto'];

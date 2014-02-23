@@ -8,7 +8,7 @@ class verificaredicaooficio extends verificadorFormularioAjax {
 
     public function _validar() {
         try {
-            $idusuario = $_SESSION['usuario']->get_id();
+            $idusuario = $_SESSION['usuario']->get_idUsuario();
             $idoficio = fnDecrypt($_REQUEST['i_idoficio']);
             $numOficio = $_REQUEST['i_numOficio'];
             $assunto = $_REQUEST['assunto'];

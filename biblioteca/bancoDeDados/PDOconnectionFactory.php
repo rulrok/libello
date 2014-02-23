@@ -4,26 +4,34 @@ include_once __DIR__ . '/../configuracoes.php';
 
 class PDOconnectionFactory {
 
-    static $connection = null;
+    /**
+     *
+     * @var \PDO 
+     */
+    static $connection;
 
     private function __construct() {
         
     }
 
-    public static function getConection() {
+    /**
+     * 
+     * @return \PDO
+     */
+    public static function obterConexao() {
 
-        if (self::$connection === null) {
+        if (static::$connection === null) {
             try {
-                self::$connection = new PDO('mysql:host=' . DATABASE_SERVER_IP . ';dbname=' . DATABASE_SERVER_DBNAME . ';port=' . DATABASE_SERVER_PORT, DATABASE_SERVER_USER, DATABASE_SERVER_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
-                self::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                static::$connection = new PDO('mysql:host=' . DATABASE_SERVER_IP . ';dbname=' . DATABASE_SERVER_DBNAME . ';port=' . DATABASE_SERVER_PORT
+                        , DATABASE_SERVER_USER, DATABASE_SERVER_PASSWORD
+                        , array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+                static::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (Exception $e) {
                 //print_r($e);
-                exit;
+                die("Falha ao conectar-se ao banco de dados");
             }
         }
-        return self::$connection;
+        return static::$connection;
     }
 
 }
-
-?>

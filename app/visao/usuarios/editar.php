@@ -96,18 +96,17 @@
 
     $(document).ready(function() {
         $('#cpf').mask('999.999.999-99');
-        varrerCampos();
-        formularioAjax();
         $("#ajuda").tooltip({placement: 'right'});
-
         $("#dataNascimento").datepick();
 
+        varrerCampos();
+        formularioAjax();
 
         $('[name=papel]').val("<?php echo $this->idPapel ?>");
         $("[name=papel]").on('change', preconfigurarPermissoes);
 
         var obj = <?php echo json_encode($this->permissoes) ?>;
-        var nome, idFerramenta, idPermissao, element;
+        var nome, idPermissao, element;
         for (var i = 0; i < obj.length; i++) {
             element = obj[i];
             nome = element['nome'].toLowerCase();
