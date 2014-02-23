@@ -50,7 +50,7 @@ abstract class abstractDAO {
         try {
             $conn = $this->getConexao();
             $stmt = $conn->prepare($sqlQuery);
-            if ($params !== null && is_array($params)) {
+            if ($params !== null && is_array($params) && !empty($params)) {
                 foreach ($params as $campo => $opcoes) {
                     $stmt->bindValue($campo, $opcoes[0], (int) $opcoes[1]);
                 }

@@ -1,11 +1,11 @@
 <?php
 
-include_once BIBLIOTECA_DIR.'Mvc/Controlador.php';
+include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
 include_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
 include_once BIBLIOTECA_DIR . "seguranca/Permissao.php";
-include_once ROOT . 'app/modelo/ComboBoxAreas.php';
-include_once ROOT . 'app/modelo/ComboBoxCurso.php';
 
+include_once APP_LOCATION . 'modelo/ComboBoxAreas.php';
+include_once APP_LOCATION . 'modelo/ComboBoxCurso.php';
 require_once APP_LOCATION . "modelo/Mensagem.php";
 require_once APP_LOCATION . "modelo/vo/Polo.php";
 require_once APP_LOCATION . "modelo/vo/Curso.php";
@@ -37,7 +37,7 @@ class ControladorCursospolos extends Controlador {
 
     public function acaoGerenciarcursos() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->visao->cursos = cursoDAO::consultar("idCurso,nomeCurso,nomeArea,nomeTipoCurso");
+        $this->visao->cursos = (new cursoDAO())->consultar("idCurso, nomeCurso, nomeArea, nomeTipoCurso");
         $i = 0;
         foreach ($this->visao->cursos as $value) {
             $value[0] = fnEncrypt($value[0]);
@@ -48,7 +48,7 @@ class ControladorCursospolos extends Controlador {
 
     public function acaoGerenciarpolos() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->visao->polos = poloDAO::consultar("idPolo,nomePolo,cidade,estado");
+        $this->visao->polos = (new poloDAO())->consultar("idPolo,nomePolo,cidade,estado");
         $i = 0;
         foreach ($this->visao->polos as $value) {
             $value[0] = fnEncrypt($value[0]);
@@ -64,10 +64,10 @@ class ControladorCursospolos extends Controlador {
             $this->visao->comboTipoCurso = ComboBoxCurso::montarTodosOsTipos();
             $cursoID = fnDecrypt($_REQUEST['cursoID']);
             $this->visao->cursoID = $_REQUEST['cursoID'];
-            $curso = cursoDAO::recuperarCurso($cursoID);
+            $curso = (new cursoDAO())->recuperarCurso($cursoID);
             $this->visao->curso = $curso->get_nome();
-            $this->visao->idArea = (int) $curso->get_area();
-            $this->visao->idTipoCurso = (int) $curso->get_tipo();
+            $this->visao->idArea = (int) $curso->get_idArea();
+            $this->visao->idTipoCurso = (int) $curso->get_idTipo();
         } else {
             die("Acesso indevido");
         }
@@ -95,7 +95,7 @@ class ControladorCursospolos extends Controlador {
         if (isset($_GET['poloID']) || isset($_POST['poloID'])) {
             $poloID = fnDecrypt($_REQUEST['poloID']);
             $this->visao->poloID = $_REQUEST['poloID'];
-            $polo = poloDAO::recuperarPolo($poloID);
+            $polo = (new poloDAO())->recuperarPolo($poloID);
             $this->visao->polo = $polo->get_nome();
             $this->visao->cidade = $polo->get_cidade();
             $this->visao->estadoViagem = $polo->get_estado();

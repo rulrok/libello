@@ -177,23 +177,23 @@ class imagensDAO extends abstractDAO {
         }
     }
 
-    public static function consultarImagem(Imagem $imagem) {
-//        $sql = "SELECT count(idPolo) FROM polo WHERE ";
-//        $nome = parent::quote($polo->get_nome());
-//        $cidade = parent::quote($polo->get_cidade());
-//        $estado = parent::quote($polo->get_estado());
-//        $condicao = "nomePolo = $nome AND cidade=$cidade AND estado = $estado";
-//        try {
-//            $resultado = parent::getConexao()->query($sql . $condicao)->fetch();
-//        } catch (Exception $e) {
-//            echo $e;
-//        }
-//
-//        if (is_array($resultado)) {
-//            $resultado = $resultado[0];
-//        }
-//        return $resultado;
-    }
+//    public static function consultarImagem(Imagem $imagem) {
+////        $sql = "SELECT count(idPolo) FROM polo WHERE ";
+////        $nome = parent::quote($polo->get_nome());
+////        $cidade = parent::quote($polo->get_cidade());
+////        $estado = parent::quote($polo->get_estado());
+////        $condicao = "nomePolo = $nome AND cidade=$cidade AND estado = $estado";
+////        try {
+////            $resultado = parent::getConexao()->query($sql . $condicao)->fetch();
+////        } catch (Exception $e) {
+////            echo $e;
+////        }
+////
+////        if (is_array($resultado)) {
+////            $resultado = $resultado[0];
+////        }
+////        return $resultado;
+//    }
 
     public static function removerCategoria($idCategoria) {
         if ($idCategoria !== null) {
@@ -227,56 +227,56 @@ class imagensDAO extends abstractDAO {
         }
     }
 
-    public static function remover($idPolo) {
-//        if ($idPolo !== null) {
-//            if (is_array($idPolo)) {
-//                $idPolo = $idPolo['poloID'];
-//            }
-//            $idPolo = (int) $idPolo;
-//            $sql = "DELETE FROM polo WHERE idPolo = " . $idPolo;
-//            try {
-//                parent::getConexao()->query($sql);
-//                return true;
-//            } catch (Exception $e) {
-//                return false;
-//            }
-//        }
-    }
+//    public static function remover($idPolo) {
+////        if ($idPolo !== null) {
+////            if (is_array($idPolo)) {
+////                $idPolo = $idPolo['poloID'];
+////            }
+////            $idPolo = (int) $idPolo;
+////            $sql = "DELETE FROM polo WHERE idPolo = " . $idPolo;
+////            try {
+////                parent::getConexao()->query($sql);
+////                return true;
+////            } catch (Exception $e) {
+////                return false;
+////            }
+////        }
+//    }
 
-    public static function atualizar($idPolo, Polo $novosDados) {
-
-//        $idPolo = (int) $idPolo;
-//        $dadosAntigos = poloDAO::recuperarPolo($idPolo);
+//    public static function atualizar($idPolo, Polo $novosDados) {
 //
-//        $condicao = " WHERE idPolo = " . $idPolo;
-//
-//        $nome = $novosDados->get_nome();
-//        if ($nome == null) {
-//            $nome = $dadosAntigos->get_nome();
-//        }
-//
-//        $cidade = $novosDados->get_cidade();
-//        if ($cidade == null) {
-//            $cidade = $dadosAntigos->get_cidade();
-//        }
-//
-//        $estado = $novosDados->get_estado();
-//        if ($estado == null) {
-//            $estado = $dadosAntigos->get_estado();
-//        }
-//
-//
-//        $sql = "UPDATE polo SET nomePolo = '" . $nome . "' ,cidade = '" . $cidade . "' ,estado = '" . $estado."'";
-//        $sql .= $condicao;
-//        try {
-//            parent::getConexao()->query($sql);
-//            return true;
-//        } catch (Exception $e) {
-//            echo $e;
-//            exit;
-//            return false;
-//        }
-    }
+////        $idPolo = (int) $idPolo;
+////        $dadosAntigos = poloDAO::recuperarPolo($idPolo);
+////
+////        $condicao = " WHERE idPolo = " . $idPolo;
+////
+////        $nome = $novosDados->get_nome();
+////        if ($nome == null) {
+////            $nome = $dadosAntigos->get_nome();
+////        }
+////
+////        $cidade = $novosDados->get_cidade();
+////        if ($cidade == null) {
+////            $cidade = $dadosAntigos->get_cidade();
+////        }
+////
+////        $estado = $novosDados->get_estado();
+////        if ($estado == null) {
+////            $estado = $dadosAntigos->get_estado();
+////        }
+////
+////
+////        $sql = "UPDATE polo SET nomePolo = '" . $nome . "' ,cidade = '" . $cidade . "' ,estado = '" . $estado."'";
+////        $sql .= $condicao;
+////        try {
+////            parent::getConexao()->query($sql);
+////            return true;
+////        } catch (Exception $e) {
+////            echo $e;
+////            exit;
+////            return false;
+////        }
+//    }
 
     public static function atualizarCategoria($idCategoria, ImagemCategoria $novosDados) {
 

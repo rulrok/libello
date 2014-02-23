@@ -21,7 +21,7 @@ abstract class verificadorFormularioAjax {
      *
      * @var \Mensagem 
      */
-    public $mensagem;
+    private $mensagem;
 
     /**
      * Função abstrata que deve ser implementada por todos os verificadores individuais.
@@ -33,7 +33,7 @@ abstract class verificadorFormularioAjax {
 
     public function verificar() {
         //Verifica se uma requisição via post está sendo feita.
-        if (!empty($_SERVER['REQUEST_METHOD']) && strtolower($_SERVER['REQUEST_METHOD']) == 'post') {
+        if (!empty($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $this->mensagem = new Mensagem();
             $this->mensagem->set_mensagemInfo("Mensagem padrão do validador.");

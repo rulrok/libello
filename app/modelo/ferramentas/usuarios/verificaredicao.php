@@ -2,10 +2,10 @@
 
 include_once APP_LOCATION . "modelo/Mensagem.php";
 require_once APP_LOCATION . "modelo/vo/Usuario.php";
+include_once APP_LOCATION . 'modelo/validadorCPF.php';
+include_once APP_LOCATION . 'modelo/ComboBoxPapeis.php';
+include_once APP_LOCATION . 'modelo/ComboBoxPermissoes.php';
 include_once APP_LOCATION . "visao/verificadorFormularioAjax.php";
-include_once ROOT . 'app/modelo/ComboBoxPermissoes.php';
-include_once ROOT . 'app/modelo/ComboBoxPapeis.php';
-include_once ROOT . 'app/modelo/validadorCPF.php';
 
 class verificarEdicaoUsuario extends verificadorFormularioAjax {
 
@@ -16,7 +16,7 @@ class verificarEdicaoUsuario extends verificadorFormularioAjax {
         $dataNascimento = filter_input(INPUT_POST, 'dataNascimento');
         $idPapel = (int) filter_input(INPUT_POST, 'papel');
         $cpf = filter_input(INPUT_POST, 'cpf');
-        $cpf = validadorCPF::normalizarCPF($cpf);
+        $cpf = validadorCPF::normalizarCPF($cpf); //Retira os pontos e o traço do CPF
 
         $usuarioDAO = new usuarioDAO();
 

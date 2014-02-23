@@ -200,7 +200,7 @@ class livroDAO extends abstractDAO {
 
         $area = $novosDados->get_area();
         if ($area === null) {
-            $area = $dadosAntigos->get_area();
+            $area = $dadosAntigos->get_idArea();
         }
 
         $sql = "UPDATE livro SET nomeLivro = '" . $nome . "' ,quantidade = " . $quantidade . " ,dataEntrada = '" . $dataEntrada . "' ,numeroPatrimonio = " . $numeroPatrimonio . " ,descricao=" . $descricao . ", grafica='" . $grafica . "', area=" . $area;

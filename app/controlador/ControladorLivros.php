@@ -72,7 +72,7 @@ class ControladorLivros extends Controlador {
             $this->visao->dataEntrada = $livro->get_dataEntrada();
             $this->visao->numeroPatrimonio = $livro->get_numeroPatrimonio();
             $this->visao->grafica = $livro->get_grafica();
-            $this->visao->area = $livro->get_area();
+            $this->visao->area = $livro->get_idArea();
         } else {
             die("Acesso indevido");
         }

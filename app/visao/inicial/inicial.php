@@ -285,7 +285,9 @@
                 if (canToggleFullScreen()) {
                     $("#botoesSuperiores").children(":first-child").before('<a id="fullscreen-toggle" title="Modo tela cheia" class="btn btn-small" href="javascript:void(0)" onclick="toggleFullScreen();"><i class="icon-fullscreen"></i></a>');
                 }
-                $("#carregando").hide();
+                setTimeout(function() {
+                    $("#carregando").fadeOut(150);
+                }, 150);
     </script>
 
     <!-- FIM POS SCRIPTS -->

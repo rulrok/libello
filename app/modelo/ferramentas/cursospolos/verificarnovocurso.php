@@ -6,40 +6,34 @@ require_once APP_LOCATION . "visao/verificadorFormularioAjax.php";
 class VerificarNovoCurso extends verificadorFormularioAjax {
 
     public function _validar() {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') :
-            $_SERVER['REQUEST_METHOD'] = null;
-            $curso = $_POST['nomecurso'];
-            $area = $_POST['area'];
-            $tipocurso = $_POST['tipocurso'];
+        $area = filter_input(INPUT_POST, 'area', FILTER_VALIDATE_INT);
+        $curso = filter_input(INPUT_POST, 'nomecurso');
+        $tipocurso = filter_input(INPUT_POST, 'tipocurso', FILTER_VALIDATE_INT);
 
-            if (!strpos($tipocurso, "selecione")) {
-                if (!strpos($area, "selecione")) {
-                    if (strcmp($curso, "") != 0) {
-                        $novocurso = new Curso();
-                        $novocurso->set_nome($curso);
-                        $novocurso->set_area($area);
-                        $novocurso->set_tipo($tipocurso);
-                        if (cursoDAO::consultarCurso($novocurso) == 0) {
-                            cursoDAO::cadastrarCurso($novocurso);
-                            $this->mensagem->set_mensagem("Cadastrado com sucesso.");
-                            $this->mensagem->set_status(Mensagem::SUCESSO);
-                        } else {
-                            $this->mensagem->set_mensagem("Curso já existe!");
-                            $this->mensagem->set_status(Mensagem::INFO);
-                        }
-                    } else {
-                        $this->mensagem->set_mensagem("Erro ao cadastrar");
-                        $this->mensagem->set_status(Mensagem::ERRO);
-                    }
-                } else {
-                    $this->mensagem->set_mensagem("Erro ao cadastrar");
-                    $this->mensagem->set_status(Mensagem::ERRO);
-                }
+        if (!is_int($tipocurso)) {
+            $this->mensagemErro("Tipo de curso inválido");
+        }
+        if (!is_int($area)) {
+            $this->mensagemErro("Área inválida");
+        }
+        if ($curso == "") {
+            $this->mensagemErro("Nome do curso inválido");
+        }
+
+        $novocurso = new Curso();
+        $novocurso->set_nome($curso);
+        $novocurso->set_idArea($area);
+        $novocurso->set_idTipo($tipocurso);
+        $cursoDAO = new cursoDAO();
+        if ($cursoDAO->consultarCurso($novocurso) == 0) {
+            if ($cursoDAO->cadastrarCurso($novocurso)) {
+                $this->mensagemSucesso("Cadastrado com sucesso.");
             } else {
-                $this->mensagem->set_mensagem("Erro ao cadastrar");
-                $this->mensagem->set_status(Mensagem::ERRO);
+                $this->mensagemErro("Erro ao cadastrar no banco");
             }
-        endif;
+        } else {
+            $this->mensagemAviso("Curso já existe!");
+        }
     }
 
 }

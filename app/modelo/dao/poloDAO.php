@@ -4,59 +4,66 @@ require_once 'abstractDAO.php';
 
 class poloDAO extends abstractDAO {
 
-    public static function cadastrarPolo(Polo $polo) {
-        $sql = "INSERT INTO polo(nomePolo,cidade,estado) VALUES ";
-        $nome = parent::quote($polo->get_nome());
-        $cidade = parent::quote($polo->get_cidade());
-        $estado = parent::quote($polo->get_estado());
-        $values = "($nome,$cidade,$estado)";
-        try {
-            parent::getConexao()->query($sql . $values);
-        } catch (Exception $e) {
-            echo $e;
-        }
+    /**
+     * 
+     * @param Polo $polo
+     * @return boolean
+     */
+    public function cadastrarPolo(Polo $polo) {
+        $sql = "INSERT INTO polo(nomePolo,cidade,estado) VALUES (:nome, :cidade, :estado)";
+        $params = array(
+            ':nome' => [$polo->get_nome(), PDO::PARAM_STR]
+            , ':cidade' => [$polo->get_cidade(), PDO::PARAM_STR]
+            , ':estado' => [$polo->get_estado(), PDO::PARAM_STR]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
-    public static function consultarPolo(Polo $polo) {
-        $sql = "SELECT count(idPolo) FROM polo WHERE ";
-        $nome = parent::quote($polo->get_nome());
-        $cidade = parent::quote($polo->get_cidade());
-        $estado = parent::quote($polo->get_estado());
-        $condicao = "nomePolo = $nome AND cidade=$cidade AND estado = $estado";
-        try {
-            $resultado = parent::getConexao()->query($sql . $condicao)->fetch();
-        } catch (Exception $e) {
-            echo $e;
-        }
-
-        if (is_array($resultado)) {
-            $resultado = $resultado[0];
-        }
-        return $resultado;
+    /**
+     * 
+     * @param Polo $polo
+     * @return int
+     */
+    public function consultarPolo(Polo $polo) {
+        //OBS: LIKE não foi utilizado nessa query por motivo de desempenho
+        $sql = "SELECT count(idPolo) FROM polo WHERE nomePolo = :nome AND cidade = :cidade AND estado = :estado";
+        $params = array(
+            ':nome' => [$polo->get_nome(), PDO::PARAM_STR]
+            , ':cidade' => [$polo->get_cidade(), PDO::PARAM_STR]
+            , ':estado' => [$polo->get_estado(), PDO::PARAM_STR]
+        );
+        return (int) $this->executarSelect($sql, $params, false);
     }
 
-    public static function remover($idPolo) {
+    /**
+     * 
+     * @param int $idPolo
+     * @return boolean
+     */
+    public function remover($idPolo) {
         if ($idPolo !== null) {
             if (is_array($idPolo)) {
                 $idPolo = $idPolo['poloID'];
             }
             $idPolo = (int) $idPolo;
-            $sql = "DELETE FROM polo WHERE idPolo = " . $idPolo;
-            try {
-                parent::getConexao()->query($sql);
-                return true;
-            } catch (Exception $e) {
-                return false;
-            }
+            $sql = "DELETE FROM polo WHERE idPolo = :idPolo";
+            $params = array(
+                ':idPolo' => [$idPolo, PDO::PARAM_INT]
+            );
+            return $this->executarQuery($sql, $params);
         }
     }
 
-    public static function atualizar($idPolo, Polo $novosDados) {
+    /**
+     * 
+     * @param int $idPolo
+     * @param Polo $novosDados
+     * @return boolean
+     */
+    public function atualizar($idPolo, Polo $novosDados) {
 
         $idPolo = (int) $idPolo;
-        $dadosAntigos = poloDAO::recuperarPolo($idPolo);
-
-        $condicao = " WHERE idPolo = " . $idPolo;
+        $dadosAntigos = (new poloDAO())->recuperarPolo($idPolo);
 
         $nome = $novosDados->get_nome();
         if ($nome == null) {
@@ -74,51 +81,49 @@ class poloDAO extends abstractDAO {
         }
 
 
-        $sql = "UPDATE polo SET nomePolo = '" . $nome . "' ,cidade = '" . $cidade . "' ,estado = '" . $estado."'";
-        $sql .= $condicao;
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            echo $e;
-            exit;
-            return false;
-        }
+        $sql = "UPDATE polo SET nomePolo = :nome ,cidade = :cidade ,estado = :estado WHERE idPolo = :idPolo";
+        $params = array(
+            ':nome' => [$nome, PDO::PARAM_STR]
+            , ':cidade' => [$cidade, PDO::PARAM_STR]
+            , ':estado' => [$estado, PDO::PARAM_STR]
+            , ':idPolo' => [$idPolo, PDO::PARAM_INT]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
     /** Retorna a lista com todos os polos, com base nas colunas especificadas e nas condições de seleção.
      * 
      * @param string $colunas Colunas a serem retornadas, por padrão, retorna
-     * @param type $condicao A string que precede WHERE na cláusula SQL. Não é necessário escrever a palavra WHERE.
-     * @return type A tabela com o resultado da consulta.
+     * @param string $condicao A string que precede WHERE na cláusula SQL. Não é necessário escrever a palavra WHERE.
+     * @return array A tabela com o resultado da consulta.
      */
-    public static function consultar($colunas = "*", $condicao = null) {
+    public function consultar($colunas = "*", $condicao = null) {
 
-        if ($condicao == null) {
-            $condicao = "";
+        $params = array();
+        if ($condicao === null) {
+            $sql = "SELECT $colunas FROM polo";
+        } else {
+            $sql = "SELECT :colunas FROM polo WHERE $condicao";
         }
-        $sql = "SELECT " . $colunas . " FROM polo " . $condicao;
-        $resultado = parent::getConexao()->query($sql)->fetchAll();
-        return $resultado;
+
+        return (array) $this->executarSelect($sql, $params);
     }
 
-    public static function recuperarPolo($poloID) {
-        if (is_array($poloID)) {
-            $poloID = $poloID['cursoID'];
+    /**
+     * 
+     * @param int $idPolo
+     * @return \Polo
+     */
+    public function recuperarPolo($idPolo) {
+        if (is_array($idPolo)) {
+            $idPolo = $idPolo['poloID'];
         }
 
-        $sql = "SELECT * from polo WHERE idPolo ='" . $poloID . "'";
-        try {
-            $stmt = parent::getConexao()->query($sql);
-            $stmt->setFetchMode(\PDO::FETCH_CLASS, 'Polo');
-            $polo = $stmt->fetch();
-//            if ($usuario == null) {
-//                $usuario = "Usuário não encontrado";
-//            }
-        } catch (Exception $e) {
-            $polo = NULL;
-        }
-        return $polo;
+        $sql = "SELECT * from polo WHERE idPolo = :idPolo";
+        $params = array(
+            ':idPolo' => [$idPolo, PDO::PARAM_INT]
+        );
+        return $this->executarSelect($sql, $params, false, 'Polo');
     }
 
 }

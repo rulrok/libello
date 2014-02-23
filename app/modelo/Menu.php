@@ -287,8 +287,9 @@ class Menu {
         $codigo .= ">\n";
 
         $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
+        $areaDAO = new areaDAO();
         for ($i = 1; $i <= Area::__length; $i++) {
-            $codigo .= "<option value=\"$i\">" . areaDAO::obterNomeArea($i) . "</option>\n";
+            $codigo .= "<option value=\"$i\">" . $areaDAO->obterNomeArea($i) . "</option>\n";
         }
         $codigo .= "</select>\n";
         return $codigo;
@@ -312,7 +313,7 @@ class Menu {
 
         $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
         for ($i = 1; $i <= TipoCurso::__length; $i++) {
-            $codigo .= "<option value=\"$i\">" . cursoDAO::obterNomeTipoCurso($i) . "</option>\n";
+            $codigo .= "<option value=\"$i\">" . (new cursoDAO())->obterNomeTipoCurso($i) . "</option>\n";
         }
         $codigo .= "</select>\n";
         return $codigo;
@@ -334,7 +335,7 @@ class Menu {
         }
         $codigo .= ">\n";
 
-        $cursos = cursoDAO::consultar();
+        $cursos = (new cursoDAO())->consultar();
         if (sizeof($cursos) == 0) {
             $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem cursos cadastrados --</option>\n";
         } else {
@@ -363,7 +364,7 @@ class Menu {
         }
         $codigo .= ">\n";
 
-        $polos = poloDAO::consultar();
+        $polos = (new poloDAO())->consultar();
         if (sizeof($polos) == 0) {
             $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem polos cadastrados --</option>\n";
         } else {

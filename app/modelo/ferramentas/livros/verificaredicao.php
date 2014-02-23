@@ -42,7 +42,7 @@ class verificarEdicao extends verificadorFormularioAjax {
                     $quantidade = 1;
                 }
                 if ($quantidade > 0) {
-                    $livro->set_nomelivro($livroNome)->set_dataEntrada($dataEntrada)->set_numeroPatrimonio($numeroPatrimonio)->set_quantidade($quantidade)->set_descricao($descricao)->set_grafica($grafica)->set_area($area);
+                    $livro->set_nomelivro($livroNome)->set_dataEntrada($dataEntrada)->set_numeroPatrimonio($numeroPatrimonio)->set_quantidade($quantidade)->set_descricao($descricao)->set_grafica($grafica)->set_idArea($area);
 
                     if (livroDAO::atualizar($livroID, $livro)) {
                         livroDAO::registrarAlteracaolivro($livroID);
