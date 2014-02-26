@@ -2,18 +2,24 @@
 
 include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
 
-class ControladorPagamentos extends Controlador{
-    function acaoGerenciar(){
+class ControladorPagamentos extends Controlador {
+
+    function acaoGerenciar() {
         $this->renderizar();
     }
-    
-    function acaoConsultar(){
+
+    function acaoConsultar() {
         $this->renderizar();
     }
-    
-    function acaoNova(){
+
+    function acaoNova() {
         $this->renderizar();
     }
+
+    public function idFerramentaAssociada() {
+        Ferramenta::CONTROLE_PAGAMENTOS;
+    }
+
 }
 
 ?>

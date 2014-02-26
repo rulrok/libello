@@ -75,10 +75,11 @@ class verificarnovaimagem extends verificadorFormularioAjax {
                 $this->mensagemErro("Tamanho máximo permitido para a imagem: " . ($tamanhoMaximo / 1024) . " Kb.");
             }
 
-            $codigo_desc_1 = imagensDAO::consultarDescritor('rotulo', 'idDescritor = ' . $descritor1)[0][0];
-            $codigo_desc_2 = imagensDAO::consultarDescritor('rotulo', 'idDescritor = ' . $descritor2)[0][0];
-            $codigo_desc_3 = imagensDAO::consultarDescritor('rotulo', 'idDescritor = ' . $descritor3)[0][0];
-            $codigo_desc_4 = imagensDAO::consultarDescritor('rotulo', 'idDescritor = ' . $descritor4)[0][0];
+            $imagensDAO = new imagensDAO();
+            $codigo_desc_1 = $imagensDAO->consultarDescritor('rotulo', 'idDescritor = ' . $descritor1)[0][0];
+            $codigo_desc_2 = $imagensDAO->consultarDescritor('rotulo', 'idDescritor = ' . $descritor2)[0][0];
+            $codigo_desc_3 = $imagensDAO->consultarDescritor('rotulo', 'idDescritor = ' . $descritor3)[0][0];
+            $codigo_desc_4 = $imagensDAO->consultarDescritor('rotulo', 'idDescritor = ' . $descritor4)[0][0];
 //            $dimensoesImagem = getimagesize($_FILES[$arquivoImagem]['tmp_img']);
             $nomeFinalArquivoImagem = $this->montarNome(array($codigo_desc_1, $codigo_desc_2, $codigo_desc_3, $codigo_desc_4, $dificuldade, $iniciais));
 
@@ -116,12 +117,12 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             $imagemVO = new Imagem();
 
 
-            $idGaleria = imagensDAO::consultarGaleria($cpfAutor)[0][0];
+            $idGaleria = $imagensDAO->consultarGaleria($cpfAutor)[0][0];
             if (empty($idGaleria)) {
-                if (!imagensDAO::cadastrarGaleria($cpfAutor)) {
+                if (!$imagensDAO->cadastrarGaleria($cpfAutor)) {
                     $this->mensagemErro("Problema ao criar galeria");
                 } else {
-                    $idGaleria = imagensDAO::consultarGaleria($cpfAutor);
+                    $idGaleria = $imagensDAO->consultarGaleria($cpfAutor);
                 }
             }
 //            $idGaleria = $idGaleria[0][0];
@@ -138,7 +139,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             $imagemVO->set_nomeArquivoVetorial($destinoImagemVetorial);
 
             try {
-                if (imagensDAO::cadastrarImagem($imagemVO)) {
+                if ($imagensDAO->cadastrarImagem($imagemVO)) {
                     //TODO recuperar o ID da imagem
 //                    imagensDAO::registrarCadastroImagem($idImagem);
                     $this->mensagemSucesso("Imagem cadastrada.");

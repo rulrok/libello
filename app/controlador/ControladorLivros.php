@@ -59,8 +59,8 @@ class ControladorLivros extends Controlador {
 
     public function acaoEditar() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
-        if (filter_has_var(INPUT_GET | INPUT_POST, 'livroID')) {
-            $idlivro = fnDecrypt($_REQUEST['livroID']);
+        if (filter_has_var(INPUT_GET, 'livroID') || filter_has_var(INPUT_POST, 'livroID')) {
+            $idlivro = fnDecrypt($_REQUEST['livroID']); //TODO mudar para filter_input() quando INPUT_REQUEST estiver implementado no PHP
             $livroDAO = new livroDAO();
             $this->visao->livroEditavel = $livroDAO->livroPodeTerTipoAlterado($idlivro);
             $this->visao->livroID = $_REQUEST['livroID'];
@@ -103,7 +103,7 @@ class ControladorLivros extends Controlador {
 
     public function acaoNovoretorno() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
-        if (filter_has_var(INPUT_GET | INPUT_POST, 'saidaID')) {
+        if (filter_has_var(INPUT_GET, 'saidaID') || filter_has_var(INPUT_POST, 'saidaID')) {
             $idSaida = fnDecrypt($_REQUEST['saidaID']);
             $livroDAO = new livroDAO();
             $saida = $livroDAO->recuperarSaidalivro($idSaida);

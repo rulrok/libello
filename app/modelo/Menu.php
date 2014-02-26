@@ -209,7 +209,7 @@ class Menu {
                                 $subMenuCode .= "<a href=\"#!imagens|novaImagem\"\">" . "\n";
                                 $subMenuCode .= "<li>Cadastrar imagem</li></a>" . "\n";
                             case Permissao::CONSULTA:
-                                $subMenuCode .= "<a href=\"#!imagens|consultar\"\">" . "\n";
+                                $subMenuCode .= "<a href=\"#!imagens|consultarimagem\"\">" . "\n";
                                 $subMenuCode .= "<li>Consultar galerias</li></a>" . "\n";
                         }
                     }
@@ -396,9 +396,10 @@ class Menu {
             }
             $codigo .= " numero='$nivel'>\n";
 
-            $subcategorias = imagensDAO::consultarDescritoresFilhos("*", "pai = $idCategoriaPai");
+            $imagensDAO = new imagensDAO();
+            $subcategorias = $imagensDAO->consultarDescritoresFilhos("*", "pai = $idCategoriaPai");
             if (sizeof($subcategorias) == 0) {
-                $caminho = imagensDAO::consultarCaminhoDescritores($idCategoriaPai);
+                $caminho = $imagensDAO->consultarCaminhoDescritores($idCategoriaPai);
                 $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem descritores cadastrados --</option>\n";
                 $codigo .= "</select>\n";
                 $body = "Usuário: " . obterUsuarioSessao()->get_PNome() . " " . obterUsuarioSessao()->get_UNome() . " (" . obterUsuarioSessao()->get_email() . ")%0D%0A";
@@ -435,7 +436,7 @@ class Menu {
         }
         $codigo .= " numero='1'>\n";
 
-        $categorias = imagensDAO::consultarDescritoresPais();
+        $categorias = (new imagensDAO())->consultarDescritoresPais();
         if (sizeof($categorias) == 0) {
             $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem descritores cadastrados --</option>\n";
             $codigo .= "</select>\n";

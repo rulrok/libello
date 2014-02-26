@@ -8,7 +8,7 @@ require_once APP_LOCATION . 'modelo/enumeracao/ImagensDescritor.php';
 
 class imagensDAO extends abstractDAO {
 
-    public static function consultarGaleria($nomeGaleria) {
+    public function consultarGaleria($nomeGaleria) {
         $nomeGaleria = parent::quote($nomeGaleria);
         $sql = "SELECT idGaleria FROM imagens_galeria WHERE nomeGaleria LIKE " . $nomeGaleria;
 
@@ -16,7 +16,7 @@ class imagensDAO extends abstractDAO {
         return $resultado;
     }
 
-    public static function cadastrarGaleria($nomeGaleria) {
+    public function cadastrarGaleria($nomeGaleria) {
         $nomeGaleria = parent::quote($nomeGaleria);
         $data = parent::quote(date('Y-m-j'));
         $sql = "INSERT INTO imagens_galeria(nomeGaleria,qtdFotos,dataCriacao) VALUES ($nomeGaleria,0,$data)";
@@ -29,29 +29,21 @@ class imagensDAO extends abstractDAO {
         }
     }
 
-    public static function todasImagens($limit = "") {
+    public function todasImagens($limit = "") {
         $sql = "SELECT * FROM imagens_imagem ORDER BY idImagem $limit";
-        try {
-            $resultado = parent::getConexao()->query($sql)->fetchAll();
-        } catch (Exception $ex) {
-            $resultado = null;
-        }
-        return $resultado;
+        return $this->executarSelect($sql);
     }
 
-    public static function pesquisarImagem($termoBusca, $limit = "") {
-        $termoBusca = parent::quote("%".$termoBusca."%");
-        $sql = "SELECT * from imagens_imagem WHERE titulo LIKE $termoBusca ORDER BY idImagem $limit";
-
-        try {
-            $resultado = parent::getConexao()->query($sql)->fetchAll();
-        } catch (Exception $ex) {
-            $resultado = null;
-        }
-        return $resultado;
+    public function pesquisarImagem($termoBusca, $limit = "") {
+        //TODO melhorar bastante essa função
+        $sql = "SELECT * from imagens_imagem WHERE titulo LIKE :termoBusca ORDER BY idImagem $limit";
+        $params = array(
+            ':termoBusca' => ["%$termoBusca%", PDO::PARAM_STR]
+        );
+        return $this->executarSelect($sql, $params);
     }
 
-    public static function consultarDescritoresPais($colunas = "*", $condicao = null, $condicaoJuncao = null) {
+    public function consultarDescritoresPais($colunas = "*", $condicao = null, $condicaoJuncao = null) {
 
         if ($condicao == null) {
             $condicao = " WHERE pai = " . ImagensDescritor::RAIZ_ID;
@@ -69,7 +61,7 @@ class imagensDAO extends abstractDAO {
         return $resultado;
     }
 
-    public static function consultarDescritor($colunas = "*", $condicao = null, $condicaoJuncao = null) {
+    public function consultarDescritor($colunas = "*", $condicao = null, $condicaoJuncao = null) {
         if ($condicao == null) {
             $condicao = "";
         } else {
@@ -86,7 +78,7 @@ class imagensDAO extends abstractDAO {
         return $resultado;
     }
 
-    public static function consultarCaminhoDescritores($idDescritorBase) {
+    public function consultarCaminhoDescritores($idDescritorBase) {
         $caminho = array();
 
         $resultado = static::consultarDescritor('nome, pai', "idDescritor = $idDescritorBase");
@@ -108,7 +100,7 @@ class imagensDAO extends abstractDAO {
         return $endereco . "'Novo descritor'";
     }
 
-    public static function consultarDescritoresFilhos($colunas = "*", $condicao = null, $condicaoJuncao = null) {
+    public function consultarDescritoresFilhos($colunas = "*", $condicao = null, $condicaoJuncao = null) {
         if ($condicao == null) {
             $condicao = "";
         } else {
@@ -118,12 +110,11 @@ class imagensDAO extends abstractDAO {
         if ($condicaoJuncao == null) {
             $condicaoJuncao = "";
         }
-        $sql = "SELECT " . $colunas . " FROM imagens_descritor " . $condicaoJuncao . $condicao;
-        $resultado = parent::getConexao()->query($sql)->fetchAll();
-        return $resultado;
+        $sql = "SELECT $colunas FROM imagens_descritor " . $condicaoJuncao . $condicao;
+        return $this->executarSelect($sql);
     }
 
-    public static function cadastrarCategoria(ImagemCategoria $categoria) {
+    public function cadastrarCategoria(ImagemCategoria $categoria) {
         $sql = "INSERT INTO imagens_categoria(nomeCategoria) VALUES ";
         $nomeCategoria = parent::quote($categoria->get_nomeCategoria());
         $values = "($nomeCategoria)";
@@ -136,21 +127,7 @@ class imagensDAO extends abstractDAO {
         }
     }
 
-    public static function cadastrarSubcategoria(ImagemSubcategoria $subcategoria) {
-        $sql = "INSERT INTO imagens_subcategoria(nomeSubcategoria,categoriaPai) VALUES ";
-        $nomeCategoria = parent::quote($subcategoria->get_nomeSubcategoria());
-        $categoriaPai = $subcategoria->get_categoriaPai();
-        $values = "($nomeCategoria,$categoriaPai)";
-        try {
-            parent::getConexao()->query($sql . $values);
-            return true;
-        } catch (Exception $e) {
-            echo $e;
-            return false;
-        }
-    }
-
-    public static function cadastrarImagem(Imagem $imagem) {
+    public function cadastrarImagem(Imagem $imagem) {
         $sql = "INSERT INTO imagens_imagem(idGaleria,titulo,observacoes,dificuldade,cpfAutor,ano,nomeArquivo,nomeArquivoMiniatura,nomeArquivoVetorial,descritor1,descritor2,descritor3,descritor4) VALUES ";
         $idGaleria = (int) $imagem->get_idGaleria();
 //        $idSubcategoria = (int) $imagem->get_idSubcategoria();
@@ -177,7 +154,7 @@ class imagensDAO extends abstractDAO {
         }
     }
 
-//    public static function consultarImagem(Imagem $imagem) {
+//    public function consultarImagem(Imagem $imagem) {
 ////        $sql = "SELECT count(idPolo) FROM polo WHERE ";
 ////        $nome = parent::quote($polo->get_nome());
 ////        $cidade = parent::quote($polo->get_cidade());
@@ -195,7 +172,7 @@ class imagensDAO extends abstractDAO {
 ////        return $resultado;
 //    }
 
-    public static function removerCategoria($idCategoria) {
+    public function removerCategoria($idCategoria) {
         if ($idCategoria !== null) {
             if (is_array($idCategoria)) {
                 $idCategoria = $idCategoria['categoriaID'];
@@ -211,77 +188,10 @@ class imagensDAO extends abstractDAO {
         }
     }
 
-    public static function removerSubcategoria($idSubcategoria) {
-        if ($idSubcategoria !== null) {
-            if (is_array($idSubcategoria)) {
-                $idSubcategoria = $idSubcategoria['subcategoriaID'];
-            }
-            $idSubcategoria = (int) $idSubcategoria;
-            $sql = "DELETE FROM imagens_subcategoria WHERE idSubcategoria = " . $idSubcategoria;
-            try {
-                parent::getConexao()->query($sql);
-                return true;
-            } catch (Exception $e) {
-                return false;
-            }
-        }
-    }
-
-//    public static function remover($idPolo) {
-////        if ($idPolo !== null) {
-////            if (is_array($idPolo)) {
-////                $idPolo = $idPolo['poloID'];
-////            }
-////            $idPolo = (int) $idPolo;
-////            $sql = "DELETE FROM polo WHERE idPolo = " . $idPolo;
-////            try {
-////                parent::getConexao()->query($sql);
-////                return true;
-////            } catch (Exception $e) {
-////                return false;
-////            }
-////        }
-//    }
-
-//    public static function atualizar($idPolo, Polo $novosDados) {
-//
-////        $idPolo = (int) $idPolo;
-////        $dadosAntigos = poloDAO::recuperarPolo($idPolo);
-////
-////        $condicao = " WHERE idPolo = " . $idPolo;
-////
-////        $nome = $novosDados->get_nome();
-////        if ($nome == null) {
-////            $nome = $dadosAntigos->get_nome();
-////        }
-////
-////        $cidade = $novosDados->get_cidade();
-////        if ($cidade == null) {
-////            $cidade = $dadosAntigos->get_cidade();
-////        }
-////
-////        $estado = $novosDados->get_estado();
-////        if ($estado == null) {
-////            $estado = $dadosAntigos->get_estado();
-////        }
-////
-////
-////        $sql = "UPDATE polo SET nomePolo = '" . $nome . "' ,cidade = '" . $cidade . "' ,estado = '" . $estado."'";
-////        $sql .= $condicao;
-////        try {
-////            parent::getConexao()->query($sql);
-////            return true;
-////        } catch (Exception $e) {
-////            echo $e;
-////            exit;
-////            return false;
-////        }
-//    }
-
-    public static function atualizarCategoria($idCategoria, ImagemCategoria $novosDados) {
+    public function atualizarDescritor($idCategoria, Descritor $novosDados) {
 
         $idCategoria = (int) $idCategoria;
-        $dadosAntigos = imagensDAO::recuperarCategoria($idCategoria);
+        $dadosAntigos = (new imagensDAO())->recuperarDescritor($idCategoria);
 
         $condicao = " WHERE idCategoria = " . $idCategoria;
 
@@ -302,41 +212,13 @@ class imagensDAO extends abstractDAO {
         }
     }
 
-    public static function atualizarSubcategoria($idSubcategoria, ImagemSubcategoria $novosDados) {
-
-        $idSubcategoria = (int) $idSubcategoria;
-        $dadosAntigos = imagensDAO::recuperarSubcategoria($idSubcategoria);
-
-        $condicao = " WHERE idSubcategoria = " . $idSubcategoria;
-
-        $nome = $novosDados->get_nomeSubcategoria();
-        if ($nome == null) {
-            $nome = $dadosAntigos->get_nomeSubcategoria();
-        }
-        $categoriaPai = (int) $novosDados->get_categoriaPai();
-        if ($categoriaPai == null) {
-            $categoriaPai = $dadosAntigos->get_categoriaPai();
-        }
-
-
-        $sql = "UPDATE imagens_subcategoria SET nomeSubcategoria = '" . $nome . "', categoriaPai = $categoriaPai";
-        $sql .= $condicao;
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            echo $e;
-            return false;
-        }
-    }
-
     /** Retorna a lista com todos os polos, com base nas colunas especificadas e nas condições de seleção.
      * 
      * @param string $colunas Colunas a serem retornadas, por padrão, retorna
      * @param type $condicao A string que precede WHERE na cláusula SQL. Não é necessário escrever a palavra WHERE.
      * @return type A tabela com o resultado da consulta.
      */
-    public static function consultar($colunas = "*", $condicao = null) {
+    public function consultar($colunas = "*", $condicao = null) {
 
 //        if ($condicao == null) {
 //            $condicao = "";
@@ -346,45 +228,16 @@ class imagensDAO extends abstractDAO {
 //        return $resultado;
     }
 
-    public static function recuperarPolo($poloID) {
-//        if (is_array($poloID)) {
-//            $poloID = $poloID['cursoID'];
-//        }
-//
-//        $sql = "SELECT * from polo WHERE idPolo ='" . $poloID . "'";
-//        try {
-//            $stmt = parent::getConexao()->query($sql);
-//            $stmt->setFetchMode(\PDO::FETCH_CLASS, 'Polo');
-//            $polo = $stmt->fetch();
-////            if ($usuario == null) {
-////                $usuario = "Usuário não encontrado";
-////            }
-//        } catch (Exception $e) {
-//            $polo = NULL;
-//        }
-//        return $polo;
+    public function recuperarDescritor($idDescritor) {
+
+        $sql = "SELECT * from imagens_descritor WHERE idDescritor = :idDescritor";
+        $params = array(
+            ':idDescritor' => [$idDescritor, PDO::PARAM_INT]
+        );
+        return $this->executarSelect($sql, $params, false, 'Descritor');
     }
 
-    public static function recuperarCategoria($categoriaID) {
-        if (is_array($categoriaID)) {
-            $categoriaID = $categoriaID['categoriaID'];
-        }
-
-        $sql = "SELECT * from imagens_categoria WHERE idCategoria ='" . $categoriaID . "'";
-        try {
-            $stmt = parent::getConexao()->query($sql);
-            $stmt->setFetchMode(\PDO::FETCH_CLASS, 'ImagemCategoria');
-            $categoria = $stmt->fetch();
-//            if ($usuario == null) {
-//                $usuario = "Usuário não encontrado";
-//            }
-        } catch (Exception $e) {
-            $categoria = NULL;
-        }
-        return $categoria;
-    }
-
-    public static function recuperarSubcategoria($subcategoriaID) {
+    public function recuperarSubcategoria($subcategoriaID) {
         if (is_array($subcategoriaID)) {
             $subcategoriaID = $subcategoriaID['subcategoriaID'];
         }
@@ -403,7 +256,7 @@ class imagensDAO extends abstractDAO {
         return $categoria;
     }
 
-    public static function registrarRemocaoCategoria() {
+    public function registrarRemocaoCategoria() {
         $quote = "\"";
         $tipo = TipoEventoImagens::REMOCAO_CATEGORIA;
         $usuarioID = obterUsuarioSessao()->get_idUsuario();
@@ -420,10 +273,10 @@ class imagensDAO extends abstractDAO {
         }
     }
 
-    public static function registrarRemocaoSubcategoria() {
+    public function registrarRemocaoSubcategoria() {
         $quote = "\"";
         $tipo = TipoEventoImagens::REMOCAO_SUBCATEGORIA;
-        $usuarioID = obterUsuarioSesget_idUsuario>get_id();
+        $usuarioID = obterUsuarioSesget_idUsuario > get_id();
         $sql = "INSERT INTO imagens_evento(tipoEvento,usuario,data,hora) VALUES ";
         $sql .= " ($tipo,$usuarioID,<data>,<hora>)";
         $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
@@ -437,7 +290,7 @@ class imagensDAO extends abstractDAO {
         }
     }
 
-    public static function registrarAlteracaoCategoria($idCategoria) {
+    public function registrarAlteracaoCategoria($idCategoria) {
         $quote = "\"";
         $tipo = TipoEventoImagens::ALTERACAO_CATEGORIA;
         $usuarioID = obterUsuget_idUsuariossao()->get_id();
@@ -454,7 +307,7 @@ class imagensDAO extends abstractDAO {
         }
     }
 
-    public static function registrarAlteracaoSubcategoria($idSubcategoria) {
+    public function registrarAlteracaoSubcategoria($idSubcategoria) {
         $quote = "\"";
         $tipo = TipoEventoImagens::ALTERACAO_CATEGORIA;
         $usuarioID = oget_idUsuariouarioSessao()->get_id();
@@ -471,7 +324,7 @@ class imagensDAO extends abstractDAO {
         }
     }
 
-    public static function registrarCadastroImagem($idImagem) {
+    public function registrarCadastroImagem($idImagem) {
         $quote = "\"";
         $tipo = TipoEventoImagens::CADASTRO_IMAGEM;
         $usuariget_idUsuarioobterUsuarioSessao()->get_id();

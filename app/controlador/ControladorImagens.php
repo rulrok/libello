@@ -58,7 +58,7 @@ class ControladorImagens extends Controlador {
         $this->renderizar();
     }
 
-    public function acaoConsultar() {
+    public function acaoConsultarimagem() {
         $this->visao->acessoMinimo = Permissao::CONSULTA;
         $this->renderizar();
     }
@@ -68,16 +68,10 @@ class ControladorImagens extends Controlador {
         $this->visao->cpfAutor = obterUsuarioSessao()->get_cpf();
         $this->visao->iniciaisAutor = obterUsuarioSessao()->get_iniciais();
         $this->visao->comboBoxCategorias = ComboBoxCategoriasAfins::montarDescritorPrimeiroNivel();
-//        $this->visao->comboBoxComplexidades = ComboBoxDificuldades::montarTodasAsComplexidades();
         $this->renderizar();
     }
 
     public function acaoVerificarnovaimagem() {
-        $this->visao->acessoMinimo = Permissao::ESCRITA;
-        $this->renderizar();
-    }
-
-    public function acaoUpload_img() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->renderizar();
     }
@@ -96,46 +90,36 @@ class ControladorImagens extends Controlador {
         $this->renderizar();
     }
 
-    
-    public function acaoGerenciarDescritores(){
-        $this->renderizar();
-    }
     /*
-     * CATEGORIAS
+     * DESCRITORES
      */
-
-    public function acaoNovaCategoria() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->renderizar();
-    }
 
     public function acaoDescritores() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }
 
-    public function acaoGerenciarCategorias() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->visao->categorias = imagensDAO::consultarDescritoresPais("idCategoria, nomeCategoria");
-        $i = 0;
-        foreach ($this->visao->categorias as $value) {
-            $value[0] = fnEncrypt($value[0]);
-            $this->visao->categorias[$i++] = $value;
-        }
+    public function acaoNovodescritor() {
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->renderizar();
     }
 
-    public function acaoVerificarnovacategoria() {
+    public function acaoGerenciardescritores() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }
 
-    public function acaoEditarcategoria() {
+    public function acaoVerificarnovodescritor() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
-        if (filter_has_var(INPUT_GET | INPUT_POST, 'categoriaID')) {
-            $categoriaID = fnDecrypt(filter_input(INPUT_GET | INPUT_POST, 'categoriaID'));
-            $this->visao->categoriaID = filter_input(INPUT_GET | INPUT_POST, 'categoriaID');
-            $curso = imagensDAO::recuperarCategoria($categoriaID);
+        $this->renderizar();
+    }
+
+    public function acaoEditardescritor() {
+        $this->visao->acessoMinimo = Permissao::GESTOR;
+        if (filter_has_var(INPUT_GET, 'categoriaID') || filter_has_var(INPUT_POST, 'categoriaID')) {
+            $categoriaID = filter_has_var(INPUT_GET, 'categoriaID') ? filter_input(INPUT_GET, 'categoriaID') : filter_input(INPUT_POST, 'categoriaID');
+            $this->visao->categoriaID = $categoriaID;
+            $curso = (new imagensDAO())->recuperarDescritor($categoriaID);
             $this->visao->categoria = $curso->get_nomeCategoria();
         } else {
             die("Acesso indevido");
@@ -143,69 +127,18 @@ class ControladorImagens extends Controlador {
         $this->renderizar();
     }
 
-    public function acaoVerificaredicaocategoria() {
+    public function acaoVerificaredicaodescritor() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }
 
-    public function acaoRemoverCategoria() {
+    public function acaoRemoverDescritor() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }
-
-    /*
-     * SUB-CATEGORIAS
-     */
 
     public function acaoObterdescritor() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
-        $this->renderizar();
-    }
-
-    public function acaoNovaSubcategoria() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->visao->comboBoxCategoriaPai = ComboBoxCategoriasAfins::montarDescritorPrimeiroNivel(true, 'input-large', 'categoriapai', 'categoriapai');
-        $this->renderizar();
-    }
-
-    public function acaoGerenciarSubcategorias() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->visao->subcategorias = imagensDAO::consultarDescritoresFilhos("idSubcategoria, nomeSubcategoria, nomeCategoria", null, " JOIN imagens_categoria cat ON categoriaPai = cat.idCategoria");
-        $i = 0;
-        foreach ($this->visao->subcategorias as $value) {
-            $value[0] = fnEncrypt($value[0]);
-            $this->visao->subcategorias[$i++] = $value;
-        }
-        $this->renderizar();
-    }
-
-    public function acaoVerificarnovasubcategoria() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->renderizar();
-    }
-
-    public function acaoEditarsubcategoria() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
-        if (filter_has_var(INPUT_GET | INPUT_POST, 'subcategoriaID')) {
-            $categoriaID = fnDecrypt(filter_input(INPUT_GET | INPUT_POST, 'subcategoriaID'));
-            $this->visao->subcategoriaID = filter_input(INPUT_GET | INPUT_POST, 'subcategoriaID');
-            $curso = imagensDAO::recuperarSubcategoria($categoriaID);
-            $this->visao->subcategoria = $curso->get_nomeSubcategoria();
-            $this->visao->categoriapaiID = fnEncrypt((int) $curso->get_categoriaPai());
-            $this->visao->comboBoxCategoriaPai = ComboBoxCategoriasAfins::montarDescritorPrimeiroNivel(true, 'input-large', 'categoriapai', 'categoriapai');
-        } else {
-            die("Acesso indevido");
-        }
-        $this->renderizar();
-    }
-
-    public function acaoVerificaredicaosubcategoria() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->renderizar();
-    }
-
-    public function acaoRemoverSubcategoria() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }
 

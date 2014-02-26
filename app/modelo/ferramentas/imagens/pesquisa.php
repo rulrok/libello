@@ -60,7 +60,8 @@ class pesquisa {
     }
 
     public function obterTodas($pagina, $itensPorPagina = 10) {
-        $res1 = imagensDAO::todasImagens();
+        $imagensDAO = new imagensDAO();
+        $res1 = $imagensDAO->todasImagens();
         $nr = sizeof($res1);
         $this->temResultados = ($nr != 0);
         if (!$this->temResultados) {
@@ -81,13 +82,14 @@ class pesquisa {
 
         $limite = 'LIMIT ' . ($pagina - 1) * $itensPorPagina . ',' . $itensPorPagina;
 
-        $this->resultados = imagensDAO::todasImagens($limite);
+        $this->resultados = $imagensDAO->todasImagens($limite);
 
         $this->criarPaginacao($pagina, $ultimaPagina);
     }
 
     public function buscar($termoBusca, $pagina, $itensPorPagina = 10) {
-        $res1 = imagensDAO::pesquisarImagem($termoBusca);
+        $imagensDAO = new imagensDAO();
+        $res1 = $imagensDAO->pesquisarImagem($termoBusca);
         $nr = sizeof($res1);
         $this->temResultados = ($nr != 0);
         if (!$this->temResultados) {
@@ -108,7 +110,7 @@ class pesquisa {
 
         $limite = 'LIMIT ' . ($pagina - 1) * $itensPorPagina . ',' . $itensPorPagina;
 
-        $this->resultados = imagensDAO::pesquisarImagem($termoBusca, $limite);
+        $this->resultados = $imagensDAO->pesquisarImagem($termoBusca, $limite);
 
         $this->criarPaginacao($pagina, $ultimaPagina);
 //        }

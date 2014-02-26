@@ -1,22 +1,22 @@
 <div class="btn-group" data-toggle="buttons-radio" id="abas">
-    <!--    <a href="javascript:void(0);" class="btn ignorar"
-           id="b_categorias" 
-           onclick="ajax('index.php?c=imagens&a=gerenciarDescritores', '#resultado_consulta', false);" 
-           >Gerenciar</a>
-        <a href="javascript:void(0);" class="btn ignorar" 
-           id="b_subcategorias" 
-           onclick="ajax('index.php?c=imagens&a=gerenciarSubcategorias', '#resultado_consulta', false);" 
-           >Outra coisa</a>-->
+    <a href="javascript:void(0);" class="btn ignorar"
+       id="b_gerenciar" 
+       onclick="ajax('index.php?c=imagens&a=gerenciarDescritores', '#resultado_consulta', false);" 
+       >Gerenciar</a>
+    <a href="javascript:void(0);" class="btn ignorar" 
+       id="b_novo" 
+       onclick="ajax('index.php?c=imagens&a=novoDescritor', '#resultado_consulta', false);" 
+       >Cadastrar</a>
 </div>
 <div id="resultado_consulta"></div>
 <?php
 if (isset($_GET['l'])) {
     $local = $_GET['l'];
     switch ($local) {
-        case "subcategorias":
+        case "cadastrar":
             $local = 1;
             break;
-        case "categorias":
+        case "gerenciar":
             $local = 0;
             break;
         default :
@@ -31,14 +31,14 @@ if (isset($_GET['l'])) {
 
         $('#abas a').on('click', function() {
             switch (this.innerHTML.toLowerCase()) {
-                case "categorias":
-                    local = "categorias";
+                case "gerenciar":
+                    local = "gerenciar";
                     break;
-                case "subcategorias":
-                    local = "subcategorias";
+                case "cadastrar":
+                    local = "cadastrar";
                     break;
                 default:
-                    local = "categorias";
+                    local = "gerenciar";
             }
             history.replaceState(null, null, "#!imagens|descritores&l=" + local);
         });
