@@ -66,7 +66,6 @@ class verificarnovooficio extends verificadorFormularioAjax {
             if ($numOficio != -1) {
                 $this->mensagemSucesso("Oficio gerado com sucesso!");
             } else {
-
                 $this->mensagemSucesso("Oficio salvo com sucesso!");
             }
 

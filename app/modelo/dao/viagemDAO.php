@@ -11,102 +11,88 @@ class viagemDAO extends abstractDAO {
      * @param String $condicao A string que precede WHERE na cláusula SQL. Não é necessário escrever a palavra WHERE.
      * @return Array A tabela com o resultado da consulta.
      */
-    public static function atualizarEstadoViagem($id, $estado) {
-        $sql = "UPDATE viagem SET estadoViagem='" . $estado . "' WHERE idViagem = $id";
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
+    public function atualizarEstadoViagem($id, $estado) {
+        $sql = "UPDATE viagem SET estadoViagem= :estado WHERE idViagem = :idViagem";
+        $params = array(
+            ':estado' => [$estado, PDO::PARAM_STR]
+            , ':idViagem' => [$id, PDO::PARAM_INT]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
-    public static function consultar($colunas = "*", $condicao = null) {
+    public function consultar($colunas = "*", $condicao = null) {
 
         if ($condicao == null) {
             $condicao = "";
         } else {
             $condicao = "WHERE " . $condicao;
         }
-        $sql = "SELECT " . $colunas . " FROM `viagem` AS `v` LEFT JOIN `polo` AS `p` ON `p`.`idPolo` = `v`.`idPolo` NATURAL JOIN `curso` AS `c` JOIN `usuario` AS `u` ON `u`.`idUsuario` = `responsavel` " . $condicao;
-        $resultado = parent::getConexao()->query($sql)->fetchAll();
-        return $resultado;
+        $sql = "SELECT $colunas FROM `viagem` AS `v` LEFT JOIN `polo` AS `p` ON `p`.`idPolo` = `v`.`idPolo` NATURAL JOIN `curso` AS `c` JOIN `usuario` AS `u` ON `u`.`idUsuario` = `responsavel` " . $condicao;
+        return $this->executarSelect($sql);
     }
 
-    public static function inserir(Viagem $valueObject) {
-        $s = "','";
-        $idCurso = $valueObject->get_idCurso();
-        $idPolo = $valueObject->get_idPolo();
-        $responsavel = $valueObject->get_responsavel();
-        $dataIda = $valueObject->get_dataIda();
-        $horaIda = $valueObject->get_horaIda();
-        $dataVolta = $valueObject->get_dataVolta();
-        $horaVolta = $valueObject->get_horaVolta();
-        $motivo = $valueObject->get_motivo();
-        $estado = $valueObject->get_estado();
-        $diarias = $valueObject->get_diarias();
-        $passageiros = $valueObject->get_passageiros();
-        $destinoAlternativo = $valueObject->get_destinoAlternativo();
+    public function inserir(Viagem $obj) {
+        $idCurso = $obj->get_idCurso();
+        $idPolo = $obj->get_idPolo();
+        $responsavel = $obj->get_responsavel();
+        $dataIda = $obj->get_dataIda();
+        $horaIda = $obj->get_horaIda();
+        $dataVolta = $obj->get_dataVolta();
+        $horaVolta = $obj->get_horaVolta();
+        $motivo = $obj->get_motivo();
+        $estado = $obj->get_estado();
+        $diarias = $obj->get_diarias();
+        $passageiros = $obj->get_passageiros();
+        $destinoAlternativo = $obj->get_destinoAlternativo();
 
         $sql = "INSERT INTO viagem(idCurso,idPolo,responsavel, dataIda, horaIda, dataVolta, horaVolta, motivo, estadoViagem, diarias, outroDestino)";
-//        $sql .= " VALUES (" . $idCurso . ",'" . $idPolo . $s . $responsavel . $s . $dataIda . $s . $horaIda . $s . $dataVolta . $s . $horaVolta . $s . $motivo . $s . $estado . $s . $diarias . "')";
         $sql .= " VALUES (:idCurso, :idPolo, :responsavel, :dataIda, :horaIda, :dataVolta, :horaVolta, :motivo, :estadoViagem, :diarias, :outroDestino);";
+        $params = array(
+            ':idCurso' => [$idCurso, PDO::PARAM_INT]
+            , ':idPolo' => [$idPolo, PDO::PARAM_INT]
+            , ':responsavel' => [$responsavel, PDO::PARAM_STR]
+            , ':dataIda' => [$dataIda, PDO::PARAM_STR]
+            , ':horaIda' => [$horaIda, PDO::PARAM_STR]
+            , ':dataVolta' => [$dataVolta, PDO::PARAM_STR]
+            , ':horaVolta' => [$horaVolta, PDO::PARAM_STR]
+            , ':motivo' => [$motivo, PDO::PARAM_STR]
+            , ':estadoViagem' => [$estado, PDO::PARAM_STR]
+            , ':diarias' => [$diarias, PDO::PARAM_STR]
+            , ':outroDestino' => [$destinoAlternativo, $destinoAlternativo === null ? PDO::PARAM_NULL : PDO::PARAM_STR]
+        );
         try {
-            $stmt = parent::getConexao()->prepare($sql);
-            $stmt->bindValue(':idCurso', $idCurso, PDO::PARAM_INT);
-            if ($idPolo !== null) {
-                $stmt->bindValue(':idPolo', $idPolo, PDO::PARAM_INT);
-            } else {
-                $stmt->bindValue(':idPolo', null, PDO::PARAM_NULL);
+            $this->iniciarTransacao();
+            if (!$this->executarQuery($sql, $params)) {
+                throw new Exception("Erro ao cadastrar viagem");
             }
-            $stmt->bindValue(':responsavel', $responsavel, PDO::PARAM_INT);
-            $stmt->bindValue(':dataIda', $dataIda, PDO::PARAM_STR);
-            $stmt->bindValue(':horaIda', $horaIda, PDO::PARAM_STR);
-            $stmt->bindValue(':dataVolta', $dataVolta, PDO::PARAM_STR);
-            $stmt->bindValue(':horaVolta', $horaVolta, PDO::PARAM_STR);
-            $stmt->bindValue(':motivo', $motivo, PDO::PARAM_STR);
-            $stmt->bindValue(':estadoViagem', $estado, PDO::PARAM_STR);
-            $stmt->bindValue(':diarias', $diarias, PDO::PARAM_STR);
-            if ($destinoAlternativo !== null) {
-                $stmt->bindValue(':outroDestino', $destinoAlternativo, PDO::PARAM_STR);
-            } else {
-                $stmt->bindValue(':outroDestino', null, PDO::PARAM_NULL);
-            }
-            $stmt->execute();
 
-//            $sqlAuxiliar = "SELECT idViagem FROM viagem WHERE idCurso = :idCurso AND idPolo = :idPolo AND responsavel = :responsavel AND dataIda = :dataIda AND horaIda = :horaIda AND dataVolta = :dataVolta AND horaVolta = :horaVolta AND motivo = :motivo AND estado = :estado AND diarias = :diarias AND :outroDestino = outroDestino ORDER BY idViagem DESC LIMIT 1";
-//            $stmt = parent::getConexao()->prepare($sqlAuxiliar);
-//            $stmt->bindValue(':idCurso', $idCurso, PDO::PARAM_INT);
-//            $stmt->bindValue(':idPolo', $idPolo, PDO::PARAM_INT);
-//            $stmt->bindValue(':responsavel', $responsavel, PDO::PARAM_INT);
-//            $stmt->bindValue(':dataIda', $dataIda, PDO::PARAM_STR);
-//            $stmt->bindValue(':horaIda', $horaIda, PDO::PARAM_STR);
-//            $stmt->bindValue(':dataVolta', $dataVolta, PDO::PARAM_STR);
-//            $stmt->bindValue(':horaVolta', $horaVolta, PDO::PARAM_STR);
-//            $stmt->bindValue(':motivo', $motivo, PDO::PARAM_STR);
-//            $stmt->bindValue(':estadoViagem', $estado, PDO::PARAM_STR);
-//            $stmt->bindValue(':diarias', $diarias, PDO::PARAM_STR);
-//            $stmt->bindValue(':outroDestino', $destinoAlternativo, PDO::PARAM_STR);
-//            $stmt->execute();
-            $idViagem = parent::getConexao()->lastInsertId();
-            if (is_array($idViagem))
-                $idViagem = $idViagem[0];
-            $stmt->closeCursor();
+
+            $idViagem = $this->obterUltimoIdInserido();
+//            if (is_array($idViagem))
+//                $idViagem = $idViagem[0];
+//            $stmt->closeCursor();
             $quantidadePassageiros = sizeof($passageiros);
 
             $sqlPassageiros = "INSERT INTO viagem_passageiros(idViagem,idUsuario) VALUES ";
+            $params2 = array(
+                ':idViagem' => [$idViagem, PDO::PARAM_INT]
+            );
             for ($i = 0; $i < $quantidadePassageiros - 1; $i++) {
-                $sqlPassageiros .= "($idViagem,$passageiros[$i]), ";
+                $passageiro = ":passageiro$i";
+                $sqlPassageiros .= "(:idViagem,$passageiro), ";
+                $params2[$passageiro] = [$passageiros[$i], PDO::PARAM_INT];
             }
-            $sqlPassageiros .= "($idViagem,$passageiros[$i]);";
-            parent::getConexao()->query($sqlPassageiros);
-
-            return true;
+            $passageiro = ":passageiro$i";
+            $sqlPassageiros .= "(:idViagem,$passageiro);";
+            $params2[$passageiro] = [$passageiros[$i], PDO::PARAM_INT];
+            $this->executarQuery($sqlPassageiros, $params2);
+            //TODO verificar
         } catch (Exception $e) {
-            print_r($e);
+            $this->rollback();
             return false;
         }
+        $this->encerrarTransacao();
+        return true;
     }
 
 }

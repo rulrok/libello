@@ -24,7 +24,7 @@ class ControladorViagens extends Controlador {
 
     public function acaoGerenciar() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->visao->viagens = viagemDAO::consultar("idViagem,nomeCurso,concat(dataIda,' - ',horaIda) as ida,concat(dataVolta,' - ',horaVolta) as volta,motivo,estadoViagem,diarias,concat(IFNULL(nomePolo,''),IFNULL(outroDestino,'')) as destino");
+        $this->visao->viagens = (new viagemDAO())->consultar("idViagem,nomeCurso,concat(dataIda,' - ',horaIda) as ida,concat(dataVolta,' - ',horaVolta) as volta,motivo,estadoViagem,diarias,concat(IFNULL(nomePolo,''),IFNULL(outroDestino,'')) as destino");
         $i = 0;
         foreach ($this->visao->viagens as $value) {
             $value[0] = fnEncrypt($value[0]);
@@ -40,6 +40,11 @@ class ControladorViagens extends Controlador {
 
     public function idFerramentaAssociada() {
         return Ferramenta::CONTROLE_VIAGENS;
+    }
+
+    public function acaoAcoes() {
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
+        $this->renderizar();
     }
 
 }
