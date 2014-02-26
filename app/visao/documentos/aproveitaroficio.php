@@ -21,7 +21,7 @@
             $('#ajaxForm').attr('target', '_blank');
             formularioAjax(undefined, undefined, function(i) {
             }, function(i) {
-                window.open('app/modelo/documentos/visualizarOficio.php?idv=' + i.id, '_blank');
+                window.open('index.php?c=documentos&a=visualizarOficio&idv=' + i.id, '_blank');
                 document.paginaAlterada = false;
                 document.location.reload();
             });
@@ -107,7 +107,7 @@
 
     function capturaNumOficio() {
 
-        $.getJSON('app/modelo/documentos/capturarNumDocumento.php', {valor: 1}, function(j) {
+        $.getJSON('indexp.php?c=documentos&a=capturarNumDocumento', {valor: 1}, function(j) {
             $('#i_numOficio').val(j);
             $("#ajaxForm").submit();
 

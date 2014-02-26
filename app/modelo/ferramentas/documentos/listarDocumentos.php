@@ -1,7 +1,7 @@
 <?php
 
 function listarOficios($tipo = 'todos') {
-        $oficios = documentoDAO::consultar();
+        $oficios = (new documentoDAO())->consultar();
         $num_linhas = count($oficios);
         $retorno = '';
         for ($i = 0; $i < $num_linhas; $i++) {
@@ -48,7 +48,7 @@ function listarOficios($tipo = 'todos') {
     }
 
     function listarMemorandos($tipo = 'todos') {
-        $oficios = documentoDAO::consultar('memorando');
+        $oficios = (new documentoDAO())->consultar('memorando');
         $num_linhas = count($oficios);
         
         $retorno ='';

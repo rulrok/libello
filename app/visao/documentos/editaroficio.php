@@ -20,7 +20,7 @@
         if (acao == 'gerar') {
             $('#ajaxForm').attr('target', '_blank');
             formularioAjax(undefined, undefined, null, function(i) {
-                window.open('app/modelo/documentos/visualizarOficio.php?idv='+i.id, '_blank');
+                window.open('index.php?c=documentos&a=visualizarOficio&idv='+i.id, '_blank');
                 document.paginaAlterada = false;
                         document.location.hash='#!documentos|aproveitarOficio&id='+i.id;
             });
@@ -105,7 +105,7 @@
 
     function capturaNumOficio() {
 
-        $.getJSON('app/modelo/documentos/capturarNumDocumento.php', {valor: 1}, function(j) {
+        $.getJSON('index.php?c=documentos&a=capturarNumDocumento', {valor: 1}, function(j) {
             $('#i_numOficio').val(j);
 
             $("#ajaxForm").submit();

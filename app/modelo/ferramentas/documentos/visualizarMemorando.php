@@ -1,16 +1,17 @@
 <?php
+
 ob_clean();
 //incluindo o arquivo do fpdf
-require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/configuracoes.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/dompdf/dompdf_config.inc.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/app/modelo/dao/documentoDAO.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/seguranca/seguranca.php");
+require_once BIBLIOTECA_DIR . "configuracoes.php";
+require_once BIBLIOTECA_DIR . "dompdf/dompdf_config.inc.php";
+require_once BIBLIOTECA_DIR . "seguranca/seguranca.php";
 require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
+require_once APP_LOCATION . "modelo/dao/documentoDAO.php";
 
 //-------------------
 //definindo variaveis
 $id = fnDecrypt($_REQUEST['idv']);
-$memorando = documentoDAO::consultar('memorando','idMemorando = '.$id);
+$memorando = (new documentoDAO())->consultar('memorando', 'idMemorando = ' . $id);
 $numMemorando = $memorando[0]->getNumMemorando();
 $tipoSigla = $memorando[0]->getTipoSigla();
 $data = explode('/', $memorando[0]->getData());
@@ -26,16 +27,15 @@ $cargo_remetente = $memorando[0]->getCargo_remetente();
 $remetente2 = $memorando[0]->getRemetente2();
 $cargo_remetente2 = $memorando[0]->getCargo_remetente2();
 
-if($remetente2 != '' && $cargo_remetente2 != ''){
+if ($remetente2 != '' && $cargo_remetente2 != '') {
     $i_remetente = '1';
-}
-else{
+} else {
     $i_remetente = '0';
 }
 
 //$mes = retornaMes($mes);
 setlocale(LC_ALL, 'portuguese-brazilian', 'ptb', 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8');
-$mes =$monthName = date("F", mktime(0, 0, 0, $mes, 10));
+$mes = $monthName = date("F", mktime(0, 0, 0, $mes, 10));
 $data = $dia . '/' . $mes . '/' . date('Y');
 //-------------------
 $document = '<<<EOF
@@ -68,7 +68,7 @@ $document = '<<<EOF
                 <tr><td style="height: 30px;"></td></tr>
                 <tr>
                     <td>
-                        Mem. nº'.$numMemorando.'/'.$ano.'/CEAD - ' . $tipoSigla . '
+                        Mem. nº' . $numMemorando . '/' . $ano . '/CEAD - ' . $tipoSigla . '
                     </td>
                 </tr>
                 <tr><td style="height: 40px;"></td></tr>
@@ -130,7 +130,7 @@ $document = '<<<EOF
                                 </tr>
                             </table>
                         </div>';
-                        if ($i_remetente == '1') {
+if ($i_remetente == '1') {
     $document .= '<br></br>
                         <div id="div_remetente2" name="div_remetente2">
                             <table align="center">
@@ -166,46 +166,45 @@ $dompdf->render();
 $options = array(
     'Attachment' => 0
 );
-$dompdf->stream($ano." - Memorando n".$numMemorando, $options);
+$dompdf->stream($ano . " - Memorando n" . $numMemorando, $options);
 
 function retornaMes($mes) {
-    if ($mes == '01'){        
+    if ($mes == '01') {
         return 'janeiro';
     }
-    if ($mes == '02'){        
+    if ($mes == '02') {
         return 'fevereiro';
     }
-    if ($mes == '03'){        
+    if ($mes == '03') {
         return 'março';
     }
-    if ($mes == '04'){        
+    if ($mes == '04') {
         return 'abril';
     }
-    if ($mes == '05'){        
+    if ($mes == '05') {
         return 'maio';
     }
-    if ($mes == '06'){        
+    if ($mes == '06') {
         return 'junho';
     }
-    if ($mes == '07'){        
+    if ($mes == '07') {
         return 'julho';
     }
-    if ($mes == '08'){        
+    if ($mes == '08') {
         return 'agosto';
     }
-    if ($mes == '09'){        
+    if ($mes == '09') {
         return 'setembro';
     }
-    if ($mes == '10'){        
+    if ($mes == '10') {
         return 'outubro';
     }
-    if ($mes == '11'){        
+    if ($mes == '11') {
         return 'novembro';
     }
-    if ($mes == '12'){        
+    if ($mes == '12') {
         return 'dezembro';
-    }        
+    }
 }
-
 ?>
     

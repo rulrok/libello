@@ -2,12 +2,12 @@
 
 require_once APP_LOCATION . "modelo/Mensagem.php";
 
- $id = fnDecrypt($_REQUEST['i_idmemorando']);
+$id = fnDecrypt($_REQUEST['i_idmemorando']);
 $mensagem = new Mensagem();
-if (documentoDAO::deleteMemorando($id)) {
-    $mensagem->set_mensagem("Memorando removido com sucesso.")->set_status(Mensagem::SUCESSO);
+if ((new documentoDAO())->deleteMemorando($id)) {
+    $mensagem->set_mensagemSucesso("Memorando removido com sucesso.");
 } else {
-    $mensagem->set_mensagem("Erro ao excluir")->set_status(Mensagem::ERRO);
+    $mensagem->set_mensagemErro("Erro ao excluir");
 }
 echo json_encode($mensagem);
 ?>

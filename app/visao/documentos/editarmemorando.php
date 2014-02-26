@@ -23,7 +23,7 @@
         if (acao == 'gerar') {
             $('#ajaxForm').attr('target', '_blank');
             formularioAjax(undefined, undefined, function(i){}, function(i) {
-                window.open('app/modelo/documentos/visualizarMemorando.php?idv='+i.id, '_blank');
+                window.open('index.php?c=documentos&a=visualizarMemorando&idv='+i.id, '_blank');
                  document.paginaAlterada = false;
                         document.location.hash='#!documentos|aproveitarMemorando&id='+i.id;
                        // document.location.reload();
@@ -106,7 +106,7 @@
     }
 
     function capturaNumMemorando() {
-        $.getJSON('app/modelo/documentos/capturarNumDocumento.php', {valor: 2}, function(j) {
+        $.getJSON('index.php?c=documentos&a=capturarNumDocumento', {valor: 2}, function(j) {
             $('#i_numMemorando').val(j);
             $("#ajaxForm").submit();
            

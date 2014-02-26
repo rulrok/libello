@@ -22,31 +22,31 @@ class verificaratualizacaomemorando extends verificadorFormularioAjax {
         try {
 
             $idusuario = $_SESSION['usuario']->get_idUsuario();
-            $numMemorando = $_REQUEST['i_numMemorando'];
-            $idMemorando = $_REQUEST['i_idmemorando'];
-            $assunto = $_REQUEST['assunto'];
-            $corpo = $_REQUEST['corpo'];
-            $dia = $_REQUEST['dia'];
-            $mes = $_REQUEST['mes'];
+            $numMemorando = filter_input(INPUT_POST,'i_numMemorando');
+            $idMemorando = filter_input(INPUT_POST,'i_idmemorando');
+            $assunto = filter_input(INPUT_POST,'assunto');
+            $corpo = filter_input(INPUT_POST,'corpo');
+            $dia = filter_input(INPUT_POST,'dia');
+            $mes = filter_input(INPUT_POST,'mes');
             $ano = date('Y');
             $data = $dia . '/' . $mes . '/' . $ano;
-            $tipoSigla = $_REQUEST['sigla'];
-            $remetente = $_REQUEST['remetente'];
-            $cargo_remetente = $_REQUEST['cargo_remetente'];
+            $tipoSigla = filter_input(INPUT_POST,'sigla');
+            $remetente = filter_input(INPUT_POST,'remetente');
+            $cargo_remetente = filter_input(INPUT_POST,'cargo_remetente');
 
             $remetente2 = '';
             $cargo_remetente2 = '';
-            $i_remetente = $_REQUEST['i_remetente'];
+            $i_remetente = filter_input(INPUT_POST,'i_remetente');
 
 
             if ($i_remetente == '1') {
-                $remetente2 = $_REQUEST['remetente2'];
-                $cargo_remetente2 = $_REQUEST['cargo_remetente2'];
+                $remetente2 = filter_input(INPUT_POST,'remetente2');
+                $cargo_remetente2 = filter_input(INPUT_POST,'cargo_remetente2');
             }
 
 
-            $tratamento = $_REQUEST['tratamento'];
-            $cargo_destino = $_REQUEST['cargo_destino'];
+            $tratamento = filter_input(INPUT_POST,'tratamento');
+            $cargo_destino = filter_input(INPUT_POST,'cargo_destino');
 
             $documento = new Memorando();
             $documento->setAssunto($assunto);
@@ -70,16 +70,16 @@ class verificaratualizacaomemorando extends verificadorFormularioAjax {
             $documento->setEstadoEdicao($estadoEdicao);
             $documento->setNumMemorando($numMemorando);
 
-           documentoDAO::update_memorando($documento);
+            (new documentoDAO())->update_memorando($documento);
             if ($numMemorando != -1) {
 
-                $this->mensagem->set_mensagem("Memorando gerado com sucesso!")->set_status(Mensagem::SUCESSO);
+                $this->mensagem->set_mensagemSucesso("Memorando gerado com sucesso!");
             } else {
-                $this->mensagem->set_mensagem("Memorando salvo com sucesso!")->set_status(Mensagem::SUCESSO);
+                $this->mensagem->set_mensagemErro("Memorando salvo com sucesso!");
             }
-            $this->mensagem->id = fnEncrypt($idMemorando);
+//            $this->mensagem->id = fnEncrypt($idMemorando);
         } catch (Exception $e) {
-            $this->mensagem->set_mensagem($e->getMessage())->set_status(Mensagem::ERRO);
+            $this->mensagem->set_mensagemErro($e->getMessage());
         }
     }
 

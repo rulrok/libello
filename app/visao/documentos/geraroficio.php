@@ -102,7 +102,7 @@
 
     function capturaNumOficio() {
         //window.open('app/visao/documentos/valores.ajax.php?valor=1');
-        $.getJSON('app/modelo/documentos/capturarNumDocumento.php', {valor: 1}, function(j) {
+        $.getJSON('index.php?c=documentos&a=capturarNumDocumento', {valor: 1}, function(j) {
             $('#i_numOficio').val(j);
             $("#ajaxForm").submit();
             //ajax('index.php?c=documentos&a=gerarOficio');

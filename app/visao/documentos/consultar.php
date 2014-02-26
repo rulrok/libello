@@ -144,14 +144,15 @@
             
             $('.btn-visualizar').on('click', function() {
                 if ($('#tabela1').css('display') != 'none') {
-                    window.open('app/modelo/documentos/visualizarOficio.php?idv='+$('.row_selected td.campoID').text());
+                    //TODO alterar links para não expor a estrutura interna de diretórios
+                    window.open('index.php?c=documentos&a=visualizarOficio&idv='+$('.row_selected td.campoID').text());
 //                    $('#form_visualizar').attr('action', 'app/modelo/relatoriosPDF/visualizarOficio.php');
 //                    $('#idv').val($('.row_selected td.campoID').text());
 //                    $('#form_visualizar').submit();
                     //window.open('app/modelo/relatoriosPDF/visualizarOficio.php');
                 }
                 else if ($('#tabela2').css('display') != 'none') {
-                    window.open('app/modelo/documentos/visualizarMemorando.php?idv='+$('.row_selected td.campoID').text());
+                    window.open('index.php?c=documentos&a=visualizarMemorando&idv='+$('.row_selected td.campoID').text());
 //                    $('#form_visualizar').attr('action', 'app/modelo/relatoriosPDF/visualizarMemorando.php');
 //                    $('#idv').val($('.row_selected td.campoID').text());
 //                    $('#form_visualizar').submit();
