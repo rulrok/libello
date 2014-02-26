@@ -197,7 +197,7 @@ function liberarCadastro() {
 //        }
 
         if (!patter.test(campos[i].value)) {
-            console.log(campos[i])
+//            console.log(campos[i])
             tudoCerto = false;
             $(campos[i]).addClass("campoErrado");
 //            break;

@@ -19,7 +19,7 @@ abstract class abstractDAO {
      * @return \PDO
      */
     public function getConexao() {
-        if ($this->conexao == null) {
+        if ($this->conexao === null) {
             $this->conexao = PDOconnectionFactory::obterConexao();
         }
         return $this->conexao;
@@ -31,9 +31,10 @@ abstract class abstractDAO {
      * 
      * @param type $string
      * @return type Uma string entre aspas.
+     * @deprecated since version number
      */
     public static function quote($string) {
-        if ($string == "NULL") {
+        if ($string === "NULL") {
             return $string;
         }
         return $this->getConexao()->quote($string);
@@ -83,9 +84,9 @@ abstract class abstractDAO {
 
     /**
      * 
-     * @param type $sql
-     * @param type $params
-     * @return boolean
+     * @param string $sql Query para ser executada, que pode ser qualquer comando SQL válido
+     * @param array $params Array com os parâmetros para casar com as variáveis no formato :nomeVariável
+     * @return boolean Retorna verdadeiro caso a query tenha side executada com sucesso, ou falso caso contrário
      */
     public function executarQuery($sql, $params) {
         try {
@@ -109,6 +110,18 @@ abstract class abstractDAO {
 //        $sql = "SELECT LAST_INSERT_ID()";
 //        return $this->executarSelect($sql);
         return $this->getConexao()->lastInsertId();
+    }
+
+    public function iniciarTransacao() {
+        $this->getConexao()->beginTransaction();
+    }
+
+    public function encerrarTransacao() {
+        $this->getConexao()->commit();
+    }
+
+    public function rollback() {
+        $this->getConexao()->rollBack();
     }
 
     /*

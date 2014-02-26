@@ -42,7 +42,7 @@ class verificarEdicao extends verificadorFormularioAjax {
             //É um item de custeio
             $numeroPatrimonio = null;
         } else {
-            if ($numPatrimonio === "NULL" && !$livroDAO->livroPodeTerTipoAlterado($livroID)) {
+            if ($numPatrimonio === null && !$livroDAO->livroPodeTerTipoAlterado($livroID)) {
                 $this->mensagemErro("Não é possível alterar o tipo");
                 return;
             }

@@ -131,7 +131,7 @@
                                 $(".custeio").removeClass("hidden");
                                 $(".custeio input").prop("required", true);
                                 $(".patrimonios input").prop("required", false);
-                                $("input[id^=numeroPatrimonio]").removeClass("campoErrado")
+                                $("input[id^=numeroPatrimonio]").removeClass("campoErrado");
 //                                $(".obrigatorio").remove(); //remove a imagem do asterisco de todos os campos
 
                                 $("#radioCusteio").click();

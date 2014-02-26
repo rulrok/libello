@@ -9,8 +9,8 @@
 
 </div>
 <?php
-if (isset($_GET['l'])) {
-    $local = $_GET['l'];
+if (filter_has_var(INPUT_GET, 'l')) {
+    $local = filter_input(INPUT_GET, 'l');
     switch ($local) {
         case "baixa":
             $local = 2;

@@ -6,59 +6,47 @@ require_once APP_LOCATION . "visao/verificadorFormularioAjax.php";
 class verificarEdicao extends verificadorFormularioAjax {
 
     public function _validar() {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') :
-            $_SERVER['REQUEST_METHOD'] = null;
 
-            $equipamentoID = fnDecrypt($_POST['equipamentoID']);
-            $equipamentoNome = $_POST['equipamento'];
-            $dataEntrada = $_POST['dataEntrada'];
-            $quantidade = $_POST['quantidade'];
-            $descricao = $_POST['descricao'];
-            $numeroPatrimonio = $_POST['numeroPatrimonio'];
-            $tipoEquipamento = $_POST['tipo'];
+        $equipamentoID = fnDecrypt(filter_input(INPUT_POST, 'equipamentoID'));
+        $equipamentoNome = filter_input(INPUT_POST, 'equipamento');
+        $dataEntrada = filter_input(INPUT_POST, 'dataEntrada');
+        $quantidade = filter_input(INPUT_POST, 'quantidade');
+        $descricao = filter_input(INPUT_POST, 'descricao');
+        $numeroPatrimonio = filter_input(INPUT_POST, 'numeroPatrimonio');
+        $tipoEquipamento = filter_input(INPUT_POST, 'tipo');
 
-            if ($equipamentoNome != "") {
-                $equipamento = equipamentoDAO::recuperarEquipamento($equipamentoID);
+        if ($equipamentoNome == "") {
+            $this->mensagemErro("Nome é um campo obrigatório");
+        }
+        $equipamentoDAO = new equipamentoDAO();
 
-                $numPatrimonio = $equipamento->get_numeroPatrimonio();
-                
-//                $this->mensagem->set_mensagem(print_r($equipamento,true));
-//                return;
-                if ($tipoEquipamento === "custeio") {
-                    if (($numPatrimonio != "") && !equipamentoDAO::equipamentoPodeTerTipoAlterado($equipamentoID)) {
-                        $this->mensagem->set_mensagem("Não é possível alterar o tipo")->set_status(Mensagem::ERRO);
-                        return;
-                    }
-                    //É um item de custeio
-                    $numeroPatrimonio = null;
-                } else {
-                    if ($numPatrimonio === "NULL" && !equipamentoDAO::equipamentoPodeTerTipoAlterado($equipamentoID)) {
-                        $this->mensagem->set_mensagem("Não é possível alterar o tipo")->set_status(Mensagem::ERRO);
-                        return;
-                    }
-                    //É um patrimônio
-                    $quantidade = 1;
-                }
-                if ($quantidade > 0) {
-                    $equipamento->set_nomeEquipamento($equipamentoNome)->set_dataEntrada($dataEntrada)->set_numeroPatrimonio($numeroPatrimonio)->set_quantidade($quantidade)->set_descricao($descricao);
+        $equipamento = $equipamentoDAO->recuperarEquipamento($equipamentoID);
+        $numPatrimonio = $equipamento->get_numeroPatrimonio();
 
-                    if (equipamentoDAO::atualizar($equipamentoID, $equipamento)) {
-                        equipamentoDAO::registrarAlteracaoEquipamento($equipamentoID);
-                        $this->mensagem->set_mensagem("Atualizado com sucesso");
-                        $this->mensagem->set_status(Mensagem::SUCESSO);
-                    } else {
-                        $this->mensagem->set_mensagem("Um erro ocorreu ao cadastrar no banco");
-                        $this->mensagem->set_status(Mensagem::ERRO);
-                    }
-                } else {
-                    $this->mensagem->set_mensagem("Quantidade deve ser maior que 0");
-                    $this->mensagem->set_status(Mensagem::ERRO);
-                }
-            } else {
-                $this->mensagem->set_mensagem("Nome inválido");
-                $this->mensagem->set_status(Mensagem::ERRO);
+        if ($tipoEquipamento === "custeio") {
+            if (($numPatrimonio != "") && !$equipamentoDAO->equipamentoPodeTerTipoAlterado($equipamentoID)) {
+                $this->mensagemErro("Não é possível alterar o tipo");
             }
-        endif;
+            //É um item de custeio
+            $numeroPatrimonio = null;
+        } else {
+            if ($numPatrimonio === null && !$equipamentoDAO->equipamentoPodeTerTipoAlterado($equipamentoID)) {
+                $this->mensagemErro("Não é possível alterar o tipo");
+            }
+            //É um patrimônio
+            $quantidade = 1;
+        }
+        if ($quantidade <= 0) {
+            $this->mensagemErro("Quantidade inválida");
+        }
+        $equipamento->set_nomeEquipamento($equipamentoNome)->set_dataEntrada($dataEntrada)->set_numeroPatrimonio($numeroPatrimonio)->set_quantidade($quantidade)->set_descricao($descricao);
+
+        if ($equipamentoDAO->atualizar($equipamentoID, $equipamento)) {
+            $equipamentoDAO->registrarAlteracaoEquipamento($equipamentoID);
+            $this->mensagemSucesso("Atualizado com sucesso");
+        } else {
+            $this->mensagemErro("Um erro ocorreu ao cadastrar no banco");
+        }
     }
 
 }

@@ -56,22 +56,29 @@ class verificarNovoUsuario extends verificadorFormularioAjax {
         if (count($usuarioDAO->consultar("email", "email = :email", $param)) > 0) {
             $this->mensagemErro("Email <i>$email</i> já está em uso!");
         }
-        if ($usuarioDAO->inserir($usuario)):
-            $permissoes = new PermissoesFerramenta();
-            $permissoes->set_controleCursos($_POST['permissoes_controle_de_cursos_e_polos']);
-            $permissoes->set_controleDocumentos($_POST['permissoes_controle_de_documentos']);
-            $permissoes->set_controleEquipamentos($_POST['permissoes_controle_de_equipamentos']);
-            $permissoes->set_controleLivros($_POST['permissoes_controle_de_livros']);
-            $permissoes->set_controleUsuarios($_POST['permissoes_controle_de_usuarios']);
-            $permissoes->set_controleViagens($_POST['permissoes_controle_de_viagens']);
+        try {
+            $usuarioDAO->iniciarTransacao();
+            if ($usuarioDAO->inserir($usuario)) {
+                $permissoes = new PermissoesFerramenta();
+                $permissoes->set_controleCursos(filter_input(INPUT_POST, 'permissoes_controle_de_cursos_e_polos'));
+                $permissoes->set_controleDocumentos(filter_input(INPUT_POST, 'permissoes_controle_de_documentos'));
+                $permissoes->set_controleEquipamentos(filter_input(INPUT_POST, 'permissoes_controle_de_equipamentos'));
+                $permissoes->set_controleLivros(filter_input(INPUT_POST, 'permissoes_controle_de_livros'));
+                $permissoes->set_controleUsuarios(filter_input(INPUT_POST, 'permissoes_controle_de_usuarios'));
+                $permissoes->set_controleViagens(filter_input(INPUT_POST, 'permissoes_controle_de_viagens'));
 
-            $usuarioDAO->cadastrarPermissoes($usuario, $permissoes);
-            $usuario = $usuarioDAO->recuperarUsuario($usuario->get_email());
-            (new sistemaDAO())->registrarCadastroUsuario($_SESSION['idUsuario'], $usuario->get_idUsuario());
-            $this->mensagemSucesso("Cadastro realizado com sucesso");
-        else :
-            $this->mensagemErro("Erro ao cadastrar no banco");
-        endif;
+                $usuarioDAO->cadastrarPermissoes($usuario, $permissoes);
+                $usuario = $usuarioDAO->recuperarUsuario($usuario->get_email());
+                (new sistemaDAO())->registrarCadastroUsuario($_SESSION['idUsuario'], $usuario->get_idUsuario());
+                $this->mensagemSucesso("Cadastro realizado com sucesso");
+            } else {
+                $this->mensagemErro("Erro ao cadastrar no banco");
+            }
+            $usuarioDAO->encerrarTransacao();
+        } catch (Exception $e) {
+            $usuarioDAO->rollback();
+            $this->mensagemErro("Erro ao inserir. Nenhuma alteração foi feita");
+        }
     }
 
 }

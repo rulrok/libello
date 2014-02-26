@@ -86,7 +86,7 @@
 
         $("#polo").on('change', function() {
             if ($("#polo option:selected").prop("value") === "outro") {
-                $($(".line")[2]).after("<div class='line'><label for='destinoManual'>Nome do destino</label><input type='text' required id='destinoManual' class='input-xlarge' name='destinoManual'/></div>")
+                $($(".line")[2]).after("<div class='line'><label for='destinoManual'>Nome do destino</label><input type='text' required id='destinoManual' class='input-xlarge' name='destinoManual'/></div>");
                 varrerCampos();
                 document.viagens_campoDestinoAlternativo = true;
             } else if (document.viagens_campoDestinoAlternativo) {

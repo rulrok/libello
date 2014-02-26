@@ -17,33 +17,28 @@ class livroDAO extends abstractDAO {
 
         $nome = $livro->get_nomeLivro();
         $quantidade = $livro->get_quantidade();
+        
         $dataEntrada = $livro->get_dataEntrada();
-        if ($dataEntrada === "" | $dataEntrada === null) {
-            $dataEntrada = "NULL";
+        if ($dataEntrada == "") {
+            $dataEntrada = null;
+        }
+
+        $descricao = $livro->get_descricao();
+        if ($descricao == "") {
+            $descricao = null;
         }
 
         $numeroPatrimonio = $livro->get_numeroPatrimonio();
 
-        $descricao = $livro->get_descricao();
-        if ($descricao === "" | $descricao === null) {
-            $descricao = "NULL";
-        }
-
         $grafica = $livro->get_grafica();
-        if ($grafica === "" | $grafica === null) {
-            $grafica = "NULL";
-        }
-
+        
         $area = $livro->get_area();
-        if ($area === "" | $area === null) {
-            $area = "NULL";
-        }
 
         $params = array(
             ':nome' => [$nome, PDO::PARAM_STR]
             , ':quantidade' => [$quantidade, PDO::PARAM_INT]
             , ':descricao' => [$descricao, PDO::PARAM_STR]
-            , ':dataEntrada' => [$dataEntrada, PDO::PARAM_STR]
+            , ':dataEntrada' => [$dataEntrada, $dataEntrada === null ? PDO::PARAM_NULL : PDO::PARAM_STR]
             , ':numeroPatrimonio' => [$numeroPatrimonio, PDO::PARAM_STR] //TODO O nome número não condiz muito com o tipo do dado
             , ':area' => [$area, PDO::PARAM_INT]
             , ':grafica' => [$grafica, PDO::PARAM_STR]

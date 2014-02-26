@@ -10,9 +10,9 @@ class registrarSaida extends verificadorFormularioAjax {
         $dataSaida = filter_input(INPUT_POST, 'dataSaida');
         if (!filter_has_var(INPUT_POST, 'destinoManual')) {
             $destino = fnDecrypt(filter_input(INPUT_POST, 'polo'));
-            $destinoAlternativo = "NULL";
+            $destinoAlternativo = null;
         } else {
-            $destino = "NULL";
+            $destino = null;
             $destinoAlternativo = filter_input(INPUT_POST, 'destinoManualF');
         }
         $quantidade = filter_input(INPUT_POST, 'quantidade', FILTER_VALIDATE_INT);
@@ -22,7 +22,7 @@ class registrarSaida extends verificadorFormularioAjax {
         if ($dataSaida == "") {
             $this->mensagemErro("Data de saída inválida");
         }
-        if (($destino == "NULL" || $destino == "" || $destinoAlternativo !== "NULL") && ($destino !== "NULL" || $destinoAlternativo === "")) {
+        if (($destino == null || $destino == "" || $destinoAlternativo !== null) && ($destino !== null || $destinoAlternativo === "")) {
             $this->mensagemErro("Destino inválido");
         }
         if ($quantidade <= 0) {

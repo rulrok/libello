@@ -3,14 +3,13 @@
 <ul class="nav nav-tabs" id="abas">
     <li><a href="javascript:void(0)" onclick="ajax('index.php?c=equipamentos&a=gerenciar_baixas', '#resultado_consulta', false);" data-toggle="tab">Baixas</a></li>
     <li><a href="javascript:void(0)" onclick="ajax('index.php?c=equipamentos&a=gerenciar_saidas', '#resultado_consulta', false);" data-toggle="tab">Saídas</a></li>
-    <!--<li><a href="javascript:void(0)" onclick="ajax('index.php?c=equipamentos&a=consultar_embaixa', '#resultado_consulta', false);" data-toggle="tab">Baixa</a></li>-->
 </ul>
 <div id="resultado_consulta">
 
 </div>
 <?php
-if (isset($_GET['l'])) {
-    $local = $_GET['l'];
+if (filter_has_var(INPUT_GET, 'l')) {
+    $local = filter_input(INPUT_GET, 'l');
     switch ($local) {
 //        case "baixa":
 //            $local = 2;

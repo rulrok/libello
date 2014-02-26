@@ -48,7 +48,7 @@ class verificarnovolivro extends verificadorFormularioAjax {
                 $numeroPatrimonio = filter_input(INPUT_POST, 'numeroPatrimonio-' . ($i + 1));
                 $aux->set_numeroPatrimonio($numeroPatrimonio)->set_quantidade(1);
 
-                if ($livroDAO->cadastrarlivro($aux)) { //TODO recuperar último ID inserido
+                if ($livroDAO->cadastrarlivro($aux)) {
                     $id = $livroDAO->obterUltimoIdInserido();
                     $livroDAO->registrarInsercaolivro($id);
                     $patrimoniosValidos .= $numeroPatrimonio . "<br/>";

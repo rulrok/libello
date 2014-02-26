@@ -55,7 +55,7 @@ class viagemDAO extends abstractDAO {
         try {
             $stmt = parent::getConexao()->prepare($sql);
             $stmt->bindValue(':idCurso', $idCurso, PDO::PARAM_INT);
-            if ($idPolo != "NULL") {
+            if ($idPolo !== null) {
                 $stmt->bindValue(':idPolo', $idPolo, PDO::PARAM_INT);
             } else {
                 $stmt->bindValue(':idPolo', null, PDO::PARAM_NULL);
@@ -68,7 +68,7 @@ class viagemDAO extends abstractDAO {
             $stmt->bindValue(':motivo', $motivo, PDO::PARAM_STR);
             $stmt->bindValue(':estadoViagem', $estado, PDO::PARAM_STR);
             $stmt->bindValue(':diarias', $diarias, PDO::PARAM_STR);
-            if ($destinoAlternativo != "NULL") {
+            if ($destinoAlternativo !== null) {
                 $stmt->bindValue(':outroDestino', $destinoAlternativo, PDO::PARAM_STR);
             } else {
                 $stmt->bindValue(':outroDestino', null, PDO::PARAM_NULL);

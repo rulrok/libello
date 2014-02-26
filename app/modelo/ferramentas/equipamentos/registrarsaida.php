@@ -6,34 +6,36 @@ include_once APP_LOCATION . "visao/verificadorFormularioAjax.php";
 class registrarSaida extends verificadorFormularioAjax {
 
     public function _validar() {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') :
-            $_SERVER['REQUEST_METHOD'] = null;
-            $equipamentoID = fnDecrypt($_POST['equipamentoID']);
-            $dataSaida = $_POST['dataSaida'];
-            if (!isset($_POST['destinoManual'])) {
-                $destino = fnDecrypt($_POST['polo']);
-                $destinoAlternativo = "NULL";
-            } else {
-                $destino = "NULL";
-                $destinoAlternativo = $_POST['destinoManual'];
-            }
-            $quantidade = (int) $_POST['quantidade'];
-            $responsavel = fnDecrypt($_POST['responsavel']);
+        $equipamentoID = fnDecrypt(filter_input(INPUT_POST, 'equipamentoID'));
+        $dataSaida = filter_input(INPUT_POST, 'dataSaida');
+        if (!filter_has_var(INPUT_POST, 'destinoManual')) {
+            $destino = fnDecrypt(filter_input(INPUT_POST, 'polo'));
+            $destinoAlternativo = null;
+        } else {
+            $destino = null;
+            $destinoAlternativo = filter_input(INPUT_POST, 'destinoManual');
+        }
+        $quantidade = (int) filter_input(INPUT_POST, 'quantidade');
+        $responsavel = fnDecrypt(filter_input(INPUT_POST, 'responsavel'));
 
+        if ($dataSaida == "") {
+            $this->mensagemErro("Data é um campo obrigatório");
+        }
+        if ($quantidade <= 0) {
+            $this->mensagemErro("Quantidade inválida");
+        }
 
-            if ($equipamentoID >= 0 && $dataSaida !== "" && (($destino != "NULL" && $destino != "" && $destinoAlternativo === "NULL") || ($destino === "NULL" && $destinoAlternativo !== "")) && $quantidade > 0 && $responsavel >= 0) {
-                if (equipamentoDAO::cadastrarSaida($equipamentoID, $responsavel, $destino, $destinoAlternativo, $quantidade, $dataSaida)) {
-                    $this->mensagem->set_mensagem("Saída registrada");
-                    $this->mensagem->set_status(Mensagem::SUCESSO);
-                } else {
-                    $this->mensagem->set_mensagem("Erro ao cadastrar no banco");
-                    $this->mensagem->set_status(Mensagem::ERRO);
-                }
-            } else {
-                $this->mensagem->set_mensagem("Dados inválidos");
-                $this->mensagem->set_status(Mensagem::ERRO);
-            }
-        endif;
+        if (($destino == null || $destino == "" || $destinoAlternativo !== null) && ($destino !== null || $destinoAlternativo === "")) {
+            $this->mensagemErro("Destino inválido");
+        }
+        $equipamentoDAO = new equipamentoDAO();
+        if ($equipamentoDAO->cadastrarSaida($equipamentoID, $responsavel, $destino, $destinoAlternativo, $quantidade, $dataSaida)) {
+            $id = $equipamentoDAO->obterUltimoIdInserido();
+            $equipamentoDAO->registrarCadastroSaida($id);
+            $this->mensagemSucesso("Saída registrada");
+        } else {
+            $this->mensagemErro("Erro ao cadastrar no banco");
+        }
     }
 
 }

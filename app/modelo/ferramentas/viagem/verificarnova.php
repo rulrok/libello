@@ -10,9 +10,9 @@ class verificarnova extends verificadorFormularioAjax {
         $curso = fnDecrypt($_POST['curso']);
         if (!isset($_POST['destinoManual'])) {
             $polo = fnDecrypt($_POST['polo']);
-            $destinoAlternativo = "NULL";
+            $destinoAlternativo = null;
         } else {
-            $polo = "NULL";
+            $polo = null;
             $destinoAlternativo = $_POST['destinoManual'];
         }
         $responsavel = fnDecrypt($_POST['responsavel']);
@@ -31,7 +31,7 @@ class verificarnova extends verificadorFormularioAjax {
         $viagem = new Viagem();
 
         try {
-            if ($curso != "" && (($polo != "NULL" && $polo != "" && $destinoAlternativo === "NULL") || ($polo === "NULL" && $destinoAlternativo !== "")) && $responsavel != "" && $dataIda != "" && $horaIda != "" && $dataVolta != "" && $horaVolta != "" && $motivo != "" && $estado != "" && $diarias != "" && sizeof($passageiros) > 0) {
+            if ($curso != "" && (($polo != null && $polo != "" && $destinoAlternativo === null) || ($polo === null && $destinoAlternativo !== "")) && $responsavel != "" && $dataIda != "" && $horaIda != "" && $dataVolta != "" && $horaVolta != "" && $motivo != "" && $estado != "" && $diarias != "" && sizeof($passageiros) > 0) {
                 $viagem->set_idCurso($curso)->set_idPolo($polo)->set_responsavel($responsavel)->set_dataIda($dataIda)->set_horaIda($horaIda)->set_dataVolta($dataVolta)->set_horaVolta($horaVolta)->set_motivo($motivo)->set_estado($estado)->set_diarias($diarias)->set_passageiros($passageiros)->set_destinoAlternativo($destinoAlternativo);
                 if (viagemDAO::inserir($viagem)) {
                     $this->mensagem->set_mensagem("Cadastro com sucesso")->set_status(Mensagem::SUCESSO);

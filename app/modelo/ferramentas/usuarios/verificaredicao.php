@@ -50,9 +50,10 @@ class verificarEdicaoUsuario extends verificadorFormularioAjax {
             $this->mensagemErro("CPF inválido");
         }
 
-        $usuarioDAO->atualizar($email, $usuario);
 
         try {
+            $usuarioDAO->iniciarTransacao();
+            $usuarioDAO->atualizar($email, $usuario);
             $permissoes = new PermissoesFerramenta();
             $permissoes->set_controleCursos(filter_input(INPUT_POST, 'permissoes_controle_de_cursos_e_polos'));
             $permissoes->set_controleDocumentos(filter_input(INPUT_POST, 'permissoes_controle_de_documentos'));
@@ -63,8 +64,10 @@ class verificarEdicaoUsuario extends verificadorFormularioAjax {
             $permissoes->set_tarefas(filter_input(INPUT_POST, 'permissoes_tarefas'));
             $permissoes->set_controlePagamentos(filter_input(INPUT_POST, 'permissoes_controle_de_pagamentos'));
             $permissoes->set_galeriaImagens(filter_input(INPUT_POST, 'permissoes_galeria_de_imagens'));
+            $usuarioDAO->encerrarTransacao();
         } catch (Exception $e) {
-            die($e);
+            $usuarioDAO->rollback();
+            $this->mensagemErro("Erro ao modificar. Nenhum alteração salva.");
         }
         if (!$usuarioDAO->atualizarPermissoes($usuario, $permissoes)) {
             $usuarioDAO->atualizar($email, $usuarioOriginal);

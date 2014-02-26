@@ -2,16 +2,17 @@
 
 require_once APP_LOCATION . "modelo/Mensagem.php";
 
-$id = fnDecrypt($_GET['equipamentoID']);
+$id = fnDecrypt(filter_input(INPUT_GET, 'equipamentoID'));
 $mensagem = new Mensagem();
-$novosDados = clone equipamentoDAO::recuperarEquipamento($id);
+$equipamentoDAO = new equipamentoDAO();
+$novosDados = clone $equipamentoDAO->recuperarEquipamento($id);
 $novosDados->set_quantidade(0);
 $novosDados->set_numeroPatrimonio(null);
-if (equipamentoDAO::atualizar($id, $novosDados)) {
-    $mensagem->set_mensagem("Equipamento removido com sucesso.")->set_status(Mensagem::SUCESSO);
-    equipamentoDAO::registrarExclusaoEquipamento($id);
+if ($equipamentoDAO->atualizar($id, $novosDados)) {
+    $mensagem->set_mensagemSucesso("Equipamento removido com sucesso.");
+    $equipamentoDAO->registrarExclusaoEquipamento($id);
 } else {
-    $mensagem->set_mensagem("Erro ao excluir")->set_status(Mensagem::ERRO);
+    $mensagem->set_mensagemErro("Erro ao excluir");
 }
 echo json_encode($mensagem);
 ?>
