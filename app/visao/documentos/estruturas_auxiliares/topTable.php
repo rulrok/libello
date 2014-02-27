@@ -12,7 +12,7 @@
             <th>Destino</th>
             <th>Numeração</th> 
             <th>Data</th> 
-            <th>Validação</th>
+            <th>Situação</th>
           
         </tr>
     </thead>

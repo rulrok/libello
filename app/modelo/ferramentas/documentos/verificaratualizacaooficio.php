@@ -70,7 +70,7 @@ class verificaratualizacaooficio extends verificadorFormularioAjax {
                 $documento->setEstadoEdicao($estadoEdicao);
                 $documento->setNumOficio($numOficio);
 
-                 documentoDAO::update_oficio($documento);
+                documentoDAO::update_oficio($documento);
                 if ($numOficio != -1) {
                     $this->mensagem->set_mensagem("Oficio gerado com sucesso!")->set_status(Mensagem::SUCESSO);
 

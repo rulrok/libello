@@ -108,9 +108,7 @@ $document = '
                 <tr><td style="height: 20px;"></td></tr>
                 <tr>
                     <td align="left">
-                        <div align="center">
-                            <span style="max-height: 500px;min-height: 200px;max-width: 625px;min-width: 625px">' . $corpo . '</span>
-                        </div>
+                        ' . $corpo . '
                     </td>
                 </tr>
                 <tr><td style="height: 40px;"></td></tr>

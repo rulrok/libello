@@ -120,9 +120,9 @@ if (preg_match("#.*" . WEB_SERVER_FOLDER . "?.*#", $_SERVER['REQUEST_URI'])) {
      * @return boolean Verdadeiro se o usuário existir no banco de dados, falso caso contrário
      */
     function autenticaUsuario(Usuario $user) {
+            echo'aqui';
         if (($con = PDOconnectionFactory::getConection()) != null) {
             //$con = $_SESSION['conexao'];
-
             if ($user->get_email() !== null && $user->get_email() !== '' && $user->get_senha() !== null && $user->get_senha() !== '') {
                 try {
                     $query = $con->prepare("SELECT * FROM usuario WHERE email = :email AND senha = :senha AND ativo = 1");

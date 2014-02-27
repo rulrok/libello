@@ -15,8 +15,10 @@
         <tr>
             <th hidden>id</th>
             <th>livro</th>
+            <th>Gráfica</th>
             <th>Data da saida</th>
             <th>Qtd Saída</th>
+            <th>Polo</th>
             <th>Responsável</th>
             <!--<th hidden>Descrição</th>-->
         </tr>

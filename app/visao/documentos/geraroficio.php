@@ -1,143 +1,77 @@
 <title>Gerar Oficio</title>
 <script src="publico/js/jquery/jquery-te-1.0.5.min.js" type="text/javascript"></script>
+<script src="publico/js/documentos.js" type="text/javascript"></script>
 <link href='publico/css/jquery-te-Style.css' rel='stylesheet' type="text/css"/>
-
+<link href='publico/css/documentos.css' rel='stylesheet' type="text/css"/>
+<script src="biblioteca/tinymce/js/tinymce/jquery.tinymce.min.js"></script>
+<script src="biblioteca/tinymce/js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript">
-
-    $(document).ready(function() {
-        $("#corpo").jqte();
-        $('html, body').animate({scrollTop: 0}, 'fast');
-        varrerCampos();
-        $('#b_gerar').on('click',function(){
-                bloqueia();
-                 if (confirm('Atenção, o ofício será gerado e registrado permanentemente! Tem certeza?')) {
-                formularioAjax(undefined, undefined, null, function(i) {
-                window.open('index.php?c=documentos&a=visualizarOficio&idv='+i.id, '_blank');
-                document.paginaAlterada = false;
-                        document.location.reload();
-            });
-            
-                capturaNumMemorando();
-            }
-            desbloqueia();
-            });
-            
-            $('#b_salvar').on('click',function(){
-            bloqueia();
-                  if (confirm('Atenção, o ofício será salvo! Tem certeza?')) {
-                    formularioAjax(undefined, undefined,null,function(i){
-                    document.paginaAlterada = false;
-                        document.location.reload();
-                });
-                    $('#i_numOficio').val('-1');
-                    $('#ajaxForm').submit();
-                    
-                }
-
-                desbloqueia();
-            });
-    });
 
    
 
+    $(document).ready(function() {
+         tinymce.init({selector:'textarea', skin:'lightgray', plugins:'advlist image table textcolor spellchecker link'});
+        //    $('html, body').animate({scrollTop: 0}, 'fast');
+        varrerCampos();
+        $('#b_gerar').on('click', function() {
+            bloqueia();
+            if (confirm('Atenção, o ofício será gerado e registrado permanentemente! Tem certeza?')) {
+                formularioAjax(undefined, undefined, null, function(i) {
+                    window.open('index.php?c=documentos&a=visualizarOficio&idv=' + i.id, '_blank');
+                    document.paginaAlterada = false;
+                    document.location.reload();
+                });
 
-
-    function bloqueia() {
-        $('#tratamento').attr({readonly: 'true'});
-        $('#destino').attr({readonly: 'true'});
-        $('#cargo_destino').attr({readonly: 'true'});
-        $('#assunto').attr({readonly: 'true'});
-        $('#referencia').attr({readonly: 'true'});
-        $('#corpo').attr({readonly: 'true'});
-        $('#remetente').attr({readonly: 'true'});
-        $('#cargo_remetente').attr({readonly: 'true'});
-        if ($('#i_remetente').val() == "1") {
-            $('#remetente2').attr({readonly: 'true'});
-            $('#cargo_remetente2').attr({readonly: 'true'});
-        }
-        $('#b_gerar').attr({disabled: 'true'});
-        $('#b_salvar').attr({disabled: 'true'});
-        $('#b_voltar').attr({disabled: 'true'});
-    }
-
-    function desbloqueia() {
-        $('#tratamento').removeAttr('readonly');
-        $('#destino').removeAttr('readonly');
-        $('#cargo_destino').removeAttr('readonly');
-        $('#assunto').removeAttr('readonly');
-        $('#referencia').removeAttr('readonly');
-        $('#corpo').removeAttr('readonly');
-        $('#remetente').removeAttr('readonly');
-        $('#cargo_remetente').removeAttr('readonly');
-        if ($('#i_remetente').val() == "0") {
-            $('#remetente2').removeAttr('readonly');
-            $('#cargo_remetente2').removeAttr('readonly');
-        }
-        $('#b_gerar').removeAttr('disabled');
-        $('#b_salvar').removeAttr('disabled');
-    }
-
-    function liberarCadastro() {
-        if ($('#i_remetente').val() == "0") {
-            if (($('#tratamento').val() != '') && ($('#destino').val() != '') && ($('#cargo_destino').val() != '') && ($('#assunto').val() != '') && ($('#referencia').val() != '') && ($('#corpo').val() != '') && ($('#remetente').val() != '') && ($('#cargo_remetente').val() != '')) {
-                $('#b_gerar').removeAttr('disabled');
-                $('#b_salvar').removeAttr('disabled');
+                capturaNumOficio();
             }
-            else if (($('#tratamento').val() == '') || ($('#destino').val() == '') || ($('#cargo_destino').val() == '') || ($('#assunto').val() == '') || ($('#referencia').val() == '') || ($('#corpo').val() == '') || ($('#remetente').val() == '') || ($('#cargo_remetente').val() == '')) {
-                $('#b_gerar').attr({disabled: 'true'});
-                $('#b_salvar').attr({disabled: 'true'});
-            }
-        }
-        else if ($('#i_remetente').val() == "1") {
-            if (($('#tratamento').val() != '') && ($('#destino').val() != '') && ($('#cargo_destino').val() != '') && ($('#assunto').val() != '') && ($('#referencia').val() != '') && ($('#corpo').val() != '') && ($('#remetente').val() != '') && ($('#cargo_remetente').val() != '') && ($('#remetente2').val() != '') && ($('#cargo_remetente2').val() != '')) {
-                $('#b_gerar').removeAttr('disabled');
-                $('#b_salvar').removeAttr('disabled');
-            }
-            else if (($('#tratamento').val() == '') || ($('#destino').val() == '') || ($('#cargo_destino').val() == '') || ($('#assunto').val() == '') || ($('#referencia').val() == '') || ($('#corpo').val() == '') || ($('#remetente').val() == '') || ($('#cargo_remetente').val() == '') || ($('#remetente2').val() == '') || ($('#cargo_remetente2').val() == '')) {
-                $('#b_gerar').attr({disabled: 'true'});
-                $('#b_salvar').attr({disabled: 'true'});
-            }
-        }
-    }
-
-    function capturaNumOficio() {
-        //window.open('app/visao/documentos/valores.ajax.php?valor=1');
-        $.getJSON('app/modelo/documentos/capturarNumDocumento.php', {valor: 1}, function(j) {
-            $('#i_numOficio').val(j);
-            $("#ajaxForm").submit();
-            //ajax('index.php?c=documentos&a=gerarOficio');
-
+            desbloqueia();
         });
-            
-    }
 
-    function adicionarRemetente() {
-        $("#div_remetente2").show();
-        $("#add_rem").hide();
-        $("#i_remetente").val("1");
-    }
+        $('#b_salvar').on('click', function() {
+            bloqueia();
+            if (confirm('Atenção, o rascunho do ofício será salvo! Tem certeza?')) {
+                formularioAjax(undefined, undefined, null, function(i) {
+                    document.paginaAlterada = false;
+                });
+                $('#i_numOficio').val('-1');
+                $('#ajaxForm').submit();
 
-    function removerRemetente() {
-        $("#div_remetente2").hide();
-        $("#add_rem").show();
-        $("#i_remetente").val("0");
-    }
+            }
+
+            desbloqueia();
+        });
+
+        $('#ajaxForm input').on('change', function() {
+            liberarCadastro();
+            // alert('work'); 
+        });
+        $('.reset').on('click', function() {
+            setTimeout(function() {
+
+
+                $('#ajaxForm input').change();
+
+            },50);
+        });
+        
+        var documento_form = $('#documento_form');
+        var posicao_doc = documento_form.position();
+        var menu = $('#menu_documento');
+        
+        $('#menu_documento').css({left:(posicao_doc.left )+'px', top:(posicao_doc.top + 300)+'px'});
+        $('#corpo').on('change',function(){
+           $('#corpo').val('_'); 
+        });
+    });
 
 
 
 </script>
 
 <form id="ajaxForm" name="form1" method="post" action='index.php?c=documentos&a=verificarnovooficio' target="_blank" >
-    <table align="center">
+   
 
-        <tr>
-            <td align="center" colspan="2">
-                <h5>Ofício</h5>
-            </td>
-        </tr>
-    </table>
-
-    <table style='width: 794px; height: 1123px; font-family:"Times New Roman",Georgia,Serif; font-size: 15px; background-color: #FFF;' border="0" align="center">
+    <table id="documento_form" style='' border="0" align="center">
         <tr height="189">
             <td width="113" rowspan="20"></td>
             <td width="625" align="center">
@@ -193,7 +127,7 @@
         <tr height="30">
             <td align="left">
                 <div >
-                    <textarea style="max-height: 500px;min-height: 200px;max-width: 625px;min-width: 625px" id="corpo" value="" name="corpo" onkeyup="liberarCadastro()">Corpo do Ofício</textarea>
+                    <textarea style="" id="corpo" value="" name="corpo" ></textarea>
                 </div>
             </td>
         </tr>
@@ -255,24 +189,15 @@
         </tr>
         <tr height="80"><td></td></tr>
     </table>
-    <table align="center">
-        <tr height="30"><td></td></tr>
-        <tr>
-            <td align="center" colspan="2">
-                <button class="btn" type="reset">Limpar</button>
-                <input type="button" class="btn" value="Gerar" disabled="true" name="b_gerar" id="b_gerar" />
-                <input type="button" class="btn" value="Salvar" disabled="true" name="b_salvar" id="b_salvar" />
+    <div id="menu_documento" style="">
+        <h4>Ofício</h4>
+        <div><button  class="btn reset" id="b_limpar" title="limpar" type="reset"><i class="icon-erase"></i></button></div>
+        <div><button class="btn" title="Salvar Rascunho" disabled="true" name="b_salvar" id="b_salvar" ><i class="icon-save"></i></button></div>
+        <div><button  class="btn" title="Gerar documento" disabled="true" name="b_gerar" id="b_gerar" ><i class="icon-gerar"></i></button></div>
 <!--                                        <input type="button" class="btn" value="Voltar" name="b_voltar" name="b_voltar" onclick=""/>-->
-            </td>
-        </tr>
+    </div>            
 
-        </tr>
-        <tr>
-            <td>
-                <input type="hidden" name="i_numOficio" id="i_numOficio" value='-1'/>
-                <input type="hidden" name="i_remetente" id="i_remetente" value="0"/>
-            </td>
-        </tr>
-        <tr height="30"><td></td></tr>
-    </table>
+    <input type="hidden" name="i_numOficio" id="i_numOficio" value='-1'/>
+    <input type="hidden" name="i_remetente" id="i_remetente" value="0"/>
+
 </form>

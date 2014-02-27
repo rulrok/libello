@@ -1,21 +1,23 @@
 <title>Gerar Memorando</title>
 <script src="publico/js/jquery/jquery-te-1.0.5.min.js" type="text/javascript"></script>
+<script src="publico/js/documentos.js" type="text/javascript"></script>
 <link href='publico/css/jquery-te-Style.css' rel='stylesheet' type="text/css"/>
+<link href='publico/css/documentos.css' rel='stylesheet' type="text/css"/>
+<script src="biblioteca/tinymce/js/tinymce/jquery.tinymce.min.js"></script>
+<script src="biblioteca/tinymce/js/tinymce/tinymce.min.js"></script>
 <script type="text/javascript">
-function capturaNumMemorando() {
-        
-        $.getJSON('index.php?c=documentos&a=capturarNumDocumento', {valor: 2}, function(j) {
-            $('#i_numMemorando').val(j);
-            $("#ajaxForm").submit();
-            
-        });
-    }
+
 
     $(document).ready(function() {
-        $("#corpo").jqte();
+        tinymce.init({selector:'textarea',
+            toolbar: "forecolor backcolor",
+            tools:'inserttable',
+            skin:'lightgray',
+            plugins:'contextmenu advlist directionality charmap preview visualblocks image table textcolor spellchecker link',
+            contextmenu: "link image inserttable | cell row column deletetable | forecolor backcolor"
+        });
         $('html, body').animate({scrollTop: 0},'fast');
          varrerCampos();
-        
             
             $('#b_gerar').on('click',function(){
                 bloqueia();
@@ -36,7 +38,6 @@ function capturaNumMemorando() {
                   if (confirm('Atenção, o memorando será salvo! Tem certeza?')) {
                     formularioAjax(undefined, undefined,null,function(i){
                     document.paginaAlterada = false;
-                        document.location.reload();
                 });
                     $('#i_numMemorando').val('-1');
                     $('#ajaxForm').submit();
@@ -45,92 +46,31 @@ function capturaNumMemorando() {
 
                 desbloqueia();
             });
+            
+        $('#ajaxForm *').on('change', function() {
+            liberarCadastro();
+        });
+        
+        $('.reset').on('click', function() {
+            setTimeout(function() {
+
+
+                $('#ajaxForm input').change();
+
+            },50);
+        });
+        
+        var documento_form = $('#documento_form');
+        var posicao_doc = documento_form.position();
+        var menu = $('#menu_documento');
+        
+        $('#menu_documento').css({left:(posicao_doc.left )+'px', top:(posicao_doc.top + 300)+'px'});
     });
-
-
-     
-
-    function bloqueia() {
-        $('#tratamento').attr({readonly: 'true'});
-        $('#cargo_destino').attr({readonly: 'true'});
-        $('#assunto').attr({readonly: 'true'});
-        $('#corpo').attr({readonly: 'true'});
-        $('#remetente').attr({readonly: 'true'});
-        $('#cargo_remetente').attr({readonly: 'true'});
-        if ($('#i_remetente').val() == "1") {
-            $('#remetente2').attr({readonly: 'true'});
-            $('#cargo_remetente2').attr({readonly: 'true'});
-        }
-        $('#b_gerar').attr({disabled: 'true'});
-        $('#b_salvar').attr({disabled: 'true'});
-        $('#b_voltar').attr({disabled: 'true'});
-    }
-
-    function desbloqueia() {
-        $('#tratamento').removeAttr('readonly');
-        $('#cargo_destino').removeAttr('readonly');
-        $('#assunto').removeAttr('readonly');
-        $('#corpo').removeAttr('readonly');
-        $('#remetente').removeAttr('readonly');
-        $('#cargo_remetente').removeAttr('readonly');
-        if ($('#i_remetente').val() == "0") {
-            $('#remetente2').removeAttr('readonly');
-            $('#cargo_remetente2').removeAttr('readonly');
-        }
-        $('#b_gerar').removeAttr('disabled');
-        $('#b_salvar').removeAttr('disabled');
-        $('#b_voltar').removeAttr('disabled');
-    }
-
-    function liberarCadastro() {
-        if ($('#i_remetente').val() == "0") {
-            if (($('#tratamento').val() != '') && ($('#cargo_destino').val() != '') && ($('#assunto').val() != '') && ($('#corpo').val() != '') && ($('#remetente').val() != '') && ($('#cargo_remetente').val() != '')) {
-                $('#b_gerar').removeAttr('disabled');
-                $('#b_salvar').removeAttr('disabled');
-            }
-            else if (($('#tratamento').val() == '') || ($('#cargo_destino').val() == '') || ($('#assunto').val() == '') || ($('#corpo').val() == '') || ($('#remetente').val() == '') || ($('#cargo_remetente').val() == '')) {
-                $('#b_gerar').attr({disabled: 'true'});
-                $('#b_salvar').attr({disabled: 'true'});
-            }
-        }
-        else if ($('#i_remetente').val() == "1") {
-            if (($('#tratamento').val() != '') && ($('#cargo_destino').val() != '') && ($('#assunto').val() != '') && ($('#corpo').val() != '') && ($('#remetente').val() != '') && ($('#cargo_remetente').val() != '') && ($('#remetente2').val() != '') && ($('#cargo_remetente2').val() != '')) {
-                $('#b_gerar').removeAttr('disabled');
-                $('#b_salvar').removeAttr('disabled');
-            }
-            else if (($('#tratamento').val() == '') || ($('#cargo_destino').val() == '') || ($('#assunto').val() == '') || ($('#corpo').val() == '') || ($('#remetente').val() == '') || ($('#cargo_remetente').val() == '') || ($('#remetente2').val() == '') || ($('#cargo_remetente2').val() == '')) {
-                $('#b_gerar').attr({disabled: 'true'});
-                $('#b_salvar').attr({disabled: 'true'});
-            }
-        }
-    }
-
-    
-
-    function adicionarRemetente() {
-        $("#div_remetente2").show();
-        $("#add_rem").hide();
-        $("#i_remetente").val("1");
-    }
-
-    function removerRemetente() {
-        $("#div_remetente2").hide();
-        $("#add_rem").show();
-        $("#i_remetente").val("0")
-    }
-
 </script>
 
 <form  id="ajaxForm" name="form1" target="_blank" action='index.php?c=documentos&a=verificarnovomemorando' method="post">
-    <table align="center">
-
-        <tr>
-            <td align="center" colspan="2">
-                <h5>Memorando</h5>
-            </td>
-        </tr>
-    </table>
-    <table style='width: 794px; height: 1123px; font-family:"Times New Roman",Georgia,Serif; font-size: 15px; background-color: #FFF;' border="0" align="center">
+    
+    <table id="documento_form" style='' border="0" align="center">
         <tr height="189">
             <td width="113" rowspan="20"></td>
             <td width="625" align="center">
@@ -157,25 +97,25 @@ function capturaNumMemorando() {
         <tr height="40"><td></td></tr>
         <tr height="10">
             <td>
-                <input type="text" id="tratamento" name="tratamento" onkeyup="liberarCadastro()" size="15"/><span class="classeExemploOficio"> Ex: Ao Sr.</span>
+                <input type="text" id="tratamento" name="tratamento" size="15"/><span class="classeExemploOficio"> Ex: Ao Sr.</span>
             </td>
         </tr>                                
         <tr height="10">
             <td>
-                <input type="text" id="cargo_destino" name="cargo_destino" onkeyup="liberarCadastro()" size="40"/><span class="classeExemploOficio"> Ex: Chefe do departamento de Administração</span>
+                <input type="text" id="cargo_destino" name="cargo_destino"  size="40"/><span class="classeExemploOficio"> Ex: Chefe do departamento de Administração</span>
             </td>
         </tr>
         <tr height="40"><td></td></tr>
         <tr height="30">
             <td>
-                Assunto: <input type="text" id="assunto" name="assunto" onkeyup="liberarCadastro()" size="50"/><span class="classeExemploOficio"> Ex: Administração. Instalação de microcomputadores </span>
+                Assunto: <input type="text" id="assunto" name="assunto"  size="50"/><span class="classeExemploOficio"> Ex: Administração. Instalação de microcomputadores </span>
             </td>
         </tr>
         <tr height="40"><td></td></tr>
         <tr height="30">
             <td align="left">
-                <div align="">
-                    <textarea style="max-height: 500px;min-height: 200px;max-width: 625px;min-width: 625px" id="corpo" name="corpo" onkeyup="liberarCadastro()">Corpo do Memorando</textarea>
+                <div style="text-align: none;">
+                    <textarea  id="corpo" name="corpo" ></textarea>
                 </div>
             </td>
         </tr>
@@ -197,12 +137,12 @@ function capturaNumMemorando() {
                         </tr>
                         <tr height="20">
                             <td align="center">
-                                <input type="text" id="remetente" name="remetente" onkeyup="liberarCadastro()" size="50" style="margin-left: 125px"/><span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>
+                                <input type="text" id="remetente" name="remetente"  size="50" style="margin-left: 125px"/><span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>
                             </td>
                         </tr>
                         <tr height="20">
                             <td align="center">
-                                <input type="text" id="cargo_remetente" name="cargo_remetente" onkeyup="liberarCadastro()" size="25" style="margin-left: 110px"/><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
+                                <input type="text" id="cargo_remetente" name="cargo_remetente"  size="25" style="margin-left: 110px"/><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
                             </td>
                             <td>
                                 <a id="add_rem" title="Adicionar Remetente" href="javascript:void(0);" value="" onclick="adicionarRemetente();" class="btn" >
@@ -222,12 +162,12 @@ function capturaNumMemorando() {
                         </tr>
                         <tr height="20">
                             <td align="center">
-                                <input type="text" id="remetente2" name="remetente2" onkeyup="liberarCadastro()" size="50" style="margin-left: 125px"/><span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>
+                                <input type="text" id="remetente2" name="remetente2"  size="50" style="margin-left: 125px"/><span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>
                             </td>
                         </tr>
                         <tr height="20">
                             <td align="center">
-                                <input type="text" id="cargo_remetente2" name="cargo_remetente2" onkeyup="liberarCadastro()" size="25" style="margin-left: 110px"/><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
+                                <input type="text" id="cargo_remetente2" name="cargo_remetente2"  size="25" style="margin-left: 110px"/><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
                             </td>
                             <td>
                                 <a  title="Remover Remetente" href="javascript:void(0);" value="" onclick="removerRemetente();" class="btn" >
@@ -240,23 +180,13 @@ function capturaNumMemorando() {
             </td></tr>
         <tr height="80"><td></td></tr>
     </table>
-    <table align="center">
-        <tr height="30"><td></td></tr>
-        <tr>
-            <td align="center" colspan="2">
-                <button class="btn" type="reset">Limpar</button>
-                <input  class="btn" type="button" value="Gerar" disabled="true" name="b_gerar" id="b_gerar"/>
-                <input class="btn" type="button" value="Salvar" disabled="true" name="b_salvar" id="b_salvar" />
-<!--                                        <input class="btn" type="button" value="Voltar" name="b_voltar" id="b_voltar" onclick=""/>-->
-            </td>
-        </tr>
-        
-        <tr>
-            <td>
+    <div id="menu_documento" >
+        <h5>Memorando</h5>
+                <div><button  class="btn reset" id="b_limpar" title="limpar" type="reset"><i class="icon-erase"></i></button></div>
+        <div><button class="btn" title="Salvar Rascunho" disabled="true" name="b_salvar" id="b_salvar" ><i class="icon-save"></i></button></div>
+        <div><button  class="btn" title="Gerar documento" disabled="true" name="b_gerar" id="b_gerar" ><i class="icon-gerar"></i></button></div>
+    </div>
                 <input type="hidden" name="i_numMemorando" id="i_numMemorando"/>
                 <input type="hidden" name="i_remetente" id="i_remetente" value="0"/>
-            </td>
-        </tr>
-        <tr height="30"><td></td></tr>
-    </table>
+    
 </form>

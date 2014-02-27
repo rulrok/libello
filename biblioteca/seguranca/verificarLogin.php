@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $usuario->set_senha($senha);
 
             if (autenticaUsuario($usuario)) {
+        echo 'algo';
                 sistemaDAO::registrarAccesso(obterUsuarioSessao()->get_id());
                 header("Location: " . WEB_SERVER_ADDRESS . $_POST['alvo']);
             } else {

@@ -216,7 +216,7 @@ class ControladorLivros extends Controlador {
 
     public function acaoGerenciar_saidas() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->visao->saidas = livroDAO::consultarSaidas("idSaida,nomelivro,dataSaida,quantidadeSaidaOriginal,concat(PNome,' ',UNome) as `responsavel`");
+        $this->visao->saidas = livroDAO::consultarSaidas("idSaida,nomelivro,grafica,dataSaida,quantidadeSaidaOriginal,nomePolo, concat(PNome,' ',UNome) as `responsavel`");
         $i = 0;
         foreach ($this->visao->saidas as $value) {
             $value[0] = fnEncrypt($value[0]);

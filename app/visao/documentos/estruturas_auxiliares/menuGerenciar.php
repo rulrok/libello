@@ -18,4 +18,5 @@
         <button class="btn btn-danger btn-deletar" href="#"><i class="icon-remove"></i> Deletar</button>
 
     </div>
-</div>
+    
+    

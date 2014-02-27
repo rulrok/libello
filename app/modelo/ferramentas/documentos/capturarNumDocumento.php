@@ -17,7 +17,7 @@ if($valor == 1){
         }
 }
 if($valor == 2){   
-    try{
+   
     $busca = documentoDAO::consultar("memorando", "idMemorando = (SELECT idMemorando FROM memorando WHERE numMemorando = (SELECT max(numMemorando) FROM memorando WHERE numMemorando > (-1)))");
         if ($busca != null) {
             $numMem = $busca[0];
@@ -25,9 +25,8 @@ if($valor == 2){
         } else {
             $num = 1;
         }
-    }catch(Exception $e){
-        $num = $e->getMessage();
-    }
+    
+   
 }
 
 echo( json_encode($num) ); ?>

@@ -43,6 +43,11 @@ class ComboBoxDocumentos {
 
     //combo mês
     public static function comboMes() {
+        
+        $select='<select id="mes" name="mes">';
+        
+        
+        
         return "<select id='mes' name='mes'>
                 <option value='01'>janeiro</option>
                 <option value='02'>fevereiro</option>

@@ -49,7 +49,7 @@
 
 <div id="tabela1" class="tabelaConteudo" style="display: none;">
 
-    <div style="text-align:center;cursor:default;" >
+<!--    <div style="text-align:center;cursor:default;" >
         <div align="right" style="" class="label_oficio_memorando">Visualizar: </div>
         <label style="text-align:center;display:inline-block;">
             <select id="comboOficioTipo" name="comboOficioTipo" class="ignorar">
@@ -60,10 +60,11 @@
                 <option id="option_oficio_aberto" value="aberto">Em aberto</option>
             </select>
         </label>
-    </div>
+    </div>-->
 
-    <div style="display: none;" id="todosOficios">
         <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
+        <?php require('estruturas_auxiliares/visualizarOficio.php'); ?>
+    <div style="" id="todosOficios">
         <?php require 'estruturas_auxiliares/topTable.php'; ?>
 
         <?php
@@ -71,10 +72,8 @@
         ?>
 
         <?php require 'estruturas_auxiliares/bottomTable.php'; ?>
-        <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
     </div>
     <div id="oficiosValidos" style="display:none;">
-        <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
         <?php require 'estruturas_auxiliares/topTable.php'; ?>
 
         <?php
@@ -82,10 +81,8 @@
         ?>
 
         <?php require 'estruturas_auxiliares/bottomTable.php'; ?>
-        <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
     </div>
     <div id="oficiosInvalidos" hidden="true">
-        <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
         <?php require 'estruturas_auxiliares/topTable.php'; ?>
 
         <?php
@@ -93,10 +90,8 @@
         ?>
 
         <?php require 'estruturas_auxiliares/bottomTable.php'; ?>
-        <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
     </div>
     <div id="oficiosEmAberto" hidden="true">
-        <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
         <?php require 'estruturas_auxiliares/topTable.php'; ?>
 
         <?php
@@ -104,14 +99,15 @@
         ?>
 
         <?php require 'estruturas_auxiliares/bottomTable.php'; ?>
-        <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
     </div>
+        <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
+        <?php require('estruturas_auxiliares/visualizarOficio.php'); ?>
 
 </div>
 <div id="tabela2" class="tabelaConteudo" style="display: none;">
 
 
-    <div style="text-align:center;cursor:default;" >
+<!--    <div style="text-align:center;cursor:default;" >
         <div align="right" style="" class="label_oficio_memorando">Visualizar: </div>
         <label style="text-align:center;display:inline-block;">
             <select id="comboMemorandoTipo" name="comboMemorandoTipo" class="ignorar">
@@ -122,45 +118,41 @@
                 <option id="option_memorando_aberto" value="aberto">Em aberto</option>                                                
             </select>
         </label>
-    </div>
+    </div>-->
 
 
-    <div style="display: none;" id="todosMemorandos">
         <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
+        <?php require('estruturas_auxiliares/visualizarMemorando.php'); ?>
+    <div style="" id="todosMemorandos">
         <?php require 'estruturas_auxiliares/topTable.php'; ?>
         <?php
         echo $this->todosMemorandos;
         ?>
         <?php require 'estruturas_auxiliares/bottomTable.php'; ?>
-        <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
     </div>
     <div id="memorandosValidos" hidden="true">
-        <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
         <?php require 'estruturas_auxiliares/topTable.php'; ?>
         <?php
         echo $this->memorandosValidos;
         ?>
         <?php require 'estruturas_auxiliares/bottomTable.php'; ?>
-        <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
     </div>
     <div id="memorandosInvalidos" hidden="true">
-        <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
         <?php require 'estruturas_auxiliares/topTable.php'; ?>
         <?php
         echo $this->memorandosInvalidos;
         ?>
         <?php require 'estruturas_auxiliares/bottomTable.php'; ?>
-        <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
     </div>
     <div id="memorandosEmAberto" hidden="true">
-        <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
         <?php require 'estruturas_auxiliares/topTable.php'; ?>
         <?php
         echo $this->memorandosEmAberto;
         ?>
         <?php require 'estruturas_auxiliares/bottomTable.php'; ?>
-        <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
     </div>
+        <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
+        <?php require('estruturas_auxiliares/visualizarMemorando.php'); ?>
 </div>
 
 <form id="form_visualizar" target="_blank" method="post" action="">
@@ -171,43 +163,12 @@
                 var tab_todosOficios, tab_todosValidos, tab_todosInvalidos,
                         tab_todosAberto, tab_todosMemorando, tab_memorandosValidos,
                         tab_memorandosInvalidos, tab_memorandosAberto;
+                var primeiro_acesso_oficio = 0;
+                var primeiro_acesso_memorando = 0;
                 var url_inicial = '#!documentos|gerenciar';
                 var doc = null, tipo_oficio = null, tipo_memorando = null;
 
-                function mostraOpcao(opcao) {
-                    if (opcao == 'oficio') {
-                        $('#b_oficio').addClass('active');
-                        $('#b_memorando').removeClass('active');
-                        $('#tabela1').show();
-                        $('#tabela2').hide();
-                        if (doc != 'oficio') {
-                            doc = 'oficio';
-                            document.ignorarHashChange = true;
-                            if (tipo_oficio == null) {
-                                document.location.hash = url_inicial + '&doc=' + doc;
-
-                            } else {
-                                document.location.hash = url_inicial + '&doc=' + doc + tipo_oficio;
-                            }
-                        }
-
-                    } else if (opcao == 'memorando') {
-                        $('#b_memorando').addClass('active');
-                        $('#b_oficio').removeClass('active');
-                        $('#tabela1').hide();
-                        $('#tabela2').show();
-                        if (doc != 'memorando') {
-                            doc = 'memorando';
-                            document.ignorarHashChange = true;
-                            if (tipo_memorando == null) {
-                                document.location.hash = url_inicial + '&doc=' + doc;
-
-                            } else {
-                                document.location.hash = url_inicial + '&doc=' + doc + tipo_memorando;
-                            }
-                        }
-                    }
-                }
+               
 //
                 function mouseTabela(tab) {
                     tab.$('tr').mousedown(function(e) {
@@ -261,7 +222,11 @@
                     mouseTabela(tab_memorandosValidos);
                     mouseTabela(tab_memorandosInvalidos);
                     mouseTabela(tab_memorandosAberto);
+                    
+                    tab_todosMemorandos.fnAdjustColumnSizing();
+                    tab_todosOficios.fnAdjustColumnSizing();
 
+                    
                     function select(tab) {//selecionar primeiro elemento da tabela
 
                         $(' tr.row_selected').each(function() {
@@ -282,8 +247,12 @@
                         }
                     }
 
-                    $('#comboOficioTipo').change(function() {
-                        var valor = $('#comboOficioTipo option:selected').val();
+                    
+                   // select(tab_todosOficios);
+                    //select(tab_todosMemorandos);
+                    $('.visualizar-oficio').change(function() {
+                        var valor = $('.visualizar-oficio .active').val();
+                        //alert(valor);
                         $('#todosOficios').hide();
                         $('#oficiosValidos').hide();
                         $('#oficiosInvalidos').hide();
@@ -335,8 +304,8 @@
                         }
                     });
 
-                    $('#comboMemorandoTipo').change(function() {
-                        var valor = $('#comboMemorandoTipo option:selected').val();
+                    $('.visualizar-memorando').change(function() {
+                        var valor = $('.visualizar-memorando .active').val();
                         $('#todosMemorandos').hide();
                         $('#memorandosValidos').hide();
                         $('#memorandosInvalidos').hide();
@@ -476,7 +445,56 @@
                     });
 
                 });
+                
+                 function mostraOpcao(opcao) {
+                    if (opcao == 'oficio') {
+                        $('#b_oficio').addClass('active');
+                        $('#b_memorando').removeClass('active');
+                        $('#tabela1').show();
+                        $('#tabela2').hide();
+                        if(primeiro_acesso_oficio == 0){
+                            //$('.visualizar-oficio ').change();
+                            setTimeout(function(){
+                                tab_todosOficios.fnAdjustColumnSizing();
+                                select(tab_todosOficios);
+                            },50);
+                            primeiro_acesso_oficio =1;
+                        }
+                        if (doc != 'oficio') {
+                            doc = 'oficio';
+                            document.ignorarHashChange = true;
+                            if (tipo_oficio == null) {
+                                document.location.hash = url_inicial + '&doc=' + doc;
 
+                            } else {
+                                document.location.hash = url_inicial + '&doc=' + doc + tipo_oficio;
+                            }
+                        }
+
+                    } else if (opcao == 'memorando') {
+                        $('#b_memorando').addClass('active');
+                        $('#b_oficio').removeClass('active');
+                        $('#tabela1').hide();
+                        $('#tabela2').show();
+                        if(primeiro_acesso_memorando == 0){
+                            setTimeout(function(){
+                                tab_todosMemorandos.fnAdjustColumnSizing();
+                                select(tab_todosMemorandos);
+                            },50);
+                            primeiro_acesso_memorando=1;
+                        }
+                        if (doc != 'memorando') {
+                            doc = 'memorando';
+                            document.ignorarHashChange = true;
+                            if (tipo_memorando == null) {
+                                document.location.hash = url_inicial + '&doc=' + doc;
+
+                            } else {
+                                document.location.hash = url_inicial + '&doc=' + doc + tipo_memorando;
+                            }
+                        }
+                    }
+                }
 
 </script>
 <?php
