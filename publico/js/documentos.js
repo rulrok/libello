@@ -71,7 +71,7 @@
     function capturaNumOficio() {
         $.getJSON('index.php?c=documentos&a=capturarNumDocumento', {valor: 1}, function(j) {
             $('#i_numOficio').val(j);
-            $("#ajaxForm").submit();
+            $("#b_submit").click();
 
         });
 
@@ -81,7 +81,7 @@ function capturaNumMemorando() {
         
         $.getJSON('index.php?c=documentos&a=capturarNumDocumento', {valor: 2}, function(j) {
             $('#i_numMemorando').val(j);
-            $("#ajaxForm").submit();
+            $("#b_submit").click();
             
         });
     }

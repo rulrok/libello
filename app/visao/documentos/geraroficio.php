@@ -34,7 +34,7 @@
                     document.paginaAlterada = false;
                 });
                 $('#i_numOficio').val('-1');
-                $('#ajaxForm').submit();
+                $('#b_submit').click();
 
             }
 
@@ -192,12 +192,12 @@
     <div id="menu_documento" style="">
         <h4>Ofício</h4>
         <div><button  class="btn reset" id="b_limpar" title="limpar" type="reset"><i class="icon-erase"></i></button></div>
-        <div><button class="btn" title="Salvar Rascunho" disabled="true" name="b_salvar" id="b_salvar" ><i class="icon-save"></i></button></div>
-        <div><button  class="btn" title="Gerar documento" disabled="true" name="b_gerar" id="b_gerar" ><i class="icon-gerar"></i></button></div>
+        <div><button class="btn" type="button" title="Salvar Rascunho" disabled="true" name="b_salvar" id="b_salvar" ><i class="icon-save"></i></button></div>
+        <div><button  class="btn" type="button" title="Gerar documento" disabled="true" name="b_gerar" id="b_gerar" ><i class="icon-gerar"></i></button></div>
 <!--                                        <input type="button" class="btn" value="Voltar" name="b_voltar" name="b_voltar" onclick=""/>-->
     </div>            
 
     <input type="hidden" name="i_numOficio" id="i_numOficio" value='-1'/>
     <input type="hidden" name="i_remetente" id="i_remetente" value="0"/>
-
+    <button type="submit" id="b_submit" style="display: none;"></button>
 </form>

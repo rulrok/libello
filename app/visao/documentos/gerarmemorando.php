@@ -9,67 +9,67 @@
 
 
     $(document).ready(function() {
-        tinymce.init({selector:'textarea',
+        tinymce.init({selector: 'textarea',
             toolbar: "forecolor backcolor",
-            tools:'inserttable',
-            skin:'lightgray',
-            plugins:'contextmenu advlist directionality charmap preview visualblocks image table textcolor spellchecker link',
+            tools: 'inserttable',
+            skin: 'lightgray',
+            plugins: 'contextmenu advlist directionality charmap preview visualblocks image table textcolor spellchecker link',
             contextmenu: "link image inserttable | cell row column deletetable | forecolor backcolor"
         });
-        $('html, body').animate({scrollTop: 0},'fast');
-         varrerCampos();
-            
-            $('#b_gerar').on('click',function(){
-                bloqueia();
-                 if (confirm('Atenção, o memorando será gerado e registrado permanentemente! Tem certeza?')) {
+        //$('html, body').animate({scrollTop: 0},'fast');
+        varrerCampos();
+
+        $('#b_gerar').on('click', function() {
+            bloqueia();
+            if (confirm('Atenção, o memorando será gerado e registrado permanentemente! Tem certeza?')) {
                 formularioAjax(undefined, undefined, null, function(i) {
-                window.open('index.php?c=documentos&a=visualizarMemorando&idv='+i.id, '_blank');
-                document.paginaAlterada = false;
-                        document.location.reload();
-            });
-            
+                    window.open('index.php?c=documentos&a=visualizarMemorando&idv=' + i.id, '_blank');
+                    document.paginaAlterada = false;
+                    document.location.reload();
+                });
+
                 capturaNumMemorando();
             }
             desbloqueia();
-            });
-            
-            $('#b_salvar').on('click',function(){
+        });
+
+        $('#b_salvar').on('click', function() {
             bloqueia();
-                  if (confirm('Atenção, o memorando será salvo! Tem certeza?')) {
-                    formularioAjax(undefined, undefined,null,function(i){
+            if (confirm('Atenção, o memorando será salvo! Tem certeza?')) {
+                formularioAjax(undefined, undefined, null, function(i) {
                     document.paginaAlterada = false;
                 });
-                    $('#i_numMemorando').val('-1');
-                    $('#ajaxForm').submit();
-                    
-                }
+                $('#i_numMemorando').val('-1');
+                $('#ajaxForm').submit();
 
-                desbloqueia();
-            });
-            
-        $('#ajaxForm *').on('change', function() {
+            }
+
+            desbloqueia();
+        });
+
+        $('#ajaxForm *').on('keyup', function() {
             liberarCadastro();
         });
-        
+
         $('.reset').on('click', function() {
             setTimeout(function() {
 
 
                 $('#ajaxForm input').change();
 
-            },50);
+            }, 50);
         });
-        
+
         var documento_form = $('#documento_form');
         var posicao_doc = documento_form.position();
         var menu = $('#menu_documento');
-        
-        $('#menu_documento').css({left:(posicao_doc.left )+'px', top:(posicao_doc.top + 300)+'px'});
+
+        $('#menu_documento').css({left: (posicao_doc.left) + 'px', top: (posicao_doc.top + 300) + 'px'});
     });
 </script>
 
 <form  id="ajaxForm" name="form1" target="_blank" action='index.php?c=documentos&a=verificarnovomemorando' method="post">
-    
+
     <table id="documento_form" style='' border="0" align="center">
         <tr height="189">
             <td width="113" rowspan="20"></td>
@@ -182,11 +182,13 @@
     </table>
     <div id="menu_documento" >
         <h5>Memorando</h5>
-                <div><button  class="btn reset" id="b_limpar" title="limpar" type="reset"><i class="icon-erase"></i></button></div>
-        <div><button class="btn" title="Salvar Rascunho" disabled="true" name="b_salvar" id="b_salvar" ><i class="icon-save"></i></button></div>
-        <div><button  class="btn" title="Gerar documento" disabled="true" name="b_gerar" id="b_gerar" ><i class="icon-gerar"></i></button></div>
+        <div><button  class="btn reset" id="b_limpar" title="limpar" type="reset"><i class="icon-erase"></i></button></div>
+        <div><button class="btn" type="button" title="Salvar Rascunho" disabled="true" name="b_salvar" id="b_salvar" ><i class="icon-save"></i></button></div>
+        <div><button  class="btn" type="button" title="Gerar documento" disabled="true" name="b_gerar" id="b_gerar" ><i class="icon-gerar"></i></button></div>
     </div>
-                <input type="hidden" name="i_numMemorando" id="i_numMemorando"/>
-                <input type="hidden" name="i_remetente" id="i_remetente" value="0"/>
-    
+    <input type="hidden" name="i_numMemorando" value="-1" id="i_numMemorando"/>
+    <input type="hidden" name="i_remetente" id="i_remetente" value="0"/>
+    <button type="submit" id="b_submit" style="display: none;"></button>
+
+
 </form>
