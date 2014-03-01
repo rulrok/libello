@@ -1,69 +1,76 @@
 <title>Novo descritor</title>
 <!-- Início da página -->
-<form id="ajaxForm"  method="POST" action="index.php?c=imagens&a=verificarNovoDescritor">
+<form class="tabela centralizado" id="ajaxForm"  method="POST" action="index.php?c=imagens&a=verificarNovoDescritor">
     <fieldset>
         <legend>Inserir novo descritor</legend>
-        <center>
-            <span class="line">
-                <span>
-                    <label for="descritor_1">1.</label>
-                    <input type="checkbox" id="inserir_novo_descritor_1" class="checkbox_novo_descritor"/>
-                    <select id="descritor_1" class="input-xlarge .cb_descritor">
-                        <option value="default">-- Escolha um descritor --</option>
-                    </select>
-                    <input type="text" id="novo_descritor_1" class="hidden input-xlarge"/>
-                </span>
-                <span>
-                    <label for="descritor_2">2.</label>
-                    <input type="checkbox" id="inserir_novo_descritor_2" class="checkbox_novo_descritor"/>
-                    <select id="descritor_2" class="input-xlarge .cb_descritor">
-                        <option value="default">-- Escolha um descritor --</option>
-                    </select>
-                    <input type="text" id="novo_descritor_2" class="hidden input-xlarge"/>
-                </span>
-                <span>
-                    <label for="descritor_3">3.</label>
-                    <input type="checkbox" id="inserir_novo_descritor_3" class="checkbox_novo_descritor"/>
-                    <select id="descritor_3" class="input-xlarge .cb_descritor">
-                        <option value="default">-- Escolha um descritor --</option>
-                    </select>
-                    <input type="text" id="novo_descritor_3" class="hidden input-xlarge"/>
-                </span>
-                <span>
-                    <label for="descritor_4">4.</label>
-                    <input type="checkbox" disabled checked id="inserir_novo_descritor_4"class="checkbox_novo_descritor"/>
-    <!--                <select id="descritor_4">
-                        <option value="default">-- Escolha um descritor --</option>
-                    </select>-->
-                    <input type="text" id="novo_descritor_4" class="input-xlarge"/>
-                </span>
-            </span>
-        </center>
+        <div class="line">
+            <label for="descritor_1">Nível 1</label>
+            <input type="checkbox" id="inserir_novo_descritor_1" name="inserir_novo_descritor_1"  class="checkbox_novo_descritor" data-toggle="Novo" title="Novo descritor" />
+            <select id="descritor_1" name="descritor_1" class="input-xlarge cb_descritor" required>
+                <?php echo $this->comboBoxDescritor; ?>
+            </select>
+            <input type="text" id="novo_descritor_1" name="novo_descritor_1" class="hidden input-xlarge"/>
+        </div>
+        <br/>
+        <div class="line">
+            <label for="descritor_2">Nível 2</label>
+            <input type="checkbox" id="inserir_novo_descritor_2" name="inserir_novo_descritor_2" class="checkbox_novo_descritor" data-toggle="Novo" title="Novo descritor"/>
+            <select id="descritor_2" name="descritor_2" class="input-xlarge cb_descritor" required>
+                <option value="default">-- Escolha um descritor --</option>
+            </select>
+            <input type="text" id="novo_descritor_2" name="novo_descritor_2" class="hidden input-xlarge"/>
+        </div>
+        <br/>
+        <div class="line">
+            <label for="descritor_3">Nível 3</label>
+            <input type="checkbox" id="inserir_novo_descritor_3" name="inserir_novo_descritor_3" class="checkbox_novo_descritor" data-toggle="Novo" title="Novo descritor"/>
+            <select id="descritor_3" name="descritor_3" class="input-xlarge cb_descritor" required>
+                <option value="default">-- Escolha um descritor --</option>
+            </select>
+            <input type="text" id="novo_descritor_3" name="novo_descritor_3" class="hidden input-xlarge"/>
+        </div>
+        <br/>
+        <div class="line">
+            <label for="descritor_4"> Nível 4</label>
+            <input type="checkbox" disabled checked id="inserir_novo_descritor_4" name="inserir_novo_descritor_4" class="checkbox_novo_descritor" data-toggle="Novo" title="Último descritor sempre é requerido"/>
+<!--                <select id="descritor_4">
+                <option value="default">-- Escolha um descritor --</option>
+            </select>-->
+            <input required type="text" id="novo_descritor_4" name="novo_descritor_4" class="input-xlarge"/>
+        </div>
     </fieldset>
+    <button type="reset" class="btn btn-large btn-left" >Limpar</button>
     <button type="submit" class="btn btn-large btn-success btn-primary btn-right" >Cadastrar</button>
 </form>
 <script>
-    var cb_descritores = $(".cb_descritor");
-//        console.log(cb_descritores);
-    $.each(cb_descritores, function() {
-        atualizar_combobox(this);
-    });
-    formularioAjax();
+
     function esconder(id) {
         $(id).addClass('hidden');
+        $(id).removeAttr('required');
+        $(id).prop('disabled',true);
+        $(".campoVarrido").removeClass("campoVarrido");
+        $(".imagemCampoObrigatorio").remove();
+        varrerCampos();
     }
     function exibir(id) {
         $(id).removeClass('hidden');
+        $(id).attr('required', true);
+        $(id).removeProp('disabled');
+        $(".campoVarrido").removeClass("campoVarrido");
+        $(".imagemCampoObrigatorio").remove();
+        varrerCampos();
     }
     function atualizar_combobox(combo_box) {
         $(combo_box).on('change', function() {
-            var desnum = parseInt($(this).attr("numero"));
+            var desnum = parseInt(this.id.substr(10));
+//            console.log(desnum);
             if (desnum > 0 && desnum < 4) {
-                var wrap_id = "#descritor" + (desnum + 1) + "_wrap";
+                var wrap_id = "#descritor_" + (desnum + 1);
 //                console.log(wrap_id);
-                if ($(this).val() != "default") {
-                    var $url = "index.php?c=imagens&a=obterDescritor&n=" + desnum + "&p=" + $(this).val();
-                    console.log($url);
+//                console.log(this.name);
+                if (this.selectedIndex !== 0) {
+                    var $url = "index.php?c=imagens&a=obterDescritor&n=" + desnum + "&p=" + this.value;
+//                    console.log($url);
                     $(wrap_id).load($url, function(response, status, xhr) {
                         if (status == "error") {
                             $(this).val("default");
@@ -71,7 +78,7 @@
 //                        $("#descritor2_wrap").html(msg + xhr.status + " " + xhr.statusText);
                         } else if (status == "success") {
 //                                liberarCadastro();
-                            atualizar_combobox($("#descritor" + (desnum + 1)));
+                            atualizar_combobox($("#descritor_" + (desnum + 1)));
                         }
                     });
                 } else {
@@ -80,7 +87,19 @@
             }
         });
     }
+
     $(document).ready(function() {
+        $("button[type=reset]").on('click', function() {
+            if ($('#inserir_novo_descritor_1').prop('checked'))
+                $('#inserir_novo_descritor_1').trigger('click');
+            if ($('#inserir_novo_descritor_2').prop('checked'))
+                $('#inserir_novo_descritor_2').trigger('click');
+            if ($('#inserir_novo_descritor_3').prop('checked'))
+                $('#inserir_novo_descritor_3').trigger('click');
+            setTimeout(function() {
+                liberarCadastro();
+            }, 200);
+        });
         $("input[type=checkbox]").each(function() {
             $(this).on('click', function() {
                 var id = this.id;
@@ -104,5 +123,15 @@
                 }
             });
         });
+        var cb_descritores = $(".cb_descritor");
+        $.each(cb_descritores, function() {
+            atualizar_combobox(this);
+        });
+        formularioAjax();
+        $("#inserir_novo_descritor_1").tooltip({placement: 'top'});
+        $("#inserir_novo_descritor_2").tooltip({placement: 'top'});
+        $("#inserir_novo_descritor_3").tooltip({placement: 'top'});
+        $("#inserir_novo_descritor_4").tooltip({placement: 'down'});
+        varrerCampos();
     });
 </script>

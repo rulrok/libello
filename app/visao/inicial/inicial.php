@@ -126,7 +126,7 @@
             </div>
         </div>
 
-        <div class="popUp table" style="display: none;">
+        <div class="popUp tabela" style="display: none;">
             <div class="botao_fechar" onclick="hidePopUp();"></div>
             <p class="popUpContent textoCentralizado "></p>
         </div>

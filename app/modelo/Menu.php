@@ -23,16 +23,16 @@ class Menu {
         $subMenuCode = "<div class=\"subMenu\">" . "\n";
         $subMenuCode .= "<menu>" . "\n";
 
-        foreach ($permissoes as $permissao_ferramenta) {
+        foreach ($permissoes as $permissao_ferramenta) :
 
-            switch ($permissao_ferramenta['idFerramenta']) {
+            switch ($permissao_ferramenta['idFerramenta']) :
                 case Ferramenta::CONTROLE_USUARIOS:
                     if ($permissao_ferramenta['idPermissao'] != Permissao::SEM_ACESSO) {
                         $menuCode .= "<a><li class=\"menuLink\" id=\"usuariosLink\">Usuários</li></a>" . "\n";
                         $subMenuCode .="<ul class=\"hiddenSubMenuLink usuariosSubMenu\">" . "\n";
                         switch ($permissao_ferramenta['idPermissao']) {
                             case Permissao::ADMINISTRADOR:
-                                $subMenuCode .= "<a href=\"#!usuarios|restaurar\" style=\"color: red;\"\">" . "\n";
+                                $subMenuCode .= '<a href="#!usuarios|restaurar" class="linkAdministrativo">' . "\n";
                                 $subMenuCode .= "<li>Usuários inativos</li></a>" . "\n";
                             case Permissao::GESTOR:
                                 $subMenuCode .= "   <a href=\"#!usuarios|gerenciar\">" . "\n";
@@ -73,7 +73,7 @@ class Menu {
                         $permissao = $permissao_ferramenta['idPermissao'];
                         switch ($permissao_ferramenta['idPermissao']) {
                             case Permissao::ADMINISTRADOR:
-                                $subMenuCode .= "<a href=\"#!livros|gerenciarbaixasesaidas\" style=\"color: red;\"\">" . "\n";
+                                $subMenuCode .= '<a href="#!livros|gerenciarbaixasesaidas" class="linkAdministrativo">' . "\n";
                                 $subMenuCode .= "<li>Administrar baixas e saídas</li></a>" . "\n";
                             case Permissao::GESTOR:
                                 $subMenuCode .= "<a href=\"#!livros|gerenciar\"\">" . "\n";
@@ -102,7 +102,7 @@ class Menu {
                         $permissao = $permissao_ferramenta['idPermissao'];
                         switch ($permissao) {
                             case Permissao::ADMINISTRADOR:
-                                $subMenuCode .= "<a href=\"#!equipamentos|gerenciarbaixasesaidas\" style=\"color: red;\"\">" . "\n";
+                                $subMenuCode .= '<a href="#!equipamentos|gerenciarbaixasesaidas" class="linkAdministrativo">' . "\n";
                                 $subMenuCode .= "<li>Administrar baixas e saídas</li></a>" . "\n";
                             case Permissao::GESTOR:
                                 $subMenuCode .= "<a href=\"#!equipamentos|gerenciar\"\">" . "\n";
@@ -214,16 +214,17 @@ class Menu {
                         }
                     }
                     break;
-            }
-//            $subMenuCode .= "<a class =\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/imagens/icones/go-up.png\"></li></a>" . "\n";
-            $subMenuCode .= "</ul>" . "\n";
-        }
-
+            endswitch;
+//            $subMenuCode .= '<a class="hideSubMenu" onclick="hideSubMenu();">'
+//                    . '<li class="visited">'
+//                    . '<img alt="Esconder sub-menu" src="publico/imagens/icones/go-up.png" />'
+//                    . '</li>'
+//                    . '</a>';
+            $subMenuCode .= "</ul>";
+        endforeach;
 
         $menuCode .= "</menu>" . "\n";
         $menuCode .= "</div>" . "\n";
-
-
 
         $subMenuCode .= "</menu>" . "\n";
         $subMenuCode .= "</div>" . "\n";

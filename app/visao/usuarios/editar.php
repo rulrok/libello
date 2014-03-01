@@ -1,6 +1,6 @@
 <title>Editando usuário <?php echo $this->nome; ?></title>
 <!-- Início da página -->
-<form class="table centralizado" id="ajaxForm" method="post" action="index.php?c=usuarios&a=verificaredicao">
+<form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=usuarios&a=verificaredicao">
     <fieldset>
         <legend>Dados</legend>
         <p class="centralizado textoCentralizado textoNegrito">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png" alt="Campo obrigatório"> são obrigatórios</p>

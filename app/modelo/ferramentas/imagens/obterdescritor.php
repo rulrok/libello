@@ -8,13 +8,9 @@ if (filter_has_var(INPUT_GET, 'p') && filter_has_var(INPUT_GET, 'n')):
 
     switch ($nivel) {
         case 1:
-            echo ComboBoxDescritores::montarDescritorFilhoSegundoNivel($idDescritorPai);
-            break;
         case 2:
-            echo ComboBoxDescritores::montarDescritorFilhoTerceiroNivel($idDescritorPai);
-            break;
         case 3:
-            echo ComboBoxDescritores::montarDescritorFilhoQuartoNivel($idDescritorPai);
+            echo ComboBoxDescritores::montarDescritorFilho($idDescritorPai);
             break;
         default :
             ?>

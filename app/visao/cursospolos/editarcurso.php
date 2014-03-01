@@ -1,6 +1,6 @@
 <title>Editar curso</title>
 <!--Início da página-->
-<form class="table centralizado" id="ajaxForm2" method="post" action="index.php?c=cursospolos&a=verificaredicaocurso">
+<form class="tabela centralizado" id="ajaxForm2" method="post" action="index.php?c=cursospolos&a=verificaredicaocurso">
     <fieldset>
         <legend>Dados</legend>
         <p class="centralizado textoCentralizado textoNegrito">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png" alt="Campo obrigatório"> são obrigatórios</p>

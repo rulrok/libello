@@ -1,6 +1,6 @@
 <title>Registrar retorno de livro</title>
 <!--Início da página-->
-<form class="table centralizado" id="ajaxForm" method="post" action="index.php?c=livros&a=registrarretorno">
+<form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=livros&a=registrarretorno">
     <fieldset>
         <legend>Retorno de livro</legend>
         <input hidden="true" readonly="true" type="text" class="input-small" id="saidaID" name="saidaID" value="<?php echo $this->saidaID ?>" />

@@ -46,7 +46,7 @@ if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION[
             <div id="unifal"></div>
             <div id="cead"></div>
             <div id="loginArea">
-                <form class="table centralizado" name="identificacao" action="./biblioteca/seguranca/verificarLogin.php" method="post">
+                <form class="tabela centralizado" name="identificacao" action="./biblioteca/seguranca/verificarLogin.php" method="post">
                     <fieldset>
                         <input hidden type="checkbox" class="hidden" id="fazendo_login" name="fazendo_login" checked>
                             <input hidden type="text" class="hidden" id="alvo" name="alvo" >

@@ -1,6 +1,6 @@
 <title>Cadastrar novo equipamento</title>
 <!--Início da página -->
-<form class="table centralizado" id="ajaxForm" method="post" action="index.php?c=equipamentos&a=verificarnovo">
+<form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=equipamentos&a=verificarnovo">
     <fieldset>
         <legend>Registro de novo equipamento</legend>
         <span class="line">

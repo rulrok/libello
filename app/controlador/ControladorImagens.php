@@ -66,7 +66,7 @@ class ControladorImagens extends Controlador {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->visao->cpfAutor = obterUsuarioSessao()->get_cpf();
         $this->visao->iniciaisAutor = obterUsuarioSessao()->get_iniciais();
-        $this->visao->comboBoxCategorias = ComboBoxDescritores::montarDescritorPrimeiroNivel();
+        $this->visao->comboBoxDescritor = ComboBoxDescritores::montarDescritorPrimeiroNivel();
         $this->renderizar();
     }
 
@@ -100,7 +100,7 @@ class ControladorImagens extends Controlador {
 
     public function acaoNovodescritor() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
-        $this->visao->comboBoxCategorias = ComboBoxDescritores::montarDescritorPrimeiroNivel();
+        $this->visao->comboBoxDescritor = ComboBoxDescritores::montarDescritorPrimeiroNivel();
         $this->renderizar();
     }
 

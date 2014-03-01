@@ -2,7 +2,7 @@
 <!-- Início da página -->
 <div id="showimg"> </div>
 
-<form class="table centralizado" id="upload-image-form-ajax" method="POST" action="index.php?c=imagens&a=verificarnovaimagem" enctype='multipart/form-data'>
+<form class="tabela centralizado" id="upload-image-form-ajax" method="POST" action="index.php?c=imagens&a=verificarnovaimagem" enctype='multipart/form-data'>
     <fieldset>
         <legend>Dados da imagem</legend>
         <p class="centralizado textoCentralizado textoNegrito">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png" alt="Campo obrigatório"> são obrigatórios</p>
@@ -31,25 +31,25 @@
         </div>
         <div class="line">
             <label for='descritor1'>Descritor 1</label>
-            <select required class="cb_descritor input-large" id="descritor1" name="descritor1" numero="1">
-                <?php echo $this->comboBoxCategorias; ?>
+            <select required id="descritor_1" class="cb_descritor input-xlarge" name="descritor1">
+                <?php echo $this->comboBoxDescritor; ?>
             </select>
         </div>
         <div class="line">
             <label for='descritor2'>Descritor 2</label>
-            <select required id="descritor2" class="cb_descritor" numero="2">
+            <select required id="descritor_2" class="cb_descritor input-xlarge" name="descritor2">
                 <option value="default">-- Escolha um descritor acima --</option>
             </select>
         </div>
         <div class="line">
             <label for='descritor3'>Descritor 3</label>
-            <select required id="descritor3" class="cb_descritor" numero="3">
+            <select required id="descritor_3" class="cb_descritor input-xlarge" name="descritor3">
                 <option value="default">-- Escolha um descritor acima --</option>
             </select>
         </div>
         <div class="line">
             <label for='descritor4'>Descritor 4</label>
-            <select required id="descritor4" class="cb_descritor" numero="4">
+            <select required id="descritor_4" class="cb_descritor input-xlarge" name="descritor4">
                 <option value="default">-- Escolha um descritor acima --</option>
             </select>
         </div>
@@ -207,13 +207,14 @@
 
     function atualizar_combobox(combo_box) {
         $(combo_box).on('change', function() {
-            var desnum = parseInt($(this).attr("numero"));
+            var desnum = parseInt(this.id.substr(10));
             if (desnum > 0 && desnum < 4) {
-                var wrap_id = "#descritor" + (desnum + 1) ;
+                var wrap_id = "#descritor_" + (desnum + 1);
 //                console.log(wrap_id);
-                if ($(this).val() != "default") {
-                    var $url = "index.php?c=imagens&a=obterDescritor&n=" + desnum + "&p=" + $(this).val();
-                    console.log($url);
+//                console.log(this.name);
+                if (this.selectedIndex !== 0) {
+                    var $url = "index.php?c=imagens&a=obterDescritor&n=" + desnum + "&p=" + this.value;
+//                    console.log($url);
                     $(wrap_id).load($url, function(response, status, xhr) {
                         if (status == "error") {
                             $(this).val("default");
@@ -221,7 +222,7 @@
 //                        $("#descritor2_wrap").html(msg + xhr.status + " " + xhr.statusText);
                         } else if (status == "success") {
 //                                liberarCadastro();
-                            atualizar_combobox($("#descritor" + (desnum + 1)));
+                            atualizar_combobox($("#descritor_" + (desnum + 1)));
                         }
                     });
                 } else {
@@ -297,7 +298,7 @@
 //                $("#cpfautor").mask('999.999.999-99');
 //                liberarCadastro();
 //            }, "200");
-            ajax("index.php?c=imagens&a=novaImagem", ".contentWrap", true, false, true);
+            ajax("index.php?c=imagens&a=novaImagem", ".contentWrap", true, false, true); //TODO tirar essa gambiarra =s
         });
 
 

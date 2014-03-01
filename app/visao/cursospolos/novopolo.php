@@ -1,6 +1,6 @@
 <title>Inserir novo polo</title>
 <!-- Início da página -->
-<form class="table centralizado" id="ajaxForm" method="post" action="index.php?c=cursospolos&a=verificarnovopolo">
+<form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=cursospolos&a=verificarnovopolo">
     <fieldset>
         <legend>Inserir novo polo</legend>
         <span class="line">

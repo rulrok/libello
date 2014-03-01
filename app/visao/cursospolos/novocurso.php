@@ -1,6 +1,6 @@
 <title>Inserir novo curso</title>
 <!-- Início da página -->
-<form class="table centralizado" id="ajaxForm" method="post" action="index.php?c=cursospolos&a=verificarnovocurso">
+<form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=cursospolos&a=verificarnovocurso">
     <fieldset>
         <legend>Inserir novo curso</legend>
         <span class="line">

@@ -628,6 +628,14 @@ header .userInfoWrap [id=gerenciarConta]:before{
     }
 }
 /* Links do menu */
+
+.linkAdministrativo {
+    color: red;
+}
+.linkAdministrativo:hover {
+    color: red;
+    text-decoration-line: underline;
+}
 /* Correção para a posição dos nomes dos links ao lado da imagem */
 li[id$=Link]:before{
     vertical-align: -50%;
@@ -875,31 +883,31 @@ li[id$=Link]:before{
 }*/
 
 /* Exibe componente como tabela */
-.table {
+.tabela {
     display: table;
     width: auto;
     font-size: 15px;
 }
 
 /* Span que irá conter um label e um campo de texto ou senha */
-.table .line{
+.tabela .line{
     display: table-row;
     padding: 2px;
     line-height: 35px;
 }
-.table .line textarea{
+.tabela .line textarea{
     margin-bottom: 5px!important;
 }
 
 /* Label para algum campo respectivo */
-.table .line label{
+.tabela .line label{
     display: table-cell;
     font-family: sans-serif;
     text-align: right;
     vertical-align: top;
 }
 
-.table .line img{
+.tabela .line img{
     position:relative;
     top: 8px;
     display: table-cell;
@@ -908,16 +916,16 @@ li[id$=Link]:before{
     vertical-align: top;
 }
 
-.table .line label:first-letter{
+.tabela .line label:first-letter{
     text-transform: uppercase;
 }
 
-.table .line label:after{
+.tabela .line label:after{
     content: ':';
 }
 
 /* Campos de senha e texto específicos de formulários alinhados sem tabela */
-.table .line input, .table .line select, .table .line textarea,.table .line div.chosen-container {
+.tabela .line input, .tabela .line select, .tabela .line textarea,.tabela .line div.chosen-container {
     display: table-cell;
     float: left;
     margin-bottom: -7px;
@@ -949,7 +957,7 @@ select:disabled{
 .selecaoPassageiros:first-of-type{
     margin-left: 0!important;
 }
-.table .line .selecaoPassageiros > a,select {
+.tabela .line .selecaoPassageiros > a,select {
     display: table-cell;
 }
 /* FIM Forms alinhados sem tabela */

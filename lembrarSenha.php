@@ -31,7 +31,7 @@
             <div id="cead"></div>
             <div id="loginArea">
                 <?php if (!isset($_GET['tolken'])): ?>
-                    <form class="table centralizado" id="ajaxForm" name="identificacao" action="./biblioteca/seguranca/lembrarSenha.php" method="post">
+                    <form class="tabela centralizado" id="ajaxForm" name="identificacao" action="./biblioteca/seguranca/lembrarSenha.php" method="post">
                         <fieldset>
                             <div class="line">
                                 <label for="email">Email</label>
@@ -44,7 +44,7 @@
                     </form>
                 <?php else: ?>
 
-                    <form class="table centralizado" id="ajaxForm" name="identificacao" action="./biblioteca/seguranca/lembrarSenha.php" method="post" >
+                    <form class="tabela centralizado" id="ajaxForm" name="identificacao" action="./biblioteca/seguranca/lembrarSenha.php" method="post" >
                         <fieldset>
                             <div class="line">
                                 <label>Nova senha</label>

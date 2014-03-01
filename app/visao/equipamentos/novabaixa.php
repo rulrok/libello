@@ -1,6 +1,6 @@
 <title>Registrar baixar para equipamento</title>
 <!--Início da página-->
-<form class="table centralizado" id="ajaxForm" method="post" action="index.php?c=equipamentos&a=registrarbaixa">
+<form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=equipamentos&a=registrarbaixa">
     <fieldset>
         <legend>Baixa de equipamento</legend>
         <input hidden="true" readonly="true" type="text" class="input-small" id="equipamentoID" name="equipamentoID" value="<?php echo $this->equipamentoID ?>" />

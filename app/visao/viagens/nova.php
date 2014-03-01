@@ -1,6 +1,6 @@
 <title>Nova viagem</title>
 <!-- Início da página -->
-<form class="table centralizado" id="ajaxForm" method="post" action="index.php?c=viagens&a=verificarnova">
+<form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=viagens&a=verificarnova">
     <fieldset>
         <legend>Dados da viagem</legend>
         <p class="centralizado textoCentralizado textoNegrito">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png" alt="Campo obrigatório"> são obrigatórios</p>
