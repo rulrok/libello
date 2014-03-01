@@ -1,5 +1,5 @@
 <div class="btn-group visualizar-memorando">
-        <button class="btn btn-todos active" value="todos" >Todos</button>
+        <button class="btn btn-todos " value="todos" >Todos</button>
         <button class="btn btn-validos" value="validos">Válidos</button>
         <button class="btn btn-invalidos" value="invalidos">Inválidos</button>
         <button class="btn btn-em-aberto" value="aberto">Em Aberto</button>

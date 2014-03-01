@@ -165,12 +165,33 @@
             tab_memorandosInvalidos, tab_memorandosAberto;
     var primeiro_acesso_oficio = 0;
     var primeiro_acesso_memorando = 0;
+    var ignorarhash = true;
     var url_inicial = '#!documentos|gerenciar';
     var doc = null, tipo_oficio = null, tipo_memorando = null;
 
 
 //
     function mouseTabela(tab) {
+
+
+        $(' tr.row_selected').each(function() {
+            $(this).removeClass('row_selected');
+        });
+        var selectedElement = $($('#' + tab.attr('id') + ' tr')[1]).addClass('row_selected');
+        if ($(".numeracao", selectedElement).text() != '')
+            if ($(".numeracao", selectedElement).text() != "Em aberto") {
+                $(".n_editavel").show();
+                if ($('.validacao', selectedElement).text() === 'Inválido') {
+                    $('.btn-invalidar').addClass('disabled');
+                    $('.btn-invalidar').attr({disabled: true});
+                } else {
+                    $('.btn-invalidar').removeClass('disabled');
+                    $('.btn-invalidar').removeAttr('disabled');
+                }
+            } else {
+                $(".editavel").show();
+            }
+
         tab.$('tr').mousedown(function(e) {
 
             $(this).parent().parent().find('tr.row_selected').removeClass('row_selected');
@@ -193,8 +214,29 @@
         });
     }
 
+    function select(tab) {//selecionar primeiro elemento da tabela
+//
+//            $(' tr.row_selected').each(function() {
+//                $(this).removeClass('row_selected');
+//            });
+//            var selectedElement = $($('#' + tab.attr('id') + ' tr')[1]).addClass('row_selected');
+//           if($(".numeracao", selectedElement).text()!='')
+//            if ($(".numeracao", selectedElement).text() != "Em aberto") {
+//                $(".n_editavel").show();
+//                if ($('.validacao', selectedElement).text() === 'Inválido') {
+//                    $('.btn-invalidar').addClass('disabled');
+//                    $('.btn-invalidar').attr({disabled: true});
+//                } else {
+//                    $('.btn-invalidar').removeClass('disabled');
+//                    $('.btn-invalidar').removeAttr('disabled');
+//                }
+//            } else {
+//                $(".editavel").show();
+//            }
+    }
 
     $(document).ready(function() {
+
 
         $('#todosOficios .tabelaDeEdicao').attr('id', 'tabelaTodosOficios');
         $('#oficiosValidos .tabelaDeEdicao').attr('id', 'tabelaOficiosValidos');
@@ -223,33 +265,7 @@
         mouseTabela(tab_memorandosInvalidos);
         mouseTabela(tab_memorandosAberto);
 
-        tab_todosMemorandos.fnAdjustColumnSizing();
-        tab_todosOficios.fnAdjustColumnSizing();
 
-
-        function select(tab) {//selecionar primeiro elemento da tabela
-
-            $(' tr.row_selected').each(function() {
-                $(this).removeClass('row_selected');
-            });
-            var selectedElement = $($('#' + tab.attr('id') + ' tr')[1]).addClass('row_selected');
-            if ($(".numeracao", selectedElement).text() != "Em aberto") {
-                $(".n_editavel").show();
-                if ($('.validacao', selectedElement).text() === 'Inválido') {
-                    $('.btn-invalidar').addClass('disabled');
-                    $('.btn-invalidar').attr({disabled: true});
-                } else {
-                    $('.btn-invalidar').removeClass('disabled');
-                    $('.btn-invalidar').removeAttr('disabled');
-                }
-            } else {
-                $(".editavel").show();
-            }
-        }
-
-
-        select(tab_todosOficios);
-        select(tab_todosMemorandos);
         $('.visualizar-oficio').change(function() {
             var valor = $('.visualizar-oficio .active').val();
             //alert(valor);
@@ -260,42 +276,59 @@
             $(".n_editavel").hide();
             $(".editavel").hide();
             if (valor == "todos") {
-                select(tab_todosOficios);
                 $('#todosOficios').show();
-                tab_todosOficios.fnAdjustColumnSizing();
+                if ($('#todosOficios th.ui-state-default').width() == 0) {
+                    tab_todosOficios.fnAdjustColumnSizing();
+
+                }
+                //select(tab_todosOficios);
                 if (tipo_oficio != '&tipo=todos') {
                     tipo_oficio = '&tipo=todos';
-                    document.ignorarHashChange = true;
-                    document.location.hash = url_inicial + '&doc=' + doc + tipo_oficio;
+                    if (doc != null) {
+                        document.ignorarHashChange = ignorarhash;
+                        document.location.hash = url_inicial + '&doc=' + doc + tipo_oficio;
+                    }
                 }
             } else {
                 if (valor == 'validos') {
-                    select(tab_todosValidos);
                     $('#oficiosValidos').show();
-                    tab_todosValidos.fnAdjustColumnSizing();
+                    if ($('#oficiosValidos th.ui-state-default').width() == 0) {
+
+                        tab_todosValidos.fnAdjustColumnSizing();
+                    }
+                    // select(tab_todosValidos);
                     if (tipo_oficio != '&tipo=validos') {
                         tipo_oficio = '&tipo=validos';
-                        document.ignorarHashChange = true;
+                        document.ignorarHashChange = ignorarhash;
                         document.location.hash = url_inicial + '&doc=' + doc + tipo_oficio;
                     }
                 } else {
                     if (valor == 'invalidos') {
-                        select(tab_todosInvalidos);
                         $('#oficiosInvalidos').show();
-                        tab_todosInvalidos.fnAdjustColumnSizing();
+                        if ($('#oficiosInvalidos th.ui-state-default').width() == 0) {
+
+                            tab_todosInvalidos.fnAdjustColumnSizing();
+                        }
+//                        if(!tab_todosInvalidos.find('td:first').hasClass('dataTables_empty'))
+//                    else
+//                        tab_todosInvalidos.fnDraw();
+                        //      select(tab_todosInvalidos);
                         if (tipo_oficio != '&tipo=invalidos') {
                             tipo_oficio = '&tipo=invalidos';
-                            document.ignorarHashChange = true;
+                            document.ignorarHashChange = ignorarhash;
                             document.location.hash = url_inicial + '&doc=' + doc + tipo_oficio;
                         }
                     } else {
                         if (valor == 'aberto') {
-                            select(tab_todosAberto);
                             $('#oficiosEmAberto').show();
-                            tab_todosAberto.fnAdjustColumnSizing();
+                            if ($('#oficiosEmAberto th.ui-state-default').width() == 0) {
+
+                                tab_todosAberto.fnAdjustColumnSizing();
+                            }
+                            //   select(tab_todosAberto);
                             if (tipo_oficio != '&tipo=aberto') {
                                 tipo_oficio = '&tipo=aberto';
-                                document.ignorarHashChange = true;
+                                document.ignorarHashChange = ignorarhash;
                                 document.location.hash = url_inicial + '&doc=' + doc + tipo_oficio;
                             }
                         }
@@ -312,43 +345,60 @@
             $('#memorandosEmAberto').hide();
             $(".n_editavel").hide();
             $(".editavel").hide();
+
             if (valor == "todos") {
-                select(tab_todosMemorandos);
                 $('#todosMemorandos').show();
-                tab_todosMemorandos.fnAdjustColumnSizing();
+
+                if ($('#todosMemorandos th.ui-state-default').width() == 0) {
+
+                    tab_todosMemorandos.fnAdjustColumnSizing();
+                }
+
                 if (tipo_memorando != '&tipo=todos') {
                     tipo_memorando = '&tipo=todos';
-                    document.ignorarHashChange = true;
-                    document.location.hash = url_inicial + '&doc=' + doc + tipo_memorando;
+
+                    if (doc != null) {
+                        document.ignorarHashChange = ignorarhash;
+                        document.location.hash = url_inicial + '&doc=' + doc + tipo_memorando;
+                    }
                 }
             } else {
+
                 if (valor == 'validos') {
-                    select(tab_memorandosValidos);
+
                     $('#memorandosValidos').show();
-                    tab_memorandosValidos.fnAdjustColumnSizing();
+                    if ($('#memorandosValidos th.ui-state-default').width() == 0) {
+
+                        tab_memorandosValidos.fnAdjustColumnSizing();
+                    }
+
                     if (tipo_memorando != '&tipo=validos') {
                         tipo_memorando = '&tipo=validos';
-                        document.ignorarHashChange = true;
+                        document.ignorarHashChange = ignorarhash;
                         document.location.hash = url_inicial + '&doc=' + doc + tipo_memorando;
                     }
                 } else {
                     if (valor == 'invalidos') {
-                        select(tab_memorandosInvalidos);
                         $('#memorandosInvalidos').show();
-                        tab_memorandosInvalidos.fnAdjustColumnSizing();
+                        if ($('#memorandosInvalidos th.ui-state-default').width() == 0) {
+
+                            tab_memorandosInvalidos.fnAdjustColumnSizing();
+                        }
                         if (tipo_memorando != '&tipo=invalidos') {
                             tipo_memorando = '&tipo=invalidos';
-                            document.ignorarHashChange = true;
+                            document.ignorarHashChange = ignorarhash;
                             document.location.hash = url_inicial + '&doc=' + doc + tipo_memorando;
                         }
                     } else {
                         if (valor == 'aberto') {
-                            select(tab_memorandosAberto);
                             $('#memorandosEmAberto').show();
-                            tab_memorandosAberto.fnAdjustColumnSizing();
+                            if ($('#memorandosEmAberto th.ui-state-default').width() == 0) {
+
+                                tab_memorandosAberto.fnAdjustColumnSizing();
+                            }
                             if (tipo_memorando != '&tipo=aberto') {
                                 tipo_memorando = '&tipo=aberto';
-                                document.ignorarHashChange = true;
+                                document.ignorarHashChange = ignorarhash;
                                 document.location.hash = url_inicial + '&doc=' + doc + tipo_memorando;
                             }
                         }
@@ -441,6 +491,9 @@
             var id = $('tr.row_selected .campoID').text();
             document.location.href = '#!documentos|aproveitar' + temp + '&id=' + id;
         });
+<?php if (!isset($_GET['tipo'])) { ?>
+            $('.btn-todos').click();
+<?php } ?>
 
     });
 
@@ -460,7 +513,7 @@
             }
             if (doc != 'oficio') {
                 doc = 'oficio';
-                document.ignorarHashChange = true;
+                document.ignorarHashChange = ignorarhash;
                 if (tipo_oficio == null) {
                     document.location.hash = url_inicial + '&doc=' + doc;
 
@@ -483,7 +536,7 @@
             }
             if (doc != 'memorando') {
                 doc = 'memorando';
-                document.ignorarHashChange = true;
+                document.ignorarHashChange = ignorarhash;
                 if (tipo_memorando == null) {
                     document.location.hash = url_inicial + '&doc=' + doc;
 
@@ -512,15 +565,18 @@ if (isset($_GET['tipo'])) {
     <script>
         var tipo_select = <?php echo '"' . $_GET['tipo'] . '"'; ?>;
         $(document).ready(function() {
-            if (doc == 'oficio') {
-                tipo_oficio = '&tipo=' + tipo_select;
-            } else if (doc = 'memorando') {
-                tipo_memorando = '&tipo=' + tipo_select;
-            }
-            $('#option_' + doc_select + '_default').removeAttr('selected');
-            $('#option_' + doc_select + '_' + tipo_select).attr('selected', 'selected');
-            var temp = doc_select.charAt(0).toUpperCase() + doc_select.slice(1);
-            $('#combo' + temp + 'Tipo').trigger('change');
+            ignorarhash = false;
+            $('.visualizar-' + doc + ' .btn-' + tipo_select).click();
+            ignorarhash = true;
+            //            if (doc == 'oficio') {
+            //                tipo_oficio = '&tipo=' + tipo_select;
+            //            } else if (doc = 'memorando') {
+            //                tipo_memorando = '&tipo=' + tipo_select;
+            //            }
+            //            $('#option_' + doc_select + '_default').removeAttr('selected');
+            //            $('#option_' + doc_select + '_' + tipo_select).attr('selected', 'selected');
+            //            var temp = doc_select.charAt(0).toUpperCase() + doc_select.slice(1);
+            //            $('#combo' + temp + 'Tipo').trigger('change');
         });
     </script>
 <?php } ?>
