@@ -1,7 +1,7 @@
 <title>Acesso restrito</title>
 <!-- Início da página -->
 <div class="hero-unit">
-    <img class="img-circle media-object" src="publico/imagens/acesso_restrito.png" style="float:right;margin:10px; ">
+    <img class="img-circle media-object" src="publico/imagens/acesso_restrito.png" alt="Acesso restrito!" style="float:right;margin:10px;">
     <br/>
     <h1>Acesso restrito</h1>
     <br/>

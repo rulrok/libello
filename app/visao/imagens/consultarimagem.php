@@ -1,5 +1,5 @@
 <center>
-    <div class="input-append centered">
+    <div class="input-append centralizado">
         <input name="busca" id="busca" placeholder="Buscar..." type="text" class="ignorar search-query input-xxlarge">
         <!--<button type="submit" class="btn">Search</button>-->
     </div>

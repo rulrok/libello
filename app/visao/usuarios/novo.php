@@ -2,10 +2,10 @@
 <!-- Início da página -->
 <script src="publico/js/jquery/jquery.form.js"></script>
 <script src="publico/js/ajaxForms.js"></script> 
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=usuarios&a=verificarnovo">
+<form class="table centralizado" id="ajaxForm" method="post" action="index.php?c=usuarios&a=verificarnovo">
     <fieldset>
         <legend>Informações sobre o usuário</legend>
-        <p class="centered centeredText boldedText">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png"> são obrigatórios
+        <p class="centralizado textoCentralizado textoNegrito">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png" alt="Campo obrigatório"> são obrigatórios
         <div class="line">
             <label>Nome</label>
             <input required autofocus type="text" id="nome" class="input-xlarge" placeholder="Primeiro nome apenas" name="nome"   data-content="Apenas letras.">
@@ -43,8 +43,10 @@
                 <a id="ajuda" href="javascript:void(0);" data-toggle="Dica" title="Ao escolher um papel, as permissões são definidas automaticamente de acordo com o papel selecionado." ><i class="icon-question-sign"></i></a>
             </div>
             <div class="line">
-                <label>Papel</label>
-                <?php echo $this->comboPapeis ?>
+                <label for="papel">Papel</label>
+                <select required class="input-large" id="papel">
+                    <?php echo $this->comboPapeis ?>
+                </select>
             </div>
         </fieldset>
         <br/>
@@ -99,6 +101,6 @@
         $('#cpf').mask('999.999.999-99');
         varrerCampos();
         formularioAjax();
-    $("#ajuda").tooltip({placement: 'right'});
+        $("#ajuda").tooltip({placement: 'right'});
     });
 </script>

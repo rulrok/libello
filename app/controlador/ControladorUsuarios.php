@@ -8,8 +8,8 @@ require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
 class ControladorUsuarios extends Controlador {
 
     public function acaoNovo() {
-        $this->visao->comboPermissoes = ComboBoxPermissoes::montarComboBoxPadrao();
-        $this->visao->comboPapeis = ComboBoxPapeis::montarComboBoxPadrao();
+        $this->visao->comboPermissoes = ComboBoxPermissoes::montarTodasPermissoes();
+        $this->visao->comboPapeis = ComboBoxPapeis::montarTodosPapeis();
         $this->renderizar();
     }
 
@@ -22,7 +22,7 @@ class ControladorUsuarios extends Controlador {
             $userID = fnDecrypt(filter_input(INPUT_GET, 'userID'));
             if ($userID != obterUsuarioSessao()->get_idUsuario()) { //!!! Impede que o usuário edite o próprio perfil, alterando assim sua permissões e papel. Uma violação de segurança.
                 $usuarioDAO = new usuarioDAO();
-                $this->visao->comboPermissoes = ComboBoxPermissoes::montarComboBoxPadrao();
+                $this->visao->comboPermissoes = ComboBoxPermissoes::montarTodasPermissoes();
                 $email = $usuarioDAO->descobrirEmail($userID);
                 $usuario = $usuarioDAO->recuperarUsuario($email);
                 $this->visao->nome = $usuario->get_PNome();
@@ -31,7 +31,7 @@ class ControladorUsuarios extends Controlador {
                 $this->visao->dataNascimento = $usuario->get_dataNascimento();
                 $this->visao->papel = $usuarioDAO->consultarPapel($email);
                 $this->visao->idPapel = (int) (new papelDAO())->obterIdPapel($this->visao->papel);
-                $this->visao->comboPapel = ComboBoxPapeis::montarComboBoxPadrao();
+                $this->visao->comboPapel = ComboBoxPapeis::montarTodosPapeis();
                 $this->visao->permissoes = $usuarioDAO->obterPermissoes($userID);
                 $this->visao->cpf = $usuario->get_cpf();
             } else {

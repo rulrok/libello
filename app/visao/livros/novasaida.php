@@ -1,6 +1,6 @@
 <title>Registrar nova saída de livro</title>
 <!--Início da página-->
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=livros&a=registrarsaida">
+<form class="table centralizado" id="ajaxForm" method="post" action="index.php?c=livros&a=registrarsaida">
     <fieldset>
         <legend>Saída de livro</legend>
         <input hidden="true" readonly="true" type="text" class="input-small" id="livroID" name="livroID" value="<?php echo $this->livroID ?>" />

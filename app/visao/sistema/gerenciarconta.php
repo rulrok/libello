@@ -1,9 +1,9 @@
 <title>Gerenciar própria conta</title>
 <!-- Início da página -->
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=sistema&a=validaralteracoesconta">
+<form class="table centralizado" id="ajaxForm" method="post" action="index.php?c=sistema&a=validaralteracoesconta">
     <fieldset>
         <legend>Dados</legend>
-        <p class="centered centeredText boldedText">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png"> são obrigatórios</p>
+        <p class="centralizado textoCentralizado textoNegrito">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png" alt="Campo obrigatório"> são obrigatórios</p>
         <div class="line">
             <label>Nome</label>
             <input required autofocus name="nome"  type="text" value="<?php echo $this->nome ?>"/>

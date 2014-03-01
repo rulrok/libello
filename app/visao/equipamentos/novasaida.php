@@ -1,6 +1,6 @@
 <title>Registrar nova saída de equipamento</title>
 <!--Início da página-->
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=equipamentos&a=registrarsaida">
+<form class="table centralizado" id="ajaxForm" method="post" action="index.php?c=equipamentos&a=registrarsaida">
     <fieldset>
         <legend>Saída de equipamento</legend>
         <input hidden="true" readonly="true" type="text" class="input-small" id="equipamentoID" name="equipamentoID" value="<?php echo $this->equipamentoID ?>" />

@@ -1,6 +1,6 @@
 <title>Inserir novo curso</title>
 <!-- Início da página -->
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=cursospolos&a=verificarnovocurso">
+<form class="table centralizado" id="ajaxForm" method="post" action="index.php?c=cursospolos&a=verificarnovocurso">
     <fieldset>
         <legend>Inserir novo curso</legend>
         <span class="line">
@@ -8,12 +8,16 @@
             <input required autofocus type="text" class="input-xlarge" id="nomecurso" name="nomecurso" />
         </span>
         <span class="line">
-            <label>Área</label>
-            <?php echo $this->comboArea ?>
+            <label for="area">Área</label>
+            <select required class="input-large" id="area" name="area">
+                <?php echo $this->comboArea ?>
+            </select>
         </span>
         <span class="line">
             <label>Tipo</label>
-            <?php echo $this->comboTipoCurso ?>
+            <select required class="input-large" id="tipocurso" name="tipocurso">
+                <?php echo $this->comboTipoCurso ?>
+            </select>
         </span>
     </fieldset>
     <button class="btn btn-large" type="reset">Limpar</button>

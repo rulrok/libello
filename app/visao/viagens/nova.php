@@ -1,20 +1,26 @@
 <title>Nova viagem</title>
 <!-- Início da página -->
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=viagens&a=verificarnova">
+<form class="table centralizado" id="ajaxForm" method="post" action="index.php?c=viagens&a=verificarnova">
     <fieldset>
         <legend>Dados da viagem</legend>
-        <p class="centered centeredText boldedText">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png"> são obrigatórios</p>
+        <p class="centralizado textoCentralizado textoNegrito">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png" alt="Campo obrigatório"> são obrigatórios</p>
         <div class="line">
             <label for='curso'>Curso vinculado</label>
-            <?php echo $this->cursos; ?>
+            <select required class="input-large" id="curso" name="curso">
+                <?php echo $this->cursos; ?>
+            </select>
         </div>
         <div class="line" >
             <label for='polo'>Polo destino</label>
-            <?php echo $this->polos; ?>
+            <select required class="input-large" id="polo" name="polo">
+                <?php echo $this->polos; ?>
+            </select>
         </div>
         <div class="line">
             <label for="responsavel">Responsável</label>
-            <?php echo $this->responsavel; ?>
+            <select required size="7" class="input-xxxlarge" id="responsavel" name="responsavel">
+                <?php echo $this->usuarios; ?>
+            </select>
         </div>
         <hr>
         <div class="line">
@@ -61,7 +67,9 @@
             </div>
             <div class="line" style='display: table'>
                 <!--<label for='passageiros'>Passageiros</label>-->
-                <?php echo $this->passageiros ?>
+                <select required multiple size="7" class="input-xxxlarge" id="passageiros" name="passageiros[]">
+                    <?php echo $this->usuarios ?>
+                </select>
             </div>
             <br/>
         </fieldset>

@@ -1,6 +1,6 @@
 <?php
 
-require_once APP_LOCATION . 'modelo/ComboBoxCategoriasAfins.php';
+require_once APP_LOCATION . 'modelo/ComboBoxDescritores.php';
 
 if (filter_has_var(INPUT_GET, 'p') && filter_has_var(INPUT_GET, 'n')):
     $idDescritorPai = fnDecrypt(filter_input(INPUT_GET, 'p'));
@@ -8,13 +8,13 @@ if (filter_has_var(INPUT_GET, 'p') && filter_has_var(INPUT_GET, 'n')):
 
     switch ($nivel) {
         case 1:
-            echo ComboBoxCategoriasAfins::montarDescritorFilhoSegundoNivel($idDescritorPai);
+            echo ComboBoxDescritores::montarDescritorFilhoSegundoNivel($idDescritorPai);
             break;
         case 2:
-            echo ComboBoxCategoriasAfins::montarDescritorFilhoTerceiroNivel($idDescritorPai);
+            echo ComboBoxDescritores::montarDescritorFilhoTerceiroNivel($idDescritorPai);
             break;
         case 3:
-            echo ComboBoxCategoriasAfins::montarDescritorFilhoQuartoNivel($idDescritorPai);
+            echo ComboBoxDescritores::montarDescritorFilhoQuartoNivel($idDescritorPai);
             break;
         default :
             ?>

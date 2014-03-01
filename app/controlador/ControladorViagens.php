@@ -12,8 +12,7 @@ class ControladorViagens extends Controlador {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->visao->cursos = ComboBoxCurso::montarTodosOsCursos();
         $this->visao->polos = ComboBoxPolo::montarTodosOsPolos();
-        $this->visao->passageiros = ComboBoxUsuarios::montarPassageiros();
-        $this->visao->responsavel = ComboBoxUsuarios::montarResponsavelViagem();
+        $this->visao->usuarios = ComboBoxUsuarios::listarTodosUsuarios();
         $this->renderizar();
     }
 

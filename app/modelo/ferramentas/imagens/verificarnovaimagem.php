@@ -91,18 +91,18 @@ class verificarnovaimagem extends verificadorFormularioAjax {
 
             $destinoImagem = $galerias_dir . "/$cpfAutor/" . $nomeFinalArquivoImagem . "_$timestamp." . $tipoImagem;
 
-            $copiado = copy($_FILES[$arquivoImagem]['tmp_name'], $destinoImagem);
+            $imagemCopiada = copy($_FILES[$arquivoImagem]['tmp_name'], $destinoImagem);
 
-            if (!$copiado) {
-                $this->mensagemErro("Erro ao mover imagem para a pasta do servidor<br/>" . print_r($copiado, true));
+            if (!$imagemCopiada) {
+                $this->mensagemErro("Erro ao mover imagem para a pasta do servidor<br/>" . print_r($imagemCopiada, true));
             }
 
 
             $destinoImagemVetorial = $galerias_dir . "/$cpfAutor/" . $nomeFinalArquivoImagem . "_vetorial_$timestamp." . $tipoImagemVetorial;
 
-            $copiado = copy($_FILES[$arquivoVetorial]['tmp_name'], $destinoImagemVetorial);
-            if (!$copiado) {
-                $this->mensagemErro("Erro ao mover arquivo vetorial para a pasta do servidor<br/>" . print_r($copiado, true));
+            $imagemVetorialCopiada = copy($_FILES[$arquivoVetorial]['tmp_name'], $destinoImagemVetorial);
+            if (!$imagemVetorialCopiada) {
+                $this->mensagemErro("Erro ao mover arquivo vetorial para a pasta do servidor<br/>" . print_r($imagemVetorialCopiada, true));
             }
 
             if (!file_exists($galerias_dir . "/miniaturas/$cpfAutor/")) {

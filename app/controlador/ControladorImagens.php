@@ -1,8 +1,7 @@
 <?php
 
 include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
-require_once APP_LOCATION . "modelo/ComboBoxCategoriasAfins.php";
-require_once APP_LOCATION . "modelo/ComboBoxDificuldades.php";
+require_once APP_LOCATION . "modelo/ComboBoxDescritores.php";
 require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
 require_once APP_LOCATION . "modelo/ferramentas/imagens/pesquisa.php";
 
@@ -67,7 +66,7 @@ class ControladorImagens extends Controlador {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->visao->cpfAutor = obterUsuarioSessao()->get_cpf();
         $this->visao->iniciaisAutor = obterUsuarioSessao()->get_iniciais();
-        $this->visao->comboBoxCategorias = ComboBoxCategoriasAfins::montarDescritorPrimeiroNivel();
+        $this->visao->comboBoxCategorias = ComboBoxDescritores::montarDescritorPrimeiroNivel();
         $this->renderizar();
     }
 
@@ -101,6 +100,7 @@ class ControladorImagens extends Controlador {
 
     public function acaoNovodescritor() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
+        $this->visao->comboBoxCategorias = ComboBoxDescritores::montarDescritorPrimeiroNivel();
         $this->renderizar();
     }
 

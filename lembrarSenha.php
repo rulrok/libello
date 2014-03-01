@@ -24,14 +24,14 @@
 //            $_SESSION['autenticado'] = false;
 //        }
         ?>
-        <div id="login" class="centered">
-            <h1 class="centeredText">Sistema de Controle CEAD</h1>
-            <h2 class="centeredText">Alterar senha</h2>
+        <div id="login" class="centralizado">
+            <h1 class="textoCentralizado">Sistema de Controle CEAD</h1>
+            <h2 class="textoCentralizado">Alterar senha</h2>
             <div id="unifal"></div>
             <div id="cead"></div>
             <div id="loginArea">
                 <?php if (!isset($_GET['tolken'])): ?>
-                    <form class="table centered" id="ajaxForm" name="identificacao" action="./biblioteca/seguranca/lembrarSenha.php" method="post">
+                    <form class="table centralizado" id="ajaxForm" name="identificacao" action="./biblioteca/seguranca/lembrarSenha.php" method="post">
                         <fieldset>
                             <div class="line">
                                 <label for="email">Email</label>
@@ -41,11 +41,10 @@
                             <a href="logar.php" class="btn">Voltar</a>
                             <button class="btn btn-info btn-right" name="identificacao" type="submit">Enviar</button>
                         </fieldset>
-                        <!--<a href="#"><p class="centeredText">Esqueci minha senha</p></a>-->
                     </form>
                 <?php else: ?>
 
-                    <form class="table centered" id="ajaxForm" name="identificacao" action="./biblioteca/seguranca/lembrarSenha.php" method="post" >
+                    <form class="table centralizado" id="ajaxForm" name="identificacao" action="./biblioteca/seguranca/lembrarSenha.php" method="post" >
                         <fieldset>
                             <div class="line">
                                 <label>Nova senha</label>
@@ -58,11 +57,10 @@
                             </span>
                             <button disabled id="botaoEnviarNovaSenha" class="btn btn-info" name="identificacao" type="submit">Enviar</button>
                         </fieldset>
-                        <!--<a href="#"><p class="centeredText">Esqueci minha senha</p></a>-->
                     </form>
                 <?php endif; ?>
             </div>
-            <div class="error centeredText" id="erroWrap">
+            <div class="error textoCentralizado" id="erroWrap">
                 <?php
                 if (isset($_GET['m'])) {
                     echo $_GET['m'];
@@ -76,7 +74,7 @@
             <a href="http://www.capes.gov.br/" target="_blank"><div id="capes"></div></a>
         </div>
         <div id="footer" >
-            <p class="centeredText">Copyright &copy; 2012 - 2014 | Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a> | Versão <?php echo APP_VERSION; ?></p>
+            <p class="textoCentralizado">Copyright &copy; 2012 - 2014 | Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a> | Versão <?php echo APP_VERSION; ?></p>
         </div>
         <script>
             formularioAjax("ajaxForm", "#erroWrap");

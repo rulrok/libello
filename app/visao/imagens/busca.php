@@ -27,5 +27,5 @@
         </ul>
     </div>
 <?php else: ?>
-    Nenhum resultado
+    <p>Nenhum resultado</p>
 <?php endif; ?>

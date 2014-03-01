@@ -8,6 +8,9 @@
        onclick="ajax('index.php?c=imagens&a=novoDescritor', '#resultado_consulta', false);" 
        >Cadastrar</a>
 </div>
+<br/>
+<br/>
+<br/>
 <div id="resultado_consulta"></div>
 <?php
 if (isset($_GET['l'])) {

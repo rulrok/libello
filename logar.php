@@ -40,13 +40,13 @@ if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION[
             $ocultarDetalhes = true;
         }
         ?>
-        <div id="login" class="centered">
-            <h1 class="centeredText">Sistema de Controle CEAD</h1>
-            <h2 class="centeredText">Login de Acesso</h2>
+        <div id="login" class="centralizado">
+            <h1 class="textoCentralizado">Sistema de Controle CEAD</h1>
+            <h2 class="textoCentralizado">Login de Acesso</h2>
             <div id="unifal"></div>
             <div id="cead"></div>
             <div id="loginArea">
-                <form class="table centered" name="identificacao" action="./biblioteca/seguranca/verificarLogin.php" method="post">
+                <form class="table centralizado" name="identificacao" action="./biblioteca/seguranca/verificarLogin.php" method="post">
                     <fieldset>
                         <input hidden type="checkbox" class="hidden" id="fazendo_login" name="fazendo_login" checked>
                             <input hidden type="text" class="hidden" id="alvo" name="alvo" >
@@ -67,7 +67,7 @@ if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION[
 
                                 </form>
                                 </div>
-                                <div class="error centeredText">
+                                <div class="error textoCentralizado">
                                     <?php
                                     if (isset($_GET['m'])) {
                                         echo $_GET['m'];
@@ -82,7 +82,7 @@ if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION[
                                         <a href="http://www.capes.gov.br/" target="_blank"><div id="capes"></div></a>
                                     </div>
                                     <div id="footer" >
-                                        <p class="centeredText">Copyright &copy; 2012 - 2014 | Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a> | Versão <?php echo APP_VERSION; ?></p>
+                                        <p class="textoCentralizado">Copyright &copy; 2012 - 2014 | Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a> | Versão <?php echo APP_VERSION; ?></p>
                                     </div>
                                 <?php endif; ?>
                                 <script>

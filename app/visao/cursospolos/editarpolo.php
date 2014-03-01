@@ -1,9 +1,9 @@
 <title>Editar polo</title>
 <!--Início da página-->
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=cursospolos&a=verificaredicaopolo">
+<form class="table centralizado" id="ajaxForm" method="post" action="index.php?c=cursospolos&a=verificaredicaopolo">
     <fieldset>
         <legend>Dados</legend>
-        <p class="centered centeredText boldedText">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png"> são obrigatórios</p>
+        <p class="centralizado textoCentralizado textoNegrito">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png" alt="Campo obrigatório"> são obrigatórios</p>
             <br/>
             <input hidden="true" readonly="true" type="text" class="input-small" id="poloID" name="poloID" value="<?php echo $this->poloID ?>" />
 

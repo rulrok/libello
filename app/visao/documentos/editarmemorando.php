@@ -146,7 +146,7 @@
         <tr height="189">
             <td width="113" rowspan="20"></td>
             <td width="625" align="center">
-                <img src="publico/imagens/oficio/cabecalho.jpg" />
+                <img src="publico/imagens/oficio/cabecalho.jpg" alt="Cabeçalho"/>
             </td>
             <td width="56" rowspan="20"></td>
         </tr>

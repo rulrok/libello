@@ -1,6 +1,6 @@
 <title>Editando livro</title>
 <!--Início da página-->
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=livros&a=verificaredicao">
+<form class="table centralizado" id="ajaxForm" method="post" action="index.php?c=livros&a=verificaredicao">
     <fieldset>
         <legend>Alterar dados do livro</legend>
         <input hidden="true" readonly="true" type="text" class="input-small" id="livroID" name="livroID" value="<?php echo $this->livroID ?>" />

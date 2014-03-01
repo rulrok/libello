@@ -15,6 +15,7 @@
     color: #393939;
 }
 
+/* Tela cinza inicial quando o usuário acaba de logar e some quando a página termina de carregar */
 #carregando {
     position: absolute;
     width: 100%;
@@ -22,6 +23,7 @@
     z-index: 99999;
     background-color: #ccc;
 }
+
 body{
     /*background: whitesmoke repeat fixed;*/
     background-image: url("../imagens/backgroundMenu.png");
@@ -94,17 +96,17 @@ html {
     padding: 2px;
 }
 /* Conteúdos centralizados */
-.centered {
+.centralizado {
     position:relative;
     margin-left:auto;
     margin-right: auto;
 }
 /* Texto centralizado */
-.centeredText{
+.textoCentralizado{
     text-align: center !important;
 }
 
-.boldedText{
+.textoNegrito{
     font-weight: bold;
 }
 
@@ -125,86 +127,6 @@ input,select,textarea {
 td {
     font-size: 14px;
 }
-
-/* Estilo em botões de tabelas de consultas e edições
-.botaoTabela{
-    border: none !important;
-    background: none;
-}
-
-.botaoTabela:active{
-    position:relative;
-    top: 2px;
-}
-.botaoTabela{
-    position:relative;
-}
-
-.iconExcluir{
-    background: url("../imagens/icones/botoes/botao_excluir.png") no-repeat 0;
-    position: relative;
-    top: 2px;
-    left: -3px;
-}
-
-.iconEditar {
-    background: url("../imagens/icones/botoes/botao_editar.png") no-repeat 0;
-    position: relative;
-    top: 2px;
-    left: -3px;
-}
-
-.iconAdicionar{
-    background: url("../imagens/icones/botoes/botao_adicionar.png") no-repeat 0;
-    width: 22px;
-    height: 22px;
-    position: relative;
-    top: 2px;
-    left: -3px;
-}*/
-
-/* Estilo em botões e botões de envio */
-/*input[type=submit], input[type=button],input[type=reset]{
-    background-color: #FBFBFB;
-    border: 1px #CDF solid;
-    border-radius: 3px !important;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    position: relative;
-    font-size: 14px;
-    font-weight: bold;
-    color: #333;
-    min-height: 30px;
-}*/
-
-/* Botões específicos */
-/*input[value~='Cadastrar']:enabled, .table input[value~='Atualizar'] {
-    float: right;
-    min-width: 100px;
-    min-height: 30px;
-    border: 1px #0F0 solid;
-    -moz-box-shadow: 1px 1px 1px #73f480;
-    -webkit-box-shadow: 1px 1px 1px #73f480;
-    box-shadow: 1px 1px 1px #73f480;
-}
- Botões específicos 
-input[value~='Cadastrar']:disabled,input[value~='Atualizar']:disabled {
-    min-width: 100px;
-    min-height: 30px;
-    float: right;
-    background: whitesmoke;
-    color: #DDD;
-    border: 1px #fe8888 solid;
-    -moz-box-shadow: 1px 1px 1px #fe8888;
-    -webkit-box-shadow: 1px 1px 1px #fe8888;
-    box-shadow: 1px 1px 1px #fe8888;
-}*/
-
-/* Quando clicar em algum botão, ele 'desce' */
-/*input[type=button]:active,input[type=reset]:active,input[type=submit]:active{
-    position: relative;
-    top: 2px;
-}*/
 
 .campoObrigatorio{
 
@@ -241,7 +163,7 @@ input[value~='Cadastrar']:disabled,input[value~='Atualizar']:disabled {
     width: 100%;
 }
 
-.tabelaDeEdicao .details{
+.tabelaDeEdicao .detalhes{
     padding: 1px;
 }
 
@@ -390,6 +312,11 @@ input[type=search]{
     border: #ccc solid 1px;
     border-radius: 4px;
     padding: 4px;
+}
+
+/* Página de cadastro de descritores para imagens */
+.checkbox_novo_descritor{
+
 }
 
 /* FIM DO CONTENT */

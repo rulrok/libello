@@ -1,6 +1,6 @@
 <title>Cadastrar novo livro</title>
 <!--Início da página -->
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=livros&a=verificarnovo">
+<form class="table centralizado" id="ajaxForm" method="post" action="index.php?c=livros&a=verificarnovo">
     <fieldset>
         <legend>Registro de novo livro</legend>
 

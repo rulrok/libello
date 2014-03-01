@@ -9,7 +9,7 @@ function varrerCampos() {
     if (camposObrigatorios.length > 0) {
         $(camposObrigatorios).each(function() {
 
-            $(this).after("<img src=\"publico/imagens/icones/campo_obrigatorio.png\">");
+            $(this).after('<img src="publico/imagens/icones/campo_obrigatorio.png" alt="Campo obrigatório">');
             $(this).addClass("campoVarrido");
 //            $(this).bind('keyup', liberarCadastro);
             var tempoDigitando;                //timer identifier

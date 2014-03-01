@@ -83,7 +83,7 @@ function configurarTabela(parametros) {
         function fnFormatDetails(oTable, nTr)
         {
             var aData = oTable.fnGetData(nTr);
-            var sOut = '<table class="tabelaDeDetalhes centered">';
+            var sOut = '<table class="tabelaDeDetalhes centralizado">';
             sOut += '<tr><td><b>Descrição:</b></td><td>' + aData[alvosTabelaComDetalhe] + '</td></tr>';
 
             sOut += '</table>';
@@ -94,7 +94,7 @@ function configurarTabela(parametros) {
         var nCloneTh = document.createElement('th');
         var nCloneTd = document.createElement('td');
         nCloneTh.innerHTML = "Desc.";
-        nCloneTd.innerHTML = '<img src="publico/imagens/details_open.png">';
+        nCloneTd.innerHTML = '<img src="publico/imagens/details_open.png" alt="Exibir detalhes">';
         nCloneTd.className = "center";
 
         $('#' + idTabela + ' thead tr').each(function() {

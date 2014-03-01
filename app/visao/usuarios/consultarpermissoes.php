@@ -15,7 +15,7 @@
         <div class="modal-body">
 
 
-            <table class="tabelaPermissoes centered">
+            <table class="tabelaPermissoes centralizado">
                 <tr>
                     <th>Ferramenta</th>
                     <th>Permissão</th>

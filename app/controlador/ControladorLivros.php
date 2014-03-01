@@ -139,7 +139,7 @@ class ControladorLivros extends Controlador {
     public function acaoNovasaida() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
         if (filter_has_var(INPUT_GET, 'livroID')) {
-            $this->visao->comboboxPapeis = ComboBoxPapeis::montarComboBoxPadrao();
+            $this->visao->comboboxPapeis = ComboBoxPapeis::montarTodosPapeis();
             $this->visao->livro = (new livroDAO())->recuperarlivro(fnDecrypt(filter_input(INPUT_GET, 'livroID')));
             $this->visao->livroID = fnEncrypt($this->visao->livro->get_idLivro());
             $this->visao->responsavel = ComboBoxUsuarios::montarResponsavelViagem();

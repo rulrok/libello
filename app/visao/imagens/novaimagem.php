@@ -2,10 +2,10 @@
 <!-- Início da página -->
 <div id="showimg"> </div>
 
-<form class="table centered" id="upload-image-form-ajax" method="POST" action="index.php?c=imagens&a=verificarnovaimagem" enctype='multipart/form-data'>
+<form class="table centralizado" id="upload-image-form-ajax" method="POST" action="index.php?c=imagens&a=verificarnovaimagem" enctype='multipart/form-data'>
     <fieldset>
         <legend>Dados da imagem</legend>
-        <p class="centered centeredText boldedText">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png"> são obrigatórios</p>
+        <p class="centralizado textoCentralizado textoNegrito">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png" alt="Campo obrigatório"> são obrigatórios</p>
         <div class="line">
             <label for='titulo'>Título</label>
             <input required autofocus type="text" id="titulo" name="titulo" class="input-xlarge" placeholder="Nome da imagem" data-content="Título da imagem">
@@ -31,31 +31,27 @@
         </div>
         <div class="line">
             <label for='descritor1'>Descritor 1</label>
-            <?php echo $this->comboBoxCategorias; ?>
+            <select required class="cb_descritor input-large" id="descritor1" name="descritor1" numero="1">
+                <?php echo $this->comboBoxCategorias; ?>
+            </select>
         </div>
         <div class="line">
             <label for='descritor2'>Descritor 2</label>
-            <span id="descritor2_wrap">
-                <select required id="descritor2" class="cb_descritor" numero="2">
-                    <option value="default">-- Escolha um descritor acima --</option>
-                </select>
-            </span>
+            <select required id="descritor2" class="cb_descritor" numero="2">
+                <option value="default">-- Escolha um descritor acima --</option>
+            </select>
         </div>
         <div class="line">
             <label for='descritor3'>Descritor 3</label>
-            <span id="descritor3_wrap">
-                <select required id="descritor3" class="cb_descritor" numero="3">
-                    <option value="default">-- Escolha um descritor acima --</option>
-                </select>
-            </span>
+            <select required id="descritor3" class="cb_descritor" numero="3">
+                <option value="default">-- Escolha um descritor acima --</option>
+            </select>
         </div>
         <div class="line">
             <label for='descritor4'>Descritor 4</label>
-            <span id="descritor4_wrap">
-                <select required id="descritor4" class="cb_descritor" numero="4">
-                    <option value="default">-- Escolha um descritor acima --</option>
-                </select>
-            </span>
+            <select required id="descritor4" class="cb_descritor" numero="4">
+                <option value="default">-- Escolha um descritor acima --</option>
+            </select>
         </div>
         <div class="line">
             <label for="complexidade">Complexidade</label>
@@ -75,14 +71,13 @@
                 </div>
             </div>
 
-            <?php // echo $this->comboBoxComplexidades; ?>
         </div>
         <br/>
     </fieldset>
     <fieldset>
         <legend>Imagem</legend>
 
-        <div class="centered">
+        <div class="centralizado">
             <div class="line" style="line-height: 45px;">
                 <label for="raw-image-upload">Arquivo vetorizado da imagem</label>
                 <input type="hidden" name="MAX_FILE_SIZE" value="3000000" />
@@ -210,6 +205,31 @@
         }
     }
 
+    function atualizar_combobox(combo_box) {
+        $(combo_box).on('change', function() {
+            var desnum = parseInt($(this).attr("numero"));
+            if (desnum > 0 && desnum < 4) {
+                var wrap_id = "#descritor" + (desnum + 1) ;
+//                console.log(wrap_id);
+                if ($(this).val() != "default") {
+                    var $url = "index.php?c=imagens&a=obterDescritor&n=" + desnum + "&p=" + $(this).val();
+                    console.log($url);
+                    $(wrap_id).load($url, function(response, status, xhr) {
+                        if (status == "error") {
+                            $(this).val("default");
+//                        var msg = "Problema ao recuperar os descritores. Tente novamente. ";
+//                        $("#descritor2_wrap").html(msg + xhr.status + " " + xhr.statusText);
+                        } else if (status == "success") {
+//                                liberarCadastro();
+                            atualizar_combobox($("#descritor" + (desnum + 1)));
+                        }
+                    });
+                } else {
+                    $(wrap_id).load("index.php?c=imagens&a=obterDescritor");
+                }
+            }
+        });
+    }
 
     $(document).ready(function() {
 
@@ -280,31 +300,7 @@
             ajax("index.php?c=imagens&a=novaImagem", ".contentWrap", true, false, true);
         });
 
-        function atualizar_combobox(combo_box) {
-            $(combo_box).on('change', function() {
-                var desnum = parseInt($(this).attr("numero"));
-                if (desnum > 0 && desnum < 4) {
-                    var wrap_id = "#descritor" + (desnum + 1) + "_wrap";
-//                console.log(wrap_id);
-                    if ($(this).val() != "default") {
-                        var $url = "index.php?c=imagens&a=obterDescritor&n=" + desnum + "&p=" + $(this).val();
-                        console.log($url);
-                        $(wrap_id).load($url, function(response, status, xhr) {
-                            if (status == "error") {
-                                $(this).val("default");
-//                        var msg = "Problema ao recuperar os descritores. Tente novamente. ";
-//                        $("#descritor2_wrap").html(msg + xhr.status + " " + xhr.statusText);
-                            } else if (status == "success") {
-//                                liberarCadastro();
-                                atualizar_combobox($("#descritor" + (desnum + 1)));
-                            }
-                        });
-                    } else {
-                        $(wrap_id).load("index.php?c=imagens&a=obterDescritor");
-                    }
-                }
-            });
-        }
+
 
 
 

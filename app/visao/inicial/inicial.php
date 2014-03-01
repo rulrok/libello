@@ -85,7 +85,7 @@
             <div class="userInfoWrap">
                 <p>Logado como: <b><?php echo $this->nomeUsuario ?></b> (<?php echo $this->papel ?>)</p>
                 <div class="btn-toolbar" id="configuracoesSite">
-                    <div id="botoesSuperiores" class="centered btn-group">
+                    <div id="botoesSuperiores" class="centralizado btn-group">
 
 
                         <a class="btn btn-small" href="#!sistema|gerenciarconta" onclick="
@@ -107,7 +107,7 @@
         <!-- Conteúdos auxiliares, como modais e etc -->
         <div class="shaderFrame"></div>
         <div class="shaderFrameContent">
-            <div class="shaderFrameContentWrap centered">
+            <div class="shaderFrameContentWrap centralizado">
                 <div class="loading_background">
                     <img src="publico/imagens/ajax-loader.gif"> Carregando...
                 </div>
@@ -128,7 +128,7 @@
 
         <div class="popUp table" style="display: none;">
             <div class="botao_fechar" onclick="hidePopUp();"></div>
-            <p class="popUpContent centeredText "></p>
+            <p class="popUpContent textoCentralizado "></p>
         </div>
 
         <!-- Fim dos conteúdos auxiliares -->
@@ -145,9 +145,9 @@
 
             </div>
         </nav>
-        <div class="content centered">
+        <div class="content centralizado">
 
-            <div class="contentWrap centered">
+            <div class="contentWrap centralizado">
                 <?php
                 if (isset($this->conteudo)) {
                     include $this->conteudo;

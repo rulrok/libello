@@ -149,7 +149,7 @@ class ControladorEquipamentos extends Controlador {
     public function acaoNovasaida() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
         if (filter_has_var(INPUT_GET, 'equipamentoID')) {
-            $this->visao->comboboxPapeis = ComboBoxPapeis::montarComboBoxPadrao();
+            $this->visao->comboboxPapeis = ComboBoxPapeis::montarTodosPapeis();
             $this->visao->equipamento = (new equipamentoDAO())->recuperarEquipamento(fnDecrypt(filter_input(INPUT_GET, 'equipamentoID')));
             $this->visao->equipamentoID = fnEncrypt($this->visao->equipamento->get_idEquipamento());
             $this->visao->responsavel = ComboBoxUsuarios::montarResponsavelViagem();
