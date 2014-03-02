@@ -1,7 +1,6 @@
 <?php
 
 require_once 'abstractDAO.php';
-//require_once APP_LOCATION . 'modelo/vo/ImagemCategoria.php';
 require_once APP_LOCATION . 'modelo/vo/Descritor.php';
 require_once APP_LOCATION . 'modelo/enumeracao/TipoEventoImagens.php';
 require_once APP_LOCATION . 'modelo/enumeracao/ImagensDescritor.php';
@@ -9,28 +8,30 @@ require_once APP_LOCATION . 'modelo/enumeracao/ImagensDescritor.php';
 class imagensDAO extends abstractDAO {
 
     public function consultarGaleria($nomeGaleria) {
-        $nomeGaleria = parent::quote($nomeGaleria);
-        $sql = "SELECT idGaleria FROM imagens_galeria WHERE nomeGaleria LIKE " . $nomeGaleria;
-
-        $resultado = parent::getConexao()->query($sql)->fetchAll();
-        return $resultado;
+        $sql = "SELECT idGaleria FROM imagens_galeria WHERE nomeGaleria = :nomeGaleria";
+        $params = array(
+            ':nomeGaleria' => [$nomeGaleria, PDO::PARAM_STR]
+        );
+        return $this->executarSelect($sql, $params, false);
     }
 
     public function cadastrarGaleria($nomeGaleria) {
-        $nomeGaleria = parent::quote($nomeGaleria);
-        $data = parent::quote(date('Y-m-j'));
-        $sql = "INSERT INTO imagens_galeria(nomeGaleria,qtdFotos,dataCriacao) VALUES ($nomeGaleria,0,$data)";
+        $sql = "INSERT INTO imagens_galeria(nomeGaleria,qtdFotos,dataCriacao) VALUES (:nomeGaleria,0,:data)";
+        $params = array(
+            ':nomeGaleria' => [$nomeGaleria, PDO::PARAM_STR]
+            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
+        );
 
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
+        return $this->executarQuery($sql, $params);
     }
 
-    public function todasImagens($limit = "") {
-        $sql = "SELECT * FROM imagens_imagem ORDER BY idImagem $limit";
+    public function consultarTodasAsImagens($limit = null) {
+        $limitStr = "";
+        if ($limit !== null) {
+            $limit = (int) $limit;
+            $limitStr = "LIMIT $limit";
+        }
+        $sql = "SELECT * FROM imagens_imagem ORDER BY idImagem $limitStr";
         return $this->executarSelect($sql);
     }
 
@@ -43,7 +44,7 @@ class imagensDAO extends abstractDAO {
         return $this->executarSelect($sql, $params);
     }
 
-    public function consultarDescritoresPais($colunas = "*", $condicao = null, $condicaoJuncao = null) {
+    public function consultarDescritoresNivel1($colunas = "*", $condicao = null, $condicaoJuncao = null) {
 
         if ($condicao == null) {
             $condicao = " WHERE pai = " . ImagensDescritor::RAIZ_ID;
@@ -55,10 +56,8 @@ class imagensDAO extends abstractDAO {
             $condicaoJuncao = "";
         }
 
-        $sql = "SELECT " . $colunas . " FROM imagens_descritor " . $condicaoJuncao . $condicao;
-
-        $resultado = parent::getConexao()->query($sql)->fetchAll();
-        return $resultado;
+        $sql = "SELECT $colunas FROM imagens_descritor $condicaoJuncao $condicao";
+        return $this->executarSelect($sql);
     }
 
     public function consultarDescritor($colunas = "*", $condicao = null, $condicaoJuncao = null) {
@@ -72,13 +71,12 @@ class imagensDAO extends abstractDAO {
             $condicaoJuncao = "";
         }
 
-        $sql = "SELECT " . $colunas . " FROM imagens_descritor " . $condicaoJuncao . $condicao;
+        $sql = "SELECT  $colunas  FROM imagens_descritor $condicaoJuncao $condicao";
 
-        $resultado = parent::getConexao()->query($sql)->fetchAll();
-        return $resultado;
+        return $this->executarSelect($sql);
     }
 
-    public function consultarCaminhoDescritores($idDescritorBase) {
+    public function consultarCaminhoAteRaiz($idDescritorBase) {
         $caminho = array();
 
         $resultado = static::consultarDescritor('nome, pai', "idDescritor = $idDescritorBase");
@@ -114,44 +112,25 @@ class imagensDAO extends abstractDAO {
         return $this->executarSelect($sql);
     }
 
-    public function cadastrarCategoria(ImagemCategoria $categoria) {
-        $sql = "INSERT INTO imagens_categoria(nomeCategoria) VALUES ";
-        $nomeCategoria = parent::quote($categoria->get_nomeCategoria());
-        $values = "($nomeCategoria)";
-        try {
-            parent::getConexao()->query($sql . $values);
-            return true;
-        } catch (Exception $e) {
-            echo $e;
-            return false;
-        }
-    }
-
     public function cadastrarImagem(Imagem $imagem) {
         $sql = "INSERT INTO imagens_imagem(idGaleria,titulo,observacoes,dificuldade,cpfAutor,ano,nomeArquivo,nomeArquivoMiniatura,nomeArquivoVetorial,descritor1,descritor2,descritor3,descritor4) VALUES ";
-        $idGaleria = (int) $imagem->get_idGaleria();
-//        $idSubcategoria = (int) $imagem->get_idSubcategoria();
-        $titulo = parent::quote($imagem->get_titulo());
-        $observacoes = parent::quote($imagem->get_observacoes());
-        $dificuldade = parent::quote($imagem->get_dificuldade());
-        $cpfAutor = parent::quote($imagem->get_cpfAutor());
-        $ano = parent::quote($imagem->get_ano());
-        $nomeArquivo = parent::quote($imagem->get_nomeArquivo());
-        $nomeArquivoMiniatura = parent::quote($imagem->get_nomeArquivoMiniatura());
-        $nomeArquivoVetorial = parent::quote($imagem->get_nomeArquivoVetorial());
-        $des1 = $imagem->get_descritor1();
-        $des2 = $imagem->get_descritor2();
-        $des3 = $imagem->get_descritor3();
-        $des4 = $imagem->get_descritor4();
-        $values = "($idGaleria,$titulo,$observacoes,$dificuldade,$cpfAutor,$ano,$nomeArquivo,$nomeArquivoMiniatura,$nomeArquivoVetorial,$des1,$des2,$des3,$des4)";
-        try {
-            parent::getConexao()->query($sql . $values);
-            return true;
-        } catch (Exception $e) {
-            echo $e;
-            echo $sql . $values;
-            return false;
-        }
+        $sql .= "(:idGaleria,:titulo,:observacoes,:dificuldade,:cpfAutor,:ano,:nomeArquivo,:nomeArquivoMiniatura,:nomeArquivoVetorial,:des1,:des2,:des3,:des4)";
+        $params = array(
+            ':idGaleria' => [$imagem->get_idGaleria(), PDO::PARAM_INT]
+            , ':titulo' => [$imagem->get_titulo(), PDO::PARAM_STR]
+            , ':observacoes' => [$imagem->get_observacoes(), PDO::PARAM_STR]
+            , ':dificuldade' => [$imagem->get_dificuldade(), PDO::PARAM_STR]
+            , ':cpfAutor' => [$imagem->get_cpfAutor(), PDO::PARAM_STR]
+            , ':ano' => [$imagem->get_ano(), PDO::PARAM_STR]
+            , ':nomeArquivo' => [$imagem->get_nomeArquivo(), PDO::PARAM_STR]
+            , ':nomeArquivoMiniatura' => [$imagem->get_nomeArquivoMiniatura(), PDO::PARAM_STR]
+            , ':nomeArquivoVetorial' => [$imagem->get_nomeArquivoVetorial(), PDO::PARAM_STR]
+            , ':des1' => [$imagem->get_descritor1(), PDO::PARAM_INT]
+            , ':des2' => [$imagem->get_descritor2(), PDO::PARAM_INT]
+            , ':des3' => [$imagem->get_descritor3(), PDO::PARAM_INT]
+            , ':des4' => [$imagem->get_descritor4(), PDO::PARAM_INT]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
 //    public function consultarImagem(Imagem $imagem) {
@@ -172,28 +151,11 @@ class imagensDAO extends abstractDAO {
 ////        return $resultado;
 //    }
 
-    public function removerCategoria($idCategoria) {
-        if ($idCategoria !== null) {
-            if (is_array($idCategoria)) {
-                $idCategoria = $idCategoria['categoriaID'];
-            }
-            $idCategoria = (int) $idCategoria;
-            $sql = "DELETE FROM imagens_categoria WHERE idCategoria = " . $idCategoria;
-            try {
-                parent::getConexao()->query($sql);
-                return true;
-            } catch (Exception $e) {
-                return false;
-            }
-        }
-    }
 
-    public function atualizarDescritor($idCategoria, Descritor $novosDados) {
+    public function atualizarDescritor($idDescritor, Descritor $novosDados) {
 
-        $idCategoria = (int) $idCategoria;
-        $dadosAntigos = (new imagensDAO())->recuperarDescritor($idCategoria);
-
-        $condicao = " WHERE idCategoria = " . $idCategoria;
+        $idDescritor = (int) $idDescritor;
+        $dadosAntigos = $this->recuperarDescritor($idDescritor);
 
         $nome = $novosDados->get_nomeCategoria();
         if ($nome == null) {
@@ -201,31 +163,13 @@ class imagensDAO extends abstractDAO {
         }
 
 
-        $sql = "UPDATE imagens_categoria SET nomeCategoria = '" . $nome . "'";
-        $sql .= $condicao;
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            echo $e;
-            return false;
-        }
-    }
+        $sql = "UPDATE imagens_descritor SET nomeCategoria = :nome WHERE idDescritor = :idDescritor";
+        $params = array(
+            ':nome' => [$nome, PDO::PARAM_STR],
+            ':idDescritor' => [$idDescritor, PDO::PARAM_INT]
+        );
 
-    /** Retorna a lista com todos os polos, com base nas colunas especificadas e nas condições de seleção.
-     * 
-     * @param string $colunas Colunas a serem retornadas, por padrão, retorna
-     * @param type $condicao A string que precede WHERE na cláusula SQL. Não é necessário escrever a palavra WHERE.
-     * @return type A tabela com o resultado da consulta.
-     */
-    public function consultar($colunas = "*", $condicao = null) {
-
-//        if ($condicao == null) {
-//            $condicao = "";
-//        }
-//        $sql = "SELECT " . $colunas . " FROM polo " . $condicao;
-//        $resultado = parent::getConexao()->query($sql)->fetchAll();
-//        return $resultado;
+        return $this->executarQuery($sql, $params);
     }
 
     public function recuperarDescritor($idDescritor) {
@@ -235,110 +179,6 @@ class imagensDAO extends abstractDAO {
             ':idDescritor' => [$idDescritor, PDO::PARAM_INT]
         );
         return $this->executarSelect($sql, $params, false, 'Descritor');
-    }
-
-    public function recuperarSubcategoria($subcategoriaID) {
-        if (is_array($subcategoriaID)) {
-            $subcategoriaID = $subcategoriaID['subcategoriaID'];
-        }
-
-        $sql = "SELECT * from imagens_subcategoria WHERE idSubcategoria ='" . $subcategoriaID . "'";
-        try {
-            $stmt = parent::getConexao()->query($sql);
-            $stmt->setFetchMode(\PDO::FETCH_CLASS, 'ImagemSubcategoria');
-            $categoria = $stmt->fetch();
-//            if ($usuario == null) {
-//                $usuario = "Usuário não encontrado";
-//            }
-        } catch (Exception $e) {
-            $categoria = NULL;
-        }
-        return $categoria;
-    }
-
-    public function registrarRemocaoCategoria() {
-        $quote = "\"";
-        $tipo = TipoEventoImagens::REMOCAO_CATEGORIA;
-        $usuarioID = obterUsuarioSessao()->get_idUsuario();
-        $sql = "INSERT INTO imagens_evento(tipoEvento,usuario,data,hora) VALUES ";
-        $sql .= " ($tipo,$usuarioID,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
-    }
-
-    public function registrarRemocaoSubcategoria() {
-        $quote = "\"";
-        $tipo = TipoEventoImagens::REMOCAO_SUBCATEGORIA;
-        $usuarioID = obterUsuarioSesget_idUsuario > get_id();
-        $sql = "INSERT INTO imagens_evento(tipoEvento,usuario,data,hora) VALUES ";
-        $sql .= " ($tipo,$usuarioID,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
-    }
-
-    public function registrarAlteracaoCategoria($idCategoria) {
-        $quote = "\"";
-        $tipo = TipoEventoImagens::ALTERACAO_CATEGORIA;
-        $usuarioID = obterUsuget_idUsuariossao()->get_id();
-        $sql = "INSERT INTO imagens_evento(tipoEvento,usuario,categoria,data,hora) VALUES ";
-        $sql .= " ($tipo,$usuarioID,$idCategoria,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
-    }
-
-    public function registrarAlteracaoSubcategoria($idSubcategoria) {
-        $quote = "\"";
-        $tipo = TipoEventoImagens::ALTERACAO_CATEGORIA;
-        $usuarioID = oget_idUsuariouarioSessao()->get_id();
-        $sql = "INSERT INTO imagens_evento(tipoEvento,usuario,subcategoria,data,hora) VALUES ";
-        $sql .= " ($tipo,$usuarioID,$idSubcategoria,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
-    }
-
-    public function registrarCadastroImagem($idImagem) {
-        $quote = "\"";
-        $tipo = TipoEventoImagens::CADASTRO_IMAGEM;
-        $usuariget_idUsuarioobterUsuarioSessao()->get_id();
-        $sql = "INSERT INTO imagens_evento(tipoEvento,usuario,imagem,data,hora) VALUES ";
-        $sql .= " ($tipo,$usuarioID,$idImagem,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
     }
 
 }

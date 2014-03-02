@@ -61,7 +61,7 @@ class pesquisa {
 
     public function obterTodas($pagina, $itensPorPagina = 10) {
         $imagensDAO = new imagensDAO();
-        $res1 = $imagensDAO->todasImagens();
+        $res1 = $imagensDAO->consultarTodasAsImagens();
         $nr = sizeof($res1);
         $this->temResultados = ($nr != 0);
         if (!$this->temResultados) {
@@ -82,7 +82,7 @@ class pesquisa {
 
         $limite = 'LIMIT ' . ($pagina - 1) * $itensPorPagina . ',' . $itensPorPagina;
 
-        $this->resultados = $imagensDAO->todasImagens($limite);
+        $this->resultados = $imagensDAO->consultarTodasAsImagens($limite);
 
         $this->criarPaginacao($pagina, $ultimaPagina);
     }

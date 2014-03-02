@@ -1,11 +1,11 @@
 <div class="btn-group" data-toggle="buttons-radio" id="abas">
     <a href="javascript:void(0);" class="btn ignorar"
        id="b_gerenciar" 
-       onclick="ajax('index.php?c=imagens&a=gerenciarDescritores', '#resultado_consulta', false);" 
+       onclick="ajax('index.php?c=imagens&a=gerenciardescritores', '#resultado_consulta', false);" 
        >Gerenciar</a>
     <a href="javascript:void(0);" class="btn ignorar" 
        id="b_novo" 
-       onclick="ajax('index.php?c=imagens&a=novoDescritor', '#resultado_consulta', false);" 
+       onclick="ajax('index.php?c=imagens&a=novodescritor', '#resultado_consulta', false);" 
        >Cadastrar</a>
 </div>
 <br/>

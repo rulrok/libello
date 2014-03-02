@@ -58,7 +58,7 @@ class ComboBoxDescritores {
     private static function montarCaixaSelecaoDescritorPrimeiroNivel() {
         $codigo = "";
         $imagensDAO = new imagensDAO();
-        $categorias = $imagensDAO->consultarDescritoresPais();
+        $categorias = $imagensDAO->consultarDescritoresNivel1();
         if (sizeof($categorias) == 0) {
             $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem descritores cadastrados --</option>\n";
 //            $body = "Usuário: " . obterUsuarioSessao()->get_PNome() . " " . obterUsuarioSessao()->get_UNome() . " (" . obterUsuarioSessao()->get_email() . ")%0D%0A";
