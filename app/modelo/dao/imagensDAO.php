@@ -25,6 +25,19 @@ class imagensDAO extends abstractDAO {
         return $this->executarQuery($sql, $params);
     }
 
+    public function cadastrarDescritor(Descritor $descritor, $idDescritorPai) {
+        $sql = 'INSERT INTO imagens_descritor_aux_inserir(nome,pai) VALUES (:nome,:pai)';
+        $params = array(
+            ':nome' => [$descritor->get_nome(), PDO::PARAM_STR]
+            , ':pai' => [$idDescritorPai, PDO::PARAM_INT]
+        );
+        return $this->executarQuery($sql, $params);
+    }
+
+    public function cadastrarDescritorNivel1(Descritor $descritor) {
+        return $this->cadastrarDescritor($descritor, ImagensDescritor::ID_RAIZ_NIVEL_ZERO);
+    }
+
     public function consultarTodasAsImagens($limit = null) {
         $limitStr = "";
         if ($limit !== null) {
@@ -47,9 +60,9 @@ class imagensDAO extends abstractDAO {
     public function consultarDescritoresNivel1($colunas = "*", $condicao = null, $condicaoJuncao = null) {
 
         if ($condicao == null) {
-            $condicao = " WHERE pai = " . ImagensDescritor::RAIZ_ID;
+            $condicao = " WHERE pai = " . ImagensDescritor::ID_RAIZ_NIVEL_ZERO;
         } else {
-            $condicao = " WHERE pai = " . ImagensDescritor::RAIZ_ID . " AND " . $condicao;
+            $condicao = " WHERE pai = " . ImagensDescritor::ID_RAIZ_NIVEL_ZERO . " AND " . $condicao;
         }
 
         if ($condicaoJuncao == null) {

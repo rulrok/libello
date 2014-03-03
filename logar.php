@@ -87,6 +87,7 @@ if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION[
                                 <?php endif; ?>
                                 <script>
             $(document).ready(function() {
+                document.paginaAlterada = false;
                 $("#alvo").prop("value", location.hash);
             });
                                 </script>

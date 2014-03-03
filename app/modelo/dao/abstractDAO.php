@@ -123,6 +123,10 @@ abstract class abstractDAO {
     public function rollback() {
         $this->getConexao()->rollBack();
     }
+    
+    public function transacaoEstaAberta(){
+        return $this->getConexao()->inTransaction();
+    }
 
     /*
       abstract function atualizar($valueObject, $condicao = null);

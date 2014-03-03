@@ -13,7 +13,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
         define("ALTURA_THUMB", "150");
         $formatosPermitidosImagens = array("jpg", "jpeg", "png");
         $formatosPermitidosVetoriais = array("svg", "cdr");
-        $galerias_dir = "privado/galerias";
+        $galerias_dir = APP_PRIVATE_DIR . "galerias";
 
         $tamanhoMaximo = filter_input(INPUT_POST, 'MAX_FILE_SIZE');
         $arquivoImagem = "image-upload";
@@ -30,14 +30,15 @@ class verificarnovaimagem extends verificadorFormularioAjax {
 
             $titulo = filter_input(INPUT_POST, 'titulo');
             $ano = filter_input(INPUT_POST, 'ano');
-            $cpfAutor = filter_input(INPUT_POST, 'cpfautor');
-            if (!validadorCPF::validarCPF($cpfAutor)) {
-                $cpfAutor = obterUsuarioSessao()->get_cpf();
-                if (!validadorCPF::validarCPF($cpfAutor)) {
-                    $this->mensagemErro("CPF Inválido");
-                }
-            }
-            $cpfAutor = validadorCPF::normalizarCPF($cpfAutor);
+            $cpfAutor = validadorCPF::normalizarCPF(obterUsuarioSessao()->get_cpf());
+//            $cpfAutor = filter_input(INPUT_POST, 'cpfautor');
+//            if (!validadorCPF::validarCPF($cpfAutor)) {
+//                $cpfAutor = obterUsuarioSessao()->get_cpf();
+//                if (!validadorCPF::validarCPF($cpfAutor)) {
+//                    $this->mensagemErro("CPF Inválido");
+//                }
+//            }
+//            $cpfAutor = validadorCPF::normalizarCPF($cpfAutor);
 
             $iniciais = obterUsuarioSessao()->get_iniciais();
 

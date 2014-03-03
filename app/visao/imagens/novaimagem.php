@@ -17,7 +17,7 @@
         <hr>
         <div class="line">
             <label>CPF (autor)</label>
-            <input required readonly type="text" maxlength="11" id="cpfautor" name="cpfautor" class="input-xlarge" placeholder="___.___.___-__" data-content="Seu CPF cadastrado no sistema." value="<?php echo $this->cpfAutor; ?>">
+            <input required disabled type="text" maxlength="11" id="cpfautor" name="cpfautor" class="input-xlarge" placeholder="___.___.___-__" data-content="Seu CPF cadastrado no sistema." value="<?php echo $this->cpfAutor; ?>">
         </div>
         <div class="line">
             <label for='iniciaisAutor'>Iniciais do autor</label>

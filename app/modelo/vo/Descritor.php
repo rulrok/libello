@@ -17,7 +17,7 @@ class Descritor {
         return $this->nome;
     }
 
-    public function get_pai() {
+    public function get_idPai() {
         return $this->pai;
     }
 
