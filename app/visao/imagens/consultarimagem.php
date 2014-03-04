@@ -7,8 +7,11 @@
 
 <div id="resultados"></div>
 <script>
-    function buscar() {
-        ajax('index.php?c=imagens&a=busca&q=' + $("#campo_busca").val(), '#resultados', false);
+    function buscar(pagina) {
+        if (pagina === undefined) {
+            pagina = 1;
+        }
+        ajax('index.php?c=imagens&a=busca&p=' + pagina + '&q=' + $("#campo_busca").val(), '#resultados', false);
     }
     $(document).ready(function() {
         buscar(); //Exibe todas as imagens
@@ -21,7 +24,7 @@
                 clearTimeout(timeoutBuscaId);
                 timeoutBuscaId = setTimeout(function() {
                     buscar();
-                }, 700);
+                }, 300);
             }
 
         });

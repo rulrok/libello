@@ -12,7 +12,7 @@
         </div>
         <div class="line">
             <label for='ano'>Ano</label>
-            <input required type="text" id="ano" name="ano" class="input-xlarge" placeholder="Ano de criação da imagem">
+            <input required size="4" type="number" maxlength="4" id="ano" name="ano" class="input-xlarge" placeholder="Ano de criação da imagem">
         </div>
         <hr>
         <div class="line">

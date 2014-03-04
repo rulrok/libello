@@ -16,7 +16,7 @@
 }
 
 /* Tela cinza inicial quando o usuário acaba de logar e some quando a página termina de carregar */
-#carregando {
+#telaCarregando {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -319,6 +319,34 @@ input[type=search]{
 
 }
 
+#resultadoImagens {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    padding: 20px;
+}
+
+#resultadoImagens p.descricao:before {
+    content: "“ ";
+    vertical-align: -.15em;
+    font-size: 1.75em;
+    font-family: Georgia, serif;
+    color: #888;
+}
+
+#resultadoImagens p.descricao:after {
+    content: '  ”';
+    vertical-align: -.50em;
+    font-size: 1.75em;
+    font-family: Georgia, serif;
+    color: #888;
+}
+
+
+#resultadoImagens p.descricao {
+    color: #666;
+}
+
 /* FIM DO CONTENT */
 /*================================================*/
 /* FOOTER */
@@ -432,7 +460,7 @@ footer p{
 /*================================================*/
 /* HEADER */
 
-#barra_superior {
+#barraSuperior {
     margin: 0;
     border: 1px solid #3871a6;
     background: #3871a6;
@@ -467,7 +495,7 @@ footer p{
     border-top-style: none;
     border-radius: 20px;
 }
-.headerWrap h1 {
+.headerWrap p {
     font-size: 150%;
     text-align: center;
     font-family: sans-serif;
@@ -505,7 +533,7 @@ header .logo {
     header .logo{
         display: none;
     }
-    header h1{
+    header p{
         font-size: 120%;
         max-width: 150px;
     }
@@ -518,7 +546,7 @@ header .logo {
     }
 }
 @media (min-width:500px ) and ( max-width:800px){
-    header h1{
+    header p{
         display: none;
     }
     div#informacoes{
@@ -526,18 +554,25 @@ header .logo {
     }
 }
 @media (min-width:800px) and (max-width:1100px){
-    header h1{
+    header p{
         font-size: 150%;
     }
 }
 header .userInfoWrap {
     position: absolute;
     background: #FFF;
-    border-radius: 5px 0 0 5px;
+    border-radius: 25px 0 0 5px;
     right: 0px;
     top: 20px;
     padding: 20px;
 }
+
+header #avisos {
+    width: 50%;
+    position: relative;
+    left: -80px;
+}
+
 header .userInfoWrap *{
     /*font-size: 100%;*/
     font-family: monospace;

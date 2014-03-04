@@ -32,7 +32,7 @@
         <![endif]-->
         <!-- Fim ESTILOS -->
 
-    <div id="carregando"><span>Carregando...</span></div>
+    <div id="telaCarregando"><span>Carregando...</span></div>
     <!-- PRE SCRIPTS -->
         <!--<script src="http://ie.microsoft.com/testdrive/HTML5/CompatInspector/inspector.js"></script>-->
         <!--<script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>-->
@@ -71,7 +71,7 @@
 </head>
 <body>
     <div id="frameConteudo">
-        <hr id="barra_superior">
+        <hr id="barraSuperior">
         <header>
             <figure>
                 <map name="#logoMap">
@@ -80,7 +80,18 @@
                 <img class="logo" src="publico/imagens/cead.png" usemap="#logoMap">
             </figure>
             <div class="headerWrap">
-                <h1>Controle CEAD <sup>(versão <?php echo APP_VERSION; ?>)</sup></h1>
+
+                <p class="centralizado">Controle CEAD <sup>(versão <?php echo APP_VERSION; ?>)</sup></p>
+                <?php
+                if ($this->administrador && $this->temErros) :
+                    ?>
+                    <div id="avisos" class="centralizado alert alert-error">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <?php
+                        echo $this->erros;
+                        ?>
+                    </div>
+                <?php endif; ?>
             </div>
             <div class="userInfoWrap">
                 <p>Logado como: <b><?php echo $this->nomeUsuario ?></b> (<?php echo $this->papel ?>)</p>
@@ -95,9 +106,9 @@
                                     $('.actualTool').removeClass('actualTool');
                                 }"><i class="icon-cog"></i> Gerenciar Conta</a>
 
-                        <?php // if ($this->administrador): ?>
+                        <?php // if ($this->administrador):  ?>
                                 <!--<a class="btn btn-small" href="#!sistema|administracao"><i class="icon-fire"></i> Administração</a>-->
-                        <?php // endif; ?>
+                        <?php // endif;  ?>
                         <a class="btn btn-small" href="sair.php"><i class="icon-off"></i> Sair</a>
                     </div>
                 </div>
@@ -286,7 +297,7 @@
                     $("#botoesSuperiores").children(":first-child").before('<a id="fullscreen-toggle" title="Modo tela cheia" class="btn btn-small" href="javascript:void(0)" onclick="toggleFullScreen();"><i class="icon-fullscreen"></i></a>');
                 }
                 setTimeout(function() {
-                    $("#carregando").fadeOut(150);
+                    $("#telaCarregando").fadeOut(150);
                 }, 150);
     </script>
 

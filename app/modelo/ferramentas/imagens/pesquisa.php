@@ -95,7 +95,7 @@ class pesquisa {
         if (!$this->temResultados) {
             $this->paginacao = null;
             $this->resultados = array();
-            exit;
+            return;
         }
 
         $pagina = preg_replace('#[^0-9]#i', '', $pagina);

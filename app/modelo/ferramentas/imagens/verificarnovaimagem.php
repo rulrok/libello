@@ -13,7 +13,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
         define("ALTURA_THUMB", "150");
         $formatosPermitidosImagens = array("jpg", "jpeg", "png");
         $formatosPermitidosVetoriais = array("svg", "cdr");
-        $galerias_dir = APP_PRIVATE_DIR . "galerias";
+        $galerias_dir = APP_GALLERY_DIR;
 
         $tamanhoMaximo = filter_input(INPUT_POST, 'MAX_FILE_SIZE');
         $arquivoImagem = "image-upload";
@@ -30,27 +30,15 @@ class verificarnovaimagem extends verificadorFormularioAjax {
 
             $titulo = filter_input(INPUT_POST, 'titulo');
             $ano = filter_input(INPUT_POST, 'ano');
-            $cpfAutor = validadorCPF::normalizarCPF(obterUsuarioSessao()->get_cpf());
-//            $cpfAutor = filter_input(INPUT_POST, 'cpfautor');
-//            if (!validadorCPF::validarCPF($cpfAutor)) {
-//                $cpfAutor = obterUsuarioSessao()->get_cpf();
-//                if (!validadorCPF::validarCPF($cpfAutor)) {
-//                    $this->mensagemErro("CPF Inválido");
-//                }
-//            }
-//            $cpfAutor = validadorCPF::normalizarCPF($cpfAutor);
-
-            $iniciais = obterUsuarioSessao()->get_iniciais();
-
             $observacoes = filter_input(INPUT_POST, 'observacoes');
             $descritor1 = fnDecrypt(filter_input(INPUT_POST, 'descritor1'));
             $descritor2 = fnDecrypt(filter_input(INPUT_POST, 'descritor2'));
             $descritor3 = fnDecrypt(filter_input(INPUT_POST, 'descritor3'));
             $descritor4 = fnDecrypt(filter_input(INPUT_POST, 'descritor4'));
-//            $categoria = fnDecrypt(filter_input(INPUT_POST, 'categoria'));
-//            $subcategoria = fnDecrypt(filter_input(INPUT_POST, 'subcategoria'));
-//            $dificuldade = fnDecrypt(filter_input(INPUT_POST, 'complexidade'));
             $dificuldade = filter_input(INPUT_POST, 'complexidade');
+            //Campos obtidos diretamente do sistema
+            $cpfAutor = validadorCPF::normalizarCPF(obterUsuarioSessao()->get_cpf());
+            $iniciais = obterUsuarioSessao()->get_iniciais();
 
             $nomeImagem = $_FILES[$arquivoImagem]['name'];
             //OBS $_FILES[arq]['type'] não verifica o tipo do arquivo pelo seu cabeçalho, apenas pela extensão, então extrair a extensão pelo o nome ou pelo
@@ -86,37 +74,36 @@ class verificarnovaimagem extends verificadorFormularioAjax {
 
             $timestamp = time();
 
-            if (!file_exists($galerias_dir . "/$cpfAutor/")) {
-                mkdir($galerias_dir . "/$cpfAutor/");
+            if (!file_exists(ROOT . $galerias_dir . "$cpfAutor/")) {
+                mkdir(ROOT . $galerias_dir . "$cpfAutor/");
             }
 
-            $destinoImagem = $galerias_dir . "/$cpfAutor/" . $nomeFinalArquivoImagem . "_$timestamp." . $tipoImagem;
+            $destinoImagem = $galerias_dir . "$cpfAutor/" . $nomeFinalArquivoImagem . "_$timestamp." . $tipoImagem;
 
-            $imagemCopiada = copy($_FILES[$arquivoImagem]['tmp_name'], $destinoImagem);
+            $imagemCopiada = copy($_FILES[$arquivoImagem]['tmp_name'], ROOT . $destinoImagem);
 
             if (!$imagemCopiada) {
                 $this->mensagemErro("Erro ao mover imagem para a pasta do servidor<br/>" . print_r($imagemCopiada, true));
             }
 
 
-            $destinoImagemVetorial = $galerias_dir . "/$cpfAutor/" . $nomeFinalArquivoImagem . "_vetorial_$timestamp." . $tipoImagemVetorial;
+            $destinoImagemVetorial = $galerias_dir . "$cpfAutor/" . $nomeFinalArquivoImagem . "_vetorial_$timestamp." . $tipoImagemVetorial;
 
-            $imagemVetorialCopiada = copy($_FILES[$arquivoVetorial]['tmp_name'], $destinoImagemVetorial);
+            $imagemVetorialCopiada = copy($_FILES[$arquivoVetorial]['tmp_name'], ROOT . $destinoImagemVetorial);
             if (!$imagemVetorialCopiada) {
                 $this->mensagemErro("Erro ao mover arquivo vetorial para a pasta do servidor<br/>" . print_r($imagemVetorialCopiada, true));
             }
 
-            if (!file_exists($galerias_dir . "/miniaturas/$cpfAutor/")) {
-                mkdir($galerias_dir . "/miniaturas/$cpfAutor/");
+            if (!file_exists(ROOT . $galerias_dir . "miniaturas/$cpfAutor/")) {
+                mkdir(ROOT . $galerias_dir . "miniaturas/$cpfAutor/");
             }
-            $destinoImagemMiniatura = $galerias_dir . "/miniaturas/$cpfAutor/" . $nomeFinalArquivoImagem . "_thumb_$timestamp." . $tipoImagem;
-            $this->make_thumb($destinoImagem, $destinoImagemMiniatura, LARGURA_THUMB, ALTURA_THUMB);
+            $destinoImagemMiniatura = $galerias_dir . "miniaturas/$cpfAutor/" . $nomeFinalArquivoImagem . "_thumb_$timestamp." . $tipoImagem;
+            $this->make_thumb(ROOT.$destinoImagem, ROOT.$destinoImagemMiniatura, LARGURA_THUMB, ALTURA_THUMB);
 
             if (!file_exists($destinoImagem)) {
                 $this->mensagemErro("Erro ao criar a miniatura para a imagem<br/>" . print_r($destinoImagem, true));
             }
             $imagemVO = new Imagem();
-
 
             $idGaleria = $imagensDAO->consultarGaleria($cpfAutor)[0][0];
             if (empty($idGaleria)) {

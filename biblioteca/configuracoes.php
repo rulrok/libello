@@ -31,8 +31,9 @@ if (!defined("APP_CONFIGS")) {
 
     define("BIBLIOTECA_DIR", ROOT . "biblioteca/");
 
-    define("APP_PRIVATE_DIR", ROOT . "privado/");
-    define("APP_TEMP_DIR", APP_PRIVATE_DIR . "temp/");
+    define("APP_PRIVATE_DIR", "privado/");
+    define('APP_GALLERY_DIR', APP_PRIVATE_DIR . 'galerias/');
+    define("APP_TEMP_DIR", APP_PRIVATE_DIR . 'temp/');
 
     define("SECRET", md5("controleCEAD@2013"));
 }

@@ -2,6 +2,7 @@
 
 require_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
 require_once BIBLIOTECA_DIR . 'seguranca/seguranca.php';
+require_once BIBLIOTECA_DIR . "verificacoes_sistema.php";
 require_once APP_LOCATION . 'modelo/Menu.php';
 require_once APP_LOCATION . 'modelo/enumeracao/Papel.php';
 
@@ -14,6 +15,10 @@ class ControladorInicial extends Controlador {
         } else {
             $this->visao->administrador = false;
         }
+        $verificador = new verificador_instalacao();
+        $verificador->testar();
+        $this->visao->temErros = !$verificador->tudoCerto();
+        $this->visao->erros = $verificador->mensagensErro();
         $this->visao->nomeUsuario = $usuario->get_PNome();
         $this->visao->papel = (new usuarioDAO())->consultarPapel($usuario->get_email());
         $this->visao->titulo = "Controle CEAD";

@@ -39,18 +39,27 @@ class imagensDAO extends abstractDAO {
     }
 
     public function consultarTodasAsImagens($limit = null) {
-        $limitStr = "";
-        if ($limit !== null) {
-            $limit = (int) $limit;
-            $limitStr = "LIMIT $limit";
-        }
-        $sql = "SELECT * FROM imagens_imagem ORDER BY idImagem $limitStr";
-        return $this->executarSelect($sql);
+//        $limitStr = "";
+//        if ($limit !== null) {
+//            $limitStr = $limit;
+//        }
+//        $sql = "SELECT * FROM imagens_imagem ORDER BY idImagem $limitStr";
+//        return $this->executarSelect($sql);
+        return $this->pesquisarImagem('',$limit);
     }
 
     public function pesquisarImagem($termoBusca, $limit = "") {
-        //TODO melhorar bastante essa função
-        $sql = "SELECT * from imagens_imagem WHERE titulo LIKE :termoBusca ORDER BY idImagem $limit";
+        //Query do MAL!
+        $sql = "SELECT"
+                . " t.idImagem,t.titulo,t.observacoes,t.dificuldade,t.cpfAutor,"
+                . "t.ano,t.nomeArquivo,t.nomeArquivoMiniatura,t.nomeArquivoVetorial,"
+                . "t1.nome as nomedescritor1, t2.nome as nomedescritor2, t3.nome as nomedescritor3, t4.nome as nomedescritor4, "
+                . "concat(t1.rotulo, '.', t2.rotulo, '.', t3.rotulo, '.', t4.rotulo) as rotulo "
+                . " FROM (SELECT * from `imagens_imagem` WHERE titulo LIKE :termoBusca ORDER BY idImagem LIMIT 10) as t"
+                . " JOIN `imagens_descritor` t1 ON t1.idDescritor = t.descritor1"
+                . " JOIN `imagens_descritor` t2 ON t2.idDescritor = t.descritor2"
+                . " JOIN `imagens_descritor` t3 ON t3.idDescritor = t.descritor3"
+                . " JOIN `imagens_descritor` t4 ON t4.idDescritor = t.descritor4";
         $params = array(
             ':termoBusca' => ["%$termoBusca%", PDO::PARAM_STR]
         );

@@ -40,7 +40,7 @@
         </div>
     </fieldset>
     <button type="reset" class="btn btn-large btn-left" >Limpar</button>
-    <button type="submit" class="btn btn-large btn-success btn-primary btn-right" >Cadastrar</button>
+    <button type="submit" disabled class="btn btn-large btn-success btn-primary btn-right" >Cadastrar</button>
 </form>
 <script>
 
