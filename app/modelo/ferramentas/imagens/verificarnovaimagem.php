@@ -1,14 +1,13 @@
 <?php
 
-include APP_LOCATION . "modelo/Mensagem.php";
-require_once APP_LOCATION . "modelo/vo/Imagem.php";
-require_once APP_LOCATION . "modelo/validadorCPF.php";
-include APP_LOCATION . "visao/verificadorFormularioAjax.php";
+include APP_DIR . "modelo/Mensagem.php";
+require_once APP_DIR . "modelo/vo/Imagem.php";
+require_once APP_DIR . "modelo/validadorCPF.php";
+include APP_DIR . "visao/verificadorFormularioAjax.php";
 
 class verificarnovaimagem extends verificadorFormularioAjax {
 
     public function _validar() {
-        define("MAX_SIZE", "2000");
         define("LARGURA_THUMB", "350");
         define("ALTURA_THUMB", "150");
         $formatosPermitidosImagens = array("jpg", "jpeg", "png");
@@ -60,7 +59,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             }
 
             $tamanhoImagem = filesize($_FILES[$arquivoImagem]['tmp_name']);
-            if ($tamanhoImagem > MAX_SIZE * 1024) {
+            if ($tamanhoImagem > APP_MAX_UPLOAD_SIZE) {
                 $this->mensagemErro("Tamanho máximo permitido para a imagem: " . ($tamanhoMaximo / 1024) . " Kb.");
             }
 

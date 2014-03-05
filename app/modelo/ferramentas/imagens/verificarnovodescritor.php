@@ -1,6 +1,6 @@
 <?php
 
-include APP_LOCATION . "visao/verificadorFormularioAjax.php";
+include APP_DIR . "visao/verificadorFormularioAjax.php";
 
 class verificarnovodescritor extends verificadorFormularioAjax {
 

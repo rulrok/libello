@@ -2,7 +2,6 @@
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['imagemURI'])) {
 
-    define("MAX_SIZE", "2000");  //define a max size for the uploaded images
     define("WIDTH", "350");
     define("HEIGHT", "150");
 
@@ -52,13 +51,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['imagemURI'])) {
         $ret = array(
             "master" => array(
                 "img_src" => str_replace("../", "", $master_name),
-                "size" => round((filesize($master_name) / 1000), 0) . 'kb',
+                "size" => round((filesize($master_name) / 1024), 0) . 'kb',
                 'h' => $masterH,
                 'w' => $masterW
             ),
             "thumb" => array(
                 "img_src" => str_replace("../", "", $thumb_name), //tweak return path of img
-                "size" => round((filesize($thumb_name) / 1000), 0) . 'kb',
+                "size" => round((filesize($thumb_name) / 1024), 0) . 'kb',
                 'h' => $thumbH,
                 'w' => $thumbW
             )

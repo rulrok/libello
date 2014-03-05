@@ -1,8 +1,8 @@
 <?php
 
 require_once 'abstractDAO.php';
-require_once APP_LOCATION . 'modelo/enumeracao/TipoEventoSistema.php';
-require_once APP_LOCATION . 'modelo/Utils.php';
+require_once APP_DIR . 'modelo/enumeracao/TipoEventoSistema.php';
+require_once APP_DIR . 'modelo/Utils.php';
 
 class sistemaDAO extends abstractDAO {
 

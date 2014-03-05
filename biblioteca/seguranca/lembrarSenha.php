@@ -1,7 +1,7 @@
 <?php
 
 require_once '../configuracoes.php';
-require_once APP_LOCATION . "modelo/dao/usuarioDAO.php";
+require_once APP_DIR . "modelo/dao/usuarioDAO.php";
 require_once BIBLIOTECA_DIR . 'seguranca/criptografia.php';
 
 if (filter_has_var(INPUT_POST, 'email') && filter_input(INPUT_POST, 'email') != NULL && filter_input(INPUT_POST, 'email') != "") :

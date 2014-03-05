@@ -1,7 +1,7 @@
 <?php
 
-require_once APP_LOCATION . "modelo/vo/Polo.php";
-require_once APP_LOCATION . "visao/verificadorFormularioAjax.php";
+require_once APP_DIR . "modelo/vo/Polo.php";
+require_once APP_DIR . "visao/verificadorFormularioAjax.php";
 
 class VerificarNovoPolo extends verificadorFormularioAjax {
 

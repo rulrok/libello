@@ -1,7 +1,7 @@
 <?php
 
 require_once 'abstractDAO.php';
-require_once APP_LOCATION . "modelo/vo/Curso.php";
+require_once APP_DIR . "modelo/vo/Curso.php";
 
 class cursoDAO extends abstractDAO {
 

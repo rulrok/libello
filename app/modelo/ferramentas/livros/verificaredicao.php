@@ -1,7 +1,7 @@
 <?php
 
-require_once APP_LOCATION . "modelo/vo/Livro.php";
-require_once APP_LOCATION . "visao/verificadorFormularioAjax.php";
+require_once APP_DIR . "modelo/vo/Livro.php";
+require_once APP_DIR . "visao/verificadorFormularioAjax.php";
 
 class verificarEdicao extends verificadorFormularioAjax {
 

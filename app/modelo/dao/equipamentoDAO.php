@@ -1,8 +1,8 @@
 <?php
 
 require_once 'abstractDAO.php';
-require_once APP_LOCATION . "modelo/vo/Equipamento.php";
-require_once APP_LOCATION . 'modelo/enumeracao/TipoEventoEquipamento.php';
+require_once APP_DIR . "modelo/vo/Equipamento.php";
+require_once APP_DIR . 'modelo/enumeracao/TipoEventoEquipamento.php';
 
 class equipamentoDAO extends abstractDAO {
 

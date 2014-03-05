@@ -1,16 +1,16 @@
 <?php
 
 include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
-require_once APP_LOCATION . "modelo/ComboBoxDescritores.php";
+require_once APP_DIR . "modelo/ComboBoxDescritores.php";
 require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
-require_once APP_LOCATION . "modelo/ferramentas/imagens/pesquisa.php";
+require_once APP_DIR . "modelo/ferramentas/imagens/pesquisa.php";
 
 class ControladorImagens extends Controlador {
     /*
      * IMAGEM
      */
 
-    public function acaoBusca() {
+    public function acaoBuscar() {
         $this->visao->acessoMinimo = Permissao::CONSULTA;
 
         if (filter_has_var(INPUT_GET, 'q')) {
@@ -19,12 +19,17 @@ class ControladorImagens extends Controlador {
             } else {
                 $pagina = 1;
             }
+            if (filter_has_var(INPUT_GET, 'l')) {
+                $itensPorPagina = filter_input(INPUT_GET, 'l');
+            } else {
+                $itensPorPagina = 10;
+            }
             $termo = filter_input(INPUT_GET, 'q');
             $pesquisa = new pesquisa();
             if ($termo == "") {
-                $pesquisa->obterTodas($pagina);
+                $pesquisa->obterTodas($pagina, $itensPorPagina);
             } else {
-                $pesquisa->buscar($termo, $pagina);
+                $pesquisa->buscar($termo, $pagina, $itensPorPagina);
             }
             if ($pesquisa->temResultados()) {
                 $this->visao->temResultados = true;
@@ -92,6 +97,11 @@ class ControladorImagens extends Controlador {
     /*
      * DESCRITORES
      */
+
+    public function acaoObterdescritores() {
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
+        $this->renderizar();
+    }
 
     public function acaoDescritores() {
         $this->visao->acessoMinimo = Permissao::GESTOR;

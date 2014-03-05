@@ -1,6 +1,6 @@
 <?php
 
-require_once APP_LOCATION . "modelo/dao/imagensDAO.php";
+require_once APP_DIR . "modelo/dao/imagensDAO.php";
 
 class pesquisa {
 
@@ -18,45 +18,48 @@ class pesquisa {
 
     private function criarPaginacao($pagina, $ultimaPagina) {
         $centerPages = "";
-        $sub1 = $pagina - 1;
-        $sub2 = $pagina - 2;
-        $add1 = $pagina + 1;
-        $add2 = $pagina + 2;
-
-        if ($pagina == 1) {
-            $centerPages .= '&nbsp; <span class="pagNumActive">' . $pagina . '</span> &nbsp;';
-            $centerPages .= '&nbsp; <a href="' . filter_input(INPUT_SERVER, 'PHP_SELF') . '?p=' . $add1 . '">' . $add1 . '</a> &nbsp;';
-        } else if ($pagina == $ultimaPagina) {
-            $centerPages .= '&nbsp; <a href="' . filter_input(INPUT_SERVER, 'PHP_SELF') . '?p=' . $sub1 . '">' . $sub1 . '</a> &nbsp;';
-            $centerPages .= '&nbsp; <span class="pagNumActive">' . $pagina . '</span> &nbsp;';
-        } else if ($pagina > 2 && $pagina < ($ultimaPagina - 1)) {
-            $centerPages .= '&nbsp; <a href="' . filter_input(INPUT_SERVER, 'PHP_SELF') . '?p=' . $sub2 . '">' . $sub2 . '</a> &nbsp;';
-            $centerPages .= '&nbsp; <a href="' . filter_input(INPUT_SERVER, 'PHP_SELF') . '?p=' . $sub1 . '">' . $sub1 . '</a> &nbsp;';
-            $centerPages .= '&nbsp; <span class="pagNumActive">' . $pagina . '</span> &nbsp;';
-            $centerPages .= '&nbsp; <a href="' . filter_input(INPUT_SERVER, 'PHP_SELF') . '?p=' . $add1 . '">' . $add1 . '</a> &nbsp;';
-            $centerPages .= '&nbsp; <a href="' . filter_input(INPUT_SERVER, 'PHP_SELF') . '?p=' . $add2 . '">' . $add2 . '</a> &nbsp;';
-        } else if ($pagina > 1 && $pagina < $ultimaPagina) {
-            $centerPages .= '&nbsp; <a href="' . filter_input(INPUT_SERVER, 'PHP_SELF') . '?p=' . $sub1 . '">' . $sub1 . '</a> &nbsp;';
-            $centerPages .= '&nbsp; <span class="pagNumActive">' . $pagina . '</span> &nbsp;';
-            $centerPages .= '&nbsp; <a href="' . filter_input(INPUT_SERVER, 'PHP_SELF') . '?p=' . $add1 . '">' . $add1 . '</a> &nbsp;';
+        $centerPages .= '<div class="pagination pagination-centered "><ul>';
+        $ant = $pagina - 1;
+        $prox = $pagina + 1;
+        if ($pagina > 1) {
+            $centerPages .= "<li><a href='javascript:buscar($ant)'>&laquo; Anterior</a></li>";
+            $centerPages .= "<li><a href=javascript:buscar(1)>1</a></li> ";
+        } else {
+            $centerPages .= '<li class="disabled"><span>&laquo; Anterior</span></li>';
+            $centerPages .= "<li class='active'><span>1</span></li> ";
+        }
+        if ($pagina - 3 > 1) {
+            $centerPages .= ' <li class="disabled"><span> &hellip; </span></li> ';
+            $i = max([$pagina - 2, 2]);
+            $f = min([$pagina + 2, $ultimaPagina - 1]);
+        } else {
+            $i = max([$pagina - 3, 2]);
+            $f = min([$pagina + 3, $ultimaPagina - 1]);
+        }
+        for (; $i <= $f; $i++) {
+            if ($i != $pagina) {
+                $centerPages .= "<li><a href='javascript:buscar($i)'>$i</a></li> ";
+            } else {
+                $centerPages .= "<li class='active'><span>$i</span></li> ";
+            }
+        }
+        if ($ultimaPagina > $pagina + 3) {
+            $centerPages .= ' <li class="disabled"><span> &hellip; </span></li> ';
         }
 
-
-//        if ($ultimaPagina != "1") {
-        // This shows the user what page they are on, and the total number of pages
-        $this->paginacao .= 'Page <strong>' . $pagina . '</strong> of ' . $ultimaPagina . '&nbsp;  &nbsp;  &nbsp; ';
-        // If we are not on page 1 we can place the Back button
-        if ($pagina != 1) {
-            $previous = $pagina - 1;
-            $this->paginacao .= '&nbsp;  <a href="' . filter_input(INPUT_SERVER, 'PHP_SELF') . '?p=' . $previous . '"> Back</a> ';
+        if ($ultimaPagina != $pagina) {
+            $centerPages .= "<li><a href='javascript:buscar($ultimaPagina)'>$ultimaPagina</a></li>";
+            $centerPages .= "<li><a href='javascript:buscar($prox)'>Próximo &raquo;</a></li>";
+        } else {
+            if ($ultimaPagina != 1) {
+                $centerPages .= "<li class='active'><span>$ultimaPagina</span></li>";
+            }
+            $centerPages .= '<li class="disabled"><span>Próximo &raquo;</span></li>';
         }
-        // Lay in the clickable numbers display here between the Back and Next links
+        $centerPages .= '</ul></div>';
+
+//        $this->paginacao .= 'Página <strong>' . $pagina . '</strong> de ' . $ultimaPagina . '     ';
         $this->paginacao .= '<span class="paginationNumbers">' . $centerPages . '</span>';
-        // If we are not on the very last page we can place the Next button
-        if ($pagina != $ultimaPagina) {
-            $nextPage = $pagina + 1;
-            $this->paginacao .= '&nbsp;  <a href="' . filter_input(INPUT_SERVER, 'PHP_SELF') . '?p=' . $nextPage . '"> Next</a> ';
-        }
     }
 
     public function obterTodas($pagina, $itensPorPagina = 10) {

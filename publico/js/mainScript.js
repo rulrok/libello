@@ -435,14 +435,14 @@ function ajax(link, place, hidePop, async, ignorePageChanges) {
     var request = $.ajax({
         url: link,
         async: async,
-        timeout: 5000, //Espera no máximo 5 segundos,
+        timeout: 10000, //Espera no máximo 10 segundos,
         beforeSend: function() {
 //            if (place !== null) {
             setTimeout(function() {
                 if (!paginaCompleta) {
                     exibirShader();
                 }
-            }, "500");
+            }, "1500");
 //            }
         },
         complete: function() {

@@ -1,6 +1,6 @@
 <?php
 
-require_once APP_LOCATION . "modelo/Mensagem.php";
+require_once APP_DIR . "modelo/Mensagem.php";
 
  $id = fnDecrypt($_REQUEST['i_idmemorando']);
 $mensagem = new Mensagem();

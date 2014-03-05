@@ -1,6 +1,6 @@
 <?php
 
-require_once APP_LOCATION . "modelo/dao/ferramentaDAO.php";
+require_once APP_DIR . "modelo/dao/ferramentaDAO.php";
 
 final class Ferramenta {
 

@@ -1,7 +1,7 @@
 <?php
 
 require_once 'abstractDAO.php';
-require_once APP_LOCATION . 'modelo/vo/Viagem.php';
+require_once APP_DIR . 'modelo/vo/Viagem.php';
 
 class viagemDAO extends abstractDAO {
 

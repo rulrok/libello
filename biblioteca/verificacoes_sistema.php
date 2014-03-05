@@ -44,6 +44,7 @@ class verificador_instalacao {
         $this->testar_diretorio_privado();
         $this->testar_diretorio_temporario();
         $this->testar_diretorio_galerias();
+        $this->verificar_tamanho_maximo_upload();
     }
 
     private function erroEncontrado() {
@@ -71,10 +72,11 @@ class verificador_instalacao {
         }
     }
 
-    /**
+    /*
      * Métodos gerais
      * Os testes devem ser escritos nesta parte do código
      */
+
     private function testar_diretorio_temporario() {
         $this->testar_diretorio(APP_TEMP_DIR, 'temporário');
     }
@@ -85,6 +87,36 @@ class verificador_instalacao {
 
     private function testar_diretorio_galerias() {
         $this->testar_diretorio(APP_GALLERY_DIR, 'galeria de imagens');
+    }
+
+    private function verificar_tamanho_maximo_upload() {
+
+        function convertBytes($value) {
+            if (is_numeric($value)) {
+                return $value;
+            } else {
+                $value_length = strlen($value);
+                $qty = substr($value, 0, $value_length - 1);
+                $unit = strtolower(substr($value, $value_length - 1));
+                switch ($unit) {
+                    case 'k':
+                        $qty *= 1024;
+                        break;
+                    case 'm':
+                        $qty *= 1048576;
+                        break;
+                    case 'g':
+                        $qty *= 1073741824;
+                        break;
+                }
+                return $qty;
+            }
+        }
+
+        $tamanhoMaximo = convertBytes(ini_get('upload_max_filesize'));
+        if ($tamanhoMaximo < APP_MAX_UPLOAD_SIZE) {
+            $this->anexarMensagemErro("Tamanho máximo para uploads definido pela sua instalação PHP é menor que o limite máximo definido nas configurações do aplicativo!");
+        }
     }
 
 }

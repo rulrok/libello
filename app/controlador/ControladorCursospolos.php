@@ -4,12 +4,12 @@ include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
 include_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
 include_once BIBLIOTECA_DIR . "seguranca/Permissao.php";
 
-include_once APP_LOCATION . 'modelo/ComboBoxAreas.php';
-include_once APP_LOCATION . 'modelo/ComboBoxCurso.php';
-require_once APP_LOCATION . "modelo/Mensagem.php";
-require_once APP_LOCATION . "modelo/vo/Polo.php";
-require_once APP_LOCATION . "modelo/vo/Curso.php";
-require_once APP_LOCATION . "visao/verificadorFormularioAjax.php";
+include_once APP_DIR . 'modelo/ComboBoxAreas.php';
+include_once APP_DIR . 'modelo/ComboBoxCurso.php';
+require_once APP_DIR . "modelo/Mensagem.php";
+require_once APP_DIR . "modelo/vo/Polo.php";
+require_once APP_DIR . "modelo/vo/Curso.php";
+require_once APP_DIR . "visao/verificadorFormularioAjax.php";
 
 class ControladorCursospolos extends Controlador {
 

@@ -1,8 +1,8 @@
 <?php
 
-include_once APP_LOCATION . 'modelo/vo/Usuario.php';
-include_once APP_LOCATION . 'modelo/dao/usuarioDAO.php';
-include_once APP_LOCATION . 'modelo/dao/areaDAO.php';
+include_once APP_DIR . 'modelo/vo/Usuario.php';
+include_once APP_DIR . 'modelo/dao/usuarioDAO.php';
+include_once APP_DIR . 'modelo/dao/areaDAO.php';
 require_once 'enumeracao/ImagensDificuldadeEnum.php';
 require_once 'enumeracao/Ferramenta.php';
 require_once 'enumeracao/Area.php';
@@ -210,7 +210,7 @@ class Menu {
                                 $subMenuCode .= "<li>Cadastrar imagem</li></a>" . "\n";
                             case Permissao::CONSULTA:
                                 $subMenuCode .= "<a href=\"#!imagens|consultarimagem\"\">" . "\n";
-                                $subMenuCode .= "<li>Consultar galerias</li></a>" . "\n";
+                                $subMenuCode .= "<li>Consultar imagens</li></a>" . "\n";
                         }
                     }
                     break;

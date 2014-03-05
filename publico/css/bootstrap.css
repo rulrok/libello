@@ -1829,7 +1829,7 @@ input.search-query {
     padding-left: 4px \9;
     /* IE7-8 doesn't have border-radius, so don't indent the padding */
 
-    margin-bottom: 0;
+    margin-bottom: 10px;
     -webkit-border-radius: 15px;
     -moz-border-radius: 15px;
     border-radius: 15px;

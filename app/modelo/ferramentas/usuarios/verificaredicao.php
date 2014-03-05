@@ -1,11 +1,11 @@
 <?php
 
-include_once APP_LOCATION . "modelo/Mensagem.php";
-require_once APP_LOCATION . "modelo/vo/Usuario.php";
-include_once APP_LOCATION . 'modelo/validadorCPF.php';
-include_once APP_LOCATION . 'modelo/ComboBoxPapeis.php';
-include_once APP_LOCATION . 'modelo/ComboBoxPermissoes.php';
-include_once APP_LOCATION . "visao/verificadorFormularioAjax.php";
+include_once APP_DIR . "modelo/Mensagem.php";
+require_once APP_DIR . "modelo/vo/Usuario.php";
+include_once APP_DIR . 'modelo/validadorCPF.php';
+include_once APP_DIR . 'modelo/ComboBoxPapeis.php';
+include_once APP_DIR . 'modelo/ComboBoxPermissoes.php';
+include_once APP_DIR . "visao/verificadorFormularioAjax.php";
 
 class verificarEdicaoUsuario extends verificadorFormularioAjax {
 

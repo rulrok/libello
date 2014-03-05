@@ -1,7 +1,7 @@
 <?php
 
-include_once APP_LOCATION . "modelo/Mensagem.php";
-include_once APP_LOCATION . "visao/verificadorFormularioAjax.php";
+include_once APP_DIR . "modelo/Mensagem.php";
+include_once APP_DIR . "visao/verificadorFormularioAjax.php";
 require_once BIBLIOTECA_DIR . 'seguranca/criptografia.php';
 
 class validarAlteracoesConta extends verificadorFormularioAjax {

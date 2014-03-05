@@ -1,9 +1,9 @@
 <?php
 
 require_once 'abstractDAO.php';
-require_once APP_LOCATION . 'modelo/vo/Descritor.php';
-require_once APP_LOCATION . 'modelo/enumeracao/TipoEventoImagens.php';
-require_once APP_LOCATION . 'modelo/enumeracao/ImagensDescritor.php';
+require_once APP_DIR . 'modelo/vo/Descritor.php';
+require_once APP_DIR . 'modelo/enumeracao/TipoEventoImagens.php';
+require_once APP_DIR . 'modelo/enumeracao/ImagensDescritor.php';
 
 class imagensDAO extends abstractDAO {
 
@@ -23,6 +23,11 @@ class imagensDAO extends abstractDAO {
         );
 
         return $this->executarQuery($sql, $params);
+    }
+
+    public function consultarNomeDescritores() {
+        $sql = "SELECT DISTINCT nome FROM `imagens_descritor` WHERE nome <> 'NIL'";
+        return $this->executarSelect($sql);
     }
 
     public function cadastrarDescritor(Descritor $descritor, $idDescritorPai) {
@@ -45,23 +50,38 @@ class imagensDAO extends abstractDAO {
 //        }
 //        $sql = "SELECT * FROM imagens_imagem ORDER BY idImagem $limitStr";
 //        return $this->executarSelect($sql);
-        return $this->pesquisarImagem('',$limit);
+        return $this->pesquisarImagem('', $limit);
     }
 
-    public function pesquisarImagem($termoBusca, $limit = "") {
+    public function pesquisarImagem($termoBusca, $limite = "") {
         //Query do MAL!
         $sql = "SELECT"
-                . " t.idImagem,t.titulo,t.observacoes,t.dificuldade,t.cpfAutor,"
-                . "t.ano,t.nomeArquivo,t.nomeArquivoMiniatura,t.nomeArquivoVetorial,"
-                . "t1.nome as nomedescritor1, t2.nome as nomedescritor2, t3.nome as nomedescritor3, t4.nome as nomedescritor4, "
-                . "concat(t1.rotulo, '.', t2.rotulo, '.', t3.rotulo, '.', t4.rotulo) as rotulo "
-                . " FROM (SELECT * from `imagens_imagem` WHERE titulo LIKE :termoBusca ORDER BY idImagem LIMIT 10) as t"
-                . " JOIN `imagens_descritor` t1 ON t1.idDescritor = t.descritor1"
-                . " JOIN `imagens_descritor` t2 ON t2.idDescritor = t.descritor2"
-                . " JOIN `imagens_descritor` t3 ON t3.idDescritor = t.descritor3"
-                . " JOIN `imagens_descritor` t4 ON t4.idDescritor = t.descritor4";
+                . ' t.idImagem,t.titulo,t.observacoes,t.dificuldade,t.cpfAutor,'
+                . 't.ano,t.nomeArquivo,t.nomeArquivoMiniatura,t.nomeArquivoVetorial,'
+                . 'concat(t1.rotulo,". ",t1.nome) as nomedescritor1, '
+                . 'concat(t2.rotulo,". ",t2.nome) as nomedescritor2, '
+                . 'concat(t3.rotulo,". ",t3.nome) as nomedescritor3, '
+                . 'concat(t4.rotulo,". ",t4.nome) as nomedescritor4, '
+                . 'concat(t1.rotulo, "_", t2.rotulo, "_", t3.rotulo, "_", t4.rotulo) as rotulo '
+                . ' FROM (SELECT * from `imagens_imagem` WHERE (titulo RLIKE :termoBusca OR idImagem IN '
+                . '( SELECT idImagem FROM imagens_imagem as a WHERE EXISTS '
+                . '( SELECT idDescritor FROM imagens_descritor as b WHERE b.nome RLIKE :termoBusca AND (b.idDescritor = a.descritor1 OR b.idDescritor = a.descritor2 OR b.idDescritor = a.descritor3 OR b.idDescritor = a.descritor4)))'
+                . ') ORDER BY idImagem ) as t'
+                . ' JOIN `imagens_descritor` t1 ON t1.idDescritor = t.descritor1'
+                . ' JOIN `imagens_descritor` t2 ON t2.idDescritor = t.descritor2'
+                . ' JOIN `imagens_descritor` t3 ON t3.idDescritor = t.descritor3'
+                . ' JOIN `imagens_descritor` t4 ON t4.idDescritor = t.descritor4 '
+                . $limite;
+
+        try {
+            $termoBusca = preg_replace('/,$/', '', $termoBusca);
+        } catch (Exception $e) {
+            
+        }
+        $aux = str_replace([',', ' '], "|", $termoBusca);
+        $regexTermoBusca = "($aux)";
         $params = array(
-            ':termoBusca' => ["%$termoBusca%", PDO::PARAM_STR]
+            ':termoBusca' => [$regexTermoBusca, PDO::PARAM_STR]
         );
         return $this->executarSelect($sql, $params);
     }

@@ -5,7 +5,7 @@
  *
  * @author reuel
  */
-require_once APP_LOCATION . "modelo/Mensagem.php";
+require_once APP_DIR . "modelo/Mensagem.php";
 
 abstract class verificadorFormularioAjax {
 

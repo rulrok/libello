@@ -3,8 +3,8 @@
 require_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
 require_once BIBLIOTECA_DIR . 'seguranca/seguranca.php';
 require_once BIBLIOTECA_DIR . "verificacoes_sistema.php";
-require_once APP_LOCATION . 'modelo/Menu.php';
-require_once APP_LOCATION . 'modelo/enumeracao/Papel.php';
+require_once APP_DIR . 'modelo/Menu.php';
+require_once APP_DIR . 'modelo/enumeracao/Papel.php';
 
 class ControladorInicial extends Controlador {
 

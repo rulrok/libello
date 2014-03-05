@@ -10,9 +10,9 @@
  *
  * @author Rodolfo
  */
-include APP_LOCATION . "modelo/Mensagem.php";
-require_once APP_LOCATION . "modelo/vo/Memorando.php";
-include APP_LOCATION . "visao/verificadorFormularioAjax.php";
+include APP_DIR . "modelo/Mensagem.php";
+require_once APP_DIR . "modelo/vo/Memorando.php";
+include APP_DIR . "visao/verificadorFormularioAjax.php";
 
 class verificarnovomemorando extends verificadorFormularioAjax {
 

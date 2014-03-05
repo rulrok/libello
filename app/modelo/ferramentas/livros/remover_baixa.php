@@ -1,6 +1,6 @@
 <?php
 
-require_once APP_LOCATION . "modelo/Mensagem.php";
+require_once APP_DIR . "modelo/Mensagem.php";
 
 $baixaID = fnDecrypt(filter_input(INPUT_GET, 'baixaID'));
 $mensagem = new Mensagem();

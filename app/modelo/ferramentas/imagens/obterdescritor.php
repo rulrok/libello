@@ -1,6 +1,6 @@
 <?php
 
-require_once APP_LOCATION . 'modelo/ComboBoxDescritores.php';
+require_once APP_DIR . 'modelo/ComboBoxDescritores.php';
 
 if (filter_has_var(INPUT_GET, 'p') && filter_has_var(INPUT_GET, 'n')):
     $idDescritorPai = fnDecrypt(filter_input(INPUT_GET, 'p'));

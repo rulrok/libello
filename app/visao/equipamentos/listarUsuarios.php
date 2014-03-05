@@ -1,6 +1,6 @@
 <?php
 
-require_once APP_LOCATION . "modelo/dao/usuarioDAO.php";
+require_once APP_DIR . "modelo/dao/usuarioDAO.php";
 
 if ($_SESSION['autenticado'] === true) {
     $idPapel = filter_input(INPUT_GET, 'idPapel');

@@ -1,8 +1,8 @@
 <?php
 
 require_once 'abstractDAO.php';
-require_once APP_LOCATION . "modelo/vo/Livro.php";
-require_once APP_LOCATION . 'modelo/enumeracao/TipoEventoLivro.php';
+require_once APP_DIR . "modelo/vo/Livro.php";
+require_once APP_DIR . 'modelo/enumeracao/TipoEventoLivro.php';
 
 class livroDAO extends abstractDAO {
 

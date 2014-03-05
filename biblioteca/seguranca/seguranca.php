@@ -3,8 +3,8 @@
 require_once __DIR__ . '/../configuracoes.php';
 if (preg_match("#.*" . WEB_SERVER_FOLDER . "?.*#", $_SERVER['REQUEST_URI'])) {
     require_once BIBLIOTECA_DIR . 'bancoDeDados/PDOconnectionFactory.php';
-    require_once APP_LOCATION . 'modelo/vo/Usuario.php';
-    require_once APP_LOCATION . 'modelo/dao/sistemaDAO.php';
+    require_once APP_DIR . 'modelo/vo/Usuario.php';
+    require_once APP_DIR . 'modelo/dao/sistemaDAO.php';
 
     session_start();
 

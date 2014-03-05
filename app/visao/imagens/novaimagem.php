@@ -86,7 +86,7 @@
 
             <div class="line" id="image-upload-line" style="line-height: 45px;">
                 <label for="image-upload">Arquivo de imagem</label>
-                <input type="hidden" name="MAX_FILE_SIZE" value="3000000" />
+                <input type="hidden" name="MAX_FILE_SIZE" value="4194304" />
                 <input required type="file" accept="image/jpeg,image/png,image/jpg" name="image-upload" id="image-upload" class="btn btn-small btn-info"> 
                 <output id="list"></output>
             </div>

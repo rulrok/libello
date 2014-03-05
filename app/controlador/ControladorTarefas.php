@@ -1,7 +1,7 @@
 <?php
 
 include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
-include_once APP_LOCATION . 'modelo/Enumeracao/Ferramenta.php';
+include_once APP_DIR . 'modelo/Enumeracao/Ferramenta.php';
 
 class ControladorTarefas extends Controlador{
     
