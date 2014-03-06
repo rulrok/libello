@@ -15,6 +15,7 @@ class ControladorInicial extends Controlador {
         } else {
             $this->visao->administrador = false;
         }
+        $this->visao->nomeAplicativo = APP_NAME;
         $verificador = new verificador_instalacao();
         $verificador->testar();
         $this->visao->temErros = !$verificador->tudoCerto();

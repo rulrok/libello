@@ -7,21 +7,25 @@ error_reporting(E_ALL);
 if (!defined("APP_CONFIGS")) {
     define('APP_CONFIGS', "SETTED");
 
+    define('APP_NAME', 'Controle-cead');
+
+    define('APP_COPYRIGHT', 'Copyright &copy; 2012 - 2014');
+
     define('APP_VERSION', "Alpha");
 
     /**
      * O novo da pasta de contém este programa instalado
      */
-    define('WEB_SERVER_FOLDER', "controle-cead/");
+    define('WEB_SERVER_FOLDER', "controle-cead");
     /**
      * Endereço pelo qual o acesso deverá ser feito ao programa
      */
-    define('WEB_SERVER_ADDRESS', "http://localhost/" . WEB_SERVER_FOLDER);
+    define('WEB_SERVER_ADDRESS', 'http://localhost/' . WEB_SERVER_FOLDER . '/');
 
     /**
      * Caminho completo até a pasta contendo o programa instalado
      */
-    define('ROOT', $_SERVER['DOCUMENT_ROOT'] . "/" . WEB_SERVER_FOLDER);
+    define('ROOT', $_SERVER['DOCUMENT_ROOT'] . "/" . WEB_SERVER_FOLDER . '/');
 
 
     define('DATABASE_SERVER_IP', "127.0.0.1");

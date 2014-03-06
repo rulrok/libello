@@ -1,7 +1,6 @@
 <?php
 
 require_once BIBLIOTECA_DIR . "configuracoes.php";
-require_once "Menu.php";
 
 class ComboBoxPolo {
 

@@ -1,9 +1,9 @@
 <?php
 
 require_once 'abstractDAO.php';
-require_once __DIR__ . '/../vo/Usuario.php';
-require_once __DIR__ . '/../vo/PermissoesFerramenta.php';
-require_once __DIR__ . '/../enumeracao/Ferramenta.php';
+require_once APP_DIR . 'modelo/vo/Usuario.php';
+require_once APP_DIR . 'modelo/vo/PermissoesFerramenta.php';
+require_once APP_DIR . 'modelo/enumeracao/Ferramenta.php';
 require_once BIBLIOTECA_DIR . 'seguranca/Permissao.php';
 require_once BIBLIOTECA_DIR . 'seguranca/criptografia.php';
 
@@ -233,12 +233,13 @@ class usuarioDAO extends abstractDAO {
     public function alterarPermissoes(Usuario $usuario, PermissoesFerramenta $permissoes) {
         if ($usuario->get_idUsuario() != null) {
             $consulta = $this->consultar('idUsuario', 'idUsuario = :idUsuario', array(':idUsuario' => [(int) $usuario->get_idUsuario(), PDO::PARAM_INT]));
-            $querys = array();
+//            $querys = array();
+            $query = 'UPDATE usuario_x_permissao_x_ferramenta SET idPermissao = :idPermissao WHERE idUsuario = :idUsuario AND idFerramenta = :idFerramenta';
             $parametros = array();
             if (sizeof($consulta) == 1) {
                 for ($i = 0; $i < Ferramenta::__length; $i++) {
                     if ($permissoes->get_permissao($i + 1) != null) {
-                        $querys[] = 'UPDATE usuario_x_permissao_x_ferramenta SET idPermissao = :idPermissao WHERE idUsuario = :idUsuario AND idFerramenta = :idFerramenta';
+//                        $querys[] = 'UPDATE usuario_x_permissao_x_ferramenta SET idPermissao = :idPermissao WHERE idUsuario = :idUsuario AND idFerramenta = :idFerramenta';
                         $parametros[] = array(
                             ':idPermissao' => [(int) $permissoes->get_permissao($i + 1), PDO::PARAM_INT]
                             , ':idUsuario' => [(int) $usuario->get_idUsuario(), PDO::PARAM_INT]
@@ -249,8 +250,8 @@ class usuarioDAO extends abstractDAO {
                         return false;
                     }
                 }
-                for ($i = 0; $i < count($querys); $i++) {
-                    if (!$this->executarQuery($querys[$i], $parametros[$i])) {
+                for ($i = 0; $i < count($parametros); $i++) {
+                    if (!$this->executarQuery($query, $parametros[$i])) {
                         return false;
                     }
                 }
@@ -270,24 +271,39 @@ class usuarioDAO extends abstractDAO {
     public function cadastrarPermissoes(Usuario $usuario, PermissoesFerramenta $permissoes) {
         if ($usuario->get_email() != null) {
             $consulta = $this->consultar('idUsuario', "email = :email", array(':email' => [$usuario->get_email(), PDO::PARAM_STR]));
-            $values = array();
+//            $values = array();
             if (sizeof($consulta) == 1) {
+//                for ($i = 0; $i < Ferramenta::__length; $i++) {
+//                    if ($permissoes->get_permissao($i + 1) != null) {
+//                        $values[sizeof($values)] = '(' . $consulta[0]['idUsuario'] . ',' . ($i + 1) . ',' . $permissoes->get_permissao($i + 1) . ')';
+//                    } else {
+//                        $values[sizeof($values)] = '(' . $consulta[0]['idUsuario'] . ',' . ($i + 1) . ',' . Permissao::SEM_ACESSO . ')';
+//                    }
+//                }
+                $parametros = array();
                 for ($i = 0; $i < Ferramenta::__length; $i++) {
                     if ($permissoes->get_permissao($i + 1) != null) {
-                        $values[sizeof($values)] = '(' . $consulta[0]['idUsuario'] . ',' . ($i + 1) . ',' . $permissoes->get_permissao($i + 1) . ')';
+                        $parametros[] = array(
+                            ':idPermissao' => [(int) $permissoes->get_permissao($i + 1), PDO::PARAM_INT]
+                            , ':idUsuario' => [(int) $usuario->get_idUsuario(), PDO::PARAM_INT]
+                            , ':idFerramenta' => [((int) $i + 1), PDO::PARAM_INT]
+                        );
                     } else {
-                        $values[sizeof($values)] = '(' . $consulta[0]['idUsuario'] . ',' . ($i + 1) . ',' . Permissao::SEM_ACESSO . ')';
+                        //TODO tratar esse suposto caso
+                        return false;
                     }
                 }
-                $sql = 'INSERT INTO usuario_x_permissao_x_ferramenta (idUsuario, idFerramenta, idPermissao) VALUES ' . $values[0];
-                for ($i = 1; $i < sizeof($values); $i++) {
-                    $sql .= ' ,' . $values[$i];
-                }
-                $sql = str_pad($sql, strlen($sql) - 2);
-                try {
-                    parent::getConexao()->query($sql);
-                } catch (Exception $e) {
-                    return false;
+                $sql = 'INSERT INTO usuario_x_permissao_x_ferramenta (idUsuario, idFerramenta, idPermissao) VALUES (:idUsuario, :idFerramenta, :idPermissao)';
+
+//                for ($i = 1; $i < sizeof($values); $i++) {
+//                    $sql .= ' ,' . $values[$i];
+//                }
+//                $sql = str_pad($sql, strlen($sql) - 2);
+//                return $this->executarQuery($values);
+                for ($i = 0; $i < count($parametros); $i++) {
+                    if (!$this->executarQuery($sql, $parametros[$i])) {
+                        return false;
+                    }
                 }
                 return true;
             }
@@ -304,11 +320,12 @@ class usuarioDAO extends abstractDAO {
      * @param PermissoesFerramenta $permissoes
      * @return boolean True se cadastrado com sucesso, false caso contrário.
      */
-    public function atualizarPermissoes(Usuario $usuario, PermissoesFerramenta $permissoes) {
+    public function atualizarPermissoes(Usuario &$usuario, PermissoesFerramenta $permissoes) {
         if ($usuario !== null && $permissoes !== null) {
             $idUsuario = $usuario->get_idUsuario();
             if ($idUsuario == null) {
                 $idUsuario = $this->recuperarUsuario($usuario->get_email())->get_idUsuario();
+                $usuario->set_idUsuario($idUsuario);
             }
 
             $sql = 'DELETE FROM usuario_x_permissao_x_ferramenta WHERE idUsuario =  :idUsuario';

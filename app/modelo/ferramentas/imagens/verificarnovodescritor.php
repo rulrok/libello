@@ -5,7 +5,8 @@ include APP_DIR . "visao/verificadorFormularioAjax.php";
 class verificarnovodescritor extends verificadorFormularioAjax {
 
     private function auxiliar_ultimo_id_inserido(imagensDAO $dao, $nomeDescritor) {
-        return $dao->consultarDescritoresNivel1("idDescritor", "nome = '$nomeDescritor' ORDER BY idDescritor DESC LIMIT 1")[0][0];
+        $resultado = $dao->consultarDescritor("idDescritor", "nome = '$nomeDescritor' ORDER BY idDescritor DESC LIMIT 1");
+        return $resultado[0][0];
     }
 
     public function _validar() {
@@ -20,6 +21,10 @@ class verificarnovodescritor extends verificadorFormularioAjax {
                 $this->mensagemErro("Todos os descritores são obrigatórios.");
             }
             $imagensDAO = new imagensDAO();
+            $aux = $imagensDAO->consultarDescritoresNivel1('count(idDescritor)', "nome = '$nomeDescritor1' ");
+            if ($aux != null && $aux > 0) {
+                $this->mensagemErro("Já existe o descritor '$nomeDescritor1' cadastrado como nível 1.");
+            }
             try {
                 $imagensDAO->iniciarTransacao();
                 //Descritor 1
@@ -81,10 +86,16 @@ class verificarnovodescritor extends verificadorFormularioAjax {
             $nomeDescritor3 = filter_input(INPUT_POST, 'novo_descritor_3');
             $nomeDescritor4 = filter_input(INPUT_POST, 'novo_descritor_4');
 
+
+
             if ($nomeDescritor2 == "" || $nomeDescritor3 == "" || $nomeDescritor4 == "") {
                 $this->mensagemErro("Todos os descritores são obrigatórios.");
             }
             $imagensDAO = new imagensDAO();
+            $aux = $imagensDAO->consultarDescritor('count(idDescritor)', "pai = $idDescritor1 AND nome = '$nomeDescritor2' ");
+            if ($aux != null && $aux > 0) {
+                $this->mensagemErro("Já existe o descritor '$nomeDescritor2' cadastrado para esses descritores.");
+            }
             try {
                 $imagensDAO->iniciarTransacao();
 
@@ -128,6 +139,10 @@ class verificarnovodescritor extends verificadorFormularioAjax {
                 $this->mensagemErro("Todos os descritores são obrigatórios.");
             }
             $imagensDAO = new imagensDAO();
+            $aux = $imagensDAO->consultarDescritor('count(idDescritor)', "pai = $idDescritor2 AND nome = '$nomeDescritor3' ");
+            if ($aux != null && $aux > 0) {
+                $this->mensagemErro("Já existe o descritor '$nomeDescritor3' cadastrado para esses descritores.");
+            }
             try {
                 $imagensDAO->iniciarTransacao();
 
@@ -163,6 +178,10 @@ class verificarnovodescritor extends verificadorFormularioAjax {
                 $this->mensagemErro("Todos os descritores são obrigatórios.");
             }
             $imagensDAO = new imagensDAO();
+            $aux = $imagensDAO->consultarDescritor('count(idDescritor)', "pai = $idDescritor3 AND nome = '$nomeDescritor4' ");
+            if ($aux != null && $aux > 0) {
+                $this->mensagemErro("Já existe o descritor '$nomeDescritor4' cadastrado para esses descritores.");
+            }
             try {
                 $imagensDAO->iniciarTransacao();
 

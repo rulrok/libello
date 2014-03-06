@@ -1043,12 +1043,3 @@ input[type="submit"].btn-right {
         left: 5px;
         bottom: 10px;*/
 }
-
-#botao_limpar {
-    position: absolute;
-    /* right: 5px; */
-    top: 6px;
-    right: 465px;
-    opacity: 0.5;
-    z-index: 50;
-}

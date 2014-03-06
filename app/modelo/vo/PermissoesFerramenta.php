@@ -1,7 +1,7 @@
 <?php
 
 require_once BIBLIOTECA_DIR . "seguranca/Permissao.php";
-require_once __DIR__ . "/../enumeracao/Ferramenta.php";
+require_once APP_DIR . "modelo/enumeracao/Ferramenta.php";
 
 class PermissoesFerramenta {
 
@@ -12,7 +12,6 @@ class PermissoesFerramenta {
     var $controleDocumentos = null;
     var $controleViagens = null;
     var $tarefas = null;
-    var $controlePagamentos = null;
     var $galeriaImagens = null;
 
     public function get_permissao($ferramenta) {
@@ -33,8 +32,6 @@ class PermissoesFerramenta {
                 return $this->controleViagens;
             case Ferramenta::TAREFAS:
                 return $this->tarefas;
-            case Ferramenta::CONTROLE_PAGAMENTOS:
-                return $this->controlePagamentos;
             case Ferramenta::GALERIA_IMAGENS:
                 return $this->galeriaImagens;
             default :
@@ -96,14 +93,6 @@ class PermissoesFerramenta {
 
     public function set_tarefas($tarefas) {
         $this->tarefas = $tarefas;
-    }
-
-    public function get_controlePagamentos() {
-        return $this->controlePagamentos;
-    }
-
-    public function set_controlePagamentos($controlePagamentos) {
-        $this->controlePagamentos = $controlePagamentos;
     }
 
     public function set_galeriaImagens($galeriaImagens) {

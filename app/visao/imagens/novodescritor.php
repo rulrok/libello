@@ -47,7 +47,7 @@
     function esconder(id) {
         $(id).addClass('hidden');
         $(id).removeAttr('required');
-        $(id).prop('disabled',true);
+        $(id).prop('disabled', true);
         $(".campoVarrido").removeClass("campoVarrido");
         $(".imagemCampoObrigatorio").remove();
         varrerCampos();
@@ -88,6 +88,57 @@
         });
     }
 
+    function configurarComboBox() {
+        if (!$('#inserir_novo_descritor_1').prop('checked') && !$('#inserir_novo_descritor_2').prop('checked') && !$('#inserir_novo_descritor_3').prop('checked')) {
+            $("#novo_descritor_4").val('');
+            $("#novo_descritor_4").focus();
+            return;
+        }
+
+        if ($('#inserir_novo_descritor_1').prop('checked')) {
+            nomeNivel1 = $("#novo_descritor_1").val();
+            $('#inserir_novo_descritor_1').trigger('click');
+        } else {
+            nomeNivel1 = $("#descritor_1 option:selected").text();
+        }
+        if ($('#inserir_novo_descritor_2').prop('checked')) {
+            nomeNivel2 = $("#novo_descritor_2").val();
+            $('#inserir_novo_descritor_2').trigger('click');
+        } else {
+            nomeNivel2 = $("#descritor_2 option:selected").text();
+        }
+        if ($('#inserir_novo_descritor_3').prop('checked')) {
+            nomeNivel3 = $("#novo_descritor_3").val();
+            $('#inserir_novo_descritor_3').trigger('click');
+        } else {
+            nomeNivel3 = $("#descritor_3 option:selected").text();
+        }
+
+        $("#descritor_1").load(
+                'index.php?c=imagens&a=auxcombonivel1',
+                function(responseText, textStatus, XMLHttpRequest) {
+                    console.log(textStatus);
+                    $("#novo_descritor_1").val('');
+                    $("#descritor_1 option:contains('" + nomeNivel1 + "')").prop('selected', true);
+                    $("#descritor_1").trigger('change');
+
+                    setTimeout(function() {
+                        $("#novo_descritor_2").val('');
+                        $("#descritor_2 option:contains('" + nomeNivel2 + "')").prop('selected', true);
+                        $("#descritor_2").trigger('change');
+
+                        setTimeout(function() {
+                            $("#novo_descritor_3").val('');
+                            $("#descritor_3 option:contains('" + nomeNivel3 + "')").prop('selected', true);
+                            $("#descritor_3").trigger('change');
+
+                            $("#novo_descritor_4").val('');
+                            $("#novo_descritor_4").focus();
+                        }, 400);
+                    }, 400);
+                }
+        );
+    }
     $(document).ready(function() {
         $("button[type=reset]").on('click', function() {
             if ($('#inserir_novo_descritor_1').prop('checked'))
@@ -127,7 +178,9 @@
         $.each(cb_descritores, function() {
             atualizar_combobox(this);
         });
-        formularioAjax();
+
+        formularioAjax({successFn: configurarComboBox, resetarFormulario: false});
+
         $("#inserir_novo_descritor_1").tooltip({placement: 'top'});
         $("#inserir_novo_descritor_2").tooltip({placement: 'top'});
         $("#inserir_novo_descritor_3").tooltip({placement: 'top'});

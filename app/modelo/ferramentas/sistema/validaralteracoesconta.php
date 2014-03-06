@@ -48,8 +48,6 @@ class validarAlteracoesConta extends verificadorFormularioAjax {
         if ($usuarioDAO->atualizar(obterUsuarioSessao()->get_email(), $usuario)) {
             atualizarUsuarioSessao($usuario);
             $this->mensagemSucesso("Alteração concluída com sucesso");
-            //TODO arrumar um modo de atualizar o nome do usuário na parte superior direita do site quando ele altera o nome.
-//            header('refresh: 2; url=http://localhost/controle-cead/index.php');
         } else {
             $this->mensagemErro("Erro ao inserir no banco de dados.");
         }

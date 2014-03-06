@@ -11,7 +11,7 @@
                 <div class="nav-collapse collapse navbar-responsive-collapse">
                     <div class="input-append">
                         <input type="text" autofocus autocomplete="off" class="ignorar input-xxlarge" name="busca" id="campo_busca" placeholder="Procure pelo título ou pelo nome do descritor..." data-provide="typeahead" style="position: relative; top: 6px;">
-                        <button id="botao_limpar"  type="button" data-toggle="Limpar" title="Limpar campo de busca"><i class="icon-remove"></i></button>
+                        <button id="botao_limpar" class="btn" type="button" data-toggle="Limpar" title="Limpar campo de busca" style="position: relative; top: 6px;"><i class="icon-remove"></i></button>
                         <button id="botao_buscar_imagem" class="btn" type="button" style="position: relative; top: 6px;">Procurar</button>
                     </div>
                     <ul class="nav pull-right">
@@ -71,7 +71,8 @@
             buscar();
         });
         $('#campo_busca').typeahead({
-            source: function(query, process) {
+            minLength: 4
+            , source: function(query, process) {
                 $.ajax({
                     url: 'index.php?c=imagens&a=obterDescritores',
                     type: 'POST',
@@ -85,21 +86,21 @@
             }
             , updater: function(item) {
                 return this.$element.val().replace(/[^,]*$/, '') + item + ',';
-            },
-            matcher: function(item) {
+            }
+            , matcher: function(item) {
                 var tquery = extractor(this.query);
                 if (!tquery)
                     return false;
-                return ~item.toLowerCase().indexOf(tquery.toLowerCase())
-            },
-            highlighter: function(item) {
-                var query = extractor(this.query).replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
+                return ~item.toLowerCase().indexOf(tquery.toLowerCase());
+            }
+            , highlighter: function(item) {
+                var query = extractor(this.query).replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&');
                 return item.replace(new RegExp('(' + query + ')', 'ig'), function($1, match) {
-                    return '<strong>' + match + '</strong>'
-                })
+                    return '<strong>' + match + '</strong>';
+                });
             }
         });
-        var timeoutBuscaId;
+
         $("#campo_busca").on('keyup', function(e) {
             switch (e.keyCode) {
                 case 13: // enter

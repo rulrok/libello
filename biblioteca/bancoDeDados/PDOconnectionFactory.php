@@ -20,7 +20,7 @@ class PDOconnectionFactory {
      */
     public static function obterConexao() {
 
-        if (static::$connection === null) {
+//        if (static::$connection === null) {
             try {
                 static::$connection = new PDO('mysql:host=' . DATABASE_SERVER_IP . ';dbname=' . DATABASE_SERVER_DBNAME . ';port=' . DATABASE_SERVER_PORT
                         , DATABASE_SERVER_USER, DATABASE_SERVER_PASSWORD
@@ -30,7 +30,7 @@ class PDOconnectionFactory {
                 //print_r($e);
                 die("Falha ao conectar-se ao banco de dados");
             }
-        }
+//        }
         return static::$connection;
     }
 

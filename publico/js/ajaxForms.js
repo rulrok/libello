@@ -17,8 +17,9 @@
  * do ajax.
  * @param {Function} successFn Função para ser ativada com um evento de sucesso. Será  a última ação executada após o sucesso.
  * @param {Function} alwaysFn Função que sempre será executada.
+ * @param {boolean} resetarFormulario Indica se o formulário deve ser resetado após a conclusão com sucesso.
  */
-function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn) {
+function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn, resetarFormulario) {
 
 
     if (typeof idFormulario == "object") {
@@ -26,10 +27,13 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn
         completeFn = idFormulario['completeFn'];
         successFn = idFormulario['successFn'];
         alwaysFn = idFormulario['alwaysFn'];
+        resetarFormulario = idFormulario['resetarFormulario'];
         idFormulario = idFormulario['idFormulario'];
     }
 
-
+    if (resetarFormulario === undefined) {
+        resetarFormulario = true;
+    }
 
     if (idFormulario === undefined) {
         idFormulario = $("form").prop("id");
@@ -82,9 +86,11 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn
                 showPopUp(data.mensagem, data.status);
                 if (data.status.toLowerCase() === "sucesso") {
                     document.paginaAlterada = false;
-                    $("input[type=reset],button[type=reset]").click();
                     if (successFn !== undefined && isFunction(successFn)) {
                         successFn(data);
+                    }
+                    if (resetarFormulario) {
+                        $("input[type=reset],button[type=reset]").click();
                     }
                 }
             } else {

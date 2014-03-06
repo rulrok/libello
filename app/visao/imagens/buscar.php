@@ -21,8 +21,8 @@
                                 <br/> 
                                 <?php echo $imagem['nomedescritor1'] . '<br/>' . $imagem['nomedescritor2'] . '<br/>' . $imagem['nomedescritor3'] . '<br/>' . $imagem['nomedescritor4'] ?>
                             <p class="botoes_acoes_thumb">
-                                <a href = "javascript:void(0)" class="btn btn-mini btn-info btn-imagem-visualizacao" data-toggle="Novo" title="Baixar imagem em tamanho real"><i class="icon-download-alt"></i><i class="icon-picture"></i></a>
-                                <a href = "javascript:void(0)" class="btn btn-mini btn-imagem-visualizacao" data-toggle="Novo" title="Baixar arquivo vetorizado"><i class="icon-download-alt"></i><i class="icon-file"></i></a>
+                                <a href = "javascript:void(0)" class="btn btn-mini btn-info btn-imagem-download-imagem" data-toggle="Novo" title="Baixar imagem em tamanho real"><i class="icon-download-alt"></i><i class="icon-picture"></i></a>
+                                <a href = "javascript:void(0)" class="btn btn-mini btn-imagem-download-original" data-toggle="Novo" title="Baixar arquivo vetorizado"><i class="icon-download-alt"></i><i class="icon-file"></i></a>
                                 <a href = "javascript:void(0)" class="btn btn-mini btn-imagem-visualizacao" data-toggle="Novo" title="Mais detalhes"><i class="icon-eye-open"></i> </a>
                             </p>
                         </div>
@@ -33,48 +33,52 @@
     </div>
 
     <script>
-        $(".btn-imagem-visualizacao").tooltip({placement: 'top'});
-        function esconder(thumb) {
-    //                $(thumb).children('img').removeClass('img-polaroid', 200);
-            $(thumb).children('div').hide(600, function() {
-    //                $(thumb).parent('li').removeClass('span3', 200);
-    //                $(thumb).parent('li').addClass('span2', 600);
-            });
-        }
-        function exibir(thumb) {
-    //            $(thumb).parent('li').removeClass('span2', 200);
-    //            $(thumb).parent('li').addClass('span3', 500);
-    //                $(thumb).children('img').addClass('img-polaroid', 800);
-            $(thumb).children('div').show(500);
-        }
+        $(document).ready(function() {
 
-        var ultimoThumb;
-        var ultimoThumbTimeout;
-
-       
-
-        $(".thumbnail").on('click', function() {
-            if (this == ultimoThumb) {
-                return;
-            } else {
-                ultimoThumb = this;
+            $(".btn-imagem-visualizacao").tooltip({placement: 'top'});
+            function esconder(thumb) {
+                //                $(thumb).children('img').removeClass('img-polaroid', 200);
+                $(thumb).children('div').hide(600, function() {
+                    //                $(thumb).parent('li').removeClass('span3', 200);
+                    //                $(thumb).parent('li').addClass('span2', 600);
+                });
             }
-            exibir(this);
-            $(this).addClass('clicada');
-        });
-        $(".thumbnail").on('mouseleave', function() {
-            ultimoThumbTimeout = setTimeout(function(obj) {
-                if (obj == ultimoThumb) {
-                    return;
-                }
-                $(obj).removeClass('clicada');
-                esconder(obj);
-            }, 800, this);
-            ultimoThumb = null;
-        });
+            function exibir(thumb) {
+                //            $(thumb).parent('li').removeClass('span2', 200);
+                //            $(thumb).parent('li').addClass('span3', 500);
+                //                $(thumb).children('img').addClass('img-polaroid', 800);
+                $(thumb).children('div').show(500);
+            }
 
-        $("#qtdItensPorPagina").on('change', function() {
-            buscar(undefined, this.value);
+            var ultimoThumb;
+            var ultimoThumbTimeout;
+            $(".thumbnail").on('click', function() {
+                if (this == ultimoThumb) {
+                    return;
+                } else {
+                    ultimoThumb = this;
+                }
+                exibir(this);
+                $(this).addClass('clicada');
+            });
+            $(".thumbnail").on('mouseleave', function() {
+                ultimoThumbTimeout = setTimeout(function(obj) {
+                    if (obj == ultimoThumb) {
+                        return;
+                    }
+                    $(obj).removeClass('clicada');
+                    esconder(obj);
+                }, 800, this);
+                ultimoThumb = null;
+            });
+            $("#qtdItensPorPagina").on('change', function() {
+                buscar(undefined, this.value);
+            });
+
+            $(".btn-imagem-visualizacao").on('click', function() {
+                console.log($(this).parent().parent().parent());
+//                $("#myModal").load("index.php?c=usuarios&a=consultarpermissoes&userID=" + id).modal();
+            });
         });
     </script>
 <?php else: ?>

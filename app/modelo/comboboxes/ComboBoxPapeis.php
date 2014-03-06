@@ -1,8 +1,7 @@
 <?php
 
 require_once BIBLIOTECA_DIR . "configuracoes.php";
-require_once "Menu.php";
-require_once "enumeracao/Papel.php";
+require_once APP_DIR . "modelo/enumeracao/Papel.php";
 
 class ComboBoxPapeis {
 

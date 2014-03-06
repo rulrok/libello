@@ -43,17 +43,16 @@ class imagensDAO extends abstractDAO {
         return $this->cadastrarDescritor($descritor, ImagensDescritor::ID_RAIZ_NIVEL_ZERO);
     }
 
-    public function consultarTodasAsImagens($limit = null) {
-//        $limitStr = "";
-//        if ($limit !== null) {
-//            $limitStr = $limit;
-//        }
-//        $sql = "SELECT * FROM imagens_imagem ORDER BY idImagem $limitStr";
-//        return $this->executarSelect($sql);
-        return $this->pesquisarImagem('', $limit);
+    public function consultarTodasAsImagens($limit = null, $acessoTotal = false) {
+        return $this->pesquisarImagem('', $limit, $acessoTotal);
     }
 
-    public function pesquisarImagem($termoBusca, $limite = "") {
+    public function pesquisarImagem($termoBusca, $limite = "", $acessoTotal = false) {
+        if ($acessoTotal) {
+            $query_auxiliar = '';
+        } else {
+            $query_auxiliar = ' WHERE autor = :idUsuarioLogado ';
+        }
         //Query do MAL!
         $sql = "SELECT"
                 . ' t.idImagem,t.titulo,t.observacoes,t.dificuldade,t.cpfAutor,'
@@ -71,6 +70,7 @@ class imagensDAO extends abstractDAO {
                 . ' JOIN `imagens_descritor` t2 ON t2.idDescritor = t.descritor2'
                 . ' JOIN `imagens_descritor` t3 ON t3.idDescritor = t.descritor3'
                 . ' JOIN `imagens_descritor` t4 ON t4.idDescritor = t.descritor4 '
+                . "$query_auxiliar"
                 . $limite;
 
         try {
@@ -82,6 +82,7 @@ class imagensDAO extends abstractDAO {
         $regexTermoBusca = "($aux)";
         $params = array(
             ':termoBusca' => [$regexTermoBusca, PDO::PARAM_STR]
+            , ':idUsuarioLogado' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
         );
         return $this->executarSelect($sql, $params);
     }
@@ -123,14 +124,11 @@ class imagensDAO extends abstractDAO {
 
         $resultado = static::consultarDescritor('nome, pai', "idDescritor = $idDescritorBase");
 
-
         while ($resultado[0]['pai'] != null) {
             array_push($caminho, $resultado[0]['nome']);
             $aux = (int) $resultado[0]['pai'];
             $resultado = static::consultarDescritor('nome, pai', "idDescritor = $aux");
         }
-
-
 
         $endereco = "";
         $i = sizeof($caminho);
@@ -155,8 +153,8 @@ class imagensDAO extends abstractDAO {
     }
 
     public function cadastrarImagem(Imagem $imagem) {
-        $sql = "INSERT INTO imagens_imagem(idGaleria,titulo,observacoes,dificuldade,cpfAutor,ano,nomeArquivo,nomeArquivoMiniatura,nomeArquivoVetorial,descritor1,descritor2,descritor3,descritor4) VALUES ";
-        $sql .= "(:idGaleria,:titulo,:observacoes,:dificuldade,:cpfAutor,:ano,:nomeArquivo,:nomeArquivoMiniatura,:nomeArquivoVetorial,:des1,:des2,:des3,:des4)";
+        $sql = "INSERT INTO imagens_imagem(idGaleria,titulo,observacoes,dificuldade,cpfAutor,ano,nomeArquivo,nomeArquivoMiniatura,nomeArquivoVetorial,descritor1,descritor2,descritor3,descritor4,autor) VALUES ";
+        $sql .= "(:idGaleria,:titulo,:observacoes,:dificuldade,:cpfAutor,:ano,:nomeArquivo,:nomeArquivoMiniatura,:nomeArquivoVetorial,:des1,:des2,:des3,:des4,:autor)";
         $params = array(
             ':idGaleria' => [$imagem->get_idGaleria(), PDO::PARAM_INT]
             , ':titulo' => [$imagem->get_titulo(), PDO::PARAM_STR]
@@ -171,28 +169,10 @@ class imagensDAO extends abstractDAO {
             , ':des2' => [$imagem->get_descritor2(), PDO::PARAM_INT]
             , ':des3' => [$imagem->get_descritor3(), PDO::PARAM_INT]
             , ':des4' => [$imagem->get_descritor4(), PDO::PARAM_INT]
+            , ':autor' => [$imagem->get_autor(), PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }
-
-//    public function consultarImagem(Imagem $imagem) {
-////        $sql = "SELECT count(idPolo) FROM polo WHERE ";
-////        $nome = parent::quote($polo->get_nome());
-////        $cidade = parent::quote($polo->get_cidade());
-////        $estado = parent::quote($polo->get_estado());
-////        $condicao = "nomePolo = $nome AND cidade=$cidade AND estado = $estado";
-////        try {
-////            $resultado = parent::getConexao()->query($sql . $condicao)->fetch();
-////        } catch (Exception $e) {
-////            echo $e;
-////        }
-////
-////        if (is_array($resultado)) {
-////            $resultado = $resultado[0];
-////        }
-////        return $resultado;
-//    }
-
 
     public function atualizarDescritor($idDescritor, Descritor $novosDados) {
 

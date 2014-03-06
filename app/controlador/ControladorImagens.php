@@ -1,9 +1,11 @@
 <?php
 
 include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
-require_once APP_DIR . "modelo/ComboBoxDescritores.php";
 require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
+require_once APP_DIR . "modelo/comboboxes/ComboBoxDescritores.php";
 require_once APP_DIR . "modelo/ferramentas/imagens/pesquisa.php";
+require_once APP_DIR . "modelo/enumeracao/Ferramenta.php";
+require_once APP_DIR . "modelo/enumeracao/Papel.php";
 
 class ControladorImagens extends Controlador {
     /*
@@ -12,6 +14,8 @@ class ControladorImagens extends Controlador {
 
     public function acaoBuscar() {
         $this->visao->acessoMinimo = Permissao::CONSULTA;
+
+        $papel = obterUsuarioSessao()->get_idPapel();
 
         if (filter_has_var(INPUT_GET, 'q')) {
             if (filter_has_var(INPUT_GET, 'p')) {
@@ -26,10 +30,11 @@ class ControladorImagens extends Controlador {
             }
             $termo = filter_input(INPUT_GET, 'q');
             $pesquisa = new pesquisa();
+            $acessoTotal = $papel <= Papel::GESTOR;
             if ($termo == "") {
-                $pesquisa->obterTodas($pagina, $itensPorPagina);
+                $pesquisa->obterTodas($pagina, $itensPorPagina, $acessoTotal);
             } else {
-                $pesquisa->buscar($termo, $pagina, $itensPorPagina);
+                $pesquisa->buscar($termo, $pagina, $itensPorPagina, $acessoTotal);
             }
             if ($pesquisa->temResultados()) {
                 $this->visao->temResultados = true;
@@ -72,6 +77,7 @@ class ControladorImagens extends Controlador {
         $this->visao->cpfAutor = obterUsuarioSessao()->get_cpf();
         $this->visao->iniciaisAutor = obterUsuarioSessao()->get_iniciais();
         $this->visao->comboBoxDescritor = ComboBoxDescritores::montarDescritorPrimeiroNivel();
+        $this->visao->nomeUsuario = obterUsuarioSessao()->get_PNome() . ' ' . obterUsuarioSessao()->get_UNome();
         $this->renderizar();
     }
 
@@ -149,6 +155,11 @@ class ControladorImagens extends Controlador {
 
     public function acaoObterdescritor() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
+        $this->renderizar();
+    }
+
+    public function acaoAuxcombonivel1() {
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }
 

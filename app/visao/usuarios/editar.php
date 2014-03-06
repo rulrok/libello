@@ -39,7 +39,9 @@
                                        text-align: center;">Sugestão inteligente</label>
                                 <input id="sugestaoInteligente" type="checkbox" value="">
                             </div>-->
-                <?php echo $this->comboPapel ?>
+                <select required class="input-large" id="papel" name="papel">
+                    <?php echo $this->comboPapel ?>
+                </select>
 
             </div>
         </fieldset>

@@ -2,8 +2,8 @@
 
 include_once APP_DIR . "modelo/Mensagem.php";
 require_once APP_DIR . "modelo/vo/Usuario.php";
-include_once APP_DIR . 'modelo/ComboBoxPermissoes.php';
-include_once APP_DIR . 'modelo/ComboBoxPapeis.php';
+include_once APP_DIR . 'modelo/comboboxes/ComboBoxPermissoes.php';
+include_once APP_DIR . 'modelo/comboboxes/ComboBoxPapeis.php';
 include_once APP_DIR . 'modelo/validadorCPF.php';
 include_once APP_DIR . "visao/verificadorFormularioAjax.php";
 require_once BIBLIOTECA_DIR . 'seguranca/criptografia.php';
@@ -59,6 +59,8 @@ class verificarNovoUsuario extends verificadorFormularioAjax {
         try {
             $usuarioDAO->iniciarTransacao();
             if ($usuarioDAO->inserir($usuario)) {
+                $id = $usuarioDAO->obterUltimoIdInserido();
+                $usuario->set_idUsuario($id);
                 $permissoes = new PermissoesFerramenta();
                 $permissoes->set_controleCursos(filter_input(INPUT_POST, 'permissoes_controle_de_cursos_e_polos'));
                 $permissoes->set_controleDocumentos(filter_input(INPUT_POST, 'permissoes_controle_de_documentos'));
@@ -66,15 +68,20 @@ class verificarNovoUsuario extends verificadorFormularioAjax {
                 $permissoes->set_controleLivros(filter_input(INPUT_POST, 'permissoes_controle_de_livros'));
                 $permissoes->set_controleUsuarios(filter_input(INPUT_POST, 'permissoes_controle_de_usuarios'));
                 $permissoes->set_controleViagens(filter_input(INPUT_POST, 'permissoes_controle_de_viagens'));
+                $permissoes->set_tarefas(filter_input(INPUT_POST, 'permissoes_controle_de_viagens'));
+                $permissoes->set_galeriaImagens(filter_input(INPUT_POST, 'permissoes_galeria_de_imagens'));
 
-                $usuarioDAO->cadastrarPermissoes($usuario, $permissoes);
+                if (!$usuarioDAO->cadastrarPermissoes($usuario, $permissoes)) {
+                    throw new Exception("Erro ao cadastrar permissões");
+                }
                 $usuario = $usuarioDAO->recuperarUsuario($usuario->get_email());
-                (new sistemaDAO())->registrarCadastroUsuario($_SESSION['idUsuario'], $usuario->get_idUsuario());
+//                (new sistemaDAO())->registrarCadastroUsuario(obterUsuarioSessao()->get_idUsuario(), $usuario->get_idUsuario());
+                $usuarioDAO->encerrarTransacao();
                 $this->mensagemSucesso("Cadastro realizado com sucesso");
             } else {
+                $usuarioDAO->rollback();
                 $this->mensagemErro("Erro ao cadastrar no banco");
             }
-            $usuarioDAO->encerrarTransacao();
         } catch (Exception $e) {
             $usuarioDAO->rollback();
             $this->mensagemErro("Erro ao inserir. Nenhuma alteração foi feita");

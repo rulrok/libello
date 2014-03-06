@@ -2,9 +2,9 @@
 
 include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
 include_once BIBLIOTECA_DIR . 'seguranca/criptografia.php';
-include_once APP_DIR . 'modelo/ComboBoxCurso.php';
-include_once APP_DIR . 'modelo/ComboBoxPolo.php';
-include_once APP_DIR . 'modelo/ComboBoxUsuarios.php';
+include_once APP_DIR . 'modelo/comboboxes/ComboBoxCurso.php';
+include_once APP_DIR . 'modelo/comboboxes/ComboBoxPolo.php';
+include_once APP_DIR . 'modelo/comboboxes/ComboBoxUsuarios.php';
 
 class ControladorViagens extends Controlador {
 

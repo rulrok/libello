@@ -4,7 +4,7 @@ include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
 require_once BIBLIOTECA_DIR . "seguranca/Permissao.php";
 require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
 include_once APP_DIR . 'modelo/dao/documentoDAO.php';
-include_once APP_DIR . 'modelo/ComboBoxDocumentos.php';
+include_once APP_DIR . 'modelo/comboboxes/ComboBoxDocumentos.php';
 include_once APP_DIR . 'modelo/enumeracao/Ferramenta.php';
 require_once APP_DIR . 'modelo/ferramentas/documentos/listarDocumentos.php';
 

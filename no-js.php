@@ -1,3 +1,4 @@
+<?php require_once 'biblioteca/configuracoes.php'; ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,8 +9,8 @@
         <script>
             <!--
             //Caso caia na página por engano, com o javascript habilitado
-            document.location.href = "http://172.16.11.1:8888/controle-cead/#!inicial|homepage";
-            //-->
+            document.location.href = "<?php echo WEB_SERVER_ADDRESS; ?>";
+//-->
         </script>
     </head>
     <body>

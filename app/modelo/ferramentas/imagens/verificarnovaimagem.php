@@ -38,6 +38,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             //Campos obtidos diretamente do sistema
             $cpfAutor = validadorCPF::normalizarCPF(obterUsuarioSessao()->get_cpf());
             $iniciais = obterUsuarioSessao()->get_iniciais();
+            $autor = obterUsuarioSessao()->get_idUsuario();
 
             $nomeImagem = $_FILES[$arquivoImagem]['name'];
             //OBS $_FILES[arq]['type'] não verifica o tipo do arquivo pelo seu cabeçalho, apenas pela extensão, então extrair a extensão pelo o nome ou pelo
@@ -116,7 +117,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             $imagemVO->set_idGaleria($idGaleria)->set_descritor1($descritor1)->set_descritor2($descritor2)->set_descritor3($descritor3)->set_descritor4($descritor4);
 
             $imagemVO->set_titulo($titulo)->set_observacoes($observacoes)->set_dificuldade($dificuldade);
-            $imagemVO->set_cpfAutor($cpfAutor)->set_ano($ano);
+            $imagemVO->set_cpfAutor($cpfAutor)->set_ano($ano)->set_autor($autor);
 
             $imagemVO->set_utilizadoAvaliacao(0)->set_avaliacao(null)->set_anoAvaliacao(null);
 

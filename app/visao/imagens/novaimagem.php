@@ -15,13 +15,14 @@
             <input required size="4" type="number" maxlength="4" id="ano" name="ano" class="input-xlarge" placeholder="Ano de criação da imagem">
         </div>
         <hr>
+        <p>Campos preenchidos automaticamente:</p>
         <div class="line">
             <label>CPF (autor)</label>
-            <input required disabled type="text" maxlength="11" id="cpfautor" name="cpfautor" class="input-xlarge" placeholder="___.___.___-__" data-content="Seu CPF cadastrado no sistema." value="<?php echo $this->cpfAutor; ?>">
+            <input required disabled type="text" maxlength="11" id="cpfautor" name="cpfautor" class="disabled input-xlarge" placeholder="___.___.___-__" data-content="Seu CPF cadastrado no sistema." value="<?php echo $this->cpfAutor; ?>">
         </div>
         <div class="line">
             <label for='iniciaisAutor'>Iniciais do autor</label>
-            <input required disabled type="text" maxlength="11" id="iniciaisAutor" name="iniciaisAutor" class="input-medium"  value="<?php echo $this->iniciaisAutor; ?>">
+            <input required disabled type="text" maxlength="11" id="iniciaisAutor" name="iniciaisAutor" class="disabled input-medium"  value="<?php echo $this->iniciaisAutor; ?>">
         </div>
         <hr>
         <div class="line">
@@ -53,6 +54,11 @@
                 <option value="default">-- Escolha um descritor acima --</option>
             </select>
         </div>
+        <br/>
+        <blockquote>
+            <i>Não encontrou o descritor desejado?</i>
+            <a class="btn btn-link" target="_blank" href="mailto:daeb.bei-bi@inep.gov.br?subject=Cadastro de descritor&body=Olá,%0D%0A%0D%0ANecessito cadastrar uma imagem e não encontrei nenhuma sequencia de descritores que se adequem aos critérios da minha figura.%0D%0AVenho por meio deste solicitar o cadastro da seguinte sequência de descritores:%0D%0A%0D%0AGrato, <?php echo $this->nomeUsuario; ?>">Solicitar cadastro de novo descritor</a>
+        </blockquote>
         <div class="line">
             <label for="complexidade">Complexidade</label>
             <div class="btn-toolbar" style="position:relative;left:15px;margin-bottom: 5px;">

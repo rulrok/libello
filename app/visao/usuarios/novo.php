@@ -44,7 +44,7 @@
             </div>
             <div class="line">
                 <label for="papel">Papel</label>
-                <select required class="input-large" id="papel">
+                <select required class="input-large" id="papel" name="papel">
                     <?php echo $this->comboPapeis ?>
                 </select>
             </div>
@@ -97,7 +97,7 @@
     $(document).ready(function() {
         $("#dataNascimento").datepick();
         $(".line input").popover({trigger: 'focus', container: 'body'});
-        $("[name=papel]").on('change', preconfigurarPermissoes);
+        $("#papel").on('change', preconfigurarPermissoes);
         $('#cpf').mask('999.999.999-99');
         varrerCampos();
         formularioAjax();

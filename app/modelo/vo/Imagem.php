@@ -21,6 +21,16 @@ class Imagem {
     var $descritor2;
     var $descritor3;
     var $descritor4;
+    var $autor;
+
+    public function get_autor() {
+        return $this->autor;
+    }
+
+    public function set_autor($autor) {
+        $this->autor = $autor;
+        return $this;
+    }
 
     public function get_idImagem() {
         return $this->idImagem;
@@ -40,14 +50,6 @@ class Imagem {
         return $this;
     }
 
-//    public function get_idSubcategoria() {
-//        return $this->idSubcategoria;
-//    }
-
-//    public function set_idSubcategoria($idSubcategoria) {
-//        $this->idSubcategoria = $idSubcategoria;
-//        return $this;
-//    }
     public function get_titulo() {
         return $this->titulo;
     }
@@ -155,7 +157,7 @@ class Imagem {
         $this->nomeArquivoVetorial = $nomeArquivoVetorial;
         return $this;
     }
-    
+
     public function get_descritor1() {
         return $this->descritor1;
     }
@@ -191,8 +193,6 @@ class Imagem {
         $this->descritor4 = $descritor4;
         return $this;
     }
-
-
 
 }
 

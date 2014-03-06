@@ -178,7 +178,7 @@ class Menu {
                     break;
 //                case Ferramenta::CONTROLE_PAGAMENTOS:
 //                    if ($permissao_ferramenta['idPermissao'] != Permissao::SEM_ACESSO) {
-//                        $menuCode .= "<a><li class=\"menuLink\" id=\"pagamentosLink\">Pagamentos</li></a>" . "\n";
+//                        $menuCode .= "<a><li class=\"menuLink\" id=\"pagamentosLink\">Pagamentos</li></a>" . "\n";;
 //                        $subMenuCode .="<ul class=\"hiddenSubMenuLink pagamentosSubMenu\">" . "\n";
 //                        switch ($permissao_ferramenta['idPermissao']) {
 //                            case Permissao::ADMINISTRADOR:

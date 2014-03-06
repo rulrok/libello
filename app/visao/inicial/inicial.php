@@ -32,6 +32,13 @@
         <![endif]-->
         <!-- Fim ESTILOS -->
 
+        <noscript>
+        <style>
+            #telaCarregando {
+                display: none;
+            }
+        </style>
+        </noscript>
     <div id="telaCarregando"><span>Carregando...</span></div>
     <!-- PRE SCRIPTS -->
         <!--<script src="http://ie.microsoft.com/testdrive/HTML5/CompatInspector/inspector.js"></script>-->
@@ -45,6 +52,7 @@
     <script src="publico/js/mainScript.js"></script>
     <script src="publico/js/validarCampos.js"></script>
     <script src="publico/js/ajaxForms.js"></script>
+    <script src="publico/js/debug.js"></script>
     <script>
         window.onbeforeunload = function(e) {
             if (document.paginaAlterada) {
@@ -65,7 +73,7 @@
 
     <!-- FIM PRE SCRIPTS -->
 
-    <link rel="icon" type="image/png" href="publico/imagens/cead.png" /><!-- logo CEAD favicon -->
+    <link rel="icon" type="image/png" href="publico/imagens/logotipo_header.png" />
 
     <title class="tituloFixo"><?php echo $this->titulo ?></title>
 </head>
@@ -75,13 +83,13 @@
         <header>
             <figure>
                 <map name="#logoMap">
-                    <area shape="poly" coords="86,178,120,157,177,134,202,125,224,120,240,95,243,80,228,59,201,49,196,54,197,98,188,88,186,59,176,51,167,48,156,25,135,13,127,0,92,4,43,13,2,13,12,32,32,62,31,91,40,118,65,141" alt="Controle CEAD" title="Controle CEAD" />
+                    <area shape="poly" coords="86,178,120,157,177,134,202,125,224,120,240,95,243,80,228,59,201,49,196,54,197,98,188,88,186,59,176,51,167,48,156,25,135,13,127,0,92,4,43,13,2,13,12,32,32,62,31,91,40,118,65,141" alt="<?php echo $this->nomeAplicativo; ?>" title="<?php echo $this->nomeAplicativo; ?>" />
                 </map>
-                <img class="logo" src="publico/imagens/cead.png" usemap="#logoMap">
+                <img class="logo" src="publico/imagens/logotipo_header.png" usemap="#logoMap">
             </figure>
             <div class="headerWrap">
 
-                <p class="centralizado">Controle CEAD <sup>(versão <?php echo APP_VERSION; ?>)</sup></p>
+                <p class="centralizado"><?php echo $this->nomeAplicativo; ?><sup>(versão <?php echo APP_VERSION; ?>)</sup></p>
                 <?php
                 if ($this->administrador && $this->temErros) :
                     ?>
@@ -94,7 +102,7 @@
                 <?php endif; ?>
             </div>
             <div class="userInfoWrap">
-                <p>Logado como: <b><?php echo $this->nomeUsuario ?></b> (<?php echo $this->papel ?>)</p>
+                <p>Logado como: <b id='nomeusuarioHeader'><?php echo $this->nomeUsuario ?></b> (<?php echo $this->papel ?>)</p>
                 <div class="btn-toolbar" id="configuracoesSite">
                     <div id="botoesSuperiores" class="centralizado btn-group">
 

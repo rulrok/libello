@@ -473,17 +473,19 @@ function ajax(link, place, hidePop, async, ignorePageChanges) {
 //            var tituloProprio = data.lastIndexOf("<title>");
 
             //Trata páginas com títulos personalizados
-            if (patt.test(data)) {
-                var titulo = patt.exec(data)[0];
-                data = data.replace(titulo, "");
-                titulo = titulo.replace("<title>", "");
-                titulo = titulo.replace("</title>", "");
-                mudarTitulo(titulo);
-            } else {
-                //Volta o título para o padrão
-                mudarTitulo();
+            if (data !== undefined && data !== null) {
+                if (patt.test(data)) {
+                    var titulo = patt.exec(data)[0];
+                    data = data.replace(titulo, "");
+                    titulo = titulo.replace("<title>", "");
+                    titulo = titulo.replace("</title>", "");
+                    mudarTitulo(titulo);
+                } else {
+                    //Volta o título para o padrão
+                    mudarTitulo();
+                }
+                $(place).append(data);
             }
-            $(place).append(data);
         }
 //        //Caso o conteúdo seja carregado no popup com fundo cinza
 //        if (place == ".shaderFrameContentWrap") {
@@ -982,3 +984,12 @@ function extrairJSON(string) {
     }
     return json;
 }
+
+jQuery.fn.center = function() {
+    this.css("position", "absolute");
+    this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
+            $(window).scrollTop()) + "px");
+    this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
+            $(window).scrollLeft()) + "px");
+    return this;
+};

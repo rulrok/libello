@@ -5,7 +5,7 @@ if (!isset($_SERVER['HTTP_X_REQUESTED_WITH'])) :
     ?>
     <!DOCTYPE html>
     <noscript>
-    <meta http-equiv="refresh" content="0;url=no-js.html" />
+    <meta http-equiv="refresh" content="0;url=no-js.php" />
     </noscript>
 <?php endif; ?>
 
