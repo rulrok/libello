@@ -23,16 +23,9 @@ $assunto = $memorando[0]->getAssunto();
 $corpo = $memorando[0]->getCorpo();
 $remetente = $memorando[0]->getRemetente();
 $cargo_remetente = $memorando[0]->getCargo_remetente();
-$remetente2 = $memorando[0]->getRemetente2();
-$cargo_remetente2 = $memorando[0]->getCargo_remetente2();
 
-if($remetente2 != '' && $cargo_remetente2 != ''){
-    $i_remetente = '1';
-}
-else{
-    $i_remetente = '0';
-}
-
+$remetentes = explode(';',$remetente);
+$cargos_remetentes = explode(';',$cargo_remetente);
 //$mes = retornaMes($mes);
 setlocale(LC_ALL, 'portuguese-brazilian', 'ptb', 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8');
 $mes =$monthName = date("F", mktime(0, 0, 0, $mes, 10));
@@ -110,7 +103,9 @@ $document = '<<<EOF
                 <tr><td style="height: 112px;"></td></tr>
                 <tr>
                     <td>
-                        <div id="div_remetente1" name="div_remetente1">
+                        ';
+for($i = 0;$i<count($remetentes);$i++){
+    $document.= '<div >
                             <table align="center">
                                 <tr>
                                     <td style="height: 20px;">
@@ -119,42 +114,23 @@ $document = '<<<EOF
                                 </tr>
                                 <tr>
                                     <td align="center" style="height: 20px;">
-                                        <span>' . $remetente . '</span>
+                                        <span>' . $remetentes[$i] . '</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td align="center" style="height: 20px;">
-                                        <span> ' . $cargo_remetente . ' </span>
+                                        <span> ' . $cargos_remetentes[$i] . ' </span>
                                     </td>                                                    
                                 </tr>
                             </table>
-                        </div>';
-                        if ($i_remetente == '1') {
-    $document .= '<br></br>
-                        <div id="div_remetente2" name="div_remetente2">
-                            <table align="center">
-                                <tr>
-                                    <td style="height: 20px;">
-                                        <span>____________________________________</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center" style="height: 20px;">
-                                        <span>' . $remetente2 . '</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center" style="height: 20px;">
-                                        <span> ' . $cargo_remetente2 . ' </span>
-                                    </td>                                                    
-                                </tr>
-                            </table>
-                        </div>';
+                        </div><br>';
 }
+                      
 $document .= '</table>
         </body>
     </html>';
 //echo $document; die();
+
 $dompdf = new DOMPDF();
 //$tamanho = array(0, 0, 596.4, 843.48);
 $dompdf->parse_default_view('A4', 'portrait');
@@ -167,44 +143,7 @@ $options = array(
 );
 $dompdf->stream($ano." - Memorando n".$numMemorando, $options);
 
-function retornaMes($mes) {
-    if ($mes == '01'){        
-        return 'janeiro';
-    }
-    if ($mes == '02'){        
-        return 'fevereiro';
-    }
-    if ($mes == '03'){        
-        return 'março';
-    }
-    if ($mes == '04'){        
-        return 'abril';
-    }
-    if ($mes == '05'){        
-        return 'maio';
-    }
-    if ($mes == '06'){        
-        return 'junho';
-    }
-    if ($mes == '07'){        
-        return 'julho';
-    }
-    if ($mes == '08'){        
-        return 'agosto';
-    }
-    if ($mes == '09'){        
-        return 'setembro';
-    }
-    if ($mes == '10'){        
-        return 'outubro';
-    }
-    if ($mes == '11'){        
-        return 'novembro';
-    }
-    if ($mes == '12'){        
-        return 'dezembro';
-    }        
-}
+
 
 ?>
     

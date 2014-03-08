@@ -28,18 +28,8 @@ class verificaratualizacaooficio extends verificadorFormularioAjax {
                 $remetente = $_REQUEST['remetente'];
                 $cargo_remetente = $_REQUEST['cargo_remetente'];
 
-                $remetente2 = '';
-                $cargo_remetente2 = '';
-                $i_remetente = $_REQUEST['i_remetente'];
 
 
-                if ($i_remetente == '1') {
-                    $remetente2 = $_REQUEST['remetente2'];
-                    $cargo_remetente2 = $_REQUEST['cargo_remetente2'];
-                }else{
-                    $remetente2 = null;
-                    $cargo_remetente2 = null;
-                }
 
 
                 $tratamento = $_REQUEST['tratamento'];
@@ -56,8 +46,6 @@ class verificaratualizacaooficio extends verificadorFormularioAjax {
                 $documento->setTipoSigla($tipoSigla);
                 $documento->setRemetente($remetente);
                 $documento->setCargo_remetente($cargo_remetente);
-                $documento->setRemetente2($remetente2);
-                $documento->setCargo_remetente2($cargo_remetente2);
                 $documento->setTratamento($tratamento);
                 $documento->setCargo_destino($cargo_destino);
 

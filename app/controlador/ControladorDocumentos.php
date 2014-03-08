@@ -104,8 +104,6 @@ class ControladorDocumentos extends Controlador {
         $this->visao->corpo = $temp->getCorpo();
         $this->visao->remetente = $temp->getRemetente();
         $this->visao->cargo_remetente = $temp->getCargo_remetente();
-        $this->visao->remetente2 = $temp->getRemetente2();
-        $this->visao->cargo_remetente2 = $temp->getCargo_remetente2();
         $this->visao->sigla = $temp->getTipoSigla();
         
         $this->visao->comboDia = ComboBoxDocumentos::comboDia();
@@ -129,8 +127,6 @@ class ControladorDocumentos extends Controlador {
         $this->visao->corpo = $temp->getCorpo();
         $this->visao->remetente = $temp->getRemetente();
         $this->visao->cargo_remetente = $temp->getCargo_remetente();
-        $this->visao->remetente2 = $temp->getRemetente2();
-        $this->visao->cargo_remetente2 = $temp->getCargo_remetente2();
         $this->visao->sigla = $temp->getTipoSigla();
         
         $this->visao->comboDia = ComboBoxDocumentos::comboDia();
@@ -165,8 +161,6 @@ class ControladorDocumentos extends Controlador {
         $this->visao->corpo = $temp->getCorpo();
         $this->visao->remetente = $temp->getRemetente();
         $this->visao->cargo_remetente = $temp->getCargo_remetente();
-        $this->visao->remetente2 = $temp->getRemetente2();
-        $this->visao->cargo_remetente2 = $temp->getCargo_remetente2();
         $this->visao->sigla = $temp->getTipoSigla();
         
         $this->visao->comboDia = ComboBoxDocumentos::comboDia();
@@ -187,8 +181,6 @@ class ControladorDocumentos extends Controlador {
         $this->visao->corpo = $temp->getCorpo();
         $this->visao->remetente = $temp->getRemetente();
         $this->visao->cargo_remetente = $temp->getCargo_remetente();
-        $this->visao->remetente2 = $temp->getRemetente2();
-        $this->visao->cargo_remetente2 = $temp->getCargo_remetente2();
         $this->visao->sigla = $temp->getTipoSigla();
                 
         $this->visao->comboDia = ComboBoxDocumentos::comboDia();

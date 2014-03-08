@@ -10,9 +10,8 @@
 
     $(document).ready(function() {
        
-       new Form().iniciarForm();
+       Form.instancia.iniciarForm();
        
-        //$('html, body').animate({scrollTop: 0},'fast');
 
         $('#b_gerar').on('click', function() {
             bloqueia();
@@ -85,7 +84,7 @@
                 </div>
                 <div style="padding-left: 193px;">
                     <input type="text" required id="cargo_remetente" name="cargo_remetente" onkeyup="liberarCadastro()" size="25" /><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
-                    <a title="Adicionar Remetente" id=""  onclick="adicionarRemetente();" class="btn" href="javascript:void(0);" ><i class="icon-plus"></i></a>
+                    <a title="Adicionar Remetente" id=""  onclick="new Form().adicionarRemetente();" class="btn" href="javascript:void(0);" ><i class="icon-plus"></i></a>
                 </div>
             </div>
             <br></br>

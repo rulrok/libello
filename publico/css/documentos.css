@@ -83,6 +83,10 @@
     color: #999;
 }
 
+.remetente_div{
+    margin-bottom:25px;
+}
+
 .remetente_div, .remetente_div p{
     text-align: center;
 }

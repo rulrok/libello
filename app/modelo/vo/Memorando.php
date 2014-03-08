@@ -22,9 +22,7 @@ class Memorando {
    private $data;
    private $tipoSigla;
    private $remetente;
-   private $remetente2;
    private $cargo_remetente;
-   private $cargo_remetente2;
    private $tratamento;
    private $cargo_destino;
    
@@ -108,14 +106,6 @@ class Memorando {
        $this->remetente = $remetente ;
    }
    
-   public function getRemetente2(){
-       return $this->remetente2 ;
-   }
-    
-   public function setRemetente2($remetente2){
-       $this->remetente2 = $remetente2 ;
-   }
-   
    public function getCargo_remetente(){
        return $this->cargo_remetente ;
    }
@@ -124,13 +114,6 @@ class Memorando {
        $this->cargo_remetente = $cargo_remetente ;
    }
    
-   public function getCargo_remetente2(){
-       return $this->cargo_remetente2 ;
-   }
-    
-   public function setCargo_remetente2($cargo_remetente2){
-       $this->cargo_remetente2 = $cargo_remetente2 ;
-   }
    
    public function getTratamento(){
        return $this->tratamento ;

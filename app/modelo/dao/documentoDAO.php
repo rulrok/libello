@@ -29,7 +29,7 @@ class documentoDAO extends abstractDAO {
     }
 
     public static function inserirOficio(Oficio $obj) {
-        $sql = "INSERT INTO oficio (assunto, corpo, idUsuario, estadoEdicao, tratamento, destino, cargo_destino, data, tipoSigla, referencia, remetente, remetente2, cargo_remetente, cargo_remetente2, numOficio) VALUES ";
+        $sql = "INSERT INTO oficio (assunto, corpo, idUsuario, estadoEdicao, tratamento, destino, cargo_destino, data, tipoSigla, referencia, remetente,  cargo_remetente,  numOficio) VALUES ";
         $assunto = parent::quote($obj->getAssunto());
         $corpo = parent::quote($obj->getCorpo());
         $idusuario = $obj->getIdUsuario();
@@ -41,13 +41,11 @@ class documentoDAO extends abstractDAO {
         $tipoSigla = parent::quote($obj->getTipoSigla());
         $referencia = parent::quote($obj->getReferencia());
         $remetente = parent::quote($obj->getRemetente());
-        $remetente2 = parent::quote($obj->getRemetente2());
         $cargo_remetente = parent::quote($obj->getCargo_remetente());
-        $cargo_remetente2 = parent::quote($obj->getCargo_remetente2());
         $numOficio = $obj->getNumOficio();
         
 
-        $values = "($assunto, $corpo, $idusuario, $estadoEdicao, $tratamento, $destino, $cargo_destino, $data, $tipoSigla, $referencia, $remetente, $remetente2, $cargo_remetente, $cargo_remetente2, $numOficio)";
+        $values = "($assunto, $corpo, $idusuario, $estadoEdicao, $tratamento, $destino, $cargo_destino, $data, $tipoSigla, $referencia, $remetente,  $cargo_remetente, $numOficio)";
         //echo $values;
         try {
             $stmt = parent::getConexao()->prepare($sql . $values);
@@ -84,12 +82,8 @@ class documentoDAO extends abstractDAO {
         $sql .="referencia = $referencia,";
         $remetente = parent::quote($obj->getRemetente());
         $sql.="remetente = $remetente,";
-        $remetente2 = parent::quote($obj->getRemetente2());
-        $sql .= "remetente2 = $remetente2,";
         $cargo_remetente = parent::quote($obj->getCargo_remetente());
         $sql .= "cargo_remetente = $cargo_remetente,";
-        $cargo_remetente2 = parent::quote($obj->getCargo_remetente2());
-        $sql.= "cargo_remetente2 = $cargo_remetente2,";
         $numOficio = $obj->getNumOficio();
         $sql.="numOficio = $numOficio";
         
@@ -98,7 +92,7 @@ class documentoDAO extends abstractDAO {
         $where = " WHERE idOficio = $idOficio";
         
 //        $sql = "UPDATE oficio SET assunto='" . $assunto . "', corpo='" . $corpo . "', tratamento='" . $tratamento . "', destino='" . $destino . "', cargo_destino='" . $cargo_destino . "', data='" . $data . "', estadoValidacao=1, estadoEdicao=" . $estadoEdicao . ",
-//        tipoSigla='" . $tipoSigla . "', referencia='" . $referencia . "', remetente='" . $remetente . "', remetente2='" . $remetente2 . "', cargo_remetente='" . $cargo_remetente . "', cargo_remetente2='" . $cargo_remetente2 . "', numOficio='" . $numOficio . "' WHERE idOficio=" . $idoficio;
+//        tipoSigla='" . $tipoSigla . "', referencia='" . $referencia . "', remetente='" . $remetente . "', cargo_remetente='" . $cargo_remetente . "', numOficio='" . $numOficio . "' WHERE idOficio=" . $idoficio;
         try {
             $stmt = parent::getConexao()->prepare($sql . $where);
             $stmt->execute();
@@ -145,7 +139,7 @@ class documentoDAO extends abstractDAO {
 
     public static function inserirMemorando(Memorando $obj) {
         
-        $sql = "INSERT INTO memorando(assunto, corpo, idUsuario, estadoEdicao, tratamento, cargo_destino, data, tipoSigla, remetente, remetente2, cargo_remetente, cargo_remetente2, numMemorando) VALUES ";
+        $sql = "INSERT INTO memorando(assunto, corpo, idUsuario, estadoEdicao, tratamento, cargo_destino, data, tipoSigla, remetente, cargo_remetente,  numMemorando) VALUES ";
         $assunto = parent::quote($obj->getAssunto());
         $corpo = parent::quote($obj->getCorpo());
         $idusuario = $obj->getIdUsuario();
@@ -155,13 +149,11 @@ class documentoDAO extends abstractDAO {
         $data = parent::quote($obj->getData());
         $tipoSigla = parent::quote($obj->getTipoSigla());
         $remetente = parent::quote($obj->getRemetente());
-        $remetente2 = parent::quote($obj->getRemetente2());
         $cargo_remetente = parent::quote($obj->getCargo_remetente());
-        $cargo_remetente2 = parent::quote($obj->getCargo_remetente2());
         $numMemorando = $obj->getNumMemorando();
         
 
-        $values = "($assunto, $corpo, $idusuario, $estadoEdicao, $tratamento, $cargo_destino, $data, $tipoSigla, $remetente, $remetente2, $cargo_remetente, $cargo_remetente2, $numMemorando)";
+        $values = "($assunto, $corpo, $idusuario, $estadoEdicao, $tratamento, $cargo_destino, $data, $tipoSigla, $remetente,  $cargo_remetente, $numMemorando)";
         echo $sql.$values;
         try {
             $stmt = parent::getConexao()->prepare($sql . $values);
@@ -197,12 +189,10 @@ class documentoDAO extends abstractDAO {
        
         $remetente = parent::quote($obj->getRemetente());
         $sql.="remetente = $remetente,";
-        $remetente2 = parent::quote($obj->getRemetente2());
-        $sql .= "remetente2 = $remetente2,";
+     
         $cargo_remetente = parent::quote($obj->getCargo_remetente());
         $sql .= "cargo_remetente = $cargo_remetente,";
-        $cargo_remetente2 = parent::quote($obj->getCargo_remetente2());
-        $sql.= "cargo_remetente2 = $cargo_remetente2,";
+      
         $numMemorando = $obj->getNumMemorando();
         $sql.="numMemorando = $numMemorando";
         
@@ -211,7 +201,7 @@ class documentoDAO extends abstractDAO {
         $where = " WHERE idMemorando = $idMemorando";
         
 //        $sql = "UPDATE oficio SET assunto='" . $assunto . "', corpo='" . $corpo . "', tratamento='" . $tratamento . "', destino='" . $destino . "', cargo_destino='" . $cargo_destino . "', data='" . $data . "', estadoValidacao=1, estadoEdicao=" . $estadoEdicao . ",
-//        tipoSigla='" . $tipoSigla . "', referencia='" . $referencia . "', remetente='" . $remetente . "', remetente2='" . $remetente2 . "', cargo_remetente='" . $cargo_remetente . "', cargo_remetente2='" . $cargo_remetente2 . "', numOficio='" . $numOficio . "' WHERE idOficio=" . $idoficio;
+//        tipoSigla='" . $tipoSigla . "', referencia='" . $referencia . "', remetente='" . $remetente . "', cargo_remetente='" . $cargo_remetente . "', numOficio='" . $numOficio . "' WHERE idOficio=" . $idoficio;
         try {
             $stmt = parent::getConexao()->prepare($sql . $where);
             $stmt->execute();

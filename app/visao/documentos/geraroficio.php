@@ -2,15 +2,13 @@
 <script src="publico/js/jquery/jquery-te-1.0.5.min.js" type="text/javascript"></script>
 <script src="publico/js/documentos.js" type="text/javascript"></script>
 <link href='publico/css/jquery-te-Style.css' rel='stylesheet' type="text/css"/>
-<link href='publico/css/documentos.css' rel='stylesheet' type="text/css"/>
 <script src="biblioteca/tinymce/js/tinymce/jquery.tinymce.min.js"></script>
 <script src="biblioteca/tinymce/js/tinymce/tinymce.min.js"></script>
+<link href='publico/css/documentos.css' rel='stylesheet' type="text/css"/>
 <script type="text/javascript">
 
-
-
     $(document).ready(function() {
-        new Form().iniciarForm();
+        Form.instancia.iniciarForm();
 
 
         $('#b_gerar').on('click', function() {
@@ -40,10 +38,6 @@
 
             desbloqueia();
         });
-
-
-
-
 
     });
 

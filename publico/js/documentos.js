@@ -1,25 +1,27 @@
 function liberarCadastro() {
+    var inputs = $('input[type!=hidden]');
+    var podeGerar = false;
+//    var conteudo = tinymce.get('corpo').getContent();
+    var conteudo = $('#corpo').text();
+    for (var i = 0; i < inputs.length; i++) {
+        if ($(inputs.get(i)).val() == '') {
+            podeGerar = false;
+            break;
+        } else {
+            podeGerar = true;
+        }
+    }
+    if (conteudo == '') {
+        podeGerar = false;
+    }
+    $('#b_gerar').attr({disabled: !podeGerar});
+
     if ($('#assunto').val() != '') {
         $('#b_salvar').removeAttr('disabled');
     } else {
         $('#b_salvar').attr({disabled: 'true'});
     }
-    if ($('#i_remetente').val() == "0") {
-        if (($('#tratamento').val() != '') && ($('#destino').val() != '') && ($('#cargo_destino').val() != '') && ($('#assunto').val() != '') && ($('#referencia').val() != '') && ($('#tinymce').html() != '') && ($('#remetente').val() != '') && ($('#cargo_remetente').val() != '')) {
-            $('#b_gerar').removeAttr('disabled');
-        }
-        else if (($('#tratamento').val() == '') || ($('#destino').val() == '') || ($('#cargo_destino').val() == '') || ($('#assunto').val() == '') || ($('#referencia').val() == '') || ($('#tinymce').html() == '') || ($('#remetente').val() == '') || ($('#cargo_remetente').val() == '')) {
-            $('#b_gerar').attr({disabled: 'true'});
-        }
-    }
-    else if ($('#i_remetente').val() == "1") {
-        if (($('#tratamento').val() != '') && ($('#destino').val() != '') && ($('#cargo_destino').val() != '') && ($('#assunto').val() != '') && ($('#referencia').val() != '') && ($('#corpo').val() != '') && ($('#remetente').val() != '') && ($('#cargo_remetente').val() != '') && ($('#remetente2').val() != '') && ($('#cargo_remetente2').val() != '')) {
-            $('#b_gerar').removeAttr('disabled');
-        }
-        else if (($('#tratamento').val() == '') || ($('#destino').val() == '') || ($('#cargo_destino').val() == '') || ($('#assunto').val() == '') || ($('#referencia').val() == '') || ($('#corpo').val() == '') || ($('#remetente').val() == '') || ($('#cargo_remetente').val() == '') || ($('#remetente2').val() == '') || ($('#cargo_remetente2').val() == '')) {
-            $('#b_gerar').attr({disabled: 'true'});
-        }
-    }
+
 }
 
 function bloqueia() {
@@ -56,20 +58,34 @@ function desbloqueia() {
     $('#b_salvar').removeAttr('readonly');
 }
 
-function adicionarRemetente() {
+function concatenarAssinaturas() {
+    var remetentes = $('.remetente');
+    var cargos_remetentes = $('.cargo_remetente');
+    var string_remetente = '', string_cargo_remetente = '';
 
-    $("#div_remetente2").show();
-    $("#add_rem").hide();
-    $("#i_remetente").val("1");
+    for (var i = 0; i < remetentes.length; i++) {
+        if (i > 0) {
+            string_remetente += ';';
+            string_cargo_remetente += ';';
+        }
+        if ($(remetentes.get(i)).val() == '') {
+            string_remetente += ' ';
+        } else {
+            string_remetente += $(remetentes.get(i)).val();
+        }
+        if ($(cargos_remetentes.get(i)).val() == '') {
+            string_cargo_remetente += ' ';
+        } else {
+            string_cargo_remetente += $(cargos_remetentes.get(i)).val();
+        }
+    }
+    $('#remetente').val(string_remetente);
+    $('#cargo_remetente').val(string_cargo_remetente);
 }
-
-function removerRemetente() {
-    $("#div_remetente2").hide();
-    $("#add_rem").show();
-    $("#i_remetente").val("0");
-}
+;
 
 function capturaNumOficio() {
+    concatenarAssinaturas();
     $.getJSON('index.php?c=documentos&a=capturarNumDocumento', {valor: 1}, function(j) {
         $('#i_numOficio').val(j);
         $("#b_submit").click();
@@ -79,6 +95,7 @@ function capturaNumOficio() {
 }
 
 function capturaNumMemorando() {
+    concatenarAssinaturas();
 
     $.getJSON('index.php?c=documentos&a=capturarNumDocumento', {valor: 2}, function(j) {
         $('#i_numMemorando').val(j);
@@ -94,40 +111,67 @@ function pad(d) {
 
 
 function Form() {
-    this.assinaturasCount = 1;
-    this.campoAssinatura = {0: '<div class="remetente_div" >' +
+    // this.assinaturasCount = 1;
+    //this.instancia = new Form();
+    this.campoAssinatura = {0: '<div class="remetente_div" id="assinatura-', 1: '" >' +
                 '<p>______________________________________</p>' +
                 '<div style="padding-left: 152px;margin-bottom: 2px">' +
-                '<input type="text" required id="remetente',  1: '"value="',2:   '" onkeyup="liberarCadastro()" size="50" /><span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>' +
+                '<input type="text" required class="remetente" value="', 2: '" onkeyup="liberarCadastro()" size="50" /><span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>' +
                 '</div>' +
-                '<div style="padding-left: 193px;">' +
-                '<input type="text" required id="cargo_remetente',  3: '"value="',4:  '" onkeyup="liberarCadastro()" size="25" /><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>' +
-                '<a title="Adicionar Remetente" id=""  onclick="adicionarRemetente();" class="btn" href="javascript:void(0);" ><i class="icon-plus"></i></a>' +
+                '<div style="padding-left: 152px;">' +
+                '<input type="text" required class="cargo_remetente" value="', 3: '" onkeyup="liberarCadastro()" size="25" /><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>' +
+                '</div><div><button type="button" title="Adicionar Remetente"  onclick="Form.instancia.adicionarRemetente();"  class="btn btn-add-rmt" ><i class="icon-plus"></i></button>' +
+                '<button type="button"  title="Remover Remetente" disabled  onclick="Form.instancia.removerRemetente(', 4: ');" class="btn btn-remove-rmt" ><i class="icon-minus"></i></button>' +
                 '</div>' +
                 '</div>'};
 }
 
-Form.prototype.formaCampoDeAssinatura = function(i, j,k) {
-    if(j == undefined)
-        j= '';
-    if(k == undefined){
-        k='';
+Form.instancia = new Form();
+
+Form.assinaturasCount = 1;
+
+Form.prototype.adicionarRemetente = function() {
+
+    $('#remetentes_holder').append(this.formaCampoDeAssinatura(Form.assinaturasCount++));
+    var asn_count = $('.remetente_div').length;
+    if (asn_count > 1) {
+        $('.btn-remove-rmt').removeAttr('disabled');
     }
-    return this.campoAssinatura[0] + i + this.campoAssinatura[1] + j + this.campoAssinatura[2]+i+this.campoAssinatura[3]+k+this.campoAssinatura[4];
+    liberarCadastro();
+};
+Form.prototype.removerRemetente = function(i) {
+    $('#assinatura-' + i).remove();
+    var asn_count = $('.remetente_div').length;
+    if (asn_count == 1) {
+        $('.btn-remove-rmt').attr({disabled: true});
+    }
+
+//    $("#div_remetente2").hide();
+//    $("#add_rem").show();
+//    $("#i_remetente").val("0");
+};
+
+Form.prototype.formaCampoDeAssinatura = function(i, j, k) {
+    if (j == undefined)
+        j = '';
+    if (k == undefined) {
+        k = '';
+    }
+    return this.campoAssinatura[0] + i + this.campoAssinatura[1] + j + this.campoAssinatura[2] + k + this.campoAssinatura[3] + i + this.campoAssinatura[4];
 };
 
 Form.prototype.iniciarRemetentes = function() {
     if ($('#remetente').val() == '' && $('#cargo_remetente').val() == '') {
-
-        $('#remetentes_holder').append(this.formaCampoDeAssinatura(this.assinaturasCount));
-        this.assinaturasCount++;
+        $('#remetentes_holder').append(this.formaCampoDeAssinatura(Form.assinaturasCount));
+        Form.assinaturasCount++;
 
     } else {
         var remetentes = $('#remetente').val().split(';');
         var cargos_remetentes = $('#cargo_remetente').val().split(';');
-        var numAsn = remetentes.lenght > cargos_remetentes.lenght ? remetentes.lenght : cargos_remetentes.lenght;
-        for (var i = this.assinaturasCount ; i <= numAsn; i++,this.assinaturasCount++) {
-            $('#remetentes_holder').append(this.formaCampoDeAssinatura(i,remetentes[i-1],cargos_remetentes[i-1]));
+
+        var numAsn = remetentes.length > cargos_remetentes.lenght ? remetentes.length : cargos_remetentes.length;
+        for (var i = Form.assinaturasCount; i <= numAsn; i++, Form.assinaturasCount++) {
+            $('#remetentes_holder').append(this.formaCampoDeAssinatura(i, remetentes[i - 1], cargos_remetentes[i - 1]));
         }
     }
 };
@@ -159,9 +203,8 @@ Form.prototype.diaMesDocumento = function(mesatual) {
     for (var i = 1; i <= numDias; i++) {
         $('#dia').append('<option value="' + pad(i) + '" >' + pad(i) + '</option>');
     }
-
     if (mesatual == date.getMonth()) {
-        $('[value=' + date.getDate() + ']').attr({selected: true});
+        $('#dia [value=' + pad(date.getDate()) + ']').attr({selected: true});
     }
 
 
@@ -176,13 +219,55 @@ Form.prototype.iniciarCombo = function() {
 };
 
 Form.prototype.iniciarEditorDeTexto = function() {
-    tinymce.init({selector: 'textarea',
+    $('textarea').tinymce({
+        // Location of TinyMCE script
+        setup:function(ed){
+            ed.on('change keyup',function(){
+                liberarCadastro() ;
+            });
+        },
         toolbar: "forecolor backcolor",
         tools: 'inserttable',
         skin: 'lightgray',
         plugins: 'contextmenu advlist directionality charmap preview visualblocks image table textcolor spellchecker link',
         contextmenu: "link image inserttable | cell row column deletetable | forecolor backcolor"
+                // General options
+//                        theme : "advanced",
+//                        plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+//
+//                        // Theme options
+//                        theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
+//                        theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+//                        theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+//                        theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,pagebreak",
+//                        theme_advanced_toolbar_location : "top",
+//                        theme_advanced_toolbar_align : "left",
+//                        theme_advanced_statusbar_location : "bottom",
+//                        theme_advanced_resizing : true,
+//
+//                        // Example content CSS (should be your site CSS)
+//                        content_css : "css/content.css",
+//
+//                        // Drop lists for link/image/media/template dialogs
+//                        template_external_list_url : "lists/template_list.js",
+//                        external_link_list_url : "lists/link_list.js",
+//                        external_image_list_url : "lists/image_list.js",
+//                        media_external_list_url : "lists/media_list.js",
+//
+//                        // Replace values for the template plugin
+//                        template_replace_values : {
+//                                username : "Some User",
+//                                staffid : "991234"
+
     });
+
+//    tinymce.init({selector: 'textarea',
+//        toolbar: "forecolor backcolor",
+//        tools: 'inserttable',
+//        skin: 'lightgray',
+//        plugins: 'contextmenu advlist directionality charmap preview visualblocks image table textcolor spellchecker link',
+//        contextmenu: "link image inserttable | cell row column deletetable | forecolor backcolor"
+//    });
 };
 
 Form.prototype.acaoReset = function() {
@@ -197,7 +282,7 @@ Form.prototype.acaoReset = function() {
 };
 
 Form.prototype.liberarBotoes = function() {
-    $('#ajaxForm *').on('keyup', function() {
+    $('input[type!=hidden]').on('keyup change', function() {
         liberarCadastro();
     });
 };

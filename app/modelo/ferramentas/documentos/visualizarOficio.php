@@ -24,14 +24,9 @@ $referencia = $oficio[0]->getReferencia();
 $corpo = $oficio[0]->getCorpo();
 $remetente = $oficio[0]->getRemetente();
 $cargo_remetente = $oficio[0]->getCargo_remetente();
-$remetente2 = $oficio[0]->getRemetente2();
-$cargo_remetente2 = $oficio[0]->getCargo_remetente2();
 
-if ($remetente2 != '' && $cargo_remetente2 != '') {
-    $i_remetente = '1';
-} else {
-    $i_remetente = '0';
-}
+$remetentes = explode(';',$remetente);
+$cargos_remetentes = explode(';',$cargo_remetente);
 
 setlocale(LC_ALL, 'portuguese-brazilian', 'ptb', 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8','pt-BR');
 $mes = strftime("%B", mktime(0, 0, 0,$data[1], 10));
@@ -56,7 +51,7 @@ $document = '
                 background-color: #FFF;
                 }
             </style>
-            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />        
+                  
         </head>
         <body>
             <table class="tabela">
@@ -120,7 +115,9 @@ $document = '
                 <tr><td style="height: 30px;"></td></tr>
                 <tr>
                     <td>
-                        <div id="div_remetente1" name="div_remetente1">
+                       ';
+for($i = 0;$i<count($remetentes);$i++){
+    $document.= '<div >
                             <table align="center">
                                 <tr>
                                     <td style="height: 20px;">
@@ -129,41 +126,21 @@ $document = '
                                 </tr>
                                 <tr>
                                     <td align="center" style="height: 20px;">
-                                        <span>' . $remetente . '</span>
+                                        <span>' . $remetentes[$i] . '</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td align="center" style="height: 20px;">
-                                        <span> ' . $cargo_remetente . ' </span>
+                                        <span> ' . $cargos_remetentes[$i] . ' </span>
                                     </td>                                                    
                                 </tr>
                             </table>
-                        </div>';
-                        if ($i_remetente == '1') {
-    $document .= '<br></br>
-                        <div id="div_remetente2" name="div_remetente2">
-                            <table align="center">
-                                <tr>
-                                    <td style="height: 20px;">
-                                        <span>____________________________________</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center" style="height: 20px;">
-                                        <span>' . $remetente2 . '</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center" style="height: 20px;">
-                                        <span> ' . $cargo_remetente2 . ' </span>
-                                    </td>                                                    
-                                </tr>
-                            </table>
-                        </div>';
-}
+                        </div><br>';
+}                   
 $document .= '</table>
         </body>
     </html>';
+//echo $document;
 //echo $document; die();
 $dompdf = new DOMPDF();
 //$tamanho = array(0, 0, 596.4, 843.48);
