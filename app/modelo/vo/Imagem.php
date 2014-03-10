@@ -4,11 +4,9 @@ class Imagem {
 
     var $idImagem;
     var $idGaleria;
-//    var $idSubcategoria;
     var $titulo;
     var $observacoes;
     var $dificuldade;
-    var $caminhoImagem;
     var $cpfAutor;
     var $ano;
     var $utilizadoAvaliacao;
@@ -74,15 +72,6 @@ class Imagem {
 
     public function set_dificuldade($dificuldade) {
         $this->dificuldade = $dificuldade;
-        return $this;
-    }
-
-    public function get_caminhoImagem() {
-        return $this->caminhoImagem;
-    }
-
-    public function set_caminhoImagem($caminhoImagem) {
-        $this->caminhoImagem = $caminhoImagem;
         return $this;
     }
 

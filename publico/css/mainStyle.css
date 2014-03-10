@@ -1035,15 +1035,11 @@ input[type="submit"].btn-right {
 }
 /*  FIM BOOTSTRAP FIXES */
 /*================================================*/
-
-/* Classe de marcação apenas */
-.elementoOcultavel{}
-
-.botoes_acoes_thumb{}
-
-.botoes_acoes_thumb_exibir{
-    /*    position: absolute;
-        top: -23px;
-        left: 5px;
-        bottom: 10px;*/
+/*  FANCYBOX FIXES */
+#fancybox-buttons ul{
+    width: 140px!important;
 }
+
+/*  FIM FANCYBOX FIXES */
+/*================================================*/
+/*  */

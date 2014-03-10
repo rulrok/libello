@@ -43,6 +43,14 @@ class imagensDAO extends abstractDAO {
         return $this->cadastrarDescritor($descritor, ImagensDescritor::ID_RAIZ_NIVEL_ZERO);
     }
 
+    public function consultarImagem($idImagem) {
+        $sql = 'SELECT * FROM imagens_imagem WHERE idImagem = :idImagem';
+        $params = array(
+            ':idImagem' => [$idImagem, PDO::PARAM_INT]
+        );
+        return $this->executarSelect($sql, $params, false, 'Imagem');
+    }
+
     public function consultarTodasAsImagens($limit = null, $acessoTotal = false) {
         return $this->pesquisarImagem('', $limit, $acessoTotal);
     }

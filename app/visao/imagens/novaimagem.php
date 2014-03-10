@@ -175,8 +175,7 @@
 //                    ajax("index.php?c=imagens&a=criarthumb&imageURI=" + file.result, "#image_preview", false, true, true);
                     $.ajax({
                         url: "index.php?c=imagens&a=criarthumb"
-                        ,
-                        type: "POST"
+                        ,type: "POST"
                         , async: true
                         , data: {imagemURI: file.result}
                         , success: function(data) {

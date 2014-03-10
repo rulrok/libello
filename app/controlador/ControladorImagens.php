@@ -91,6 +91,14 @@ class ControladorImagens extends Controlador {
         $this->renderizar();
     }
 
+    public function acaoBaixarimagem(){
+        $this->visao->acessoMinimo = Permissao::CONSULTA;
+        $this->renderizar();
+    }
+    public function acaoBaixarvetorial(){
+        $this->visao->acessoMinimo = Permissao::CONSULTA;
+        $this->renderizar();
+    }
     /*
      * GALERIAS
      */
