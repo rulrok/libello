@@ -15,7 +15,7 @@
         <tr>
             <th hidden>id</th>
             <th>Livro</th>
-            <th>Gráfica</th>
+            <th>Gráfica/Editora</th>
             <th>Área</th>
             <th>Qtd</th>
             <th>Entrada</th>

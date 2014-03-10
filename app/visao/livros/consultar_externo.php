@@ -3,7 +3,7 @@
     <thead>
         <tr>
             <th>Livro</th>
-            <th>Gráfica</th>
+            <th>Gráfica/Editora</th>
             <th>Área</th>
             <th>Qtd</th>
             <th>Data de entrada</th>

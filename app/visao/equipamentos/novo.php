@@ -46,13 +46,13 @@
                     <button disabled="true" type="button" class="btn btn-danger disabled" id="removerPatrimonio" onclick="removerPatrimonioAdicionado();" style="display: table-cell;"> <i class="icon-white icon-minus-sign"></i> </button>
                     <button type="button" class="btn btn-success" id="adicionarPatrimonio" onclick="adicionarNovoPatrimonio();" style="display: table-cell;"> <i class="icon-white icon-plus-sign"></i> </button>
                 </span>
-                <label>&nbsp;&nbsp;&nbsp;Quantidade de patrimônios</label>
-                <input readonly required type="text" class="input-small ignorar" id="quantidadePatrimonios" name="quantidadePatrimonios" value="1"/>
+                <label>&nbsp;&nbsp;&nbsp;Quantidade de itens</label>
+                <div id="quantidadePatrimonios">1</div>
             </span>
             <div id="linhasPatrimonios">
                 <span class="line patrimonio-1">
                     <label>Código Patrimônio</label>
-                    <input readonly type="text" class="input-medium" id="numeroPatrimonio-1" name="numeroPatrimonio-1" title="Código do Patrimônio" data-content="Equipamentos idênticos com número de patrimônio variados podem ser cadastrados em lote. Para isso, clique em no botão '+'"/>
+                    <input readonly type="text" class="input-medium" id="numeroPatrimonio-1" name="numeroPatrimonio-1" />
                 </span>
             </div>
         </span>
@@ -75,7 +75,7 @@
                             quantidadePatrimonios++;
                             $("#removerPatrimonio").removeClass("disabled");
                             $("#removerPatrimonio").prop("disabled", false);
-                            $("#quantidadePatrimonios").val(quantidadePatrimonios);
+                            $("#quantidadePatrimonios").text(quantidadePatrimonios);
 
                             $("span.patrimonio-" + (quantidadePatrimonios - 1)).after(novoCodigoHtml());
                             varrerCampos();
@@ -85,7 +85,7 @@
                             if (quantidadePatrimonios > 1) {
                                 $("span.patrimonio-" + (quantidadePatrimonios)).remove();
                                 quantidadePatrimonios--;
-                                $("#quantidadePatrimonios").val(quantidadePatrimonios);
+                                $("#quantidadePatrimonios").text(quantidadePatrimonios);
                             }
                             if (quantidadePatrimonios <= 1) {
                                 quantidadePatrimonios = 1;

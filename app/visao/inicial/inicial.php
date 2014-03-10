@@ -118,6 +118,7 @@
                                 <!--<a class="btn btn-small" href="#!sistema|administracao"><i class="icon-fire"></i> Administração</a>-->
                         <?php // endif;  ?>
                         <a class="btn btn-small" href="sair.php"><i class="icon-off"></i> Sair</a>
+                        <a class="btn btn-small" href="caixaProcessos.php"><i class="icon-tasks"></i> Processos</a>
                     </div>
                 </div>
             </div>
@@ -199,6 +200,7 @@
                     <div class="footerLinks" id="suporte">
                         <ul><lt>Suporte</lt>
                             <li>reuel@bcc.unifal-mg.edu.br</li>
+                            <li>a12033@bcc.unifal-mg.edu.br</li>
                         </ul>
                     </div>
                 </nav>

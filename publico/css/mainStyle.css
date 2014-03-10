@@ -347,6 +347,10 @@ input[type=search]{
     color: #666;
 }
 
+#quantidadePatrimonios{
+    margin-left: 5px;
+}
+
 /* FIM DO CONTENT */
 /*================================================*/
 /* FOOTER */

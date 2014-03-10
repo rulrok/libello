@@ -28,6 +28,10 @@
         <fieldset>
             <legend>Atualizar senha (opcional)</legend>
             <div class="line">
+            <label>Senha atual</label>
+            <input required id="senhaAtual" name="senhaAtual"  type="password"/>
+            </div>
+            <div class="line">
                 <label>Nova senha</label>
                 <input onblur="querMudarSenha()" id="senha" name="senha" type="password"/>
             </div>
@@ -37,10 +41,6 @@
             </div>
         </fieldset>
         <hr>
-        <div class="line">
-            <label>Senha atual</label>
-            <input required id="senhaAtual" name="senhaAtual"  type="password"/>
-        </div>
     </fieldset>
 
     <button class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit">Atualizar</button>
