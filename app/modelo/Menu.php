@@ -201,16 +201,16 @@ class Menu {
                         switch ($permissao_ferramenta['idPermissao']) {
                             case Permissao::ADMINISTRADOR:
                             case Permissao::GESTOR:
-                                $subMenuCode .= "<a href=\"#!imagens|descritores\"\">" . "\n";
-                                $subMenuCode .= "<li>Descritores</li></a>" . "\n";
-//                                $subMenuCode .= "<a href=\"#!imagens|gerenciarGalerias\"\">" . "\n";
-//                                $subMenuCode .= "<li>Gerenciar Galerias</li></a>" . "\n";
+                                $subMenuCode .= "<a href=\"#!imagens|gerenciarDescritores\"\">" . "\n";
+                                $subMenuCode .= "<li>Gerenciar Descritores</li></a>" . "\n";
+                                $subMenuCode .= "<a href=\"#!imagens|novoDescritor\"\">" . "\n";
+                                $subMenuCode .= "<li>Novo Descritor</li></a>" . "\n";
                             case Permissao::ESCRITA:
                                 $subMenuCode .= "<a href=\"#!imagens|novaImagem\"\">" . "\n";
-                                $subMenuCode .= "<li>Cadastrar imagem</li></a>" . "\n";
+                                $subMenuCode .= "<li>Cadastrar Imagem</li></a>" . "\n";
                             case Permissao::CONSULTA:
                                 $subMenuCode .= "<a href=\"#!imagens|consultarimagem\"\">" . "\n";
-                                $subMenuCode .= "<li>Consultar imagens</li></a>" . "\n";
+                                $subMenuCode .= "<li>Consultar Imagens</li></a>" . "\n";
                         }
                     }
                     break;
