@@ -1,11 +1,11 @@
 <title>Cadastrar novo equipamento</title>
 <!--Início da página -->
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=equipamentos&a=verificarnovo">
+<form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=equipamentos&a=verificarnovo">
     <fieldset>
         <legend>Registro de novo equipamento</legend>
         <span class="line">
             <label>Equipamento</label>
-            <input required type="text" class="input-xlarge" id="equipamento" name="equipamento" title="Equipamento" data-content="O nome do equipamento apenas" />
+            <input required autofocus type="text" class="input-xlarge" id="equipamento" name="equipamento" title="Equipamento" data-content="O nome do equipamento apenas" />
         </span>
         <div class="line">
             <label for="descricoes">Descrições</label>
@@ -46,13 +46,13 @@
                     <button disabled="true" type="button" class="btn btn-danger disabled" id="removerPatrimonio" onclick="removerPatrimonioAdicionado();" style="display: table-cell;"> <i class="icon-white icon-minus-sign"></i> </button>
                     <button type="button" class="btn btn-success" id="adicionarPatrimonio" onclick="adicionarNovoPatrimonio();" style="display: table-cell;"> <i class="icon-white icon-plus-sign"></i> </button>
                 </span>
-                <label>&nbsp;&nbsp;&nbsp;Quantidade de patrimônios</label>
-                <input readonly required type="text" class="input-small ignorar" id="quantidadePatrimonios" name="quantidadePatrimonios" value="1"/>
+                <label>&nbsp;&nbsp;&nbsp;Quantidade de itens</label>
+                <div id="quantidadePatrimonios">1</div>
             </span>
             <div id="linhasPatrimonios">
                 <span class="line patrimonio-1">
                     <label>Código Patrimônio</label>
-                    <input readonly type="text" class="input-medium" id="numeroPatrimonio-1" name="numeroPatrimonio-1" title="Código do Patrimônio" data-content="Equipamentos idênticos com número de patrimônio variados podem ser cadastrados em lote. Para isso, clique em no botão '+'"/>
+                    <input readonly type="text" class="input-medium" id="numeroPatrimonio-1" name="numeroPatrimonio-1" />
                 </span>
             </div>
         </span>
@@ -75,7 +75,7 @@
                             quantidadePatrimonios++;
                             $("#removerPatrimonio").removeClass("disabled");
                             $("#removerPatrimonio").prop("disabled", false);
-                            $("#quantidadePatrimonios").val(quantidadePatrimonios);
+                            $("#quantidadePatrimonios").text(quantidadePatrimonios);
 
                             $("span.patrimonio-" + (quantidadePatrimonios - 1)).after(novoCodigoHtml());
                             varrerCampos();
@@ -85,7 +85,7 @@
                             if (quantidadePatrimonios > 1) {
                                 $("span.patrimonio-" + (quantidadePatrimonios)).remove();
                                 quantidadePatrimonios--;
-                                $("#quantidadePatrimonios").val(quantidadePatrimonios);
+                                $("#quantidadePatrimonios").text(quantidadePatrimonios);
                             }
                             if (quantidadePatrimonios <= 1) {
                                 quantidadePatrimonios = 1;
@@ -105,6 +105,7 @@
                         function botaoLimpar() {
                             $("span.patrimonio-2").nextAll().andSelf().remove();
                             quantidadePatrimonios = 1;
+                            $("#quantidadePatrimonios").text(quantidadePatrimonios);
                             removerPatrimonioAdicionado();
                             liberarCadastro();
                             $("#chars").text("1000");
@@ -131,7 +132,7 @@
                                 $(".custeio").removeClass("hidden");
                                 $(".custeio input").prop("required", true);
                                 $(".patrimonios input").prop("required", false);
-                                $("input[id^=numeroPatrimonio]").removeClass("campoErrado")
+                                $("input[id^=numeroPatrimonio]").removeClass("campoErrado");
 //                                $(".obrigatorio").remove(); //remove a imagem do asterisco de todos os campos
 
                                 $("#radioCusteio").click();

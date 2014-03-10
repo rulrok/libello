@@ -1,12 +1,12 @@
 <title>Editando livro</title>
 <!--Início da página-->
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=livros&a=verificaredicao">
+<form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=livros&a=verificaredicao">
     <fieldset>
         <legend>Alterar dados do livro</legend>
         <input hidden="true" readonly="true" type="text" class="input-small" id="livroID" name="livroID" value="<?php echo $this->livroID ?>" />
         <span class="line">
             <label>Nome do Livro</label>
-            <input required type="text" class="input-xlarge" id="livro" name="livro" value="<?php echo $this->livro ?>" />
+            <input required autofocus type="text" class="input-xlarge" id="livro" name="livro" value="<?php echo $this->livro ?>" />
         </span>
         <span class="line">
             <label for="grafica">Nome da Gráfica</label>
@@ -23,7 +23,9 @@
         </div>
         <div class="line">
             <label for="area">Área</label>
-            <?php echo $this->comboBoxAreas; ?>
+            <select id="area" name="area" class="input-xlarge">
+                <?php echo $this->comboBoxAreas; ?>
+            </select>
         </div>
         <hr/>
         <?php if ($this->livroEditavel): ?>
@@ -82,73 +84,73 @@
 </form>
 
 <script>
-        $(document).ready(function() {
-            var elem = $("#chars");
-            $("#descricao").limiter(1000, elem);
-            var area;
-            //Gambiarra master
-            area = <?php echo "'" . $this->area . "'"; ?>;
-            $("#area").val(area);
-            varrerCampos();
-            formularioAjax();
-            $("#dataEntrada").datepick();
-            $(".line input").popover({trigger: 'focus', container: 'body'});
-            $(".line textarea").popover({trigger: 'focus', container: 'body'});
+    $(document).ready(function() {
+        var elem = $("#chars");
+        $("#descricao").limiter(1000, elem);
+        var area;
+        //Gambiarra master
+        area = <?php echo "'" . $this->area . "'"; ?>;
+        $("#area").val(area);
+        varrerCampos();
+        formularioAjax();
+        $("#dataEntrada").datepick();
+        $(".line input").popover({trigger: 'focus', container: 'body'});
+        $(".line textarea").popover({trigger: 'focus', container: 'body'});
 
-            $("#custeio").on("click", function() {
-                if (!$(this).hasClass("btn-info")) {
-                    $(this).toggleClass("btn-info");
-                    $("#patrimonio").toggleClass("btn-info");
-                }
-
-                $("input[id^=numeroPatrimonio]").prop("required", false);
-                $("input[id^=numeroPatrimonio]").prop("readonly", true);
-                $(".patrimonios").prop("hidden", true);
-                $(".custeio").prop("hidden", false);
-                $(".custeio input").prop("required", true);
-                $(".patrimonios input").prop("required", false);
-                $("input[id^=numeroPatrimonio]").removeClass("campoErrado")
-
-                $("#radioCusteio").click();
-                liberarCadastro();
-            });
-
-            $("#patrimonio").on("click", function() {
-
-                if (!$(this).hasClass("btn-info")) {
-                    $(this).toggleClass("btn-info");
-                    $("#custeio").toggleClass("btn-info");
-                }
-
-                $("input[id^=numeroPatrimonio]").prop("required", true);
-                $("input[id^=numeroPatrimonio]").prop("readonly", false);
-                $(".patrimonios").prop("hidden", false);
-                $(".custeio").prop("hidden", true);
-                $(".custeio input").prop("required", false);
-                $(".patrimonios input").prop("required", true);
-                $("input[id^=numeroPatrimonio]").removeClass("campoErrado");
-
-                $("#radioPatrimonio").click();
-                $("#submit").prop("disabled", true);
-                varrerCampos();
-            });
-
-            var numeroPatrimonio;
-            //Gambiarra master
-            numeroPatrimonio = <?php echo "'" . $this->numeroPatrimonio . "'"; ?>;
-            if (numeroPatrimonio == "") {
-                $("#custeio").click();
-            } else {
-                $("#patrimonio").click();
-            }
-            var editavel;
-            editavel = <?php echo "'" . $this->livroEditavel . "'"; ?>;
-            if (!editavel) {
-                $("#custeio").unbind("click");
-                $("#patrimonio").unbind("click");
+        $("#custeio").on("click", function() {
+            if (!$(this).hasClass("btn-info")) {
+                $(this).toggleClass("btn-info");
+                $("#patrimonio").toggleClass("btn-info");
             }
 
+            $("input[id^=numeroPatrimonio]").prop("required", false);
+            $("input[id^=numeroPatrimonio]").prop("readonly", true);
+            $(".patrimonios").prop("hidden", true);
+            $(".custeio").prop("hidden", false);
+            $(".custeio input").prop("required", true);
+            $(".patrimonios input").prop("required", false);
+            $("input[id^=numeroPatrimonio]").removeClass("campoErrado")
 
-
+            $("#radioCusteio").click();
+            liberarCadastro();
         });
+
+        $("#patrimonio").on("click", function() {
+
+            if (!$(this).hasClass("btn-info")) {
+                $(this).toggleClass("btn-info");
+                $("#custeio").toggleClass("btn-info");
+            }
+
+            $("input[id^=numeroPatrimonio]").prop("required", true);
+            $("input[id^=numeroPatrimonio]").prop("readonly", false);
+            $(".patrimonios").prop("hidden", false);
+            $(".custeio").prop("hidden", true);
+            $(".custeio input").prop("required", false);
+            $(".patrimonios input").prop("required", true);
+            $("input[id^=numeroPatrimonio]").removeClass("campoErrado");
+
+            $("#radioPatrimonio").click();
+            $("#submit").prop("disabled", true);
+            varrerCampos();
+        });
+
+        var numeroPatrimonio;
+        //Gambiarra master
+        numeroPatrimonio = <?php echo "'" . $this->numeroPatrimonio . "'"; ?>;
+        if (numeroPatrimonio == "") {
+            $("#custeio").click();
+        } else {
+            $("#patrimonio").click();
+        }
+        var editavel;
+        editavel = <?php echo "'" . $this->livroEditavel . "'"; ?>;
+        if (!editavel) {
+            $("#custeio").unbind("click");
+            $("#patrimonio").unbind("click");
+        }
+
+
+
+    });
 </script>

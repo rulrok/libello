@@ -1,6 +1,6 @@
 <?php
 
-ob_clean();
+//ob_clean();
 /**
  * Esse arquivo será incluso ao inicio de todos os demais arquivos carregados,
  * via configuração apache, para evitar que os arquivos da aplicação sejam 
@@ -32,19 +32,21 @@ require_once __DIR__ . '/seguranca.php';
 //}
 //if (substr_count($_SERVER['REQUEST_URI'], APP_LOCATION) > 0) {
 // ***  Nova solução, provavelmente mais robusta e mais portável    ***
-//Verifica se foi a aplicação controle-cead que está chamando a página
-if (preg_match("#.*" . WEB_SERVER_FOLDER . "?.*#", $_SERVER['REQUEST_URI'])) {
-    $uri_requisicao = $_SERVER['REQUEST_URI'];
+//Verifica se foi a aplicação que está chamando a página
+$uri_requisicao = filter_input(INPUT_SERVER, 'REQUEST_URI');
+if (preg_match("#.*" . WEB_SERVER_FOLDER . "?.*#", $uri_requisicao)) {
+//    $uri_requisicao = $_SERVER['REQUEST_URI'];
     //Verificamos se é uma das páginas listadas como excessões, as quais não precisamos
     //verificar o acesso.
-    $ret = preg_replace("#^/controle-cead(/((index|sair|logar|lembrarSenha)\.php(\?(m|tolken)=.*)?|biblioteca.*)?)?#", "", $uri_requisicao);
-    if ($ret !== "")
-    //É uma página que não pertence às excessões, definidas pela REGEX acima.
-    //Verifica se uma requisição via AJAX está sendo feita, pois todas as páginas
-    //devem ser acessadas por ajax.
-        if (!isset($_SERVER['HTTP_X_REQUESTED_WITH'])) {
+    $pasta_instalacao = WEB_SERVER_FOLDER;
+    $ret = preg_replace("#^/$pasta_instalacao(/((index|sair|logar|lembrarSenha)\.php(\?(m|tolken)=.*)?|biblioteca.*)?)?#", "", $uri_requisicao);
+    if ($ret !== "") {
+        //É uma página que não pertence às excessões, definidas pela REGEX acima.
+        //Verifica se uma requisição via AJAX está sendo feita, pois todas as páginas
+        //devem ser acessadas por ajax.
+        if (!filter_has_var(INPUT_SERVER, 'HTTP_X_REQUESTED_WITH')) {
             //arquivo está sendo chamado diretamente
             expulsaVisitante("Chamada indevida ao arquivo.");
         }
+    }
 }
-?>

@@ -2,22 +2,29 @@
 <!-- Início da página -->
 <div id="showimg"> </div>
 
-<form class="table centered" id="upload-image-form-ajax" method="POST" action="index.php?c=imagens&a=verificarnovaimagem" enctype='multipart/form-data'>
+<form class="tabela centralizado" id="upload-image-form-ajax" method="POST" action="index.php?c=imagens&a=verificarnovaimagem" enctype='multipart/form-data'>
     <fieldset>
         <legend>Dados da imagem</legend>
-        <p class="centered centeredText boldedText">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png"> são obrigatórios</p>
+        <p class="centralizado textoCentralizado textoNegrito">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png" alt="Campo obrigatório"> são obrigatórios</p>
         <div class="line">
-            <label for='nome'>Título</label>
-            <input required type="text" id="nome" name="nome" class="input-xlarge" placeholder="Nome da imagem">
+            <label for='titulo'>Título</label>
+            <input required autofocus type="text" id="titulo" name="titulo" class="input-xlarge" placeholder="Nome da imagem" data-content="Título da imagem">
         </div>
         <div class="line">
-            <label for='nome'>Ano</label>
-            <input required type="text" id="ano" name="ano" class="input-xlarge" placeholder="Ano de criação da imagem">
+            <label for='ano'>Ano</label>
+            <input required size="4" type="number" maxlength="4" id="ano" name="ano" class="input-xlarge" placeholder="Ano de criação da imagem">
+        </div>
+        <hr>
+        <p>Campos preenchidos automaticamente:</p>
+        <div class="line">
+            <label>CPF (autor)</label>
+            <input required disabled type="text" maxlength="11" id="cpfautor" name="cpfautor" class="disabled input-xlarge" placeholder="___.___.___-__" data-content="Seu CPF cadastrado no sistema." value="<?php echo $this->cpfAutor; ?>">
         </div>
         <div class="line">
-            <label for='nome'>CPF (autor)</label>
-            <input required type="text" maxlength="11" id="cpfautor" name="cpfautor" class="input-xlarge" placeholder="CPF do autor dos direitos da figura">
+            <label for='iniciaisAutor'>Iniciais do autor</label>
+            <input required disabled type="text" maxlength="11" id="iniciaisAutor" name="iniciaisAutor" class="disabled input-medium"  value="<?php echo $this->iniciaisAutor; ?>">
         </div>
+        <hr>
         <div class="line">
             <label for="observacoes">Observações</label>
             <textarea rows="8" id="descricoes" name="observacoes" class="input-xlarge" title="Observações" data-content="Alguma característica da imagem ao qual o registro seja pertinente. Limite de 1000 caracteres." ></textarea>           
@@ -25,56 +32,72 @@
         </div>
         <div class="line">
             <label for='descritor1'>Descritor 1</label>
-            <input required type="text" id="descritor1" name="descritor1" class="input-large" placeholder="Descritor 1">
+            <select required id="descritor_1" class="cb_descritor input-xlarge" name="descritor1">
+                <?php echo $this->comboBoxDescritor; ?>
+            </select>
         </div>
         <div class="line">
             <label for='descritor2'>Descritor 2</label>
-            <input required type="text" id="descritor2" name="descritor2" class="input-large" placeholder="Descritor 2">
+            <select required id="descritor_2" class="cb_descritor input-xlarge" name="descritor2">
+                <option value="default">-- Escolha um descritor acima --</option>
+            </select>
         </div>
         <div class="line">
             <label for='descritor3'>Descritor 3</label>
-            <input required type="text" id="descritor3" name="descritor3" class="input-large" placeholder="Descritor 3">
+            <select required id="descritor_3" class="cb_descritor input-xlarge" name="descritor3">
+                <option value="default">-- Escolha um descritor acima --</option>
+            </select>
         </div>
         <div class="line">
-            <label for='categoria'>Categoria</label>
-            <?php echo $this->comboBoxCategorias; ?>
+            <label for='descritor4'>Descritor 4</label>
+            <select required id="descritor_4" class="cb_descritor input-xlarge" name="descritor4">
+                <option value="default">-- Escolha um descritor acima --</option>
+            </select>
         </div>
+        <br/>
+        <blockquote>
+            <i>Não encontrou o descritor desejado?</i>
+            <a class="btn btn-link" target="_blank" href="mailto:daeb.bei-bi@inep.gov.br?subject=Cadastro de descritor&body=Olá,%0D%0A%0D%0ANecessito cadastrar uma imagem e não encontrei nenhuma sequencia de descritores que se adequem aos critérios da minha figura.%0D%0AVenho por meio deste solicitar o cadastro da seguinte sequência de descritores:%0D%0A%0D%0AGrato, <?php echo $this->nomeUsuario; ?>">Solicitar cadastro de novo descritor</a>
+        </blockquote>
         <div class="line">
-            <label for='subcategoria'>Sub-categoria</label>
-            <span id="subcategorias_wrap">
-                <select>
-                    <option>-- Selecione uma categoria --</option>
-                </select>
-            </span>
-        </div>
-        <div class="line">
-            <label for="dificuldade">Dificuldade</label>
-<!--            <select name="dificuldade" id="dificuldade">
-                <option value="1">Fácil</option>
-                <option value="2">Médio</option>
-                <option value="3">Difícil</option>
-            </select>-->
-            <?php echo $this->comboBoxDificuldades; ?>
+            <label for="complexidade">Complexidade</label>
+            <div class="btn-toolbar" style="position:relative;left:15px;margin-bottom: 5px;">
+                <div id="complexidade_botoes" class="btn-group" data-toggle="buttons-radio">
+                    <button type="button" class="btn active" id="simples_botao">Baixa</button>
+                    <button type="button" class="btn" id="media_botao">Média</button>
+                    <button type="button" class="btn" id="alta_botao">Alta</button>
+                    <button type="button" class="btn" id="muitoalta_botao">Muito alta</button>
+                </div>
+                <img src="publico/imagens/icones/campo_obrigatorio.png" style="display: initial;">
+                <div class="hidden">
+                    <input type="radio" name="complexidade" id="simples_radio" value="A" checked/>
+                    <input type="radio" name="complexidade" id="media_radio" value="B"/>
+                    <input type="radio" name="complexidade" id="alta_radio" value="C"/>
+                    <input type="radio" name="complexidade" id="muitoalta_radio" value="D"/>
+                </div>
+            </div>
+
         </div>
         <br/>
     </fieldset>
     <fieldset>
         <legend>Imagem</legend>
 
-        <div class="centered">
+        <div class="centralizado">
             <div class="line" style="line-height: 45px;">
                 <label for="raw-image-upload">Arquivo vetorizado da imagem</label>
-                <input type="hidden" name="MAX_FILE_SIZE" value="300000" />
-                <input required type="file" name="raw-image-upload" id="raw-image-upload" class="btn btn-small btn-warning"> 
+                <input type="hidden" name="MAX_FILE_SIZE" value="3000000" />
+                <input required type="file" accept=".svg,.cdr,imagem/svg+xml" name="raw-image-upload" id="raw-image-upload" class="btn btn-small btn-warning"> 
             </div>
 
             <div class="line" id="image-upload-line" style="line-height: 45px;">
                 <label for="image-upload">Arquivo de imagem</label>
-                <input type="hidden" name="MAX_FILE_SIZE" value="300000" />
-                <input required type="file" name="image-upload" id="image-upload" class="btn btn-small btn-warning"> 
+                <input type="hidden" name="MAX_FILE_SIZE" value="4194304" />
+                <input required type="file" accept="image/jpeg,image/png,image/jpg" name="image-upload" id="image-upload" class="btn btn-small btn-info"> 
                 <output id="list"></output>
             </div>
             <br/>
+            <img id="image-loading" alt="Carregando..." src="publico/imagens/loader.gif" style="display: none;">
             <br/>
             <div id="image-info">
                 <button id="remove-image-upload" style="display: none; margin-bottom: 10px; ">
@@ -84,9 +107,8 @@
                 <div id="resultado_imagem">
                     <ul class="thumbnails">
                         <li class="span4">
-                            <img class="loading" alt="loading..." src="publico/imagens/loader.gif" style="display: none;">
                             <div class="thumbnail">
-                                <img alt="picture" src="publico/imagens/350x150.jpg" id="image_preview">
+                                <img class="img-polaroid" alt="picture" src="publico/imagens/350x150.jpg" id="image_preview">
                                 <div class="caption">
                                     <h3>Visualização</h3>
                                     <div id="thumb_info">
@@ -101,8 +123,7 @@
                 <hr>
                 <ul class="thumbnails" id="image_original_wrap">
                     <li>
-                        <img alt="Carregue uma imagem primeiro" src="" id="image_original">
-                        <!--<img class="loading" alt="loading..." src="publico/imagens/loader.gif" style="display: none;">-->
+                        <img class="img-polaroid" alt="Carregue uma imagem primeiro" src="" id="image_original">
                         <div>
                             <h3>Imagem original</h3>
                             <div id="master_info">
@@ -117,10 +138,9 @@
     </fieldset>
 
     <button class="btn btn-large" type="reset">Limpar tudo</button>
-    <button class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit">Cadastrar</button>
+    <button class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit">Enviar</button>
 
 </form>
-<!--<script src="publico/js/carregarImagem/jquery-ajax-image-upload.js"></script>-->
 <script>
 
     function alternar_exibir_original() {
@@ -132,7 +152,6 @@
                 $("#mostrar_original").text("Mostrar original");
             }
         });
-
     }
 
     function handleFileSelect(evt) {
@@ -147,79 +166,150 @@
             }
 
             var reader = new FileReader();
-
             // Closure to capture the file information.
             reader.onload = (function(theFile) {
                 return function(e) {
                     // Render thumbnail.
                     var file = e.target;
-//                    ajax()
-                };
-            })(f);
+//                    console.log(file.result);
+//                    ajax("index.php?c=imagens&a=criarthumb&imageURI=" + file.result, "#image_preview", false, true, true);
+                    $.ajax({
+                        url: "index.php?c=imagens&a=criarthumb"
+                        ,type: "POST"
+                        , async: true
+                        , data: {imagemURI: file.result}
+                        , success: function(data) {
+                            data = $.parseJSON(data);
+                            $("#image-info").show();
+                            $("#image_preview").prop('src', data.thumb.img_src);
+                            $("#image_original").prop('src', data.master.img_src);
+                            //show img data
+                            $("#thumb_info").empty();
+                            $("#thumb_info").html("<p>Dimensões: " + data.thumb.w + "x" + data.thumb.h + "</p><p>Tamanho: " + data.thumb.size + "</p>");
+                            $("#master_info").empty();
+                            $("#master_info").html("<p>Dimensões: " + data.master.w + "x" + data.master.h + "</p><p>Tamanho: " + data.master.size + "</p>");
+                            $('#remove-image-upload').show();
+                            $('#image-upload-line').hide();
+                        }
+                        , error: function() {
+                            $("#image-info").hide();
+                        }
+                        , beforeSend: function() {
+                            $("#image-loading").show();
+                        },
+                        complete: function() {
+                            $("#image-loading").hide();
+                        }
 
-            // Read in the image file as a data URL.
-//            reader.readAsDataURL(f);
-//            console.log(reader);
+
+                    });
+                };
+
+            })(f);
+            reader.readAsDataURL(f);
         }
+    }
+
+    function atualizar_combobox(combo_box) {
+        $(combo_box).on('change', function() {
+            var desnum = parseInt(this.id.substr(10));
+            if (desnum > 0 && desnum < 4) {
+                var wrap_id = "#descritor_" + (desnum + 1);
+//                console.log(wrap_id);
+//                console.log(this.name);
+                if (this.selectedIndex !== 0) {
+                    var $url = "index.php?c=imagens&a=obterDescritor&n=" + desnum + "&p=" + this.value;
+//                    console.log($url);
+                    $(wrap_id).load($url, function(response, status, xhr) {
+                        if (status == "error") {
+                            $(this).val("default");
+//                        var msg = "Problema ao recuperar os descritores. Tente novamente. ";
+//                        $("#descritor2_wrap").html(msg + xhr.status + " " + xhr.statusText);
+                        } else if (status == "success") {
+//                                liberarCadastro();
+                            atualizar_combobox($("#descritor_" + (desnum + 1)));
+                        }
+                    });
+                } else {
+                    $(wrap_id).load("index.php?c=imagens&a=obterDescritor");
+                }
+            }
+        });
     }
 
     $(document).ready(function() {
 
-        // Check for the various File API support.
-//        if (window.File && window.FileReader && window.FileList && window.Blob) {
-//            // Great success! All the File APIs are supported.
-//            $("#image-upload").on('change', handleFileSelect);
-//        } else {
-//            alert('O seu navegador não suporta a API de arquivos.');
-//        }
-        $("#image_original_wrap").toggle();
-        $("#image-info").hide();
-        var elem = $("#chars");
-        $("#descricoes").limiter(1000, elem);
+        if (window.File && window.FileReader && window.FileList && window.Blob) {
+            $("#image-upload").on('change', handleFileSelect);
+            $('#remove-image-upload').on('click', function(e)
+            {
+                $('#image-upload-line').show();
+                $("#image_preview").prop('src', 'publico/imagens/350x150.jpg');
+                $("#image_original").prop('src', '');
+                $('.img-data').remove();
+                $('#remove-image-upload').hide();
+                $("#thumb_info").empty();
+                $("#master_info").empty();
+                $("#image-info").hide();
+                $("[type=file]").each(function() {
+                    $(this).val("");
+                });
+                e.preventDefault();
+                return false;
+            });
+        } else {
+            alert('O seu navegador não suporta a API de arquivos.\nVisualizações estarão indisponíveis.');
+        }
 
-        $('#cpfautor').mask('000.000.000-00', {reverse: true});
+        var botoes_radio_fake = $("#complexidade_botoes").children();
+        $.each(botoes_radio_fake, function() {
+            $(this).on('click', function() {
+                var id = this.id;
+                var limite = id.search("_");
+                id = id.substr(0, limite + 1) + "radio";
+                $("#" + id).trigger('click');
+//                liberarCadastro();
+            });
+        });
 
-//        configurar_upload_imagem("#image_preview", "#image_original", "#upload-image-form", "index.php?c=imagens&a=processarimagem");
+        var cb_descritores = $(".cb_descritor");
+//        console.log(cb_descritores);
+        $.each(cb_descritores, function() {
+            atualizar_combobox(this);
+        });
         formularioAjax();
         varrerCampos();
 
-
+        //Prepara elementos
+        $("#image_original_wrap").toggle();
+        $("#image-info").hide();
+        //Configura caixa de observações
+        var elem = $("#chars");
+        $("#descricoes").limiter(1000, elem);
+        //Aplica mascara campo CPF
+        $('#cpfautor').mask('999.999.999-99');
         $("#mostrar_original").on("click", function() {
             alternar_exibir_original();
         });
-
-        $(".line input").popover({trigger: 'focus', container: 'body'});
-
+        $(".line input,.line textearea").popover({trigger: 'focus', container: 'body'});
         $("button[type=reset]").bind("click", function() {
-            $("select").val('').trigger("chosen:updated");
-//            $("div.chosen-container li.search-choice").remove();
-//            $("div.chosen-container li.search-field").addClass("default");
-            setTimeout(function() {
-                liberarCadastro();
-            }, "200");
-            $("[name=categoria]").trigger('change');
-//            $("#image_original_wrap").css("display", "none");
-//            $("#image-info").hide();
+//            $("[name=categoria]").trigger('change');
 //            $("#remove-image-upload").click();
-
+//            $("#simples_botao").click();
+//            for (var i = 4; i > 0; i--) {
+//                $("#descritor" + i).val('default').trigger('change');
+//            }
+//            setTimeout(function() {
+//                $("#cpfautor").mask('999.999.999-99');
+//                liberarCadastro();
+//            }, "200");
+            ajax("index.php?c=imagens&a=novaImagem", ".contentWrap", true, false, true); //TODO tirar essa gambiarra =s
         });
 
-        $("[name=categoria]").on('change', function() {
-            if ($(this).val() != "default") {
-                var $url = "index.php?c=imagens&a=obterSubcategorias&categoriaID=" + $(this).val();
-                $("#subcategorias_wrap").load($url, function(response, status, xhr) {
-                    if (status == "error") {
-                        var msg = "Problema ao recuperar subcategorias. Tente novamente. ";
-                        $("#subcategorias_wrap").html(msg + xhr.status + " " + xhr.statusText);
-                    } else if (status == "success") {
-                        varrerCampos();
-                    }
-                });
-            } else {
-                $("#subcategorias_wrap").load("index.php?c=imagens&a=obterSubcategorias");
-            }
 
-        });
+
+
+
 
     });
 </script>

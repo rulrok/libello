@@ -1,9 +1,9 @@
 <?php
 
 include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
-require_once APP_LOCATION . "modelo/ComboBoxPapeis.php";
-require_once APP_LOCATION . "modelo/ComboBoxUsuarios.php";
-include_once APP_LOCATION . 'modelo/ComboBoxPolo.php';
+require_once APP_DIR . "modelo/comboboxes/ComboBoxPapeis.php";
+require_once APP_DIR . "modelo/comboboxes/ComboBoxUsuarios.php";
+include_once APP_DIR . 'modelo/comboboxes/ComboBoxPolo.php';
 require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
 
 class ControladorEquipamentos extends Controlador {
@@ -27,25 +27,25 @@ class ControladorEquipamentos extends Controlador {
 
     public function acaoConsultar_interno() {
         $this->visao->acessoMinimo = Permissao::CONSULTA;
-        $this->visao->equipamentosInternos = equipamentoDAO::consultar("nomeEquipamento,quantidade,dataEntrada,numeroPatrimonio");
+        $this->visao->equipamentosInternos = (new equipamentoDAO())->consultar("nomeEquipamento,quantidade,dataEntrada,numeroPatrimonio");
         $this->renderizar();
     }
 
     public function acaoConsultar_externo() {
         $this->visao->acessoMinimo = Permissao::CONSULTA;
-        $this->visao->equipamentosExternos = equipamentoDAO::consultarSaidas("nomeEquipamento,quantidadeSaida,dataEntrada,numeroPatrimonio");
+        $this->visao->equipamentosExternos = (new equipamentoDAO())->consultarSaidas("nomeEquipamento,quantidadeSaida,dataEntrada,numeroPatrimonio");
         $this->renderizar();
     }
 
     public function acaoConsultar_embaixa() {
         $this->visao->acessoMinimo = Permissao::CONSULTA;
-        $this->visao->equipamentosBaixa = equipamentoDAO::consultarBaixas("nomeEquipamento,quantidadeBaixa,dataBaixa,numeroPatrimonio,observacoes");
+        $this->visao->equipamentosBaixa = (new equipamentoDAO())->consultarBaixas("nomeEquipamento,quantidadeBaixa,dataBaixa,numeroPatrimonio,observacoes");
         $this->renderizar();
     }
 
     public function acaoGerenciar() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->visao->equipamentos = equipamentoDAO::consultar("idEquipamento,nomeEquipamento,quantidade,dataEntrada,numeroPatrimonio,descricao");
+        $this->visao->equipamentos = (new equipamentoDAO())->consultar("idEquipamento,nomeEquipamento,quantidade,dataEntrada,numeroPatrimonio,descricao");
         $i = 0;
         foreach ($this->visao->equipamentos as $value) {
             $value[0] = fnEncrypt($value[0]);
@@ -56,11 +56,12 @@ class ControladorEquipamentos extends Controlador {
 
     public function acaoEditar() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
-        if (isset($_GET['equipamentoID']) || isset($_POST['equipamentoID'])) {
+        if (filter_has_var(INPUT_GET, 'equipamentoID') || filter_has_var(INPUT_POST, 'equipamentoID')) {
             $idEquipamento = fnDecrypt($_REQUEST['equipamentoID']);
-            $this->visao->equipamentoEditavel = equipamentoDAO::equipamentoPodeTerTipoAlterado($idEquipamento);
+            $equipamentoDAO = new equipamentoDAO();
+            $this->visao->equipamentoEditavel = $equipamentoDAO->equipamentoPodeTerTipoAlterado($idEquipamento);
             $this->visao->equipamentoID = $_REQUEST['equipamentoID'];
-            $equipamento = equipamentoDAO::recuperarEquipamento($idEquipamento);
+            $equipamento = $equipamentoDAO->recuperarEquipamento($idEquipamento);
 
             $this->visao->descricao = $equipamento->get_descricao();
             $this->visao->equipamento = $equipamento->get_nomeEquipamento();
@@ -86,10 +87,23 @@ class ControladorEquipamentos extends Controlador {
 
     public function acaoRetorno() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
-        $this->visao->saidas = equipamentoDAO::consultarSaidas("idSaida, nomeEquipamento, numeroPatrimonio, concat(PNome,' ',UNome) AS `responsavel`,destino,nomePolo,quantidadeSaida,dataSaida");
+        $this->visao->saidas = (new equipamentoDAO())->consultarSaidas("idSaida, nomeEquipamento, numeroPatrimonio, concat(PNome,' ',UNome) AS `responsavel`,destino,nomePolo,quantidadeSaida,dataSaida");
+        /*
+         * 0 - idSaída
+         * 1 - nomeEquipamento
+         * 2 - númeroPatrimônio
+         * 3 - responsável
+         * 4 - destino
+         * 5 - nomePolo
+         * 6 - qtdSaída
+         * 7 - dataSaída
+         */
         $i = 0;
         foreach ($this->visao->saidas as $value) {
             $value[0] = fnEncrypt($value[0]);
+            if ($value[4] == null){
+                $value[4] = '';
+            }
             $this->visao->saidas[$i++] = $value;
         }
         $this->renderizar();
@@ -97,13 +111,13 @@ class ControladorEquipamentos extends Controlador {
 
     public function acaoNovoretorno() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
-        if (isset($_GET['saidaID']) || isset($_POST['saidaID'])) {
-            $idSaida = fnDecrypt($_GET['saidaID']);
-
-            $saida = equipamentoDAO::recuperarSaidaEquipamento($idSaida);
+        if (filter_has_var(INPUT_GET, 'saidaID') || filter_has_var(INPUT_POST, 'saidaID')) {
+            $idSaida = fnDecrypt($_REQUEST['saidaID']);
+            $equipamentoDAO = new equipamentoDAO();
+            $saida = $equipamentoDAO->recuperarSaidaEquipamento($idSaida);
 
             $equipamentoID = $saida['equipamento'];
-            $equipamento = equipamentoDAO::recuperarEquipamento($equipamentoID);
+            $equipamento = $equipamentoDAO->recuperarEquipamento($equipamentoID);
 
             $this->visao->saidaID = fnEncrypt($idSaida);
             $this->visao->equipamentoID = fnEncrypt($equipamentoID);
@@ -123,7 +137,7 @@ class ControladorEquipamentos extends Controlador {
 
     public function acaoSaida() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->visao->equipamentos = equipamentoDAO::consultar("idEquipamento,nomeEquipamento,quantidade,dataEntrada,numeroPatrimonio", "quantidade > 0");
+        $this->visao->equipamentos = (new equipamentoDAO())->consultar("idEquipamento,nomeEquipamento,quantidade,dataEntrada,numeroPatrimonio", "quantidade > 0");
         $i = 0;
         foreach ($this->visao->equipamentos as $value) {
             $value[0] = fnEncrypt($value[0]);
@@ -134,9 +148,9 @@ class ControladorEquipamentos extends Controlador {
 
     public function acaoNovasaida() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
-        if (isset($_GET['equipamentoID'])) {
-            $this->visao->comboboxPapeis = ComboBoxPapeis::montarComboBoxPadrao();
-            $this->visao->equipamento = equipamentoDAO::recuperarEquipamento(fnDecrypt($_GET['equipamentoID']));
+        if (filter_has_var(INPUT_GET, 'equipamentoID')) {
+            $this->visao->comboboxPapeis = ComboBoxPapeis::montarTodosPapeis();
+            $this->visao->equipamento = (new equipamentoDAO())->recuperarEquipamento(fnDecrypt(filter_input(INPUT_GET, 'equipamentoID')));
             $this->visao->equipamentoID = fnEncrypt($this->visao->equipamento->get_idEquipamento());
             $this->visao->responsavel = ComboBoxUsuarios::montarResponsavelViagem();
             $this->visao->polos = ComboBoxPolo::montarTodosOsPolos();
@@ -158,8 +172,8 @@ class ControladorEquipamentos extends Controlador {
 
     public function acaoNovabaixa() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
-        if (isset($_GET['equipamentoID'])) {
-            $equipamento = equipamentoDAO::recuperarEquipamento(fnDecrypt($_GET['equipamentoID']));
+        if (filter_has_var(INPUT_GET, 'equipamentoID')) {
+            $equipamento = (new equipamentoDAO())->recuperarEquipamento(fnDecrypt(filter_input(INPUT_GET, 'equipamentoID')));
             $this->visao->equipamento = $equipamento;
             $this->visao->dataMinima = $equipamento->get_dataEntrada();
             if ($this->visao->dataMinima == "") {
@@ -169,13 +183,14 @@ class ControladorEquipamentos extends Controlador {
             $this->visao->quantidadeMaxima = $equipamento->get_quantidade();
             $this->visao->saidaID = '';
             $this->renderizar();
-        } else if (isset($_GET['saidaID'])) {
-            $saida = equipamentoDAO::recuperarSaidaEquipamento(fnDecrypt($_GET['saidaID']));
+        } else if (filter_has_var(INPUT_GET, 'saidaID')) {
+            $equipamentoDAO = new equipamentoDAO();
+            $saida = $equipamentoDAO->recuperarSaidaEquipamento(fnDecrypt(filter_input(INPUT_GET, 'saidaID')));
             $this->visao->dataMinima = $saida['dataSaida'];
-            $this->visao->equipamento = equipamentoDAO::recuperarEquipamento($saida['equipamento']);
+            $this->visao->equipamento = $equipamentoDAO->recuperarEquipamento($saida['equipamento']);
             $this->visao->equipamentoID = fnEncrypt($this->visao->equipamento->get_idEquipamento());
             $this->visao->quantidadeMaxima = $saida['quantidadeSaida'];
-            $this->visao->saidaID = $_GET['saidaID'];
+            $this->visao->saidaID = filter_input(INPUT_GET, 'saidaID');
             $this->renderizar();
         } else {
             die("Acesso indevido.");
@@ -194,7 +209,7 @@ class ControladorEquipamentos extends Controlador {
 
     public function acaoGerenciar_baixas() {
         $this->visao->acessoMinimo = Permissao::ADMINISTRADOR;
-        $this->visao->baixas = equipamentoDAO::consultarBaixas("idBaixa,nomeEquipamento,dataBaixa,quantidadeBaixa,saida,observacoes");
+        $this->visao->baixas = (new equipamentoDAO())->consultarBaixas("idBaixa,nomeEquipamento,dataBaixa,quantidadeBaixa,saida,observacoes");
         $i = 0;
         foreach ($this->visao->baixas as $value) {
             $value[0] = fnEncrypt($value[0]);
@@ -210,7 +225,7 @@ class ControladorEquipamentos extends Controlador {
 
     public function acaoGerenciar_saidas() {
         $this->visao->acessoMinimo = Permissao::ADMINISTRADOR;
-        $this->visao->saidas = equipamentoDAO::consultarSaidas("idSaida,nomeEquipamento,dataSaida,quantidadeSaidaOriginal,concat(PNome,' ',UNome) as `responsavel`");
+        $this->visao->saidas = (new equipamentoDAO())->consultarSaidas("idSaida,nomeEquipamento,dataSaida,quantidadeSaidaOriginal,concat(PNome,' ',UNome) as `responsavel`");
         $i = 0;
         foreach ($this->visao->saidas as $value) {
             $value[0] = fnEncrypt($value[0]);

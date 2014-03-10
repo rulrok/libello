@@ -1,10 +1,10 @@
 <?php
 
 require_once __DIR__ . '/../configuracoes.php';
-if (preg_match("#.*" . WEB_SERVER_FOLDER . "?.*#", $_SERVER['REQUEST_URI'])) {
+if (preg_match("#.*" . WEB_SERVER_FOLDER . "/?.*#", $_SERVER['REQUEST_URI'])) {
     require_once BIBLIOTECA_DIR . 'bancoDeDados/PDOconnectionFactory.php';
-    require_once APP_LOCATION . 'modelo/vo/Usuario.php';
-    require_once APP_LOCATION . 'modelo/dao/sistemaDAO.php';
+    require_once APP_DIR . 'modelo/vo/Usuario.php';
+    require_once APP_DIR . 'modelo/dao/sistemaDAO.php';
 
     session_start();
 
@@ -33,6 +33,10 @@ if (preg_match("#.*" . WEB_SERVER_FOLDER . "?.*#", $_SERVER['REQUEST_URI'])) {
         }
     }
 
+    /**
+     * Obtem o VO com os dados do usuário logado atualmente
+     * @return Usuario
+     */
     function obterUsuarioSessao() {
         if (sessaoIniciada()) {
             $usuario = $_SESSION['usuario'];
@@ -40,6 +44,16 @@ if (preg_match("#.*" . WEB_SERVER_FOLDER . "?.*#", $_SERVER['REQUEST_URI'])) {
         } else {
             return NULL;
         }
+    }
+
+    /**
+     * Utilizado quando o usuário altera os seus dados e os novos valores precisam refletir
+     * nas futuras chamadas ao método obterUsuarioSessao();
+     * 
+     * @param Usuario $usuario
+     */
+    function atualizarUsuarioSessao(Usuario $usuario) {
+        $_SESSION['usuario'] = $usuario;
     }
 
 //
@@ -65,7 +79,8 @@ if (preg_match("#.*" . WEB_SERVER_FOLDER . "?.*#", $_SERVER['REQUEST_URI'])) {
         }
 
         $idFerramentaAssociada = $controlador->idFerramentaAssociada();
-        $permissoes = usuarioDAO::obterPermissoes($usuario->get_id());
+        $usuarioDAO = new usuarioDAO();
+        $permissoes = $usuarioDAO->obterPermissoes($usuario->get_idUsuario());
         foreach ($permissoes as $permissao_ferramenta) { //Procura pela ferramenta
             if ($permissao_ferramenta['idFerramenta'] == $idFerramentaAssociada) {
                 //Achou a ferramenta
@@ -120,8 +135,7 @@ if (preg_match("#.*" . WEB_SERVER_FOLDER . "?.*#", $_SERVER['REQUEST_URI'])) {
      * @return boolean Verdadeiro se o usuário existir no banco de dados, falso caso contrário
      */
     function autenticaUsuario(Usuario $user) {
-            echo'aqui';
-        if (($con = PDOconnectionFactory::getConection()) != null) {
+        if (($con = PDOconnectionFactory::obterConexao()) != null) {
             //$con = $_SESSION['conexao'];
             if ($user->get_email() !== null && $user->get_email() !== '' && $user->get_senha() !== null && $user->get_senha() !== '') {
                 try {

@@ -4,26 +4,32 @@ require_once 'abstractDAO.php';
 
 class areaDAO extends abstractDAO {
 
-    public static function obterNomeArea($areaId) {
-        $areaId = (int) $areaId;
-        $sql = "SELECT nomeArea FROM area WHERE idArea = " . $areaId;
-        try {
-            $resultado = parent::getConexao()->query($sql)->fetch();
-        } catch (Exception $e) {
-            echo $e;
-        }
-        return $resultado[0];
+    /**
+     * 
+     * @param int $idArea
+     * @return string
+     */
+    public function obterNomeArea($idArea) {
+        $idArea = (int) $idArea;
+        $sql = "SELECT nomeArea FROM area WHERE idArea = :idArea";
+        $params = array(
+            ':idArea' => [$idArea, PDO::PARAM_STR]
+        );
+        return (string) $this->executarSelect($sql, $params, false);
     }
 
-    public static function obterIdArea($nomeArea) {
+    /**
+     * 
+     * @param string $nomeArea
+     * @return int
+     */
+    public function obterIdArea($nomeArea) {
 
-        $sql = "SELECT idArea FROM area WHERE nome = '" . $nomeArea . "'";
-        try {
-            $resultado = parent::getConexao()->query($sql)->fetch();
-        } catch (Exception $e) {
-            echo $e;
-        }
-        return $resultado[0];
+        $sql = "SELECT idArea FROM area WHERE nome = :nome";
+        $params = array(
+            ':nome' => [$nomeArea, PDO::PARAM_STR]
+        );
+        return (int) $this->executarSelect($sql, $params, false);
     }
 
 }

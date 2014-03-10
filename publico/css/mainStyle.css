@@ -14,8 +14,18 @@
 * a{
     color: #393939;
 }
+
+/* Tela cinza inicial quando o usuário acaba de logar e some quando a página termina de carregar */
+#telaCarregando {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    background-color: #ccc;
+}
+
 body{
-    /*background: whitesmoke repeat fixed;*/
+    /* background: whitesmoke repeat fixed; */
     background-image: url("../imagens/backgroundMenu.png");
     background-size: auto;
     margin: 0;
@@ -86,17 +96,17 @@ html {
     padding: 2px;
 }
 /* Conteúdos centralizados */
-.centered {
+.centralizado {
     position:relative;
     margin-left:auto;
     margin-right: auto;
 }
 /* Texto centralizado */
-.centeredText{
+.textoCentralizado{
     text-align: center !important;
 }
 
-.boldedText{
+.textoNegrito{
     font-weight: bold;
 }
 
@@ -111,92 +121,12 @@ input,select,textarea {
     /*    border-radius: 0px !important;
         border: #ccc solid 2px;*/
     min-height: 25px;
-    padding: 2px;
+    /* padding: 2px; */
 }
 
 td {
     font-size: 14px;
 }
-
-/* Estilo em botões de tabelas de consultas e edições
-.botaoTabela{
-    border: none !important;
-    background: none;
-}
-
-.botaoTabela:active{
-    position:relative;
-    top: 2px;
-}
-.botaoTabela{
-    position:relative;
-}
-
-.iconExcluir{
-    background: url("../imagens/icones/botoes/botao_excluir.png") no-repeat 0;
-    position: relative;
-    top: 2px;
-    left: -3px;
-}
-
-.iconEditar {
-    background: url("../imagens/icones/botoes/botao_editar.png") no-repeat 0;
-    position: relative;
-    top: 2px;
-    left: -3px;
-}
-
-.iconAdicionar{
-    background: url("../imagens/icones/botoes/botao_adicionar.png") no-repeat 0;
-    width: 22px;
-    height: 22px;
-    position: relative;
-    top: 2px;
-    left: -3px;
-}*/
-
-/* Estilo em botões e botões de envio */
-/*input[type=submit], input[type=button],input[type=reset]{
-    background-color: #FBFBFB;
-    border: 1px #CDF solid;
-    border-radius: 3px !important;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    position: relative;
-    font-size: 14px;
-    font-weight: bold;
-    color: #333;
-    min-height: 30px;
-}*/
-
-/* Botões específicos */
-/*input[value~='Cadastrar']:enabled, .table input[value~='Atualizar'] {
-    float: right;
-    min-width: 100px;
-    min-height: 30px;
-    border: 1px #0F0 solid;
-    -moz-box-shadow: 1px 1px 1px #73f480;
-    -webkit-box-shadow: 1px 1px 1px #73f480;
-    box-shadow: 1px 1px 1px #73f480;
-}
- Botões específicos 
-input[value~='Cadastrar']:disabled,input[value~='Atualizar']:disabled {
-    min-width: 100px;
-    min-height: 30px;
-    float: right;
-    background: whitesmoke;
-    color: #DDD;
-    border: 1px #fe8888 solid;
-    -moz-box-shadow: 1px 1px 1px #fe8888;
-    -webkit-box-shadow: 1px 1px 1px #fe8888;
-    box-shadow: 1px 1px 1px #fe8888;
-}*/
-
-/* Quando clicar em algum botão, ele 'desce' */
-/*input[type=button]:active,input[type=reset]:active,input[type=submit]:active{
-    position: relative;
-    top: 2px;
-}*/
 
 .campoObrigatorio{
 
@@ -233,7 +163,7 @@ input[value~='Cadastrar']:disabled,input[value~='Atualizar']:disabled {
     width: 100%;
 }
 
-.tabelaDeEdicao .details{
+.tabelaDeEdicao .detalhes{
     padding: 1px;
 }
 
@@ -384,6 +314,43 @@ input[type=search]{
     padding: 4px;
 }
 
+/* Página de cadastro de descritores para imagens */
+.checkbox_novo_descritor{
+
+}
+
+#resultadoImagens {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    padding: 20px;
+}
+
+#resultadoImagens p.descricao:before {
+    content: "“ ";
+    vertical-align: .15em;
+    font-size: 1.00em;
+    font-family: Georgia, serif;
+    color: #888;
+}
+
+#resultadoImagens p.descricao:after {
+    content: '  ”';
+    vertical-align: -.50em;
+    font-size: 1.00em;
+    font-family: Georgia, serif;
+    color: #888;
+}
+
+
+#resultadoImagens p.descricao {
+    color: #666;
+}
+
+#quantidadePatrimonios{
+    margin-left: 5px;
+}
+
 /* FIM DO CONTENT */
 /*================================================*/
 /* FOOTER */
@@ -497,7 +464,7 @@ footer p{
 /*================================================*/
 /* HEADER */
 
-#barra_superior {
+#barraSuperior {
     margin: 0;
     border: 1px solid #3871a6;
     background: #3871a6;
@@ -532,7 +499,7 @@ footer p{
     border-top-style: none;
     border-radius: 20px;
 }
-.headerWrap h1 {
+.headerWrap p {
     font-size: 150%;
     text-align: center;
     font-family: sans-serif;
@@ -570,7 +537,7 @@ header .logo {
     header .logo{
         display: none;
     }
-    header h1{
+    header p{
         font-size: 120%;
         max-width: 150px;
     }
@@ -583,7 +550,7 @@ header .logo {
     }
 }
 @media (min-width:500px ) and ( max-width:800px){
-    header h1{
+    header p{
         display: none;
     }
     div#informacoes{
@@ -591,18 +558,25 @@ header .logo {
     }
 }
 @media (min-width:800px) and (max-width:1100px){
-    header h1{
+    header p{
         font-size: 150%;
     }
 }
 header .userInfoWrap {
     position: absolute;
     background: #FFF;
-    border-radius: 5px 0 0 5px;
+    border-radius: 25px 0 0 5px;
     right: 0px;
     top: 20px;
     padding: 20px;
 }
+
+header #avisos {
+    width: 60%;
+    position: relative;
+    left: -80px;
+}
+
 header .userInfoWrap *{
     /*font-size: 100%;*/
     font-family: monospace;
@@ -693,6 +667,14 @@ header .userInfoWrap [id=gerenciarConta]:before{
     }
 }
 /* Links do menu */
+
+.linkAdministrativo {
+    color: red;
+}
+.linkAdministrativo:hover {
+    color: red;
+    text-decoration-line: underline;
+}
 /* Correção para a posição dos nomes dos links ao lado da imagem */
 li[id$=Link]:before{
     vertical-align: -50%;
@@ -734,8 +716,8 @@ li[id$=Link]:before{
 }
 .menuContainer:hover{
     opacity: 1;
-        min-height: 56px;
-        background: url("../imagens/backgroundMenu.png");
+    min-height: 56px;
+    background: url("../imagens/backgroundMenu.png");
 
 }
 .menuContainer div.menu:hover{
@@ -940,31 +922,31 @@ li[id$=Link]:before{
 }*/
 
 /* Exibe componente como tabela */
-.table {
+.tabela {
     display: table;
     width: auto;
     font-size: 15px;
 }
 
 /* Span que irá conter um label e um campo de texto ou senha */
-.table .line{
+.tabela .line{
     display: table-row;
     padding: 2px;
     line-height: 35px;
 }
-.table .line textarea{
+.tabela .line textarea{
     margin-bottom: 5px!important;
 }
 
 /* Label para algum campo respectivo */
-.table .line label{
+.tabela .line label{
     display: table-cell;
     font-family: sans-serif;
     text-align: right;
     vertical-align: top;
 }
 
-.table .line img{
+.tabela .line img{
     position:relative;
     top: 8px;
     display: table-cell;
@@ -973,16 +955,16 @@ li[id$=Link]:before{
     vertical-align: top;
 }
 
-.table .line label:first-letter{
+.tabela .line label:first-letter{
     text-transform: uppercase;
 }
 
-.table .line label:after{
+.tabela .line label:after{
     content: ':';
 }
 
 /* Campos de senha e texto específicos de formulários alinhados sem tabela */
-.table .line input, .table .line select, .table .line textarea,.table .line div.chosen-container {
+.tabela .line input, .tabela .line select, .tabela .line textarea,.tabela .line div.chosen-container {
     display: table-cell;
     float: left;
     margin-bottom: -7px;
@@ -1014,7 +996,7 @@ select:disabled{
 .selecaoPassageiros:first-of-type{
     margin-left: 0!important;
 }
-.table .line .selecaoPassageiros > a,select {
+.tabela .line .selecaoPassageiros > a,select {
     display: table-cell;
 }
 /* FIM Forms alinhados sem tabela */
@@ -1025,10 +1007,10 @@ select:disabled{
 Classe hidden para Internet Explorer
 */
 .hidden {
-  display: none!important;
-  visibility: hidden!important;
-  width: 0!important;
-  height: 0!important;
+    display: none!important;
+    visibility: hidden!important;
+    width: 0!important;
+    height: 0!important;
 }
 
 button.btn-right,
@@ -1037,7 +1019,27 @@ input[type="submit"].btn-right {
 }
 
 .input-xxzlarge {
-  width: 590px;
+    width: 590px;
+}
+
+.thumbnail{
+    cursor: pointer;
+}
+
+.thumbnail.clicada{
+    cursor: default;
+}
+
+.caption {
+    padding: 0;
 }
 /*  FIM BOOTSTRAP FIXES */
 /*================================================*/
+/*  FANCYBOX FIXES */
+#fancybox-buttons ul{
+    width: 140px!important;
+}
+
+/*  FIM FANCYBOX FIXES */
+/*================================================*/
+/*  */

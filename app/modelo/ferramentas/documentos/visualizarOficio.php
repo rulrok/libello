@@ -1,16 +1,17 @@
 <?php
+
 ob_clean();
 //incluindo o arquivo do fpdf
-require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/configuracoes.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/dompdf/dompdf_config.inc.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/app/modelo/dao/documentoDAO.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/seguranca/seguranca.php");
+require_once BIBLIOTECA_DIR . "configuracoes.php";
+require_once BIBLIOTECA_DIR . "dompdf/dompdf_config.inc.php";
+require_once BIBLIOTECA_DIR . "seguranca/seguranca.php";
 require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
+require_once APP_DIR . "modelo/dao/documentoDAO.php";
 //require_once '../seguranca.php';
 //-------------------
 //definindo variaveis
 $id = fnDecrypt($_REQUEST['idv']);
-$oficio = documentoDAO::consultar('oficio','idOficio = '.$id);
+$oficio = (new documentoDAO())->consultar('oficio', 'idOficio = ' . $id);
 $numOficio = $oficio[0]->getNumOficio();
 $tipoSigla = $oficio[0]->getTipoSigla();
 $data = explode('/', $oficio[0]->getData());
@@ -28,8 +29,8 @@ $cargo_remetente = $oficio[0]->getCargo_remetente();
 $remetentes = explode(';',$remetente);
 $cargos_remetentes = explode(';',$cargo_remetente);
 
-setlocale(LC_ALL, 'portuguese-brazilian', 'ptb', 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8','pt-BR');
-$mes = strftime("%B", mktime(0, 0, 0,$data[1], 10));
+setlocale(LC_ALL, 'portuguese-brazilian', 'ptb', 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8', 'pt-BR');
+$mes = strftime("%B", mktime(0, 0, 0, $data[1], 10));
 $data = $dia . '/' . $mes . '/' . $ano;
 
 //-------------------
@@ -63,7 +64,7 @@ $document = '
                 <tr><td style="height: 30px;"></td></tr>
                 <tr>
                     <td>
-                        Ofício nº'.$numOficio.'/'.$ano.'/CEAD - ' . $tipoSigla . '
+                        Ofício nº' . $numOficio . '/' . $ano . '/CEAD - ' . $tipoSigla . '
                     </td>
                 </tr>
                 <tr><td style="height: 40px;"></td></tr>
@@ -152,9 +153,6 @@ $dompdf->render();
 $options = array(
     'Attachment' => 0
 );
-$dompdf->stream($ano." - Oficio n".$numOficio, $options);
-
-
-
+$dompdf->stream($ano . " - Oficio n" . $numOficio, $options);
 ?>
     

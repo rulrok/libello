@@ -1,8 +1,8 @@
 <?php
 
-include_once APP_LOCATION . 'modelo/vo/Usuario.php';
-include_once APP_LOCATION . 'modelo/dao/usuarioDAO.php';
-include_once APP_LOCATION . 'modelo/dao/areaDAO.php';
+include_once APP_DIR . 'modelo/vo/Usuario.php';
+include_once APP_DIR . 'modelo/dao/usuarioDAO.php';
+include_once APP_DIR . 'modelo/dao/areaDAO.php';
 require_once 'enumeracao/ImagensDificuldadeEnum.php';
 require_once 'enumeracao/Ferramenta.php';
 require_once 'enumeracao/Area.php';
@@ -14,25 +14,25 @@ class Menu {
 
     public static function montarMenuNavegacao() {
 
-        $permissoes = usuarioDAO::obterPermissoes(obterUsuarioSessao()->get_id());
+        $permissoes = (new usuarioDAO())->obterPermissoes(obterUsuarioSessao()->get_idUsuario());
 
         $menuCode = "<div class=\"menu\">" . "\n";
-        $menuCode .= "<menu class=\"centered\">" . "\n";
+        $menuCode .= "<menu class=\"centralizado\">" . "\n";
         $menuCode .= "<a href=\"#!inicial|homepage\"><li class=\"menuLink actualTool visited\" id=\"homeLink\" class=\"visited\">Home</li></a>" . "\n";
 
         $subMenuCode = "<div class=\"subMenu\">" . "\n";
         $subMenuCode .= "<menu>" . "\n";
 
-        foreach ($permissoes as $permissao_ferramenta) {
+        foreach ($permissoes as $permissao_ferramenta) :
 
-            switch ($permissao_ferramenta['idFerramenta']) {
+            switch ($permissao_ferramenta['idFerramenta']) :
                 case Ferramenta::CONTROLE_USUARIOS:
                     if ($permissao_ferramenta['idPermissao'] != Permissao::SEM_ACESSO) {
                         $menuCode .= "<a><li class=\"menuLink\" id=\"usuariosLink\">Usuários</li></a>" . "\n";
                         $subMenuCode .="<ul class=\"hiddenSubMenuLink usuariosSubMenu\">" . "\n";
                         switch ($permissao_ferramenta['idPermissao']) {
                             case Permissao::ADMINISTRADOR:
-                                $subMenuCode .= "<a href=\"#!usuarios|restaurar\" style=\"color: red;\"\">" . "\n";
+                                $subMenuCode .= '<a href="#!usuarios|restaurar" class="linkAdministrativo">' . "\n";
                                 $subMenuCode .= "<li>Usuários inativos</li></a>" . "\n";
                             case Permissao::GESTOR:
                                 $subMenuCode .= "   <a href=\"#!usuarios|gerenciar\">" . "\n";
@@ -73,7 +73,7 @@ class Menu {
                         $permissao = $permissao_ferramenta['idPermissao'];
                         switch ($permissao_ferramenta['idPermissao']) {
                             case Permissao::ADMINISTRADOR:
-                                $subMenuCode .= "<a href=\"#!livros|gerenciarbaixasesaidas\" style=\"color: red;\"\">" . "\n";
+                                $subMenuCode .= '<a href="#!livros|gerenciarbaixasesaidas" class="linkAdministrativo">' . "\n";
                                 $subMenuCode .= "<li>Administrar baixas e saídas</li></a>" . "\n";
                             case Permissao::GESTOR:
                                 $subMenuCode .= "<a href=\"#!livros|gerenciar\"\">" . "\n";
@@ -102,7 +102,7 @@ class Menu {
                         $permissao = $permissao_ferramenta['idPermissao'];
                         switch ($permissao) {
                             case Permissao::ADMINISTRADOR:
-                                $subMenuCode .= "<a href=\"#!equipamentos|gerenciarbaixasesaidas\" style=\"color: red;\"\">" . "\n";
+                                $subMenuCode .= '<a href="#!equipamentos|gerenciarbaixasesaidas" class="linkAdministrativo">' . "\n";
                                 $subMenuCode .= "<li>Administrar baixas e saídas</li></a>" . "\n";
                             case Permissao::GESTOR:
                                 $subMenuCode .= "<a href=\"#!equipamentos|gerenciar\"\">" . "\n";
@@ -178,7 +178,7 @@ class Menu {
                     break;
 //                case Ferramenta::CONTROLE_PAGAMENTOS:
 //                    if ($permissao_ferramenta['idPermissao'] != Permissao::SEM_ACESSO) {
-//                        $menuCode .= "<a><li class=\"menuLink\" id=\"pagamentosLink\">Pagamentos</li></a>" . "\n";
+//                        $menuCode .= "<a><li class=\"menuLink\" id=\"pagamentosLink\">Pagamentos</li></a>" . "\n";;
 //                        $subMenuCode .="<ul class=\"hiddenSubMenuLink pagamentosSubMenu\">" . "\n";
 //                        switch ($permissao_ferramenta['idPermissao']) {
 //                            case Permissao::ADMINISTRADOR:
@@ -201,29 +201,30 @@ class Menu {
                         switch ($permissao_ferramenta['idPermissao']) {
                             case Permissao::ADMINISTRADOR:
                             case Permissao::GESTOR:
-                                $subMenuCode .= "<a href=\"#!imagens|categoriaseafins\"\">" . "\n";
-                                $subMenuCode .= "<li>Categorias e Subcategorias</li></a>" . "\n";
-//                                $subMenuCode .= "<a href=\"#!imagens|gerenciarGalerias\"\">" . "\n";
-//                                $subMenuCode .= "<li>Gerenciar Galerias</li></a>" . "\n";
+                                $subMenuCode .= "<a href=\"#!imagens|gerenciarDescritores\"\">" . "\n";
+                                $subMenuCode .= "<li>Gerenciar Descritores</li></a>" . "\n";
+                                $subMenuCode .= "<a href=\"#!imagens|novoDescritor\"\">" . "\n";
+                                $subMenuCode .= "<li>Novo Descritor</li></a>" . "\n";
                             case Permissao::ESCRITA:
                                 $subMenuCode .= "<a href=\"#!imagens|novaImagem\"\">" . "\n";
-                                $subMenuCode .= "<li>Cadastrar imagem</li></a>" . "\n";
+                                $subMenuCode .= "<li>Cadastrar Imagem</li></a>" . "\n";
                             case Permissao::CONSULTA:
-                                $subMenuCode .= "<a href=\"#!imagens|consultar\"\">" . "\n";
-                                $subMenuCode .= "<li>Consultar galerias</li></a>" . "\n";
+                                $subMenuCode .= "<a href=\"#!imagens|consultarimagem\"\">" . "\n";
+                                $subMenuCode .= "<li>Consultar Imagens</li></a>" . "\n";
                         }
                     }
                     break;
-            }
-//            $subMenuCode .= "<a class =\"hideSubMenu\" onclick=\"hideSubMenu();\"><li class=\"visited\"><img alt=\"Esconder sub-menu\" src=\"publico/imagens/icones/go-up.png\"></li></a>" . "\n";
-            $subMenuCode .= "</ul>" . "\n";
-        }
-
+            endswitch;
+//            $subMenuCode .= '<a class="hideSubMenu" onclick="hideSubMenu();">'
+//                    . '<li class="visited">'
+//                    . '<img alt="Esconder sub-menu" src="publico/imagens/icones/go-up.png" />'
+//                    . '</li>'
+//                    . '</a>';
+            $subMenuCode .= "</ul>";
+        endforeach;
 
         $menuCode .= "</menu>" . "\n";
         $menuCode .= "</div>" . "\n";
-
-
 
         $subMenuCode .= "</menu>" . "\n";
         $subMenuCode .= "</div>" . "\n";
@@ -231,291 +232,6 @@ class Menu {
         return $menuCode . $subMenuCode;
     }
 
-    public static function montarCaixaSelecaoPermissoes($required = null, $class = null, $name = null) {
-        if ($required === true) {
-            if ($class == null) {
-                $class = "";
-            }
-        }
-        $codigo = "<select " . ($required === true ? "required " : " ") . ($class !== null ? "class=\"" . $class . "\"" : " ") . ($name !== null ? "name =\"" . $name . "\"" : " ") . ">";
-        $codigo .= "\n<option value=\"default\"> -- Selecione uma opção -- </option>";
-        $codigo .= "\n<option value=\"1\">Sem acesso</option>";
-        $codigo .= "\n<option value=\"10\">Consulta</option>";
-        $codigo .= "\n<option value=\"20\">Escrita</option>";
-        $codigo .= "\n<option value=\"30\">Gestor</option>";
-        $codigo .= "\n<option value=\"40\">Administrador</option>";
-        $codigo .= "</select>";
-        return $codigo;
-    }
-
-    public static function montarCaixaSelecaoPapeis($required = false, $class = null, $name = null) {
-        $codigo = "<select ";
-        if ($required) {
-            $codigo .= "required ";
-        }
-        if ($class != null) {
-            $codigo .= " class = \"" . $class . "\" ";
-        }
-        if ($name != null) {
-            $codigo .= " name = \"" . $name . "\"";
-        }
-        $codigo .= ">\n";
-
-        $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
-        for ($i = 1; $i <= Papel::__length; $i++) {
-            $codigo .= "<option value=\"$i\">" . papelDAO::obterNomePapel($i) . "</option>\n";
-        }
-        $codigo .= "</select>\n";
-        return $codigo;
-    }
-
-    public static function montarCaixaSelecaoAreas($required = false, $class = null, $id = null, $name = null) {
-        $codigo = "<select ";
-        if ($required) {
-            $codigo .= "required ";
-        }
-        if ($class != null) {
-            $codigo .= " class = \"" . $class . "\" ";
-        }
-        if ($id != null) {
-            $codigo .= " id = \"" . $id . "\" ";
-        }
-        if ($name != null) {
-            $codigo .= " name = \"" . $name . "\"";
-        }
-        $codigo .= ">\n";
-
-        $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
-        for ($i = 1; $i <= Area::__length; $i++) {
-            $codigo .= "<option value=\"$i\">" . areaDAO::obterNomeArea($i) . "</option>\n";
-        }
-        $codigo .= "</select>\n";
-        return $codigo;
-    }
-
-    public static function montarCaixaSelecaoTiposCurso($required = false, $class = null, $id = null, $name = null) {
-        $codigo = "<select ";
-        if ($required) {
-            $codigo .= "required ";
-        }
-        if ($class != null) {
-            $codigo .= " class = \"" . $class . "\" ";
-        }
-        if ($id != null) {
-            $codigo .= " id = \"" . $id . "\" ";
-        }
-        if ($name != null) {
-            $codigo .= " name = \"" . $name . "\"";
-        }
-        $codigo .= ">\n";
-
-        $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
-        for ($i = 1; $i <= TipoCurso::__length; $i++) {
-            $codigo .= "<option value=\"$i\">" . cursoDAO::obterNomeTipoCurso($i) . "</option>\n";
-        }
-        $codigo .= "</select>\n";
-        return $codigo;
-    }
-
-    public static function montarCaixaSelecaoCursos($required = false, $class = null, $id = null, $name = null) {
-        $codigo = "<select ";
-        if ($required) {
-            $codigo .= "required ";
-        }
-        if ($class != null) {
-            $codigo .= " class = \"" . $class . "\" ";
-        }
-        if ($id != null) {
-            $codigo .= " id = \"" . $id . "\" ";
-        }
-        if ($name != null) {
-            $codigo .= " name = \"" . $name . "\"";
-        }
-        $codigo .= ">\n";
-
-        $cursos = cursoDAO::consultar();
-        if (sizeof($cursos) == 0) {
-            $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem cursos cadastrados --</option>\n";
-        } else {
-            $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
-            for ($i = 0; $i < sizeof($cursos); $i++) {
-                $codigo .= "<option value=\"" . fnEncrypt($cursos[$i]['idCurso']) . "\">" . $cursos[$i]['nomeCurso'] . "</option>\n";
-            }
-        }
-        $codigo .= "</select>\n";
-        return $codigo;
-    }
-
-    public static function montarCaixaSelecaoPolos($required = false, $class = null, $id = null, $name = null) {
-        $codigo = "<select ";
-        if ($required) {
-            $codigo .= "required ";
-        }
-        if ($class != null) {
-            $codigo .= " class = \"" . $class . "\" ";
-        }
-        if ($id != null) {
-            $codigo .= " id = \"" . $id . "\" ";
-        }
-        if ($name != null) {
-            $codigo .= " name = \"" . $name . "\"";
-        }
-        $codigo .= ">\n";
-
-        $polos = poloDAO::consultar();
-        if (sizeof($polos) == 0) {
-            $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem polos cadastrados --</option>\n";
-        } else {
-            $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
-            $codigo .= "<optgroup label='Polos'>\n";
-            for ($i = 0; $i < sizeof($polos); $i++) {
-                $codigo .= "<option value=\"" . fnEncrypt($polos[$i]['idPolo']) . "\">" . $polos[$i]['nomePolo'] . "</option>\n";
-            }
-        }
-        $codigo .= "</optgroup>\n";
-        $codigo .= "</select>\n";
-        return $codigo;
-    }
-
-    public static function montarCaixaSelecaoSubcategorias($required = false, $class = null, $id = null, $name = null, $idCategoriaPai = null) {
-        if ($idCategoriaPai != null) {
-            $codigo = "<select ";
-            if ($required) {
-                $codigo .= "required ";
-            }
-            if ($class != null) {
-                $codigo .= " class = \"" . $class . "\" ";
-            }
-            if ($id != null) {
-                $codigo .= " id = \"" . $id . "\" ";
-            }
-            if ($name != null) {
-                $codigo .= " name = \"" . $name . "\"";
-            }
-            $codigo .= ">\n";
-
-            $subcategorias = imagensDAO::consultarSubcategorias("*", "categoriaPai = $idCategoriaPai");
-            if (sizeof($subcategorias) == 0) {
-                $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem subcategorias cadastradas --</option>\n";
-            } else {
-                $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
-                $codigo .= "<optgroup label='Subcategorias'>\n";
-                for ($i = 0; $i < sizeof($subcategorias); $i++) {
-                    $codigo .= "<option value=\"" . fnEncrypt($subcategorias[$i]['idSubcategoria']) . "\">" . $subcategorias[$i]['nomeSubcategoria'] . "</option>\n";
-                }
-            }
-            $codigo .= "</optgroup>\n";
-            $codigo .= "</select>\n";
-            return $codigo;
-        } else {
-            return "<p>Categoria pai não informada.</p>";
-        }
-    }
-
-    public static function montarCaixaSelecaoCategorias($required = false, $class = null, $id = null, $name = null) {
-        $codigo = "<select ";
-        if ($required) {
-            $codigo .= "required ";
-        }
-        if ($class != null) {
-            $codigo .= " class = \"" . $class . "\" ";
-        }
-        if ($id != null) {
-            $codigo .= " id = \"" . $id . "\" ";
-        }
-        if ($name != null) {
-            $codigo .= " name = \"" . $name . "\"";
-        }
-        $codigo .= ">\n";
-
-        $categorias = imagensDAO::consultarCategorias();
-        if (sizeof($categorias) == 0) {
-            $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem categorias cadastradas --</option>\n";
-        } else {
-            $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
-            $codigo .= "<optgroup label='Categorias'>\n";
-            for ($i = 0; $i < sizeof($categorias); $i++) {
-                $codigo .= "<option value=\"" . fnEncrypt($categorias[$i]['idCategoria']) . "\">" . $categorias[$i]['nomeCategoria'] . "</option>\n";
-            }
-        }
-        $codigo .= "</optgroup>\n";
-        $codigo .= "</select>\n";
-        return $codigo;
-    }
-
-    public static function montarCaixaSelecaoDificuldades($required = false, $class = null, $id = null, $name = null) {
-        $codigo = "<select ";
-        if ($required) {
-            $codigo .= "required ";
-        }
-        if ($class != null) {
-            $codigo .= " class = \"" . $class . "\" ";
-        }
-        if ($id != null) {
-            $codigo .= " id = \"" . $id . "\" ";
-        }
-        if ($name != null) {
-            $codigo .= " name = \"" . $name . "\"";
-        }
-        $codigo .= ">\n";
-
-        //Não há necessidade de cadastrar no banco por enquanto, então fica um processo manual aqui
-        $dificuldades = array(
-            0 => array(ImagensDificuldadeEnum::SIMPLES, "Simples")
-            , 1 => array(ImagensDificuldadeEnum::MEDIA, "Média")
-            , 2 => array(ImagensDificuldadeEnum::COMPLEXA, "Complexa")
-            , 3 => array(ImagensDificuldadeEnum::ALTA_COMPLEXIDADE, "Alta complexidade"));
-        if (sizeof($dificuldades) == 0) {
-            $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem dificuldades cadastradas --</option>\n";
-        } else {
-            $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
-            $codigo .= "<optgroup label='Categorias'>\n";
-            for ($i = 0; $i < sizeof($dificuldades); $i++) {
-                $codigo .= "<option value=\"" . fnEncrypt($dificuldades[$i][0]) . "\">" . $dificuldades[$i][1] . "</option>\n";
-            }
-        }
-        $codigo .= "</optgroup>\n";
-        $codigo .= "</select>\n";
-        return $codigo;
-    }
-
-    public static function montarSelecaoUsuarios($required = false, $class = null, $id = null, $name = null, $multiple = false) {
-        if ($multiple) {
-            $codigo = "<select multiple='multiple' size='7'";
-        } else {
-            $codigo = "<select size='7'";
-        }
-        if ($required) {
-            $codigo .= "required ";
-        }
-        if ($class != null) {
-            $codigo .= " class = \"" . $class . "\" ";
-        }
-        if ($id != null) {
-            $codigo .= " id = \"" . $id . "\" ";
-        }
-        if ($name != null) {
-            $codigo .= " name = \"" . $name . "\"";
-        }
-        $codigo .= " style='display: table-cell;'>\n";
-        for ($i = 1; $i <= Papel::__length; $i++) {
-            $usuarios = usuarioDAO::consultar("idUsuario,concat(PNome,' ',UNome) as Nome,email", "idPapel = " . $i);
-            if (sizeof($usuarios) == 0) {
-                continue;
-            } else {
-                $nomePapel = papelDAO::obterNomePapel($i);
-//            $codigo .= "<option value=\"default\" selected=\"selected\"> -- Selecione uma opção --</option>\n";
-                $codigo .= "<optgroup label='$nomePapel'>\n";
-                for ($j = 0; $j < sizeof($usuarios); $j++) {
-                    $codigo .= "<option value=\"" . fnEncrypt($usuarios[$j]['idUsuario']) . "\">" . $usuarios[$j]['Nome'] . " (" . $usuarios[$j]['email'] . ")</option>\n";
-                }
-                $codigo .= "</optgroup>\n";
-            }
-        }
-        $codigo .= "</select>\n";
-        return $codigo;
-    }
-
 }
-?>
 
+?>

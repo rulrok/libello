@@ -1,6 +1,6 @@
 <title>Registrar baixar para equipamento</title>
 <!--Início da página-->
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=equipamentos&a=registrarbaixa">
+<form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=equipamentos&a=registrarbaixa">
     <fieldset>
         <legend>Baixa de equipamento</legend>
         <input hidden="true" readonly="true" type="text" class="input-small" id="equipamentoID" name="equipamentoID" value="<?php echo $this->equipamentoID ?>" />
@@ -13,7 +13,7 @@
         <hr/>
         <div class="line">
             <label for="dataBaixa">Data de baixa</label>
-            <input type="text"  required id="dataBaixa" on class="campoData" name="dataBaixa" />
+            <input type="text" required autofocus id="dataBaixa" on class="campoData" name="dataBaixa" />
         </div>
         <div class="line">
             <label for="quantidade">Quantidade</label>

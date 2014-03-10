@@ -549,10 +549,10 @@
 
 </script>
 <?php
-if (isset($_GET['doc'])) {//reload, delete ou invalidar usam isso para voltar na pagina certa
+if (filter_has_var(INPUT_GET, 'doc')) {//reload, delete ou invalidar usam isso para voltar na pagina certa
     ?>
     <script>
-        var doc_select = <?php echo '"' . $_GET['doc'] . '"'; ?>;
+        var doc_select = <?php echo filter_input(INPUT_GET, 'doc'); ?>;
         $(document).ready(function() {
             doc = doc_select;
             $('.btn_' + doc_select).click();
@@ -560,10 +560,10 @@ if (isset($_GET['doc'])) {//reload, delete ou invalidar usam isso para voltar na
     </script>
     <?php
 }
-if (isset($_GET['tipo'])) {
+if (filter_has_var(INPUT_GET, 'tipo')) {
     ?>
     <script>
-        var tipo_select = <?php echo '"' . $_GET['tipo'] . '"'; ?>;
+        var tipo_select = <?php echo filter_input(INPUT_GET, 'tipo'); ?>;
         $(document).ready(function() {
             ignorarhash = false;
             $('.visualizar-' + doc + ' .btn-' + tipo_select).click();

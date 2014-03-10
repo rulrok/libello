@@ -1,15 +1,15 @@
 <title>Cadastrar novo livro</title>
 <!--Início da página -->
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=livros&a=verificarnovo">
+<form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=livros&a=verificarnovo">
     <fieldset>
         <legend>Registro de novo livro</legend>
 
         <span class="line">
             <label>Nome do Livro</label>
-            <input required type="text" class="input-xlarge" id="livro" name="livro" title="Livro" data-content="O nome do livro apenas" />
+            <input required autofocus type="text" class="input-xlarge" id="livro" name="livro" title="Livro" data-content="O nome do livro apenas" />
         </span>
         <span class="line">
-            <label for="grafica">Nome da Gráfica</label>
+            <label for="grafica">Gráfica/Editora</label>
             <input required type="text" class="input-xlarge" id="grafica" name="grafica" />
         </span>
         <div class="line">
@@ -23,7 +23,9 @@
         </div>
         <div class="line">
             <label for="area">Área</label>
-            <?php echo $this->comboBoxAreas; ?>
+            <select id="area" name="area" class="input-xlarge">
+                <?php echo $this->comboBoxAreas; ?>
+            </select>
         </div>
         <hr/>
         <div class="line">
@@ -55,13 +57,13 @@
                     <button disabled="true" type="button" class="btn btn-danger disabled" id="removerPatrimonio" onclick="removerPatrimonioAdicionado();" style="display: table-cell;"> <i class="icon-white icon-minus-sign"></i> </button>
                     <button type="button" class="btn btn-success" id="adicionarPatrimonio" onclick="adicionarNovoPatrimonio();" style="display: table-cell;"> <i class="icon-white icon-plus-sign"></i> </button>
                 </span>
-                <label>&nbsp;&nbsp;&nbsp;Quantidade de patrimônios</label>
-                <input readonly required type="text" class="input-small ignorar" id="quantidadePatrimonios" name="quantidadePatrimonios" value="1"/>
+                <label>&nbsp;&nbsp;&nbsp;Quantidade de itens</label>
+                <div id="quantidadePatrimonios">1</div>              
             </span>
             <div id="linhasPatrimonios">
                 <span class="line patrimonio-1">
                     <label>Código Patrimônio</label>
-                    <input readonly type="text" class="input-medium" id="numeroPatrimonio-1" name="numeroPatrimonio-1" title="Código do Patrimônio" data-content="livros idênticos com número de patrimônio variados podem ser cadastrados em lote. Para isso, clique em no botão '+'"/>
+                    <input readonly type="text" class="input-medium" id="numeroPatrimonio-1" name="numeroPatrimonio-1" />
                 </span>
             </div>
         </span>
@@ -73,106 +75,107 @@
 </form>
 
 <script>
-                        var elem = $("#chars");
-                        $("#descricoes").limiter(1000, elem);
-                        $(".line input").popover({trigger: 'focus', container: 'body'});
-                        $(".line textarea").popover({trigger: 'focus', container: 'body'});
-                        var quantidadePatrimonios = 1;
-                        var codigoHtml = "";
+    var elem = $("#chars");
+    $("#descricoes").limiter(1000, elem);
+    $(".line input").popover({trigger: 'focus', container: 'body'});
+    $(".line textarea").popover({trigger: 'focus', container: 'body'});
+    var quantidadePatrimonios = 1;
+    var codigoHtml = "";
 
-                        function adicionarNovoPatrimonio() {
-                            quantidadePatrimonios++;
-                            $("#removerPatrimonio").removeClass("disabled");
-                            $("#removerPatrimonio").prop("disabled", false);
-                            $("#quantidadePatrimonios").val(quantidadePatrimonios);
+    function adicionarNovoPatrimonio() {
+        quantidadePatrimonios++;
+        $("#removerPatrimonio").removeClass("disabled");
+        $("#removerPatrimonio").prop("disabled", false);
+        $("#quantidadePatrimonios").text(" " + quantidadePatrimonios);
 
-                            $("span.patrimonio-" + (quantidadePatrimonios - 1)).after(novoCodigoHtml());
-                            varrerCampos();
-                        }
+        $("span.patrimonio-" + (quantidadePatrimonios - 1)).after(novoCodigoHtml());
+        varrerCampos();
+    }
 
-                        function removerPatrimonioAdicionado() {
-                            if (quantidadePatrimonios > 1) {
-                                $("span.patrimonio-" + (quantidadePatrimonios)).remove();
-                                quantidadePatrimonios--;
-                                $("#quantidadePatrimonios").val(quantidadePatrimonios);
-                            }
-                            if (quantidadePatrimonios <= 1) {
-                                quantidadePatrimonios = 1;
-                                $("#removerPatrimonio").addClass("disabled");
-                                $("#removerPatrimonio").prop("disabled", true);
-                            }
-                        }
+    function removerPatrimonioAdicionado() {
+        if (quantidadePatrimonios > 1) {
+            $("span.patrimonio-" + (quantidadePatrimonios)).remove();
+            quantidadePatrimonios--;
+            $("#quantidadePatrimonios").text(quantidadePatrimonios);
+        }
+        if (quantidadePatrimonios <= 1) {
+            quantidadePatrimonios = 1;
+            $("#removerPatrimonio").addClass("disabled");
+            $("#removerPatrimonio").prop("disabled", true);
+        }
+    }
 
-                        function novoCodigoHtml() {
-                            return codigoHtml.
-                                    replace("<n>", quantidadePatrimonios).
-                                    replace("<n>", quantidadePatrimonios).
-                                    replace("<n>", quantidadePatrimonios);
+    function novoCodigoHtml() {
+        return codigoHtml.
+                replace("<n>", quantidadePatrimonios).
+                replace("<n>", quantidadePatrimonios).
+                replace("<n>", quantidadePatrimonios);
 
-                        }
+    }
 
-                        function botaoLimpar() {
-                            $("span.patrimonio-2").nextAll().andSelf().remove();
-                            quantidadePatrimonios = 1;
-                            removerPatrimonioAdicionado();
-                            liberarCadastro();
-                            $("#chars").text("1000");
-                        }
+    function botaoLimpar() {
+        $("span.patrimonio-2").nextAll().andSelf().remove();
+        quantidadePatrimonios = 1;
+        $("#quantidadePatrimonios").text(quantidadePatrimonios);
+        removerPatrimonioAdicionado();
+        liberarCadastro();
+        $("#chars").text("1000");
+    }
 
-                        $(document).ready(function() {
+    $(document).ready(function() {
 
-                            varrerCampos();
-                            formularioAjax();
+        varrerCampos();
+        formularioAjax();
 
-                            $("#dataEntrada").datepick();
+        $("#dataEntrada").datepick();
 
 
-                            $("#custeio").on("click", function() {
-                                if (!$(this).hasClass("btn-info")) {
-                                    $(this).toggleClass("btn-info");
-                                    $("#patrimonio").toggleClass("btn-info");
-                                }
+        $("#custeio").on("click", function() {
+            if (!$(this).hasClass("btn-info")) {
+                $(this).toggleClass("btn-info");
+                $("#patrimonio").toggleClass("btn-info");
+            }
 
-                                $("input[id^=numeroPatrimonio]").prop("required", false);
-                                $("input[id^=numeroPatrimonio]").prop("readonly", true);
-                                $(".patrimonios").prop("hidden", true);
-                                $(".patrimonios").addClass("hidden");
-                                $(".custeio").removeClass("hidden");
-                                $(".custeio input").prop("required", true);
-                                $(".patrimonios input").prop("required", false);
-                                $("input[id^=numeroPatrimonio]").removeClass("campoErrado");
+            $("input[id^=numeroPatrimonio]").prop("required", false);
+            $("input[id^=numeroPatrimonio]").prop("readonly", true);
+            $(".patrimonios").prop("hidden", true);
+            $(".patrimonios").addClass("hidden");
+            $(".custeio").removeClass("hidden");
+            $(".custeio input").prop("required", true);
+            $(".patrimonios input").prop("required", false);
+            $("input[id^=numeroPatrimonio]").removeClass("campoErrado");
 //                                $(".obrigatorio").remove(); //remove a imagem do asterisco de todos os campos
 
-                                $("#radioCusteio").click();
-                                liberarCadastro();
-                            });
+            $("#radioCusteio").click();
+            liberarCadastro();
+        });
 
-                            $("#patrimonio").on("click", function() {
+        $("#patrimonio").on("click", function() {
 
-                                if (!$(this).hasClass("btn-info")) {
-                                    $(this).toggleClass("btn-info");
-                                    $("#custeio").toggleClass("btn-info");
-                                }
+            if (!$(this).hasClass("btn-info")) {
+                $(this).toggleClass("btn-info");
+                $("#custeio").toggleClass("btn-info");
+            }
 
-                                $("input[id^=numeroPatrimonio]").prop("required", true);
-                                $("input[id^=numeroPatrimonio]").prop("readonly", false);
-                                $(".patrimonios").prop("hidden", false);
-                                $(".patrimonios").removeClass("hidden");
-                                $(".custeio").addClass("hidden");
-                                $(".custeio input").prop("required", false);
-                                $(".patrimonios input").prop("required", true);
-                                $("input[id^=numeroPatrimonio]").removeClass("campoErrado");
+            $("input[id^=numeroPatrimonio]").prop("required", true);
+            $("input[id^=numeroPatrimonio]").prop("readonly", false);
+            $(".patrimonios").prop("hidden", false);
+            $(".patrimonios").removeClass("hidden");
+            $(".custeio").addClass("hidden");
+            $(".custeio input").prop("required", false);
+            $(".patrimonios input").prop("required", true);
+            $("input[id^=numeroPatrimonio]").removeClass("campoErrado");
 //                                if ($(".obrigatorio").length === 0) {
 //                                    $("input[id^=numeroPatrimonio]").after("<img class=\"obrigatorio\" src=\"publico/imagens/icones/campo_obrigatorio.png\">");
 //                                }
-                                if (codigoHtml === "") {
-                                    codigoHtml = $("#linhasPatrimonios").last().html().replace("-1", "-<n>").replace("-1", "-<n>").replace("-1", "-<n>");
-                                    varrerCampos();
-                                }
+            if (codigoHtml === "") {
+                codigoHtml = $("#linhasPatrimonios").last().html().replace("-1", "-<n>").replace("-1", "-<n>").replace("-1", "-<n>");
+                varrerCampos();
+            }
 
-                                $("#radioPatrimonio").click();
-                                $("#submit").prop("disabled", true);
-                            });
+            $("#radioPatrimonio").click();
+            $("#submit").prop("disabled", true);
+        });
 
-                        });
+    });
 </script>

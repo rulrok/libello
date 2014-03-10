@@ -13,7 +13,8 @@
             <th>Equipamento</th>
             <th>Patrimônio</th>
             <th>Responsável</th>
-            <th>Local</th>
+            <th>Destino</th>
+            <th>Polo</th>
             <th>Qtd</th>
             <th>Data Saída</th>
         </tr>
@@ -25,15 +26,11 @@
             for ($i = 0; $i < sizeof($value) / 2; $i++) {
                 if ($i === 0) {
                     echo '<td hidden class="campoID">';
-                    } elseif ($i === 4 && $value[$i] == "") {
-                    continue;
-                    } elseif ($i === 5 && $value[$i] == "") {
-                    
-                } else {
+                }  else {
                     echo "<td>";
                 }
 //                echo $i == 0 ? '<td hidden class="campoID">' : '<td>';
-                echo $value[$i];
+                echo $value[$i] !== null ? $value[$i] : '';
                 echo '</td>';
             }
             echo '</tr>';

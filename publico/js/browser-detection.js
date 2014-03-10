@@ -5,7 +5,10 @@
  * Visit us at: www.devslide.com/labs
  */
 
-var notSupportedBrowsers = [{'os': 'Any', 'browser': 'MSIE', 'version': 9   }, {'os': 'Any', 'browser': 'Firefox', 'version': 23}, {'os': 'Any', 'browser': 'Chrome', 'version': 25}, {'os': 'Mac', 'browser': 'Safari', 'version': 5}, {'os': 'Any', 'browser': 'Opera', 'version': 14}];
+//  OBSERVAÇÃO: Script original modificado para corresponder as necessidades do sistema.
+//  Ao atualizar o script (se achar necessário), tomar cuidado.
+
+var notSupportedBrowsers = [{'os': 'Any', 'browser': 'MSIE', 'version': 9}, {'os': 'Any', 'browser': 'Firefox', 'version': 23}, {'os': 'Any', 'browser': 'Chrome', 'version': 25}, {'os': 'Mac', 'browser': 'Safari', 'version': 5}, {'os': 'Any', 'browser': 'Opera', 'version': 14}];
 var displayPoweredBy = false;
 var noticeLang = 'custom';
 var noticeLangCustom = {

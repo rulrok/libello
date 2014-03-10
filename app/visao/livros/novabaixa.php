@@ -1,6 +1,6 @@
 <title>Registrar baixar para livro</title>
 <!--Início da página-->
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=livros&a=registrarbaixa">
+<form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=livros&a=registrarbaixa">
     <fieldset>
         <legend>Baixa de livro</legend>
         <input hidden="true" readonly="true" type="text" class="input-small" id="livroID" name="livroID" value="<?php echo $this->livroID ?>" />
@@ -13,7 +13,7 @@
         <hr/>
         <div class="line">
             <label for="dataBaixa">Data de baixa</label>
-            <input type="text"  required id="dataBaixa" on class="campoData" name="dataBaixa" />
+            <input type="text" autofocus required id="dataBaixa" on class="campoData" name="dataBaixa" />
         </div>
         <div class="line">
             <label for="quantidade">Quantidade</label>

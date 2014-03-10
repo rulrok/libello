@@ -12,13 +12,9 @@ final class TipoEventoImagens extends Evento_Log{
     const REMOCAO_IMAGEM = 2;
     const ALTERACAO_IMAGEM = 3;
     
-    const CADASTRO_CATEGORIA = 21;
-    const REMOCAO_CATEGORIA = 22;
-    const ALTERACAO_CATEGORIA = 23;
-    
-    const CADASTRO_SUBCATEGORIA = 31;
-    const REMOCAO_SUBCATEGORIA = 32;
-    const ALTERACAO_SUBCATEGORIA = 33;
+    const CADASTRO_DESCRITOR = 21;
+    const REMOCAO_DESCRITOR = 22;
+    const ALTERACAO_DESCRITOR = 23;
     
 }
 ?>

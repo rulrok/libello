@@ -10,9 +10,9 @@
  *
  * @author Rodolfo
  */
-include APP_LOCATION . "modelo/Mensagem.php";
-require_once APP_LOCATION . "modelo/vo/Memorando.php";
-include APP_LOCATION . "visao/verificadorFormularioAjax.php";
+include APP_DIR . "modelo/Mensagem.php";
+require_once APP_DIR . "modelo/vo/Memorando.php";
+include APP_DIR . "visao/verificadorFormularioAjax.php";
 
 class verificarnovomemorando extends verificadorFormularioAjax {
 
@@ -21,23 +21,23 @@ class verificarnovomemorando extends verificadorFormularioAjax {
     public function _validar() {
         try {
 
-            $idusuario = $_SESSION['usuario']->get_id();
-            $numMemorando = $_REQUEST['i_numMemorando'];
-            $assunto = $_REQUEST['assunto'];
-            $corpo = $_REQUEST['corpo'];
-            $dia = $_REQUEST['dia'];
-            $mes = $_REQUEST['mes'];
+            $idusuario = $_SESSION['usuario']->get_idUsuario();
+            $numMemorando = filter_input(INPUT_POST, 'i_numMemorando');
+            $assunto = filter_input(INPUT_POST, 'assunto');
+            $corpo = filter_input(INPUT_POST, 'corpo');
+            $dia = filter_input(INPUT_POST, 'dia');
+            $mes = filter_input(INPUT_POST, 'mes');
             $ano = date('Y');
             $data = $dia . '/' . $mes . '/' . $ano;
-            $tipoSigla = $_REQUEST['sigla'];
-            $remetente = $_REQUEST['remetente'];
-            $cargo_remetente = $_REQUEST['cargo_remetente'];
+            $tipoSigla = filter_input(INPUT_POST, 'sigla');
+            $remetente = filter_input(INPUT_POST, 'remetente');
+            $cargo_remetente = filter_input(INPUT_POST, 'cargo_remetente');
 
 
 
 
-            $tratamento = $_REQUEST['tratamento'];
-            $cargo_destino = $_REQUEST['cargo_destino'];
+            $tratamento = filter_input(INPUT_POST, 'tratamento');
+            $cargo_destino = filter_input(INPUT_POST, 'cargo_destino');
 
             $documento = new Memorando();
             $documento->setAssunto($assunto);
@@ -58,16 +58,17 @@ class verificarnovomemorando extends verificadorFormularioAjax {
             $documento->setEstadoEdicao($estadoEdicao);
             $documento->setNumMemorando($numMemorando);
 
-            $id = documentoDAO::inserirMemorando($documento);
+            $documentoDAO = new documentoDAO();
+            $documentoDAO->inserirMemorando($documento);
+//            $id = $documentoDAO->obterUltimoIdInserido();
             if ($numMemorando != -1) {
-
-                $this->mensagem->set_mensagem("Memorando gerado com sucesso!")->set_status(Mensagem::SUCESSO);
+                $this->mensagemSucesso("Memorando gerado com sucesso!");
             } else {
-                $this->mensagem->set_mensagem("Memorando salvo com sucesso!")->set_status(Mensagem::SUCESSO);
+                $this->mensagemSucesso("Memorando salvo com sucesso!");
             }
-            $this->mensagem->id = fnEncrypt($id);
+//            $this->mensagem->id = fnEncrypt($id);
         } catch (Exception $e) {
-            $this->mensagem->set_mensagem($e->getMessage())->set_status(Mensagem::ERRO);
+            $this->mensagemErro($e->getMessage());
         }
     }
 

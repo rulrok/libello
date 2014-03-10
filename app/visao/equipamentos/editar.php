@@ -1,12 +1,12 @@
 <title>Editando equipamento</title>
 <!--Início da página-->
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=equipamentos&a=verificaredicao">
+<form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=equipamentos&a=verificaredicao">
     <fieldset>
         <legend>Alterar dados do equipamento</legend>
         <input hidden="true" readonly="true" type="text" class="input-small" id="equipamentoID" name="equipamentoID" value="<?php echo $this->equipamentoID ?>" />
         <span class="line">
             <label>Equipamento</label>
-            <input required type="text" class="input-xlarge" id="equipamento" name="equipamento" value="<?php echo $this->equipamento ?>" />
+            <input required autofocus type="text" class="input-xlarge" id="equipamento" name="equipamento" value="<?php echo $this->equipamento ?>" />
         </span>
         <div class="line">
             <label for="descricao">Descrições</label>

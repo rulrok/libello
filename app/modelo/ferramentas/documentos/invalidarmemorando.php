@@ -1,13 +1,13 @@
 <?php
 
-require_once APP_LOCATION . "modelo/Mensagem.php";
+require_once APP_DIR . "modelo/Mensagem.php";
 
  $id = fnDecrypt($_REQUEST['i_idmemorando']);
 $mensagem = new Mensagem();
-if (documentoDAO::invalidarMemorando($id)) {
-    $mensagem->set_mensagem("Memorando invalidado com sucesso.")->set_status(Mensagem::SUCESSO);
+if ((new documentoDAO())->invalidarMemorando($id)) {
+    $mensagem->set_mensagemSucesso("Memorando invalidado com sucesso.");
 } else {
-    $mensagem->set_mensagem("Erro ao excluir")->set_status(Mensagem::ERRO);
+    $mensagem->set_mensagemErro("Erro ao excluir");
 }
 echo json_encode($mensagem);
 ?>

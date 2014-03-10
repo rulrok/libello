@@ -1,17 +1,18 @@
 <?php
 
 require_once '../configuracoes.php';
-require_once APP_LOCATION . "modelo/dao/usuarioDAO.php";
+require_once APP_DIR . "modelo/dao/usuarioDAO.php";
+require_once BIBLIOTECA_DIR . 'seguranca/criptografia.php';
 
-if (isset($_POST['email']) && $_POST['email'] != NULL && $_POST['email'] != "") :
-    $email = $_POST['email'];
-    $usuario = usuarioDAO::recuperarUsuario($email);
-    if ($usuario != NULL) :
-        $id = $usuario->get_id();
-        usuarioDAO::gerarTolkenRecuperarSenha($email);
-        $tolken = usuarioDAO::consultarTolkenRecuperarSenha($id);
+if (filter_has_var(INPUT_POST, 'email') && filter_input(INPUT_POST, 'email') != NULL && filter_input(INPUT_POST, 'email') != "") :
+    $email = filter_input(INPUT_POST, 'email');
+    $usuarioDAO = new usuarioDAO();
+    $usuario = $usuarioDAO->recuperarUsuario($email);
+    if ($usuario !== null) :
+        $id = $usuario->get_idUsuario();
+        $usuarioDAO->gerarTolkenRecuperarSenha($email);
+        $tolken = $usuarioDAO->consultarTolkenRecuperarSenha($id);
 
-//            $destinatario = "Reuel <rulrok@gmail.com>";
         $link = WEB_SERVER_ADDRESS . "lembrarSenha.php?tolken=" . $tolken;
         $assunto = "Alteração de senha";
         $mensagem = "<p>Você está recebendo esse e-mail pois fez uma solicitação de recuperação da sua senha. Clique no link abaixo para redefinir a sua senha:</p><br/>";
@@ -22,8 +23,8 @@ if (isset($_POST['email']) && $_POST['email'] != NULL && $_POST['email'] != "") 
 
 
         //SMTP needs accurate times, and the PHP time zone MUST be set
-//This should be done in your php.ini, but this is how to do it if you don't have access to that
-        date_default_timezone_set('America/Sao_Paulo');
+        //This should be done in your php.ini, but this is how to do it if you don't have access to that
+        date_default_timezone_set(APP_TIME_ZONE);
 
         require BIBLIOTECA_DIR . 'PHPMailer/class.phpmailer.php';
 
@@ -53,17 +54,18 @@ if (isset($_POST['email']) && $_POST['email'] != NULL && $_POST['email'] != "") 
         echo "<p>Verifique se seu email está correto!</p>";
 
     endif;
-elseif (isset($_POST['novaSenha']) && $_POST['novaSenha'] != NULL && $_POST['novaSenha'] != ""):
-    $tolken = $_POST['tolken'];
-    $novaSenha = $_POST['novaSenha'];
+elseif (filter_has_var(INPUT_POST, 'novaSenha') && filter_input(INPUT_POST, 'novaSenha') != NULL && filter_input(INPUT_POST, 'novaSenha') != ""):
+    $tolken = filter_input(INPUT_POST, 'tolken');
+    $novaSenha = filter_input(INPUT_POST, 'novaSenha');
 
     try {
-        $idUsuario = usuarioDAO::consultarIDUsuario_RecuperarSenha($tolken);
-        $email = usuarioDAO::descobrirEmail($idUsuario);
+        $usuarioDAO = new usuarioDAO();
+        $idUsuario = $usuarioDAO->consultarIDUsuario_RecuperarSenha($tolken);
+        $email = $usuarioDAO->descobrirEmail($idUsuario);
         $usuario = new Usuario();
-        $usuario->set_senha(md5($novaSenha));
-        usuarioDAO::atualizar($email, $usuario);
-        usuarioDAO::removerTolken($tolken);
+        $usuario->set_senha(encriptarSenha($novaSenha));
+        $usuarioDAO->atualizar($email, $usuario);
+        $usuarioDAO->removerTolken($tolken);
 
         echo "<p>Senha alterada com sucesso!</p>";
     } catch (Exception $e) {

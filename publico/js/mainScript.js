@@ -373,7 +373,7 @@ function carregarPagina(link) {
     if (menu === "inicial" || menu === undefined) {
         menu = "home";
     }
-    var ferramentaAtual = $(".actualTool").attr("id");
+    var ferramentaAtual = $(".actualTool").prop("id");
     try {
         if (ferramentaAtual.lastIndexOf(menu) === -1) {
             $(".actualTool").removeClass("actualTool");
@@ -435,14 +435,14 @@ function ajax(link, place, hidePop, async, ignorePageChanges) {
     var request = $.ajax({
         url: link,
         async: async,
-        timeout: 5000, //Espera no máximo 5 segundos,
+        timeout: 10000, //Espera no máximo 10 segundos,
         beforeSend: function() {
 //            if (place !== null) {
             setTimeout(function() {
                 if (!paginaCompleta) {
                     exibirShader();
                 }
-            }, "500");
+            }, "1500");
 //            }
         },
         complete: function() {
@@ -468,21 +468,24 @@ function ajax(link, place, hidePop, async, ignorePageChanges) {
         document.paginaAlterada = false;
         if (place !== null) {
             $(place).empty();
-            var tituloProprio = data.lastIndexOf("<title>");
+            var patt = new RegExp("<title>.*?</title>.*?");
+//            window.alert(data);
+//            var tituloProprio = data.lastIndexOf("<title>");
 
             //Trata páginas com títulos personalizados
-            if (tituloProprio !== -1) {
-                var fimTitulo = data.lastIndexOf("</title>");
-                var titulo = data.substr(tituloProprio + 7, fimTitulo);
-                mudarTitulo(titulo);
-                data = data.replace("<title>", "");
-                data = data.replace(titulo, "");
-                data = data.replace("</title>", "");
-            } else {
-                //Volta o título para o padrão
-                mudarTitulo();
+            if (data !== undefined && data !== null) {
+                if (patt.test(data)) {
+                    var titulo = patt.exec(data)[0];
+                    data = data.replace(titulo, "");
+                    titulo = titulo.replace("<title>", "");
+                    titulo = titulo.replace("</title>", "");
+                    mudarTitulo(titulo);
+                } else {
+                    //Volta o título para o padrão
+                    mudarTitulo();
+                }
+                $(place).append(data);
             }
-            $(place).append(data);
         }
 //        //Caso o conteúdo seja carregado no popup com fundo cinza
 //        if (place == ".shaderFrameContentWrap") {
@@ -981,3 +984,12 @@ function extrairJSON(string) {
     }
     return json;
 }
+
+jQuery.fn.center = function() {
+    this.css("position", "absolute");
+    this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
+            $(window).scrollTop()) + "px");
+    this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
+            $(window).scrollLeft()) + "px");
+    return this;
+};

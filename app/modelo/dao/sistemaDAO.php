@@ -1,22 +1,19 @@
 <?php
 
 require_once 'abstractDAO.php';
-require_once __DIR__ . '/../enumeracao/TipoEventoSistema.php';
+require_once APP_DIR . 'modelo/enumeracao/TipoEventoSistema.php';
+require_once APP_DIR . 'modelo/Utils.php';
 
 class sistemaDAO extends abstractDAO {
 
-    public static function registrarAccesso($idUsuario) {
-        $quote = "\"";
-        $sql = "INSERT INTO usuarios_logs(data,hora,idUsuario) VALUES (<data>,<hora>,<idUsuario>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        $sql = str_replace("<idUsuario>", $idUsuario, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
+    public function registrarAccesso($idUsuario) {
+        $sql = "INSERT INTO usuarios_logs(data,hora,idUsuario) VALUES (:d, :h, :idU)";
+        $params = array(
+            ':idU' => [$idUsuario, PDO::PARAM_INT]
+            , ':d' => [obterDataAtual(), PDO::PARAM_STR]
+            , ':h' => [obterHoraAtual(), PDO::PARAM_STR]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
 // <editor-fold defaultstate="collapsed" desc="Registro de atividade para ferramenta de usuários">
@@ -27,20 +24,17 @@ class sistemaDAO extends abstractDAO {
      * @param type $idUsuarioFonte Usuário que está cadastrando
      * @param type $idUsuarioAlvo Usuário que está sendo cadastrado
      */
-    public static function registrarCadastroUsuario($idUsuarioFonte, $idUsuarioAlvo) {
-        $quote = "\"";
+    public function registrarCadastroUsuario($idUsuarioFonte, $idUsuarioAlvo) {
         $tipo = TipoEventoSistema::CADASTRO_USUARIO;
-        $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES ";
-        $sql .= " ($idUsuarioFonte,$idUsuarioAlvo,$tipo,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
+        $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES (:idUF, :idUA, :t, :d, :h)";
+        $params = array(
+            ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
+            , ':idUA' => [$idUsuarioAlvo, PDO::PARAM_INT]
+            , ':t' => [$tipo, PDO::PARAM_INT]
+            , ':d' => [obterDataAtual(), PDO::PARAM_STR]
+            , ':h' => [obterHoraAtual(), PDO::PARAM_STR]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
     /**
@@ -49,55 +43,42 @@ class sistemaDAO extends abstractDAO {
      * @param type $idUsuarioAlvo Usuário que está sendo editado.
      * @return boolean True em caso de sucesso, False em caso contrário.
      */
-    public static function registrarDesativacaoUsuario($idUsuarioFonte, $idUsuarioAlvo) {
-        $quote = "\"";
+    public function registrarDesativacaoUsuario($idUsuarioFonte, $idUsuarioAlvo) {
         $tipo = TipoEventoSistema::REMOCAO_USUARIO;
-        $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES ";
-        $sql .= " ($idUsuarioFonte,$idUsuarioAlvo,$tipo,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
+        $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES (:idUF, :idUA,:t, :d, :h)";
+        $params = array(
+            ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
+            , ':idUA' => [$idUsuarioAlvo, PDO::PARAM_INT]
+            , ':t' => [$tipo, PDO::PARAM_INT]
+            , ':d' => [obterDataAtual(), PDO::PARAM_STR]
+            , ':h' => [obterHoraAtual(), PDO::PARAM_STR]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
-    public static function registrarExclusaoCurso($idUsuarioFonte) {
-        $quote = "\"";
+    public function registrarExclusaoCurso($idUsuarioFonte) {
         $tipo = TipoEventoSistema::REMOCAO_CURSO;
-        $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES ";
-        $sql .= " ($idUsuarioFonte,NULL,$tipo,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
+        $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES (:idUF, NULL, :t,:d, :h)";
+        $params = array(
+            ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
+            , ':t' => [$tipo, PDO::PARAM_INT]
+            , ':d' => [obterDataAtual(), PDO::PARAM_STR]
+            , ':h' => [obterHoraAtual(), PDO::PARAM_STR]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
-    public static function registrarExclusaoPolo($idUsuarioFonte) {
-        $quote = "\"";
+    public function registrarExclusaoPolo($idUsuarioFonte) {
         $tipo = TipoEventoSistema::REMOCAO_POLO;
-        $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES ";
-        $sql .= " ($idUsuarioFonte,NULL,$tipo,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
+        $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES (:idUF, NULL, :t, :d, :h)";
+        $params = array(
+            ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
+            , ':t' => [$tipo, PDO::PARAM_INT]
+            , ':d' => [obterDataAtual(), PDO::PARAM_STR]
+            , ':h' => [obterHoraAtual(), PDO::PARAM_STR]
+        );
+        return $this->executarQuery($sql, $params);
     }
-
-
 
     /**
      * Registra um evento de alteração de um usuário do sistema.
@@ -105,20 +86,17 @@ class sistemaDAO extends abstractDAO {
      * @param type $idUsuarioAlvo Usuário que está sendo editado.
      * @return boolean True em caso de sucesso, False em caso contrário.
      */
-    public static function registrarAlteracaoUsuario($idUsuarioFonte, $idUsuarioAlvo) {
-        $quote = "\"";
+    public function registrarAlteracaoUsuario($idUsuarioFonte, $idUsuarioAlvo) {
         $tipo = TipoEventoSistema::ALTERACAO_USUARIO;
-        $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES ";
-        $sql .= " ($idUsuarioFonte,$idUsuarioAlvo,$tipo,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
+        $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES (:idUF,:idUA,:t,:d,:h)";
+        $params = array(
+            ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
+            , ':idUA' => [$idUsuarioAlvo, PDO::PARAM_INT]
+            , ':t' => [$tipo, PDO::PARAM_INT]
+            , ':d' => [obterDataAtual(), PDO::PARAM_STR]
+            , ':h' => [obterHoraAtual(), PDO::PARAM_STR]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
 }

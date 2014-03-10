@@ -5,8 +5,22 @@ require_once BIBLIOTECA_DIR . 'seguranca/seguranca.php';
 
 class Mvc {
 
+    /**
+     *
+     * @var string Nome do controlador
+     */
     protected $controlador;
+
+    /**
+     *
+     * @var string Nome da ação
+     */
     protected $acao;
+
+    /**
+     *
+     * @var \MVC Singleton
+     */
     private static $instancia;
 
     /**
@@ -61,49 +75,49 @@ class Mvc {
 //        BIBLIOTECA_DIR . 'seguranca/seguranca.php' . autenticaUsuario($usuario);
 
 
-        if (sessaoIniciada()) {
-            //pega o modulo, controlador e acao
-            $controlador = isset($_GET['c']) ? $_GET['c'] : 'inicial';
-            $acao = isset($_GET['a']) ? $_GET['a'] : 'inicial';
-
-            //padronizacao de nomes
-            $this->controlador = ucfirst(strtolower($controlador));
-            $this->acao = ucfirst(strtolower($acao));
-
-            $nomeClasseControlador = 'Controlador' . $this->controlador;
-            $nomeAcao = 'acao' . $this->acao;
-
-            try {
-                //verifica se a classe existe
-                if (class_exists($nomeClasseControlador)) {
-                    $controladorObjeto = new $nomeClasseControlador;
-
-                    //verifica se o metodo existe
-                    if (method_exists($controladorObjeto, $nomeAcao)) {
-//                        if (usuarioAutorizado(obterUsuarioSessao(), $controladorObjeto, $nomeAcao)) {
-                            $controladorObjeto->$nomeAcao();
-                            return true;
-//                        } else {
-//                            //Carrega uma página de acesso proibido
-//                            $controladorObjeto = new ControladorInicial();
-//                            $this->controlador = "Inicial";
-//                            $this->acao = "acessoProibido";
-//                            $controladorObjeto->acaoAcessoProibido();
-//                            return true;
-//                        }
-                    } else {
-                        throw new Exception('Acao nao existente.');
-                    }
-                } else {
-                    throw new Exception('Controlador nao existente.');
-                }
-            } catch (Exception $e) {
-                $_GET['c'] = "Inicial";
-                $_GET['a'] = "404";
-                $this->rodar();
-            }
-        } else {
+        if (!sessaoIniciada()) {
             expulsaVisitante("Você precisa estar autenticado para realizar essa operação");
+        }
+        //pega o modulo, controlador e acao
+        $controlador = filter_has_var(INPUT_GET, 'c') ? filter_input(INPUT_GET, 'c') : 'inicial';
+        $acao = filter_has_var(INPUT_GET, 'a') ? filter_input(INPUT_GET, 'a') : 'inicial';
+
+        //padronizacao de nomes
+        $this->controlador = ucfirst(strtolower($controlador));
+        $this->acao = ucfirst(strtolower($acao));
+
+        $nomeClasseControlador = 'Controlador' . $this->controlador;
+        $nomeAcao = 'acao' . $this->acao;
+
+        try {
+            //verifica se a classe existe
+            if (!class_exists($nomeClasseControlador)) {
+                throw new Exception('Controlador nao existente.');
+            }
+            $controladorObjeto = new $nomeClasseControlador;
+
+            //verifica se o metodo existe
+            if (!method_exists($controladorObjeto, $nomeAcao)) {
+                throw new Exception('Acao nao existente.');
+            }
+//            if (usuarioAutorizado(obterUsuarioSessao(), $controladorObjeto, $nomeAcao)) {
+            $controladorObjeto->$nomeAcao();
+            return true;
+//            } else {
+//                //Carrega uma página de acesso proibido
+//                $controladorObjeto = new ControladorInicial();
+//                $this->controlador = "Inicial";
+//                $this->acao = "acessoProibido";
+//                $controladorObjeto->acaoAcessoProibido();
+//                return true;
+//            }
+        } catch (Exception $e) {
+            print_r($e);
+
+            $_GET['c'] = "Inicial";
+            $_GET['a'] = "404";
+            //TODO Verificar se isso não pode gerar uma recursão sem fim!
+            $this->rodar();
         }
     }
 

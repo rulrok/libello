@@ -3,7 +3,7 @@
     <thead>
         <tr>
             <th>Livro</th>
-            <th>Gráfica</th>
+            <th>Polo</th>
             <th>Área</th>
             <th>Qtd</th>
             <th>Data da baixa</th>

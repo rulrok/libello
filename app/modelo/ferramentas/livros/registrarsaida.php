@@ -1,39 +1,41 @@
 <?php
 
-include_once APP_LOCATION . "modelo/Mensagem.php";
-include_once APP_LOCATION . "visao/verificadorFormularioAjax.php";
+include_once APP_DIR . "modelo/Mensagem.php";
+include_once APP_DIR . "visao/verificadorFormularioAjax.php";
 
 class registrarSaida extends verificadorFormularioAjax {
 
     public function _validar() {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') :
-            $_SERVER['REQUEST_METHOD'] = null;
-            $livroID = fnDecrypt($_POST['livroID']);
-            $dataSaida = $_POST['dataSaida'];
-            if (!isset($_POST['destinoManual'])) {
-                $destino = fnDecrypt($_POST['polo']);
-                $destinoAlternativo = "NULL";
-            } else {
-                $destino = "NULL";
-                $destinoAlternativo = $_POST['destinoManual'];
-            }
-            $quantidade = (int) $_POST['quantidade'];
-            $responsavel = fnDecrypt($_POST['responsavel']);
+        $livroID = fnDecrypt(filter_input(INPUT_POST, 'livroID'));
+        $dataSaida = filter_input(INPUT_POST, 'dataSaida');
+        if (!filter_has_var(INPUT_POST, 'destinoManual')) {
+            $destino = fnDecrypt(filter_input(INPUT_POST, 'polo'));
+            $destinoAlternativo = null;
+        } else {
+            $destino = null;
+            $destinoAlternativo = filter_input(INPUT_POST, 'destinoManualF');
+        }
+        $quantidade = filter_input(INPUT_POST, 'quantidade', FILTER_VALIDATE_INT);
+        $responsavel = fnDecrypt(filter_input(INPUT_POST, 'responsavel'));
 
 
-            if ($livroID >= 0 && $dataSaida !== "" && (($destino != "NULL" && $destino != "" && $destinoAlternativo === "NULL") || ($destino === "NULL" && $destinoAlternativo !== "")) && $quantidade > 0 && $responsavel >= 0) {
-                if (livroDAO::cadastrarSaida($livroID, $responsavel, $destino, $destinoAlternativo, $quantidade, $dataSaida)) {
-                    $this->mensagem->set_mensagem("Saída registrada");
-                    $this->mensagem->set_status(Mensagem::SUCESSO);
-                } else {
-                    $this->mensagem->set_mensagem("Erro ao cadastrar no banco");
-                    $this->mensagem->set_status(Mensagem::ERRO);
-                }
-            } else {
-                $this->mensagem->set_mensagem("Dados inválidos");
-                $this->mensagem->set_status(Mensagem::ERRO);
-            }
-        endif;
+        if ($dataSaida == "") {
+            $this->mensagemErro("Data de saída inválida");
+        }
+        if (($destino == null || $destino == "" || $destinoAlternativo !== null) && ($destino !== null || $destinoAlternativo === "")) {
+            $this->mensagemErro("Destino inválido");
+        }
+        if ($quantidade <= 0) {
+            $this->mensagemErro("Quantidade informada inválida");
+        }
+        $livroDAO = new livroDAO();
+        if ($livroDAO->cadastrarSaida($livroID, $responsavel, $destino, $destinoAlternativo, $quantidade, $dataSaida)) {
+            $id = $livroDAO->obterUltimoIdInserido();
+            $livroDAO->registrarCadastroSaida($id);
+            $this->mensagemSucesso("Saída registrada");
+        } else {
+            $this->mensagemErro("Erro ao cadastrar no banco");
+        }
     }
 
 }

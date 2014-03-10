@@ -1,6 +1,6 @@
 <title>Registrar nova saída de livro</title>
 <!--Início da página-->
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=livros&a=registrarsaida">
+<form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=livros&a=registrarsaida">
     <fieldset>
         <legend>Saída de livro</legend>
         <input hidden="true" readonly="true" type="text" class="input-small" id="livroID" name="livroID" value="<?php echo $this->livroID ?>" />
@@ -11,7 +11,7 @@
         <hr/>
         <div class="line">
             <label for="dataSaida">Data de saída</label>
-            <input type="text"  required id="dataSaida" on class="campoData" name="dataSaida" />
+            <input type="text" autofocus required id="dataSaida" on class="campoData" name="dataSaida" />
         </div>
         <div class="line">
             <label for="polo">Polo de Destino</label>

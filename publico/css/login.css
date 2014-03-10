@@ -100,7 +100,7 @@ float: right;
 }
 
 /* Div que apresentará logotipo da Unifal */
-#unifal{
+#logo_esquerda_paginas_iniciais{
     display: block;
     background: url('../imagens/unifal.png') no-repeat;
     width: 105px;
@@ -111,7 +111,7 @@ float: right;
 }
 
 /* Div que apresentará logotipo do CEAD */
-#cead{
+#logo_direita_paginas_iniciais{
     display: block;
     background: url('../imagens/ceadMini.png') no-repeat;
     width: 146px;

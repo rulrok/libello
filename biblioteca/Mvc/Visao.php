@@ -10,7 +10,7 @@ class Visao {
         if (isset($this->acessoMinimo)) {
             //Caso haja algum nível mínimo de acesso, verifica se o atual usuário logado pode realizar tal operação
             if (!usuarioAutorizado(obterUsuarioSessao(), $this->acessoMinimo)) {
-                require APP_LOCATION . "visao/acessoproibido.php";
+                require APP_DIR . "visao/acessoproibido.php";
                 die("Não autorizado");
             }
         }
@@ -25,7 +25,7 @@ class Visao {
         }
 
         if (!$encontrou) {
-            require APP_LOCATION . "visao/paginaConstrucao.php";
+            require APP_DIR . "visao/paginaConstrucao.php";
         }
     }
 

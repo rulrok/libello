@@ -9,7 +9,7 @@ function varrerCampos() {
     if (camposObrigatorios.length > 0) {
         $(camposObrigatorios).each(function() {
 
-            $(this).after("<img src=\"publico/imagens/icones/campo_obrigatorio.png\">");
+            $(this).after('<img class="imagemCampoObrigatorio" src="publico/imagens/icones/campo_obrigatorio.png" alt="Campo obrigatório">');
             $(this).addClass("campoVarrido");
 //            $(this).bind('keyup', liberarCadastro);
             var tempoDigitando;                //timer identifier
@@ -187,7 +187,6 @@ function liberarCadastro() {
 
         //window.alert("Vai testar: " + campos[i].value+"\nPattern: "+patter);
 //        if (nome != "combobox") {
-//        console.log(campos[i].value)
         if (campos[i].value != "" && campos[i].value != "default") {
             todosEmBranco = false;
         }
@@ -198,6 +197,7 @@ function liberarCadastro() {
 //        }
 
         if (!patter.test(campos[i].value)) {
+//            console.log(campos[i])
             tudoCerto = false;
             $(campos[i]).addClass("campoErrado");
 //            break;
@@ -223,8 +223,8 @@ function validarCPF(cpf) {
     cpf = cpf.replace(/[^\d]+/g, '');
     if (cpf == '')
         return false; // Elimina CPFs invalidos conhecidos
-    if (cpf.length != 11 || cpf == "00000000000" || cpf == "11111111111" || cpf == "22222222222" || cpf == "33333333333" || cpf == "44444444444" || cpf == "55555555555" || cpf == "66666666666" || cpf == "77777777777" || cpf == "88888888888" || cpf == "99999999999")
-        return false; // Valida 1o digito 
+//    if (cpf.length != 11 || cpf == "00000000000" || cpf == "11111111111" || cpf == "22222222222" || cpf == "33333333333" || cpf == "44444444444" || cpf == "55555555555" || cpf == "66666666666" || cpf == "77777777777" || cpf == "88888888888" || cpf == "99999999999")
+//        return false; // Valida 1o digito 
     add = 0;
     for (i = 0; i < 9; i ++)
         add += parseInt(cpf.charAt(i)) * (10 - i);

@@ -1,6 +1,6 @@
 <title>Registrar retorno de livro</title>
 <!--Início da página-->
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=livros&a=registrarretorno">
+<form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=livros&a=registrarretorno">
     <fieldset>
         <legend>Retorno de livro</legend>
         <input hidden="true" readonly="true" type="text" class="input-small" id="saidaID" name="saidaID" value="<?php echo $this->saidaID ?>" />
@@ -13,7 +13,7 @@
         <hr/>
         <div class="line">
             <label for="dataRetorno">Data de retorno</label>
-            <input type="text"  required id="dataRetorno" on class="campoData" name="dataRetorno" />
+            <input type="text" autofocus required id="dataRetorno" on class="campoData" name="dataRetorno" />
         </div>
         <div class="line">
             <label for="observacoes">Observações</label>

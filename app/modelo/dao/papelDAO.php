@@ -4,20 +4,16 @@ require_once 'abstractDAO.php';
 
 class papelDAO extends abstractDAO {
 
-    public static function obterNomePapel($papelID) {
-        $papelID = (int) $papelID;
-        $sql = "SELECT nome FROM papel WHERE idpapel = " . $papelID;
-        try {
-            $resultado = parent::getConexao()->query($sql)->fetch();
-        } catch (Exception $e) {
-            echo $e;
-        }
-        return $resultado[0];
+    public function obterNomePapel($papelID) {
+        $sql = "SELECT nome FROM papel WHERE idpapel = :idPapel";
+        $params = array(':idPapel' => array((int) $papelID, PDO::PARAM_INT));
+
+        return $this->executarSelect($sql, $params, false);
     }
 
-    public static function obterIdPapel($nomePapel) {
-        
-        $sql = "SELECT idPapel FROM papel WHERE nome = '" . $nomePapel."'";
+    public function obterIdPapel($nomePapel) {
+
+        $sql = "SELECT idPapel FROM papel WHERE nome = '" . $nomePapel . "'";
         try {
             $resultado = parent::getConexao()->query($sql)->fetch();
         } catch (Exception $e) {

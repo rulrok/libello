@@ -1,42 +1,46 @@
 <?php
 
-include_once APP_LOCATION . "modelo/Mensagem.php";
-include_once APP_LOCATION . "visao/verificadorFormularioAjax.php";
+include_once APP_DIR . "modelo/Mensagem.php";
+include_once APP_DIR . "visao/verificadorFormularioAjax.php";
 
 class registrarSaida extends verificadorFormularioAjax {
 
     public function _validar() {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') :
-            $_SERVER['REQUEST_METHOD'] = null;
-            $saidaID = fnDecrypt($_POST['saidaID']);
-            $equipamentoID = fnDecrypt($_POST['equipamentoID']);
-            $dataRetorno = $_POST['dataRetorno'];
-            $observacoes = $_POST['observacoes'];
-            $quantidade = (int) $_POST['quantidade'];
-            $quantidadeMaxima = (int) $_POST['quantidadeMaxima'];
+        $saidaID = fnDecrypt(filter_input(INPUT_POST, 'saidaID'));
+        //TODO verificar pq esse campo
+        $equipamentoID = fnDecrypt(filter_input(INPUT_POST, 'equipamentoID'));
+        $dataRetorno = filter_input(INPUT_POST, 'dataRetorno');
+        $observacoes = filter_input(INPUT_POST, 'observacoes');
+        $quantidade = filter_input(INPUT_POST, 'quantidade', FILTER_VALIDATE_INT);
+        $quantidadeMaxima = filter_input(INPUT_POST, 'quantidadeMaxima', FILTER_VALIDATE_INT);
 
 
+        if ($dataRetorno == '') {
+            $this->mensagemErro("Data é um campo obrigatório");
+        }
 
-            if ($equipamentoID >= 0 && $dataRetorno !== "" && $quantidade > 0 && $quantidade <= $quantidadeMaxima) {
-                $recuperarSaidaEquipamento = equipamentoDAO::recuperarSaidaEquipamento($saidaID);
-                if ($recuperarSaidaEquipamento['quantidadeSaida'] == $quantidadeMaxima) {
-                    if (equipamentoDAO::cadastrarRetorno($saidaID, $dataRetorno, $quantidade, $observacoes)) {
-                        if ($quantidade > 1) {
-                            $this->mensagem->set_mensagem("Equipamentos retornados");
-                        } else {
-                            $this->mensagem->set_mensagem("Equipamento retornado");
-                        }
-                        $this->mensagem->set_status(Mensagem::SUCESSO);
-                    } else {
-                        $this->mensagem->set_mensagem("Erro ao cadastrar no banco")->set_status(Mensagem::ERRO);
-                    }
-                } else {
-                    $this->mensagem->set_mensagem("Violação de dados")->set_status(Mensagem::ERRO);
-                }
+        if ($quantidade <= 0 || $quantidade > $quantidadeMaxima) {
+            $this->mensagemErro("Quantidade inválida");
+        }
+
+
+        $equipamentoDAO = new equipamentoDAO();
+        $recuperarSaidaEquipamento = $equipamentoDAO->recuperarSaidaEquipamento($saidaID);
+        if ($recuperarSaidaEquipamento['quantidadeSaida'] != $quantidadeMaxima) {
+            $this->mensagemErro("Dados inconsistentes");
+        }
+
+        if ($equipamentoDAO->cadastrarRetorno($saidaID, $dataRetorno, $quantidade, $observacoes)) {
+            if ($quantidade > 1) {
+                $this->mensagemSucesso("Equipamentos retornados");
             } else {
-                $this->mensagem->set_mensagem("Dados inválidos")->set_status(Mensagem::ERRO);
+                $this->mensagemSucesso("Equipamento retornado");
             }
-        endif;
+            $id = $equipamentoDAO->obterUltimoIdInserido();
+            $equipamentoDAO->registrarRetorno($id);
+        } else {
+            $this->mensagemErro("Erro ao cadastrar no banco");
+        }
     }
 
 }

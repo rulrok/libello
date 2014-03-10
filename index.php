@@ -1,11 +1,10 @@
 <?php
 ob_start();
 //Ignora a verificação do javascript caso uma requisição ajax esteja sendo feita via AJAX
-if (!isset($_SERVER['HTTP_X_REQUESTED_WITH'])) :
-    ?>
+if (!isset($_SERVER['HTTP_X_REQUESTED_WITH'])) :    ?>
     <!DOCTYPE html>
     <noscript>
-    <meta http-equiv="refresh" content="0;url=no-js.html" />
+    <meta http-equiv="refresh" content="0;url=no-js.php" />
     </noscript>
 <?php endif; ?>
 
@@ -20,4 +19,4 @@ CarregadorAutomatico::registrar();
 //ob_start();
 Mvc::pegarInstancia()->rodar();
 //$var = ob_get_clean();
-?>
+

@@ -1,76 +1,83 @@
 <?php
 
-include APP_LOCATION . "modelo/Mensagem.php";
-require_once APP_LOCATION . "modelo/vo/Livro.php";
-include APP_LOCATION . "visao/verificadorFormularioAjax.php";
+include APP_DIR . "modelo/Mensagem.php";
+require_once APP_DIR . "modelo/vo/Livro.php";
+include APP_DIR . "visao/verificadorFormularioAjax.php";
 
 class verificarnovolivro extends verificadorFormularioAjax {
 
     public function _validar() {
-        $nomelivro = $_POST['livro'];
-        $descricao = $_POST['descricoes'];
-        $dataEntrada = $_POST['dataEntrada'];
-        $quantidade = $_POST['quantidade'];
-        $tipo = $_POST['tipo'];
-        $grafica = $_POST['grafica'];
-        $area = $_POST['area'];
-        $numeroPatrimonio;
+        $nomelivro = filter_input(INPUT_POST, 'livro');
+        $descricao = filter_input(INPUT_POST, 'descricoes');
+        $dataEntrada = filter_input(INPUT_POST, 'dataEntrada');
+        $quantidade = filter_input(INPUT_POST, 'quantidade');
+        $tipo = filter_input(INPUT_POST, 'tipo');
+        $grafica = filter_input(INPUT_POST, 'grafica');
+        $area = filter_input(INPUT_POST, 'area', FILTER_VALIDATE_INT);
 
-        //Vai validar os dados
-        try {
-            $livro = new livro();
 
-            $livro->set_nomelivro($nomelivro)->set_dataEntrada($dataEntrada)->set_descricao($descricao);
 
-            if ($tipo == "patrimonio") {
-                $quantidade = $_POST['quantidadePatrimonios'];
+        $livro = new livro();
 
-                $colecaolivros = [];
-                $aux = new livro();
-                $patrimoniosValidos = 'Patrimônios ';
-                $patrimoniosInvalidos = '';
-                for ($i = 0; $i < $quantidade; $i++) {
-                    $aux = clone $livro;
-                    $numeroPatrimonio = $_POST['numeroPatrimonio-' . ($i + 1)];
-                    /*$colecaolivros[$i] = */$aux->set_numeroPatrimonio($numeroPatrimonio)->set_quantidade(1)->set_grafica($grafica)->set_area($area);
-                    try {
-                        $id = livroDAO::cadastrarlivro($aux);
-                        livroDAO::registrarInsercaolivro($id);
-                        $patrimoniosValidos .= $numeroPatrimonio . "<br/>";
-                    } catch (Exception $e) {
-                        $patrimoniosInvalidos .= "<li>" . $numeroPatrimonio . "</li>";
-                    }
-                }
-                if ($patrimoniosInvalidos === '') {
-                    //Todos foram cadastrados com sucesso
-                    $this->mensagem->set_mensagem("Todos os patrimônios foram cadastrados com sucesso")->set_status(Mensagem::SUCESSO);
+        if ($nomelivro == "") {
+            $this->mensagemErro("Nome inválido");
+        }
+//        if ($dataEntrada == "") {
+//            $this->mensagemErro("Data de entrada inválida");
+//        }
+        if (!is_int($area)) {
+            $this->mensagemErro("Área inválida");
+        }
+        if ($grafica == "") {
+            $this->mensagemErro("Nome da gráfica inválido");
+        }
+        $livro->set_nomelivro($nomelivro)->set_dataEntrada($dataEntrada)->set_descricao($descricao)->set_area($area)->set_grafica($grafica);
+
+        $livroDAO = new livroDAO();
+        if ($tipo == "patrimonio") {
+
+            $quantidadePatrimonios = filter_input(INPUT_POST, 'quantidadePatrimonios');
+
+//                $colecaolivros = [];
+            $aux = new livro();
+            $patrimoniosValidos = 'Patrimônios ';
+            $patrimoniosInvalidos = '';
+            $numeroPatrimonio;
+            for ($i = 0; $i < $quantidadePatrimonios; $i++) {
+                $aux = clone $livro;
+                $numeroPatrimonio = filter_input(INPUT_POST, 'numeroPatrimonio-' . ($i + 1));
+                $aux->set_numeroPatrimonio($numeroPatrimonio)->set_quantidade(1);
+
+                if ($livroDAO->cadastrarlivro($aux)) {
+                    $id = $livroDAO->obterUltimoIdInserido();
+                    $livroDAO->registrarInsercaolivro($id);
+                    $patrimoniosValidos .= $numeroPatrimonio . "<br/>";
                 } else {
-                    //Alguns não puderam ser cadastrados
-                    $this->mensagem->set_mensagem("Os patrimônios:<br/><ul style=\"text-align: left;\"> " . $patrimoniosInvalidos . "</ul>não puderam ser cadastrados.<br/>Verifique se os mesmos já não foram cadastrados!")->set_status(Mensagem::INFO);
-                }
-            } else {
-                if ($quantidade > 0) {
-                    //É do tipo custeio
-                    $livro->set_quantidade($quantidade);
-                    $livro->set_numeroPatrimonio(null);
-                    $livro->set_grafica($grafica);
-                    $livro->set_area($area);
-                    //Vai tentar cadastrar
-                    try {
-                        $id = livroDAO::cadastrarlivro($livro);
-                        livroDAO::registrarInsercaolivro($id);
-                        $this->mensagem->set_mensagem("Cadastrado com sucesso.")->set_status(Mensagem::SUCESSO);
-                    } catch (Exception $e) {
-                        $this->mensagem->set_mensagem("Erro ao cadastrar no banco de dados.")->set_status(Mensagem::ERRO);
-                    }
-                } else {
-                    $this->mensagem->set_mensagem("Quantidade deve ser maior que 0");
-                    $this->mensagem->set_status(Mensagem::ERRO);
+                    $patrimoniosInvalidos .= "<li>" . $numeroPatrimonio . "</li>";
                 }
             }
-        } catch (Exception $e) {
-            //Mensagem de erro gerada pela classe livro.
-            $this->mensagem->set_mensagem($e->getMessage())->set_status(Mensagem::ERRO);
+            if ($patrimoniosInvalidos === '') {
+                //Todos foram cadastrados com sucesso
+                $this->mensagemSucesso("Todos os patrimônios foram cadastrados com sucesso");
+            } else {
+                //Alguns não puderam ser cadastrados
+                $this->mensagemAviso("Os patrimônios:<br/><ul style=\"text-align: left;\"> " . $patrimoniosInvalidos . "</ul>não puderam ser cadastrados.<br/>Verifique se os mesmos já não foram cadastrados!");
+            }
+        } else {
+            if ($quantidade <= 0) {
+                $this->mensagemErro("Quantidade deve ser maior que 0");
+            }
+            //É do tipo custeio
+            $livro->set_quantidade($quantidade);
+            $livro->set_numeroPatrimonio(null);
+            //Vai tentar cadastrar
+            if ($livroDAO->cadastrarlivro($livro)) {
+                $id = $livroDAO->obterUltimoIdInserido();
+                $livroDAO->registrarInsercaolivro($id);
+                $this->mensagemSucesso("Cadastrado com sucesso.");
+            } else {
+                $this->mensagemErro("Erro ao cadastrar no banco de dados.");
+            }
         }
     }
 

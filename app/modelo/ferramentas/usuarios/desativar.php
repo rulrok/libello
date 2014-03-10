@@ -1,14 +1,15 @@
 <?php
 
-require_once APP_LOCATION . "modelo/Mensagem.php";
+require_once APP_DIR . "modelo/Mensagem.php";
 
-$id = fnDecrypt($_GET['userID']);
-$email = usuarioDAO::descobrirEmail($id);
+$id = fnDecrypt(filter_input(INPUT_GET, 'userID'));
+$usuarioDAO = new usuarioDAO();
+$email = $usuarioDAO->descobrirEmail($id);
 $mensagem = new Mensagem();
 
-if (usuarioDAO::desativar($email)) {
-    sistemaDAO::registrarDesativacaoUsuario(obterUsuarioSessao()->get_id(), $id);
-    $mensagem->set_mensagem("Usuário desativado com sucesso.")->set_status(Mensagem::SUCESSO);
+if ($usuarioDAO->desativar($email)) {
+    (new sistemaDAO())->registrarDesativacaoUsuario(obterUsuarioSessao()->get_idUsuario(), $id);
+    $mensagem->set_mensagemSucesso("Usuário desativado com sucesso.");
 } else {
     $mensagem->set_mensagem("Erro ao concluir a operação")->set_status(Mensagem::ERRO);
 }

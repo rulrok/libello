@@ -4,35 +4,30 @@ class VerificarEdicaoCurso extends verificadorFormularioAjax {
 
     public function _validar() {
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') :
-            $_SERVER['REQUEST_METHOD'] = null;
-            $cursoID = fnDecrypt($_POST['cursoID']);
-            $nomeCurso = $_POST['nomecurso'];
-            $area = $_POST['area'];
-            $tipoCurso = $_POST['tipocurso'];
+
+        $area = filter_input(INPUT_POST, 'area');
+        $nomeCurso = filter_input(INPUT_POST, 'nomecurso');
+        $tipoCurso = filter_input(INPUT_POST, 'tipocurso');
+        $cursoID = fnDecrypt(filter_input(INPUT_POST, 'cursoID'));
 
 
-            $cursoNovo = new Curso();
-            $cursoNovo->set_nome($nomeCurso);
-            $cursoNovo->set_area($area);
-            $cursoNovo->set_tipo($tipoCurso);
+        $cursoNovo = new Curso();
+        $cursoNovo->set_nome($nomeCurso);
+        $cursoNovo->set_idArea($area);
+        $cursoNovo->set_idTipo($tipoCurso);
 
-            $curso = cursoDAO::recuperarCurso($cursoID);
+        $cursoDAO = new cursoDAO();
+        $curso = $cursoDAO->recuperarCurso($cursoID);
 
-            if ($curso->get_nome() != "") {
+        if ($curso->get_nome() == "") {
+            $this->mensagemErro("Nome inconsistentes");
+        }
 
-                if (cursoDAO::atualizar($cursoID, $cursoNovo)) {
-                    $this->mensagem->set_mensagem("Atualização concluída");
-                    $this->mensagem->set_status(Mensagem::SUCESSO);
-                } else {
-                    $this->mensagem->set_mensagem("Atualização mal sucedida");
-                    $this->mensagem->set_status(Mensagem::ERRO);
-                }
-            } else {
-                $this->mensagem->set_mensagem("Dados inconsistentes");
-                $this->mensagem->set_status(Mensagem::ERRO);
-            }
-        endif;
+        if ($cursoDAO->atualizar($cursoID, $cursoNovo)) {
+            $this->mensagemSucesso("Atualização concluída");
+        } else {
+            $this->mensagemErro("Atualização mal sucedida");
+        }
     }
 
 }

@@ -1,160 +1,118 @@
 <?php
 
 require_once 'abstractDAO.php';
-require_once APP_LOCATION . "modelo/vo/Equipamento.php";
-require_once APP_LOCATION . 'modelo/enumeracao/TipoEventoEquipamento.php';
+require_once APP_DIR . "modelo/vo/Equipamento.php";
+require_once APP_DIR . 'modelo/enumeracao/TipoEventoEquipamento.php';
 
 class equipamentoDAO extends abstractDAO {
 
-    public static function cadastrarEquipamento(Equipamento $equipamento) {
+    public function cadastrarEquipamento(Equipamento $equipamento) {
         $sql = "INSERT INTO equipamento(nomeEquipamento,quantidade,descricao,dataEntrada,numeroPatrimonio) VALUES ";
-        $nome = parent::quote($equipamento->get_nomeEquipamento());
-        $quantidade = $equipamento->get_quantidade();
+        $sql .= "(:nome,:quantidade,:descricao,:dataEntrada,:numeroPatrimonio)";
 
-        $dataEntrada = $equipamento->get_dataEntrada();
-        if ($dataEntrada === "" | $dataEntrada === null) {
-            $dataEntrada = "NULL";
-        }
-        $dataEntrada = parent::quote($dataEntrada);
-
-
-        $numeroPatrimonio = parent::quote($equipamento->get_numeroPatrimonio());
-
-        $descricao = $equipamento->get_descricao();
-        if ($descricao === "" | $descricao === null) {
-            $descricao = "NULL";
-        }
-        $descricao = parent::quote($descricao);
-
-
-        $values = "($nome,$quantidade,$descricao,$dataEntrada,$numeroPatrimonio)";
-        try {
-            $stmt = parent::getConexao()->prepare($sql . $values);
-            $stmt->execute();
-            $id = parent::getConexao()->lastInsertId();
-            return $id;
-//            print_r($id);
-        } catch (Exception $e) {
-            throw new Exception("Erro");
-        }
+        $params = array(
+            ':nome' => [$equipamento->get_nomeEquipamento(), PDO::PARAM_STR]
+            , ':quantidade' => [$equipamento->get_quantidade(), PDO::PARAM_INT]
+            , ':descricao' => [$equipamento->get_descricao(), PDO::PARAM_STR]
+            , ':dataEntrada' => [$equipamento->get_dataEntrada(), PDO::PARAM_STR]
+            , ':numeroPatrimonio' => [$equipamento->get_numeroPatrimonio(), PDO::PARAM_STR]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
     /**
-     * Retorna a lista com todos os equipamentos, com base nas colunas especificadas e nas condições de seleção.
+     * Retorna a lista com todos os equipame`ntos, com base nas colunas especificadas e nas condições de seleção.
      * @param String $colunas Colunas a serem retornadas, por padrão, retorna
      * @param String $condicao A string que precede WHERE na cláusula SQL. Não é necessário escrever a palavra WHERE.
      * @return Array A tabela com o resultado da consulta.
      */
-    public static function consultar($colunas = "*", $condicao = null) {
+    public function consultar($colunas = "*", $condicao = null) {
 
         if ($condicao == null) {
             $condicao = "WHERE quantidade > 0";
         } else {
             $condicao = "WHERE " . $condicao . " AND quantidade > 0";
         }
-        $sql = "SELECT " . $colunas . " FROM equipamento " . $condicao;
-        $resultado = parent::getConexao()->query($sql)->fetchAll();
-        return $resultado;
+        $sql = "SELECT  $colunas  FROM equipamento " . $condicao;
+        return $this->executarSelect($sql);
     }
 
-    public static function recuperarEquipamento($equipamentoID) {
-        if (is_array($equipamentoID)) {
-            $equipamentoID = $equipamentoID['equipamentoID'];
+    public function recuperarEquipamento($idEquipamento) {
+        if (is_array($idEquipamento)) {
+            $idEquipamento = $idEquipamento['equipamentoID'];
         }
 
-        $sql = "SELECT * from equipamento WHERE idEquipamento ='" . $equipamentoID . "'";
-        try {
-            $stmt = parent::getConexao()->query($sql);
-            $stmt->setFetchMode(\PDO::FETCH_CLASS, 'Equipamento');
-            $saida = $stmt->fetch();
-        } catch (Exception $e) {
-            $saida = NULL;
-        }
-        return $saida;
+        $sql = "SELECT * from equipamento WHERE idEquipamento = :idEquipamento";
+        $params = array(
+            ':idEquipamento' => [$idEquipamento, PDO::PARAM_INT]
+        );
+        return $this->executarSelect($sql, $params, false, 'Equipamento');
     }
 
-    public static function recuperarSaidaEquipamento($saidaID) {
-        $saida = equipamentoDAO::consultarSaidas("*", "es.idSaida = " . $saidaID);
+    public function recuperarSaidaEquipamento($saidaID) {
+        $saida = $this->consultarSaidas("*", "es.idSaida = " . $saidaID);
         if (is_array($saida)) {
             $saida = $saida[0];
         }
         return $saida;
     }
 
-    public static function removerBaixa($baixaID) {
+    public function removerBaixa($baixaID) {
         if (is_array($baixaID)) {
-            $equipamentoID = $equipamentoID['baixaID'];
+            $idEquipamento = $idEquipamento['baixaID'];
         }
 
-        $sql = "DELETE from equipamento_baixa WHERE idBaixa = " . $baixaID;
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-//            print_r($e);
-            return false;
-        }
+        $sql = "DELETE from equipamento_baixa WHERE idBaixa = :idBaixa";
+        $params = array(
+            ':idBaixa' => [$idEquipamento, PDO::PARAM_INT]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
-    public static function removerSaida($saidaID) {
-        if (is_array($saidaID)) {
+    public function removerSaida($idSaida) {
+        if (is_array($idSaida)) {
             $equipamentoID = $equipamentoID['saidaID'];
         }
 
-        $sql = "DELETE from equipamento_saida WHERE idSaida = " . $saidaID;
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-//            print_r($e);
-            return false;
-        }
+        $sql = "DELETE from equipamento_saida WHERE idSaida = :idSaida";
+        $params = array(
+            ':idSaida' => [$idSaida, PDO::PARAM_INT]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
-    public static function consultarSaidas($colunas = "*", $condicao = null) {
+    public function consultarSaidas($colunas = "*", $condicao = null) {
 
         if ($condicao == null) {
             $condicao = "WHERE quantidadeSaida > 0";
         } else {
             $condicao = "WHERE " . $condicao . " AND quantidadeSaida > 0";
         }
-        $sql = "SELECT " . $colunas . " FROM `equipamento_saida` AS `es` JOIN `equipamento` AS `e` ON `es`.`equipamento` = `e`.idEquipamento JOIN `usuario` AS `u` ON `es`.`responsavel` = `u`.`idUsuario` LEFT JOIN `polo` AS `p` ON `es`.`poloDestino` = `p`.`idPolo` " . $condicao;
-        try {
-            $resultado = parent::getConexao()->query($sql)->fetchAll();
-        } catch (Exception $e) {
-            die($e);
-        }
-        return $resultado;
+        $sql = "SELECT $colunas FROM `equipamento_saida` AS `es` JOIN `equipamento` AS `e` ON `es`.`equipamento` = `e`.idEquipamento JOIN `usuario` AS `u` ON `es`.`responsavel` = `u`.`idUsuario` LEFT JOIN `polo` AS `p` ON `es`.`poloDestino` = `p`.`idPolo` " . $condicao;
+        return $this->executarSelect($sql);
     }
 
-    public static function consultarBaixas($colunas = "*", $condicao = null) {
+    public function consultarBaixas($colunas = "*", $condicao = null) {
 
         if ($condicao == null) {
             $condicao = "";
         } else {
             $condicao = "WHERE " . $condicao;
         }
-        $sql = "SELECT " . $colunas . " FROM `equipamento_baixa` AS `eb` JOIN `equipamento` AS `e` ON `eb`.`equipamento` = `e`.idEquipamento" . $condicao;
-        try {
-            $resultado = parent::getConexao()->query($sql)->fetchAll();
-        } catch (Exception $e) {
-            die($e);
-        }
-        return $resultado;
+        $sql = "SELECT $colunas  FROM `equipamento_baixa` AS `eb` JOIN `equipamento` AS `e` ON `eb`.`equipamento` = `e`.idEquipamento " . $condicao;
+        return $this->executarSelect($sql);
     }
 
     /**
      * Atualiza informações de um equipamento.
-     * @param int $equipamentoID Usado para localizar equipamento no banco de dados.
+     * @param int $idEquipamento Usado para localizar equipamento no banco de dados.
      * @param Curso $novosDados Objecto VO com as novas informações.
      * @return boolean
      */
-    public static function atualizar($equipamentoID, Equipamento $novosDados) {
+    public function atualizar($idEquipamento, Equipamento $novosDados) {
 
-        $equipamentoID = (int) $equipamentoID;
-        $dadosAntigos = equipamentoDAO::recuperarEquipamento($equipamentoID);
-
-        $condicao = " WHERE idEquipamento = " . $equipamentoID;
+        $idEquipamento = (int) $idEquipamento;
+        $dadosAntigos = $this->recuperarEquipamento($idEquipamento);
 
         $nome = $novosDados->get_nomeEquipamento();
         if ($nome == null) {
@@ -172,88 +130,75 @@ class equipamentoDAO extends abstractDAO {
         }
 
         $numeroPatrimonio = $novosDados->get_numeroPatrimonio();
-        if ($numeroPatrimonio !== "NULL") {
-            $numeroPatrimonio = parent::quote($numeroPatrimonio);
-        }
 
         $descricao = $novosDados->get_descricao();
-        $descricao = parent::quote($descricao);
 
-        $sql = "UPDATE equipamento SET nomeEquipamento = '" . $nome . "' ,quantidade = " . $quantidade . " ,dataEntrada = '" . $dataEntrada . "' ,numeroPatrimonio = " . $numeroPatrimonio . " ,descricao=" . $descricao;
-        $sql .= $condicao;
-        try {
-            $stmt = parent::getConexao()->prepare($sql);
-            $stmt->execute();
-            return true;
-        } catch (Exception $e) {
-            echo $e;
-            exit;
-            return false;
+        $params = array(
+            ':nome' => [$nome, PDO::PARAM_STR]
+            , ':quantidade' => [$quantidade, PDO::PARAM_INT]
+            , ':dataEntrada' => [$dataEntrada, PDO::PARAM_STR]
+            , ':numeroPatrimonio' => [$numeroPatrimonio, PDO::PARAM_STR]
+            , ':descricao' => [$descricao, PDO::PARAM_STR]
+            , ':idEquipamento' => [$idEquipamento, PDO::PARAM_INT]
+        );
+
+        $sql = "UPDATE equipamento SET nomeEquipamento = :nome ,quantidade = :quantidade ,dataEntrada = :dataEntrada ,numeroPatrimonio = :numeroPatrimonio ,descricao = :descricao WHERE idEquipamento = :idEquipamento";
+
+        return $this->executarQuery($sql, $params);
+    }
+
+    public function remover($idEquipamento) {
+        if ($idEquipamento !== null) {
+            if (is_array($idEquipamento)) {
+                $idEquipamento = $idEquipamento['equipamentoID'];
+            }
+            $idEquipamento = (int) $idEquipamento;
+            $sql = "DELETE FROM equipamento WHERE idEquipamento = :idEquipamento";
+            $params = array(
+                ':idEquipamento' => [$idEquipamento, PDO::PARAM_INT]
+            );
+            return $this->executarQuery($sql, $params);
         }
     }
 
-    public static function remover($equipamentoID) {
-        if ($equipamentoID !== null) {
-            if (is_array($equipamentoID)) {
-                $equipamentoID = $equipamentoID['equipamentoID'];
-            }
-            $equipamentoID = (int) $equipamentoID;
-            $sql = "DELETE FROM equipamento WHERE idEquipamento = " . $equipamentoID;
-            try {
-                parent::getConexao()->query($sql);
-                return true;
-            } catch (Exception $e) {
-                return false;
-            }
-        }
-    }
-
-    public static function cadastrarSaida($idEquipamento, $idResponsavel, $destino, $destinoAlternativo, $quantidade, $data = "NULL") {
-        $destino = $destino;
-        $data = parent::quote($data);
-        $destinoAlternativo = parent::quote($destinoAlternativo);
+    public function cadastrarSaida($idEquipamento, $idResponsavel, $destino, $destinoAlternativo, $quantidade, $data = null) {
         $sql = "INSERT INTO equipamento_saida(equipamento,responsavel,destino,quantidadeSaida,quantidadeSaidaOriginal,dataSaida,PoloDestino) VALUES " .
-                "($idEquipamento,$idResponsavel,$destinoAlternativo,$quantidade,$quantidade,$data,$destino)";
+                "(:idEquipamento,:idResponsavel,:destinoAlternativo,:quantidade,:quantidade,:data,:destino)";
+        $params = array(
+            ':idEquipamento' => [$idEquipamento, PDO::PARAM_INT]
+            , ':idResponsavel' => [$idResponsavel, PDO::PARAM_INT]
+            , ':destinoAlternativo' => [$destinoAlternativo, PDO::PARAM_STR]
+            , ':quantidade' => [$quantidade, PDO::PARAM_INT]
+            , ':data' => [$data, $data === null ? PDO::PARAM_NULL : PDO::PARAM_STR]
+            , ':destino' => [$destino, PDO::PARAM_STR]
+        );
 
-        try {
-            parent::getConexao()->query($sql);
-            $id = parent::getConexao()->lastInsertId();
-            equipamentoDAO::registrarCadastroSaida($id);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
+        return $this->executarQuery($sql, $params);
     }
 
-    public static function cadastrarRetorno($idSaida, $data, $quantidade, $observacoes = "NULL") {
-        $observacoes = parent::quote($observacoes);
-        $data = parent::quote($data);
+    public function cadastrarRetorno($idSaida, $data, $quantidade, $observacoes = null) {
         $sql = "INSERT INTO equipamento_retorno(saida,dataRetorno,quantidadeRetorno,observacoes) VALUES " .
-                "($idSaida,$data,$quantidade,$observacoes)";
-        try {
-            parent::getConexao()->query($sql);
-            $id = parent::getConexao()->lastInsertId();
-            equipamentoDAO::registrarRetorno($id);
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
+                "(:idSaida,:data,:quantidade,:observacoes)";
+        $params = array(
+            ':idSaida' => [$idSaida, PDO::PARAM_INT]
+            , ':data' => [$data, PDO::PARAM_STR]
+            , ':quantidade' => [$quantidade, PDO::PARAM_INT]
+            , ':observacoes' => [$observacoes, $observacoes === null ? PDO::PARAM_NULL : PDO::PARAM_STR]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
-    public static function cadastrarBaixa($idEquipamento, $dataBaixa, $quantidade, $observacoes = "NULL", $idSaida = "NULL") {
-        $observacoes = parent::quote($observacoes);
-        $dataBaixa = parent::quote($dataBaixa);
+    public function cadastrarBaixa($idEquipamento, $dataBaixa, $quantidade, $observacoes = null, $idSaida = null) {
         $sql = "INSERT INTO equipamento_baixa(equipamento,saida,dataBaixa,quantidadeBaixa,observacoes) VALUES " .
-                "($idEquipamento,$idSaida,$dataBaixa,$quantidade,$observacoes)";
-        try {
-            parent::getConexao()->query($sql);
-            $idBaixa = parent::getConexao()->lastInsertId();
-            equipamentoDAO::registrarCadastroBaixa($idBaixa);
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
+                "(:idEquipamento,:idSaida,:dataBaixa,:quantidade,:observacoes)";
+        $params = array(
+            ':idEquipamento' => [$idEquipamento, PDO::PARAM_INT]
+            , ':idSaida' => [$idSaida, $idSaida === null ? PDO::PARAM_NULL : PDO::PARAM_INT]
+            , ':dataBaixa' => [$dataBaixa, PDO::PARAM_STR]
+            , ':quantidade' => [$quantidade, PDO::PARAM_INT]
+            , ':observacoes' => [$observacoes, $observacoes === null ? PDO::PARAM_NULL : PDO::PARAM_STR]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
     /**
@@ -263,191 +208,158 @@ class equipamentoDAO extends abstractDAO {
      * consequentemente algum retorno ou baixa, ele não pode mais então ser editado.
      * @param type $idEquipamento
      */
-    public static function equipamentoPodeTerTipoAlterado($idEquipamento) {
-        try {
-            //  Verifica se tem saída
-            $sql = "SELECT count(equipamento) as qtdSaidas FROM equipamento_saida WHERE equipamento = :equipamento";
-            $stmt = parent::getConexao()->prepare($sql);
-            $stmt->bindValue(":equipamento", $idEquipamento, PDO::PARAM_INT);
-            $stmt->execute();
-            $resultado = $stmt->fetch();
-            if (is_array($resultado)) {
-                $resultado = $resultado['qtdSaidas'];
-            } else {
-                $stmt->closeCursor();
-            }
-            if ((int) $resultado > 0) {
-                return false;
-            }
-            //  Verifica se tem baixa
-            $sql = "SELECT count(equipamento) as qtdBaixas FROM equipamento_baixa WHERE equipamento = :equipamento";
-            $stmt = parent::getConexao()->prepare($sql);
-            $stmt->bindValue(":equipamento", $idEquipamento, PDO::PARAM_INT);
-            $stmt->execute();
-            $resultado = $stmt->fetch();
-            if (is_array($resultado)) {
-                $resultado = $resultado['qtdBaixas'];
-            } else {
-                $stmt->closeCursor();
-            }
-            if ((int) $resultado > 0) {
-                return false;
-            }
-            //  Verifica se tem retorno
-            $sql = "SELECT count(equipamento) as qtdSaidas FROM equipamento_saida WHERE equipamento = :equipamento";
-            $stmt = parent::getConexao()->prepare($sql);
-            $stmt->bindValue(":equipamento", $idEquipamento, PDO::PARAM_INT);
-            $stmt->execute();
-            $resultado = $stmt->fetch();
-            if (is_array($resultado)) {
-                $resultado = $resultado['qtdSaidas'];
-            } else {
-                $stmt->closeCursor();
-            }
-            if ((int) $resultado > 0) {
-                return false;
-            }
-            return true;
-        } catch (Exception $e) {
+    public function equipamentoPodeTerTipoAlterado($idEquipamento) {
+        //  Verifica se tem saída
+        $sql1 = "SELECT count(equipamento) as qtdSaidas FROM equipamento_saida WHERE equipamento = :equipamento LIMIT 1";
+        $params = array(
+            ':equipamento' => [$idEquipamento, PDO::PARAM_INT]
+        );
+        $resultado1 = $this->executarSelect($sql1, $params, false);
+        if (is_array($resultado1)) {
+            $resultado1 = $resultado1['qtdSaidas'];
+        }
+        if ((int) $resultado1 > 0) {
             return false;
         }
+        //  Verifica se tem baixa
+        $sql2 = "SELECT count(equipamento) as qtdBaixas FROM equipamento_baixa WHERE equipamento = :equipamento LIMIT 1";
+        $params2 = array(
+            ':equipamento' => [$idEquipamento, PDO::PARAM_INT]
+        );
+        $resultado2 = $this->executarSelect($sql2, $params2, false);
+        if (is_array($resultado2)) {
+            $resultado2 = $resultado2['qtdBaixas'];
+        }
+        if ((int) $resultado2 > 0) {
+            return false;
+        }
+        //  Verifica se tem retorno
+        $sql3 = "SELECT count(equipamento) as qtdSaidas FROM equipamento_saida WHERE equipamento = :equipamento LIMIT 1";
+        $params3 = array(
+            ':equipamento' => [$idEquipamento, PDO::PARAM_INT]
+        );
+        $resultado = $this->executarSelect($sql3, $params3, false);
+        if (is_array($resultado)) {
+            $resultado = $resultado['qtdSaidas'];
+        }
+        if ((int) $resultado > 0) {
+            return false;
+        }
+        return true;
     }
 
     /////////////////// REGISTRO DE EVENTOS PARA LOG ///////////////////////////
 
-    public static function registrarExclusaoEquipamento($idEquipamento) {
-        $quote = "\"";
+    public function registrarExclusaoEquipamento($idEquipamento) {
         $tipo = TipoEventoEquipamento::REMOCAO_EQUIPAMENTO;
-        $usuarioID = obterUsuarioSessao()->get_id();
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,equipamento,data,hora) VALUES ";
-        $sql .= " ($tipo,$usuarioID,$idEquipamento,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
+        $sql .= " (:tipo,:usuarioID,:idEquipamento,:data ,:hora )";
+        $params = array(
+            ':tipo' => [$tipo, PDO::PARAM_INT]
+            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
+            , ':idEquipamento' => [$idEquipamento, PDO::PARAM_INT]
+            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
+            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
-    public static function registrarInsercaoEquipamento($idEquipamento) {
-        $quote = "\"";
+    public function registrarInsercaoEquipamento($idEquipamento) {
         $tipo = TipoEventoEquipamento::CADASTRO_EQUIPAMENTO;
-        $usuarioID = obterUsuarioSessao()->get_id();
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,equipamento,data,hora) VALUES ";
-        $sql .= " ($tipo,$usuarioID,$idEquipamento,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
+        $sql .= " (:tipo,:usuarioID,:idEquipamento,:data ,:hora )";
+        $params = array(
+            ':tipo' => [$tipo, PDO::PARAM_INT]
+            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
+            , ':idEquipamento' => [$idEquipamento, PDO::PARAM_INT]
+            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
+            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
-    public static function registrarAlteracaoEquipamento($idEquipamento) {
-        $quote = "\"";
+    public function registrarAlteracaoEquipamento($idEquipamento) {
         $tipo = TipoEventoEquipamento::ALTERACAO_EQUIPAMENTO;
-        $usuarioID = obterUsuarioSessao()->get_id();
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,equipamento,data,hora) VALUES ";
-        $sql .= " ($tipo,$usuarioID,$idEquipamento,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
+        $sql .= " (:tipo,:usuarioID,:idEquipamento,:data ,:hora )";
+        $params = array(
+            ':tipo' => [$tipo, PDO::PARAM_INT]
+            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
+            , ':idEquipamento' => [$idEquipamento, PDO::PARAM_INT]
+            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
+            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
-    public static function registrarCadastroBaixa($idBaixa) {
-        $quote = "\"";
+    public function registrarCadastroBaixa($idBaixa) {
         $tipo = TipoEventoEquipamento::CADASTRO_BAIXA;
-        $usuarioID = obterUsuarioSessao()->get_id();
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,baixa,data,hora) VALUES ";
-        $sql .= " ($tipo,$usuarioID,$idBaixa,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
+        $sql .= " (:tipo,:usuarioID,:idBaixa,:data,:hora)";
+        $params = array(
+            ':tipo' => [$tipo, PDO::PARAM_INT]
+            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
+            , ':idBaixa' => [$idBaixa, PDO::PARAM_INT]
+            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
+            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
-    public static function registrarRemocaoBaixa($idBaixa) {
-        $quote = "\"";
+    public function registrarRemocaoBaixa($idBaixa) {
         $tipo = TipoEventoEquipamento::REMOCAO_BAIXA;
-        $usuarioID = obterUsuarioSessao()->get_id();
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,baixa,data,hora) VALUES ";
-        $sql .= " ($tipo,$usuarioID,$idBaixa,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
+        $sql .= " (:tipo,:usuarioID,:idBaixa,:data,:hora)";
+        $params = array(
+            ':tipo' => [$tipo, PDO::PARAM_INT]
+            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
+            , ':idBaixa' => [$idBaixa, PDO::PARAM_INT]
+            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
+            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+        );
+        return $this->executarQuery($sql, $params);
     }
-    
-    public static function registrarCadastroSaida($idSaida) {
-        $quote = "\"";
+
+    public function registrarCadastroSaida($idSaida) {
         $tipo = TipoEventoEquipamento::CADASTRO_SAIDA;
-        $usuarioID = obterUsuarioSessao()->get_id();
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,saida,data,hora) VALUES ";
-        $sql .= " ($tipo,$usuarioID,$idSaida,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
+        $sql .= " (:tipo,:usuarioID,:idSaida,:data,:hora)";
+        $params = array(
+            ':tipo' => [$tipo, PDO::PARAM_INT]
+            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
+            , ':idSaida' => [$idSaida, PDO::PARAM_INT]
+            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
+            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+        );
+        return $this->executarQuery($sql, $params);
     }
-    public static function registrarRemocaoSaida($idSaida) {
-        $quote = "\"";
+
+    public function registrarRemocaoSaida($idSaida) {
         $tipo = TipoEventoEquipamento::REMOCAO_SAIDA;
-        $usuarioID = obterUsuarioSessao()->get_id();
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,saida,data,hora) VALUES ";
-        $sql .= " ($tipo,$usuarioID,$idSaida,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
+        $sql .= " (:tipo,:usuarioID,:idSaida,:data,:hora)";
+        $params = array(
+            ':tipo' => [$tipo, PDO::PARAM_INT]
+            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
+            , ':idSaida' => [$idSaida, PDO::PARAM_INT]
+            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
+            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+        );
+        return $this->executarQuery($sql, $params);
     }
-    
-    public static function registrarRetorno($idRetorno) {
-        $quote = "\"";
+
+    public function registrarRetorno($idRetorno) {
         $tipo = TipoEventoEquipamento::CADASTRO_RETORNO;
-        $usuarioID = obterUsuarioSessao()->get_id();
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,retorno,data,hora) VALUES ";
-        $sql .= " ($tipo,$usuarioID,$idRetorno,<data>,<hora>)";
-        $sql = str_replace("<data>", $quote . date('Y-m-j') . $quote, $sql);
-        $sql = str_replace("<hora>", $quote . date('h:i:s') . $quote, $sql);
-        try {
-            parent::getConexao()->query($sql);
-            return true;
-        } catch (Exception $e) {
-            print_r($e);
-            return false;
-        }
+        $sql .= " (:tipo,:usuarioID,:idSaida,:data,:hora)";
+        $params = array(
+            ':tipo' => [$tipo, PDO::PARAM_INT]
+            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
+            , ':idSaida' => [$idRetorno, PDO::PARAM_INT]
+            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
+            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
 }

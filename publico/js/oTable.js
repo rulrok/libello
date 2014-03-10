@@ -1,27 +1,27 @@
 function habilitarBotoes() {
     $('.btn-deletar').removeClass('disabled');
-    $('.btn-deletar').attr('disabled', false);
+    $('.btn-deletar').prop('disabled', false);
     $('.btn-editar').removeClass('disabled');
-    $('.btn-editar').attr('disabled', false);
+    $('.btn-editar').prop('disabled', false);
     $('.btn-baixa').removeClass('disabled');
-    $('.btn-baixa').attr('disabled', false);
+    $('.btn-baixa').prop('disabled', false);
     $('.btn-saida').removeClass('disabled');
-    $('.btn-saida').attr('disabled', false);
+    $('.btn-saida').prop('disabled', false);
     $('.btn-retorno').removeClass('disabled');
-    $('.btn-retorno').attr('disabled', false);
+    $('.btn-retorno').prop('disabled', false);
 }
 
 function desabilitarBotoes() {
     $('.btn-deletar').addClass('disabled');
-    $('.btn-deletar').attr('disabled', true);
+    $('.btn-deletar').prop('disabled', true);
     $('.btn-editar').addClass('disabled');
-    $('.btn-editar').attr('disabled', true);
+    $('.btn-editar').prop('disabled', true);
     $('.btn-baixa').addClass('disabled');
-    $('.btn-baixa').attr('disabled', true);
+    $('.btn-baixa').prop('disabled', true);
     $('.btn-saida').addClass('disabled');
-    $('.btn-saida').attr('disabled', true);
+    $('.btn-saida').prop('disabled', true);
     $('.btn-retorno').addClass('disabled');
-    $('.btn-retorno').attr('disabled', true);
+    $('.btn-retorno').prop('disabled', true);
 }
 
 function selecionarPrimeiraLinha(idTabela) {
@@ -83,7 +83,7 @@ function configurarTabela(parametros) {
         function fnFormatDetails(oTable, nTr)
         {
             var aData = oTable.fnGetData(nTr);
-            var sOut = '<table class="tabelaDeDetalhes centered">';
+            var sOut = '<table class="tabelaDeDetalhes centralizado">';
             sOut += '<tr><td><b>Descrição:</b></td><td>' + aData[alvosTabelaComDetalhe] + '</td></tr>';
 
             sOut += '</table>';
@@ -94,7 +94,7 @@ function configurarTabela(parametros) {
         var nCloneTh = document.createElement('th');
         var nCloneTd = document.createElement('td');
         nCloneTh.innerHTML = "Desc.";
-        nCloneTd.innerHTML = '<img src="publico/imagens/details_open.png">';
+        nCloneTd.innerHTML = '<img src="publico/imagens/details_open.png" alt="Exibir detalhes">';
         nCloneTd.className = "center";
 
         $('#' + idTabela + ' thead tr').each(function() {

@@ -1,7 +1,7 @@
 <?php
 
 function listarOficios($tipo = 'todos') {
-        $oficios = documentoDAO::consultar();
+        $oficios = (new documentoDAO())->consultar();
         $num_linhas = count($oficios);
         $retorno = '';
         for ($i = 0; $i < $num_linhas; $i++) {
@@ -31,7 +31,7 @@ function listarOficios($tipo = 'todos') {
                     $retorno.="</tr>";
                 }
             } else if (($oficios[$i]->getEstadoEdicao() != 0) && ($tipo == 'emAberto' || $tipo == 'todos')) {
-                if ($oficios[$i]->getIdUsuario() == $_SESSION['usuario']->get_id()) {
+                if ($oficios[$i]->getIdUsuario() == $_SESSION['usuario']->get_idUsuario()) {
                     $retorno.="<tr tipo='".$tipo."' doc='oficio'>";
                     $retorno.="<td hidden class='campoID'>" . fnEncrypt($oficios[$i]->getIdOficio()) . '</td>';
                     //$retorno.="<td hidden class='campoID'>" . $oficios[$i]->getIdOficio() . '</td>';
@@ -48,7 +48,7 @@ function listarOficios($tipo = 'todos') {
     }
 
     function listarMemorandos($tipo = 'todos') {
-        $oficios = documentoDAO::consultar('memorando');
+        $oficios = (new documentoDAO())->consultar('memorando');
         $num_linhas = count($oficios);
         
         $retorno ='';
@@ -79,7 +79,7 @@ function listarOficios($tipo = 'todos') {
                     $retorno.= '</tr>';
                 }
             } else if (($oficios[$i]->getEstadoEdicao() != 0) && ($tipo =='emAberto' || $tipo== 'todos')) {
-                if ($oficios[$i]->getIdUsuario() == $_SESSION['usuario']->get_id()) {
+                if ($oficios[$i]->getIdUsuario() == $_SESSION['usuario']->get_idUsuario()) {
                     $retorno.= "<tr tipo='".$tipo."' doc='memorando'>";
                     $retorno.= "<td hidden class='campoID'>" . fnEncrypt($oficios[$i]->getIdMemorando()) . '</td>';
                     //$retorno.= "<td hidden class='campoID'>" . $oficios[$i]->getIdMemorando() . '</td>';

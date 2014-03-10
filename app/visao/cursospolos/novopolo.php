@@ -1,11 +1,11 @@
 <title>Inserir novo polo</title>
 <!-- Início da página -->
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=cursospolos&a=verificarnovopolo">
+<form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=cursospolos&a=verificarnovopolo">
     <fieldset>
         <legend>Inserir novo polo</legend>
         <span class="line">
             <label>Nome</label>
-            <input required type="text" class="input-xlarge" id="nomepolo" name="nomepolo" />
+            <input required autofocus type="text" class="input-xlarge" id="nomepolo" name="nomepolo" />
         </span>
         <span class="line">
             <label>Estado</label>

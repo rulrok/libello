@@ -1,16 +1,17 @@
 <?php
+
 ob_clean();
 //incluindo o arquivo do fpdf
-require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/configuracoes.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/dompdf/dompdf_config.inc.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/app/modelo/dao/documentoDAO.php");
-require_once($_SERVER['DOCUMENT_ROOT'] . "/controle-cead/biblioteca/seguranca/seguranca.php");
+require_once BIBLIOTECA_DIR . "configuracoes.php";
+require_once BIBLIOTECA_DIR . "dompdf/dompdf_config.inc.php";
+require_once BIBLIOTECA_DIR . "seguranca/seguranca.php";
 require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
+require_once APP_DIR . "modelo/dao/documentoDAO.php";
 
 //-------------------
 //definindo variaveis
 $id = fnDecrypt($_REQUEST['idv']);
-$memorando = documentoDAO::consultar('memorando','idMemorando = '.$id);
+$memorando = (new documentoDAO())->consultar('memorando', 'idMemorando = ' . $id);
 $numMemorando = $memorando[0]->getNumMemorando();
 $tipoSigla = $memorando[0]->getTipoSigla();
 $data = explode('/', $memorando[0]->getData());
@@ -28,7 +29,7 @@ $remetentes = explode(';',$remetente);
 $cargos_remetentes = explode(';',$cargo_remetente);
 //$mes = retornaMes($mes);
 setlocale(LC_ALL, 'portuguese-brazilian', 'ptb', 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8');
-$mes =$monthName = date("F", mktime(0, 0, 0, $mes, 10));
+$mes = $monthName = date("F", mktime(0, 0, 0, $mes, 10));
 $data = $dia . '/' . $mes . '/' . date('Y');
 //-------------------
 $document = '<<<EOF
@@ -61,7 +62,7 @@ $document = '<<<EOF
                 <tr><td style="height: 30px;"></td></tr>
                 <tr>
                     <td>
-                        Mem. nº'.$numMemorando.'/'.$ano.'/CEAD - ' . $tipoSigla . '
+                        Mem. nº' . $numMemorando . '/' . $ano . '/CEAD - ' . $tipoSigla . '
                     </td>
                 </tr>
                 <tr><td style="height: 40px;"></td></tr>
@@ -141,7 +142,7 @@ $dompdf->render();
 $options = array(
     'Attachment' => 0
 );
-$dompdf->stream($ano." - Memorando n".$numMemorando, $options);
+$dompdf->stream($ano . " - Memorando n" . $numMemorando, $options);
 
 
 

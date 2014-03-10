@@ -2,9 +2,9 @@
 
 include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
 include_once BIBLIOTECA_DIR . 'seguranca/criptografia.php';
-include_once APP_LOCATION . 'modelo/ComboBoxCurso.php';
-include_once APP_LOCATION . 'modelo/ComboBoxPolo.php';
-include_once APP_LOCATION . 'modelo/ComboBoxUsuarios.php';
+include_once APP_DIR . 'modelo/comboboxes/ComboBoxCurso.php';
+include_once APP_DIR . 'modelo/comboboxes/ComboBoxPolo.php';
+include_once APP_DIR . 'modelo/comboboxes/ComboBoxUsuarios.php';
 
 class ControladorViagens extends Controlador {
 
@@ -12,8 +12,7 @@ class ControladorViagens extends Controlador {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->visao->cursos = ComboBoxCurso::montarTodosOsCursos();
         $this->visao->polos = ComboBoxPolo::montarTodosOsPolos();
-        $this->visao->passageiros = ComboBoxUsuarios::montarPassageiros();
-        $this->visao->responsavel = ComboBoxUsuarios::montarResponsavelViagem();
+        $this->visao->usuarios = ComboBoxUsuarios::listarTodosUsuarios();
         $this->renderizar();
     }
 
@@ -24,7 +23,7 @@ class ControladorViagens extends Controlador {
 
     public function acaoGerenciar() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->visao->viagens = viagemDAO::consultar("idViagem,nomeCurso,concat(dataIda,' - ',horaIda) as ida,concat(dataVolta,' - ',horaVolta) as volta,motivo,estadoViagem,diarias,concat(IFNULL(nomePolo,''),IFNULL(outroDestino,'')) as destino");
+        $this->visao->viagens = (new viagemDAO())->consultar("idViagem,nomeCurso,concat(dataIda,' - ',horaIda) as ida,concat(dataVolta,' - ',horaVolta) as volta,motivo,estadoViagem,diarias,concat(IFNULL(nomePolo,''),IFNULL(outroDestino,'')) as destino");
         $i = 0;
         foreach ($this->visao->viagens as $value) {
             $value[0] = fnEncrypt($value[0]);
@@ -40,6 +39,11 @@ class ControladorViagens extends Controlador {
 
     public function idFerramentaAssociada() {
         return Ferramenta::CONTROLE_VIAGENS;
+    }
+
+    public function acaoAcoes() {
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
+        $this->renderizar();
     }
 
 }

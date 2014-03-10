@@ -1,6 +1,6 @@
 <title>Registrar nova saída de equipamento</title>
 <!--Início da página-->
-<form class="table centered" id="ajaxForm" method="post" action="index.php?c=equipamentos&a=registrarsaida">
+<form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=equipamentos&a=registrarsaida">
     <fieldset>
         <legend>Saída de equipamento</legend>
         <input hidden="true" readonly="true" type="text" class="input-small" id="equipamentoID" name="equipamentoID" value="<?php echo $this->equipamentoID ?>" />
@@ -11,7 +11,7 @@
         <hr/>
         <div class="line">
             <label for="dataSaida">Data de saída</label>
-            <input type="text"  required id="dataSaida" on class="campoData" name="dataSaida" />
+            <input type="text" autofocus required id="dataSaida" on class="campoData" name="dataSaida" />
         </div>
         <div class="line">
             <label for="polo">Polo de Destino</label>
@@ -86,7 +86,7 @@
 
         $("#polo").on('change', function() {
             if ($("#polo option:selected").prop("value") === "outro") {
-                $($(".line")[2]).after("<div class='line'><label for='destinoManual'>Nome do destino</label><input type='text' required id='destinoManual' class='input-xlarge' name='destinoManual'/></div>")
+                $($(".line")[2]).after("<div class='line'><label for='destinoManual'>Nome do destino</label><input type='text' required id='destinoManual' class='input-xlarge' name='destinoManual'/></div>");
                 varrerCampos();
                 document.viagens_campoDestinoAlternativo = true;
             } else if (document.viagens_campoDestinoAlternativo) {

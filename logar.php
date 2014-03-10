@@ -1,23 +1,30 @@
 <?php
 ob_start();
 require_once './biblioteca/configuracoes.php';
-if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION['autenticado'] === TRUE) {
+require_once './biblioteca/seguranca/seguranca.php';
+
+if (sessaoIniciada()) {
     header("Location: index.php");
-} else {
-    $_SESSION['autenticado'] = false;
 }
 ?>
 <!DOCTYPE html">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br">
+<html>
     <head>
+        <title class="tituloFixo">Autenticação</title>
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <!-- FOLHAS DE ESTILO -->
         <link rel='stylesheet' href='publico/css/bootstrap.css' />
         <link rel='stylesheet' href='publico/css/mainStyle.css' />  
         <link rel='stylesheet' href='publico/css/login.css' />
-        <title class="tituloFixo">Autenticação</title>
-        <link rel="stylesheet" type="text/css" media="screen" href="publico/css/browser-detection.css" />
-<!--        <script src="http://ie.microsoft.com/testdrive/HTML5/CompatInspector/inspector.js"></script>-->
+        <link rel="stylesheet" media="screen" href="publico/css/browser-detection.css" />
+
+        <!-- SCRIPTS -->
+
         <script src="publico/js/jquery/jquery-1.9.1.js"></script>
+        <script src="publico/js/jquery/jquery-ui.js"></script>
+        <script src="publico/js/browser-detection.js"></script>
         <script>
             jQuery.fn.center = function() {
                 this.css("position", "absolute");
@@ -29,8 +36,6 @@ if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION[
             };
             document.paginaAlterada = false;
         </script>
-        <script src="publico/js/jquery/jquery-ui.js"></script>
-        <script src="publico/js/browser-detection.js"></script>
 
     </head>
     <body>
@@ -40,54 +45,49 @@ if (isset($_SESSION['iniciada']) && $_SESSION['iniciada'] === true && $_SESSION[
             $ocultarDetalhes = true;
         }
         ?>
-        <div id="login" class="centered">
-            <h1 class="centeredText">Sistema de Controle CEAD</h1>
-            <h2 class="centeredText">Login de Acesso</h2>
-            <div id="unifal"></div>
-            <div id="cead"></div>
+        <div id="login" class="centralizado">
+            <h1 class="textoCentralizado"><?php echo APP_NAME; ?></h1>
+            <h2 class="textoCentralizado">Login de Acesso</h2>
+            <div id="logo_esquerda_paginas_iniciais"></div>
+            <div id="logo_direita_paginas_iniciais"></div>
             <div id="loginArea">
-                <form class="table centered" name="identificacao" action="./biblioteca/seguranca/verificarLogin.php" method="post">
+                <form class="tabela centralizado" name="identificacao" action="./biblioteca/seguranca/verificarLogin.php" method="post">
                     <fieldset>
                         <input hidden type="checkbox" class="hidden" id="fazendo_login" name="fazendo_login" checked>
                         <input hidden type="text" class="hidden" id="alvo" name="alvo" >
                         <div class="line">
-                            <label>Email</label>
-                            <input required type="email" name="login">
+                            <label for="email">Email</label>
+                            <input autofocus="true" required type="email" id="email" name="login">
                         </div>
                         <div class="line">
-                            <label>Senha</label>
-                            <input required type="password" name="senha" >
+                            <label for="password">Senha</label>
+                            <input required type="password" id="password" name="senha" >
                         </div>
                         <br/>
                         <button class="btn btn-right btn-info" name="identificacao" type="submit">Entrar</button>
-                            <?php if ($ocultarDetalhes): ?>
-                                <a class="btn"href="lembrarSenha.php">Esqueci a senha</a>
-                            <?php endif; ?>
+                        <?php if ($ocultarDetalhes): ?>
+                            <a href="lembrarSenha.php" class="btn btn-link">Esqueci a senha</a>
+                        <?php endif; ?>
                     </fieldset>
 
                 </form>
             </div>
-            <div class="error centeredText">
+            <div class="error textoCentralizado">
                 <?php
-                if (isset($_GET['m'])) {
-                    echo $_GET['m'];
+                if (filter_has_var(INPUT_GET, 'm')) {
+                    echo filter_input(INPUT_GET, 'm');
                 }
                 ?>
             </div>
         </div>
         <?php if ($ocultarDetalhes): ?>
-            <div id="apoio">
-                <h3>Apoio:</h3>
-                <div id="uab"></div>
-                <div id="capes"></div>
-            </div>
-            <div id="footer" >
-                <p class="centeredText">Copyright &copy; 2012 - 2013 | Desenvolvido por <a href="http://cead.unifal-mg.edu.br" target="_blank" title="Cead home page">CEAD</a> | Versão <?php echo APP_VERSION; ?></p>
-            </div>
+            <?php require_once 'apoio.php'; ?>
+            <?php require_once 'footer.php'; ?>
         <?php endif; ?>
         <script>
             $(document).ready(function() {
-                $("#alvo").attr("value", location.hash);
+                document.paginaAlterada = false;
+                $("#alvo").prop("value", location.hash);
             });
         </script>
     </body>

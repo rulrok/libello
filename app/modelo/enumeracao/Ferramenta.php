@@ -1,11 +1,11 @@
 <?php
 
-require_once APP_LOCATION . "modelo/dao/ferramentaDAO.php";
+require_once APP_DIR . "modelo/dao/ferramentaDAO.php";
 
 final class Ferramenta {
 
     const __default = self::DESCONHECIDO;
-    const __length = 9;
+    const __length = 8;
     const DESCONHECIDO = 0;
     const CONTROLE_USUARIOS = 1;
     const CURSOS_E_POLOS = 2;
@@ -14,13 +14,7 @@ final class Ferramenta {
     const CONTROLE_DOCUMENTOS = 5;
     const CONTROLE_VIAGENS = 6;
     const TAREFAS = 7;
-    const CONTROLE_PAGAMENTOS = 8;
-    const GALERIA_IMAGENS = 9;
-
-    public static function get_nome_ferramenta($ferramentaID) {
-        $retorno = ferramentaDAO::obterNomeFerramenta($ferramentaID);
-        return $retorno;
-    }
+    const GALERIA_IMAGENS = 8;
 
     public static function get_codigo_ferramenta($nomeFerramenta) {
         $nomeFerramenta = strtolower($nomeFerramenta);
@@ -34,8 +28,6 @@ final class Ferramenta {
                 return Ferramenta::CONTROLE_EQUIPAMENTOS;
             case "livros":
                 return Ferramenta::CONTROLE_LIVROS;
-            case "pagamentos":
-                return Ferramenta::CONTROLE_PAGAMENTOS;
             case "tarefas":
                 return Ferramenta::TAREFAS;
             case "usuarios":
