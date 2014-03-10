@@ -104,7 +104,7 @@
 
                         function botaoLimpar() {
                             $("span.patrimonio-2").nextAll().andSelf().remove();
-                            quantidadePatrimonios = 1;
+                            $(quantidadePatrimonios).text(1);
                             removerPatrimonioAdicionado();
                             liberarCadastro();
                             $("#chars").text("1000");
