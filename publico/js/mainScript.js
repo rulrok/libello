@@ -433,10 +433,10 @@ function ajax(link, place, hidePop, async, ignorePageChanges) {
 
     paginaCompleta = false;
     var request = $.ajax({
-        url: link,
-        async: async,
-        timeout: 10000, //Espera no máximo 10 segundos,
-        beforeSend: function() {
+        url: link
+        , async: async
+        //, timeout: 10000 //Espera no máximo 10 segundos,
+        , beforeSend: function() {
 //            if (place !== null) {
             setTimeout(function() {
                 if (!paginaCompleta) {
@@ -444,12 +444,12 @@ function ajax(link, place, hidePop, async, ignorePageChanges) {
                 }
             }, "1500");
 //            }
-        },
-        complete: function() {
+        }
+        , complete: function() {
             paginaCompleta = true;
             esconderShader();
-        },
-        error: function() {
+        }
+        , error: function() {
             paginaCompleta = true;
             esconderShader();
         }

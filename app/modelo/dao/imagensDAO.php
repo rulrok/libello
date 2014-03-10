@@ -211,6 +211,24 @@ class imagensDAO extends abstractDAO {
         return $this->executarSelect($sql, $params, false, 'Descritor');
     }
 
+    public function arvoreDescritores() {
+        $descritores = $this->montarRecursivamente(ImagensDescritor::ID_RAIZ_NIVEL_ZERO);
+        return $descritores;
+    }
+
+    private function montarRecursivamente($idPai) {
+        $filhos = $this->consultarDescritor('idDescritor,concat(rotulo,". ",nome) as nome,qtdFilhos', "pai = $idPai");
+        $array = array();
+        foreach ($filhos as $descritor) {
+            if ($descritor['qtdFilhos'] == '0') {
+                $array[] = $descritor['nome'];
+            } else {
+                $array[] = array('id' => fnEncrypt($descritor['idDescritor']), 'text' => $descritor['nome'], 'children' => $this->montarRecursivamente($descritor['idDescritor']));
+            }
+        }
+        return $array;
+    }
+
 }
 
 ?>

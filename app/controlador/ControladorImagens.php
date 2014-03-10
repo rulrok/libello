@@ -91,14 +91,16 @@ class ControladorImagens extends Controlador {
         $this->renderizar();
     }
 
-    public function acaoBaixarimagem(){
+    public function acaoBaixarimagem() {
         $this->visao->acessoMinimo = Permissao::CONSULTA;
         $this->renderizar();
     }
-    public function acaoBaixarvetorial(){
+
+    public function acaoBaixarvetorial() {
         $this->visao->acessoMinimo = Permissao::CONSULTA;
         $this->renderizar();
     }
+
     /*
      * GALERIAS
      */
@@ -130,6 +132,8 @@ class ControladorImagens extends Controlador {
 
     public function acaoGerenciardescritores() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
+        $imagensDAO = new imagensDAO();
+        $this->visao->descritores = $imagensDAO->consultarDescritor('*', 'qtdFilhos = 0');
         $this->renderizar();
     }
 
@@ -174,6 +178,12 @@ class ControladorImagens extends Controlador {
     /*
      * OUTROS
      */
+
+    public function acaoArvoreDescritores() {
+        $imagensDAO = new imagensDAO();
+        $this->visao->arvore = $imagensDAO->arvoreDescritores();
+        $this->renderizar();
+    }
 
     public function idFerramentaAssociada() {
         return Ferramenta::GALERIA_IMAGENS;
