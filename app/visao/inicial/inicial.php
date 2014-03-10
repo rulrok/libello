@@ -22,6 +22,8 @@
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.dataTables_themeroller.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.datepick.css"/> 
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.chosen.css"/> 
+        <link type="text/css" rel="stylesheet" href="publico/css/jquery.fancybox.css"/> 
+        <link type="text/css" rel="stylesheet" href="publico/css/jquery.fancybox-buttons.css"/> 
         <link type="text/css" rel="stylesheet" media="screen" href="publico/css/browser-detection.css" />
         <link type="text/css" rel="stylesheet" media="screen" href="publico/css/jquery-ui-timepicker-addon.css" />
 
@@ -214,6 +216,9 @@
     <script src='publico/js/jquery/jquery-ui-sliderAccess.js'></script> 
     <!--<script src='publico/js/jquery/jquery.mask.min.js'></script>--> 
     <script src='publico/js/jquery/jquery.maskedinput.js'></script> 
+    <script src='publico/js/jquery/jquery.fancybox.min.js'></script> 
+    <script src='publico/js/jquery/jquery.fancybox-buttons.js'></script> 
+    <script src='publico/js/jquery/jquery.mousewheel-3.0.6.min.js'></script> 
     <script src="publico/js/oTable.js" ></script>
     <script src="publico/js/bootstrap.js"></script> 
     <script>
