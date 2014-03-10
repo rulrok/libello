@@ -18,8 +18,8 @@ class documentoDAO extends abstractDAO {
 
     public function inserirOficio(Oficio $obj) {
 
-        $sql = "INSERT INTO oficio (assunto, corpo, idUsuario, estadoEdicao, tratamento, destino, cargo_destino, data, tipoSigla, referencia, remetente, remetente2, cargo_remetente, cargo_remetente2, numOficio) VALUES ";
-        $sql .= "(:assunto, :corpo, :idusuario, :estadoEdicao, :tratamento, :destino, :cargo_destino, :data, :tipoSigla, :referencia, :remetente, :remetente2, :cargo_remetente, :cargo_remetente2, :numOficio)";
+        $sql = "INSERT INTO oficio (assunto, corpo, idUsuario, estadoEdicao, tratamento, destino, cargo_destino, data, tipoSigla, referencia, remetente, cargo_remetente,  numOficio) VALUES ";
+        $sql .= "(:assunto, :corpo, :idusuario, :estadoEdicao, :tratamento, :destino, :cargo_destino, :data, :tipoSigla, :referencia, :remetente, :cargo_remetente, :numOficio)";
 
         $params = array(
             ':assunto' => [$obj->getAssunto(), PDO::PARAM_STR]
@@ -33,9 +33,7 @@ class documentoDAO extends abstractDAO {
             , ':tipoSigla' => [$obj->getTipoSigla(), PDO::PARAM_STR]
             , ':referencia' => [$obj->getReferencia(), PDO::PARAM_STR]
             , ':remetente' => [$obj->getRemetente(), PDO::PARAM_STR]
-            , ':remetente2' => [$obj->getRemetente2(), PDO::PARAM_STR]
             , ':cargo_remetente' => [$obj->getCargo_remetente(), PDO::PARAM_STR]
-            , ':cargo_remetente2' => [$obj->getCargo_remetente2(), PDO::PARAM_STR]
             , ':numOficio' => [$obj->getNumOficio(), PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
@@ -44,7 +42,7 @@ class documentoDAO extends abstractDAO {
     public function update_oficio(Oficio $obj) {
 
         $sql = 'UPDATE oficio SET assunto = :assunto, corpo = :corpo, estadoEdicao = :estadoEdicao, tratamento = :tratamento, destino = :destino, cargo_destino = :cargo_destino,';
-        $sql .= 'data = :data, tipoSigla = :tipoSigla, referencia = :referencia, remetente = :remetente, remetente2 = :remetente2, cargo_remetente = :cargo_remetente, cargo_remetente2 = :cargo_remetente2, numOficio = :numOficio ';
+        $sql .= 'data = :data, tipoSigla = :tipoSigla, referencia = :referencia, remetente = :remetente, cargo_remetente = :cargo_remetente,  numOficio = :numOficio ';
         $sql .= ' WHERE idOficio = :idOficio';
 
         $params = array(
@@ -58,9 +56,7 @@ class documentoDAO extends abstractDAO {
             , ':tipoSigla' => [$obj->getTipoSigla(), PDO::PARAM_STR]
             , ':referencia' => [$obj->getReferencia(), PDO::PARAM_STR]
             , ':remetente' => [$obj->getRemetente(), PDO::PARAM_STR]
-            , ':remetente2' => [$obj->getRemetente2(), PDO::PARAM_STR]
             , ':cargo_remetente' => [$obj->getCargo_remetente(), PDO::PARAM_STR]
-            , ':cargo_remetente2' => [$obj->getCargo_remetente2(), PDO::PARAM_STR]
             , ':numOficio' => [$obj->getNumOficio(), PDO::PARAM_INT]
             , ':idOficio' => [$obj->getIdOficio(), PDO::PARAM_INT]
         );
@@ -95,8 +91,8 @@ class documentoDAO extends abstractDAO {
 
     public function inserirMemorando(Memorando $obj) {
 
-        $sql = "INSERT INTO memorando (assunto, corpo, idUsuario, estadoEdicao, tratamento, cargo_destino, data, tipoSigla, remetente, remetente2, cargo_remetente, cargo_remetente2, numMemorando) VALUES ";
-        $sql .= "(:assunto, :corpo, :idusuario, :estadoEdicao, :tratamento, :cargo_destino, :data, :tipoSigla, :remetente, :remetente2, :cargo_remetente, :cargo_remetente2, :numMemorando)";
+        $sql = "INSERT INTO memorando (assunto, corpo, idUsuario, estadoEdicao, tratamento, cargo_destino, data, tipoSigla, remetente, cargo_remetente,  numMemorando) VALUES ";
+        $sql .= "(:assunto, :corpo, :idusuario, :estadoEdicao, :tratamento, :cargo_destino, :data, :tipoSigla, :remetente, :cargo_remetente,  :numMemorando)";
 
         $params = array(
             ':assunto' => [$obj->getAssunto(), PDO::PARAM_STR]
@@ -108,9 +104,7 @@ class documentoDAO extends abstractDAO {
             , ':data' => [$obj->getData(), PDO::PARAM_STR]
             , ':tipoSigla' => [$obj->getTipoSigla(), PDO::PARAM_STR]
             , ':remetente' => [$obj->getRemetente(), PDO::PARAM_STR]
-            , ':remetente2' => [$obj->getRemetente2(), PDO::PARAM_STR]
             , ':cargo_remetente' => [$obj->getCargo_remetente(), PDO::PARAM_STR]
-            , ':cargo_remetente2' => [$obj->getCargo_remetente2(), PDO::PARAM_STR]
             , ':numMemorando' => [$obj->getNumMemorando(), PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
@@ -118,7 +112,7 @@ class documentoDAO extends abstractDAO {
 
     public function update_memorando(Memorando $obj) {
 
-        $sql = 'UPDATE memorando SET assunto = :assunto, corpo = :corpo, estadoEdicao = :estadoEdicao, tratamento = :tratamento, cargo_destino = :cargo_destino, data = :data, tipoSigla = :tipoSigla, remetente = :remetente, remetente2 = :remetente2, cargo_remetente = :cargo_remetente, cargo_remetente2 = :cargo_remetente2, numMemorando = :numMemorando) WHERE idMemorando = :idMemorando';
+        $sql = 'UPDATE memorando SET assunto = :assunto, corpo = :corpo, estadoEdicao = :estadoEdicao, tratamento = :tratamento, cargo_destino = :cargo_destino, data = :data, tipoSigla = :tipoSigla, remetente = :remetente, cargo_remetente = :cargo_remetente, numMemorando = :numMemorando) WHERE idMemorando = :idMemorando';
 
         $params = array(
             ':assunto' => [$obj->getAssunto(), PDO::PARAM_STR]
@@ -129,9 +123,7 @@ class documentoDAO extends abstractDAO {
             , ':data' => [$obj->getData(), PDO::PARAM_STR]
             , ':tipoSigla' => [$obj->getTipoSigla(), PDO::PARAM_STR]
             , ':remetente' => [$obj->getRemetente(), PDO::PARAM_STR]
-            , ':remetente2' => [$obj->getRemetente2(), PDO::PARAM_STR]
             , ':cargo_remetente' => [$obj->getCargo_remetente(), PDO::PARAM_STR]
-            , ':cargo_remetente2' => [$obj->getCargo_remetente2(), PDO::PARAM_STR]
             , ':numMemorando' => [$obj->getNumMemorando(), PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
