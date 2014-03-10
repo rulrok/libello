@@ -113,7 +113,8 @@
 
                         function botaoLimpar() {
                             $("span.patrimonio-2").nextAll().andSelf().remove();
-                            $(quantidadePatrimonios).text(1);
+                            quantidadePatrimonios = 1;
+                            $("#quantidadePatrimonios").text(quantidadePatrimonios);
                             removerPatrimonioAdicionado();
                             liberarCadastro();
                             $("#chars").text("1000");
