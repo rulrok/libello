@@ -209,9 +209,10 @@ Form.prototype.diaMesDocumento = function(mesatual) {
 
 Form.prototype.iniciarCombo = function() {
     var d = new Date();
+    var t = this;
     this.diaMesDocumento(d.getMonth());
-    $('#mes').on('change', function() {
-        diaMesDocumento($('#mes ').val() - 1);
+    $('#mes').on('change',  function() {
+        t.diaMesDocumento($('#mes ').val() - 1);
     });
 };
 
