@@ -146,9 +146,6 @@ Form.prototype.removerRemetente = function(i) {
         $('.btn-remove-rmt').attr({disabled: true});
     }
 
-//    $("#div_remetente2").hide();
-//    $("#add_rem").show();
-//    $("#i_remetente").val("0");
 };
 
 Form.prototype.formaCampoDeAssinatura = function(i, j, k) {
