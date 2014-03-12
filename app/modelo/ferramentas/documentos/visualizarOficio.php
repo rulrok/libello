@@ -52,9 +52,9 @@ $document = '
                 background-color: #FFF;
                 }
             </style>
-                  
         </head>
         <body>
+     
             <table class="tabela">
                 <tr>
                     <td style="width: 597px" align="center">
@@ -139,6 +139,9 @@ for($i = 0;$i<count($remetentes);$i++){
                         </div><br>';
 }                   
 $document .= '</table>
+    <script type="text/php>"
+    $pdf->page_text(1,1, "{PAGE_NUM} of {PAGE_COUNT}", $font, 10, array(0,0,0));
+    </script>
         </body>
     </html>';
 //echo $document;
@@ -147,7 +150,7 @@ $dompdf = new DOMPDF();
 //$tamanho = array(0, 0, 596.4, 843.48);
 $dompdf->parse_default_view('A4', 'portrait');
 $dompdf->set_paper('A4', 'portrait');
-$dompdf->load_html($document);
+$dompdf->load_html(utf8_decode($document));
 $dompdf->render();
 //$dompdf->;
 $options = array(

@@ -45,6 +45,10 @@ abstract class verificadorFormularioAjax {
         }
     }
 
+    public function setId($id){
+        $this->mensagem->id = fnEncrypt($id);
+    }
+    
     public function mensagemSucesso($mensagem) {
         $this->mensagem->set_mensagemSucesso($mensagem);
         $this->retornar();
