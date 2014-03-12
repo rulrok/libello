@@ -193,7 +193,7 @@ class imagensDAO extends abstractDAO {
         }
 
 
-        $sql = "UPDATE imagens_descritor SET nomeCategoria = :nome WHERE idDescritor = :idDescritor";
+        $sql = "UPDATE imagens_descritor SET nome = :nome WHERE idDescritor = :idDescritor";
         $params = array(
             ':nome' => [$nome, PDO::PARAM_STR],
             ':idDescritor' => [$idDescritor, PDO::PARAM_INT]
@@ -211,19 +211,30 @@ class imagensDAO extends abstractDAO {
         return $this->executarSelect($sql, $params, false, 'Descritor');
     }
 
+    public function renomearDescritor($idDescritor, $novoNome) {
+        $sql = "UPDATE imagens_descritor SET nome = :nome WHERE idDescritor = :idDescritor";
+        $params = array(
+            ':nome' => [$novoNome, PDO::PARAM_STR]
+            , ':idDescritor' => [$idDescritor, PDO::PARAM_INT]
+        );
+
+        return $this->executarQuery($sql, $params);
+    }
+
     public function arvoreDescritores() {
         $descritores = $this->montarRecursivamente(ImagensDescritor::ID_RAIZ_NIVEL_ZERO);
-        return $descritores;
+        $arvore[] = ['id' => fnEncrypt(ImagensDescritor::ID_RAIZ_NIVEL_ZERO), 'text' => 'Descritores', 'nivel' => '0', 'rotulo' => '0', 'children' => $descritores];
+        return $arvore;
     }
 
     private function montarRecursivamente($idPai) {
-        $filhos = $this->consultarDescritor('idDescritor,concat(rotulo,". ",nome) as nome,qtdFilhos', "pai = $idPai");
+        $filhos = $this->consultarDescritor('idDescritor,nome,qtdFilhos,nivel,rotulo', "pai = $idPai");
         $array = array();
         foreach ($filhos as $descritor) {
             if ($descritor['qtdFilhos'] == '0') {
-                $array[] = $descritor['nome'];
+                $array[] = array('id' => fnEncrypt($descritor['idDescritor']), 'text' => $descritor['nome'], 'nivel' => $descritor['nivel'], 'rotulo' => $descritor['rotulo']);
             } else {
-                $array[] = array('id' => fnEncrypt($descritor['idDescritor']), 'text' => $descritor['nome'], 'children' => $this->montarRecursivamente($descritor['idDescritor']));
+                $array[] = array('id' => fnEncrypt($descritor['idDescritor']), 'text' => $descritor['nome'], 'nivel' => $descritor['nivel'], 'rotulo' => $descritor['rotulo'], 'children' => $this->montarRecursivamente($descritor['idDescritor']));
             }
         }
         return $array;

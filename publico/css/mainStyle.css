@@ -320,10 +320,6 @@ input[type=search]{
 }
 
 #resultadoImagens {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: white;
-    padding: 20px;
 }
 
 #resultadoImagens p.descricao:before {
@@ -351,6 +347,12 @@ input[type=search]{
     margin-left: 5px;
 }
 
+.blocoBranco {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    padding: 20px;
+}
 /* FIM DO CONTENT */
 /*================================================*/
 /* FOOTER */

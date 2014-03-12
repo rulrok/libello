@@ -175,6 +175,14 @@ class ControladorImagens extends Controlador {
         $this->renderizar();
     }
 
+    public function acaoRenomearDescritor(){
+        $this->visao->acessoMinimo = Permissao::GESTOR;
+        $this->renderizar();
+    }
+    public function acaoCriarDescritor(){
+        $this->visao->acessoMinimo = Permissao::GESTOR;
+        $this->renderizar();
+    }
     /*
      * OUTROS
      */

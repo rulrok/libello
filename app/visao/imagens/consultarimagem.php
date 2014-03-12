@@ -1,6 +1,6 @@
 
 
-<div id="resultadoImagens">
+<div id="resultadoImagens" class="blocoBranco">
 
           <!--<input autofocus autocomplete class="ignorar search-query input-xlarge" name="busca" id="campo_busca" placeholder="Buscar..." type="text">-->
 

@@ -48,7 +48,7 @@
         <!--<script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>-->
 
     <script src="publico/js/jquery/jquery-1.9.1.js"></script>
-    <script src="publico/js/browser-detection.js" />
+    <script src="publico/js/browser-detection.js" ></script>
     <script src="publico/js/jquery/jquery.ba-hashchange.js"></script>
     <script src="publico/js/jquery/jquery.form.js"></script>
     <script src="publico/js/jquery/jquery.chosen.js"></script>
