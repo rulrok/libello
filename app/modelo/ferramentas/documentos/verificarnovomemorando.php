@@ -60,13 +60,13 @@ class verificarnovomemorando extends verificadorFormularioAjax {
 
             $documentoDAO = new documentoDAO();
             $documentoDAO->inserirMemorando($documento);
-//            $id = $documentoDAO->obterUltimoIdInserido();
+            $id = $documentoDAO->obterUltimoIdInserido();
+            $this->setId($id);
             if ($numMemorando != -1) {
                 $this->mensagemSucesso("Memorando gerado com sucesso!");
             } else {
                 $this->mensagemSucesso("Memorando salvo com sucesso!");
             }
-//            $this->mensagem->id = fnEncrypt($id);
         } catch (Exception $e) {
             $this->mensagemErro($e->getMessage());
         }

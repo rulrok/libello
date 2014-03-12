@@ -19,14 +19,14 @@ class documentoDAO extends abstractDAO {
     public function inserirOficio(Oficio $obj) {
 
         $sql = "INSERT INTO oficio (assunto, corpo, idUsuario, estadoEdicao, tratamento, destino, cargo_destino, data, tipoSigla, referencia, remetente, cargo_remetente,  numOficio) VALUES ";
-        $sql .= "(:assunto, :corpo, :idusuario, :estadoEdicao, :tratamento, :destino, :cargo_destino, :data, :tipoSigla, :referencia, :remetente, :cargo_remetente, :numOficio)";
+        $sql .= "(:assunto, :corpo, :idUsuario, :estadoEdicao, :tratamento, :destino, :cargo_destino, :data, :tipoSigla, :referencia, :remetente, :cargo_remetente, :numOficio)";
 
         $params = array(
             ':assunto' => [$obj->getAssunto(), PDO::PARAM_STR]
             , ':corpo' => [$obj->getCorpo(), PDO::PARAM_STR]
+            , ':idUsuario' => [$obj->getIdUsuario(), PDO::PARAM_INT]
             , ':estadoEdicao' => [$obj->getEstadoEdicao(), PDO::PARAM_INT]
             , ':tratamento' => [$obj->getTratamento(), PDO::PARAM_STR]
-            , ':idUsuario' => [$obj->getIdUsuario(), PDO::PARAM_INT]
             , ':destino' => [$obj->getDestino(), PDO::PARAM_STR]
             , ':cargo_destino' => [$obj->getCargo_destino(), PDO::PARAM_STR]
             , ':data' => [$obj->getData(), PDO::PARAM_STR]
@@ -39,6 +39,10 @@ class documentoDAO extends abstractDAO {
         return $this->executarQuery($sql, $params);
     }
 
+    public function teste(){
+        parent::getConexao()->lastInsertId();
+    }
+    
     public function update_oficio(Oficio $obj) {
 
         $sql = 'UPDATE oficio SET assunto = :assunto, corpo = :corpo, estadoEdicao = :estadoEdicao, tratamento = :tratamento, destino = :destino, cargo_destino = :cargo_destino,';
@@ -92,14 +96,14 @@ class documentoDAO extends abstractDAO {
     public function inserirMemorando(Memorando $obj) {
 
         $sql = "INSERT INTO memorando (assunto, corpo, idUsuario, estadoEdicao, tratamento, cargo_destino, data, tipoSigla, remetente, cargo_remetente,  numMemorando) VALUES ";
-        $sql .= "(:assunto, :corpo, :idusuario, :estadoEdicao, :tratamento, :cargo_destino, :data, :tipoSigla, :remetente, :cargo_remetente,  :numMemorando)";
+        $sql .= "(:assunto, :corpo, :idUsuario, :estadoEdicao, :tratamento, :cargo_destino, :data, :tipoSigla, :remetente, :cargo_remetente,  :numMemorando)";
 
         $params = array(
             ':assunto' => [$obj->getAssunto(), PDO::PARAM_STR]
             , ':corpo' => [$obj->getCorpo(), PDO::PARAM_STR]
+            , ':idUsuario' => [$obj->getIdUsuario(), PDO::PARAM_INT]
             , ':estadoEdicao' => [$obj->getEstadoEdicao(), PDO::PARAM_INT]
             , ':tratamento' => [$obj->getTratamento(), PDO::PARAM_STR]
-            , ':idUsuario' => [$obj->getIdUsuario(), PDO::PARAM_INT]
             , ':cargo_destino' => [$obj->getCargo_destino(), PDO::PARAM_STR]
             , ':data' => [$obj->getData(), PDO::PARAM_STR]
             , ':tipoSigla' => [$obj->getTipoSigla(), PDO::PARAM_STR]

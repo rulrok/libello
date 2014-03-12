@@ -22,8 +22,8 @@ class verificarnovooficio extends verificadorFormularioAjax {
             $remetente = filter_input(INPUT_POST, 'remetente');
             $cargo_remetente = filter_input(INPUT_POST, 'cargo_remetente');
 
-                $tratamento = $_REQUEST['tratamento'];
-                $cargo_destino = $_REQUEST['cargo_destino'];
+               $tratamento = filter_input(INPUT_POST, 'tratamento');
+            $cargo_destino = filter_input(INPUT_POST, 'cargo_destino');
 
                 $documento = new Oficio();
                 $documento->setAssunto($assunto);
@@ -48,16 +48,15 @@ class verificarnovooficio extends verificadorFormularioAjax {
             $documento->setNumOficio($numOficio);
 
             $documentoDAO = new documentoDAO();
-            $documentoDAO->inserirOficio($documento);
-//            $id = $documentoDAO->obterUltimoIdInserido();
+            $problema = $documentoDAO->inserirOficio($documento);
+            $id = $documentoDAO->obterUltimoIdInserido();
+           
+            $this->setId($id);
             if ($numOficio != -1) {
                 $this->mensagemSucesso("Oficio gerado com sucesso!");
             } else {
                 $this->mensagemSucesso("Oficio salvo com sucesso!");
             }
-
-//            $this->mensagem->id = fnEncrypt($id);
-            //return fnEncrypt($id);
         } catch (Exception $e) {
             $this->mensagemErro($e->getMessage());
         }

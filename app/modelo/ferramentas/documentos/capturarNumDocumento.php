@@ -1,10 +1,10 @@
 <?php
 
 require_once BIBLIOTECA_DIR . 'configuracoes.php';
-require_once BIBLIOTECA_DIR . 'controlador/ControladorDocumentos.php';
+require_once APP_DIR . 'controlador/ControladorDocumentos.php';
 
-header('Cache-Control: no-cache');
-header('Content-type: application/xml; charset="utf-8"', true);
+//header('Cache-Control: no-cache');
+//header('Content-type: application/xml; charset="utf-8"', true);
 
 $valor = $_REQUEST['valor'];
 $documentoDAO = new documentoDAO();
@@ -26,6 +26,6 @@ if ($valor == 2) {
         $num = 1;
     }
 }
-
+echo $num;die();
 echo( json_encode($num) );
 ?>

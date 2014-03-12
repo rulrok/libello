@@ -13,11 +13,11 @@
 
         $('#b_gerar').on('click', function() {
             bloqueia();
+           
             if (confirm('Atenção, o ofício será gerado e registrado permanentemente! Tem certeza?')) {
                 formularioAjax(undefined, undefined, null, function(i) {
                     window.open('index.php?c=documentos&a=visualizarOficio&idv=' + i.id, '_blank');
                     document.paginaAlterada = false;
-                    document.location.reload();
                 });
 
                 capturaNumOficio();
@@ -28,6 +28,7 @@
         $('#b_salvar').on('click', function() {
             bloqueia();
             if (confirm('Atenção, o rascunho do ofício será salvo! Tem certeza?')) {
+                concatenarAssinaturas();
                 formularioAjax(undefined, undefined, null, function(i) {
                     document.paginaAlterada = false;
                 });
@@ -101,6 +102,5 @@
     <input id='remetente' type='hidden' name='remetente' />
     <input id='cargo_remetente' type='hidden' name='cargo_remetente'/>
     <input type="hidden" name="i_numOficio" id="i_numOficio" value='-1'/>
-    <input type="hidden" name="i_remetente" id="i_remetente" value="0"/>
     <button type="submit" id="b_submit" style="display: none;"></button>
 </form>
