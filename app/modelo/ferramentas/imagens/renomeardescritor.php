@@ -6,12 +6,12 @@ $novoNome = filter_input(INPUT_POST, 'novoNome');
 if (!empty($id) && is_numeric($id) && !empty($novoNome)) {
     $imagensDAO = new imagensDAO();
     if ($imagensDAO->renomearDescritor($id, $novoNome)) {
-        echo json_encode(['resposta' => true]);
+        echo json_encode(true);
     } else {
-        echo json_encode(['resposta' => false]);
+        echo json_encode(false);
     }
 } else {
-    echo json_encode(['resposta' => false]);
+    echo json_encode(false);
 }
 
 

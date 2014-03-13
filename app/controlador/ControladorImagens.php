@@ -183,6 +183,10 @@ class ControladorImagens extends Controlador {
         $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }
+    public function acaoMoverDescritor(){
+        $this->visao->acessoMinimo = Permissao::GESTOR;
+        $this->renderizar();
+    }
     /*
      * OUTROS
      */

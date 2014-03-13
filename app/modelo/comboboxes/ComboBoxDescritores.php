@@ -20,7 +20,7 @@ class ComboBoxDescritores {
         if ($idCategoriaPai !== null) {
             $codigo = "";
             $imagensDAO = new imagensDAO();
-            $subcategorias = $imagensDAO->consultarDescritoresFilhos("*", "pai = $idCategoriaPai AND nome <> 'Padrão'");
+            $subcategorias = $imagensDAO->consultarDescritoresFilhos("*", "pai = $idCategoriaPai ");
             if (sizeof($subcategorias) == 0) {
 //                $caminho = $imagensDAO->consultarCaminhoDescritores($idCategoriaPai);
                 $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem descritores cadastrados --</option>\n";
@@ -39,7 +39,7 @@ class ComboBoxDescritores {
     private static function montarCaixaSelecaoDescritorPrimeiroNivel() {
         $codigo = "";
         $imagensDAO = new imagensDAO();
-        $categorias = $imagensDAO->consultarDescritoresNivel1('*', 'nome <> "Padrão"');
+        $categorias = $imagensDAO->consultarDescritoresNivel1();
         if (sizeof($categorias) == 0) {
             $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem descritores cadastrados --</option>\n";
         } else {

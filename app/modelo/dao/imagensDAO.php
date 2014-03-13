@@ -221,9 +221,68 @@ class imagensDAO extends abstractDAO {
         return $this->executarQuery($sql, $params);
     }
 
+    public function moverDescritor($idDescritor, $novoPai, $antigoPai) {
+        try {
+            $this->iniciarTransacao();
+
+            //------------------------------------------------------------------
+            //  Atualizar informações sobre rotulo
+            //------------------------------------------------------------------
+            $sqlRotulo = "SELECT IFNULL ( (SELECT rotulo FROM imagens_descritor WHERE pai = :novoPai ORDER BY rotulo DESC LIMIT 1) ,0)";
+            $paramsRotulo = array(
+                ':novoPai' => [$novoPai, PDO::PARAM_INT]
+            );
+            $maiorRotuloNovoPai = $this->executarSelect($sqlRotulo, $paramsRotulo, false);
+            if (is_bool($maiorRotuloNovoPai) && !$maiorRotuloNovoPai || is_null($maiorRotuloNovoPai)) {
+                throw new Exception("Erro");
+            }
+
+            //------------------------------------------------------------------
+            //  Mover descritor
+            //------------------------------------------------------------------
+            $sql = "UPDATE imagens_descritor SET pai = :novoPai,rotulo = :novoRotulo WHERE idDescritor = :idDescritor AND pai = :antigoPai";
+            $params = array(
+                ':novoPai' => [$novoPai, PDO::PARAM_INT]
+                , ':antigoPai' => [$antigoPai, PDO::PARAM_INT]
+                , ':idDescritor' => [$idDescritor, PDO::PARAM_INT]
+                , ':novoRotulo' => [(int) $maiorRotuloNovoPai + 1, PDO::PARAM_INT]
+            );
+
+            if (!$this->executarQuery($sql, $params)) {
+                throw new Exception("Falha ao mover descritor");
+            }
+
+            //------------------------------------------------------------------
+            //  Atualizar informações sobre qtdFilhos
+            //------------------------------------------------------------------
+
+            $sql2 = "UPDATE imagens_descritor SET qtdFilhos = qtdFilhos - 1 WHERE idDescritor = :antigoPai";
+            $params2 = array(
+                ':antigoPai' => [$antigoPai, PDO::PARAM_INT]
+            );
+            if (!$this->executarQuery($sql2, $params2)) {
+                throw new Exception("Falha ao atualizar informações");
+            }
+
+            $sql3 = "UPDATE imagens_descritor SET qtdFilhos = qtdFilhos + 1 WHERE idDescritor = :novoPai";
+            $params3 = array(
+                ':novoPai' => [$novoPai, PDO::PARAM_INT]
+            );
+            if (!$this->executarQuery($sql3, $params3)) {
+                throw new Exception("Falha ao atualizar informações");
+            }
+
+            $this->encerrarTransacao();
+            return true;
+        } catch (Exception $e) {
+            $this->rollback();
+            return false;
+        }
+    }
+
     public function arvoreDescritores() {
         $descritores = $this->montarRecursivamente(ImagensDescritor::ID_RAIZ_NIVEL_ZERO);
-        $arvore[] = ['id' => fnEncrypt(ImagensDescritor::ID_RAIZ_NIVEL_ZERO), 'text' => 'Descritores', 'nivel' => '0', 'rotulo' => '0', 'children' => $descritores];
+        $arvore[] = ['id' => fnEncrypt(ImagensDescritor::ID_RAIZ_NIVEL_ZERO), 'text' => 'Descritores', 'nivel' => '0', 'rotulo' => '0', 'children' => $descritores, 'state' => ['opened' => true, 'selected' => true]];
         return $arvore;
     }
 

@@ -39,23 +39,27 @@
         });
 
         function renomearDescritor(id, novoNome) {
-
-            $.ajax({
+            var sucesso;
+            return $.ajax({
                 async: false
                 , type: "POST"
                 , url: "index.php?c=imagens&a=renomearDescritor"
                 , dataType: "json"
                 , data: {'id': id, 'novoNome': novoNome}
                 , success: function(json) {
-                    return json.resposta;
+                    sucesso = json;
+                    return json;
                 }
                 , error: function(xhr, ajaxOptions, thrownError) {
+                    sucesso = false;
                     return false;
                 }
             });
+            return sucesso;
         }
 
         function criarDescritor(idPai, nome) {
+            var sucesso;
             $.ajax({
                 async: false
                 , type: "POST"
@@ -63,12 +67,34 @@
                 , dataType: "json"
                 , data: {'idPai': idPai, 'nome': nome}
                 , success: function(json) {
+                    sucesso = json;
                     return json.resposta;
                 }
                 , error: function(xhr, ajaxOptions, thrownError) {
+                    sucesso = false;
                     return false;
                 }
             });
+            return sucesso;
+        }
+        function moverDescritor(idDescritor, idNovoPai, idAntigoPai) {
+            var sucesso;
+            $.ajax({
+                async: false
+                , type: "POST"
+                , url: "index.php?c=imagens&a=moverDescritor"
+                , dataType: "json"
+                , data: {'idDescritor': idDescritor, 'idNovoPai': idNovoPai, 'idAntigoPai': idAntigoPai}
+                , success: function(json) {
+                    sucesso = json;
+                    return json;
+                }
+                , error: function(xhr, ajaxOptions, thrownError) {
+                    sucesso = false;
+                    return false;
+                }
+            });
+            return sucesso;
         }
         function criarArvore(jsonData) {
 
@@ -122,7 +148,7 @@
             };
 
             $('#jstree_div').jstree({
-                "core": {
+                "core": {//Configurações básicas
                     data: jsonData
                     , "themes": {
                         "stripes": true
@@ -134,6 +160,7 @@
                         switch (operation) {
                             case "move_node":
                                 if (node.original !== undefined && node_parent.original != undefined && node.original.nivel - 1 == node_parent.original.nivel) {
+//                                    console.log("movendo...");
                                     check_passed = true;
                                 }
                                 break;
@@ -147,12 +174,15 @@
                                 break;
                             case "rename_node":
                                 check_passed = renomearDescritor(node.id, node_position);
+                                if (!check_passed) {
+                                    showPopUp("Não foi possível renomear. Verifique se o nome já não existe.", "erro");
+                                }
                                 break;
                         }
                         return check_passed;
                     }
                 }
-                , contextmenu: {
+                , contextmenu: {//Menu com clique direito
                     items: function(node) {
                         if (node.parent == "#") {
                             return {
@@ -173,9 +203,9 @@
                     }
 
                 }
-                , dnd: {
+                , dnd: {//Drag 'n' Drop
                     is_draggable: function(node) {
-                        if (node.parent == "#") {
+                        if (node.parent == "#" || node.original.nivel == 1) {
                             return false;
                         }
                         return true;
@@ -190,19 +220,22 @@
 //                console.log("Renomeado...");
 //                console.log(data);
 //            });
-//            $('#jstree_div').on("move_node.jstree", function(e, data) {
-//                console.log(e);
-//                console.log("Movendo...");
-//                console.log(data);
-//            });
+            $('#jstree_div').on("move_node.jstree", function(e, data) {
+                if (!moverDescritor(data.node.id, data.parent, data.old_parent)) {
+                    showPopUp("Falha ao mover", "erro");
+                    return false;
+                } else {
+                    return true;
+                }
+            });
 //            $('#jstree_div').on("delete_node.jstree", function(e, data) {
 //                console.log("Deletando...");
 //                console.log(data);
 //            });
-            $('#jstree_div').on("create_node.jstree", function(e, data) {
-                console.log("Descritor criado")
-//                criarDescritor(data.parent,data.original.text);
-            });
+//            $('#jstree_div').on("create_node.jstree", function(e, data) {
+//                console.log("Descritor criado")
+////                criarDescritor(data.parent,data.original.text);
+//            });
         }
 
     });
