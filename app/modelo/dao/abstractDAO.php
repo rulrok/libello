@@ -88,7 +88,7 @@ abstract class abstractDAO {
      * @param array $params Array com os parâmetros para casar com as variáveis no formato :nomeVariável
      * @return boolean Retorna verdadeiro caso a query tenha side executada com sucesso, ou falso caso contrário
      */
-    public function executarQuery($sql, $params) {
+    public function executarQuery($sql, $params, $forcarRetorno = false) {
         try {
             $conn = $this->getConexao();
             $stmt = $conn->prepare($sql);
@@ -98,7 +98,11 @@ abstract class abstractDAO {
                 }
             }
             $stmt->execute();
-            return true;
+            if (!$forcarRetorno) {
+                return true;
+            } else {
+                return $stmt->rowCount();
+            }
         } catch (Exception $e) {
             //TODO Armazenar exceção para depuração do sistema
             print_r($e);
@@ -123,8 +127,8 @@ abstract class abstractDAO {
     public function rollback() {
         $this->getConexao()->rollBack();
     }
-    
-    public function transacaoEstaAberta(){
+
+    public function transacaoEstaAberta() {
         return $this->getConexao()->inTransaction();
     }
 

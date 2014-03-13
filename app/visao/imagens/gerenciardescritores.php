@@ -4,7 +4,8 @@
     <label for="busca_descritor">Buscar: </label>
     <input type="text" id="busca_descritor" class="input-large ignorar"/>
     <hr>
-    <div id="jstree_div"></div>
+    <div id="jstree_div" class="span5"></div>
+    <div id="jstree_div_aux" class="span5"></div>
 </div>
 
 <script>
@@ -96,6 +97,43 @@
             });
             return sucesso;
         }
+
+        function montarArvoreAuxiliar() {
+            $(function() {
+                $.ajax({
+                    async: true,
+                    type: "GET",
+                    url: "index.php?c=imagens&a=arvoredescritores&completa=true",
+                    dataType: "json",
+                    success: function(json) {
+                        $('#jstree_div_aux').jstree({
+                            core: {
+                                data: function(node, callback) {
+                                    var jsonAux = jsonData;
+
+                                    for (var i = 0; i < jsonAux.length; i++) {
+                                        jsonAux[i].id = jsonAux[i].id != "#" ? "a_" + jsonAux[i].id : "#";
+                                        jsonAux[i].parent = jsonAux[i].parent != "#" ? "a_" + jsonAux[i].parent : "#";
+                                    }
+                                    console.log(jsonAux);
+                                    callback(jsonAux);
+                                }
+                                , "themes": {
+                                    "stripes": true
+                                    , icons: false
+                                }
+                                , "multiple": false
+                            }
+                        });
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
+                    }
+                });
+            });
+
+        }
         function criarArvore(jsonData) {
 
             var menuCriar = {
@@ -165,6 +203,7 @@
                                 }
                                 break;
                             case "delete_node":
+                                window.alert("Deletando");
                                 check_passed = true;
                                 break;
                             case "create_node":
@@ -213,6 +252,9 @@
                 }
                 , "plugins": ["contextmenu", "unique", "json_data", "dnd", "search"]
             });
+
+
+
 //            $('#jstree_div').on("changed.jstree", function(e, data) {
 //                console.log(data);
 //            });
@@ -228,14 +270,15 @@
                     return true;
                 }
             });
-//            $('#jstree_div').on("delete_node.jstree", function(e, data) {
-//                console.log("Deletando...");
+            $('#jstree_div').on("delete_node.jstree", function(e, data) {
+                window.alert("Deletado");
 //                console.log(data);
-//            });
+            });
 //            $('#jstree_div').on("create_node.jstree", function(e, data) {
 //                console.log("Descritor criado")
 ////                criarDescritor(data.parent,data.original.text);
 //            });
+montarArvoreAuxiliar();
         }
 
     });

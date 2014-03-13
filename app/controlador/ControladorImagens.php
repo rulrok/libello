@@ -175,25 +175,32 @@ class ControladorImagens extends Controlador {
         $this->renderizar();
     }
 
-    public function acaoRenomearDescritor(){
+    public function acaoRenomearDescritor() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }
-    public function acaoCriarDescritor(){
+
+    public function acaoCriarDescritor() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }
-    public function acaoMoverDescritor(){
+
+    public function acaoMoverDescritor() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }
+
     /*
      * OUTROS
      */
 
     public function acaoArvoreDescritores() {
         $imagensDAO = new imagensDAO();
-        $this->visao->arvore = $imagensDAO->arvoreDescritores();
+        if (filter_has_var(INPUT_GET, 'completa') && filter_input(INPUT_GET, 'completa')) {
+            $this->visao->arvore = $imagensDAO->arvoreDescritores(true);
+        } else {
+            $this->visao->arvore = $imagensDAO->arvoreDescritores();
+        }
         $this->renderizar();
     }
 

@@ -127,6 +127,30 @@ class imagensDAO extends abstractDAO {
         return $this->executarSelect($sql);
     }
 
+    public function consultarDescritoresCompletos() {
+        $sql = ' CREATE TEMPORARY TABLE ids_aux ( id INT NOT NULL UNIQUE) ENGINE = InnoDB; -- Tabela auxiliar
+CREATE TEMPORARY TABLE ids_aux2 ( id INT NOT NULL UNIQUE) ENGINE = InnoDB; -- Outra tabela auxiliar
+CREATE TEMPORARY TABLE ids(id INT NOT NULL UNIQUE) ENGINE = InnoDB; -- Tabela que vai conter os IDs dos elementos que devem ser retornados
+
+INSERT INTO ids SELECT DISTINCT idDescritor FROM imagens_descritor WHERE nivel = 4; -- Seleciona os filhos propriamente ditos
+
+INSERT INTO ids_aux SELECT DISTINCT pai FROM imagens_descritor WHERE nivel = 4; -- Para encontrar os pais dos descritores nivel 4
+INSERT INTO ids SELECT DISTINCT idDescritor FROM imagens_descritor WHERE idDescritor IN (SELECT * FROM ids_aux); -- Seleciona os pais nivel 3
+	
+INSERT INTO ids_aux2 SELECT DISTINCT pai FROM imagens_descritor WHERE idDescritor IN (SELECT * FROM ids_aux); -- Para encontrar os pais dos descritores nivel 3
+INSERT INTO ids SELECT DISTINCT idDescritor FROM imagens_descritor WHERE idDescritor IN (SELECT * FROM ids_aux2); -- Seleciona os pais nivel 2
+DELETE QUICK FROM ids_aux;
+
+INSERT INTO ids_aux SELECT DISTINCT pai FROM imagens_descritor WHERE idDescritor IN (SELECT * FROM ids_aux2); -- Para encontrar os pais dos descritores nivel 2
+INSERT INTO ids SELECT DISTINCT idDescritor FROM imagens_descritor WHERE idDescritor IN (SELECT * FROM ids_aux); -- Seleciona os pais nivel 1
+
+SELECT * FROM imagens_descritor WHERE idDescritor IN (SELECT * FROM ids);';
+        $conn = PDOconnectionFactory::obterConexao();
+        $stmt = $conn->query($sql);
+        $resultado = $stmt;
+        return $resultado;
+    }
+
     public function consultarCaminhoAteRaiz($idDescritorBase) {
         $caminho = array();
 
@@ -342,9 +366,16 @@ class imagensDAO extends abstractDAO {
         }
     }
 
-    public function arvoreDescritores() {
-        $descritores = $this->montarRecursivamente(ImagensDescritor::ID_RAIZ_NIVEL_ZERO);
-        $arvore[] = ['id' => fnEncrypt(ImagensDescritor::ID_RAIZ_NIVEL_ZERO), 'text' => 'Descritores', 'nivel' => '0', 'rotulo' => '0', 'children' => $descritores, 'state' => ['opened' => true, 'selected' => true]];
+    public function arvoreDescritores($completaApenas = false) {
+        $arvore[] = ['id' => fnEncrypt(ImagensDescritor::ID_RAIZ_NIVEL_ZERO), 'parent' => '#', 'text' => 'Descritores', 'nivel' => '0', 'rotulo' => '0', 'state' => ['opened' => true, 'selected' => true]];
+        if (!$completaApenas) {
+            $descritores = $this->consultarDescritor('idDescritor, nome, pai, nivel, rotulo', 'pai IS NOT NULL');
+        } else {
+            $descritores = $this->consultarDescritoresCompletos();
+        }
+        foreach ($descritores as $desc) {
+            $arvore[] = ['id' => fnEncrypt($desc['idDescritor']), 'parent' => (fnEncrypt($desc['pai'])), 'text' => $desc['nome'], 'nivel' => $desc['nivel'], 'rotulo' => $desc['rotulo']];
+        }
         return $arvore;
     }
 
