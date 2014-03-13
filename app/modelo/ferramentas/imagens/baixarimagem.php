@@ -14,17 +14,17 @@ if (filter_has_var(INPUT_GET, 'idImagem')) {
         $tipoImagem = 'png';
     }
     
-    $diretorioTemp = APP_TEMP_DIR . time();
-    mkdir($diretorioTemp);
-    $arquivoTemp = $diretorioTemp . '/' . $nomeArquivoNormalizado;
-    $copiou = copy($enderecoArquivo, $arquivoTemp);
+//    $diretorioTemp = APP_TEMP_DIR . time();
+//    mkdir($diretorioTemp);
+//    $arquivoTemp = $diretorioTemp . '/' . $nomeArquivoNormalizado;
+//    $copiou = copy($enderecoArquivo, $arquivoTemp);
 
-    if (!$copiou) {
-        echo 'Erro ao baixar imagem';
-        die('Erro ao copiar');
-    }
+//    if (!$copiou) {
+//        echo 'Erro ao baixar imagem';
+//        die('Erro ao copiar');
+//    }
 
     header("Content-disposition: attachment; filename=$nomeArquivoNormalizado");
     header("Content-type: image/$tipoImagem");
-    readfile($arquivoTemp);
+    readfile($enderecoArquivo);
 }

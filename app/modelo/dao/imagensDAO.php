@@ -225,9 +225,71 @@ class imagensDAO extends abstractDAO {
         try {
             $this->iniciarTransacao();
 
+//            $sequanciaAntigaIds = array();
+//            $descAtual = $idDescritor;
+//            $ret = -1;
+//            while ($ret != ImagensDescritor::ID_RAIZ_NIVEL_ZERO) {
+//                $sqlAux = "SELECT pai FROM imagens_descritor WHERE idDescritor = :idDescritor LIMIT 1";
+//                $paramsAux = array(
+//                    ':idDescritor' => [$descAtual, PDO::PARAM_INT]
+//                );
+//                $ret = $this->executarSelect($sqlAux, $paramsAux, FALSE);
+//                $sequanciaAntigaIds[] = $ret;
+//                $descAtual = $ret;
+//            }
+//            array_pop($sequanciaAntigaIds);
+            $sequanciaNovaIds = array($novoPai);
+            $descAtual = $novoPai;
+            $ret = -1;
+            while ($ret != ImagensDescritor::ID_RAIZ_NIVEL_ZERO) {
+                $sqlAux = "SELECT pai FROM imagens_descritor WHERE idDescritor = :idDescritor LIMIT 1";
+                $paramsAux = array(
+                    ':idDescritor' => [$descAtual, PDO::PARAM_INT]
+                );
+                $ret = $this->executarSelect($sqlAux, $paramsAux, FALSE);
+                $sequanciaNovaIds[] = $ret;
+                $descAtual = $ret;
+            }
+            array_pop($sequanciaNovaIds); //Retira o '0' do vetor
+
+
+            switch (sizeof($sequanciaNovaIds)) {
+                case 3:
+                    $sqlAtualizar = "UPDATE imagens_imagem SET descritor1 = :desc1, descritor2 = :desc2, descritor3 = :desc3 WHERE descritor4 = :desc4";
+                    $paramsAtualizar = array(
+                        ':desc1' => [$sequanciaNovaIds[2], PDO::PARAM_INT]
+                        , ':desc2' => [$sequanciaNovaIds[1], PDO::PARAM_INT]
+                        , ':desc3' => [$sequanciaNovaIds[0], PDO::PARAM_INT]
+                        , ':desc4' => [$idDescritor, PDO::PARAM_INT]
+                    );
+                    break;
+                case 2:
+                    $sqlAtualizar = "UPDATE imagens_imagem SET descritor1 = :desc1, descritor2 = :desc2  WHERE descritor3 = :desc3";
+                    $paramsAtualizar = array(
+                        ':desc1' => [$sequanciaNovaIds[1], PDO::PARAM_INT]
+                        , ':desc2' => [$sequanciaNovaIds[0], PDO::PARAM_INT]
+                        , ':desc3' => [$idDescritor, PDO::PARAM_INT]
+                    );
+                    break;
+                case 1:
+                    $sqlAtualizar = "UPDATE imagens_imagem SET descritor1 = :desc1 WHERE descritor2 = :desc2";
+                    $paramsAtualizar = array(
+                        ':desc1' => [$sequanciaNovaIds[0], PDO::PARAM_INT]
+                        , ':desc2' => [$idDescritor, PDO::PARAM_INT]
+                    );
+                    break;
+                default:
+                    throw new Exception("Erro ao processar descritores");
+            }
+
+            if (!$this->executarQuery($sqlAtualizar, $paramsAtualizar)) {
+                throw new Exception("Falha ao atualizar descritores");
+            }
+
             //------------------------------------------------------------------
             //  Atualizar informações sobre rotulo
             //------------------------------------------------------------------
+
             $sqlRotulo = "SELECT IFNULL ( (SELECT rotulo FROM imagens_descritor WHERE pai = :novoPai ORDER BY rotulo DESC LIMIT 1) ,0)";
             $paramsRotulo = array(
                 ':novoPai' => [$novoPai, PDO::PARAM_INT]
