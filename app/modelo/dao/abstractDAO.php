@@ -88,7 +88,7 @@ abstract class abstractDAO {
      * @param array $params Array com os parâmetros para casar com as variáveis no formato :nomeVariável
      * @return boolean Retorna verdadeiro caso a query tenha side executada com sucesso, ou falso caso contrário
      */
-    public function executarQuery($sql, $params, $forcarRetorno = false) {
+    public function executarQuery($sql, $params = null, $forcarRetorno = false) {
         try {
             $conn = $this->getConexao();
             $stmt = $conn->prepare($sql);

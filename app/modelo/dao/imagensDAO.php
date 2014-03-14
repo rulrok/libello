@@ -127,39 +127,106 @@ class imagensDAO extends abstractDAO {
         return $this->executarSelect($sql);
     }
 
-    public function consultarDescritoresCompletos() {
-        $sql = ' CREATE TEMPORARY TABLE ids_aux ( id INT NOT NULL UNIQUE) ENGINE = InnoDB; -- Tabela auxiliar
-CREATE TEMPORARY TABLE ids_aux2 ( id INT NOT NULL UNIQUE) ENGINE = InnoDB; -- Outra tabela auxiliar
-CREATE TEMPORARY TABLE ids(id INT NOT NULL UNIQUE) ENGINE = InnoDB; -- Tabela que vai conter os IDs dos elementos que devem ser retornados
-
-INSERT INTO ids SELECT DISTINCT idDescritor FROM imagens_descritor WHERE nivel = 4; -- Seleciona os filhos propriamente ditos
-
-INSERT INTO ids_aux SELECT DISTINCT pai FROM imagens_descritor WHERE nivel = 4; -- Para encontrar os pais dos descritores nivel 4
-INSERT INTO ids SELECT DISTINCT idDescritor FROM imagens_descritor WHERE idDescritor IN (SELECT * FROM ids_aux); -- Seleciona os pais nivel 3
-	
-INSERT INTO ids_aux2 SELECT DISTINCT pai FROM imagens_descritor WHERE idDescritor IN (SELECT * FROM ids_aux); -- Para encontrar os pais dos descritores nivel 3
-INSERT INTO ids SELECT DISTINCT idDescritor FROM imagens_descritor WHERE idDescritor IN (SELECT * FROM ids_aux2); -- Seleciona os pais nivel 2
-DELETE QUICK FROM ids_aux;
-
-INSERT INTO ids_aux SELECT DISTINCT pai FROM imagens_descritor WHERE idDescritor IN (SELECT * FROM ids_aux2); -- Para encontrar os pais dos descritores nivel 2
-INSERT INTO ids SELECT DISTINCT idDescritor FROM imagens_descritor WHERE idDescritor IN (SELECT * FROM ids_aux); -- Seleciona os pais nivel 1
-
-SELECT * FROM imagens_descritor WHERE idDescritor IN (SELECT * FROM ids);';
-        $conn = PDOconnectionFactory::obterConexao();
-        $stmt = $conn->query($sql);
-        $resultado = $stmt;
+    public function consultarDescritoresCompletos($idDescritorExcluir = null) {
+        try {
+            $this->iniciarTransacao();
+            $sql = 'CREATE TEMPORARY TABLE ids_aux ( id INT NOT NULL UNIQUE, pai INT NOT NULL) ENGINE = InnoDB';
+            $this->executarQuery($sql);
+            $sql = 'CREATE TEMPORARY TABLE ids_aux2 ( id INT NOT NULL UNIQUE, pai INT NOT NULL) ENGINE = InnoDB';
+            $this->executarQuery($sql);
+            $sql = 'CREATE TEMPORARY TABLE ids(id INT NOT NULL UNIQUE, pai INT NOT NULL) ENGINE = InnoDB';
+            $this->executarQuery($sql);
+            if ($idDescritorExcluir !== null) {
+                $param = array(
+                    ':idDescritorExcluir' => [$idDescritorExcluir, PDO::PARAM_INT]
+                );
+                //Inicia a seleção a partir dos nós de nível 1
+                $sql = 'INSERT INTO ids_aux(id) SELECT idDescritor FROM imagens_descritor WHERE nivel = 1 AND idDescritor <> :idDescritorExcluir';
+                $this->executarQuery($sql, $param);
+                //Seleciona os filhos de nível 2 que os pais foram selecionados
+                $sql = 'INSERT INTO ids_aux2(id) SELECT idDescritor FROM imagens_descritor WHERE pai IN (SELECT id FROM ids_aux) AND idDescritor <> :idDescritorExcluir';
+                $this->executarQuery($sql, $param);;
+                //Limpa tabela temporária
+                $sql = 'DELETE QUICK FROM ids_aux';
+                $this->executarQuery($sql);
+                //Seleciona os filhos de nível 3 que os pois foram selecionados
+                $sql = 'INSERT INTO ids_aux(id) SELECT idDescritor FROM imagens_descritor WHERE pai IN (SELECT id FROM ids_aux2) AND idDescritor <> :idDescritorExcluir';
+                $this->executarQuery($sql, $param);
+                $sql = 'DELETE QUICK FROM ids_aux2';
+                $this->executarQuery($sql);
+                $sql = 'INSERT INTO ids_aux2(id) SELECT idDescritor FROM imagens_descritor WHERE pai IN (SELECT id FROM ids_aux) AND idDescritor <> :idDescritorExcluir';
+                $this->executarQuery($sql, $param);
+                //----//
+                //Seleciona as folhas que devem pertencer à árvore
+                $sql = 'INSERT INTO ids(id,pai) SELECT idDescritor,pai FROM imagens_descritor WHERE idDescritor IN (SELECT id FROM ids_aux2)';
+                $this->executarQuery($sql);
+                //Seleciona os pais de nível 3
+                $sql = 'DELETE QUICK FROM ids_aux';
+                $this->executarQuery($sql);
+                $sql = 'INSERT INTO ids_aux(id,pai) SELECT idDescritor,pai FROM imagens_descritor WHERE idDescritor IN (SELECT pai FROM ids)';
+                $this->executarQuery($sql);
+                $sql = 'INSERT INTO ids SELECT * FROM ids_aux';
+                $this->executarQuery($sql);
+                //Seleciona os pais de nível 2
+                $sql = 'DELETE QUICK FROM ids_aux2';
+                $this->executarQuery($sql);
+                $sql = 'INSERT INTO ids_aux2(id,pai) SELECT idDescritor,pai FROM imagens_descritor WHERE idDescritor IN (SELECT pai FROM ids_aux)';
+                $this->executarQuery($sql);
+                $sql = 'INSERT INTO ids(id,pai) SELECT * FROM ids_aux2';
+                $this->executarQuery($sql);
+                //Seleciona os pais de nível 1
+                $sql = 'DELETE QUICK FROM ids_aux';
+                $this->executarQuery($sql);
+                $sql = 'INSERT INTO ids_aux(id,pai) SELECT idDescritor,pai FROM imagens_descritor WHERE idDescritor IN (SELECT pai FROM ids_aux2)';
+                $this->executarQuery($sql);
+                $sql = 'INSERT INTO ids(id,pai) SELECT * FROM ids_aux';
+                $this->executarQuery($sql);
+            } else {
+                //Seleciona os filhos propriamente ditos
+                $sql = "INSERT INTO ids(id) SELECT DISTINCT idDescritor FROM imagens_descritor WHERE nivel = 4";
+                $this->executarQuery($sql);
+                //Para encontrar os pais dos descritores nivel 4
+                $sql = "INSERT INTO ids_aux(id) SELECT DISTINCT pai FROM imagens_descritor WHERE nivel = 4";
+                $this->executarQuery($sql);
+                //Seleciona os pais nivel 3
+                $sql = 'INSERT INTO ids(id) SELECT DISTINCT idDescritor FROM imagens_descritor WHERE idDescritor IN (SELECT id FROM ids_aux)';
+                $this->executarQuery($sql);
+                //Para encontrar os pais dos descritores nivel 3
+                $sql = 'INSERT INTO ids_aux2(id) SELECT DISTINCT pai FROM imagens_descritor WHERE idDescritor IN (SELECT id FROM ids_aux)';
+                $this->executarQuery($sql);
+                //Seleciona os pais nivel 2
+                $sql = 'INSERT INTO ids(id) SELECT DISTINCT idDescritor FROM imagens_descritor WHERE idDescritor IN (SELECT id FROM ids_aux2)';
+                $this->executarQuery($sql);
+                $sql = 'DELETE QUICK FROM ids_aux;';
+                $this->executarQuery($sql);
+                //Para encontrar os pais dos descritores nivel 2
+                $sql = 'INSERT INTO ids_aux(id) SELECT DISTINCT pai FROM imagens_descritor WHERE idDescritor IN (SELECT id FROM ids_aux2)';
+                $this->executarQuery($sql);
+                //Seleciona os pais nivel 1
+                $sql = 'INSERT INTO ids(id) SELECT DISTINCT idDescritor FROM imagens_descritor WHERE idDescritor IN (SELECT id FROM ids_aux)';
+                $this->executarQuery($sql);
+            }
+            $sql = 'SELECT * FROM imagens_descritor WHERE idDescritor IN (SELECT id FROM ids)';
+            $resultado = $this->executarSelect($sql);
+            $sql = 'DROP TEMPORARY TABLE IF EXISTS ids, ids_aux, ids_aux2';
+            $this->executarQuery($sql);
+            $this->encerrarTransacao();
+        } catch (Exception $e) {
+            $resultado = [];
+            $this->rollback();
+        }
         return $resultado;
     }
 
     public function consultarCaminhoAteRaiz($idDescritorBase) {
         $caminho = array();
 
-        $resultado = static::consultarDescritor('nome, pai', "idDescritor = $idDescritorBase");
+        $resultado = $this->consultarDescritor('nome, pai', "idDescritor = $idDescritorBase");
 
         while ($resultado[0]['pai'] != null) {
             array_push($caminho, $resultado[0]['nome']);
             $aux = (int) $resultado[0]['pai'];
-            $resultado = static::consultarDescritor('nome, pai', "idDescritor = $aux");
+            $resultado = $this->consultarDescritor('nome, pai', "idDescritor = $aux");
         }
 
         $endereco = "";
@@ -366,12 +433,12 @@ SELECT * FROM imagens_descritor WHERE idDescritor IN (SELECT * FROM ids);';
         }
     }
 
-    public function arvoreDescritores($completaApenas = false) {
+    public function arvoreDescritores($completaApenas = false, $idDescritorExcluir = null) {
         $arvore[] = ['id' => fnEncrypt(ImagensDescritor::ID_RAIZ_NIVEL_ZERO), 'parent' => '#', 'text' => 'Descritores', 'nivel' => '0', 'rotulo' => '0', 'state' => ['opened' => true, 'selected' => true]];
         if (!$completaApenas) {
             $descritores = $this->consultarDescritor('idDescritor, nome, pai, nivel, rotulo', 'pai IS NOT NULL');
         } else {
-            $descritores = $this->consultarDescritoresCompletos();
+            $descritores = $this->consultarDescritoresCompletos($idDescritorExcluir);
         }
         foreach ($descritores as $desc) {
             $arvore[] = ['id' => fnEncrypt($desc['idDescritor']), 'parent' => (fnEncrypt($desc['pai'])), 'text' => $desc['nome'], 'nivel' => $desc['nivel'], 'rotulo' => $desc['rotulo']];

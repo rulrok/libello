@@ -5,7 +5,13 @@
     <input type="text" id="busca_descritor" class="input-large ignorar"/>
     <hr>
     <div id="jstree_div" class="span5"></div>
-    <div id="jstree_div_aux" class="span5"></div>
+    <div id="wrap_aux" class="hidden">
+        <div id="jstree_div_aux" class="span5"></div>
+        <div class="span5" style="clear:left;min-height: 1px;margin-left: 220px;">
+            <input id="botao_cancelar" type="button" class="btn" value="Cancelar" />
+            <input id="botao_confirmar" type="button" class="btn btn-primary" value="Confirmar" />
+        </div>
+    </div>
 </div>
 
 <script>
@@ -37,6 +43,13 @@
                     alert(thrownError);
                 }
             });
+        });
+
+
+        $("#botao_cancelar").on('click', function() {
+            $('#jstree_div').toggle(200);
+            $('#jstree_div_aux').jstree(true).destroy();
+            $('#wrap_aux').toggleClass('hidden', 200);
         });
 
         function renomearDescritor(id, novoNome) {
@@ -78,6 +91,7 @@
             });
             return sucesso;
         }
+
         function moverDescritor(idDescritor, idNovoPai, idAntigoPai) {
             var sucesso;
             $.ajax({
@@ -98,92 +112,90 @@
             return sucesso;
         }
 
-        function montarArvoreAuxiliar() {
-            $(function() {
-                $.ajax({
-                    async: true,
-                    type: "GET",
-                    url: "index.php?c=imagens&a=arvoredescritores&completa=true",
-                    dataType: "json",
-                    success: function(json) {
-                        $('#jstree_div_aux').jstree({
-                            core: {
-                                data: function(node, callback) {
-                                    var jsonAux = jsonData;
+        function montarArvoreAuxiliar(idIgnorar) {
+            $.ajax({
+                async: true,
+                type: "GET",
+                url: "index.php?c=imagens&a=arvoredescritores&completa=true&descritorExcluir=" + idIgnorar,
+                dataType: "json",
+                success: function(jsonData) {
+                    $('#jstree_div_aux').jstree({
+                        core: {
+                            data: function(node, callback) {
+                                var jsonAux = jsonData;
 
-                                    for (var i = 0; i < jsonAux.length; i++) {
-                                        jsonAux[i].id = jsonAux[i].id != "#" ? "a_" + jsonAux[i].id : "#";
-                                        jsonAux[i].parent = jsonAux[i].parent != "#" ? "a_" + jsonAux[i].parent : "#";
-                                    }
-                                    console.log(jsonAux);
-                                    callback(jsonAux);
+                                for (var i = 0; i < jsonAux.length; i++) {
+                                    jsonAux[i].id = jsonAux[i].id != "#" ? "a_" + jsonAux[i].id : "#";
+                                    jsonAux[i].parent = jsonAux[i].parent != "#" ? "a_" + jsonAux[i].parent : "#";
                                 }
-                                , "themes": {
-                                    "stripes": true
-                                    , icons: false
-                                }
-                                , "multiple": false
+                                callback(jsonAux);
                             }
-                        });
-                    },
-                    error: function(xhr, ajaxOptions, thrownError) {
-                        alert(xhr.status);
-                        alert(thrownError);
-                    }
-                });
-            });
-
-        }
-        function criarArvore(jsonData) {
-
-            var menuCriar = {
-                "separator_before": false,
-                "separator_after": true,
-                "_disabled": false, //(this.check("create_node", data.reference, {}, "last")),
-                "label": "Criar",
-                "action": function(data) {
-                    var inst = $.jstree.reference(data.reference),
-                            obj = inst.get_node(data.reference);
-                    inst.create_node(obj, {}, "last", function(new_node) {
-                        setTimeout(function() {
-                            inst.edit(new_node);
-                        }, 0);
+                            , "themes": {
+                                "stripes": true
+                                , icons: false
+                            }
+                            , "multiple": false
+                        }
                     });
+
+                    $('#jstree_div').toggle(200);
+                    $('#wrap_aux').toggleClass('hidden', 200);
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert("Erro. Recarregue a página!");
                 }
-            };
-            var menuRenomear = {
-                "separator_before": false,
-                "separator_after": false,
-                "_disabled": false, //(this.check("rename_node", data.reference, this.get_parent(data.reference), "")),
-                "label": "Renomear",
-                /*
-                 "shortcut"			: 113,
-                 "shortcut_label"	: 'F2',
-                 "icon"				: "glyphicon glyphicon-leaf",
-                 */
-                "action": function(data) {
-                    var inst = $.jstree.reference(data.reference),
-                            obj = inst.get_node(data.reference);
-                    inst.edit(obj);
+            });
+        }
+
+        var menuCriar = {
+            "separator_before": false,
+            "separator_after": true,
+            "_disabled": false, //(this.check("create_node", data.reference, {}, "last")),
+            "label": "Criar",
+            "action": function(data) {
+                var inst = $.jstree.reference(data.reference),
+                        obj = inst.get_node(data.reference);
+                inst.create_node(obj, {}, "last", function(new_node) {
+                    setTimeout(function() {
+                        inst.edit(new_node);
+                    }, 0);
+                });
+            }
+        };
+        var menuRenomear = {
+            "separator_before": false,
+            "separator_after": false,
+            "_disabled": false, //(this.check("rename_node", data.reference, this.get_parent(data.reference), "")),
+            "label": "Renomear",
+            /*
+             "shortcut"			: 113,
+             "shortcut_label"	: 'F2',
+             "icon"				: "glyphicon glyphicon-leaf",
+             */
+            "action": function(data) {
+                var inst = $.jstree.reference(data.reference),
+                        obj = inst.get_node(data.reference);
+                inst.edit(obj);
+            }
+        };
+        var menuRemover = {
+            "separator_before": false,
+            "icon": false,
+            "separator_after": false,
+            "_disabled": false, //(this.check("delete_node", data.reference, this.get_parent(data.reference), "")),
+            "label": "Remover",
+            "action": function(data) {
+                var inst = $.jstree.reference(data.reference),
+                        obj = inst.get_node(data.reference);
+                if (inst.is_selected(obj)) {
+                    inst.delete_node(inst.get_selected());
                 }
-            };
-            var menuRemover = {
-                "separator_before": false,
-                "icon": false,
-                "separator_after": false,
-                "_disabled": false, //(this.check("delete_node", data.reference, this.get_parent(data.reference), "")),
-                "label": "Remover",
-                "action": function(data) {
-                    var inst = $.jstree.reference(data.reference),
-                            obj = inst.get_node(data.reference);
-                    if (inst.is_selected(obj)) {
-                        inst.delete_node(inst.get_selected());
-                    }
-                    else {
-                        inst.delete_node(obj);
-                    }
+                else {
+                    inst.delete_node(obj);
                 }
-            };
+            }
+        };
+        function criarArvore(jsonData) {
 
             $('#jstree_div').jstree({
                 "core": {//Configurações básicas
@@ -203,8 +215,9 @@
                                 }
                                 break;
                             case "delete_node":
-                                window.alert("Deletando");
-                                check_passed = true;
+//                                console.log(node.id)
+                                montarArvoreAuxiliar(node.id);
+                                check_passed = false;
                                 break;
                             case "create_node":
 //                                check_passed = criarDescritor(node_parent.id,node.text);
@@ -270,15 +283,15 @@
                     return true;
                 }
             });
-            $('#jstree_div').on("delete_node.jstree", function(e, data) {
-                window.alert("Deletado");
-//                console.log(data);
-            });
+//            $('#jstree_div').on("delete_node.jstree", function(e, data) {
+////                window.alert("Deletado");
+////                console.log(data);
+//            });
 //            $('#jstree_div').on("create_node.jstree", function(e, data) {
 //                console.log("Descritor criado")
 ////                criarDescritor(data.parent,data.original.text);
 //            });
-montarArvoreAuxiliar();
+
         }
 
     });

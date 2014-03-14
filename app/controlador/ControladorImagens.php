@@ -197,7 +197,12 @@ class ControladorImagens extends Controlador {
     public function acaoArvoreDescritores() {
         $imagensDAO = new imagensDAO();
         if (filter_has_var(INPUT_GET, 'completa') && filter_input(INPUT_GET, 'completa')) {
-            $this->visao->arvore = $imagensDAO->arvoreDescritores(true);
+            if (filter_has_var(INPUT_GET, 'descritorExcluir')) {
+                $descritorExcluido = fnDecrypt(filter_input(INPUT_GET, 'descritorExcluir'));
+            } else {
+                $descritorExcluido = null;
+            }
+            $this->visao->arvore = $imagensDAO->arvoreDescritores(true, $descritorExcluido);
         } else {
             $this->visao->arvore = $imagensDAO->arvoreDescritores();
         }
