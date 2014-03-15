@@ -2,6 +2,8 @@
 
 $id = fnDecrypt(filter_input(INPUT_POST, 'id'));
 $novoNome = filter_input(INPUT_POST, 'novoNome');
+$novoNome = rtrim($novoNome);
+$novoNome = ltrim($novoNome);
 
 if (!empty($id) && is_numeric($id) && !empty($novoNome)) {
     $imagensDAO = new imagensDAO();
@@ -13,5 +15,3 @@ if (!empty($id) && is_numeric($id) && !empty($novoNome)) {
 } else {
     echo json_encode(false);
 }
-
-

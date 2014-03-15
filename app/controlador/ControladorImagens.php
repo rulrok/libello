@@ -160,11 +160,6 @@ class ControladorImagens extends Controlador {
         $this->renderizar();
     }
 
-    public function acaoRemoverDescritor() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->renderizar();
-    }
-
     public function acaoObterdescritor() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->renderizar();
@@ -186,6 +181,11 @@ class ControladorImagens extends Controlador {
     }
 
     public function acaoMoverDescritor() {
+        $this->visao->acessoMinimo = Permissao::GESTOR;
+        $this->renderizar();
+    }
+
+    public function acaoRemoverDescritor() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }
@@ -214,5 +214,3 @@ class ControladorImagens extends Controlador {
     }
 
 }
-
-?>

@@ -145,7 +145,8 @@ class imagensDAO extends abstractDAO {
                 $this->executarQuery($sql, $param);
                 //Seleciona os filhos de nível 2 que os pais foram selecionados
                 $sql = 'INSERT INTO ids_aux2(id) SELECT idDescritor FROM imagens_descritor WHERE pai IN (SELECT id FROM ids_aux) AND idDescritor <> :idDescritorExcluir';
-                $this->executarQuery($sql, $param);;
+                $this->executarQuery($sql, $param);
+                ;
                 //Limpa tabela temporária
                 $sql = 'DELETE QUICK FROM ids_aux';
                 $this->executarQuery($sql);
@@ -221,20 +222,15 @@ class imagensDAO extends abstractDAO {
     public function consultarCaminhoAteRaiz($idDescritorBase) {
         $caminho = array();
 
-        $resultado = $this->consultarDescritor('nome, pai', "idDescritor = $idDescritorBase");
+        $resultado = $this->consultarDescritor('*', "idDescritor = $idDescritorBase");
 
         while ($resultado[0]['pai'] != null) {
-            array_push($caminho, $resultado[0]['nome']);
+            array_push($caminho, $resultado[0]);
             $aux = (int) $resultado[0]['pai'];
-            $resultado = $this->consultarDescritor('nome, pai', "idDescritor = $aux");
+            $resultado = $this->consultarDescritor('*', "idDescritor = $aux");
         }
 
-        $endereco = "";
-        $i = sizeof($caminho);
-        for (; $i > 0; $i--) {
-            $endereco .= array_pop($caminho) . " > ";
-        }
-        return $endereco . "'Novo descritor'";
+        return array_reverse($caminho);
     }
 
     public function consultarDescritoresFilhos($colunas = "*", $condicao = null, $condicaoJuncao = null) {
@@ -460,5 +456,3 @@ class imagensDAO extends abstractDAO {
     }
 
 }
-
-?>

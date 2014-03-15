@@ -142,5 +142,3 @@ abstract class abstractDAO {
       abstract function remover($valueObject);
      */
 }
-
-?>

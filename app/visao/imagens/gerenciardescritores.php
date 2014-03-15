@@ -7,9 +7,10 @@
     <div id="jstree_div" class="span5"></div>
     <div id="wrap_aux" class="hidden">
         <div id="jstree_div_aux" class="span5"></div>
-        <div class="span5" style="clear:left;min-height: 1px;margin-left: 220px;">
+        <div class="span5">
+            <p>Indique para onde as imagens com o atual descritor devem ser movidas</p>
             <input id="botao_cancelar" type="button" class="btn" value="Cancelar" />
-            <input id="botao_confirmar" type="button" class="btn btn-primary" value="Confirmar" />
+            <input id="botao_confirmar" type="button" class="btn btn-primary" disabled value="Confirmar" />
         </div>
     </div>
 </div>
@@ -19,47 +20,81 @@
     $(document).ready(function() {
 
 
-        $(function() {
-            $.ajax({
-                async: true,
-                type: "GET",
-                url: "index.php?c=imagens&a=arvoredescritores",
-                dataType: "json",
-                success: function(json) {
-                    criarArvore(json);
-                    var to = false;
-                    $('#busca_descritor').keyup(function() {
-                        if (to) {
-                            clearTimeout(to);
-                        }
-                        to = setTimeout(function() {
-                            var v = $('#busca_descritor').val();
-                            $('#jstree_div').jstree(true).search(v);
-                        }, 250);
-                    });
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    alert(xhr.status);
-                    alert(thrownError);
+        $.ajax({
+            async: true,
+            type: "GET",
+            url: "index.php?c=imagens&a=arvoredescritores",
+            dataType: "json",
+            success: function(json) {
+                criarArvore(json);
+                configurarCampoBusca('#jstree_div');
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            }
+        });
+
+        function configurarCampoBusca(elemento) {
+            $('#busca_descritor').val('');
+            $(elemento).jstree(true).search();
+            var to = false;
+            $('#busca_descritor').off('keyup');
+            $('#busca_descritor').keyup(function() {
+                if (to) {
+                    clearTimeout(to);
                 }
+                to = setTimeout(function() {
+                    var v = $('#busca_descritor').val();
+                    $(elemento).jstree(true).search(v);
+                }, 250);
             });
-        });
+        }
+        function escolherSubstituto() {
 
-
-        $("#botao_cancelar").on('click', function() {
-            $('#jstree_div').toggle(200);
-            $('#jstree_div_aux').jstree(true).destroy();
-            $('#wrap_aux').toggleClass('hidden', 200);
-        });
+            $("#botao_cancelar").on('click', function() {
+                configurarCampoBusca('#jstree_div');
+                $('#wrap_aux').addClass('hidden');
+                $('#jstree_div').removeClass('hidden', 200);
+                setTimeout(function() {
+                    $('#jstree_div_aux').jstree(true).destroy();
+                    $("#botao_cancelar,#botao_confirmar").off('click');
+                }, 400);
+            });
+            $("#botao_confirmar").on('click', function() {
+                confirmadoRemocao = true;
+                configurarCampoBusca('#jstree_div');
+                $('#jstree_div').jstree(true).delete_node($('#jstree_div').jstree(true).get_selected());
+                $('#jstree_div').removeClass('hidden', 200);
+                $("#botao_cancelar,#botao_confirmar").off('click');
+            });
+        }
 
         function renomearDescritor(id, novoNome) {
             var sucesso;
-            return $.ajax({
+            $.ajax({
                 async: false
                 , type: "POST"
                 , url: "index.php?c=imagens&a=renomearDescritor"
                 , dataType: "json"
                 , data: {'id': id, 'novoNome': novoNome}
+                , success: function(json) {
+                    sucesso = json;
+                }
+                , error: function(xhr, ajaxOptions, thrownError) {
+                    sucesso = false;
+                }
+            });
+            return sucesso;
+        }
+        function criarDescritor(idPai, nome) {
+            var sucesso;
+            $.ajax({
+                async: false
+                , type: "POST"
+                , url: "index.php?c=imagens&a=criarDescritor"
+                , dataType: "json"
+                , data: {'idPai': idPai, 'nome': nome}
                 , success: function(json) {
                     sucesso = json;
                     return json;
@@ -71,27 +106,6 @@
             });
             return sucesso;
         }
-
-        function criarDescritor(idPai, nome) {
-            var sucesso;
-            $.ajax({
-                async: false
-                , type: "POST"
-                , url: "index.php?c=imagens&a=criarDescritor"
-                , dataType: "json"
-                , data: {'idPai': idPai, 'nome': nome}
-                , success: function(json) {
-                    sucesso = json;
-                    return json.resposta;
-                }
-                , error: function(xhr, ajaxOptions, thrownError) {
-                    sucesso = false;
-                    return false;
-                }
-            });
-            return sucesso;
-        }
-
         function moverDescritor(idDescritor, idNovoPai, idAntigoPai) {
             var sucesso;
             $.ajax({
@@ -111,10 +125,28 @@
             });
             return sucesso;
         }
+        function removerDescritor(idDescritor, idDescritorSubstituto) {
+            var sucesso;
+            $.ajax({
+                async: false
+                , type: "POST"
+                , url: "index.php?c=imagens&a=removerDescritor"
+                , dataType: "json"
+                , data: {'idDescritor': idDescritor, 'idDescritorSubstituto': idDescritorSubstituto}
+                , success: function(json) {
+                    sucesso = json;
+                    return json;
+                }
+                , error: function(xhr, ajaxOptions, thrownError) {
+                    sucesso = false;
+                    return false;
+                }
+            });
+        }
 
         function montarArvoreAuxiliar(idIgnorar) {
             $.ajax({
-                async: true,
+                async: false,
                 type: "GET",
                 url: "index.php?c=imagens&a=arvoredescritores&completa=true&descritorExcluir=" + idIgnorar,
                 dataType: "json",
@@ -136,13 +168,26 @@
                             }
                             , "multiple": false
                         }
+                        , "plugins": ["unique", "json_data", "search"]
                     });
 
-                    $('#jstree_div').toggle(200);
-                    $('#wrap_aux').toggleClass('hidden', 200);
+                    $('#jstree_div').addClass('hidden', 200);
+                    $('#wrap_aux').removeClass('hidden', 200);
+                    configurarCampoBusca('#jstree_div_aux');
                 },
                 error: function(xhr, ajaxOptions, thrownError) {
                     alert("Erro. Recarregue a página!");
+                }
+            });
+            $('#jstree_div_aux').on("changed.jstree", function(e, data) {
+                if (data.action == "select_node") {
+                    if (data.node.original.nivel != 4) {
+                        $("#botao_confirmar").addClass('disabled');
+                        $("#botao_confirmar").prop('disabled', true);
+                    } else {
+                        $("#botao_confirmar").removeClass('disabled');
+                        $("#botao_confirmar").prop('disabled', false);
+                    }
                 }
             });
         }
@@ -151,11 +196,34 @@
             "separator_before": false,
             "separator_after": true,
             "_disabled": false, //(this.check("create_node", data.reference, {}, "last")),
-            "label": "Criar",
+            "label": "Criar descritor",
             "action": function(data) {
+                var nomebase = "Novo descritor";
                 var inst = $.jstree.reference(data.reference),
                         obj = inst.get_node(data.reference);
-                inst.create_node(obj, {}, "last", function(new_node) {
+                var child = inst.get_children_dom(data.reference);
+
+                var maiorNumero = -1;
+                $(child).each(function(index, data) {
+                    var nomeDescritor = inst.get_node(data).text;
+                    if (nomebase == nomeDescritor.substr(0, nomebase.length)) {
+                        var numeroEncontrado = parseInt(nomeDescritor.substr(nomebase.length, nomeDescritor.length));
+                        if (isNaN(numeroEncontrado)) {
+                            numeroEncontrado = 0;
+                        }
+                        if (maiorNumero < numeroEncontrado) {
+                            maiorNumero = numeroEncontrado;
+                        }
+                    }
+                });
+
+                maiorNumero++;
+
+                if (maiorNumero > 0) {
+                    nomebase = nomebase + " " + maiorNumero;
+                }
+
+                inst.create_node(obj, {text: nomebase}, "last", function(new_node) {
                     setTimeout(function() {
                         inst.edit(new_node);
                     }, 0);
@@ -195,6 +263,7 @@
                 }
             }
         };
+        confirmadoRemocao = false;
         function criarArvore(jsonData) {
 
             $('#jstree_div').jstree({
@@ -215,22 +284,25 @@
                                 }
                                 break;
                             case "delete_node":
-//                                console.log(node.id)
-                                montarArvoreAuxiliar(node.id);
-                                check_passed = false;
+                                if (!confirmadoRemocao) {
+                                    montarArvoreAuxiliar(node.id);
+                                    escolherSubstituto();
+                                    check_passed = false;
+                                } else {
+                                    var idDescritor = $('#jstree_div').jstree(true).get_selected().toString();
+                                    var idDescritorSubs = $('#jstree_div_aux').jstree(true).get_selected().toString().substr(2);
+                                    check_passed = removerDescritor(idDescritor, idDescritorSubs);
+                                    confirmadoRemocao = false;
+                                }
                                 break;
                             case "create_node":
-//                                check_passed = criarDescritor(node_parent.id,node.text);
-                                console.log("Criando descritor...");
-                                check_passed = true;
+                                check_passed = criarDescritor(node_parent.id, node.text);
                                 break;
                             case "rename_node":
                                 check_passed = renomearDescritor(node.id, node_position);
-                                if (!check_passed) {
-                                    showPopUp("Não foi possível renomear. Verifique se o nome já não existe.", "erro");
-                                }
                                 break;
                         }
+                        console.log(check_passed);
                         return check_passed;
                     }
                 }
@@ -238,11 +310,11 @@
                     items: function(node) {
                         if (node.parent == "#") {
                             return {
-                                //"create": menuCriar
+                                "create": menuCriar
                             };
                         } else if (node.original.nivel < 4) {
                             return {
-                                //"create": menuCriar,
+                                "create": menuCriar,
                                 "rename": menuRenomear,
                                 "remove": menuRemover
                             };
@@ -283,10 +355,13 @@
                     return true;
                 }
             });
-//            $('#jstree_div').on("delete_node.jstree", function(e, data) {
-////                window.alert("Deletado");
-////                console.log(data);
-//            });
+            $('#jstree_div').on("delete_node.jstree", function(e, data) {
+                configurarCampoBusca('#jstree_div');
+                $('#wrap_aux').toggleClass('hidden', 200);
+                $('#jstree_div').removeClass('hidden', 200);
+                $('#jstree_div_aux').jstree(true).destroy();
+                $("#botao_cancelar,#botao_confirmar").off('click');
+            });
 //            $('#jstree_div').on("create_node.jstree", function(e, data) {
 //                console.log("Descritor criado")
 ////                criarDescritor(data.parent,data.original.text);

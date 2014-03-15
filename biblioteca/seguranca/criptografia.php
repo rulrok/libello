@@ -47,4 +47,3 @@ function encriptarSenha($senha) {
 //echo "Final: ".$final;
 //if (isset($_GET['id']))
 //    echo fnDecrypt($_GET['id']);
-?>
