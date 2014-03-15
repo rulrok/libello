@@ -111,7 +111,7 @@ class imagensDAO extends abstractDAO {
         return $this->executarSelect($sql);
     }
 
-    public function consultarDescritor($colunas = "*", $condicao = null, $condicaoJuncao = null) {
+    public function consultarDescritor($colunas = "*", $condicao = null, $condicaoJuncao = null, $params = null) {
         if ($condicao == null) {
             $condicao = "";
         } else {
@@ -124,7 +124,7 @@ class imagensDAO extends abstractDAO {
 
         $sql = "SELECT  $colunas  FROM imagens_descritor $condicaoJuncao $condicao";
 
-        return $this->executarSelect($sql);
+        return $this->executarSelect($sql,$params);
     }
 
     public function consultarDescritoresCompletos($idDescritorExcluir = null) {

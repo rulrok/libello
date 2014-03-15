@@ -87,16 +87,22 @@
             });
             return sucesso;
         }
-        function criarDescritor(idPai, nome) {
+
+        function criarDescritor(pai, descritor) {
             var sucesso;
             $.ajax({
                 async: false
                 , type: "POST"
                 , url: "index.php?c=imagens&a=criarDescritor"
                 , dataType: "json"
-                , data: {'idPai': idPai, 'nome': nome}
+                , data: {'idPai': pai.id, 'nome': descritor.text}
                 , success: function(json) {
-                    sucesso = json;
+                    if (json.sucesso) {
+                        ultimoIdCriado = json.id;
+                    } else {
+                        ultimoIdCriado = undefined;
+                    }
+                    sucesso = json.sucesso;
                     return json;
                 }
                 , error: function(xhr, ajaxOptions, thrownError) {
@@ -264,6 +270,7 @@
             }
         };
         confirmadoRemocao = false;
+        ultimoIdCriado = undefined;
         function criarArvore(jsonData) {
 
             $('#jstree_div').jstree({
@@ -296,13 +303,13 @@
                                 }
                                 break;
                             case "create_node":
-                                check_passed = criarDescritor(node_parent.id, node.text);
+                                check_passed = criarDescritor(node_parent, node);
                                 break;
                             case "rename_node":
                                 check_passed = renomearDescritor(node.id, node_position);
                                 break;
                         }
-                        console.log(check_passed);
+//                        console.log(check_passed);
                         return check_passed;
                     }
                 }
@@ -362,10 +369,12 @@
                 $('#jstree_div_aux').jstree(true).destroy();
                 $("#botao_cancelar,#botao_confirmar").off('click');
             });
-//            $('#jstree_div').on("create_node.jstree", function(e, data) {
-//                console.log("Descritor criado")
-////                criarDescritor(data.parent,data.original.text);
-//            });
+            $('#jstree_div').on("create_node.jstree", function(e, data) {
+                if (ultimoIdCriado !== undefined) {
+                    $("#jstree_div").jstree(true).set_id(data.node, ultimoIdCriado);
+                }
+//                criarDescritor(data.parent,data.original.text);
+            });
 
         }
 
