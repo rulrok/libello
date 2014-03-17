@@ -1,9 +1,6 @@
 
 
 <div id="resultadoImagens" class="blocoBranco">
-
-          <!--<input autofocus autocomplete class="ignorar search-query input-xlarge" name="busca" id="campo_busca" placeholder="Buscar..." type="text">-->
-
     <div class="navbar">
         <div class="navbar-inner">
             <div class="container">
@@ -19,8 +16,6 @@
                         <li >
                             <span style="position: relative; top: 6px;">Itens por página 
                                 <select id="qtdItensPorPagina" class="ignorar">
-                                    <option value="1">1</option>
-                                    <option value="5">5</option>
                                     <option value="10" selected>10</option>
                                     <option value="20">20</option>
                                     <option value="50">50</option>
@@ -38,6 +33,14 @@
 <script>
 
     paginaAtual = 1;
+    //==========================================================================
+    //  Função que recupera o texto digitado no campo de busca e carrega a consulta
+    //por ajax e exibe os resultados na página.
+    //  Aceita a página desejada como parâmetro. Caso a página seja inválida, o
+    //  valor 1 será usado por padrão.
+    //  A quantidade de itens por página é obtido automaticamente do componente
+    //  da página.
+    //==========================================================================
     function buscar(pagina) {
         if (pagina === undefined) {
             pagina = 1;
@@ -52,14 +55,18 @@
         itensPorPagina = $("#qtdItensPorPagina").val();
 
         paginaAtual = pagina;
-        ajax('index.php?c=imagens&a=buscar&l=' + itensPorPagina + '&p=' + pagina + '&q=' + $("#campo_busca").val(), '#resultados', false);
+//        ajax('index.php?c=imagens&a=buscar&l=' + itensPorPagina + '&p=' + pagina + '&q=' + $("#campo_busca").val(), '#resultados', false);
+        var url = 'index.php?c=imagens&a=buscar&l=' + itensPorPagina + '&p=' + pagina + '&q=' + $("#campo_busca").val();
+        $("#resultados").load(url);
     }
+
     function extractor(query) {
         var result = /([^,]+)$/.exec(query);
         if (result && result[1])
             return result[1].trim();
         return '';
     }
+
     $(document).ready(function() {
         buscar(); //Exibe todas as imagens
         $("#botao_buscar_imagem").on('click', function() {
@@ -70,6 +77,9 @@
             $('#campo_busca').val('');
             buscar();
         });
+
+        //Configura o campo para aceitar multiplas sugestões de descritores, separados por virgula
+        //Originalmente o componente não mostra outro depois de já haver algum selecionado.
         $('#campo_busca').typeahead({
             minLength: 4
             , source: function(query, process) {
@@ -79,7 +89,6 @@
                     dataType: 'JSON',
                     data: 'query=' + extractor(query),
                     success: function(data) {
-                        console.log(data);
                         process(data);
                     }
                 });
@@ -101,6 +110,7 @@
             }
         });
 
+        var to = false;
         $("#campo_busca").on('keyup', function(e) {
             switch (e.keyCode) {
                 case 13: // enter
@@ -122,10 +132,12 @@
                     e.preventDefault();
                     break
                 default :
-//                    clearTimeout(timeoutBuscaId);
-//                    timeoutBuscaId = setTimeout(function() {
-//                        buscar();
-//                    }, 300);
+                    if (to) {
+                        clearTimeout(to);
+                    }
+                    to = setTimeout(function() {
+                        buscar();
+                    }, 400);
                     break;
             }
 

@@ -32,6 +32,7 @@
             error: function(xhr, ajaxOptions, thrownError) {
                 alert(xhr.status);
                 alert(thrownError);
+                //TODO fazer algo indicando que houve um erro
             }
         });
 
@@ -50,6 +51,8 @@
                 }, 250);
             });
         }
+        //Exibe a nova árvore de descritores atualizada para o usuário indicar o
+        //novo descritor que irá substituir o atual descritor removido.
         function escolherSubstituto() {
 
             $("#botao_cancelar").on('click', function() {
@@ -70,6 +73,9 @@
             });
         }
 
+        //======================================================================
+        //  Callbacks utilizados para realizar as ações no servidor
+        //======================================================================
         function renomearDescritor(id, novoNome) {
             var sucesso;
             $.ajax({
@@ -150,6 +156,11 @@
             });
         }
 
+        //Monta a nova árvore de descritores para o usuário indicar o novo descritor
+        //que deve substituir o descritor que será excluído do banco de imagens.
+        //Observar que a árvore retornada é uma árvore completa, contendo apenas
+        //descritores que vão até as folhas da árvore, já ignorando o atual ramo
+        //que deverá ser excluído pelo usuário.
         function montarArvoreAuxiliar(idIgnorar) {
             $.ajax({
                 async: false,
@@ -198,6 +209,10 @@
             });
         }
 
+        //======================================================================
+        //  Menus que irão compor o context menu, ou seja, as opções que irão 
+        // aparecer quando um descritor for clicado com o botão direito do mouse
+        //======================================================================
         var menuCriar = {
             "separator_before": false,
             "separator_after": true,
@@ -269,8 +284,26 @@
                 }
             }
         };
+
+        //  Variável para auxiliar na decisão do que fazer quando um usuário quer 
+        //remover um descritor.
+        //  Quando um nó é escolhido para ser removido, ele ativará o evento "delete_node"
+        //e quando esse evento é disparado, é preciso saber por que ele está sendo ativado.
+        //Ou é por causa do usuário clicar em remover e uma nova árvore deve ser exibida
+        //perguntando para onde mover as imagens com o atual descritor, ou então
+        //deletando da árvore principal o descritor - quando o usuário confirmou
+        // a exclusão.
         confirmadoRemocao = false;
+
+        //Variável para auxiliar na atualização da jsTree quando um descritor é criado.
+        //Quando ele é criado com sucesso, o servidor informa com true e também responde
+        //com o ID no banco do novo descritor. Sem esse ID, o descritor na jstree
+        //não teria utilidade, pois ações como renomeá-lo ou removê-lo não surtiriam
+        //nenhum efeito no banco de dados por não haver um ID válido associado a ele
+        //na jstree.
         ultimoIdCriado = undefined;
+
+        //Cria a árvore principal para gerência dos descritores
         function criarArvore(jsonData) {
 
             $('#jstree_div').jstree({
@@ -347,6 +380,12 @@
 
 
 
+
+            //==================================================================
+            //  Eventos que serão ativados após os eventos no "check_callback"
+            // da jstree ocorrerem.
+            //==================================================================
+
 //            $('#jstree_div').on("changed.jstree", function(e, data) {
 //                console.log(data);
 //            });
@@ -354,6 +393,7 @@
 //                console.log("Renomeado...");
 //                console.log(data);
 //            });
+
             $('#jstree_div').on("move_node.jstree", function(e, data) {
                 if (!moverDescritor(data.node.id, data.parent, data.old_parent)) {
                     showPopUp("Falha ao mover", "erro");
@@ -362,6 +402,7 @@
                     return true;
                 }
             });
+
             $('#jstree_div').on("delete_node.jstree", function(e, data) {
                 configurarCampoBusca('#jstree_div');
                 $('#wrap_aux').toggleClass('hidden', 200);
@@ -369,11 +410,11 @@
                 $('#jstree_div_aux').jstree(true).destroy();
                 $("#botao_cancelar,#botao_confirmar").off('click');
             });
+
             $('#jstree_div').on("create_node.jstree", function(e, data) {
                 if (ultimoIdCriado !== undefined) {
                     $("#jstree_div").jstree(true).set_id(data.node, ultimoIdCriado);
                 }
-//                criarDescritor(data.parent,data.original.text);
             });
 
         }

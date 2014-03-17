@@ -34,10 +34,10 @@
     <script>
         function esconder(thumb) {
             //                $(thumb).children('img').removeClass('img-polaroid', 200);
-            $(thumb).children('div').hide(600, function() {
-                //                $(thumb).parent('li').removeClass('span3', 200);
-                //                $(thumb).parent('li').addClass('span2', 600);
-            });
+            $(thumb).children('div').hide(600)
+            //                $(thumb).parent('li').removeClass('span3', 200);
+            //                $(thumb).parent('li').addClass('span2', 600);
+
         }
         function exibir(thumb) {
             //            $(thumb).parent('li').removeClass('span2', 200);
@@ -52,6 +52,7 @@
             window.open('index.php?c=imagens&a=baixarvetorial&idImagem=' + id, '_blank');
         }
         $(document).ready(function() {
+            //Configura o plugin para a galeria de imagens
             $(".fancybox").fancybox({
                 closeBtn: false
                 , helpers: {
@@ -59,6 +60,7 @@
                     , buttons: {tpl: '<div id="fancybox-buttons" class="top"><ul><li><a class="btnPrev" title="Anterior" href="javascript:;"></a></li><li><a class="btnNext" title="Próximo" href="javascript:;"></a></li><li><a class="btnToggle" title="Tamanho real/reduzido" href="javascript:;"></a></li><li><a class="btnClose" title="Fechar" href="javascript:;"></a></li></ul></div>'}
                 }
             });
+
             $(".btn-imagem-visualizacao").tooltip({placement: 'top'});
 
 
@@ -84,20 +86,10 @@
                 ultimoThumb = null;
             });
             $("#qtdItensPorPagina").on('change', function() {
-                buscar(undefined, this.value);
+                buscar();
             });
-
-            //            $(".btn-imagem-visualizacao").on('click', function() {
-            ////                var id = $(this).attr('data-ref');
-            ////                var imagem = $("[id='" + id + "']").children('img').attr('src');
-            ////    //                console.log(imagem);
-            ////
-            ////                $("#myModal .modal-body").empty().append('<img src="' + imagem + '">');
-            ////                $("#myModal").modal();
-            //            });
         });
     </script>
 <?php else: ?>
-
     <p class="textoCentralizado">Nenhum resultado</p>
 <?php endif; ?>

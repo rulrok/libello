@@ -50,9 +50,11 @@
         </div>
         <div class="line">
             <label for='descritor4'>Descritor 4</label>
+            <input type="checkbox" id="descritor_4_personalizado" name="descritor_4_personalizado" class="checkbox_descritor_personalizado" title="Descritor personalizado"/>
             <select required id="descritor_4" class="cb_descritor input-xlarge" name="descritor4">
                 <option value="default">-- Escolha um descritor acima --</option>
             </select>
+            <input type="text" id="novo_descritor_4" name="novo_descritor_4" class="hidden input-xlarge"/>
         </div>
         <br/>
         <blockquote>
@@ -143,6 +145,23 @@
 </form>
 <script>
 
+    function esconder(id) {
+        $(id).addClass('hidden');
+        $(id).removeAttr('required');
+        $(id).prop('disabled', true);
+        $(".campoVarrido").removeClass("campoVarrido");
+        $(".imagemCampoObrigatorio").remove();
+        varrerCampos();
+    }
+    function exibir(id) {
+        $(id).removeClass('hidden');
+        $(id).attr('required', true);
+        $(id).removeProp('disabled');
+        $(".campoVarrido").removeClass("campoVarrido");
+        $(".imagemCampoObrigatorio").remove();
+        varrerCampos();
+    }
+
     function alternar_exibir_original() {
 
         $("#image_original_wrap").toggle(400, function() {
@@ -175,7 +194,7 @@
 //                    ajax("index.php?c=imagens&a=criarthumb&imageURI=" + file.result, "#image_preview", false, true, true);
                     $.ajax({
                         url: "index.php?c=imagens&a=criarthumb"
-                        ,type: "POST"
+                        , type: "POST"
                         , async: true
                         , data: {imagemURI: file.result}
                         , success: function(data) {
@@ -307,9 +326,17 @@
         });
 
 
+        $("#descritor_4_personalizado").tooltip({placement: 'top'});
 
-
-
+        $("#descritor_4_personalizado").on('click', function() {
+            if (this.checked) {
+                esconder();
+                exibir();
+            } else {
+                esconder();
+                exibir();
+            }
+        });
 
     });
 </script>
