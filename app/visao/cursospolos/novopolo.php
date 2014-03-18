@@ -4,15 +4,15 @@
     <fieldset>
         <legend>Inserir novo polo</legend>
         <span class="line">
-            <label>Nome</label>
+            <label for="nomepolo">Nome</label>
             <input required autofocus type="text" class="input-xlarge" id="nomepolo" name="nomepolo" />
         </span>
         <span class="line">
-            <label>Estado</label>
+            <label for="estado">Estado</label>
             <select required class="input-large" id="estado" name="estado"></select>
         </span>
         <span class="line">
-            <label>Cidade</label>
+            <label for="cidade">Cidade</label>
             <select required class="input-xlarge" id="cidade" name="cidade"></select>
         </span>
     </fieldset>
@@ -36,6 +36,7 @@
 
             $("input[type=reset]").bind("click", function() {
                 $("select").val('').trigger("chosen:updated");
+                liberarCadastro();
             });
         });
 

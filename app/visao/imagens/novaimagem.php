@@ -5,19 +5,19 @@
 <form class="tabela centralizado" id="upload-image-form-ajax" method="POST" action="index.php?c=imagens&a=verificarnovaimagem" enctype='multipart/form-data'>
     <fieldset>
         <legend>Dados da imagem</legend>
-        <p class="centralizado textoCentralizado textoNegrito">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png" alt="Campo obrigatório"> são obrigatórios</p>
+        
         <div class="line">
             <label for='titulo'>Título</label>
             <input required autofocus type="text" id="titulo" name="titulo" class="input-xlarge" placeholder="Nome da imagem" data-content="Título da imagem">
         </div>
         <div class="line">
             <label for='ano'>Ano</label>
-            <input required size="4" type="number" maxlength="4" id="ano" name="ano" class="input-xlarge" placeholder="Ano de criação da imagem">
+            <input required size="4" type="number" min="0" maxlength="4" id="ano" name="ano" class="input-xlarge" placeholder="Ano de criação da imagem">
         </div>
         <hr>
         <p>Campos preenchidos automaticamente:</p>
         <div class="line">
-            <label>CPF (autor)</label>
+            <label for="cpfautor">CPF (autor)</label>
             <input required disabled type="text" maxlength="11" id="cpfautor" name="cpfautor" class="disabled input-xlarge" placeholder="___.___.___-__" data-content="Seu CPF cadastrado no sistema." value="<?php echo $this->cpfAutor; ?>">
         </div>
         <div class="line">
@@ -50,11 +50,11 @@
         </div>
         <div class="line">
             <label for='descritor4'>Descritor 4</label>
-            <input type="checkbox" id="descritor_4_personalizado" name="descritor_4_personalizado" class="checkbox_descritor_personalizado" title="Descritor personalizado"/>
             <select required id="descritor_4" class="cb_descritor input-xlarge" name="descritor4">
                 <option value="default">-- Escolha um descritor acima --</option>
             </select>
             <input type="text" id="novo_descritor_4" name="novo_descritor_4" class="hidden input-xlarge"/>
+            <input type="checkbox" id="descritor_4_personalizado" name="descritor_4_personalizado" class="checkbox_descritor_personalizado" data-title="Descritor personalizado"/>
         </div>
         <br/>
         <blockquote>
@@ -310,7 +310,7 @@
         $("#mostrar_original").on("click", function() {
             alternar_exibir_original();
         });
-        $(".line input,.line textearea").popover({trigger: 'focus', container: 'body'});
+//        $(".line input,.line textearea").popover({trigger: 'focus', container: 'body'});
         $("button[type=reset]").bind("click", function() {
 //            $("[name=categoria]").trigger('change');
 //            $("#remove-image-upload").click();
@@ -330,11 +330,11 @@
 
         $("#descritor_4_personalizado").on('click', function() {
             if (this.checked) {
-                esconder();
-                exibir();
+                esconder("#descritor_4");
+                exibir("#novo_descritor_4");
             } else {
-                esconder();
-                exibir();
+                esconder("#novo_descritor_4");
+                exibir("#descritor_4");
             }
         });
 

@@ -5,17 +5,16 @@
 <form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=usuarios&a=verificarnovo">
     <fieldset>
         <legend>Informações sobre o usuário</legend>
-        <p class="centralizado textoCentralizado textoNegrito">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png" alt="Campo obrigatório"> são obrigatórios
         <div class="line">
-            <label>Nome</label>
+            <label for="nome">Nome</label>
             <input required autofocus type="text" id="nome" class="input-xlarge" placeholder="Primeiro nome apenas" name="nome"   data-content="Apenas letras.">
         </div>
         <div class="line">
-            <label>Sobrenome</label>
+            <label for="sobrenome">Sobrenome</label>
             <input required type="text" id="sobrenome" class="input-xlarge" placeholder="Demais nomes" name="sobrenome"  data-content="Apenas letras e espaços.">
         </div>
         <div class="line">
-            <label>E-mail</label>
+            <label for="email">E-mail</label>
             <input required type="email" id="email" class="input-large" placeholder="email@dominio.com" name="email" data-content="O email será usado como login.">
         </div>
         <div class="line">
@@ -23,17 +22,17 @@
             <input required type="text" id="cpf" class="input-large" placeholder="___.___.___-__" name="cpf" data-content="Um CPF válido do usuário.">
         </div>
         <div class="line">
-            <label>Data de nascimento</label>
+            <label for="dataNascimento">Data de nascimento</label>
             <input type="text" readonly id="dataNascimento" class=" input-large campoData" placeholder="Clique para escolher" name="dataNascimento" >
         </div>
         <div class="line">
-            <label>Senha</label>
-            <input required type="password"  name="senha" class="input-large" data-content="Quaisquer caracteres exceto 'espaço'.Mínimo de seis caracteres.">
+            <label for="senha">Senha</label>
+            <input required type="password" id="senha" name="senha" class="input-large" data-content="Quaisquer caracteres exceto 'espaço'.Mínimo de seis caracteres.">
         </div>
 
         <div class="line">
-            <label>Confirmar Senha</label>
-            <input required type="password" class="input-large" name="confsenha" >
+            <label for="confsenha">Confirmar Senha</label>
+            <input required type="password" class="input-large" id="confsenha" name="confsenha" >
         </div>
         <br/>
         <fieldset>

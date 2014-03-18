@@ -44,7 +44,7 @@
                     <form class="tabela centralizado" id="ajaxForm" name="identificacao" action="./biblioteca/seguranca/lembrarSenha.php" method="post" >
                         <fieldset>
                             <div class="line">
-                                <label>Nova senha</label>
+                                <label for="novaSenha">Nova senha</label>
                                 <input id="novaSenha" required type="password" name="novaSenha"/>
                             </div>
                             <input hidden="true" readonly id="tolken" required type="text" name="tolken" value="<?php echo filter_input(INPUT_GET, 'tolken'); ?>"/>

@@ -14,9 +14,9 @@ class ComboBoxPermissoes {
             $code .= "<span class=\"line\">\n";
 //            $nomeferramenta
             $nomeFerramenta = $DAO->obterNomeFerramenta($i);
-            $code .= "<label>" . $nomeFerramenta . "</label>\n";
             $nomeNormalizado = trim(strtolower($nomeFerramenta));
-            $code .= "<select required name='permissoes $nomeNormalizado'>";
+            $code .= "<label for='$nomeNormalizado'>" . $nomeFerramenta . "</label>\n";
+            $code .= "<select required id='$nomeNormalizado' name='permissoes $nomeNormalizado'>";
             $code .= $codigoOpcoes;
             $code .= "</select>\n";
             $code .= "</span>\n";

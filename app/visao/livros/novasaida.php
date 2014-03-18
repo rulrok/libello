@@ -26,16 +26,6 @@
         <br/>
         <fieldset>
             <legend>Responsável</legend>
-            <!--            <div class="line">
-                            <label>Tipo</label>
-            <?php //echo $this->comboboxPapeis ?>
-                        </div>
-                        <div class="line">
-                            <label>Usuário</label>
-                            <select class="input-xlarge cb_usuarios" id="cb_usuarios" name="responsavel" required>
-                                <option value="default">-- Escolha um tipo de usuário --</option>
-                            </select>
-                        </div>-->
             <div class="line">
                 <label for="responsavel">Responsável</label>
                 <?php echo $this->responsavel; ?>
