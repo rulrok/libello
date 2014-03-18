@@ -76,7 +76,10 @@
             <div style="margin-bottom: 80px;" class="left_align">
                 Atenciosamente,
             </div>
-            <div id="div_remetente1" class="remetente_div" name="div_remetente1">
+            <div id='remetentes_holder'>
+                
+            </div>
+<!--            <div id="div_remetente1" class="remetente_div" name="div_remetente1">
 
                 <p>______________________________________</p>
                 <div style="padding-left: 152px;margin-bottom: 2px">
@@ -93,7 +96,7 @@
                 <input type="text" id="remetente2" name="remetente2" onkeyup="liberarCadastro()" size="50" style="margin-left: 125px"/><span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>
                 <input type="text" id="cargo_remetente2" name="cargo_remetente2" onkeyup="liberarCadastro()" size="25" style="margin-left: 110px"/><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>
                 <a  title="Remover Remetente" id="" href="javascript:void(0);" onclick="removerRemetente();" class="btn" ><i class="icon-minus"></i></a>
-            </div>
+            </div>-->
         </div>
     </div>
     

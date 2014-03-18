@@ -88,7 +88,7 @@ class equipamentoDAO extends abstractDAO {
         } else {
             $condicao = "WHERE " . $condicao . " AND quantidadeSaida > 0";
         }
-        $sql = "SELECT $colunas FROM `equipamento_saida` AS `es` JOIN `equipamento` AS `e` ON `es`.`equipamento` = `e`.idEquipamento JOIN `usuario` AS `u` ON `es`.`responsavel` = `u`.`idUsuario` LEFT JOIN `polo` AS `p` ON `es`.`poloDestino` = `p`.`idPolo` " . $condicao;
+        $sql = "SELECT $colunas FROM `equipamento_saida` AS `es` JOIN `equipamento` AS `e` ON `es`.`equipamento` = `e`.idEquipamento JOIN `usuario` AS `u` ON `es`.`responsavel` = `u`.`idUsuario` LEFT JOIN `cursospolos_polo` AS `p` ON `es`.`poloDestino` = `p`.`idPolo` " . $condicao;
         return $this->executarSelect($sql);
     }
 
@@ -252,112 +252,104 @@ class equipamentoDAO extends abstractDAO {
 
     public function registrarExclusaoEquipamento($idEquipamento) {
         $tipo = TipoEventoEquipamento::REMOCAO_EQUIPAMENTO;
-        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,equipamento,data,hora) VALUES ";
-        $sql .= " (:tipo,:usuarioID,:idEquipamento,:data ,:hora )";
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,equipamento,data) VALUES ";
+        $sql .= " (:tipo,:usuarioID,:idEquipamento,:data )";
         $params = array(
             ':tipo' => [$tipo, PDO::PARAM_INT]
             , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
             , ':idEquipamento' => [$idEquipamento, PDO::PARAM_INT]
-            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
-            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+            , ':data' => [time(), PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
 
     public function registrarInsercaoEquipamento($idEquipamento) {
         $tipo = TipoEventoEquipamento::CADASTRO_EQUIPAMENTO;
-        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,equipamento,data,hora) VALUES ";
-        $sql .= " (:tipo,:usuarioID,:idEquipamento,:data ,:hora )";
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,equipamento,data) VALUES ";
+        $sql .= " (:tipo,:usuarioID,:idEquipamento,:data)";
         $params = array(
             ':tipo' => [$tipo, PDO::PARAM_INT]
             , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
             , ':idEquipamento' => [$idEquipamento, PDO::PARAM_INT]
-            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
-            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+            , ':data' => [time(), PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
 
     public function registrarAlteracaoEquipamento($idEquipamento) {
         $tipo = TipoEventoEquipamento::ALTERACAO_EQUIPAMENTO;
-        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,equipamento,data,hora) VALUES ";
-        $sql .= " (:tipo,:usuarioID,:idEquipamento,:data ,:hora )";
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,equipamento,data) VALUES ";
+        $sql .= " (:tipo,:usuarioID,:idEquipamento,:data)";
         $params = array(
             ':tipo' => [$tipo, PDO::PARAM_INT]
             , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
             , ':idEquipamento' => [$idEquipamento, PDO::PARAM_INT]
-            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
-            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+            , ':data' => [time(), PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
 
     public function registrarCadastroBaixa($idBaixa) {
         $tipo = TipoEventoEquipamento::CADASTRO_BAIXA;
-        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,baixa,data,hora) VALUES ";
-        $sql .= " (:tipo,:usuarioID,:idBaixa,:data,:hora)";
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,baixa,data) VALUES ";
+        $sql .= " (:tipo,:usuarioID,:idBaixa,:data)";
         $params = array(
             ':tipo' => [$tipo, PDO::PARAM_INT]
             , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
             , ':idBaixa' => [$idBaixa, PDO::PARAM_INT]
-            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
-            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+            , ':data' => [time(), PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
 
     public function registrarRemocaoBaixa($idBaixa) {
         $tipo = TipoEventoEquipamento::REMOCAO_BAIXA;
-        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,baixa,data,hora) VALUES ";
-        $sql .= " (:tipo,:usuarioID,:idBaixa,:data,:hora)";
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,baixa,data) VALUES ";
+        $sql .= " (:tipo,:usuarioID,:idBaixa,:data)";
         $params = array(
             ':tipo' => [$tipo, PDO::PARAM_INT]
             , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
             , ':idBaixa' => [$idBaixa, PDO::PARAM_INT]
-            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
-            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+            , ':data' => [time(), PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
 
     public function registrarCadastroSaida($idSaida) {
         $tipo = TipoEventoEquipamento::CADASTRO_SAIDA;
-        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,saida,data,hora) VALUES ";
-        $sql .= " (:tipo,:usuarioID,:idSaida,:data,:hora)";
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,saida,data) VALUES ";
+        $sql .= " (:tipo,:usuarioID,:idSaida,:data)";
         $params = array(
             ':tipo' => [$tipo, PDO::PARAM_INT]
             , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
             , ':idSaida' => [$idSaida, PDO::PARAM_INT]
-            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
-            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+            , ':data' => [time(), PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
 
     public function registrarRemocaoSaida($idSaida) {
         $tipo = TipoEventoEquipamento::REMOCAO_SAIDA;
-        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,saida,data,hora) VALUES ";
-        $sql .= " (:tipo,:usuarioID,:idSaida,:data,:hora)";
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,saida,data) VALUES ";
+        $sql .= " (:tipo,:usuarioID,:idSaida,:data)";
         $params = array(
             ':tipo' => [$tipo, PDO::PARAM_INT]
             , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
             , ':idSaida' => [$idSaida, PDO::PARAM_INT]
-            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
-            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+            , ':data' => [time(), PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
 
     public function registrarRetorno($idRetorno) {
         $tipo = TipoEventoEquipamento::CADASTRO_RETORNO;
-        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,retorno,data,hora) VALUES ";
-        $sql .= " (:tipo,:usuarioID,:idSaida,:data,:hora)";
+        $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,retorno,data) VALUES ";
+        $sql .= " (:tipo,:usuarioID,:idSaida,:data)";
         $params = array(
             ':tipo' => [$tipo, PDO::PARAM_INT]
             , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
             , ':idSaida' => [$idRetorno, PDO::PARAM_INT]
-            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
-            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+            , ':data' => [time(), PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }

@@ -91,21 +91,21 @@ class ControladorDocumentos extends Controlador {
 
     public function acaoAproveitarOficio() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
-        $ofc = (new documentoDAO())->consultar('oficio', 'idOficio = ' . fnDecrypt(filter_input(INPUT_GET, 'id')));
+        $ofc = (new documentoDAO())->consultar('documento_oficio', 'idOficio = ' . fnDecrypt(filter_input(INPUT_GET, 'id')));
 
         $oficioTmp = $ofc[0];
 
-        $this->visao->tratamento = $oficioTmp->getTratamento();
-        $this->visao->destino = $oficioTmp->getDestino();
-        $this->visao->cargo_destino = $oficioTmp->getCargo_destino();
-        $this->visao->referencia = $oficioTmp->getReferencia();
-        $this->visao->assunto = $oficioTmp->getAssunto();
-        $this->visao->corpo = $oficioTmp->getCorpo();
-        $this->visao->remetente = $oficioTmp->getRemetente();
-        $this->visao->cargo_remetente = $oficioTmp->getCargo_remetente();
-        $this->visao->remetente2 = $oficioTmp->getRemetente2();
-        $this->visao->cargo_remetente2 = $oficioTmp->getCargo_remetente2();
-        $this->visao->sigla = $oficioTmp->getTipoSigla();
+        $this->visao->tratamento = $oficioTmp->get_tratamento();
+        $this->visao->destino = $oficioTmp->get_destino();
+        $this->visao->cargo_destino = $oficioTmp->get_cargo_destino();
+        $this->visao->referencia = $oficioTmp->get_referencia();
+        $this->visao->assunto = $oficioTmp->get_assunto();
+        $this->visao->corpo = $oficioTmp->get_corpo();
+        $this->visao->remetente = $oficioTmp->get_remetente();
+        $this->visao->cargo_remetente = $oficioTmp->get_cargo_remetente();
+//        $this->visao->remetente2 = $oficioTmp->getRemetente2();
+//        $this->visao->cargo_remetente2 = $oficioTmp->get_cargo_remetente2();
+        $this->visao->sigla = $oficioTmp->get_tipoSigla();
 
         $this->visao->comboDia = ComboBoxDocumentos::comboDia();
         $this->visao->comboMes = ComboBoxDocumentos::comboMes();
@@ -115,22 +115,22 @@ class ControladorDocumentos extends Controlador {
 
     public function acaoEditarOficio() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
-        $ofc = (new documentoDAO())->consultar('oficio', 'idOficio = ' . fnDecrypt(filter_input(INPUT_GET, 'id')));
+        $ofc = (new documentoDAO())->consultar('documento_oficio', 'idOficio = ' . fnDecrypt(filter_input(INPUT_GET, 'id')));
 
         $oficioTmp = $ofc[0];
 
-        $this->visao->idoficio = $oficioTmp->getIdOficio();
-        $this->visao->tratamento = $oficioTmp->getTratamento();
-        $this->visao->destino = $oficioTmp->getDestino();
-        $this->visao->cargo_destino = $oficioTmp->getCargo_destino();
-        $this->visao->referencia = $oficioTmp->getReferencia();
-        $this->visao->assunto = $oficioTmp->getAssunto();
-        $this->visao->corpo = $oficioTmp->getCorpo();
-        $this->visao->remetente = $oficioTmp->getRemetente();
-        $this->visao->cargo_remetente = $oficioTmp->getCargo_remetente();
-        $this->visao->remetente2 = $oficioTmp->getRemetente2();
-        $this->visao->cargo_remetente2 = $oficioTmp->getCargo_remetente2();
-        $this->visao->sigla = $oficioTmp->getTipoSigla();
+        $this->visao->idoficio = $oficioTmp->get_idOficio();
+        $this->visao->tratamento = $oficioTmp->get_tratamento();
+        $this->visao->destino = $oficioTmp->get_destino();
+        $this->visao->cargo_destino = $oficioTmp->get_cargo_destino();
+        $this->visao->referencia = $oficioTmp->get_referencia();
+        $this->visao->assunto = $oficioTmp->get_assunto();
+        $this->visao->corpo = $oficioTmp->get_corpo();
+        $this->visao->remetente = $oficioTmp->get_remetente();
+        $this->visao->cargo_remetente = $oficioTmp->get_cargo_remetente();
+//        $this->visao->remetente2 = $oficioTmp->getRemetente2();
+//        $this->visao->cargo_remetente2 = $oficioTmp->get_cargo_remetente2();
+        $this->visao->sigla = $oficioTmp->get_tipoSigla();
 
         $this->visao->comboDia = ComboBoxDocumentos::comboDia();
         $this->visao->comboMes = ComboBoxDocumentos::comboMes();
@@ -153,20 +153,20 @@ class ControladorDocumentos extends Controlador {
 
     public function acaoEditarMemorando() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
-        $mem = (new documentoDAO())->consultar('memorando', 'idMemorando = ' . fnDecrypt(filter_input(INPUT_GET, 'id')));
+        $mem = (new documentoDAO())->consultar('documento_memorando', 'idMemorando = ' . fnDecrypt(filter_input(INPUT_GET, 'id')));
 
         $memorandoTmp = $mem[0];
 
-        $this->visao->idmemorando = $memorandoTmp->getIdMemorando();
-        $this->visao->tratamento = $memorandoTmp->getTratamento();
-        $this->visao->cargo_destino = $memorandoTmp->getCargo_destino();
-        $this->visao->assunto = $memorandoTmp->getAssunto();
-        $this->visao->corpo = $memorandoTmp->getCorpo();
-        $this->visao->remetente = $memorandoTmp->getRemetente();
-        $this->visao->cargo_remetente = $memorandoTmp->getCargo_remetente();
-        $this->visao->remetente2 = $memorandoTmp->getRemetente2();
-        $this->visao->cargo_remetente2 = $memorandoTmp->getCargo_remetente2();
-        $this->visao->sigla = $memorandoTmp->getTipoSigla();
+        $this->visao->idmemorando = $memorandoTmp->get_idMemorando();
+        $this->visao->tratamento = $memorandoTmp->get_tratamento();
+        $this->visao->cargo_destino = $memorandoTmp->get_cargo_destino();
+        $this->visao->assunto = $memorandoTmp->get_assunto();
+        $this->visao->corpo = $memorandoTmp->get_corpo();
+        $this->visao->remetente = $memorandoTmp->get_remetente();
+        $this->visao->cargo_remetente = $memorandoTmp->get_cargo_remetente();
+//        $this->visao->remetente2 = $memorandoTmp->getRemetente2();
+//        $this->visao->cargo_remetente2 = $memorandoTmp->get_cargo_remetente2();
+        $this->visao->sigla = $memorandoTmp->get_tipoSigla();
 
         $this->visao->comboDia = ComboBoxDocumentos::comboDia();
         $this->visao->comboMes = ComboBoxDocumentos::comboMes();
@@ -176,19 +176,19 @@ class ControladorDocumentos extends Controlador {
 
     public function acaoAproveitarMemorando() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
-        $mem = (new documentoDAO())->consultar('memorando', 'idMemorando = ' . fnDecrypt($_GET['id']));
+        $mem = (new documentoDAO())->consultar('documento_memorando', 'idMemorando = ' . fnDecrypt($_GET['id']));
 
         $memorandoTmp = $mem[0];
 
-        $this->visao->tratamento = $memorandoTmp->getTratamento();
-        $this->visao->cargo_destino = $memorandoTmp->getCargo_destino();
-        $this->visao->assunto = $memorandoTmp->getAssunto();
-        $this->visao->corpo = $memorandoTmp->getCorpo();
-        $this->visao->remetente = $memorandoTmp->getRemetente();
-        $this->visao->cargo_remetente = $memorandoTmp->getCargo_remetente();
-        $this->visao->remetente2 = $memorandoTmp->getRemetente2();
-        $this->visao->cargo_remetente2 = $memorandoTmp->getCargo_remetente2();
-        $this->visao->sigla = $memorandoTmp->getTipoSigla();
+        $this->visao->tratamento = $memorandoTmp->get_tratamento();
+        $this->visao->cargo_destino = $memorandoTmp->get_cargo_destino();
+        $this->visao->assunto = $memorandoTmp->get_assunto();
+        $this->visao->corpo = $memorandoTmp->get_corpo();
+        $this->visao->remetente = $memorandoTmp->get_remetente();
+        $this->visao->cargo_remetente = $memorandoTmp->get_cargo_remetente();
+//        $this->visao->remetente2 = $memorandoTmp->getRemetente2();
+//        $this->visao->cargo_remetente2 = $memorandoTmp->get_cargo_remetente2();
+        $this->visao->sigla = $memorandoTmp->get_tipoSigla();
 
         $this->visao->comboDia = ComboBoxDocumentos::comboDia();
         $this->visao->comboMes = ComboBoxDocumentos::comboMes();

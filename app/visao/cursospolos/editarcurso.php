@@ -12,12 +12,16 @@
             <input required autofocus type="text" class="input-xlarge" id="nomecurso" name="nomecurso" value="<?php echo $this->curso ?>" />
         </span>
         <span class="line">
-            <label>Área</label>
-            <?php echo $this->comboArea ?>
+            <label for="area">Área</label>
+            <select id="area" name="area">
+                <?php echo $this->comboArea ?>
+            </select>
         </span>
         <span class="line">
-            <label>Tipo</label>
-            <?php echo $this->comboTipoCurso ?>
+            <label for="tipocurso">Tipo</label>
+            <select id="tipocurso" name="tipocurso">
+                <?php echo $this->comboTipoCurso ?>
+            </select>
         </span>
 
     </fieldset>

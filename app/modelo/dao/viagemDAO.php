@@ -27,7 +27,7 @@ class viagemDAO extends abstractDAO {
         } else {
             $condicao = "WHERE " . $condicao;
         }
-        $sql = "SELECT $colunas FROM `viagem` AS `v` LEFT JOIN `polo` AS `p` ON `p`.`idPolo` = `v`.`idPolo` NATURAL JOIN `curso` AS `c` JOIN `usuario` AS `u` ON `u`.`idUsuario` = `responsavel` " . $condicao;
+        $sql = "SELECT $colunas FROM `viagem` AS `v` LEFT JOIN `cursospolos_polo` AS `p` ON `p`.`idPolo` = `v`.`idPolo` NATURAL JOIN `cursospolos_curso` AS `c` JOIN `usuario` AS `u` ON `u`.`idUsuario` = `responsavel` " . $condicao;
         return $this->executarSelect($sql);
     }
 

@@ -8,7 +8,7 @@ require_once APP_DIR . 'modelo/enumeracao/ImagensDescritor.php';
 class imagensDAO extends abstractDAO {
 
     public function consultarGaleria($nomeGaleria) {
-        $sql = "SELECT idGaleria FROM imagens_galeria WHERE nomeGaleria = :nomeGaleria";
+        $sql = "SELECT idGaleria FROM imagem_galeria WHERE nomeGaleria = :nomeGaleria";
         $params = array(
             ':nomeGaleria' => [$nomeGaleria, PDO::PARAM_STR]
         );
@@ -16,7 +16,7 @@ class imagensDAO extends abstractDAO {
     }
 
     public function cadastrarGaleria($nomeGaleria) {
-        $sql = "INSERT INTO imagens_galeria(nomeGaleria,qtdFotos,dataCriacao) VALUES (:nomeGaleria,0,:data)";
+        $sql = "INSERT INTO imagem_galeria(nomeGaleria,qtdFotos,dataCriacao) VALUES (:nomeGaleria,0,:data)";
         $params = array(
             ':nomeGaleria' => [$nomeGaleria, PDO::PARAM_STR]
             , ':data' => [obterDataAtual(), PDO::PARAM_STR]
@@ -26,12 +26,12 @@ class imagensDAO extends abstractDAO {
     }
 
     public function consultarNomeDescritores() {
-        $sql = "SELECT DISTINCT nome FROM `imagens_descritor` WHERE nome <> 'NIL'";
+        $sql = "SELECT DISTINCT nome FROM `imagem_descritor` WHERE nome <> 'NIL'";
         return $this->executarSelect($sql);
     }
 
     public function cadastrarDescritor(Descritor $descritor, $idDescritorPai) {
-        $sql = 'INSERT INTO imagens_descritor_aux_inserir(nome,pai) VALUES (:nome,:pai)';
+        $sql = 'INSERT INTO imagem_descritor_aux_inserir(nome,pai) VALUES (:nome,:pai)';
         $params = array(
             ':nome' => [$descritor->get_nome(), PDO::PARAM_STR]
             , ':pai' => [$idDescritorPai, PDO::PARAM_INT]
@@ -44,7 +44,7 @@ class imagensDAO extends abstractDAO {
     }
 
     public function consultarImagem($idImagem) {
-        $sql = 'SELECT * FROM imagens_imagem WHERE idImagem = :idImagem';
+        $sql = 'SELECT * FROM imagem WHERE idImagem = :idImagem';
         $params = array(
             ':idImagem' => [$idImagem, PDO::PARAM_INT]
         );
@@ -70,14 +70,14 @@ class imagensDAO extends abstractDAO {
                 . 'concat(t3.rotulo,". ",t3.nome) as nomedescritor3, '
                 . 'concat(t4.rotulo,". ",t4.nome) as nomedescritor4, '
                 . 'concat(t1.rotulo, "_", t2.rotulo, "_", t3.rotulo, "_", t4.rotulo) as rotulo '
-                . ' FROM (SELECT * from `imagens_imagem` WHERE (titulo RLIKE :termoBusca OR idImagem IN '
-                . '( SELECT idImagem FROM imagens_imagem as a WHERE EXISTS '
-                . '( SELECT idDescritor FROM imagens_descritor as b WHERE b.nome RLIKE :termoBusca AND (b.idDescritor = a.descritor1 OR b.idDescritor = a.descritor2 OR b.idDescritor = a.descritor3 OR b.idDescritor = a.descritor4)))'
+                . ' FROM (SELECT * from `imagem` WHERE (titulo RLIKE :termoBusca OR idImagem IN '
+                . '( SELECT idImagem FROM imagem as a WHERE EXISTS '
+                . '( SELECT idDescritor FROM imagem_descritor as b WHERE b.nome RLIKE :termoBusca AND (b.idDescritor = a.descritor1 OR b.idDescritor = a.descritor2 OR b.idDescritor = a.descritor3 OR b.idDescritor = a.descritor4)))'
                 . ') ORDER BY idImagem ) as t'
-                . ' JOIN `imagens_descritor` t1 ON t1.idDescritor = t.descritor1'
-                . ' JOIN `imagens_descritor` t2 ON t2.idDescritor = t.descritor2'
-                . ' JOIN `imagens_descritor` t3 ON t3.idDescritor = t.descritor3'
-                . ' JOIN `imagens_descritor` t4 ON t4.idDescritor = t.descritor4 '
+                . ' JOIN `imagem_descritor` t1 ON t1.idDescritor = t.descritor1'
+                . ' JOIN `imagem_descritor` t2 ON t2.idDescritor = t.descritor2'
+                . ' JOIN `imagem_descritor` t3 ON t3.idDescritor = t.descritor3'
+                . ' JOIN `imagem_descritor` t4 ON t4.idDescritor = t.descritor4 '
                 . "$query_auxiliar"
                 . $limite;
 
@@ -107,7 +107,7 @@ class imagensDAO extends abstractDAO {
             $condicaoJuncao = "";
         }
 
-        $sql = "SELECT $colunas FROM imagens_descritor $condicaoJuncao $condicao";
+        $sql = "SELECT $colunas FROM imagem_descritor $condicaoJuncao $condicao";
         return $this->executarSelect($sql);
     }
 
@@ -122,7 +122,7 @@ class imagensDAO extends abstractDAO {
             $condicaoJuncao = "";
         }
 
-        $sql = "SELECT  $colunas  FROM imagens_descritor $condicaoJuncao $condicao";
+        $sql = "SELECT  $colunas  FROM imagem_descritor $condicaoJuncao $condicao";
 
         return $this->executarSelect($sql,$params);
     }
@@ -141,73 +141,73 @@ class imagensDAO extends abstractDAO {
                     ':idDescritorExcluir' => [$idDescritorExcluir, PDO::PARAM_INT]
                 );
                 //Inicia a seleção a partir dos nós de nível 1
-                $sql = 'INSERT INTO ids_aux(id) SELECT idDescritor FROM imagens_descritor WHERE nivel = 1 AND idDescritor <> :idDescritorExcluir';
+                $sql = 'INSERT INTO ids_aux(id) SELECT idDescritor FROM imagem_descritor WHERE nivel = 1 AND idDescritor <> :idDescritorExcluir';
                 $this->executarQuery($sql, $param);
                 //Seleciona os filhos de nível 2 que os pais foram selecionados
-                $sql = 'INSERT INTO ids_aux2(id) SELECT idDescritor FROM imagens_descritor WHERE pai IN (SELECT id FROM ids_aux) AND idDescritor <> :idDescritorExcluir';
+                $sql = 'INSERT INTO ids_aux2(id) SELECT idDescritor FROM imagem_descritor WHERE pai IN (SELECT id FROM ids_aux) AND idDescritor <> :idDescritorExcluir';
                 $this->executarQuery($sql, $param);
                 ;
                 //Limpa tabela temporária
                 $sql = 'DELETE QUICK FROM ids_aux';
                 $this->executarQuery($sql);
                 //Seleciona os filhos de nível 3 que os pois foram selecionados
-                $sql = 'INSERT INTO ids_aux(id) SELECT idDescritor FROM imagens_descritor WHERE pai IN (SELECT id FROM ids_aux2) AND idDescritor <> :idDescritorExcluir';
+                $sql = 'INSERT INTO ids_aux(id) SELECT idDescritor FROM imagem_descritor WHERE pai IN (SELECT id FROM ids_aux2) AND idDescritor <> :idDescritorExcluir';
                 $this->executarQuery($sql, $param);
                 $sql = 'DELETE QUICK FROM ids_aux2';
                 $this->executarQuery($sql);
-                $sql = 'INSERT INTO ids_aux2(id) SELECT idDescritor FROM imagens_descritor WHERE pai IN (SELECT id FROM ids_aux) AND idDescritor <> :idDescritorExcluir';
+                $sql = 'INSERT INTO ids_aux2(id) SELECT idDescritor FROM imagem_descritor WHERE pai IN (SELECT id FROM ids_aux) AND idDescritor <> :idDescritorExcluir';
                 $this->executarQuery($sql, $param);
                 //----//
                 //Seleciona as folhas que devem pertencer à árvore
-                $sql = 'INSERT INTO ids(id,pai) SELECT idDescritor,pai FROM imagens_descritor WHERE idDescritor IN (SELECT id FROM ids_aux2)';
+                $sql = 'INSERT INTO ids(id,pai) SELECT idDescritor,pai FROM imagem_descritor WHERE idDescritor IN (SELECT id FROM ids_aux2)';
                 $this->executarQuery($sql);
                 //Seleciona os pais de nível 3
                 $sql = 'DELETE QUICK FROM ids_aux';
                 $this->executarQuery($sql);
-                $sql = 'INSERT INTO ids_aux(id,pai) SELECT idDescritor,pai FROM imagens_descritor WHERE idDescritor IN (SELECT pai FROM ids)';
+                $sql = 'INSERT INTO ids_aux(id,pai) SELECT idDescritor,pai FROM imagem_descritor WHERE idDescritor IN (SELECT pai FROM ids)';
                 $this->executarQuery($sql);
                 $sql = 'INSERT INTO ids SELECT * FROM ids_aux';
                 $this->executarQuery($sql);
                 //Seleciona os pais de nível 2
                 $sql = 'DELETE QUICK FROM ids_aux2';
                 $this->executarQuery($sql);
-                $sql = 'INSERT INTO ids_aux2(id,pai) SELECT idDescritor,pai FROM imagens_descritor WHERE idDescritor IN (SELECT pai FROM ids_aux)';
+                $sql = 'INSERT INTO ids_aux2(id,pai) SELECT idDescritor,pai FROM imagem_descritor WHERE idDescritor IN (SELECT pai FROM ids_aux)';
                 $this->executarQuery($sql);
                 $sql = 'INSERT INTO ids(id,pai) SELECT * FROM ids_aux2';
                 $this->executarQuery($sql);
                 //Seleciona os pais de nível 1
                 $sql = 'DELETE QUICK FROM ids_aux';
                 $this->executarQuery($sql);
-                $sql = 'INSERT INTO ids_aux(id,pai) SELECT idDescritor,pai FROM imagens_descritor WHERE idDescritor IN (SELECT pai FROM ids_aux2)';
+                $sql = 'INSERT INTO ids_aux(id,pai) SELECT idDescritor,pai FROM imagem_descritor WHERE idDescritor IN (SELECT pai FROM ids_aux2)';
                 $this->executarQuery($sql);
                 $sql = 'INSERT INTO ids(id,pai) SELECT * FROM ids_aux';
                 $this->executarQuery($sql);
             } else {
                 //Seleciona os filhos propriamente ditos
-                $sql = "INSERT INTO ids(id) SELECT DISTINCT idDescritor FROM imagens_descritor WHERE nivel = 4";
+                $sql = "INSERT INTO ids(id) SELECT DISTINCT idDescritor FROM imagem_descritor WHERE nivel = 4";
                 $this->executarQuery($sql);
                 //Para encontrar os pais dos descritores nivel 4
-                $sql = "INSERT INTO ids_aux(id) SELECT DISTINCT pai FROM imagens_descritor WHERE nivel = 4";
+                $sql = "INSERT INTO ids_aux(id) SELECT DISTINCT pai FROM imagem_descritor WHERE nivel = 4";
                 $this->executarQuery($sql);
                 //Seleciona os pais nivel 3
-                $sql = 'INSERT INTO ids(id) SELECT DISTINCT idDescritor FROM imagens_descritor WHERE idDescritor IN (SELECT id FROM ids_aux)';
+                $sql = 'INSERT INTO ids(id) SELECT DISTINCT idDescritor FROM imagem_descritor WHERE idDescritor IN (SELECT id FROM ids_aux)';
                 $this->executarQuery($sql);
                 //Para encontrar os pais dos descritores nivel 3
-                $sql = 'INSERT INTO ids_aux2(id) SELECT DISTINCT pai FROM imagens_descritor WHERE idDescritor IN (SELECT id FROM ids_aux)';
+                $sql = 'INSERT INTO ids_aux2(id) SELECT DISTINCT pai FROM imagem_descritor WHERE idDescritor IN (SELECT id FROM ids_aux)';
                 $this->executarQuery($sql);
                 //Seleciona os pais nivel 2
-                $sql = 'INSERT INTO ids(id) SELECT DISTINCT idDescritor FROM imagens_descritor WHERE idDescritor IN (SELECT id FROM ids_aux2)';
+                $sql = 'INSERT INTO ids(id) SELECT DISTINCT idDescritor FROM imagem_descritor WHERE idDescritor IN (SELECT id FROM ids_aux2)';
                 $this->executarQuery($sql);
                 $sql = 'DELETE QUICK FROM ids_aux;';
                 $this->executarQuery($sql);
                 //Para encontrar os pais dos descritores nivel 2
-                $sql = 'INSERT INTO ids_aux(id) SELECT DISTINCT pai FROM imagens_descritor WHERE idDescritor IN (SELECT id FROM ids_aux2)';
+                $sql = 'INSERT INTO ids_aux(id) SELECT DISTINCT pai FROM imagem_descritor WHERE idDescritor IN (SELECT id FROM ids_aux2)';
                 $this->executarQuery($sql);
                 //Seleciona os pais nivel 1
-                $sql = 'INSERT INTO ids(id) SELECT DISTINCT idDescritor FROM imagens_descritor WHERE idDescritor IN (SELECT id FROM ids_aux)';
+                $sql = 'INSERT INTO ids(id) SELECT DISTINCT idDescritor FROM imagem_descritor WHERE idDescritor IN (SELECT id FROM ids_aux)';
                 $this->executarQuery($sql);
             }
-            $sql = 'SELECT * FROM imagens_descritor WHERE idDescritor IN (SELECT id FROM ids)';
+            $sql = 'SELECT * FROM imagem_descritor WHERE idDescritor IN (SELECT id FROM ids)';
             $resultado = $this->executarSelect($sql);
             $sql = 'DROP TEMPORARY TABLE IF EXISTS ids, ids_aux, ids_aux2';
             $this->executarQuery($sql);
@@ -243,12 +243,12 @@ class imagensDAO extends abstractDAO {
         if ($condicaoJuncao == null) {
             $condicaoJuncao = "";
         }
-        $sql = "SELECT $colunas FROM imagens_descritor " . $condicaoJuncao . $condicao;
+        $sql = "SELECT $colunas FROM imagem_descritor " . $condicaoJuncao . $condicao;
         return $this->executarSelect($sql);
     }
 
     public function cadastrarImagem(Imagem $imagem) {
-        $sql = "INSERT INTO imagens_imagem(idGaleria,titulo,observacoes,dificuldade,cpfAutor,ano,nomeArquivo,nomeArquivoMiniatura,nomeArquivoVetorial,descritor1,descritor2,descritor3,descritor4,autor) VALUES ";
+        $sql = "INSERT INTO imagem(idGaleria,titulo,observacoes,dificuldade,cpfAutor,ano,nomeArquivo,nomeArquivoMiniatura,nomeArquivoVetorial,descritor1,descritor2,descritor3,descritor4,autor) VALUES ";
         $sql .= "(:idGaleria,:titulo,:observacoes,:dificuldade,:cpfAutor,:ano,:nomeArquivo,:nomeArquivoMiniatura,:nomeArquivoVetorial,:des1,:des2,:des3,:des4,:autor)";
         $params = array(
             ':idGaleria' => [$imagem->get_idGaleria(), PDO::PARAM_INT]
@@ -280,7 +280,7 @@ class imagensDAO extends abstractDAO {
         }
 
 
-        $sql = "UPDATE imagens_descritor SET nome = :nome WHERE idDescritor = :idDescritor";
+        $sql = "UPDATE imagem_descritor SET nome = :nome WHERE idDescritor = :idDescritor";
         $params = array(
             ':nome' => [$nome, PDO::PARAM_STR],
             ':idDescritor' => [$idDescritor, PDO::PARAM_INT]
@@ -291,7 +291,7 @@ class imagensDAO extends abstractDAO {
 
     public function recuperarDescritor($idDescritor) {
 
-        $sql = "SELECT * from imagens_descritor WHERE idDescritor = :idDescritor";
+        $sql = "SELECT * from imagem_descritor WHERE idDescritor = :idDescritor";
         $params = array(
             ':idDescritor' => [$idDescritor, PDO::PARAM_INT]
         );
@@ -299,7 +299,7 @@ class imagensDAO extends abstractDAO {
     }
 
     public function renomearDescritor($idDescritor, $novoNome) {
-        $sql = "UPDATE imagens_descritor SET nome = :nome WHERE idDescritor = :idDescritor";
+        $sql = "UPDATE imagem_descritor SET nome = :nome WHERE idDescritor = :idDescritor";
         $params = array(
             ':nome' => [$novoNome, PDO::PARAM_STR]
             , ':idDescritor' => [$idDescritor, PDO::PARAM_INT]
@@ -316,7 +316,7 @@ class imagensDAO extends abstractDAO {
 //            $descAtual = $idDescritor;
 //            $ret = -1;
 //            while ($ret != ImagensDescritor::ID_RAIZ_NIVEL_ZERO) {
-//                $sqlAux = "SELECT pai FROM imagens_descritor WHERE idDescritor = :idDescritor LIMIT 1";
+//                $sqlAux = "SELECT pai FROM imagem_descritor WHERE idDescritor = :idDescritor LIMIT 1";
 //                $paramsAux = array(
 //                    ':idDescritor' => [$descAtual, PDO::PARAM_INT]
 //                );
@@ -329,7 +329,7 @@ class imagensDAO extends abstractDAO {
             $descAtual = $novoPai;
             $ret = -1;
             while ($ret != ImagensDescritor::ID_RAIZ_NIVEL_ZERO) {
-                $sqlAux = "SELECT pai FROM imagens_descritor WHERE idDescritor = :idDescritor LIMIT 1";
+                $sqlAux = "SELECT pai FROM imagem_descritor WHERE idDescritor = :idDescritor LIMIT 1";
                 $paramsAux = array(
                     ':idDescritor' => [$descAtual, PDO::PARAM_INT]
                 );
@@ -342,7 +342,7 @@ class imagensDAO extends abstractDAO {
 
             switch (sizeof($sequanciaNovaIds)) {
                 case 3:
-                    $sqlAtualizar = "UPDATE imagens_imagem SET descritor1 = :desc1, descritor2 = :desc2, descritor3 = :desc3 WHERE descritor4 = :desc4";
+                    $sqlAtualizar = "UPDATE imagem SET descritor1 = :desc1, descritor2 = :desc2, descritor3 = :desc3 WHERE descritor4 = :desc4";
                     $paramsAtualizar = array(
                         ':desc1' => [$sequanciaNovaIds[2], PDO::PARAM_INT]
                         , ':desc2' => [$sequanciaNovaIds[1], PDO::PARAM_INT]
@@ -351,7 +351,7 @@ class imagensDAO extends abstractDAO {
                     );
                     break;
                 case 2:
-                    $sqlAtualizar = "UPDATE imagens_imagem SET descritor1 = :desc1, descritor2 = :desc2  WHERE descritor3 = :desc3";
+                    $sqlAtualizar = "UPDATE imagem SET descritor1 = :desc1, descritor2 = :desc2  WHERE descritor3 = :desc3";
                     $paramsAtualizar = array(
                         ':desc1' => [$sequanciaNovaIds[1], PDO::PARAM_INT]
                         , ':desc2' => [$sequanciaNovaIds[0], PDO::PARAM_INT]
@@ -359,7 +359,7 @@ class imagensDAO extends abstractDAO {
                     );
                     break;
                 case 1:
-                    $sqlAtualizar = "UPDATE imagens_imagem SET descritor1 = :desc1 WHERE descritor2 = :desc2";
+                    $sqlAtualizar = "UPDATE imagem SET descritor1 = :desc1 WHERE descritor2 = :desc2";
                     $paramsAtualizar = array(
                         ':desc1' => [$sequanciaNovaIds[0], PDO::PARAM_INT]
                         , ':desc2' => [$idDescritor, PDO::PARAM_INT]
@@ -377,7 +377,7 @@ class imagensDAO extends abstractDAO {
             //  Atualizar informações sobre rotulo
             //------------------------------------------------------------------
 
-            $sqlRotulo = "SELECT IFNULL ( (SELECT rotulo FROM imagens_descritor WHERE pai = :novoPai ORDER BY rotulo DESC LIMIT 1) ,0)";
+            $sqlRotulo = "SELECT IFNULL ( (SELECT rotulo FROM imagem_descritor WHERE pai = :novoPai ORDER BY rotulo DESC LIMIT 1) ,0)";
             $paramsRotulo = array(
                 ':novoPai' => [$novoPai, PDO::PARAM_INT]
             );
@@ -389,7 +389,7 @@ class imagensDAO extends abstractDAO {
             //------------------------------------------------------------------
             //  Mover descritor
             //------------------------------------------------------------------
-            $sql = "UPDATE imagens_descritor SET pai = :novoPai,rotulo = :novoRotulo WHERE idDescritor = :idDescritor AND pai = :antigoPai";
+            $sql = "UPDATE imagem_descritor SET pai = :novoPai,rotulo = :novoRotulo WHERE idDescritor = :idDescritor AND pai = :antigoPai";
             $params = array(
                 ':novoPai' => [$novoPai, PDO::PARAM_INT]
                 , ':antigoPai' => [$antigoPai, PDO::PARAM_INT]
@@ -405,7 +405,7 @@ class imagensDAO extends abstractDAO {
             //  Atualizar informações sobre qtdFilhos
             //------------------------------------------------------------------
 
-            $sql2 = "UPDATE imagens_descritor SET qtdFilhos = qtdFilhos - 1 WHERE idDescritor = :antigoPai";
+            $sql2 = "UPDATE imagem_descritor SET qtdFilhos = qtdFilhos - 1 WHERE idDescritor = :antigoPai";
             $params2 = array(
                 ':antigoPai' => [$antigoPai, PDO::PARAM_INT]
             );
@@ -413,7 +413,7 @@ class imagensDAO extends abstractDAO {
                 throw new Exception("Falha ao atualizar informações");
             }
 
-            $sql3 = "UPDATE imagens_descritor SET qtdFilhos = qtdFilhos + 1 WHERE idDescritor = :novoPai";
+            $sql3 = "UPDATE imagem_descritor SET qtdFilhos = qtdFilhos + 1 WHERE idDescritor = :novoPai";
             $params3 = array(
                 ':novoPai' => [$novoPai, PDO::PARAM_INT]
             );

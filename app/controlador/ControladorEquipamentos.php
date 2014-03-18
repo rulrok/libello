@@ -152,7 +152,7 @@ class ControladorEquipamentos extends Controlador {
             $this->visao->comboboxPapeis = ComboBoxPapeis::montarTodosPapeis();
             $this->visao->equipamento = (new equipamentoDAO())->recuperarEquipamento(fnDecrypt(filter_input(INPUT_GET, 'equipamentoID')));
             $this->visao->equipamentoID = fnEncrypt($this->visao->equipamento->get_idEquipamento());
-            $this->visao->responsavel = ComboBoxUsuarios::montarResponsavelViagem();
+            $this->visao->responsavel = ComboBoxUsuarios::listarTodosUsuarios();
             $this->visao->polos = ComboBoxPolo::montarTodosOsPolos();
             $this->renderizar();
         } else {

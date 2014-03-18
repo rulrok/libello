@@ -1,3 +1,9 @@
+/*
+ * Função que configura a classe do botões das páginas de gerência para dar a 
+ * aparência de botões habilitado
+ * 
+ * @returns {undefined}
+ */
 function habilitarBotoes() {
     $('.btn-deletar').removeClass('disabled');
     $('.btn-deletar').prop('disabled', false);
@@ -11,6 +17,12 @@ function habilitarBotoes() {
     $('.btn-retorno').prop('disabled', false);
 }
 
+/*
+ * Função que configura a classe do botões das páginas de gerência para dar a 
+ * aparência de botões desabilitados
+ * 
+ * @returns {undefined}
+ */
 function desabilitarBotoes() {
     $('.btn-deletar').addClass('disabled');
     $('.btn-deletar').prop('disabled', true);
@@ -24,9 +36,15 @@ function desabilitarBotoes() {
     $('.btn-retorno').prop('disabled', true);
 }
 
+/*
+ * Seleciona a primeira linha de uma jTable baseado no id da tabela
+ * 
+ * @param string idTabela
+ * @returns {selecionarPrimeiraLinha.primeiraLinha}
+ */
 function selecionarPrimeiraLinha(idTabela) {
 
-    $('.row_selected').removeClass('row_selected')
+    $('.row_selected').removeClass('row_selected');
     var primeiraLinha = $("#" + idTabela + " tr")[1];
     if (primeiraLinha !== undefined) {
         if (!$(primeiraLinha.children[0]).hasClass("dataTables_empty")) {

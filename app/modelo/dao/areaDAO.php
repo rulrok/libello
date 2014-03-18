@@ -11,7 +11,7 @@ class areaDAO extends abstractDAO {
      */
     public function obterNomeArea($idArea) {
         $idArea = (int) $idArea;
-        $sql = "SELECT nomeArea FROM area WHERE idArea = :idArea";
+        $sql = "SELECT nomeArea FROM cursospolos_area WHERE idArea = :idArea";
         $params = array(
             ':idArea' => [$idArea, PDO::PARAM_STR]
         );
@@ -25,7 +25,7 @@ class areaDAO extends abstractDAO {
      */
     public function obterIdArea($nomeArea) {
 
-        $sql = "SELECT idArea FROM area WHERE nome = :nome";
+        $sql = "SELECT idArea FROM cursospolos_area WHERE nome = :nome";
         $params = array(
             ':nome' => [$nomeArea, PDO::PARAM_STR]
         );

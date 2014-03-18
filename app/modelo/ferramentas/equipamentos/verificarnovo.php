@@ -56,6 +56,7 @@ class verificarnovoequipamento extends verificadorFormularioAjax {
                 $equipamento->set_numeroPatrimonio(null);
                 //Vai tentar cadastrar
                 try {
+                    $equipamentoDAO = new equipamentoDAO();
                     $equipamentoDAO->cadastrarEquipamento($equipamento);
                     $id = $equipamentoDAO->obterUltimoIdInserido();
                     $equipamentoDAO->registrarInsercaoEquipamento($id);
