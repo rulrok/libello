@@ -67,11 +67,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['imagemURI'])) {
     echo json_encode($ret);
 }
 
-//--------- BEGIN SECOND SCRIPT --------------------------------------------------------------------
-//save master image to temp folder, name it using a temp name
-//resize and save thumb image, name it using the same temp name as master
-// this is the function that will create the thumbnail image from the uploaded image
-// the resize will be done considering the width and height defined, but without deforming the image
 function make_thumb($img_name, $filename, $new_w, $new_h) {
     //get image extension.
     $ext = getExtension($img_name);

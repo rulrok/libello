@@ -30,6 +30,12 @@ class imagensDAO extends abstractDAO {
         return $this->executarSelect($sql);
     }
 
+    /**
+     * 
+     * @param Descritor $descritor Objeto com o nome do novo descritor configurado apenas
+     * @param type $idDescritorPai
+     * @return type
+     */
     public function cadastrarDescritor(Descritor $descritor, $idDescritorPai) {
         $sql = 'INSERT INTO imagem_descritor_aux_inserir(nome,pai) VALUES (:nome,:pai)';
         $params = array(
@@ -55,6 +61,13 @@ class imagensDAO extends abstractDAO {
         return $this->pesquisarImagem('', $limit, $acessoTotal);
     }
 
+    /**
+     * Realiza uma busca nas imagens do banco de dados por
+     * @param string $termoBusca Uma string no formato "termo1,termo2,termo3,...,termo-n"
+     * @param string $limite Trecho SQL (LIMIT ...) válido
+     * @param boolean $acessoTotal Indica se o resultado deve retornar todas as imagens de todos os autores, ou apenas do usuário logado atualmente
+     * @return type
+     */
     public function pesquisarImagem($termoBusca, $limite = "", $acessoTotal = false) {
         if ($acessoTotal) {
             $query_auxiliar = '';
@@ -127,6 +140,15 @@ class imagensDAO extends abstractDAO {
         return $this->executarSelect($sql,$params);
     }
 
+    /**
+     * Função que retorna a árvore de descritores contendo apenas os ramos que são completos,
+     * ou seja, que possuem as folhas no nível 4. Opcionalmente pode-se indicar um descritor
+     * para não ser incluído nessa árvore, e isso poderá causar a poda de todo um ramo da 
+     * árvore.
+     * 
+     * @param int $idDescritorExcluir
+     * @return array Um array no formato esperado para o componente jsTree (jQuery)
+     */
     public function consultarDescritoresCompletos($idDescritorExcluir = null) {
         try {
             $this->iniciarTransacao();

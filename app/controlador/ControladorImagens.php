@@ -102,15 +102,6 @@ class ControladorImagens extends Controlador {
     }
 
     /*
-     * GALERIAS
-     */
-
-    public function acaoGerenciargalerias() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->renderizar();
-    }
-
-    /*
      * DESCRITORES
      */
 
@@ -139,19 +130,6 @@ class ControladorImagens extends Controlador {
 
     public function acaoVerificarnovodescritor() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->renderizar();
-    }
-
-    public function acaoEditardescritor() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
-        if (filter_has_var(INPUT_GET, 'categoriaID') || filter_has_var(INPUT_POST, 'categoriaID')) {
-            $categoriaID = filter_has_var(INPUT_GET, 'categoriaID') ? filter_input(INPUT_GET, 'categoriaID') : filter_input(INPUT_POST, 'categoriaID');
-            $this->visao->categoriaID = $categoriaID;
-            $curso = (new imagensDAO())->recuperarDescritor($categoriaID);
-            $this->visao->categoria = $curso->get_nomeCategoria();
-        } else {
-            die("Acesso indevido");
-        }
         $this->renderizar();
     }
 

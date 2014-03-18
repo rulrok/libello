@@ -28,7 +28,7 @@
         <div class="line">
             <label for="observacoes">Observações</label>
             <textarea rows="8" id="descricoes" name="observacoes" class="input-xlarge" title="Observações" data-content="Alguma característica da imagem ao qual o registro seja pertinente. Limite de 1000 caracteres." ></textarea>           
-            <div id="chars">1000</div>
+            <div id="chars" style="float: right;">1000</div>
         </div>
         <div class="line">
             <label for='descritor1'>Descritor 1</label>

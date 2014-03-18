@@ -21,16 +21,16 @@ try {
     //TODO Retirar essas queries desse arquivo e mover para métodos em imagensDAO
     switch ($descritorExcluido['nivel']) {
         case '1':
-            $sql = "UPDATE imagem_imagem SET descritor1 = :descritor1, descritor2 = :descritor2, descritor3 = :descritor3, descritor4 = :descritor4 WHERE descritor1 = :descritorExcluir";
+            $sql = "UPDATE imagem SET descritor1 = :descritor1, descritor2 = :descritor2, descritor3 = :descritor3, descritor4 = :descritor4 WHERE descritor1 = :descritorExcluir";
             break;
         case '2':
-            $sql = "UPDATE imagem_imagem SET descritor1 = :descritor1, descritor2 = :descritor2, descritor3 = :descritor3, descritor4 = :descritor4 WHERE descritor2 = :descritorExcluir";
+            $sql = "UPDATE imagem SET descritor1 = :descritor1, descritor2 = :descritor2, descritor3 = :descritor3, descritor4 = :descritor4 WHERE descritor2 = :descritorExcluir";
             break;
         case '3':
-            $sql = "UPDATE imagem_imagem SET descritor1 = :descritor1, descritor2 = :descritor2, descritor3 = :descritor3, descritor4 = :descritor4 WHERE descritor3 = :descritorExcluir";
+            $sql = "UPDATE imagem SET descritor1 = :descritor1, descritor2 = :descritor2, descritor3 = :descritor3, descritor4 = :descritor4 WHERE descritor3 = :descritorExcluir";
             break;
         case '4':
-            $sql = "UPDATE imagem_imagem SET descritor1 = :descritor1, descritor2 = :descritor2, descritor3 = :descritor3, descritor4 = :descritor4 WHERE descritor4 = :descritorExcluir";
+            $sql = "UPDATE imagem SET descritor1 = :descritor1, descritor2 = :descritor2, descritor3 = :descritor3, descritor4 = :descritor4 WHERE descritor4 = :descritorExcluir";
             break;
     }
 
