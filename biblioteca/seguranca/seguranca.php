@@ -69,7 +69,7 @@ if (preg_match("#.*" . WEB_SERVER_FOLDER . "/?.*#", $_SERVER['REQUEST_URI'])) {
 
     function usuarioAutorizado(Usuario $usuario, $acessoMinimo) {
         $diretorio = strtolower(Mvc::pegarInstancia()->pegarControlador());
-        $arquivo = strtolower(Mvc::pegarInstancia()->pegarAcao());
+//        $arquivo = strtolower(Mvc::pegarInstancia()->pegarAcao());
 
         $nomeClasseControlador = 'Controlador' . ucfirst($diretorio);
         $controlador = new $nomeClasseControlador;
@@ -85,7 +85,6 @@ if (preg_match("#.*" . WEB_SERVER_FOLDER . "/?.*#", $_SERVER['REQUEST_URI'])) {
             if ($permissao_ferramenta['idFerramenta'] == $idFerramentaAssociada) {
                 //Achou a ferramenta
                 if ($permissao_ferramenta['idPermissao'] != Permissao::SEM_ACESSO) {
-                    //TODO verificar granularidade do acesso
                     if ($permissao_ferramenta['idPermissao'] >= $acessoMinimo) {
                         return true;
                     } else {
