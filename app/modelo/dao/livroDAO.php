@@ -60,7 +60,7 @@ class livroDAO extends abstractDAO {
         } else {
             $condicao = "WHERE " . $condicao . " AND quantidade > 0";
         }
-        $sql = "SELECT $colunas FROM livro JOIN area ON area = idArea " . $condicao;
+        $sql = "SELECT $colunas FROM livro JOIN cursospolos_area ON area = idArea " . $condicao;
         return $this->executarSelect($sql);
     }
 
@@ -146,7 +146,7 @@ class livroDAO extends abstractDAO {
         } else {
             $condicao = "WHERE $condicao AND quantidadeSaida > 0";
         }
-        $sql = "SELECT $colunas FROM `livro_saida` AS `ls` JOIN `livro` AS `l` ON `ls`.`livro` = `l`.idLivro JOIN `usuario` AS `u` ON `ls`.`responsavel` = `u`.`idUsuario` LEFT JOIN `polo` AS `p` ON `ls`.`poloDestino` = `p`.`idPolo` JOIN `area` AS `a` ON `l`.`area` = `a`.`idArea` $condicao";
+        $sql = "SELECT $colunas FROM `livro_saida` AS `ls` JOIN `livro` AS `l` ON `ls`.`livro` = `l`.idLivro JOIN `usuario` AS `u` ON `ls`.`responsavel` = `u`.`idUsuario` LEFT JOIN `cursospolos_polo` AS `p` ON `ls`.`poloDestino` = `p`.`idPolo` JOIN `cursospolos_area` AS `a` ON `l`.`area` = `a`.`idArea` $condicao";
         return $this->executarSelect($sql);
     }
 
@@ -163,7 +163,7 @@ class livroDAO extends abstractDAO {
         } else {
             $condicao = "WHERE $condicao";
         }
-        $sql = "SELECT $colunas FROM `livro_baixa` AS `lb` JOIN `livro` AS `l` ON `lb`.`livro` = `l`.`idLivro` JOIN `area` AS `a` ON `l`.`area` = `a`.`idArea` $condicao";
+        $sql = "SELECT $colunas FROM `livro_baixa` AS `lb` JOIN `livro` AS `l` ON `lb`.`livro` = `l`.`idLivro` JOIN `cursospolos_area` AS `a` ON `l`.`area` = `a`.`idArea` $condicao";
         return $this->executarSelect($sql);
     }
 

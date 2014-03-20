@@ -92,7 +92,7 @@ class ControladorLivros extends Controlador {
 
     public function acaoRetorno() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
-        $this->visao->saidas = (new livroDAO())->consultarSaidas("idSaida, nomelivro, numeroPatrimonio, concat(PNome,' ',UNome) AS `responsavel`,destino,nomePolo,quantidadeSaida,dataSaida");
+        $this->visao->saidas = (new livroDAO())->consultarSaidas("idSaida, nomelivro, numeroPatrimonio, concat(PNome,' ',UNome) AS `responsavel`, coalesce(destino,nomePolo),quantidadeSaida,dataSaida");
         $i = 0;
         foreach ($this->visao->saidas as $value) {
             $value[0] = fnEncrypt($value[0]);
@@ -216,7 +216,7 @@ class ControladorLivros extends Controlador {
 
     public function acaoGerenciar_saidas() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->visao->saidas = (new livroDAO())->consultarSaidas("idSaida,nomelivro,dataSaida,quantidadeSaidaOriginal,concat(PNome,' ',UNome) as `responsavel`");
+        $this->visao->saidas = (new livroDAO())->consultarSaidas("idSaida,nomelivro,grafica,dataSaida,quantidadeSaidaOriginal,coalesce(destino,nomePolo),concat(PNome,' ',UNome) as `responsavel`");
         $i = 0;
         foreach ($this->visao->saidas as $value) {
             $value[0] = fnEncrypt($value[0]);
