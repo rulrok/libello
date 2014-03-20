@@ -7,6 +7,11 @@ include APP_DIR . "visao/verificadorFormularioAjax.php";
 
 class verificarnovaimagem extends verificadorFormularioAjax {
 
+    private function auxiliar_ultimo_id_inserido(imagensDAO $dao, $nomeDescritor) {
+        $resultado = $dao->consultarDescritor("idDescritor", "nome = '$nomeDescritor' ORDER BY idDescritor DESC LIMIT 1");
+        return $resultado[0][0];
+    }
+
     public function _validar() {
         define("LARGURA_THUMB", "350");
         define("ALTURA_THUMB", "150");
@@ -30,10 +35,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             $titulo = filter_input(INPUT_POST, 'titulo');
             $ano = filter_input(INPUT_POST, 'ano');
             $observacoes = filter_input(INPUT_POST, 'observacoes');
-            $descritor1 = fnDecrypt(filter_input(INPUT_POST, 'descritor1'));
-            $descritor2 = fnDecrypt(filter_input(INPUT_POST, 'descritor2'));
-            $descritor3 = fnDecrypt(filter_input(INPUT_POST, 'descritor3'));
-            $descritor4 = fnDecrypt(filter_input(INPUT_POST, 'descritor4'));
+
             $dificuldade = filter_input(INPUT_POST, 'complexidade');
             //Campos obtidos diretamente do sistema
             $cpfAutor = validadorCPF::normalizarCPF(obterUsuarioSessao()->get_cpf());
@@ -64,13 +66,34 @@ class verificarnovaimagem extends verificadorFormularioAjax {
                 $this->mensagemErro("Tamanho máximo permitido para a imagem: " . ($tamanhoMaximo / 1024) . " Kb.");
             }
 
+            $descritor1 = fnDecrypt(filter_input(INPUT_POST, 'descritor1'));
+            $descritor2 = fnDecrypt(filter_input(INPUT_POST, 'descritor2'));
+            $descritor3 = fnDecrypt(filter_input(INPUT_POST, 'descritor3'));
+
             $imagensDAO = new imagensDAO();
+            if (filter_has_var(INPUT_POST, 'descritor_4_personalizado')) {
+                $novo_descritor_nome = filter_input(INPUT_POST, 'novo_descritor_4');
+                $novo_descritor = new Descritor();
+                $novo_descritor->set_nome($novo_descritor_nome);
+                if ($imagensDAO->cadastrarDescritor($novo_descritor, $descritor3)) {
+                    $descritor4 = $this->auxiliar_ultimo_id_inserido($imagensDAO, $novo_descritor_nome);
+                } else {
+                    $this->mensagemErro("Não foi possível cadastrar o novo descritor");
+                }
+            } else {
+                $descritor4 = fnDecrypt(filter_input(INPUT_POST, 'descritor4'));
+            }
+
+            //Obtém os códigos que irão compor o nome do arquivo de imagem no servidor
             $codigo_desc_1 = $imagensDAO->consultarDescritor('rotulo', 'idDescritor = ' . $descritor1)[0][0];
             $codigo_desc_2 = $imagensDAO->consultarDescritor('rotulo', 'idDescritor = ' . $descritor2)[0][0];
             $codigo_desc_3 = $imagensDAO->consultarDescritor('rotulo', 'idDescritor = ' . $descritor3)[0][0];
-            $codigo_desc_4 = $imagensDAO->consultarDescritor('rotulo', 'idDescritor = ' . $descritor4)[0][0];
+//            $codigo_desc_4 = $imagensDAO->consultarDescritor('rotulo', 'idDescritor = ' . $descritor4)[0][0];
 //            $dimensoesImagem = getimagesize($_FILES[$arquivoImagem]['tmp_img']);
-            $nomeFinalArquivoImagem = $this->montarNome(array($codigo_desc_1, $codigo_desc_2, $codigo_desc_3, $codigo_desc_4, $dificuldade, $iniciais));
+            /*
+             * O NOME DO ARQUIVO QUE SERÁ SALVO NO SERVIDOR DEVE SER CONFIGURADO UNICAMENTE NESSA VARIÁVEL
+             */
+            $nomeFinalArquivoImagem = $this->montarNome(array($codigo_desc_1, $codigo_desc_2, $codigo_desc_3, $dificuldade, $iniciais));
 
             $timestamp = time();
 
@@ -94,11 +117,16 @@ class verificarnovaimagem extends verificadorFormularioAjax {
                 $this->mensagemErro("Erro ao mover arquivo vetorial para a pasta do servidor<br/>" . print_r($imagemVetorialCopiada, true));
             }
 
-            if (!file_exists(ROOT . $galerias_dir . "miniaturas/$cpfAutor/")) {
-                mkdir(ROOT . $galerias_dir . "miniaturas/$cpfAutor/");
+            $dirMiniaturas = ROOT . $galerias_dir . "miniaturas/";
+            if (!file_exists($dirMiniaturas)) {
+                mkdir($dirMiniaturas);
+            }
+            $dirMiniaturaAutor = ROOT . $galerias_dir . "miniaturas/$cpfAutor/";
+            if (!file_exists($dirMiniaturaAutor)) {
+                mkdir($dirMiniaturaAutor);
             }
             $destinoImagemMiniatura = $galerias_dir . "miniaturas/$cpfAutor/" . $nomeFinalArquivoImagem . "_thumb_$timestamp." . $tipoImagem;
-            $this->make_thumb(ROOT.$destinoImagem, ROOT.$destinoImagemMiniatura, LARGURA_THUMB, ALTURA_THUMB);
+            $this->make_thumb(ROOT . $destinoImagem, ROOT . $destinoImagemMiniatura, LARGURA_THUMB, ALTURA_THUMB);
 
             if (!file_exists($destinoImagem)) {
                 $this->mensagemErro("Erro ao criar a miniatura para a imagem<br/>" . print_r($destinoImagem, true));

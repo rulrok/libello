@@ -5,7 +5,7 @@
         <legend>Alterar dados do livro</legend>
         <input hidden="true" readonly="true" type="text" class="input-small" id="livroID" name="livroID" value="<?php echo $this->livroID ?>" />
         <span class="line">
-            <label>Nome do Livro</label>
+            <label for="livro">Nome do Livro</label>
             <input required autofocus type="text" class="input-xlarge" id="livro" name="livro" value="<?php echo $this->livro ?>" />
         </span>
         <span class="line">
@@ -30,7 +30,7 @@
         <hr/>
         <?php if ($this->livroEditavel): ?>
             <div class="line">
-                <label>Tipo</label>
+                <label for="tipo">Tipo</label>
                 <div class="btn-toolbar" style="position:relative;left:15px;margin-bottom: 5px;">
                     <div class="btn-group">
                         <a class="btn btn-info" id="custeio"  value="custeio" checked><i class="icon-headphones"></i> Custeio</a>
@@ -44,7 +44,7 @@
             <?php else: ?>
                 <div class="alert alert-info"><i class="icon-warning-sign"> </i> O tipo não pode ser alterado pois já houve algum <br/>registro de baixa, saída ou retorno.</div>
                 <div class="line">  
-                    <label>Tipo</label>
+                    <label for="tipo">Tipo</label>
                     <div class="btn-toolbar"  style="position:relative;left:15px;margin-bottom: 5px;" > 
                         <div class="btn-group">
                             <a class="btn btn-info disabled" id="custeio"  value="custeio" checked data-content="asdasd"><i class="icon-headphones"></i> Custeio</a>
@@ -61,7 +61,7 @@
             <!-- custeio -->
             <span class="custeio">
                 <span class="line">
-                    <label>Quantidade</label>
+                    <label for="quantidade">Quantidade</label>
                     <input required type="number" min="1" class="input-medium" id="quantidade" name="quantidade" value="<?php echo $this->quantidade ?>"/>
                 </span>
             </span>
@@ -71,7 +71,7 @@
 
                 <div id="linhasPatrimonios">
                     <span class="line patrimonio-1">
-                        <label>Código Patrimônio</label>
+                        <label for="numeroPatrimonio">Código Patrimônio</label>
                         <input readonly type="text" class="input-medium" id="numeroPatrimonio" name="numeroPatrimonio" value="<?php echo $this->numeroPatrimonio ?>"/>
                     </span>
                 </div>

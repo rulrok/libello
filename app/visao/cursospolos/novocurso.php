@@ -4,7 +4,7 @@
     <fieldset>
         <legend>Inserir novo curso</legend>
         <span class="line">
-            <label>Curso</label>
+            <label for="nomecurso">Curso</label>
             <input required autofocus type="text" class="input-xlarge" id="nomecurso" name="nomecurso" />
         </span>
         <span class="line">
@@ -14,7 +14,7 @@
             </select>
         </span>
         <span class="line">
-            <label>Tipo</label>
+            <label for="tipocurso">Tipo</label>
             <select required class="input-large" id="tipocurso" name="tipocurso">
                 <?php echo $this->comboTipoCurso ?>
             </select>
@@ -30,5 +30,9 @@
     $(document).ready(function() {
         varrerCampos();
         formularioAjax();
+
+        $("button[type=reset]").bind("click", function() {
+            setTimeout(liberarCadastro,200);
+        });
     });
 </script>

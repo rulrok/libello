@@ -11,20 +11,20 @@ require_once APP_DIR . "modelo/dao/documentoDAO.php";
 //-------------------
 //definindo variaveis
 $id = fnDecrypt($_REQUEST['idv']);
-$oficio = (new documentoDAO())->consultar('oficio', 'idOficio = ' . $id);
-$numOficio = $oficio[0]->getNumOficio();
-$tipoSigla = $oficio[0]->getTipoSigla();
-$data = explode('/', $oficio[0]->getData());
+$oficio = (new documentoDAO())->consultar('documento_oficio', 'idOficio = ' . $id);
+$numOficio = $oficio[0]->get_numOficio();
+$tipoSigla = $oficio[0]->get_tipoSigla();
+$data = explode('/', $oficio[0]->get_data());
 $dia = $data[0];
 $ano = $data[2];
-$tratamento = $oficio[0]->getTratamento();
-$destino = $oficio[0]->getDestino();
-$cargo_destino = $oficio[0]->getCargo_destino();
-$assunto = $oficio[0]->getAssunto();
-$referencia = $oficio[0]->getReferencia();
-$corpo = $oficio[0]->getCorpo();
-$remetente = $oficio[0]->getRemetente();
-$cargo_remetente = $oficio[0]->getCargo_remetente();
+$tratamento = $oficio[0]->get_tratamento();
+$destino = $oficio[0]->get_destino();
+$cargo_destino = $oficio[0]->get_cargo_destino();
+$assunto = $oficio[0]->get_assunto();
+$referencia = $oficio[0]->get_referencia();
+$corpo = $oficio[0]->get_corpo();
+$remetente = $oficio[0]->get_remetente();
+$cargo_remetente = $oficio[0]->get_cargo_remetente();
 
 $remetentes = explode(';',$remetente);
 $cargos_remetentes = explode(';',$cargo_remetente);

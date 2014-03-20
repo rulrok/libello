@@ -11,19 +11,19 @@ require_once APP_DIR . "modelo/dao/documentoDAO.php";
 //-------------------
 //definindo variaveis
 $id = fnDecrypt($_REQUEST['idv']);
-$memorando = (new documentoDAO())->consultar('memorando', 'idMemorando = ' . $id);
-$numMemorando = $memorando[0]->getNumMemorando();
-$tipoSigla = $memorando[0]->getTipoSigla();
-$data = explode('/', $memorando[0]->getData());
+$memorando = (new documentoDAO())->consultar('documento_memorando', 'idMemorando = ' . $id);
+$numMemorando = $memorando[0]->get_numMemorando();
+$tipoSigla = $memorando[0]->get_tipoSigla();
+$data = explode('/', $memorando[0]->get_data());
 $dia = $data[0];
 $mes = $data[1];
 $ano = $data[2];
-$tratamento = $memorando[0]->getTratamento();
-$cargo_destino = $memorando[0]->getCargo_destino();
-$assunto = $memorando[0]->getAssunto();
-$corpo = $memorando[0]->getCorpo();
-$remetente = $memorando[0]->getRemetente();
-$cargo_remetente = $memorando[0]->getCargo_remetente();
+$tratamento = $memorando[0]->get_tratamento();
+$cargo_destino = $memorando[0]->get_cargo_destino();
+$assunto = $memorando[0]->get_assunto();
+$corpo = $memorando[0]->get_corpo();
+$remetente = $memorando[0]->get_remetente();
+$cargo_remetente = $memorando[0]->get_cargo_remetente();
 
 $remetentes = explode(';',$remetente);
 $cargos_remetentes = explode(';',$cargo_remetente);

@@ -10,7 +10,7 @@ class poloDAO extends abstractDAO {
      * @return boolean
      */
     public function cadastrarPolo(Polo $polo) {
-        $sql = "INSERT INTO polo(nomePolo,cidade,estado) VALUES (:nome, :cidade, :estado)";
+        $sql = "INSERT INTO cursospolos_polo(nomePolo,cidade,estado) VALUES (:nome, :cidade, :estado)";
         $params = array(
             ':nome' => [$polo->get_nome(), PDO::PARAM_STR]
             , ':cidade' => [$polo->get_cidade(), PDO::PARAM_STR]
@@ -26,7 +26,7 @@ class poloDAO extends abstractDAO {
      */
     public function consultarPolo(Polo $polo) {
         //OBS: LIKE não foi utilizado nessa query por motivo de desempenho
-        $sql = "SELECT count(idPolo) FROM polo WHERE nomePolo = :nome AND cidade = :cidade AND estado = :estado";
+        $sql = "SELECT count(idPolo) FROM cursospolos_polo WHERE nomePolo = :nome AND cidade = :cidade AND estado = :estado";
         $params = array(
             ':nome' => [$polo->get_nome(), PDO::PARAM_STR]
             , ':cidade' => [$polo->get_cidade(), PDO::PARAM_STR]
@@ -46,7 +46,7 @@ class poloDAO extends abstractDAO {
                 $idPolo = $idPolo['poloID'];
             }
             $idPolo = (int) $idPolo;
-            $sql = "DELETE FROM polo WHERE idPolo = :idPolo";
+            $sql = "DELETE FROM cursospolos_polo WHERE idPolo = :idPolo";
             $params = array(
                 ':idPolo' => [$idPolo, PDO::PARAM_INT]
             );
@@ -81,7 +81,7 @@ class poloDAO extends abstractDAO {
         }
 
 
-        $sql = "UPDATE polo SET nomePolo = :nome ,cidade = :cidade ,estado = :estado WHERE idPolo = :idPolo";
+        $sql = "UPDATE cursospolos_polo SET nomePolo = :nome ,cidade = :cidade ,estado = :estado WHERE idPolo = :idPolo";
         $params = array(
             ':nome' => [$nome, PDO::PARAM_STR]
             , ':cidade' => [$cidade, PDO::PARAM_STR]
@@ -101,9 +101,9 @@ class poloDAO extends abstractDAO {
 
         $params = array();
         if ($condicao === null) {
-            $sql = "SELECT $colunas FROM polo";
+            $sql = "SELECT $colunas FROM cursospolos_polo";
         } else {
-            $sql = "SELECT :colunas FROM polo WHERE $condicao";
+            $sql = "SELECT :colunas FROM cursospolos_polo WHERE $condicao";
         }
 
         return (array) $this->executarSelect($sql, $params);
@@ -119,7 +119,7 @@ class poloDAO extends abstractDAO {
             $idPolo = $idPolo['poloID'];
         }
 
-        $sql = "SELECT * from polo WHERE idPolo = :idPolo";
+        $sql = "SELECT * from cursospolos_polo WHERE idPolo = :idPolo";
         $params = array(
             ':idPolo' => [$idPolo, PDO::PARAM_INT]
         );

@@ -7,11 +7,11 @@ require_once APP_DIR . 'modelo/Utils.php';
 class sistemaDAO extends abstractDAO {
 
     public function registrarAccesso($idUsuario) {
-        $sql = "INSERT INTO usuarios_logs(data,hora,idUsuario) VALUES (:d, :h, :idU)";
+        $sql = "INSERT INTO usuario_acessos(idUsuario,data,ip) VALUES (:idU, :d, :ip)";
         $params = array(
             ':idU' => [$idUsuario, PDO::PARAM_INT]
-            , ':d' => [obterDataAtual(), PDO::PARAM_STR]
-            , ':h' => [obterHoraAtual(), PDO::PARAM_STR]
+            , ':d' => [time(),PDO::PARAM_INT]
+            , ':ip' => [$_SERVER['REMOTE_ADDR'], PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -26,7 +26,7 @@ class sistemaDAO extends abstractDAO {
      */
     public function registrarCadastroUsuario($idUsuarioFonte, $idUsuarioAlvo) {
         $tipo = TipoEventoSistema::CADASTRO_USUARIO;
-        $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES (:idUF, :idUA, :t, :d, :h)";
+        $sql = "INSERT INTO sistema_eventosistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES (:idUF, :idUA, :t, :d, :h)";
         $params = array(
             ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
             , ':idUA' => [$idUsuarioAlvo, PDO::PARAM_INT]
@@ -45,7 +45,7 @@ class sistemaDAO extends abstractDAO {
      */
     public function registrarDesativacaoUsuario($idUsuarioFonte, $idUsuarioAlvo) {
         $tipo = TipoEventoSistema::REMOCAO_USUARIO;
-        $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES (:idUF, :idUA,:t, :d, :h)";
+        $sql = "INSERT INTO sistema_eventosistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES (:idUF, :idUA,:t, :d, :h)";
         $params = array(
             ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
             , ':idUA' => [$idUsuarioAlvo, PDO::PARAM_INT]
@@ -58,7 +58,7 @@ class sistemaDAO extends abstractDAO {
 
     public function registrarExclusaoCurso($idUsuarioFonte) {
         $tipo = TipoEventoSistema::REMOCAO_CURSO;
-        $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES (:idUF, NULL, :t,:d, :h)";
+        $sql = "INSERT INTO sistema_eventosistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES (:idUF, NULL, :t,:d, :h)";
         $params = array(
             ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
             , ':t' => [$tipo, PDO::PARAM_INT]
@@ -70,7 +70,7 @@ class sistemaDAO extends abstractDAO {
 
     public function registrarExclusaoPolo($idUsuarioFonte) {
         $tipo = TipoEventoSistema::REMOCAO_POLO;
-        $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES (:idUF, NULL, :t, :d, :h)";
+        $sql = "INSERT INTO sistema_eventosistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES (:idUF, NULL, :t, :d, :h)";
         $params = array(
             ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
             , ':t' => [$tipo, PDO::PARAM_INT]
@@ -88,7 +88,7 @@ class sistemaDAO extends abstractDAO {
      */
     public function registrarAlteracaoUsuario($idUsuarioFonte, $idUsuarioAlvo) {
         $tipo = TipoEventoSistema::ALTERACAO_USUARIO;
-        $sql = "INSERT INTO eventoSistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES (:idUF,:idUA,:t,:d,:h)";
+        $sql = "INSERT INTO sistema_eventosistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES (:idUF,:idUA,:t,:d,:h)";
         $params = array(
             ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
             , ':idUA' => [$idUsuarioAlvo, PDO::PARAM_INT]

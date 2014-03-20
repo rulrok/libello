@@ -4,12 +4,18 @@
  * tem seu conteúdo alterado.
  * 
  */
+codigoImagem = '<img class="imagemCampoObrigatorio" src="publico/imagens/icones/campo_obrigatorio.png" alt="Campo obrigatório">';
+
 function varrerCampos() {
     var camposObrigatorios = $("input:required,select:required,textarea:required").not(".ignorar").not(".campoVarrido");
     if (camposObrigatorios.length > 0) {
+        if ($("form.tabela > fieldset").children()[1].id != "avisoCampoObrigatorio") {
+            $("form.tabela > fieldset").children().first().after('<p id="avisoCampoObrigatorio" class="centralizado textoCentralizado textoNegrito">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png" alt="Campo obrigatório"> são obrigatórios</p>')
+        }
         $(camposObrigatorios).each(function() {
 
-            $(this).after('<img class="imagemCampoObrigatorio" src="publico/imagens/icones/campo_obrigatorio.png" alt="Campo obrigatório">');
+//            $(this).parent().children('label').append(codigoImagem); //children().before(codigoImagem);
+            $(this).parent().last().append(codigoImagem)
             $(this).addClass("campoVarrido");
 //            $(this).bind('keyup', liberarCadastro);
             var tempoDigitando;                //timer identifier

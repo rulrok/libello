@@ -3,40 +3,39 @@
 <form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=sistema&a=validaralteracoesconta">
     <fieldset>
         <legend>Dados</legend>
-        <p class="centralizado textoCentralizado textoNegrito">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png" alt="Campo obrigatório"> são obrigatórios</p>
         <div class="line">
-            <label>Nome</label>
+            <label for="nome">Nome</label>
             <input required autofocus id="nome" name="nome"  type="text" value="<?php echo $this->nome ?>"/>
         </div>
         <div class="line">
-            <label>Sobrenome</label>
+            <label for="sobrenome">Sobrenome</label>
             <input required id="sobrenome" name="sobrenome"  type="text" value="<?php echo $this->sobrenome ?>"/>
         </div>
         <div class="line">
-            <label>email</label>
+            <label for="email">email</label>
             <input required disabled type="text" id="email" name="email" value="<?php echo $this->email ?>"/>
         </div>
         <div class="line">
-            <label>Data de nascimento</label>
+            <label for="dataNascimento">Data de nascimento</label>
             <input type="text" readonly id="dataNascimento" class="campoData" name="dataNascimento" value="<?php echo $this->dataNascimento ?>" />
         </div>
         <div class="line">
-            <label>Papel no sistema</label>
+            <label for="papel">Papel no sistema</label>
             <input id="papel" type="text" name="papel" disabled value="<?php echo $this->papel ?>"/>
         </div>
         <br/>
         <fieldset>
             <legend>Atualizar senha (opcional)</legend>
             <div class="line">
-            <label>Senha atual</label>
+            <label for="senhaAtual">Senha atual</label>
             <input required id="senhaAtual" name="senhaAtual"  type="password"/>
             </div>
             <div class="line">
-                <label>Nova senha</label>
+                <label for="senha">Nova senha</label>
                 <input onblur="querMudarSenha()" id="senha" name="senha" type="password"/>
             </div>
             <div class="line">
-                <label>Confirmar senha</label>
+                <label for="confSenha">Confirmar senha</label>
                 <input onblur="querMudarSenha()" id="confSenha" name="confSenha" type="password"/>
             </div>
         </fieldset>

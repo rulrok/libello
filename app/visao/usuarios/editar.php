@@ -3,7 +3,6 @@
 <form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=usuarios&a=verificaredicao">
     <fieldset>
         <legend>Dados</legend>
-        <p class="centralizado textoCentralizado textoNegrito">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png" alt="Campo obrigatório"> são obrigatórios</p>
         <div class="line">
             <label for="nome">Nome</label>
             <input required autofocus id="nome" name="nome" class="campoObrigatorio" type="text" value="<?php echo $this->nome ?>">

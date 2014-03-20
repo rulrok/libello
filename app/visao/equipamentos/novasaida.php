@@ -16,7 +16,9 @@
         <div class="line">
             <label for="polo">Polo de Destino</label>
             <!--<input required type="text" class="input-xlarge" id="destino" name="destino" title="Destino" data-content="A localização para onde o equipamento está saindo." />-->           
-            <?php echo $this->polos; ?>
+            <select id="polo" name="polo">
+                <?php echo $this->polos; ?>
+            </select>
         </div>
 
         <div class="line">
@@ -26,19 +28,11 @@
         <br/>
         <fieldset>
             <legend>Responsável</legend>
-            <!--            <div class="line">
-                            <label>Tipo</label>
-            <?php //echo $this->comboboxPapeis ?>
-                        </div>
-                        <div class="line">
-                            <label>Usuário</label>
-                            <select class="input-xlarge cb_usuarios" id="cb_usuarios" name="responsavel" required>
-                                <option value="default">-- Escolha um tipo de usuário --</option>
-                            </select>
-                        </div>-->
             <div class="line">
                 <label for="responsavel">Responsável</label>
-                <?php echo $this->responsavel; ?>
+                <select id="responsavel" name="responsavel">
+                    <?php echo $this->responsavel; ?>
+                </select>
             </div>
         </fieldset>
 

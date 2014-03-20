@@ -5,7 +5,7 @@ require_once 'Evento_Log.php';
  */
 final class TipoEventoImagens extends Evento_Log{
 
-    const __table = "imagens_tipoEvento";
+    const __table = "imagem_tipoEvento";
     const __length = 9;
     
     const CADASTRO_IMAGEM = 1;

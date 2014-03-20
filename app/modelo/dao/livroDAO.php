@@ -60,7 +60,7 @@ class livroDAO extends abstractDAO {
         } else {
             $condicao = "WHERE " . $condicao . " AND quantidade > 0";
         }
-        $sql = "SELECT $colunas FROM livro JOIN area ON area = idArea " . $condicao;
+        $sql = "SELECT $colunas FROM livro JOIN cursospolos_area ON area = idArea " . $condicao;
         return $this->executarSelect($sql);
     }
 
@@ -146,7 +146,7 @@ class livroDAO extends abstractDAO {
         } else {
             $condicao = "WHERE $condicao AND quantidadeSaida > 0";
         }
-        $sql = "SELECT $colunas FROM `livro_saida` AS `ls` JOIN `livro` AS `l` ON `ls`.`livro` = `l`.idLivro JOIN `usuario` AS `u` ON `ls`.`responsavel` = `u`.`idUsuario` LEFT JOIN `polo` AS `p` ON `ls`.`poloDestino` = `p`.`idPolo` JOIN `area` AS `a` ON `l`.`area` = `a`.`idArea` $condicao";
+        $sql = "SELECT $colunas FROM `livro_saida` AS `ls` JOIN `livro` AS `l` ON `ls`.`livro` = `l`.idLivro JOIN `usuario` AS `u` ON `ls`.`responsavel` = `u`.`idUsuario` LEFT JOIN `cursospolos_polo` AS `p` ON `ls`.`poloDestino` = `p`.`idPolo` JOIN `cursospolos_area` AS `a` ON `l`.`area` = `a`.`idArea` $condicao";
         return $this->executarSelect($sql);
     }
 
@@ -163,7 +163,7 @@ class livroDAO extends abstractDAO {
         } else {
             $condicao = "WHERE $condicao";
         }
-        $sql = "SELECT $colunas FROM `livro_baixa` AS `lb` JOIN `livro` AS `l` ON `lb`.`livro` = `l`.`idLivro` JOIN `area` AS `a` ON `l`.`area` = `a`.`idArea` $condicao";
+        $sql = "SELECT $colunas FROM `livro_baixa` AS `lb` JOIN `livro` AS `l` ON `lb`.`livro` = `l`.`idLivro` JOIN `cursospolos_area` AS `a` ON `l`.`area` = `a`.`idArea` $condicao";
         return $this->executarSelect($sql);
     }
 
@@ -359,13 +359,12 @@ class livroDAO extends abstractDAO {
     public function registrarExclusaoLivro($idLivro) {
         $tipo = TipoEventoLivro::REMOCAO_LIVRO;
         $idUsuario = obterUsuarioSessao()->get_idUsuario();
-        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,livro,data,hora) VALUES (:tipo,:idUsuario,:idLivro,:data,:hora)";
+        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,livro,data) VALUES (:tipo,:idUsuario,:idLivro,:data)";
         $params = array(
             ':tipo' => [$tipo, PDO::PARAM_INT]
             , ':idUsuario' => [$idUsuario, PDO::PARAM_INT]
             , ':idLivro' => [$idLivro, PDO::PARAM_INT]
-            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
-            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+            , ':data' => [time(), PDO::PARAM_INT]
         );
 
         return $this->executarQuery($sql, $params);
@@ -379,13 +378,12 @@ class livroDAO extends abstractDAO {
     public function registrarInsercaoLivro($idLivro) {
         $tipo = TipoEventoLivro::CADASTRO_LIVRO;
         $idUsuario = obterUsuarioSessao()->get_idUsuario();
-        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,livro,data,hora) VALUES (:tipo,:idUsuario,:idLivro,:data,:hora)";
+        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,livro,data) VALUES (:tipo,:idUsuario,:idLivro,:data)";
         $params = array(
             ':tipo' => [$tipo, PDO::PARAM_INT]
             , ':idUsuario' => [$idUsuario, PDO::PARAM_INT]
             , ':idLivro' => [$idLivro, PDO::PARAM_INT]
-            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
-            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+            , ':data' => [time(), PDO::PARAM_INT]
         );
 
         return $this->executarQuery($sql, $params);
@@ -399,13 +397,12 @@ class livroDAO extends abstractDAO {
     public function registrarAlteracaoLivro($idLivro) {
         $tipo = TipoEventoLivro::ALTERACAO_LIVRO;
         $idUsuario = obterUsuarioSessao()->get_idUsuario();
-        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,livro,data,hora) VALUES (:tipo,:idUsuario,:idLivro,:data,:hora)";
+        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,livro,data) VALUES (:tipo,:idUsuario,:idLivro,:data)";
         $params = array(
             ':tipo' => [$tipo, PDO::PARAM_INT]
             , ':idUsuario' => [$idUsuario, PDO::PARAM_INT]
             , ':idLivro' => [$idLivro, PDO::PARAM_INT]
-            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
-            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+            , ':data' => [time(), PDO::PARAM_INT]
         );
 
         return $this->executarQuery($sql, $params);
@@ -419,13 +416,12 @@ class livroDAO extends abstractDAO {
     public function registrarCadastroBaixa($idBaixa) {
         $tipo = TipoEventoLivro::CADASTRO_BAIXA;
         $idUsuario = obterUsuarioSessao()->get_idUsuario();
-        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,baixa,data,hora) VALUES (:tipo,:idUsuario,:idBaixa,:data,:hora)";
+        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,baixa,data) VALUES (:tipo,:idUsuario,:idBaixa,:data)";
         $params = array(
             ':tipo' => [$tipo, PDO::PARAM_INT]
             , ':idUsuario' => [$idUsuario, PDO::PARAM_INT]
             , ':idBaixa' => [$idBaixa, PDO::PARAM_INT]
-            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
-            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+            , ':data' => [time(), PDO::PARAM_INT]
         );
 
         return $this->executarQuery($sql, $params);
@@ -439,13 +435,12 @@ class livroDAO extends abstractDAO {
     public function registrarRemocaoBaixa($idBaixa) {
         $tipo = TipoEventoLivro::REMOCAO_BAIXA;
         $idUsuario = obterUsuarioSessao()->get_idUsuario();
-        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,baixa,data,hora) VALUES (:tipo,:idUsuario,:idBaixa,:data,:hora)";
+        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,baixa,data) VALUES (:tipo,:idUsuario,:idBaixa,:data)";
         $params = array(
             ':tipo' => [$tipo, PDO::PARAM_INT]
             , ':idUsuario' => [$idUsuario, PDO::PARAM_INT]
             , ':idBaixa' => [$idBaixa, PDO::PARAM_INT]
-            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
-            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+            , ':data' => [time(), PDO::PARAM_INT]
         );
 
         return $this->executarQuery($sql, $params);
@@ -459,13 +454,12 @@ class livroDAO extends abstractDAO {
     public function registrarCadastroSaida($idSaida) {
         $tipo = TipoEventoLivro::CADASTRO_SAIDA;
         $idUsuario = obterUsuarioSessao()->get_idUsuario();
-        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,saida,data,hora) VALUES (:tipo,:idUsuario,:idSaida,:data,:hora)";
+        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,saida,data,hora) VALUES (:tipo,:idUsuario,:idSaida,:data)";
         $params = array(
             ':tipo' => [$tipo, PDO::PARAM_INT]
             , ':idUsuario' => [$idUsuario, PDO::PARAM_INT]
             , ':idSaida' => [$idSaida, PDO::PARAM_INT]
-            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
-            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+            , ':data' => [time(), PDO::PARAM_INT]
         );
 
         return $this->executarQuery($sql, $params);
@@ -479,13 +473,12 @@ class livroDAO extends abstractDAO {
     public function registrarRemocaoSaida($idSaida) {
         $tipo = TipoEventoLivro::REMOCAO_SAIDA;
         $idUsuario = obterUsuarioSessao()->get_idUsuario();
-        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,saida,data,hora) VALUES (:tipo,:idUsuario,:idSaida,:data,:hora)";
+        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,saida,data) VALUES (:tipo,:idUsuario,:idSaida,:data)";
         $params = array(
             ':tipo' => [$tipo, PDO::PARAM_INT]
             , ':idUsuario' => [$idUsuario, PDO::PARAM_INT]
             , ':idSaida' => [$idSaida, PDO::PARAM_INT]
-            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
-            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+            , ':data' => [time(), PDO::PARAM_INT]
         );
 
         return $this->executarQuery($sql, $params);
@@ -499,13 +492,12 @@ class livroDAO extends abstractDAO {
     public function registrarRetorno($idRetorno) {
         $tipo = TipoEventoLivro::CADASTRO_RETORNO;
         $idUsuario = obterUsuarioSessao()->get_idUsuario();
-        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,retorno,data,hora) VALUES (:tipo,:idUsuario,:idRetorno,:data,:hora)";
+        $sql = "INSERT INTO livro_evento(tipoEvento,usuario,retorno,data) VALUES (:tipo,:idUsuario,:idRetorno,:data)";
         $params = array(
             ':tipo' => [$tipo, PDO::PARAM_INT]
             , ':idUsuario' => [$idUsuario, PDO::PARAM_INT]
             , ':idRetorno' => [$idRetorno, PDO::PARAM_INT]
-            , ':data' => [obterDataAtual(), PDO::PARAM_STR]
-            , ':hora' => [obterHoraAtual(), PDO::PARAM_STR]
+            , ':data' => [time(), PDO::PARAM_INT]
         );
 
         return $this->executarQuery($sql, $params);

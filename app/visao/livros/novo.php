@@ -5,7 +5,7 @@
         <legend>Registro de novo livro</legend>
 
         <span class="line">
-            <label>Nome do Livro</label>
+            <label for="livro">Nome do Livro</label>
             <input required autofocus type="text" class="input-xlarge" id="livro" name="livro" title="Livro" data-content="O nome do livro apenas" />
         </span>
         <span class="line">
@@ -23,13 +23,13 @@
         </div>
         <div class="line">
             <label for="area">Área</label>
-            <select id="area" name="area" class="input-xlarge">
+            <select id="area" name="area" class="input-xlarge" required>
                 <?php echo $this->comboBoxAreas; ?>
             </select>
         </div>
         <hr/>
         <div class="line">
-            <label>Tipo</label>
+            <label for="tipo">Tipo</label>
             <div class="btn-toolbar" style="position:relative;left:15px;margin-bottom: 5px;">
                 <div class="btn-group">
                     <a class="btn btn-info" id="custeio"  value="custeio" checked><i class="icon-headphones"></i> Custeio</a>
@@ -45,7 +45,7 @@
         <!-- custeio -->
         <span class="custeio">
             <span class="line">
-                <label>Quantidade</label>
+                <label for="quantidade">Quantidade</label>
                 <input required type="number" min="1" class="input-medium" id="quantidade" name="quantidade"/>
             </span>
         </span>
@@ -57,12 +57,12 @@
                     <button disabled="true" type="button" class="btn btn-danger disabled" id="removerPatrimonio" onclick="removerPatrimonioAdicionado();" style="display: table-cell;"> <i class="icon-white icon-minus-sign"></i> </button>
                     <button type="button" class="btn btn-success" id="adicionarPatrimonio" onclick="adicionarNovoPatrimonio();" style="display: table-cell;"> <i class="icon-white icon-plus-sign"></i> </button>
                 </span>
-                <label>&nbsp;&nbsp;&nbsp;Quantidade de itens</label>
-                <div id="quantidadePatrimonios">1</div>              
+                <span>&nbsp;&nbsp;&nbsp;Quantidade de itens:</span>
+                <span id="quantidadePatrimonios">1</span>              
             </span>
             <div id="linhasPatrimonios">
                 <span class="line patrimonio-1">
-                    <label>Código Patrimônio</label>
+                    <label for="numeroPatrimonio-1">Código Patrimônio</label>
                     <input readonly type="text" class="input-medium" id="numeroPatrimonio-1" name="numeroPatrimonio-1" />
                 </span>
             </div>

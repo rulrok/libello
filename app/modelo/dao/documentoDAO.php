@@ -6,70 +6,70 @@ require_once APP_DIR . "modelo/vo/Memorando.php";
 
 class documentoDAO extends abstractDAO {
 
-    public function consultar($documento = "oficio", $condicao = null) {
+    public function consultar($documento = "documento_oficio", $condicao = null) {
 
         $sql = "SELECT * FROM $documento ";
         if ($condicao != null) {
             $sql .=" WHERE " . $condicao;
         }
-        $tipo = ucfirst($documento);
+        $tipo = ucfirst(preg_replace('/documento_/', '', $documento));
         return $this->executarSelect($sql, null, true, $tipo);
     }
 
     public function inserirOficio(Oficio $obj) {
 
-        $sql = "INSERT INTO oficio (assunto, corpo, idUsuario, estadoEdicao, tratamento, destino, cargo_destino, data, tipoSigla, referencia, remetente, cargo_remetente,  numOficio) VALUES ";
+        $sql = "INSERT INTO documento_oficio (assunto, corpo, idUsuario, estadoEdicao, tratamento, destino, cargo_destino, data, tipoSigla, referencia, remetente, cargo_remetente,  numOficio) VALUES ";
         $sql .= "(:assunto, :corpo, :idUsuario, :estadoEdicao, :tratamento, :destino, :cargo_destino, :data, :tipoSigla, :referencia, :remetente, :cargo_remetente, :numOficio)";
 
         $params = array(
-            ':assunto' => [$obj->getAssunto(), PDO::PARAM_STR]
-            , ':corpo' => [$obj->getCorpo(), PDO::PARAM_STR]
-            , ':idUsuario' => [$obj->getIdUsuario(), PDO::PARAM_INT]
-            , ':estadoEdicao' => [$obj->getEstadoEdicao(), PDO::PARAM_INT]
-            , ':tratamento' => [$obj->getTratamento(), PDO::PARAM_STR]
-            , ':destino' => [$obj->getDestino(), PDO::PARAM_STR]
-            , ':cargo_destino' => [$obj->getCargo_destino(), PDO::PARAM_STR]
-            , ':data' => [$obj->getData(), PDO::PARAM_STR]
-            , ':tipoSigla' => [$obj->getTipoSigla(), PDO::PARAM_STR]
-            , ':referencia' => [$obj->getReferencia(), PDO::PARAM_STR]
-            , ':remetente' => [$obj->getRemetente(), PDO::PARAM_STR]
-            , ':cargo_remetente' => [$obj->getCargo_remetente(), PDO::PARAM_STR]
-            , ':numOficio' => [$obj->getNumOficio(), PDO::PARAM_INT]
+            ':assunto' => [$obj->get_assunto(), PDO::PARAM_STR]
+            , ':corpo' => [$obj->get_corpo(), PDO::PARAM_STR]
+            , ':idUsuario' => [$obj->get_idUsuario(), PDO::PARAM_INT]
+            , ':estadoEdicao' => [$obj->get_estadoEdicao(), PDO::PARAM_INT]
+            , ':tratamento' => [$obj->get_tratamento(), PDO::PARAM_STR]
+            , ':destino' => [$obj->get_destino(), PDO::PARAM_STR]
+            , ':cargo_destino' => [$obj->get_cargo_destino(), PDO::PARAM_STR]
+            , ':data' => [$obj->get_data(), PDO::PARAM_STR]
+            , ':tipoSigla' => [$obj->get_tipoSigla(), PDO::PARAM_STR]
+            , ':referencia' => [$obj->get_referencia(), PDO::PARAM_STR]
+            , ':remetente' => [$obj->get_remetente(), PDO::PARAM_STR]
+            , ':cargo_remetente' => [$obj->get_cargo_remetente(), PDO::PARAM_STR]
+            , ':numOficio' => [$obj->get_numOficio(), PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }
 
-    public function teste(){
+    public function teste() {
         parent::getConexao()->lastInsertId();
     }
-    
+
     public function update_oficio(Oficio $obj) {
 
-        $sql = 'UPDATE oficio SET assunto = :assunto, corpo = :corpo, estadoEdicao = :estadoEdicao, tratamento = :tratamento, destino = :destino, cargo_destino = :cargo_destino,';
+        $sql = 'UPDATE documento_oficio SET assunto = :assunto, corpo = :corpo, estadoEdicao = :estadoEdicao, tratamento = :tratamento, destino = :destino, cargo_destino = :cargo_destino,';
         $sql .= 'data = :data, tipoSigla = :tipoSigla, referencia = :referencia, remetente = :remetente, cargo_remetente = :cargo_remetente,  numOficio = :numOficio ';
         $sql .= ' WHERE idOficio = :idOficio';
 
         $params = array(
-            ':assunto' => [$obj->getAssunto(), PDO::PARAM_STR]
-            , ':corpo' => [$obj->getCorpo(), PDO::PARAM_STR]
-            , ':estadoEdicao' => [$obj->getEstadoEdicao(), PDO::PARAM_INT]
-            , ':tratamento' => [$obj->getTratamento(), PDO::PARAM_STR]
-            , ':destino' => [$obj->getDestino(), PDO::PARAM_STR]
-            , ':cargo_destino' => [$obj->getCargo_destino(), PDO::PARAM_STR]
-            , ':data' => [$obj->getData(), PDO::PARAM_STR]
-            , ':tipoSigla' => [$obj->getTipoSigla(), PDO::PARAM_STR]
-            , ':referencia' => [$obj->getReferencia(), PDO::PARAM_STR]
-            , ':remetente' => [$obj->getRemetente(), PDO::PARAM_STR]
-            , ':cargo_remetente' => [$obj->getCargo_remetente(), PDO::PARAM_STR]
-            , ':numOficio' => [$obj->getNumOficio(), PDO::PARAM_INT]
-            , ':idOficio' => [$obj->getIdOficio(), PDO::PARAM_INT]
+            ':assunto' => [$obj->get_assunto(), PDO::PARAM_STR]
+            , ':corpo' => [$obj->get_corpo(), PDO::PARAM_STR]
+            , ':estadoEdicao' => [$obj->get_estadoEdicao(), PDO::PARAM_INT]
+            , ':tratamento' => [$obj->get_tratamento(), PDO::PARAM_STR]
+            , ':destino' => [$obj->get_destino(), PDO::PARAM_STR]
+            , ':cargo_destino' => [$obj->get_cargo_destino(), PDO::PARAM_STR]
+            , ':data' => [$obj->get_data(), PDO::PARAM_STR]
+            , ':tipoSigla' => [$obj->get_tipoSigla(), PDO::PARAM_STR]
+            , ':referencia' => [$obj->get_referencia(), PDO::PARAM_STR]
+            , ':remetente' => [$obj->get_remetente(), PDO::PARAM_STR]
+            , ':cargo_remetente' => [$obj->get_cargo_remetente(), PDO::PARAM_STR]
+            , ':numOficio' => [$obj->get_numOficio(), PDO::PARAM_INT]
+            , ':idOficio' => [$obj->get_idOficio(), PDO::PARAM_INT]
         );
 
         return $this->executarQuery($sql, $params);
     }
 
     public function invalidarOficio($idOficio) {
-        $sql = "UPDATE oficio SET estadoValidacao = 0 WHERE idOficio = :idOficio";
+        $sql = "UPDATE documento_oficio SET estadoValidacao = 0 WHERE idOficio = :idOficio";
         $params = array(
             ':idOficio' => [$idOficio, PDO::PARAM_INT]
         );
@@ -77,7 +77,7 @@ class documentoDAO extends abstractDAO {
     }
 
     public function deleteOficio($idOficio) {
-        $sql = "DELETE FROM oficio WHERE idOficio= :idOficio";
+        $sql = "DELETE FROM documento_oficio WHERE idOficio= :idOficio";
         $params = array(
             ':idOficio' => [$idOficio, PDO::PARAM_INT]
         );
@@ -86,7 +86,7 @@ class documentoDAO extends abstractDAO {
 
     public function deleteMemorando($idMemorando) {
 
-        $sql = "DELETE FROM memorando WHERE idMemorando= :idMemorando";
+        $sql = "DELETE FROM documento_memorando WHERE idMemorando= :idMemorando";
         $params = array(
             ':idMemorando' => [$idMemorando, PDO::PARAM_INT]
         );
@@ -95,47 +95,47 @@ class documentoDAO extends abstractDAO {
 
     public function inserirMemorando(Memorando $obj) {
 
-        $sql = "INSERT INTO memorando (assunto, corpo, idUsuario, estadoEdicao, tratamento, cargo_destino, data, tipoSigla, remetente, cargo_remetente,  numMemorando) VALUES ";
+        $sql = "INSERT INTO documento_memorando (assunto, corpo, idUsuario, estadoEdicao, tratamento, cargo_destino, data, tipoSigla, remetente, cargo_remetente,  numMemorando) VALUES ";
         $sql .= "(:assunto, :corpo, :idUsuario, :estadoEdicao, :tratamento, :cargo_destino, :data, :tipoSigla, :remetente, :cargo_remetente,  :numMemorando)";
 
         $params = array(
-            ':assunto' => [$obj->getAssunto(), PDO::PARAM_STR]
-            , ':corpo' => [$obj->getCorpo(), PDO::PARAM_STR]
-            , ':idUsuario' => [$obj->getIdUsuario(), PDO::PARAM_INT]
-            , ':estadoEdicao' => [$obj->getEstadoEdicao(), PDO::PARAM_INT]
-            , ':tratamento' => [$obj->getTratamento(), PDO::PARAM_STR]
-            , ':cargo_destino' => [$obj->getCargo_destino(), PDO::PARAM_STR]
-            , ':data' => [$obj->getData(), PDO::PARAM_STR]
-            , ':tipoSigla' => [$obj->getTipoSigla(), PDO::PARAM_STR]
-            , ':remetente' => [$obj->getRemetente(), PDO::PARAM_STR]
-            , ':cargo_remetente' => [$obj->getCargo_remetente(), PDO::PARAM_STR]
-            , ':numMemorando' => [$obj->getNumMemorando(), PDO::PARAM_INT]
+            ':assunto' => [$obj->get_assunto(), PDO::PARAM_STR]
+            , ':corpo' => [$obj->get_corpo(), PDO::PARAM_STR]
+            , ':idUsuario' => [$obj->get_idUsuario(), PDO::PARAM_INT]
+            , ':estadoEdicao' => [$obj->get_estadoEdicao(), PDO::PARAM_INT]
+            , ':tratamento' => [$obj->get_tratamento(), PDO::PARAM_STR]
+            , ':cargo_destino' => [$obj->get_cargo_destino(), PDO::PARAM_STR]
+            , ':data' => [$obj->get_data(), PDO::PARAM_STR]
+            , ':tipoSigla' => [$obj->get_tipoSigla(), PDO::PARAM_STR]
+            , ':remetente' => [$obj->get_remetente(), PDO::PARAM_STR]
+            , ':cargo_remetente' => [$obj->get_cargo_remetente(), PDO::PARAM_STR]
+            , ':numMemorando' => [$obj->get_numMemorando(), PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }
 
     public function update_memorando(Memorando $obj) {
 
-        $sql = 'UPDATE memorando SET assunto = :assunto, corpo = :corpo, estadoEdicao = :estadoEdicao, tratamento = :tratamento, cargo_destino = :cargo_destino, data = :data, tipoSigla = :tipoSigla, remetente = :remetente, cargo_remetente = :cargo_remetente, numMemorando = :numMemorando) WHERE idMemorando = :idMemorando';
+        $sql = 'UPDATE documento_memorando SET assunto = :assunto, corpo = :corpo, estadoEdicao = :estadoEdicao, tratamento = :tratamento, cargo_destino = :cargo_destino, data = :data, tipoSigla = :tipoSigla, remetente = :remetente, cargo_remetente = :cargo_remetente, numMemorando = :numMemorando) WHERE idMemorando = :idMemorando';
 
         $params = array(
-            ':assunto' => [$obj->getAssunto(), PDO::PARAM_STR]
-            , ':corpo' => [$obj->getCorpo(), PDO::PARAM_STR]
-            , ':estadoEdicao' => [$obj->getEstadoEdicao(), PDO::PARAM_INT]
-            , ':tratamento' => [$obj->getTratamento(), PDO::PARAM_STR]
-            , ':cargo_destino' => [$obj->getCargo_destino(), PDO::PARAM_STR]
-            , ':data' => [$obj->getData(), PDO::PARAM_STR]
-            , ':tipoSigla' => [$obj->getTipoSigla(), PDO::PARAM_STR]
-            , ':remetente' => [$obj->getRemetente(), PDO::PARAM_STR]
-            , ':cargo_remetente' => [$obj->getCargo_remetente(), PDO::PARAM_STR]
-            , ':numMemorando' => [$obj->getNumMemorando(), PDO::PARAM_INT]
+            ':assunto' => [$obj->get_assunto(), PDO::PARAM_STR]
+            , ':corpo' => [$obj->get_corpo(), PDO::PARAM_STR]
+            , ':estadoEdicao' => [$obj->get_estadoEdicao(), PDO::PARAM_INT]
+            , ':tratamento' => [$obj->get_tratamento(), PDO::PARAM_STR]
+            , ':cargo_destino' => [$obj->get_cargo_destino(), PDO::PARAM_STR]
+            , ':data' => [$obj->get_data(), PDO::PARAM_STR]
+            , ':tipoSigla' => [$obj->get_tipoSigla(), PDO::PARAM_STR]
+            , ':remetente' => [$obj->get_remetente(), PDO::PARAM_STR]
+            , ':cargo_remetente' => [$obj->get_cargo_remetente(), PDO::PARAM_STR]
+            , ':numMemorando' => [$obj->get_numMemorando(), PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }
 
     public function invalidarMemorando($idmemorando) {
 
-        $sql = "UPDATE memorando SET estadoValidacao = 0 WHERE idMemorando=" . $idmemorando;
+        $sql = "UPDATE documento_memorando SET estadoValidacao = 0 WHERE idMemorando=" . $idmemorando;
         try {
             parent::getConexao()->query($sql);
             return true;

@@ -3,20 +3,19 @@
 <form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=cursospolos&a=verificaredicaopolo">
     <fieldset>
         <legend>Dados</legend>
-        <p class="centralizado textoCentralizado textoNegrito">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png" alt="Campo obrigatório"> são obrigatórios</p>
             <br/>
             <input hidden="true" readonly="true" type="text" class="input-small" id="poloID" name="poloID" value="<?php echo $this->poloID ?>" />
 
             <span class="line">
-                <label>Polo</label>
-                <input required autofocus type="text" class="input-xlarge" id="nomepolo" name="nomepolo" value="<?php echo $this->polo ?>" />
+                <label for="polo">Polo</label>
+                <input required autofocus type="text" class="input-xlarge" id="nomepolo" id="polo" name="nomepolo" value="<?php echo $this->polo ?>" />
             </span>
             <span class="line">
-                <label>Estado</label>
+                <label for="estado">Estado</label>
                 <select required class="input-large" id="estado" name="estado"></select>
             </span>
             <span class="line">
-                <label>Cidade</label>
+                <label for="cidade">Cidade</label>
                 <select required class="input-xlarge" id="cidade" name="cidade"></select>
             </span>
 

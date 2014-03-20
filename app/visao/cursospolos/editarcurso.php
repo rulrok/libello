@@ -3,21 +3,24 @@
 <form class="tabela centralizado" id="ajaxForm2" method="post" action="index.php?c=cursospolos&a=verificaredicaocurso">
     <fieldset>
         <legend>Dados</legend>
-        <p class="centralizado textoCentralizado textoNegrito">Campos com <img src="publico/imagens/icones/campo_obrigatorio.png" alt="Campo obrigatório"> são obrigatórios</p>
         <br/>
         <input hidden="true" readonly="true" type="text" class="input-small" id="cursoID" name="cursoID" value="<?php echo $this->cursoID ?>" />
 
         <span class="line">
-            <label>Curso</label>
+            <label for="nomecurso">Curso</label>
             <input required autofocus type="text" class="input-xlarge" id="nomecurso" name="nomecurso" value="<?php echo $this->curso ?>" />
         </span>
         <span class="line">
-            <label>Área</label>
-            <?php echo $this->comboArea ?>
+            <label for="area">Área</label>
+            <select id="area" name="area">
+                <?php echo $this->comboArea ?>
+            </select>
         </span>
         <span class="line">
-            <label>Tipo</label>
-            <?php echo $this->comboTipoCurso ?>
+            <label for="tipocurso">Tipo</label>
+            <select id="tipocurso" name="tipocurso">
+                <?php echo $this->comboTipoCurso ?>
+            </select>
         </span>
 
     </fieldset>

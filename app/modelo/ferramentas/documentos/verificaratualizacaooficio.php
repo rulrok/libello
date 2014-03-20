@@ -8,7 +8,7 @@ class verificaratualizacaooficio extends verificadorFormularioAjax {
 
     public function _validar() {
         try {
-            $idusuario = $_SESSION['usuario']->get_idUsuario();
+            $idusuario = obterUsuarioSessao()->get_idUsuario();
             $idOficio = filter_input(INPUT_POST, 'i_idoficio');
             $numOficio = filter_input(INPUT_POST, 'i_numOficio');
             $assunto = filter_input(INPUT_POST, 'assunto');
@@ -31,18 +31,18 @@ class verificaratualizacaooficio extends verificadorFormularioAjax {
             $cargo_destino = filter_input(INPUT_POST, 'cargo_destino');
 
                 $documento = new Oficio();
-                $documento->setIdOficio($idOficio);
-                $documento->setAssunto($assunto);
-                $documento->setIdUsuario(trim($idusuario));
-                $documento->setCorpo($corpo);
-                $documento->setDestino($destino);
-                $documento->setReferencia($referencia);
-                $documento->setData($data);
-                $documento->setTipoSigla($tipoSigla);
-                $documento->setRemetente($remetente);
-                $documento->setCargo_remetente($cargo_remetente);
-                $documento->setTratamento($tratamento);
-                $documento->setCargo_destino($cargo_destino);
+                $documento->set_idOficio($idOficio);
+                $documento->set_assunto($assunto);
+                $documento->set_idUsuario(trim($idusuario));
+                $documento->set_corpo($corpo);
+                $documento->set_destino($destino);
+                $documento->set_referencia($referencia);
+                $documento->set_data($data);
+                $documento->set_tipoSigla($tipoSigla);
+                $documento->set_remetente($remetente);
+                $documento->set_cargo_remetente($cargo_remetente);
+                $documento->set_tratamento($tratamento);
+                $documento->set_cargo_destino($cargo_destino);
 
             $estadoEdicao = 0;
 
@@ -50,8 +50,8 @@ class verificaratualizacaooficio extends verificadorFormularioAjax {
                 $estadoEdicao = 1;
             }
 
-            $documento->setEstadoEdicao($estadoEdicao);
-            $documento->setNumOficio($numOficio);
+            $documento->set_estadoEdicao($estadoEdicao);
+            $documento->set_numOficio($numOficio);
 
             (new documentoDAO())->update_oficio($documento);
             if ($numOficio != -1) {

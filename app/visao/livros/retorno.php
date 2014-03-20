@@ -23,16 +23,11 @@
         foreach ($this->saidas as $value) {
             echo '<tr>';
             for ($i = 0; $i < sizeof($value) / 2; $i++) {
-                if ($i === 0) {
+                if ($i == 0) {
                     echo '<td hidden class="campoID">';
-                    } elseif ($i === 4 && $value[$i] == "") {
-                    continue;
-                    } elseif ($i === 5 && $value[$i] == "") {
-                    
                 } else {
                     echo "<td>";
                 }
-//                echo $i == 0 ? '<td hidden class="campoID">' : '<td>';
                 echo $value[$i];
                 echo '</td>';
             }

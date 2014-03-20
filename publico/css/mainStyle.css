@@ -936,6 +936,12 @@ li[id$=Link]:before{
     padding: 2px;
     line-height: 35px;
 }
+
+.tabela .line *{
+    alignment-baseline: middle;
+    vertical-align: middle;
+}
+
 .tabela .line textarea{
     margin-bottom: 5px!important;
 }
@@ -948,15 +954,6 @@ li[id$=Link]:before{
     vertical-align: top;
 }
 
-.tabela .line img{
-    position:relative;
-    top: 8px;
-    display: table-cell;
-    opacity: 0.8;
-    alignment-baseline: middle;
-    vertical-align: top;
-}
-
 .tabela .line label:first-letter{
     text-transform: uppercase;
 }
@@ -965,8 +962,17 @@ li[id$=Link]:before{
     content: ':';
 }
 
+/* Asterisco de campo obrigatório */
+.tabela .line img[class='imagemCampoObrigatorio']{
+    position:relative;
+    top: -5px;
+    opacity: 0.8;
+    /*float: right;*/
+}
+
+
 /* Campos de senha e texto específicos de formulários alinhados sem tabela */
-.tabela .line input, .tabela .line select, .tabela .line textarea,.tabela .line div.chosen-container {
+.tabela .line input, .tabela .line select, .tabela .line textarea,.tabela .line div.chosen-container,.line div[class~='tooltip'] {
     display: table-cell;
     float: left;
     margin-bottom: -7px;
@@ -977,7 +983,7 @@ select{
     background-color: #FFF;
     border-width: 1px;
     /*border-radius: 3px;*/
-    border-color: #DDD;
+    border-color: #CCC;
     min-width:100px;
     min-height: 25px;
     color: #000;
@@ -999,8 +1005,9 @@ select:disabled{
     margin-left: 0!important;
 }
 .tabela .line .selecaoPassageiros > a,select {
-    display: table-cell;
+    /*display: table-cell;*/
 }
+
 /* FIM Forms alinhados sem tabela */
 /*================================================*/
 /*  BOOTSTRAP FIXES */

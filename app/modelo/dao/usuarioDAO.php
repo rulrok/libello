@@ -75,7 +75,7 @@ class usuarioDAO extends abstractDAO {
         } else {
             $condicao = 'WHERE ativo = 1 AND ' . $condicao;
         }
-        $sql = "SELECT  $colunas  FROM usuario NATURAL JOIN papel " . $condicao;
+        $sql = "SELECT  $colunas  FROM usuario NATURAL JOIN usuario_papel " . $condicao;
         return $this->executarSelect($sql, $parametros);
     }
 
@@ -130,13 +130,13 @@ class usuarioDAO extends abstractDAO {
      * @return array
      */
     public function consultarPapel($email) {
-        $sql = 'SELECT p.nome FROM papel p NATURAL JOIN usuario u WHERE u.email = :email';
+        $sql = 'SELECT p.nome FROM usuario_papel p NATURAL JOIN usuario u WHERE u.email = :email';
         $params = array(':email' => array($email, PDO::PARAM_STR));
         return $this->executarSelect($sql, $params, false);
     }
 
     /**
-     * Gera um tolken e armazena na tabela 'usuariosRecuperarSenha'.
+     * Gera um tolken e armazena na tabela 'usuario_recuperarsenha'.
      * @param type $email
      */
     public function gerarTolkenRecuperarSenha($email) {
@@ -146,7 +146,7 @@ class usuarioDAO extends abstractDAO {
             $hora = time();
             $idUsuario = $usuario->get_idUsuario();
             $token = encriptarSenha($antigaSenhaMD5 . $hora);
-            $sql = 'INSERT INTO usuariosRecuperarSenha VALUES (:idUsuario, :token)';
+            $sql = 'INSERT INTO usuario_recuperarsenha VALUES (:idUsuario, :token)';
             $params = array(
                 ':idUsuario' => [$idUsuario, PDO::PARAM_INT]
                 , ':token' => [$token, PDO::PARAM_STR]
@@ -159,14 +159,14 @@ class usuarioDAO extends abstractDAO {
 
     /**
      * Caso o usuário queira redefinir sua senha, um tolken é gerado e armazenado
-     * na tabela 'usuariosRecuperarSenha'. Essa função retorna esse tolken, caso
+     * na tabela 'usuario_recuperarsenha'. Essa função retorna esse tolken, caso
      * ele exista, ou NULL caso contrário.
      * 
      * @param type int
      * @return string Description
      */
     public function consultarTolkenRecuperarSenha($idUsuario) {
-        $sql = 'SELECT tolken FROM usuariosRecuperarSenha WHERE idUsuario = :idUsuario';
+        $sql = 'SELECT tolken FROM usuario_recuperarsenha WHERE idUsuario = :idUsuario';
         $params = array(':idUsuario' => [$idUsuario, PDO::PARAM_INT]);
         return $this->executarSelect($sql, $params, false);
     }
@@ -177,7 +177,7 @@ class usuarioDAO extends abstractDAO {
      * @param type $tolken
      */
     public function consultarIDUsuario_RecuperarSenha($tolken) {
-        $sql = "SELECT idUsuario FROM usuariosRecuperarSenha WHERE tolken = :token";
+        $sql = "SELECT idUsuario FROM usuario_recuperarsenha WHERE tolken = :token";
         $params = array(':token' => [$tolken, PDO::PARAM_INT]);
         $resultado = $this->executarSelect($sql, $params, false);
         if ($resultado === false) {
@@ -194,7 +194,7 @@ class usuarioDAO extends abstractDAO {
      * @param type $token
      */
     public function removerTolken($token) {
-        $sql = "DELETE FROM usuariosRecuperarSenha WHERE tolken = :token";
+        $sql = "DELETE FROM usuario_recuperarsenha WHERE tolken = :token";
         $params = array(':token' => [$token, PDO::PARAM_STR]);
         return $this->executarQuery($sql, $params);
     }
@@ -217,9 +217,11 @@ class usuarioDAO extends abstractDAO {
     }
 
     public function obterPermissoes($idUsuario) {
-        $sql = "SELECT f.idFerramenta,f.nome,tp.idPermissao,tp.tipo FROM ferramenta f, permissao tp, usuario_x_permissao_x_ferramenta p WHERE f.idFerramenta = p.idFerramenta AND tp.idPermissao = p.idPermissao AND idUsuario =  $idUsuario  ORDER BY idFerramenta";
-        $resultado = parent::getConexao()->query($sql)->fetchAll();
-        return $resultado;
+        $sql = "SELECT f.idFerramenta,f.nome,tp.idPermissao,tp.tipo FROM sistema_ferramenta f, usuario_permissao tp, usuario_x_permissao_x_ferramenta p WHERE f.idFerramenta = p.idFerramenta AND tp.idPermissao = p.idPermissao AND idUsuario =  :idUsuario  ORDER BY idFerramenta";
+        $params = array(
+            ':idUsuario' => [$idUsuario, PDO::PARAM_INT]
+        );
+        return $this->executarSelect($sql, $params);
     }
 
     /**
