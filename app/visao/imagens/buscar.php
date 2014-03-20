@@ -8,7 +8,7 @@
             <?php foreach ($this->resultados as $chave => $imagem) : ?>
                 <li class = "span2">
                     <div class="thumbnail" >
-                        <img class="img-rounded" src="<?php echo $imagem['nomeArquivoMiniatura']; ?>">
+                        <img class="img-rounded" src="<?php echo $imagem['diretorioMiniatura'].$imagem['nomeArquivoMiniatura']; ?>">
                         <div class = "caption" id="<?php echo $imagem['idImagem']; ?>" style="display: none">
                             <h4><?php echo $imagem['titulo'] ?></h4>
                             <?php if (!empty($imagem['observacoes'])): ?>
@@ -22,7 +22,7 @@
                             <p class="botoes_acoes_thumb">
                                 <a href = "javascript:baixarImagem('<?php echo $imagem['idImagem']; ?>')" class="btn btn-mini btn-info btn-imagem-download-imagem" data-toggle="Novo" title="Baixar imagem em tamanho real"><i class="icon-download-alt"></i><i class="icon-picture"></i></a>
                                 <a href = "javascript:baixarOriginal('<?php echo $imagem['idImagem']; ?>')" class="btn btn-mini btn-imagem-download-original" data-toggle="Novo" title="Baixar arquivo vetorizado"><i class="icon-download-alt"></i><i class="icon-file"></i></a>
-                                <a href="<?php echo $imagem['nomeArquivo']; ?>" class="btn btn-mini btn-imagem-visualizacao fancybox" rel="group" title="Mais detalhes"><i class="icon-eye-open"></i><img class="hidden" alt="Teste" > </a>
+                                <a href="<?php echo $imagem['diretorio'].$imagem['nomeArquivo']; ?>" class="btn btn-mini btn-imagem-visualizacao fancybox" rel="group" title="Mais detalhes"><i class="icon-eye-open"></i><img class="hidden" alt="Teste" > </a>
                             </p>
                         </div>
                     </div>

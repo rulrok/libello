@@ -1,5 +1,11 @@
 <?php
-
+/*
+ * Arquivo utilizado para gerar a visualização de imagem para quando o usuário escolhe
+ * uma imagem para ser enviada na página de cadastro de imagens.
+ * Possui dois métodos em comum com o arquivo 'verificarnovaimagem.php' que talvez
+ * possam ser todos movidos para uma classe em comum.
+ * Este arquivo tem apenas a finalidade descrita acima.
+ */
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['imagemURI'])) {
 
     define("WIDTH", "350");
