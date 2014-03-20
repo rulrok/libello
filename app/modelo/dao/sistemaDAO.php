@@ -7,11 +7,11 @@ require_once APP_DIR . 'modelo/Utils.php';
 class sistemaDAO extends abstractDAO {
 
     public function registrarAccesso($idUsuario) {
-        $sql = "INSERT INTO usuario_acessos(data,hora,idUsuario) VALUES (:d, :h, :idU)";
+        $sql = "INSERT INTO usuario_acessos(idUsuario,data,ip) VALUES (:idU, :d, :ip)";
         $params = array(
             ':idU' => [$idUsuario, PDO::PARAM_INT]
-            , ':d' => [obterDataAtual(), PDO::PARAM_STR]
-            , ':h' => [obterHoraAtual(), PDO::PARAM_STR]
+            , ':d' => [time(),PDO::PARAM_INT]
+            , ':ip' => [$_SERVER['REMOTE_ADDR'], PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
