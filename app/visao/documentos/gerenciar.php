@@ -193,7 +193,7 @@
             }
 
         tab.$('tr').mousedown(function(e) {
-
+            $('tr.row_selected').removeClass('row_selected');
             $(this).parent().parent().find('tr.row_selected').removeClass('row_selected');
             $(this).addClass('row_selected');
             var selectedElement = this;
