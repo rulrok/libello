@@ -117,6 +117,10 @@ html {
     outline-offset: -2px;
 }*/
 
+input {
+    padding-left: 5px;
+}
+
 input,select,textarea {
     /*    border-radius: 0px !important;
         border: #ccc solid 2px;*/
@@ -1027,6 +1031,17 @@ input[type="submit"].btn-right {
     float: right;
 }
 
+.btn-buscainterna {
+    display: inline-block;
+
+    height: 25px; 
+    /* position: absolute!important; */
+    float: right; 
+    /* right: 0; */
+    /* top: 0; */
+    border: none!important;
+    background: transparent!important;
+}
 .input-xxzlarge {
     width: 590px;
 }
@@ -1041,6 +1056,12 @@ input[type="submit"].btn-right {
 
 .caption {
     padding: 0;
+}
+
+/*Alguns componentes do bootstrap estão sendo exibidos desalinhados */
+.fix_position {
+    position: relative;
+    top: 6px;
 }
 /*  FIM BOOTSTRAP FIXES */
 /*================================================*/

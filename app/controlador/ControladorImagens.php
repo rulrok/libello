@@ -3,6 +3,7 @@
 include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
 require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
 require_once APP_DIR . "modelo/comboboxes/ComboBoxDescritores.php";
+require_once APP_DIR . "modelo/comboboxes/ComboBoxUsuarios.php";
 require_once APP_DIR . "modelo/ferramentas/imagens/pesquisa.php";
 require_once APP_DIR . "modelo/enumeracao/Ferramenta.php";
 require_once APP_DIR . "modelo/enumeracao/Papel.php";
@@ -69,6 +70,7 @@ class ControladorImagens extends Controlador {
 
     public function acaoConsultarimagem() {
         $this->visao->acessoMinimo = Permissao::CONSULTA;
+        $this->visao->todosUsuarios = ComboBoxUsuarios::listarTodosUsuarios(ComboBoxUsuarios::LISTAR_COM_CPF,"");
         $this->renderizar();
     }
 

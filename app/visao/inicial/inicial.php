@@ -18,6 +18,7 @@
 
         <link type="text/css" rel="stylesheet" href="publico/css/jquery-ui.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/bootstrap.css"/> 
+        <link type="text/css" rel="stylesheet" href="publico/css/bootstrap-responsive.css"/> 
         <link type="text/css" rel="stylesheet" href="publico/css/mainStyle.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.dataTables_themeroller.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.datepick.css"/> 
@@ -168,7 +169,7 @@
 
             </div>
         </nav>
-        <div class="content centralizado">
+        <div class="content centralizado container">
 
             <div class="contentWrap centralizado">
                 <?php
@@ -224,7 +225,7 @@
     <script src='publico/js/jquery/jquery.mousewheel-3.0.6.min.js'></script> 
     <script src='publico/js/jquery/jquery.jstree.js'></script> 
     <script src="publico/js/oTable.js" ></script>
-    <script src="publico/js/bootstrap.js"></script> 
+    <script src="publico/js/bootstrap/bootstrap.js"></script> 
     <script src="publico/js/require.js"></script> 
     <script>
                 //Configurações globais para dataTables

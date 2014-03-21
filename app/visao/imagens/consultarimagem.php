@@ -1,33 +1,61 @@
-
-
+<title>Buscar imagem</title>
+<br/>
 <div id="resultadoImagens" class="blocoBranco">
     <div class="navbar">
         <div class="navbar-inner">
             <div class="container">
-                <!--<a class="brand" href="#">Title</a>-->
-                <div class="nav-collapse collapse navbar-responsive-collapse">
-                    <div class="input-append">
-                        <input type="text" autofocus autocomplete="off" class="ignorar input-xxlarge" name="busca" id="campo_busca" placeholder="Procure pelo título ou pelo nome do descritor..." data-provide="typeahead" style="position: relative; top: 6px;">
-                        <button id="botao_limpar" class="btn" type="button" data-toggle="Limpar" title="Limpar campo de busca" style="position: relative; top: 6px;"><i class="icon-remove"></i></button>
-                        <button id="botao_buscar_imagem" class="btn" type="button" style="position: relative; top: 6px;">Procurar</button>
-                    </div>
-                    <ul class="nav pull-right">
-                        <li class="divider-vertical"></li>
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <!--<a class="brand" href="#"></a>-->
+                <span><i class="icon-picture"></i></span>
+                <span class="divider-vertical"></span>
+                <div class="input-append">
+                    <input type="text" autofocus autocomplete="off" class="ignorar input-xxlarge fix_position search-query" name="busca" id="campo_busca" placeholder="Procure pelo título ou pelo nome do descritor..." data-provide="typeahead">
+                    <button id="botao_buscar_imagem" class="fix_position btn-buscainterna" type="button" ><i class="icon-search"></i></button>
+                    <button id="botao_limpar" class="fix_position btn-buscainterna" type="button" data-toggle="Limpar" title="Limpar campo de busca" ><i class="icon-remove"></i></button>
+                </div>
+                <span class="pull-right">
+                    <button id="b_filtros" class="btn" title="Filtros">
+                        <i id="mostrar_filtros" class="icon-chevron-down hidden"></i>
+                        <i id="ocultar_filtros" class="icon-chevron-up "></i>
+                    </button>
+                </span>
+                <div id="barra_filtros" class="nav-collapse collapse navbar-responsive-collapse" >
+                    <ul class="nav fix_position pull-left">
+                        <li>
+                            Exibir&nbsp;
+                        </li>
                         <li >
-                            <span style="position: relative; top: 6px;">Itens por página 
-                                <select id="qtdItensPorPagina" class="ignorar">
-                                    <option value="10" selected>10</option>
-                                    <option value="20">20</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
-                                </select>
-                            </span>
+                            <select id="qtdItensPorPagina" class="ignorar">
+                                <option value="10">10</option>
+                                <option value="20" selected>20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </li>
+                        <li>
+                            &nbsp;imagens
+                        </li>
+
+                    </ul>
+                    <span class="divider-vertical pull-left"></span>
+                    <ul class="nav fix_position  pull-left">
+                        <!--<li class="divider-vertical"></li>-->
+                        <li>Filtrar por usuário&nbsp;</li>
+                        <li>
+                            <select id="usuarios" class="ignorar" data-placeholder="Escolha um usuário">
+                                <?php echo $this->todosUsuarios; ?>
+                            </select>
                         </li>
                     </ul>
                 </div><!-- /.nav-collapse -->
             </div>
         </div><!-- /navbar-inner -->
     </div>
+
     <div id="resultados"></div>
 </div>
 <script>
@@ -68,11 +96,27 @@
     }
 
     $(document).ready(function() {
+
+        $("#qtdItensPorPagina").chosen({
+            disable_search_threshold: 10
+        });
+
+        $("#usuarios").chosen({allow_single_deselect: true});
         buscar(); //Exibe todas as imagens
         $("#botao_buscar_imagem").on('click', function() {
             buscar();
         });
-        $("#botao_limpar").tooltip({placement: 'bottom'});
+
+        $("#b_filtros").tooltip({placement: 'top'});
+        $("#b_filtros").on('click', function() {
+            $("#barra_filtros").fadeToggle("fast", function() {
+
+                $("#ocultar_filtros").toggleClass("hidden");
+                $("#mostrar_filtros").toggleClass("hidden");
+            });
+        });
+
+        $("#botao_limpar").tooltip({placement: 'top'});
         $("#botao_limpar").on('click', function() {
             $('#campo_busca').val('');
             buscar();
