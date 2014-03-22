@@ -19,15 +19,20 @@
         <link type="text/css" rel="stylesheet" href="publico/css/jquery-ui.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/bootstrap.css"/> 
         <link type="text/css" rel="stylesheet" href="publico/css/bootstrap-responsive.css"/> 
+        <!--<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">-->
+        <!--<link type="text/css" rel="stylesheet" href="publico/css/bootstrap-datetimepicker.min.css"/>--> 
         <link type="text/css" rel="stylesheet" href="publico/css/mainStyle.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.dataTables_themeroller.css" />
-        <link type="text/css" rel="stylesheet" href="publico/css/jquery.datepick.css"/> 
+        <!--<link type="text/css" rel="stylesheet" href="publico/css/jquery.datepick.css"/>--> 
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.chosen.css"/> 
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.fancybox.css"/> 
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.fancybox-buttons.css"/> 
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.jstree.css"/> 
         <link type="text/css" rel="stylesheet" media="screen" href="publico/css/browser-detection.css" />
-        <link type="text/css" rel="stylesheet" media="screen" href="publico/css/jquery-ui-timepicker-addon.css" />
+        <!--<link type="text/css" rel="stylesheet" media="screen" href="publico/css/jquery-ui-timepicker-addon.css" />-->
+        <link type="text/css" rel="stylesheet" href="publico/css/daterangepicker-bs3.css" />
+        <!--<link type="text/css" rel="stylesheet" href="publico/css/daterangepicker-bs3.css" />-->
+
 
         <!--[if !IE 7]>
         <style type="text/css">
@@ -214,9 +219,9 @@
     <!-- POS SCRIPTS -->
     <script src="publico/js/jquery/jquery-ui.js"></script>
     <script src="publico/js/jquery/jquery.dataTables.js"></script>
-    <script src="publico/js/jquery/jquery.datepick.js"></script>
-    <script src="publico/js/jquery/jquery.datepick-pt-BR.js"></script>
-    <script src='publico/js/jquery/jquery-ui-timepicker-addon.js'></script> 
+    <!--<script src="publico/js/jquery/jquery.datepick.js"></script>-->
+    <!--<script src="publico/js/jquery/jquery.datepick-pt-BR.js"></script>-->
+    <!--<script src='publico/js/jquery/jquery-ui-timepicker-addon.js'></script>--> 
     <script src='publico/js/jquery/jquery-ui-sliderAccess.js'></script> 
     <!--<script src='publico/js/jquery/jquery.mask.min.js'></script>--> 
     <script src='publico/js/jquery/jquery.maskedinput.js'></script> 
@@ -226,6 +231,9 @@
     <script src='publico/js/jquery/jquery.jstree.js'></script> 
     <script src="publico/js/oTable.js" ></script>
     <script src="publico/js/bootstrap/bootstrap.js"></script> 
+    <!--<script src="publico/js/bootstrap/bootstrap-datetimepicker.min.js"></script>--> 
+    <script src="publico/js/moment.js"></script>
+    <script src="publico/js/daterangepicker.js"></script>
     <script src="publico/js/require.js"></script> 
     <script>
                 //Configurações globais para dataTables
@@ -248,47 +256,94 @@
                     "bStateSave": true,
                     "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
                 });
-                $.datepick.setDefaults({
-                    dateFormat: 'dd/mm/yyyy'
-                });
-                $.datepick.setDefaults($.datepick.regional['pt-BR']);
-                $.datepicker.regional['pt-BR'] = {
-                    closeText: 'Fechar',
-                    prevText: 'Anterior',
-                    nextText: 'Próximo',
-                    currentText: 'Atual',
-                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-                        'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
-                        'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
-                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
-                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-                    weekHeader: 'Semana',
-                    dateFormat: 'dd/mm/yy',
-                    firstDay: 1,
-                    isRTL: false,
-                    showMonthAfterYear: true,
-                    yearSuffix: ''
-                };
-                $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
 
-                $.timepicker.regional['pt-BR'] = {
-                    timeOnlyTitle: 'Apenas tempo',
-                    timeText: 'Tempo',
-                    hourText: 'Hora',
-                    minuteText: 'Minuto',
-                    secondText: 'Segundo',
-                    millisecText: 'Milisegundo',
-                    timezoneText: 'Região',
-                    currentText: 'Agora',
-                    closeText: 'OK',
-                    timeFormat: 'HH:mm',
-                    amNames: ['AM', 'A'],
-                    pmNames: ['PM', 'P'],
-                    isRTL: false
-                };
-                $.timepicker.setDefaults($.timepicker.regional['pt-BR']);
+                //COnfigurações de idioma para MomentJS
+                moment.lang('pt_BR', {
+                    months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outrubro", "Novembro", "Dezembro"],
+                    monthsShort: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+                    weekdays: ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"],
+                    weekdaysShort: ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"],
+                    weekdaysMin: ["S", "T", "Q", "Q", "S", "S", "D"],
+                    longDateFormat: {
+                        LT: "HH:mm",
+                        L: "DD/MM/YYYY",
+                        LL: "D MMMM YYYY",
+                        LLL: "D MMMM YYYY LT",
+                        LLLL: "dddd D MMMM YYYY LT"
+                    },
+                    calendar: {
+                        sameDay: "[Hoje] LT",
+                        nextDay: '[Amanhã] LT',
+                        nextWeek: 'dddd [à] LT',
+                        lastDay: '[Ontem] LT',
+                        lastWeek: 'dddd [Semana passada] LT',
+                        sameElse: 'L'
+                    },
+                    relativeTime: {
+                        future: "em %s",
+                        past: "%s atrás",
+                        s: "agora a pouco",
+                        m: "um minuto",
+                        mm: "%d minutos",
+                        h: "uma hora",
+                        hh: "%d horas",
+                        d: "um dia",
+                        dd: "%d dias",
+                        M: "um mês",
+                        MM: "%d meses",
+                        y: "um ano",
+                        yy: "%d anos"
+                    },
+                    ordinal: function(number) {
+                        return number + (number === 1 ? 'º' : '');
+                    },
+                    week: {
+                        dow: 1, // Monday is the first day of the week.
+                        doy: 4  // The week that contains Jan 4th is the first week of the year.
+                    }
+                });
+                moment.lang('pt_BR');
+//                $.datepick.setDefaults({
+//                    dateFormat: 'dd/mm/yyyy'
+//                });
+//                $.datepick.setDefaults($.datepick.regional['pt-BR']);
+//                $.datepicker.regional['pt-BR'] = {
+//                    closeText: 'Fechar',
+//                    prevText: 'Anterior',
+//                    nextText: 'Próximo',
+//                    currentText: 'Atual',
+//                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+//                        'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+//                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
+//                        'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+//                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+//                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+//                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+//                    weekHeader: 'Semana',
+//                    dateFormat: 'dd/mm/yy',
+//                    firstDay: 1,
+//                    isRTL: false,
+//                    showMonthAfterYear: true,
+//                    yearSuffix: ''
+//                };
+//                $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
+//
+//                $.timepicker.regional['pt-BR'] = {
+//                    timeOnlyTitle: 'Apenas tempo',
+//                    timeText: 'Tempo',
+//                    hourText: 'Hora',
+//                    minuteText: 'Minuto',
+//                    secondText: 'Segundo',
+//                    millisecText: 'Milisegundo',
+//                    timezoneText: 'Região',
+//                    currentText: 'Agora',
+//                    closeText: 'OK',
+//                    timeFormat: 'HH:mm',
+//                    amNames: ['AM', 'A'],
+//                    pmNames: ['PM', 'P'],
+//                    isRTL: false
+//                };
+//                $.timepicker.setDefaults($.timepicker.regional['pt-BR']);
 
                 //Configura pequena função para criar limiter em textareas
                 (function($) {
@@ -309,9 +364,9 @@
                         }
                     });
                 })(jQuery);
-                //Configura botão para tela cheia
-//                                $("#fullscreen-toggle").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
-//                                $("#fullscreen-off").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
+                //Configurar botão para tela cheia
+//                $("#fullscreen-toggle").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
+//                $("#fullscreen-off").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
                 if (canToggleFullScreen()) {
                     $("#botoesSuperiores").children(":first-child").before('<a id="fullscreen-toggle" title="Modo tela cheia" class="btn btn-small" href="javascript:void(0)" onclick="toggleFullScreen();"><i class="icon-fullscreen"></i></a>');
                 }

@@ -12,7 +12,7 @@
                 <!--<a class="brand" href="#"></a>-->
                 <span><i class="icon-picture"></i></span>
                 <span class="divider-vertical"></span>
-                <div class="input-append">
+                <div class="input-append" style="position: relative; top: 4px;">
                     <input type="text" autofocus autocomplete="off" class="ignorar input-xxlarge fix_position search-query" name="busca" id="campo_busca" placeholder="Procure pelo título ou pelo nome do descritor..." data-provide="typeahead">
                     <button id="botao_buscar_imagem" class="fix_position btn-buscainterna" type="button" ><i class="icon-search"></i></button>
                     <button id="botao_limpar" class="fix_position btn-buscainterna" type="button" data-toggle="Limpar" title="Limpar campo de busca" ><i class="icon-remove"></i></button>
@@ -44,13 +44,26 @@
                     <span class="divider-vertical pull-left"></span>
                     <ul class="nav fix_position  pull-left">
                         <!--<li class="divider-vertical"></li>-->
-                        <li>Filtrar por usuário&nbsp;</li>
+                        <!--<li>Período&nbsp;</li>-->
                         <li>
-                            <select id="usuarios" class="ignorar" data-placeholder="Escolha um usuário">
-                                <?php echo $this->todosUsuarios; ?>
-                            </select>
+                            <span id="reportrange" class="btn" style="display: inline-block; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; margin: 0">
+                                <i class="icon-calendar"></i>
+                                <span><?php setlocale(LC_ALL, 'pt_BR'); echo date("j/M/Y", strtotime('-30 day')); ?> - <?php echo date("j/M/Y"); ?></span> <b class="caret"></b>
+                            </span>
                         </li>
                     </ul>
+                    <span class="divider-vertical pull-left"></span>
+                    <?php if ($this->acessoTotal) : ?>
+                        <ul class="nav fix_position  pull-left">
+                            <!--<li class="divider-vertical"></li>-->
+                            <li>Autor&nbsp;</li>
+                            <li>
+                                <select id="usuarios" class="ignorar" data-placeholder="Escolha um usuário">
+                                    <?php echo $this->todosUsuarios; ?>
+                                </select>
+                            </li>
+                        </ul>
+                    <?php endif; ?>
                 </div><!-- /.nav-collapse -->
             </div>
         </div><!-- /navbar-inner -->
@@ -59,6 +72,49 @@
     <div id="resultados"></div>
 </div>
 <script>
+
+    config_datepicker = {
+        startDate: moment().subtract('days', 29),
+        endDate: moment(),
+        minDate: '01/01/2000',
+        maxDate: '12/31/2014',
+        dateLimit: {days: 60},
+        showDropdowns: true,
+        showWeekNumbers: true,
+        timePicker: false,
+        timePickerIncrement: 1,
+        timePicker12Hour: false,
+        ranges: {
+            'Todos os dias': [moment().subtract('years', 14), moment()],
+            'Hoje': [moment(), moment()],
+            'Ontem': [moment().subtract('days', 1), moment().subtract('days', 1)],
+            'Últimos 7 dias': [moment().subtract('days', 6), moment()],
+            'Últimos 30 dias': [moment().subtract('days', 29), moment()],
+            'Esse mês': [moment().startOf('month'), moment().endOf('month')],
+            'Mês passado': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+        },
+        opens: 'right',
+        buttonClasses: ['btn btn-default'],
+        applyClass: 'btn-small btn-primary',
+        cancelClass: 'btn-small',
+        format: 'DD/MM/YYYY',
+        separator: '/',
+        locale: {
+            applyLabel: 'Aplicar',
+            cancelLabel: 'Cancelar',
+            fromLabel: 'De',
+            toLabel: 'Até',
+            weekLabel: 'S',
+            customRangeLabel: 'Personalizar',
+            daysOfWeek: ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"],
+            monthNames: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+            firstDay: 0
+        }
+    };
+
+    $('#reportrange').daterangepicker(config_datepicker, function(start, end) {
+        $('#reportrange span').html(start.format('D MMMM YYYY') + ' - ' + end.format('D MMMM YYYY'));
+    });
 
     paginaAtual = 1;
     //==========================================================================
@@ -80,11 +136,23 @@
             }
         }
 
-        itensPorPagina = $("#qtdItensPorPagina").val();
+        var itensPorPagina = $("#qtdItensPorPagina").val();
+        var termos = ($("#campo_busca").val()).split(',');
+        var consulta = "";
+        //Fase de normalização dos termos de busca para uma string padronizada
+        for (var i = 0; i < termos.length; i++) {
+            consulta += termos[i].replace(/ +/g, ' ').replace(/^ +/, '').replace(/ +$/, '') + ',';
+        }
+        consulta = consulta.replace(/,$/, '');
+        consulta = encodeURI(consulta);
+        var usuario = $("#usuarios").val();
 
         paginaAtual = pagina;
-//        ajax('index.php?c=imagens&a=buscar&l=' + itensPorPagina + '&p=' + pagina + '&q=' + $("#campo_busca").val(), '#resultados', false);
-        var url = 'index.php?c=imagens&a=buscar&l=' + itensPorPagina + '&p=' + pagina + '&q=' + $("#campo_busca").val();
+
+        var url = 'index.php?c=imagens&a=buscar&l=' + itensPorPagina + '&p=' + pagina + '&q=' + consulta;
+        if (usuario !== undefined) {
+            url = url + '&u=' + usuario;
+        }
         $("#resultados").load(url);
     }
 
@@ -101,8 +169,13 @@
             disable_search_threshold: 10
         });
 
-        $("#usuarios").chosen({allow_single_deselect: true});
-        buscar(); //Exibe todas as imagens
+        if ($("#usuarios").length) { //Verifica se o componente está sendo exibido
+            $("#usuarios").chosen({allow_single_deselect: true});
+            $("#usuarios").on('change', function() {
+                buscar();
+            });
+        }
+
         $("#botao_buscar_imagem").on('click', function() {
             buscar();
         });
@@ -125,7 +198,7 @@
         //Configura o campo para aceitar multiplas sugestões de descritores, separados por virgula
         //Originalmente o componente não mostra outro depois de já haver algum selecionado.
         $('#campo_busca').typeahead({
-            minLength: 4
+            minLength: 2
             , source: function(query, process) {
                 $.ajax({
                     url: 'index.php?c=imagens&a=obterDescritores',
@@ -158,7 +231,7 @@
         $("#campo_busca").on('keyup', function(e) {
             switch (e.keyCode) {
                 case 13: // enter
-//                    clearTimeout(timeoutBuscaId);
+                    //                    clearTimeout(timeoutBuscaId);
                     buscar();
                     break;
                 case 9: // tab
@@ -187,6 +260,8 @@
 
 
         });
+
+        buscar(); //Exibe todas as imagens
     });
 
 </script>

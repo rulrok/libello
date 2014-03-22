@@ -16,13 +16,13 @@ class pesquisa {
         return $this->temResultados;
     }
 
-    private function ofuscarIds(){
+    private function ofuscarIds() {
         foreach ($this->resultados as $key => $value) {
             $this->resultados[$key]['idImagem'] = fnEncrypt($value['idImagem']);
             $this->resultados[$key][0] = $this->resultados[$key]['idImagem'];
         }
     }
-    
+
     private function criarPaginacao($pagina, $ultimaPagina) {
         $centerPages = "";
         $centerPages .= '<div class="pagination pagination-centered "><ul>';
@@ -69,38 +69,13 @@ class pesquisa {
         $this->paginacao .= '<span class="paginationNumbers">' . $centerPages . '</span>';
     }
 
-    public function obterTodas($pagina, $itensPorPagina = 10, $acessoTotal = false) {
-        $imagensDAO = new imagensDAO();
-        $res1 = $imagensDAO->consultarTodasAsImagens(null, $acessoTotal);
-        $nr = sizeof($res1);
-        $this->temResultados = ($nr != 0);
-        if (!$this->temResultados) {
-            $this->paginacao = null;
-            $this->resultados = array();
-            exit;
-        }
-
-        $pagina = preg_replace('#[^0-9]#i', '', $pagina);
-
-        $ultimaPagina = ceil($nr / $itensPorPagina);
-
-        if ($pagina < 1) {
-            $pagina = 1;
-        } else if ($pagina > $ultimaPagina) {
-            $pagina = $ultimaPagina;
-        }
-
-        $limite = 'LIMIT ' . ($pagina - 1) * $itensPorPagina . ',' . $itensPorPagina;
-
-        $this->resultados = $imagensDAO->consultarTodasAsImagens($limite, $acessoTotal);
-
-        $this->criarPaginacao($pagina, $ultimaPagina);
-        $this->ofuscarIds();
+    public function obterTodas($pagina, $itensPorPagina = 10, $acessoTotal = false, $autor = null) {
+        return $this->buscar('', $pagina, $itensPorPagina, $acessoTotal, $autor);
     }
 
-    public function buscar($termoBusca, $pagina, $itensPorPagina = 10, $acessoTotal = false) {
+    public function buscar($termoBusca, $pagina, $itensPorPagina = 10, $acessoTotal = false, $autor = null) {
         $imagensDAO = new imagensDAO();
-        $res1 = $imagensDAO->pesquisarImagem($termoBusca, null, $acessoTotal);
+        $res1 = $imagensDAO->pesquisarImagem($termoBusca, null, $acessoTotal, $autor);
         $nr = sizeof($res1);
         $this->temResultados = ($nr != 0);
         if (!$this->temResultados) {
@@ -119,9 +94,9 @@ class pesquisa {
             $pagina = $ultimaPagina;
         }
 
-        $limite = 'LIMIT ' . ($pagina - 1) * $itensPorPagina . ',' . $itensPorPagina;
+        $limite = ' LIMIT ' . ($pagina - 1) * $itensPorPagina . ',' . $itensPorPagina;
 
-        $this->resultados = $imagensDAO->pesquisarImagem($termoBusca, $limite, $acessoTotal);
+        $this->resultados = $imagensDAO->pesquisarImagem($termoBusca, $limite, $acessoTotal, $autor);
 
         $this->criarPaginacao($pagina, $ultimaPagina);
         $this->ofuscarIds();

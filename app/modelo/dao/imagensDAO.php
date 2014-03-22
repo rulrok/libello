@@ -33,11 +33,15 @@ class imagensDAO extends abstractDAO {
      * @param boolean $acessoTotal Indica se o resultado deve retornar todas as imagens de todos os autores, ou apenas do usuário logado atualmente
      * @return type
      */
-    public function pesquisarImagem($termoBusca, $limite = "", $acessoTotal = false) {
+    public function pesquisarImagem($termoBusca, $limite = "", $acessoTotal = false, $autor = null) {
         if ($acessoTotal) {
-            $query_auxiliar = '';
+            if ($autor !== null) {
+                $query_auxiliar_condicional = ' WHERE autor = :idAutor ';
+            } else {
+                $query_auxiliar_condicional = '';
+            }
         } else {
-            $query_auxiliar = ' WHERE autor = :idUsuarioLogado ';
+            $query_auxiliar_condicional = ' WHERE autor = :idUsuarioLogado ';
         }
         //Query do MAL!
         $sql = "SELECT"
@@ -56,20 +60,34 @@ class imagensDAO extends abstractDAO {
                 . ' JOIN `imagem_descritor` t2 ON t2.idDescritor = t.descritor2'
                 . ' JOIN `imagem_descritor` t3 ON t3.idDescritor = t.descritor3'
                 . ' JOIN `imagem_descritor` t4 ON t4.idDescritor = t.descritor4 '
-                . "$query_auxiliar"
+                . "$query_auxiliar_condicional"
                 . $limite;
 
-        try {
-            $termoBusca = preg_replace('/,$/', '', $termoBusca);
-        } catch (Exception $e) {
-            
+
+        $termoBusca = ltrim(rtrim(rtrim($termoBusca, ','))); //preg_replace('/,$/', '', $termoBusca);
+        //Elimina possíveis vírgulas no início e fim
+        $aux = str_replace(['/^,+/', '/,+$/'], '', $termoBusca);
+        $aux = str_replace([','], "|", $termoBusca);
+
+        if (!empty($aux)) {
+            $regexTermoBusca = "($aux)";
+        } else {
+            $regexTermoBusca = ".";
         }
-        $aux = str_replace([',', ' '], "|", $termoBusca);
-        $regexTermoBusca = "($aux)";
-        $params = array(
-            ':termoBusca' => [$regexTermoBusca, PDO::PARAM_STR]
-            , ':idUsuarioLogado' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
-        );
+        if ($autor !== null && $acessoTotal) {
+            $params = array(
+                ':termoBusca' => [$regexTermoBusca, PDO::PARAM_STR]
+                , ':idAutor' => [$autor, PDO::PARAM_INT]
+            );
+        } else {
+            $params = array(
+                ':termoBusca' => [$regexTermoBusca, PDO::PARAM_STR]
+            );
+            if (!$acessoTotal) {
+                $params[':idUsuarioLogado'] = [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT];
+            }
+        }
+
         return $this->executarSelect($sql, $params);
     }
 

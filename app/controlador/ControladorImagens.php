@@ -29,14 +29,24 @@ class ControladorImagens extends Controlador {
             } else {
                 $itensPorPagina = 10;
             }
+
+            if (filter_has_var(INPUT_GET, 'u')) {
+                if (filter_input(INPUT_GET, 'u') != "default") {
+                    $idAutor = fnDecrypt(filter_input(INPUT_GET, 'u'));
+                } else {
+                    $idAutor = null;
+                }
+            } else {
+                $idAutor = null;
+            }
             $termo = filter_input(INPUT_GET, 'q');
             $pesquisa = new pesquisa();
             $acessoTotal = $papel <= Papel::GESTOR;
-            if ($termo == "") {
-                $pesquisa->obterTodas($pagina, $itensPorPagina, $acessoTotal);
-            } else {
-                $pesquisa->buscar($termo, $pagina, $itensPorPagina, $acessoTotal);
-            }
+//            if ($termo == "") {
+//                $pesquisa->obterTodas($pagina, $itensPorPagina, $acessoTotal);
+//            } else {
+            $pesquisa->buscar($termo, $pagina, $itensPorPagina, $acessoTotal, $idAutor);
+//            }
             if ($pesquisa->temResultados()) {
                 $this->visao->temResultados = true;
                 $this->visao->resultados = $pesquisa->obterResultados();
@@ -70,7 +80,8 @@ class ControladorImagens extends Controlador {
 
     public function acaoConsultarimagem() {
         $this->visao->acessoMinimo = Permissao::CONSULTA;
-        $this->visao->todosUsuarios = ComboBoxUsuarios::listarTodosUsuarios(ComboBoxUsuarios::LISTAR_COM_CPF,"");
+        $this->visao->acessoTotal = obterUsuarioSessao()->get_idPapel() <= Papel::GESTOR;
+        $this->visao->todosUsuarios = ComboBoxUsuarios::listarTodosUsuarios(ComboBoxUsuarios::LISTAR_COM_CPF, "");
         $this->renderizar();
     }
 

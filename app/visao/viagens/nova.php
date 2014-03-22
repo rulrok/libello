@@ -61,7 +61,7 @@
         <fieldset>
             <legend>Passageiros</legend>
             <div class='alert alert-info'>
-                <span class='label label-info'>Dica </span> Escolha vários passageiros ao mesmo tempo segurando a tecla <span class="badge" id="tecla"></span>
+                <span class='label label-info'>Dica </span> Escolha vários passageiros ao mesmo tempo segurando a tecla <kbd class="badge" id="tecla"></kbd>
                 <a class="close" data-dismiss="alert" href="#">&times;</a>
             </div>
             <div class="line" style='display: table'>
