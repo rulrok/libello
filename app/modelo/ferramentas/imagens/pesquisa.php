@@ -73,9 +73,20 @@ class pesquisa {
         return $this->buscar('', $pagina, $itensPorPagina, $acessoTotal, $autor);
     }
 
-    public function buscar($termoBusca, $pagina, $itensPorPagina = 10, $acessoTotal = false, $autor = null) {
+    /**
+     * 
+     * @param type $termoBusca
+     * @param type $pagina
+     * @param type $itensPorPagina
+     * @param type $acessoTotal
+     * @param type $autor id do usuario autor
+     * @param type $dataInicio Unix timestamp
+     * @param type $dataFim Unix timestamp
+     * @return type
+     */
+    public function buscar($termoBusca, $pagina, $itensPorPagina = 10, $acessoTotal = false, $autor = null, $dataInicio = null, $dataFim = null) {
         $imagensDAO = new imagensDAO();
-        $res1 = $imagensDAO->pesquisarImagem($termoBusca, null, $acessoTotal, $autor);
+        $res1 = $imagensDAO->pesquisarImagem($termoBusca, null, $acessoTotal, $autor, $dataInicio, $dataFim);
         $nr = sizeof($res1);
         $this->temResultados = ($nr != 0);
         if (!$this->temResultados) {
@@ -96,7 +107,7 @@ class pesquisa {
 
         $limite = ' LIMIT ' . ($pagina - 1) * $itensPorPagina . ',' . $itensPorPagina;
 
-        $this->resultados = $imagensDAO->pesquisarImagem($termoBusca, $limite, $acessoTotal, $autor);
+        $this->resultados = $imagensDAO->pesquisarImagem($termoBusca, $limite, $acessoTotal, $autor, $dataInicio, $dataFim);
 
         $this->criarPaginacao($pagina, $ultimaPagina);
         $this->ofuscarIds();

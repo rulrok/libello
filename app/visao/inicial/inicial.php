@@ -3,7 +3,7 @@
     <head>
         <!-- META TAGS -->
 
-        <meta charset="UTF-8"/>
+        <meta charset="UTF-8">
         <meta name="description" content="Ferramenta para controle interno do CEAD">
         <meta name="keywords" content="cead, gerenciamento">
         <meta name="robots" content="noindex, nofollow">
@@ -18,8 +18,8 @@
 
         <link type="text/css" rel="stylesheet" href="publico/css/jquery-ui.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/bootstrap.css"/> 
-        <link type="text/css" rel="stylesheet" href="publico/css/bootstrap-responsive.css"/> 
-        <!--<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">-->
+        <link type="text/css" rel="stylesheet" href="publico/css/bootstrap-responsive.css"/>
+        <link type="text/css" rel="stylesheet" href="publico/css/bootstrap-datepicker.css"/>
         <!--<link type="text/css" rel="stylesheet" href="publico/css/bootstrap-datetimepicker.min.css"/>--> 
         <link type="text/css" rel="stylesheet" href="publico/css/mainStyle.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.dataTables_themeroller.css" />
@@ -30,7 +30,7 @@
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.jstree.css"/> 
         <link type="text/css" rel="stylesheet" media="screen" href="publico/css/browser-detection.css" />
         <!--<link type="text/css" rel="stylesheet" media="screen" href="publico/css/jquery-ui-timepicker-addon.css" />-->
-        <link type="text/css" rel="stylesheet" href="publico/css/daterangepicker-bs3.css" />
+        <!--<link type="text/css" rel="stylesheet" href="publico/css/daterangepicker-bs3.css" />-->
         <!--<link type="text/css" rel="stylesheet" href="publico/css/daterangepicker-bs3.css" />-->
 
 
@@ -232,8 +232,10 @@
     <script src="publico/js/oTable.js" ></script>
     <script src="publico/js/bootstrap/bootstrap.js"></script> 
     <!--<script src="publico/js/bootstrap/bootstrap-datetimepicker.min.js"></script>--> 
+    <script src="publico/js/bootstrap/bootstrap-datepicker.js"></script>
+    <script src="publico/js/bootstrap/bootstrap-datepicker.pt-BR.js"></script>
     <script src="publico/js/moment.js"></script>
-    <script src="publico/js/daterangepicker.js"></script>
+    <!--<script src="publico/js/daterangepicker.js"></script>-->
     <script src="publico/js/require.js"></script> 
     <script>
                 //Configurações globais para dataTables

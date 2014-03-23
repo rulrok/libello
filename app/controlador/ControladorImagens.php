@@ -39,13 +39,26 @@ class ControladorImagens extends Controlador {
             } else {
                 $idAutor = null;
             }
+
+            if (filter_has_var(INPUT_GET, 'de')) {
+                //TODO filtrar com FILTER_FLAG_EMPTY_STRING_NULL quando estiver implementado pelo PHP
+                $dataInicio = !empty(filter_input(INPUT_GET, 'de')) ? filter_input(INPUT_GET, 'de') : null;
+            } else {
+                $dataInicio = null;
+            }
+
+            if (filter_has_var(INPUT_GET, 'ate')) {
+                $dataFim = !empty(filter_input(INPUT_GET, 'ate')) ? filter_input(INPUT_GET, 'ate') : null;
+            } else {
+                $dataFim = null;
+            }
             $termo = filter_input(INPUT_GET, 'q');
             $pesquisa = new pesquisa();
             $acessoTotal = $papel <= Papel::GESTOR;
 //            if ($termo == "") {
 //                $pesquisa->obterTodas($pagina, $itensPorPagina, $acessoTotal);
 //            } else {
-            $pesquisa->buscar($termo, $pagina, $itensPorPagina, $acessoTotal, $idAutor);
+            $pesquisa->buscar($termo, $pagina, $itensPorPagina, $acessoTotal, $idAutor, $dataInicio, $dataFim);
 //            }
             if ($pesquisa->temResultados()) {
                 $this->visao->temResultados = true;

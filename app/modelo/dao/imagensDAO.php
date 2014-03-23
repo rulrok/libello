@@ -33,16 +33,66 @@ class imagensDAO extends abstractDAO {
      * @param boolean $acessoTotal Indica se o resultado deve retornar todas as imagens de todos os autores, ou apenas do usuário logado atualmente
      * @return type
      */
-    public function pesquisarImagem($termoBusca, $limite = "", $acessoTotal = false, $autor = null) {
+    public function pesquisarImagem($termoBusca, $limite = "", $acessoTotal = false, $autor = null, $dataInicio = null, $dataFim = null) {
+
+        $params = array();
+
+        //Variável onde as queries auxiliares serão armazenadas.
+        //Após isso, ele é processado para gerar uma condição WHERE válida 
+        //para ser adicionado ao final da query.
+        $condicoes = array();
+
+        //Monta a query que irá filtrar os resultados baseado no autor
         if ($acessoTotal) {
             if ($autor !== null) {
-                $query_auxiliar_condicional = ' WHERE autor = :idAutor ';
+                $query_auxiliar_autor = ' autor = :idAutor ';
+                $params[':idAutor'] = [$autor, PDO::PARAM_INT];
             } else {
-                $query_auxiliar_condicional = '';
+                $query_auxiliar_autor = '';
             }
         } else {
-            $query_auxiliar_condicional = ' WHERE autor = :idUsuarioLogado ';
+            $query_auxiliar_autor = ' autor = :idUsuarioLogado ';
+            $params[':idUsuarioLogado'] = [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT];
         }
+
+        if (!empty($query_auxiliar_autor)) {
+            $condicoes[] = $query_auxiliar_autor;
+        }
+
+        //Monta a query que irá filtrar os resultados com base na data de registro da imagem no banco
+        if ($dataInicio !== null) {
+            if ($dataFim !== null) {
+                $query_auxiliar_data = ' (dataCadastro BETWEEN :inicio AND :fim) ';
+                $params[':fim'] = [$dataFim, PDO::PARAM_INT];
+            } else {
+                $query_auxiliar_data = ' dataCadastro >= :inicio ';
+            }
+            $params[':inicio'] = [$dataInicio, PDO::PARAM_INT];
+        } elseif ($dataFim !== null) {
+            $query_auxiliar_data = ' dataCadastro <= :fim ';
+            $params[':fim'] = [$dataFim, PDO::PARAM_INT];
+        } else {
+            $query_auxiliar_data = '';
+        }
+
+        if (!empty($query_auxiliar_data)) {
+            $condicoes[] = $query_auxiliar_data;
+        }
+
+
+        //Processamento das condições
+        $query_where_aux = "";
+        foreach ($condicoes as $condicao) {
+            $query_where_aux .= $condicao . " AND ";
+        }
+
+        if (!empty($query_where_aux)) {
+            $query_where = " WHERE " . preg_replace("/AND +$/", "", $query_where_aux);
+        } else {
+            $query_where = "";
+        }
+
+
         //Query do MAL!
         $sql = "SELECT"
                 . ' t.idImagem,t.titulo,t.observacoes,t.dificuldade,t.cpfAutor,'
@@ -60,7 +110,7 @@ class imagensDAO extends abstractDAO {
                 . ' JOIN `imagem_descritor` t2 ON t2.idDescritor = t.descritor2'
                 . ' JOIN `imagem_descritor` t3 ON t3.idDescritor = t.descritor3'
                 . ' JOIN `imagem_descritor` t4 ON t4.idDescritor = t.descritor4 '
-                . "$query_auxiliar_condicional"
+                . $query_where
                 . $limite;
 
 
@@ -74,19 +124,7 @@ class imagensDAO extends abstractDAO {
         } else {
             $regexTermoBusca = ".";
         }
-        if ($autor !== null && $acessoTotal) {
-            $params = array(
-                ':termoBusca' => [$regexTermoBusca, PDO::PARAM_STR]
-                , ':idAutor' => [$autor, PDO::PARAM_INT]
-            );
-        } else {
-            $params = array(
-                ':termoBusca' => [$regexTermoBusca, PDO::PARAM_STR]
-            );
-            if (!$acessoTotal) {
-                $params[':idUsuarioLogado'] = [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT];
-            }
-        }
+        $params[':termoBusca'] = [$regexTermoBusca, PDO::PARAM_STR];
 
         return $this->executarSelect($sql, $params);
     }
