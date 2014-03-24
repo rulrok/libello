@@ -34,6 +34,7 @@
         <!--<link type="text/css" rel="stylesheet" href="publico/css/daterangepicker-bs3.css" />-->
         <!--<link type="text/css" rel="stylesheet" href="publico/css/daterangepicker-bs3.css" />-->
         <link type="text/css" rel="stylesheet" href="publico/css/thumbnailgrid/component.css"/> 
+        <link type="text/css" rel="stylesheet" href="publico/css/picbox/picbox.css"/> 
         <!--<link type="text/css" rel="stylesheet" href="publico/css/thumbnailgrid/default.css"/>--> 
 
 
@@ -234,17 +235,18 @@
 <!--    <script src='publico/js/jquery/jquery.fancybox.min.js'></script> 
     <script src='publico/js/jquery/jquery.fancybox-buttons.js'></script> -->
     <!--<script src='publico/js/jquery/jquery.mousewheel-3.0.6.min.js'></script>--> 
-    <script src="publico/js/thumbnailgrid/modernizr.custom.js"></script>
-    <script src="publico/js/thumbnailgrid/grid.js"></script>
     <script src='publico/js/jquery/jquery.jstree.js'></script> 
     <script src="publico/js/oTable.js" ></script>
     <script src="publico/js/bootstrap/bootstrap.js"></script> 
     <!--<script src="publico/js/bootstrap/bootstrap-datetimepicker.min.js"></script>--> 
     <script src="publico/js/bootstrap/bootstrap-datepicker.js"></script>
     <script src="publico/js/bootstrap/bootstrap-datepicker.pt-BR.js"></script>
+    <!--<script src="publico/js/zoomerang/zoomerang.js"></script>-->
+    <script src="publico/js/jquery/jquery.picbox.js"></script>
     <script src="publico/js/moment.js"></script>
     <!--<script src="publico/js/daterangepicker.js"></script>-->
     <script src="publico/js/require.js"></script> 
+
     <script>
                 //Configurações globais para dataTables
                 $.extend($.fn.dataTable.defaults, {

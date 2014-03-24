@@ -167,6 +167,8 @@ class verificarnovaimagem extends verificadorFormularioAjax {
 
             /*
              * O NOME DO ARQUIVO QUE SERÁ SALVO NO SERVIDOR DEVE SER CONFIGURADO UNICAMENTE NESSA VARIÁVEL
+             * ELE SERÁ USADO COMO BASE PARA GERAR OS NOMES DAS THUMBS E ARQUIVO VETORIAL COM SUAIS INFORMAÇÕES ADICIONAIS
+             * COMO TIMESTAMP.
              */
 
             $nomeFinalArquivoImagem = $this->montarNome(array($codigo_desc_1, $codigo_desc_2, $codigo_desc_3, $dificuldade, $iniciais));
@@ -277,11 +279,12 @@ class verificarnovaimagem extends verificadorFormularioAjax {
         //get image extension.
         $ext = obterExtensaoArquivo($img_name);
         //creates the new image using the appropriate function from gd library
-        if (!strcmp("jpg", $ext) || !strcmp("jpeg", $ext))
+        if (!strcmp("jpg", $ext) || !strcmp("jpeg", $ext)) {
             $src_img = imagecreatefromjpeg($img_name);
+        } elseif (!strcmp("png", $ext)) {
 
-        if (!strcmp("png", $ext))
             $src_img = imagecreatefrompng($img_name);
+        }
 
         //gets the dimmensions of the image
         $old_x = imageSX($src_img);

@@ -10,23 +10,23 @@
             <ul id="og-grid" class="og-grid">
                 <?php foreach ($this->resultados as $key => $imagem) : ?>
                     <li>
-                        <a href="javascript:void(0);" data-largesrc="<?php echo $imagem['diretorio'] . $imagem['nomeArquivo']; ?>" data-title="<?php echo $imagem['titulo']; ?>" data-description="<?php echo $imagem['observacoes']; ?>" data-desc1="Descritor 1">
+                        <a target="_blank" href="index.php?c=imagens&a=visualizarImagem&id=<?php echo $imagem['idImagem']; ?>" data-largesrc="index.php?c=imagens&a=visualizarImagem&id=<?php echo $imagem['idImagem']; ?>" data-title="<?php echo $imagem['titulo']; ?>" data-description="<?php echo $imagem['observacoes']; ?>" data-desc1="Descritor 1">
                             <img src="<?php echo $imagem['diretorioMiniatura'] . $imagem['nomeArquivoMiniatura']; ?>" alt="img02"/>
                         </a>
-<!--                        <div class="og-expander">
-                            <div class="og-expander-inner">
-                                <span class="og-close"></span>
-                                <div class="og-fullimg">
-                                    <div class="og-loading"></div>
-                                    <img src="<?php // echo $imagem['diretorio'] . $imagem['nomeArquivo']; ?>">
-                                </div>
-                                <div class="og-details">
-                                    <h3>Veggies sunt bona vobis</h3>
-                                    <p>Komatsuna prairie turnip wattle seed artichoke mustard horseradish taro rutabaga ricebean carrot black-eyed pea turnip greens beetroot yarrow watercress kombu.</p>
-                                    <a href="http://cargocollective.com/jaimemartinez/">Visit website</a>
-                                </div>
-                            </div>
-                        </div>-->
+                        <!--                        <div class="og-expander">
+                                                    <div class="og-expander-inner">
+                                                        <span class="og-close"></span>
+                                                        <div class="og-fullimg">
+                                                            <div class="og-loading"></div>
+                                                            <img src="<?php // echo $imagem['diretorio'] . $imagem['nomeArquivo'];    ?>">
+                                                        </div>
+                                                        <div class="og-details">
+                                                            <h3>Veggies sunt bona vobis</h3>
+                                                            <p>Komatsuna prairie turnip wattle seed artichoke mustard horseradish taro rutabaga ricebean carrot black-eyed pea turnip greens beetroot yarrow watercress kombu.</p>
+                                                            <a href="http://cargocollective.com/jaimemartinez/">Visit website</a>
+                                                        </div>
+                                                    </div>
+                                                </div>-->
                     </li>
                 <?php endforeach; ?>
             </ul>
@@ -38,7 +38,8 @@
 </div>
 <br/>
 <?php echo "Tempo gasto: " . $this->tempoGasto . " segundos"; ?>
-<script src="publico/js/thumbnailgrid/grid.js"></script>
+<script src="publico/js/thumbnailgrid/modernizr.custom.js"></script>
+<script src="publico/js/thumbnailgrid/grid.custom.js"></script>
 <script>
     function esconder(thumb) {
         //                $(thumb).children('img').removeClass('img-polaroid', 200);
@@ -67,9 +68,12 @@
             , data: {id: id}
         }).data;
     }
+
     $(document).ready(function() {
 
         Grid.init();
+
+//        Zoomerang.listen(".zoom");
         //Configura o plugin para a galeria de imagens
         //                $(".fancybox").fancybox({
         //                    closeBtn: false
