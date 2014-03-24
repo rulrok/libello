@@ -88,6 +88,7 @@ class ControladorImagens extends Controlador {
                 $this->visao->paginacao = null;
             }
         }
+        $this->visao->tempoGasto = $pesquisa->obterTempoGasto();
         $this->renderizar();
     }
 
@@ -123,6 +124,11 @@ class ControladorImagens extends Controlador {
     }
 
     public function acaoBaixarvetorial() {
+        $this->visao->acessoMinimo = Permissao::CONSULTA;
+        $this->renderizar();
+    }
+
+    public function acaoVisualizarimagem() {
         $this->visao->acessoMinimo = Permissao::CONSULTA;
         $this->renderizar();
     }

@@ -45,6 +45,7 @@ class verificador_instalacao {
         $this->testar_diretorio_temporario();
         $this->testar_diretorio_galerias();
         $this->verificar_tamanho_maximo_upload();
+        $this->verificarTiposImagensSuportados();
     }
 
     private function erroEncontrado() {
@@ -116,6 +117,15 @@ class verificador_instalacao {
         $tamanhoMaximo = convertBytes(ini_get('upload_max_filesize'));
         if ($tamanhoMaximo < APP_MAX_UPLOAD_SIZE) {
             $this->anexarMensagemErro("Tamanho máximo para uploads definido pela sua instalação PHP é menor que o limite máximo definido nas configurações do aplicativo!");
+        }
+    }
+
+    private function verificarTiposImagensSuportados() {
+        if (!(imagetypes() & IMG_PNG)) {
+            $this->anexarMensagemErro("Sua instalação não suporta tipos de imagens PNG");
+        }
+        if (!(imagetypes() & IMG_JPEG)){
+            $this->anexarMensagemErro("Sua instalação não suporta tipos de imagens JPG/JPEG");
         }
     }
 

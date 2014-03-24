@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Arquivo utilizado para gerar a visualização de imagem para quando o usuário escolhe
  * uma imagem para ser enviada na página de cadastro de imagens.
@@ -6,6 +7,8 @@
  * possam ser todos movidos para uma classe em comum.
  * Este arquivo tem apenas a finalidade descrita acima.
  */
+require_once APP_DIR . 'modelo/Utils.php';
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['imagemURI'])) {
 
     define("WIDTH", "350");
@@ -75,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['imagemURI'])) {
 
 function make_thumb($img_name, $filename, $new_w, $new_h) {
     //get image extension.
-    $ext = getExtension($img_name);
+    $ext = obterExtensaoArquivo($img_name);
     //creates the new image using the appropriate function from gd library
     if (!strcmp("jpg", $ext) || !strcmp("jpeg", $ext)) {
         $src_img = imagecreatefromjpeg($img_name);
@@ -121,16 +124,6 @@ function make_thumb($img_name, $filename, $new_w, $new_h) {
     imagedestroy($src_img);
 }
 
-// This function reads the extension of the file.
-// It is used to determine if the file is an image by checking the extension.
-function getExtension($str) {
-    $i = strrpos($str, ".");
-    if (!$i) {
-        return "";
-    }
-    $l = strlen($str) - $i;
-    $ext = substr($str, $i + 1, $l);
-    return $ext;
-}
+
 
 ?>

@@ -7,6 +7,8 @@ class pesquisa {
     var $paginacao;
     var $resultados;
     var $temResultados;
+    var $tempoInicial;
+    var $tempoFinal;
 
     public function temResultados() {
 //        if ($this->paginacao != null && !empty($this->resultados)) {
@@ -20,6 +22,23 @@ class pesquisa {
         foreach ($this->resultados as $key => $value) {
             $this->resultados[$key]['idImagem'] = fnEncrypt($value['idImagem']);
             $this->resultados[$key][0] = $this->resultados[$key]['idImagem'];
+        }
+    }
+
+    private function processarTipos() {
+
+        function getExtension($str) {
+            $i = strrpos($str, ".");
+            if (!$i) {
+                return "";
+            }
+            $l = strlen($str) - $i;
+            $ext = substr($str, $i + 1, $l);
+            return $ext;
+        }
+
+        foreach ($this->resultados as $key => $value) {
+            $this->resultados[$key]['tipo'] = getExtension($value['nomeArquivo']);
         }
     }
 
@@ -85,6 +104,7 @@ class pesquisa {
      * @return type
      */
     public function buscar($termoBusca, $pagina, $itensPorPagina = 10, $acessoTotal = false, $autor = null, $dataInicio = null, $dataFim = null) {
+        $this->tempoInicial = microtime(true);
         $imagensDAO = new imagensDAO();
         $res1 = $imagensDAO->pesquisarImagem($termoBusca, null, $acessoTotal, $autor, $dataInicio, $dataFim);
         $nr = sizeof($res1);
@@ -92,6 +112,7 @@ class pesquisa {
         if (!$this->temResultados) {
             $this->paginacao = null;
             $this->resultados = array();
+            $this->tempoFinal = microtime(true);
             return;
         }
 
@@ -111,7 +132,8 @@ class pesquisa {
 
         $this->criarPaginacao($pagina, $ultimaPagina);
         $this->ofuscarIds();
-//        }
+        $this->processarTipos();
+        $this->tempoFinal = microtime(true);
     }
 
     public function obterResultados() {
@@ -120,6 +142,10 @@ class pesquisa {
 
     public function obterPaginacao() {
         return $this->paginacao;
+    }
+
+    public function obterTempoGasto() {
+        return number_format($this->tempoFinal - $this->tempoInicial, 5);
     }
 
 }

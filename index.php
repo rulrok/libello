@@ -16,7 +16,6 @@ require_once 'biblioteca/Mvc/Mvc.php';
 
 CarregadorAutomatico::registrar();
 
-//ob_start();
 Mvc::pegarInstancia()->rodar();
-//$var = ob_get_clean();
+ob_end_flush();
 

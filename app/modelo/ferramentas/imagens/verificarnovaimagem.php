@@ -1,6 +1,7 @@
 <?php
 
 include APP_DIR . "modelo/Mensagem.php";
+require_once APP_DIR . "modelo/Utils.php";
 require_once APP_DIR . "modelo/vo/Imagem.php";
 require_once APP_DIR . "modelo/validadorCPF.php";
 include APP_DIR . "visao/verificadorFormularioAjax.php";
@@ -85,7 +86,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             //OBS $_FILES[arq]['type'] não verifica o tipo do arquivo pelo seu cabeçalho, apenas pela extensão, então extrair a extensão pelo o nome ou pelo
             //parâmetro 'type' tem o mesmo efeito. Esperava mais de você PHP :/
 
-            $tipoImagem = strtolower($this->getExtension($nomeImagem));
+            $tipoImagem = strtolower(obterExtensaoArquivo($nomeImagem));
 
 
             if (!in_array($tipoImagem, $formatosPermitidosImagens)) {
@@ -93,7 +94,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             }
 
             $nomeImagemVetorial = $_FILES[$arquivoVetorial]['name'];
-            $tipoImagemVetorial = strtolower($this->getExtension($nomeImagemVetorial));
+            $tipoImagemVetorial = strtolower(obterExtensaoArquivo($nomeImagemVetorial));
 
             //TODO Verificar quais serão os tipos válidos
             if (!in_array($tipoImagemVetorial, $formatosPermitidosVetoriais)) {
@@ -274,7 +275,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
 
     function make_thumb($img_name, $filename, $new_w, $new_h) {
         //get image extension.
-        $ext = $this->getExtension($img_name);
+        $ext = obterExtensaoArquivo($img_name);
         //creates the new image using the appropriate function from gd library
         if (!strcmp("jpg", $ext) || !strcmp("jpeg", $ext))
             $src_img = imagecreatefromjpeg($img_name);
@@ -318,18 +319,6 @@ class verificarnovaimagem extends verificadorFormularioAjax {
         //destroys source and destination images.
         imagedestroy($dst_img);
         imagedestroy($src_img);
-    }
-
-// This function reads the extension of the file.
-// It is used to determine if the file is an image by checking the extension.
-    function getExtension($str) {
-        $i = strrpos($str, ".");
-        if (!$i) {
-            return "";
-        }
-        $l = strlen($str) - $i;
-        $ext = substr($str, $i + 1, $l);
-        return $ext;
     }
 
 }

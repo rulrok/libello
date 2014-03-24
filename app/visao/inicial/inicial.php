@@ -25,13 +25,16 @@
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.dataTables_themeroller.css" />
         <!--<link type="text/css" rel="stylesheet" href="publico/css/jquery.datepick.css"/>--> 
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.chosen.css"/> 
-        <link type="text/css" rel="stylesheet" href="publico/css/jquery.fancybox.css"/> 
-        <link type="text/css" rel="stylesheet" href="publico/css/jquery.fancybox-buttons.css"/> 
+        <!--        <link type="text/css" rel="stylesheet" href="publico/css/jquery.fancybox.css"/> 
+                <link type="text/css" rel="stylesheet" href="publico/css/jquery.fancybox-buttons.css"/> -->
+        <!--<link type="text/css" rel="stylesheet" href="publico/css/slimbox/slimbox2.css">-->
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.jstree.css"/> 
         <link type="text/css" rel="stylesheet" media="screen" href="publico/css/browser-detection.css" />
         <!--<link type="text/css" rel="stylesheet" media="screen" href="publico/css/jquery-ui-timepicker-addon.css" />-->
         <!--<link type="text/css" rel="stylesheet" href="publico/css/daterangepicker-bs3.css" />-->
         <!--<link type="text/css" rel="stylesheet" href="publico/css/daterangepicker-bs3.css" />-->
+        <link type="text/css" rel="stylesheet" href="publico/css/thumbnailgrid/component.css"/> 
+        <!--<link type="text/css" rel="stylesheet" href="publico/css/thumbnailgrid/default.css"/>--> 
 
 
         <!--[if !IE 7]>
@@ -225,9 +228,14 @@
     <script src='publico/js/jquery/jquery-ui-sliderAccess.js'></script> 
     <!--<script src='publico/js/jquery/jquery.mask.min.js'></script>--> 
     <script src='publico/js/jquery/jquery.maskedinput.js'></script> 
-    <script src='publico/js/jquery/jquery.fancybox.min.js'></script> 
-    <script src='publico/js/jquery/jquery.fancybox-buttons.js'></script> 
-    <script src='publico/js/jquery/jquery.mousewheel-3.0.6.min.js'></script> 
+    <!--<script src="publico/js/slimbox/slimbox2.js"></script>-->
+    <!--<script src="publico/js/slimbox/fix-urls.js"></script>-->
+    <!--<script src="publico/js/slimbox/autoactivation.js"></script>-->
+<!--    <script src='publico/js/jquery/jquery.fancybox.min.js'></script> 
+    <script src='publico/js/jquery/jquery.fancybox-buttons.js'></script> -->
+    <!--<script src='publico/js/jquery/jquery.mousewheel-3.0.6.min.js'></script>--> 
+    <script src="publico/js/thumbnailgrid/modernizr.custom.js"></script>
+    <script src="publico/js/thumbnailgrid/grid.js"></script>
     <script src='publico/js/jquery/jquery.jstree.js'></script> 
     <script src="publico/js/oTable.js" ></script>
     <script src="publico/js/bootstrap/bootstrap.js"></script> 

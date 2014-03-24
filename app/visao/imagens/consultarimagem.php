@@ -42,7 +42,7 @@
                         <!--                        <li>
                                                     <span id="reportrange" class="btn" style="display: inline-block; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; margin: 0">
                                                         <i class="icon-calendar"></i>
-                                                        <span><?php // setlocale(LC_ALL, 'pt_BR'); echo date("j/M/Y", strtotime('-30 day'));                           ?> - <?php // echo date("j/M/Y");                           ?></span> <b class="caret"></b>
+                                                        <span><?php // setlocale(LC_ALL, 'pt_BR'); echo date("j/M/Y", strtotime('-30 day'));                             ?> - <?php // echo date("j/M/Y");                             ?></span> <b class="caret"></b>
                                                     </span>
                                                 </li>-->
                         <li>
@@ -70,58 +70,11 @@
             </div>
         </div><!-- /navbar-inner -->
     </div>
-    <br/>
     <div id="resultadosWrap">
         <div id="resultados"></div>
     </div>
 </div>
 <script>
-
-//    config_datepicker = {
-//        startDate: moment().subtract('days', 29),
-//        endDate: moment(),
-//        minDate: '01/01/2000',
-//        maxDate: '12/31/2014',
-//        dateLimit: {days: 60},
-//        showDropdowns: true,
-//        showWeekNumbers: true,
-//        timePicker: false,
-//        timePickerIncrement: 1,
-//        timePicker12Hour: false,
-//        ranges: {
-//            'Todos os dias': [moment().subtract('years', 14), moment()],
-//            'Hoje': [moment(), moment()],
-//            'Ontem': [moment().subtract('days', 1), moment().subtract('days', 1)],
-//            'Últimos 7 dias': [moment().subtract('days', 6), moment()],
-//            'Últimos 30 dias': [moment().subtract('days', 29), moment()],
-//            'Esse mês': [moment().startOf('month'), moment().endOf('month')],
-//            'Mês passado': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
-//        },
-//        opens: 'right',
-//        buttonClasses: ['btn btn-default'],
-//        applyClass: 'btn-small btn-primary',
-//        cancelClass: 'btn-small',
-//        format: 'DD/MM/YYYY',
-//        separator: '/',
-//        locale: {
-//            applyLabel: 'Aplicar',
-//            cancelLabel: 'Cancelar',
-//            fromLabel: 'De',
-//            toLabel: 'Até',
-//            weekLabel: 'S',
-//            customRangeLabel: 'Personalizar',
-//            daysOfWeek: ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"],
-//            monthNames: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
-//            firstDay: 0
-//        }
-//    };
-
-//    $('#reportrange').daterangepicker(config_datepicker, function(start, end) {
-//        $('#reportrange span').html(start.format('D MMMM YYYY') + ' - ' + end.format('D MMMM YYYY'));
-//    });
-
-
-
     paginaAtual = 1;
     //==========================================================================
     //  Função que recupera o texto digitado no campo de busca e carrega a consulta
@@ -133,48 +86,48 @@
     //  chamada dessa função.
     //==========================================================================
     function buscar(pagina) {
-    if (pagina === undefined) {
-        pagina = 1;
-    } else {
-        try {
-            pagina = parseInt(pagina);
-        } catch (e) {
+        if (pagina === undefined) {
             pagina = 1;
+        } else {
+            try {
+                pagina = parseInt(pagina);
+            } catch (e) {
+                pagina = 1;
+            }
         }
-    }
 
-    var itensPorPagina = $("#qtdItensPorPagina").val();
-    var termos = ($("#campo_busca").val()).split(',');
-    var consulta = "";
-    //Fase de normalização dos termos de busca para uma string padronizada
-    for (var i = 0; i < termos.length; i++) {
-        consulta += termos[i].replace(/ +/g, ' ').replace(/^ +/, '').replace(/ +$/, '') + ',';
-    }
-    consulta = consulta.replace(/,$/, '');
-    consulta = encodeURI(consulta);
+        var itensPorPagina = $("#qtdItensPorPagina").val();
+        var termos = ($("#campo_busca").val()).split(',');
+        var consulta = "";
+        //Fase de normalização dos termos de busca para uma string padronizada
+        for (var i = 0; i < termos.length; i++) {
+            consulta += termos[i].replace(/ +/g, ' ').replace(/^ +/, '').replace(/ +$/, '') + ',';
+        }
+        consulta = consulta.replace(/,$/, '');
+        consulta = encodeURI(consulta);
 
-    var usuario = $("#usuarios").val();
+        var usuario = $("#usuarios").val();
 
-    var dataInicial = "";
-    if ($("#dataInicio").val() != "") {
-        dataInicial = moment($("#dataInicio").val(), "DD/MM/YYYY").startOf('day').toDate().getTime() / 1000;
-    }
-    var dataFinal = "";
-    if ($("#dataFim").val() != "") {
-        dataFinal = moment($("#dataFim").val(), "DD/MM/YYYY").endOf('day').toDate().getTime() / 1000;
-    }
+        var dataInicial = "";
+        if ($("#dataInicio").val() != "") {
+            dataInicial = moment($("#dataInicio").val(), "DD/MM/YYYY").startOf('day').toDate().getTime() / 1000;
+        }
+        var dataFinal = "";
+        if ($("#dataFim").val() != "") {
+            dataFinal = moment($("#dataFim").val(), "DD/MM/YYYY").endOf('day').toDate().getTime() / 1000;
+        }
 
-    paginaAtual = pagina;
+        paginaAtual = pagina;
 
-    var url = 'index.php?c=imagens&a=buscar&l=' + itensPorPagina + '&p=' + pagina + '&q=' + consulta + '&de=' + dataInicial + '&ate=' + dataFinal;
-    if (usuario !== undefined) {
-        url = url + '&u=' + usuario;
+        var url = 'index.php?c=imagens&a=buscar&l=' + itensPorPagina + '&p=' + pagina + '&q=' + consulta + '&de=' + dataInicial + '&ate=' + dataFinal;
+        if (usuario !== undefined) {
+            url = url + '&u=' + usuario;
+        }
+        $("#resultados").css('opacity', '0.3');
+        $("#resultados").load(url, function() {
+            $("#resultados").css('opacity', '1');
+        });
     }
-    $("#resultados").css('opacity', '0.3');
-    $("#resultados").load(url, function() {
-        $("#resultados").css('opacity', '1');
-    });
-}
 
     function extractor(query) {
         var result = /([^,]+)$/.exec(query);
@@ -207,8 +160,10 @@
         });
 
         $("#limpar_datas").on('click', function() {
-            $("#dataInicio,#dataFim").val('');
-            buscar();
+            if ($("#dataInicio").val().length > 0 || $("#dataFim").val().length > 0) {
+                $("#dataInicio,#dataFim").val('');
+                buscar();
+            }
         });
 
         $("#qtdItensPorPagina").chosen({
@@ -237,8 +192,10 @@
 
         $("#botao_limpar").tooltip({placement: 'top'});
         $("#botao_limpar").on('click', function() {
-            $('#campo_busca').val('');
-            buscar();
+            if ($('#campo_busca').val().length > 0) {
+                $('#campo_busca').val('');
+                buscar();
+            }
         });
 
         //Configura o campo para aceitar multiplas sugestões de descritores, separados por virgula
@@ -252,7 +209,11 @@
                     dataType: 'JSON',
                     data: 'query=' + extractor(query),
                     success: function(data) {
+                        console.log(data)
                         process(data);
+                    }
+                    , error : function(data){
+                        console.log(data);
                     }
                 });
             }
