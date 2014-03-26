@@ -4,7 +4,10 @@ require_once './biblioteca/configuracoes.php';
 require_once './biblioteca/seguranca/seguranca.php';
 
 if (sessaoIniciada()) {
+    ob_clean();
     header("Location: index.php");
+    ob_end_flush();
+    exit;
 }
 ?>
 <!DOCTYPE html">

@@ -62,7 +62,7 @@ class ControladorUsuarios extends Controlador {
         $usuarioDAO = new usuarioDAO();
         $idUsuario = (int) obterUsuarioSessao()->get_idUsuario();
         $params = array(':idUsuario' => array($idUsuario, PDO::PARAM_INT));
-        $this->visao->usuarios = $usuarioDAO->consultar("idUsuario,concat(PNome,' ',UNome),email,dataNascimento,cpf,nome", "idUsuario <> :idUsuario", $params);
+        $this->visao->usuarios = $usuarioDAO->consultar("idUsuario,concat_ws(' ',PNome,UNome),email,dataNascimento,cpf,nome", "idUsuario <> :idUsuario", $params);
         $i = 0;
         foreach ($this->visao->usuarios as $value) {
             $value[0] = fnEncrypt($value[0]);
@@ -72,7 +72,7 @@ class ControladorUsuarios extends Controlador {
     }
 
     public function acaoConsultar() {
-        $this->visao->usuarios = (new usuarioDAO())->consultar("idUsuario, concat(PNome,' ',UNome),email,dataNascimento,nome");
+        $this->visao->usuarios = (new usuarioDAO())->consultar("idUsuario, concat_ws(' ',PNome,UNome),email,dataNascimento,nome");
         $i = 0;
         foreach ($this->visao->usuarios as $value) {
             $value[0] = fnEncrypt($value[0]);

@@ -9,13 +9,15 @@ class verificarnovodescritor extends verificadorFormularioAjax {
         return $resultado[0][0];
     }
 
+    //TODO Verificar se os IDs obtidos do formulário são consistentes
+    //TODO Escrever a estrutura do código de outra forma, pois os trechos são repetidos em cascata
     public function _validar() {
         if (filter_has_var(INPUT_POST, 'inserir_novo_descritor_1')) {
             //Vai cadastrar desde a raiz
-            $nomeDescritor1 = filter_input(INPUT_POST, 'novo_descritor_1');
-            $nomeDescritor2 = filter_input(INPUT_POST, 'novo_descritor_2');
-            $nomeDescritor3 = filter_input(INPUT_POST, 'novo_descritor_3');
-            $nomeDescritor4 = filter_input(INPUT_POST, 'novo_descritor_4');
+            $nomeDescritor1 = normalizarNomeDescritor(filter_input(INPUT_POST, 'novo_descritor_1'));
+            $nomeDescritor2 = normalizarNomeDescritor(filter_input(INPUT_POST, 'novo_descritor_2'));
+            $nomeDescritor3 = normalizarNomeDescritor(filter_input(INPUT_POST, 'novo_descritor_3'));
+            $nomeDescritor4 = normalizarNomeDescritor(filter_input(INPUT_POST, 'novo_descritor_4'));
 
             if ($nomeDescritor1 == "" || $nomeDescritor2 == "" || $nomeDescritor3 == "" || $nomeDescritor4 == "") {
                 $this->mensagemErro("Todos os descritores são obrigatórios.");
@@ -82,9 +84,9 @@ class verificarnovodescritor extends verificadorFormularioAjax {
         } elseif (filter_has_var(INPUT_POST, 'inserir_novo_descritor_2')) {
             //Vai cadastrar a partir do segundo nível
             $idDescritor1 = fnDecrypt(filter_input(INPUT_POST, 'descritor_1'));
-            $nomeDescritor2 = filter_input(INPUT_POST, 'novo_descritor_2');
-            $nomeDescritor3 = filter_input(INPUT_POST, 'novo_descritor_3');
-            $nomeDescritor4 = filter_input(INPUT_POST, 'novo_descritor_4');
+            $nomeDescritor2 = normalizarNomeDescritor(filter_input(INPUT_POST, 'novo_descritor_2'));
+            $nomeDescritor3 = normalizarNomeDescritor(filter_input(INPUT_POST, 'novo_descritor_3'));
+            $nomeDescritor4 = normalizarNomeDescritor(filter_input(INPUT_POST, 'novo_descritor_4'));
 
 
 
@@ -133,8 +135,8 @@ class verificarnovodescritor extends verificadorFormularioAjax {
             //Vai cadastrar a partir do terceiro nível
             $idDescritor1 = fnDecrypt(filter_input(INPUT_POST, 'descritor_2'));
             $idDescritor2 = fnDecrypt(filter_input(INPUT_POST, 'descritor_2'));
-            $nomeDescritor3 = filter_input(INPUT_POST, 'novo_descritor_3');
-            $nomeDescritor4 = filter_input(INPUT_POST, 'novo_descritor_4');
+            $nomeDescritor3 = normalizarNomeDescritor(filter_input(INPUT_POST, 'novo_descritor_3'));
+            $nomeDescritor4 = normalizarNomeDescritor(filter_input(INPUT_POST, 'novo_descritor_4'));
             if ($nomeDescritor3 == "" || $nomeDescritor4 == "") {
                 $this->mensagemErro("Todos os descritores são obrigatórios.");
             }
@@ -173,7 +175,7 @@ class verificarnovodescritor extends verificadorFormularioAjax {
             $idDescritor1 = fnDecrypt(filter_input(INPUT_POST, 'descritor_2'));
             $idDescritor2 = fnDecrypt(filter_input(INPUT_POST, 'descritor_2'));
             $idDescritor3 = fnDecrypt(filter_input(INPUT_POST, 'descritor_3'));
-            $nomeDescritor4 = filter_input(INPUT_POST, 'novo_descritor_4');
+            $nomeDescritor4 = normalizarNomeDescritor(filter_input(INPUT_POST, 'novo_descritor_4'));
             if ($nomeDescritor4 == "") {
                 $this->mensagemErro("Todos os descritores são obrigatórios.");
             }

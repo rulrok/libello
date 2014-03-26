@@ -435,17 +435,30 @@ function ajax(link, place, hidePop, async, ignorePageChanges) {
     var request = $.ajax({
         url: link
         , async: async
-        //, timeout: 10000 //Espera no máximo 10 segundos,
+                //, timeout: 10000 //Espera no máximo 10 segundos,
         , beforeSend: function() {
 //            if (place !== null) {
             setTimeout(function() {
-                if (!paginaCompleta) {
+                if (!paginaCompleta && !ocorreuExcecaoJS) {
                     exibirShader();
                 }
             }, "1500");
 //            }
         }
         , complete: function() {
+            //Ao ocorreu uma exceção JS, as demais páginas carregas após isso não
+            //terão seus scripts executados. Para forçar que eles sejam executados,
+            //apenas recarregamos a página do navegador para que o JS volte a ser
+            //executado.
+            if (ocorreuExcecaoJS) {
+                document.paginaAlterada = false;
+                ocorreuExcecaoJS = false;
+                //Previnir um reload infinito caso o erro ocorra na página inicial
+                if (!/(index.php($|\?c=inicial&a=(inicial|homepage))|#!(inicial\|homepage))/.test(location.href)) {
+                    location.reload(true);
+                }
+                return false;
+            }
             paginaCompleta = true;
             esconderShader();
         }

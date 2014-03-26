@@ -1,9 +1,9 @@
 <?php
 
-//Manter essas duas linhas durante a fase de desenvolvimento
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
+/*
+ * Justificativa para usar defines ao invés de variáveis para o arquivo de configuração:
+ * http://stackoverflow.com/questions/1225082/define-vs-variable-in-php 
+ */
 if (!defined("APP_CONFIGS")) {
     define('APP_CONFIGS', "SETTED");
 
@@ -22,12 +22,6 @@ if (!defined("APP_CONFIGS")) {
      */
     define('WEB_SERVER_ADDRESS', 'http://localhost/' . WEB_SERVER_FOLDER . '/');
 
-    /**
-     * Caminho completo até a pasta contendo o programa instalado
-     */
-    define('ROOT', $_SERVER['DOCUMENT_ROOT'] . "/" . WEB_SERVER_FOLDER . '/');
-
-
     define('DATABASE_SERVER_IP', "127.0.0.1");
     define('DATABASE_SERVER_PORT', "3306");
     define('DATABASE_SERVER_DBNAME', "novo_controle_cead");
@@ -45,14 +39,26 @@ if (!defined("APP_CONFIGS")) {
      * Endereço das pastas
      */
 
+    /**
+     * Caminho completo até a pasta contendo o programa instalado.
+     */
+    define('ROOT', $_SERVER['DOCUMENT_ROOT'] . "/" . WEB_SERVER_FOLDER . '/');
+
     define('APP_DIR', ROOT . "app/");
     define('BIBLIOTECA_DIR', ROOT . "biblioteca/");
+    //Pasta privada - Configurações de acesso devem ser feitas via apache/nginx
     define('APP_PRIVATE_DIR', "privado/");
+    define('APP_PRIVATE_ABSOLUTE_DIR', ROOT . APP_PRIVATE_DIR);
+    //Galerias
     define('APP_GALLERY_DIR', APP_PRIVATE_DIR . 'galerias/');
+    define('APP_GALLERY_ABSOLUTE_DIR', APP_PRIVATE_ABSOLUTE_DIR . 'galerias/');
+    //Pasta temporária para uso geral
     define('APP_TEMP_DIR', APP_PRIVATE_DIR . 'temp/');
+    define('APP_TEMP_ABSOLUTE_DIR', APP_PRIVATE_ABSOLUTE_DIR . 'temp/');
 
     /**
      * Variável para determinar o tamanho máximo de upload (em bytes) de um arquivo para o servidor.
+     * Atualmente definido para 4MB (Medida base: 1024)
      */
     define('APP_MAX_UPLOAD_SIZE', '4194304'); //4MB
     /**
@@ -62,4 +68,10 @@ if (!defined("APP_CONFIGS")) {
      */
     define('SECRET', md5("controleCEAD@2013"));
 }
-?>
+
+
+//Manter essas duas linhas durante a fase de desenvolvimento
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+ini_set("log_errors", 1);
+ini_set("error_log", ROOT . "php-error.log");

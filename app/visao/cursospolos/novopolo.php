@@ -9,11 +9,11 @@
         </span>
         <span class="line">
             <label for="estado">Estado</label>
-            <select required class="input-large" id="estado" name="estado"></select>
+            <select required class="input-large" id="estado" name="estado" data-placeholder="Selecione um estado"></select>
         </span>
         <span class="line">
             <label for="cidade">Cidade</label>
-            <select required class="input-xlarge" id="cidade" name="cidade"></select>
+            <select required class="input-xlarge" id="cidade" name="cidade" data-placeholder="Seleciona uma cidade"></select>
         </span>
     </fieldset>
     <input class="btn btn-large" type="reset" value="Limpar" onclick="$('#estado').val(0);
@@ -31,11 +31,12 @@
                 cidade: $('#cidade').get(0),
                 estado: $('#estado').get(0)
             });
-            $("#estado").chosen();
+            $("#estado").chosen({allow_single_deselect: true});
             $("#cidade").chosen();
 
             $("input[type=reset]").bind("click", function() {
-                $("select").val('').trigger("chosen:updated");
+                $("#estado").val('').trigger("chosen:updated");
+                $("#cidade").empty().trigger("chosen:updated");
                 liberarCadastro();
             });
         });

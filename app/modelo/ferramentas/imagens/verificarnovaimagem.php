@@ -1,10 +1,15 @@
 <?php
 
 include APP_DIR . "modelo/Mensagem.php";
+require_once APP_DIR . "modelo/Utils.php";
 require_once APP_DIR . "modelo/vo/Imagem.php";
 require_once APP_DIR . "modelo/validadorCPF.php";
 include APP_DIR . "visao/verificadorFormularioAjax.php";
 
+/**
+ * Verifica se o formulário de cadastro de imagem e seus dados estão todos corretos
+ * para poder registrar a nova imagem na base de dados.
+ */
 class verificarnovaimagem extends verificadorFormularioAjax {
 
     private function auxiliar_ultimo_id_inserido(imagensDAO $dao, $nomeDescritor) {
@@ -13,6 +18,10 @@ class verificarnovaimagem extends verificadorFormularioAjax {
     }
 
     public function _validar() {
+        /*
+         * Definimos algumas configurações que serão usadas ao longo de script
+         */
+
         define("LARGURA_THUMB", "350");
         define("ALTURA_THUMB", "150");
         $formatosPermitidosImagens = array("jpg", "jpeg", "png");
@@ -32,21 +41,52 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             $this->mensagemErro("Arquivo vetorizado não pôde ser enviado.");
         } else {
 
+            //Campos do formulário obtidos diretamente do sistema
+            $cpfAutor = validadorCPF::normalizarCPF(obterUsuarioSessao()->get_cpf());
+            $iniciais = obterUsuarioSessao()->get_iniciais();
+            $idAutor = obterUsuarioSessao()->get_idUsuario();
+
+            /*
+             * Verificação dos diretórios do sistema
+             */
+
+            if (!file_exists(APP_GALLERY_ABSOLUTE_DIR)) {
+                if (!mkdir(APP_GALLERY_ABSOLUTE_DIR)) {
+                    $this->mensagemErro("Falha ao configurar o diretório de imagens.<br/>Contate o suporte informando o erro.");
+                }
+            }
+
+            if (!file_exists(APP_GALLERY_ABSOLUTE_DIR . "$cpfAutor/")) {
+                mkdir(APP_GALLERY_ABSOLUTE_DIR . "$cpfAutor/");
+            }
+
+            $dirMiniaturas = APP_GALLERY_ABSOLUTE_DIR . "miniaturas/";
+            if (!file_exists($dirMiniaturas)) {
+                if (!mkdir($dirMiniaturas)) {
+                    $this->mensagemErro("Falha ao configurar o diretório de miniaturas.<br/>Contate o suporte informando o erro.");
+                }
+            }
+            $dirMiniaturaAutor = APP_GALLERY_ABSOLUTE_DIR . "miniaturas/$cpfAutor/";
+            if (!file_exists($dirMiniaturaAutor)) {
+                mkdir($dirMiniaturaAutor);
+            }
+
+
+            /*
+             * Obtenção dos dados do formulário
+             */
+
             $titulo = filter_input(INPUT_POST, 'titulo');
             $ano = filter_input(INPUT_POST, 'ano');
             $observacoes = filter_input(INPUT_POST, 'observacoes');
 
             $dificuldade = filter_input(INPUT_POST, 'complexidade');
-            //Campos obtidos diretamente do sistema
-            $cpfAutor = validadorCPF::normalizarCPF(obterUsuarioSessao()->get_cpf());
-            $iniciais = obterUsuarioSessao()->get_iniciais();
-            $autor = obterUsuarioSessao()->get_idUsuario();
 
             $nomeImagem = $_FILES[$arquivoImagem]['name'];
             //OBS $_FILES[arq]['type'] não verifica o tipo do arquivo pelo seu cabeçalho, apenas pela extensão, então extrair a extensão pelo o nome ou pelo
             //parâmetro 'type' tem o mesmo efeito. Esperava mais de você PHP :/
 
-            $tipoImagem = strtolower($this->getExtension($nomeImagem));
+            $tipoImagem = strtolower(obterExtensaoArquivo($nomeImagem));
 
 
             if (!in_array($tipoImagem, $formatosPermitidosImagens)) {
@@ -54,7 +94,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             }
 
             $nomeImagemVetorial = $_FILES[$arquivoVetorial]['name'];
-            $tipoImagemVetorial = strtolower($this->getExtension($nomeImagemVetorial));
+            $tipoImagemVetorial = strtolower(obterExtensaoArquivo($nomeImagemVetorial));
 
             //TODO Verificar quais serão os tipos válidos
             if (!in_array($tipoImagemVetorial, $formatosPermitidosVetoriais)) {
@@ -71,14 +111,41 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             $descritor3 = fnDecrypt(filter_input(INPUT_POST, 'descritor3'));
 
             $imagensDAO = new imagensDAO();
+
+            //Verifica a galeria do usuário no banco
+            $idGaleria = $imagensDAO->consultarGaleria($cpfAutor)[0][0];
+            if (empty($idGaleria)) {
+                if (!$imagensDAO->cadastrarGaleria($cpfAutor, $idAutor)) {
+                    $this->mensagemErro("Problema ao criar galeria");
+                } else {
+                    $idGaleria = $imagensDAO->consultarGaleria($cpfAutor);
+                }
+            }
+
+            //Verifica se um novo descritor está sendo cadastrado ou não
             if (filter_has_var(INPUT_POST, 'descritor_4_personalizado')) {
                 $novo_descritor_nome = filter_input(INPUT_POST, 'novo_descritor_4');
-                $novo_descritor = new Descritor();
-                $novo_descritor->set_nome($novo_descritor_nome);
-                if ($imagensDAO->cadastrarDescritor($novo_descritor, $descritor3)) {
-                    $descritor4 = $this->auxiliar_ultimo_id_inserido($imagensDAO, $novo_descritor_nome);
+
+
+                //Verifica se ele já está cadastrado para não tentar uma duplicidade de cadastro
+                $params = array(
+                    ':pai' => [$descritor3, PDO::PARAM_INT]
+                    , ':nome' => [normalizarNomeDescritor($novo_descritor_nome), PDO::PARAM_STR]
+                );
+                $resultado = $imagensDAO->consultarDescritor('idDescritor', 'pai = :pai AND nome = :nome LIMIT 1', null, $params);
+
+                if (sizeof($resultado) === 0) {
+
+                    $novo_descritor = new Descritor();
+                    $novo_descritor->set_nome($novo_descritor_nome);
+                    if ($imagensDAO->cadastrarDescritor($novo_descritor, $descritor3)) {
+                        $descritor4 = $this->auxiliar_ultimo_id_inserido($imagensDAO, $novo_descritor_nome);
+                    } else {
+                        $this->mensagemErro("Não foi possível cadastrar o novo descritor");
+                    }
                 } else {
-                    $this->mensagemErro("Não foi possível cadastrar o novo descritor");
+                    $descritorExistente = $resultado[0];
+                    $descritor4 = $descritorExistente['idDescritor'];
                 }
             } else {
                 $descritor4 = fnDecrypt(filter_input(INPUT_POST, 'descritor4'));
@@ -88,77 +155,78 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             $codigo_desc_1 = $imagensDAO->consultarDescritor('rotulo', 'idDescritor = ' . $descritor1)[0][0];
             $codigo_desc_2 = $imagensDAO->consultarDescritor('rotulo', 'idDescritor = ' . $descritor2)[0][0];
             $codigo_desc_3 = $imagensDAO->consultarDescritor('rotulo', 'idDescritor = ' . $descritor3)[0][0];
+
+            /*
+             * Como o quarto descritor agora pode ser cadastrado pelo usuário, dado a sua grande especifidade,
+             * o seu código não irá compor mais o nome do arquivo, como era feito antes.
+             * 
+             */
+
 //            $codigo_desc_4 = $imagensDAO->consultarDescritor('rotulo', 'idDescritor = ' . $descritor4)[0][0];
 //            $dimensoesImagem = getimagesize($_FILES[$arquivoImagem]['tmp_img']);
+
             /*
              * O NOME DO ARQUIVO QUE SERÁ SALVO NO SERVIDOR DEVE SER CONFIGURADO UNICAMENTE NESSA VARIÁVEL
+             * ELE SERÁ USADO COMO BASE PARA GERAR OS NOMES DAS THUMBS E ARQUIVO VETORIAL COM SUAIS INFORMAÇÕES ADICIONAIS
+             * COMO TIMESTAMP.
              */
+
             $nomeFinalArquivoImagem = $this->montarNome(array($codigo_desc_1, $codigo_desc_2, $codigo_desc_3, $dificuldade, $iniciais));
 
             $timestamp = time();
+            //--------------    Trata o arquivo original    -------------
+            $destinoImagem = $galerias_dir . "$cpfAutor/";
+            $nomeArquivo = $nomeFinalArquivoImagem . "_$timestamp." . $tipoImagem;
 
-            if (!file_exists(ROOT . $galerias_dir . "$cpfAutor/")) {
-                mkdir(ROOT . $galerias_dir . "$cpfAutor/");
-            }
-
-            $destinoImagem = $galerias_dir . "$cpfAutor/" . $nomeFinalArquivoImagem . "_$timestamp." . $tipoImagem;
-
-            $imagemCopiada = copy($_FILES[$arquivoImagem]['tmp_name'], ROOT . $destinoImagem);
+            $imagemCopiada = copy($_FILES[$arquivoImagem]['tmp_name'], ROOT . $destinoImagem . $nomeArquivo);
 
             if (!$imagemCopiada) {
-                $this->mensagemErro("Erro ao mover imagem para a pasta do servidor<br/>" . print_r($imagemCopiada, true));
+                $this->mensagemErro("Erro ao mover imagem para a pasta do servidor");
             }
 
+            //--------------    Trata o arquivo vetorial    -------------
+            $destinoImagemVetorial = $galerias_dir . "$cpfAutor/";
+            $nomeArquivoVetorial = $nomeFinalArquivoImagem . "_vetorial_$timestamp." . $tipoImagemVetorial;
 
-            $destinoImagemVetorial = $galerias_dir . "$cpfAutor/" . $nomeFinalArquivoImagem . "_vetorial_$timestamp." . $tipoImagemVetorial;
-
-            $imagemVetorialCopiada = copy($_FILES[$arquivoVetorial]['tmp_name'], ROOT . $destinoImagemVetorial);
+            $imagemVetorialCopiada = copy($_FILES[$arquivoVetorial]['tmp_name'], ROOT . $destinoImagemVetorial . $nomeArquivoVetorial);
             if (!$imagemVetorialCopiada) {
-                $this->mensagemErro("Erro ao mover arquivo vetorial para a pasta do servidor<br/>" . print_r($imagemVetorialCopiada, true));
+                $this->mensagemErro("Erro ao mover arquivo vetorial para a pasta do servidor");
             }
 
-            $dirMiniaturas = ROOT . $galerias_dir . "miniaturas/";
-            if (!file_exists($dirMiniaturas)) {
-                mkdir($dirMiniaturas);
-            }
-            $dirMiniaturaAutor = ROOT . $galerias_dir . "miniaturas/$cpfAutor/";
-            if (!file_exists($dirMiniaturaAutor)) {
-                mkdir($dirMiniaturaAutor);
-            }
-            $destinoImagemMiniatura = $galerias_dir . "miniaturas/$cpfAutor/" . $nomeFinalArquivoImagem . "_thumb_$timestamp." . $tipoImagem;
-            $this->make_thumb(ROOT . $destinoImagem, ROOT . $destinoImagemMiniatura, LARGURA_THUMB, ALTURA_THUMB);
+            //--------------    Trata o arquivo de miniatura    -------------
+            $destinoImagemMiniatura = $galerias_dir . "miniaturas/$cpfAutor/";
+            $nomeArquivoMiniatura = $nomeFinalArquivoImagem . "_thumb_$timestamp." . $tipoImagem;
+            $this->make_thumb(ROOT . $destinoImagem . $nomeArquivo, ROOT . $destinoImagemMiniatura . $nomeArquivoMiniatura, LARGURA_THUMB, ALTURA_THUMB);
 
-            if (!file_exists($destinoImagem)) {
-                $this->mensagemErro("Erro ao criar a miniatura para a imagem<br/>" . print_r($destinoImagem, true));
+            if (!file_exists(ROOT . $destinoImagemMiniatura . $nomeArquivoMiniatura)) {
+                $this->mensagemErro("Erro ao criar a miniatura para a imagem");
             }
+
+            /*
+             * Todos os dados e arquivos prontos para serem cadastrados.
+             * Preparando a imagem para ser cadastrada.
+             */
             $imagemVO = new Imagem();
 
-            $idGaleria = $imagensDAO->consultarGaleria($cpfAutor)[0][0];
-            if (empty($idGaleria)) {
-                if (!$imagensDAO->cadastrarGaleria($cpfAutor)) {
-                    $this->mensagemErro("Problema ao criar galeria");
-                } else {
-                    $idGaleria = $imagensDAO->consultarGaleria($cpfAutor);
-                }
-            }
-//            $idGaleria = $idGaleria[0][0];
             $imagemVO->set_idGaleria($idGaleria)->set_descritor1($descritor1)->set_descritor2($descritor2)->set_descritor3($descritor3)->set_descritor4($descritor4);
 
             $imagemVO->set_titulo($titulo)->set_observacoes($observacoes)->set_dificuldade($dificuldade);
-            $imagemVO->set_cpfAutor($cpfAutor)->set_ano($ano)->set_autor($autor);
+            $imagemVO->set_cpfAutor($cpfAutor)->set_ano($ano)->set_autor($idAutor);
 
             $imagemVO->set_utilizadoAvaliacao(0)->set_avaliacao(null)->set_anoAvaliacao(null);
 
-//            $imagemVO->set_nomeArquivo($nomeFinalArquivoImagem . "." . $tipoImagem)->set_nomeArquivoMiniatura($nomeFinalArquivoImagem . "-thumb." . $tipoImagem);
-//            $imagemVO->set_nomeArquivoVetorial($nomeFinalArquivoImagem . "-vetorial." . $tipoImagemVetorial);
-            $imagemVO->set_nomeArquivo($destinoImagem)->set_nomeArquivoMiniatura($destinoImagemMiniatura);
-            $imagemVO->set_nomeArquivoVetorial($destinoImagemVetorial);
+            $imagemVO->set_diretorio($destinoImagem)->set_diretorioMiniatura($destinoImagemMiniatura);
+
+            $imagemVO->set_nomeArquivo($nomeArquivo)->set_nomeArquivoMiniatura($nomeArquivoMiniatura);
+            $imagemVO->set_nomeArquivoVetorial($nomeArquivoVetorial);
 
             try {
                 if ($imagensDAO->cadastrarImagem($imagemVO)) {
                     //TODO recuperar o ID da imagem
 //                    imagensDAO::registrarCadastroImagem($idImagem);
                     $this->mensagemSucesso("Imagem cadastrada.");
+                } else {
+                    $this->mensagemErro("Falha ao cadastrar a imagem.");
                 }
             } catch (Exception $ex) {
                 $this->mensagemErro($ex->getMessage());
@@ -203,20 +271,20 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             foreach ($nomes as $nome) {
                 $ret .= $nome . $separador;
             }
-            $ret = preg_replace("/-$/", "", $ret);
-            return $ret;
+            return preg_replace("/-$/", "", $ret);
         }
     }
 
     function make_thumb($img_name, $filename, $new_w, $new_h) {
         //get image extension.
-        $ext = $this->getExtension($img_name);
+        $ext = obterExtensaoArquivo($img_name);
         //creates the new image using the appropriate function from gd library
-        if (!strcmp("jpg", $ext) || !strcmp("jpeg", $ext))
+        if (!strcmp("jpg", $ext) || !strcmp("jpeg", $ext)) {
             $src_img = imagecreatefromjpeg($img_name);
+        } elseif (!strcmp("png", $ext)) {
 
-        if (!strcmp("png", $ext))
             $src_img = imagecreatefrompng($img_name);
+        }
 
         //gets the dimmensions of the image
         $old_x = imageSX($src_img);
@@ -256,20 +324,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
         imagedestroy($src_img);
     }
 
-// This function reads the extension of the file.
-// It is used to determine if the file is an image by checking the extension.
-    function getExtension($str) {
-        $i = strrpos($str, ".");
-        if (!$i) {
-            return "";
-        }
-        $l = strlen($str) - $i;
-        $ext = substr($str, $i + 1, $l);
-        return $ext;
-    }
-
 }
 
 $verificar = new verificarnovaimagem();
 $verificar->verificar();
-?>

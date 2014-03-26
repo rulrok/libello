@@ -1,5 +1,6 @@
 <title>Nova imagem</title>
 <!-- Início da página -->
+<br/>
 <div id="showimg"> </div>
 
 <form class="tabela centralizado" id="upload-image-form-ajax" method="POST" action="index.php?c=imagens&a=verificarnovaimagem" enctype='multipart/form-data'>

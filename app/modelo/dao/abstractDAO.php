@@ -26,21 +26,6 @@ abstract class abstractDAO {
     }
 
     /**
-     * Coloca a string entre aspas e trata aspas internas dela. Caso a string
-     * seja igual a NULL, a própria string será retornada.
-     * 
-     * @param type $string
-     * @return type Uma string entre aspas.
-     * @deprecated since version number
-     */
-    public static function quote($string) {
-        if ($string === "NULL") {
-            return $string;
-        }
-        return $this->getConexao()->quote($string);
-    }
-
-    /**
      * 
      * @param string $sqlQuery
      * @param boolean $retornarTodos
@@ -71,13 +56,13 @@ abstract class abstractDAO {
                     $retorno = $stmt->fetch()[0];
                 } else {
                     $r = $stmt->fetchObject($fetchClass);
-//                    print_r($r);
                     $retorno = $r;
                 }
             }
             return $retorno;
         } catch (Exception $e) {
             print_r($e);
+            error_log($e->getMessage());
             return null;
         }
     }
@@ -106,13 +91,12 @@ abstract class abstractDAO {
         } catch (Exception $e) {
             //TODO Armazenar exceção para depuração do sistema
             print_r($e);
+            error_log($e->getMessage());
             return false;
         }
     }
 
     public function obterUltimoIdInserido() {
-//        $sql = "SELECT LAST_INSERT_ID()";
-//        return $this->executarSelect($sql);
         return $this->getConexao()->lastInsertId();
     }
 
@@ -131,14 +115,4 @@ abstract class abstractDAO {
     public function transacaoEstaAberta() {
         return $this->getConexao()->inTransaction();
     }
-
-    /*
-      abstract function atualizar($valueObject, $condicao = null);
-
-      abstract function consultar($colunas = null, $condicao = null);
-
-      abstract function inserir($valueObject);
-
-      abstract function remover($valueObject);
-     */
 }
