@@ -646,7 +646,7 @@ class imagensDAO extends abstractDAO {
             $descritores = $this->consultarDescritoresCompletos($idDescritorExcluir);
         }
         foreach ($descritores as $desc) {
-            $arvore[] = ['id' => fnEncrypt($desc['idDescritor']), 'parent' => (fnEncrypt($desc['pai'])), 'text' => $desc['rotulo'] . '.' . $desc['nome'], 'nivel' => $desc['nivel'], 'rotulo' => $desc['rotulo']];
+            $arvore[] = ['id' => fnEncrypt($desc['idDescritor']), 'parent' => (fnEncrypt($desc['pai'])), 'text' =>  $desc['nome'], 'nivel' => $desc['nivel'], 'rotulo' => $desc['rotulo']];
         }
         return $arvore;
     }

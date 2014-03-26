@@ -476,7 +476,7 @@ var Grid = (function() {
         },
         calcHeight: function() {
 
-            var heightPreview = winsize.height - this.$item.data('height') - marginExpanded,
+            var heightPreview = winsize.height - this.$item.data('height') - marginExpanded;
                     itemHeight = winsize.height;
 
             if (heightPreview < settings.minHeight) {
@@ -486,6 +486,8 @@ var Grid = (function() {
 
             this.height = heightPreview;
             this.itemHeight = itemHeight;
+//            this.height = settings.minHeight;
+//            this.itemHeight = settings.minHeight + this.$item.data('height') + marginExpanded;
 
         },
         setHeights: function() {
