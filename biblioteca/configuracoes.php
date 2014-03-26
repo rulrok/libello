@@ -24,10 +24,10 @@ if (!defined("APP_CONFIGS")) {
     /**
      * Endereço pelo qual o acesso deverá ser feito ao programa
      */
-    define('WEB_SERVER_ADDRESS', 'http://172.16.11.1:8888/' . WEB_SERVER_FOLDER . '/');
+    define('WEB_SERVER_ADDRESS', 'http://localhost/' . WEB_SERVER_FOLDER . '/');
 
     define('DATABASE_SERVER_IP', "127.0.0.1");
-    define('DATABASE_SERVER_PORT', "3307");
+    define('DATABASE_SERVER_PORT', "3306");
     define('DATABASE_SERVER_DBNAME', "novo_controle_cead");
     define('DATABASE_SERVER_USER', "root");
     define('DATABASE_SERVER_PASSWORD', "root");
