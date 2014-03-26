@@ -19,7 +19,7 @@ if (filter_has_var(INPUT_GET, 'idImagem')) {
 
         header("Content-disposition: attachment; filename=$nomeArquivoNormalizado");
         header("Content-type: image/$tipoImagem");
-        readfile($diretorio.$nomeArquivo);
+        readfile($diretorio . $nomeArquivo);
     } catch (Exception $e) {
         header("Charset: UTF-8");
         echo "Erro ao processar o arquivo";

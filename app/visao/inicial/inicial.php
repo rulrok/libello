@@ -219,8 +219,7 @@
                     </div>
                     <div class="footerLinks" id="suporte">
                         <ul><lt>Suporte</lt>
-                            <li>reuel@bcc.unifal-mg.edu.br</li>
-                            <li>a12033@bcc.unifal-mg.edu.br</li>
+                            <li><a target="_blank" href="mailto:<?php echo APP_SUPPORT_EMAIL; ?>"><?php echo APP_SUPPORT_EMAIL; ?></a></li>
                         </ul>
                     </div>
                 </nav>

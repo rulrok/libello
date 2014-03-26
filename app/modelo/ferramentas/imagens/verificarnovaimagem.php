@@ -25,7 +25,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
         define("LARGURA_THUMB", "350");
         define("ALTURA_THUMB", "150");
         $formatosPermitidosImagens = array("jpg", "jpeg", "png");
-        $formatosPermitidosVetoriais = array("svg", "cdr");
+        $formatosPermitidosVetoriais = array("svg", "cdr","fh","ai","wmd","dwg","dwf","3ds","xcf");
         $galerias_dir = APP_GALLERY_DIR;
 
         $tamanhoMaximo = filter_input(INPUT_POST, 'MAX_FILE_SIZE');
@@ -98,7 +98,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
 
             //TODO Verificar quais serão os tipos válidos
             if (!in_array($tipoImagemVetorial, $formatosPermitidosVetoriais)) {
-                $this->mensagemErro("Arquivo vetorial inválido.");
+                $this->mensagemErro("Arquivo vetorial não permitido.");
             }
 
             $tamanhoImagem = filesize($_FILES[$arquivoImagem]['tmp_name']);

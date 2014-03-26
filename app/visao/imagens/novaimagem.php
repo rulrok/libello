@@ -90,7 +90,7 @@
             <div class="line" style="line-height: 45px;">
                 <label for="raw-image-upload">Arquivo vetorizado da imagem</label>
                 <input type="hidden" name="MAX_FILE_SIZE" value="3000000" />
-                <input required type="file" accept=".svg,.cdr,imagem/svg+xml" name="raw-image-upload" id="raw-image-upload" class="btn btn-small btn-warning"> 
+                <input required type="file" accept=".fh,.ai,.xcf,.dwg,.dwf,.wmd,.3ds,.cdr,image/xcf,image/svg+xml,application/cdr,application/postscript" name="raw-image-upload" id="raw-image-upload" class="btn btn-small btn-warning"> 
             </div>
 
             <div class="line" id="image-upload-line" style="line-height: 45px;">
@@ -259,6 +259,7 @@
 
     $(document).ready(function() {
 
+        //Verifica se o navegador possui os requisitos necessários para poder gerar a pré visualização da imagem
         if (window.File && window.FileReader && window.FileList && window.Blob) {
             $("#image-upload").on('change', handleFileSelect);
             $('#remove-image-upload').on('click', function(e)
@@ -278,7 +279,7 @@
                 return false;
             });
         } else {
-            alert('O seu navegador não suporta a API de arquivos.\nVisualizações estarão indisponíveis.');
+            alert('O seu navegador não suporta a API de arquivos.\nPré-visualizações estarão indisponíveis.\nConsidere fazer uma atualização do seu navegador.');
         }
 
         var botoes_radio_fake = $("#complexidade_botoes").children();

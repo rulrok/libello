@@ -1,5 +1,10 @@
 <?php
 
+function registrar_erro($mensagem) {
+    $usuario = print_r(obterUsuarioSessao(), true);
+    error_log("Mensagem: <" . $mensagem . ">\n" . $usuario . "\n");
+}
+
 function obterHoraAtual($formato = 'h:i:s') {
     date_default_timezone_set(APP_TIME_ZONE);
     return date($formato);

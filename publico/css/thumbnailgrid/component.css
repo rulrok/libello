@@ -43,8 +43,9 @@
     width: 100%;
     margin-top: 10px;
     text-align: left;
-    height: 0;
+    height: initial!important;
     overflow: hidden;
+    z-index: 999;
 }
 
 .og-expander-inner {
@@ -59,6 +60,7 @@
     top: 20px;
     right: 20px;
     cursor: pointer;
+    z-index: 1000;
 }
 
 .og-close::before,
@@ -89,13 +91,14 @@
 .og-details {
     width: 46%;
     float: left;
-    height: 100%;
+    /*height: 100%;*/
     overflow: hidden;
     position: relative;
 }
 
 .og-details {
     padding: 0 40px 0 20px;
+    text-align: justify;
 }
 
 .og-fullimg {
@@ -122,7 +125,7 @@
     color: #999;
 }
 
-.og-details a {
+.og-link {
     font-weight: 700;
     font-size: 16px;
     color: #333;
@@ -135,8 +138,7 @@
     outline: none;
     margin-right: 5px;
 }
-
-.og-details a::before {
+.og-link::before {
     content: '\21ea';
     display: inline-block;
     margin-right: 10px;
@@ -156,7 +158,11 @@
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=4);
 }
 
-.og-details a:hover {
+.og-links {
+    clear: both;
+}
+
+.og-link:hover {
     border-color: #999;
     color: #999;
 }
@@ -199,12 +205,17 @@
     .og-expander h3 { font-size: 32px; }
     .og-expander p { font-size: 13px; }
     .og-expander a { font-size: 12px; }
-
+    .og-details, .og-fullimg {
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: 650px) {
 
     .og-fullimg { display: none; }
     .og-details { float: none; width: 100%; }
+    .og-details, .og-fullimg {
+        width: 100%;
+    }
 
 }

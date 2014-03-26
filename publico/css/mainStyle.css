@@ -460,6 +460,9 @@ footer p{
     padding-right: 5px;
 }
 
+/* FIM FOOTER */
+/*================================================*/
+/* HEADER */
 #fullscreen-toggle{
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -474,9 +477,6 @@ footer p{
     -o-user-select: none;
     user-select: none;  
 }
-/* FIM FOOTER */
-/*================================================*/
-/* HEADER */
 
 #barraSuperior {
     margin: 0;
@@ -1052,14 +1052,6 @@ input[type="submit"].btn-right {
 }
 .input-xxzlarge {
     width: 590px;
-}
-
-.thumbnail{
-    cursor: pointer;
-}
-
-.thumbnail.clicada{
-    cursor: default;
 }
 
 .caption {

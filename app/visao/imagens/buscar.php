@@ -3,9 +3,9 @@
         <?php echo $this->paginacao; ?>
     </div>
 <?php endif; ?>
-<div class="container-fluid blocoBranco" >
+<!--<div class="" >-->
     <?php if ($this->temResultados): ?>
-        <div style="position: relative;"> <!-- Div para limitar até onde a preview se expande -->
+        <!--<div style="position: relative;">  Div para limitar até onde a preview se expande -->
             <ul id="og-grid" class="og-grid">
                 <?php foreach ($this->resultados as $key => $imagem) : ?>
                     <li>
@@ -28,13 +28,13 @@
                     </li>
                 <?php endforeach; ?>
             </ul>
-        </div> <!-- /Div para limitar até onde a preview se expande -->
+        <!--</div>  /Div para limitar até onde a preview se expande--> 
 
     <?php else: ?>
         <p></p>
         <p class="textoCentralizado">Nenhum resultado</p>
     <?php endif; ?>
-</div>
+<!--</div>-->
 <br/>
 <?php echo "Tempo gasto: " . $this->tempoGasto . " segundos"; ?>
 <!-- Dependência do plugin thumbnail-grid -->
