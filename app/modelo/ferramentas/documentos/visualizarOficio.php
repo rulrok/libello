@@ -1,6 +1,7 @@
 <?php
 
 ob_clean();
+header('Content-Type: text/plain; charset=UTF-8');
 //incluindo o arquivo do fpdf
 require_once BIBLIOTECA_DIR . "configuracoes.php";
 require_once BIBLIOTECA_DIR . "dompdf/dompdf_config.inc.php";
@@ -26,18 +27,22 @@ $corpo = $oficio[0]->get_corpo();
 $remetente = $oficio[0]->get_remetente();
 $cargo_remetente = $oficio[0]->get_cargo_remetente();
 
-$remetentes = explode(';',$remetente);
-$cargos_remetentes = explode(';',$cargo_remetente);
+$remetentes = explode(';', $remetente);
+$cargos_remetentes = explode(';', $cargo_remetente);
 
 setlocale(LC_ALL, 'portuguese-brazilian', 'ptb', 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8', 'pt-BR');
-$mes = strftime("%B", mktime(0, 0, 0, $data[1], 10));
+$mes = utf8_encode(strftime("%B", mktime(0, 0, 0, $data[1], 10)));
 $data = $dia . '/' . $mes . '/' . $ano;
 
 //-------------------
 $document = '
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br">       
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br">   
+
+
+
         <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
             <style>            
             html{
                 margin: 48px 98px 0 94px;
@@ -54,7 +59,17 @@ $document = '
             </style>
         </head>
         <body>
-     
+      <script type="text/php">
+
+       if ( isset($pdf) ) {
+
+         $font = Font_Metrics::get_font("helvetica", "bold");
+         $w = $pdf->get_width();
+         $h = $pdf->get_height();
+         $pdf->page_text($w-72, $h-30, utf8_encode("Página {PAGE_NUM}/{PAGE_COUNT}"), $font, 8, array(0,0,0));
+
+       }
+       </script>
             <table class="tabela">
                 <tr>
                     <td style="width: 597px" align="center">
@@ -117,7 +132,7 @@ $document = '
                 <tr>
                     <td>
                        ';
-for($i = 0;$i<count($remetentes);$i++){
+for ($i = 0; $i < count($remetentes); $i++) {
     $document.= '<div >
                             <table align="center">
                                 <tr>
@@ -137,11 +152,9 @@ for($i = 0;$i<count($remetentes);$i++){
                                 </tr>
                             </table>
                         </div><br>';
-}                   
+}
 $document .= '</table>
-    <script type="text/php>"
-    $pdf->page_text(1,1, "{PAGE_NUM} of {PAGE_COUNT}", $font, 10, array(0,0,0));
-    </script>
+  
         </body>
     </html>';
 //echo $document;
@@ -150,7 +163,7 @@ $dompdf = new DOMPDF();
 //$tamanho = array(0, 0, 596.4, 843.48);
 $dompdf->parse_default_view('A4', 'portrait');
 $dompdf->set_paper('A4', 'portrait');
-$dompdf->load_html(utf8_decode($document));
+$dompdf->load_html($document);
 $dompdf->render();
 //$dompdf->;
 $options = array(
