@@ -23,7 +23,7 @@
         </div>
         <div class="line">
             <label for="dataNascimento">Data de nascimento</label>
-            <input type="text" readonly id="dataNascimento" class=" input-large campoData" placeholder="Clique para escolher" name="dataNascimento" >
+            <input type="text" id="dataNascimento" class=" input-large campoData" placeholder="Clique para escolher" name="dataNascimento" >
         </div>
         <div class="line">
             <label for="senha">Senha</label>
@@ -94,7 +94,7 @@
         });
     }
     $(document).ready(function() {
-        $("#dataNascimento").datepick();
+        $("#dataNascimento").datepicker();
         $(".line input").popover({trigger: 'focus', container: 'body'});
         $("#papel").on('change', preconfigurarPermissoes);
         $('#cpf').mask('999.999.999-99');

@@ -343,8 +343,9 @@ var Grid = (function() {
             // create Preview structure:
             this.$title = $('<h3></h3>');
             this.$description = $('<p></p>');
-            this.$href = $('<a href="#">Baixar imagem</a><a href="#">Baixar arquivo vetorial</a>');
-            this.$details = $('<div class="og-details"></div>').append(this.$title, this.$description, this.$href);
+            this.$hrefImg = $('<a>Baixar imagem</a>');
+            this.$hrefVct = $('<a>Baixar arquivo vetorial</a>');
+            this.$details = $('<div class="og-details"></div>').append(this.$title, this.$description, this.$hrefImg, this.$hrefVct);
             this.$loading = $('<div class="og-loading"></div>');
             this.$fullimage = $('<div class="og-fullimg"></div>').append(this.$loading);
             this.$closePreview = $('<span class="og-close"></span>');
@@ -378,15 +379,35 @@ var Grid = (function() {
             // update preview´s content
             var $itemEl = this.$item.children('a'),
                     eldata = {
-                        href: $itemEl.attr('href'),
-                        largesrc: $itemEl.data('largesrc'),
-                        title: $itemEl.data('title'),
-                        description: $itemEl.data('description')
+                        href: $itemEl.attr('href')
+                        , largesrc: $itemEl.data('largesrc')
+                        , title: $itemEl.data('title')
+                        , description: $itemEl.data('description')
+                        , autor: $itemEl.data('autor')
+                        , dataCadastro: $itemEl.data('cadastro')
+                        , idImagem: $itemEl.data('imagem')
+                        , ano: $itemEl.data('ano')
+                        , dificuldade: $itemEl.data('dificuldade')
+                        , desc1: $itemEl.data('desc1')
+                        , desc2: $itemEl.data('desc2')
+                        , desc3: $itemEl.data('desc3')
+                        , desc4: $itemEl.data('desc4')
+                        , descritores: $itemEl.data('descritores')
                     };
 
             this.$title.html(eldata.title);
-            this.$description.html(eldata.description);
-            this.$href.attr('href', eldata.href);
+            this.$description.html(
+                    "<p><b>Por:</b> " + eldata.autor + " em <small><i>" + moment.unix(eldata.dataCadastro).format("DD/MM/YYYY hh:mm") + "</i></small></p>"
+                    + "<p><b>Ano:</b> " + eldata.ano + "</p>"
+                    + "<p><b>Dificuldade:</b> " + eldata.dificuldade + "</p>"
+                    + "<p><b>Descritores:</b> " + eldata.desc1 + ", " + eldata.desc2 + ", " + eldata.desc3 + ", " + eldata.desc4 + "</p>"
+                    + (eldata.description.length ?
+                            "<p><b>Observações:</b> " + eldata.description + "</p>"
+                            : "")
+//                    + "<p><b>Descritores:</b> " + eldata.descritores + "</p>"
+                    );
+            this.$hrefImg.attr('href', "javascript:baixarImagem('" + eldata.idImagem + "')");
+            this.$hrefVct.attr('href', "javascript:baixarOriginal('" + eldata.idImagem + "')");
 
             var self = this;
 

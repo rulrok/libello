@@ -20,22 +20,13 @@
         <link type="text/css" rel="stylesheet" href="publico/css/bootstrap.css"/> 
         <link type="text/css" rel="stylesheet" href="publico/css/bootstrap-responsive.css"/>
         <link type="text/css" rel="stylesheet" href="publico/css/bootstrap-datepicker.css"/>
-        <!--<link type="text/css" rel="stylesheet" href="publico/css/bootstrap-datetimepicker.min.css"/>--> 
         <link type="text/css" rel="stylesheet" href="publico/css/mainStyle.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.dataTables_themeroller.css" />
-        <!--<link type="text/css" rel="stylesheet" href="publico/css/jquery.datepick.css"/>--> 
-        <link type="text/css" rel="stylesheet" href="publico/css/jquery.chosen.css"/> 
-        <!--        <link type="text/css" rel="stylesheet" href="publico/css/jquery.fancybox.css"/> 
-                <link type="text/css" rel="stylesheet" href="publico/css/jquery.fancybox-buttons.css"/> -->
-        <!--<link type="text/css" rel="stylesheet" href="publico/css/slimbox/slimbox2.css">-->
+        <link type="text/css" rel="stylesheet" href="publico/css/jquery.chosen.css"/>
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.jstree.css"/> 
         <link type="text/css" rel="stylesheet" media="screen" href="publico/css/browser-detection.css" />
-        <!--<link type="text/css" rel="stylesheet" media="screen" href="publico/css/jquery-ui-timepicker-addon.css" />-->
-        <!--<link type="text/css" rel="stylesheet" href="publico/css/daterangepicker-bs3.css" />-->
-        <!--<link type="text/css" rel="stylesheet" href="publico/css/daterangepicker-bs3.css" />-->
         <link type="text/css" rel="stylesheet" href="publico/css/thumbnailgrid/component.css"/> 
-        <link type="text/css" rel="stylesheet" href="publico/css/picbox/picbox.css"/> 
-        <!--<link type="text/css" rel="stylesheet" href="publico/css/thumbnailgrid/default.css"/>--> 
+        <link type="text/css" rel="stylesheet" href="publico/css/picbox/picbox.css"/>
 
 
         <!--[if !IE 7]>
@@ -57,7 +48,24 @@
         <!--<script src="http://ie.microsoft.com/testdrive/HTML5/CompatInspector/inspector.js"></script>-->
         <!--<script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>-->
 
+    <script>
+        ocorreuExcecaoJS = false;
+        //Utilizado para capturar exceções globalmente.
+        //Quando a variável 'ocorreuExcecaoJS' é verdadeira, ao abrir qualquer nova
+        //página em seguida, a página no navegador será recarregada para que os scripts
+        //delas possam ser executados
+        window.onerror = function(msg, url, linenumber) {
+            ocorreuExcecaoJS = true;
+            alert("Um erro ocorreu no aplicativo e a página pode não ser exibida corretamente.\nTente recarregar a sua página.\nPersistindo o erro, entre em contato com suporte@bi.com.br");
+            console.log("Exceção ocorrida na página " + url);
+            console.log(linenumber + ": " + msg);
+            return false;
+        };
+
+    </script>
+    <!-- jQuery Plugin -->
     <script src="publico/js/jquery/jquery-1.9.1.js"></script>
+    <!-- Outros scripts -->
     <script src="publico/js/browser-detection.js" ></script>
     <script src="publico/js/jquery/jquery.ba-hashchange.js"></script>
     <script src="publico/js/jquery/jquery.form.js"></script>
@@ -103,9 +111,8 @@
             <div class="headerWrap">
 
                 <p class="centralizado"><?php echo $this->nomeAplicativo; ?><sup>(versão <?php echo APP_VERSION; ?>)</sup></p>
-                <?php
-                if ($this->administrador && $this->temErros) :
-                    ?>
+                <?php if ($this->administrador && $this->temErros) : ?>
+                    <!-- Avisos e mensagens do sistema -->
                     <div id="avisos" class="centralizado alert alert-error">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
                         <?php
@@ -115,6 +122,7 @@
                 <?php endif; ?>
             </div>
             <div class="userInfoWrap">
+                <!-- Informações sobre o usuário logado -->
                 <p>Logado como: <b id='nomeusuarioHeader'><?php echo $this->nomeUsuario ?></b> (<?php echo $this->papel ?>)</p>
                 <div class="btn-toolbar" id="configuracoesSite">
                     <div id="botoesSuperiores" class="centralizado btn-group">
@@ -138,27 +146,31 @@
         </header>
 
         <!-- Conteúdos auxiliares, como modais e etc -->
+
         <div class="shaderFrame"></div>
         <div class="shaderFrameContent">
             <div class="shaderFrameContentWrap centralizado">
                 <div class="loading_background">
-                    <img src="publico/imagens/ajax-loader.gif"> Carregando...
+                    <img src="publico/imagens/ajax-loader.gif" alt="Carregando..."> Carregando...
                 </div>
             </div>
         </div>
+
+        <!-- Modal Bootstrap -->
         <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <!--                <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                 <h3 id="myModalLabel">Modal header</h3>
                             </div>-->
             <div class="modal-body">
-                <!-- CORPO -->
+                <!-- Cordo da Modal -->
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Fechar</button>
             </div>
         </div>
 
+        <!-- Pop-up para mensagens do sistema -->
         <div class="popUp tabela" style="display: none;">
             <div class="botao_fechar" onclick="hidePopUp();"></div>
             <p class="popUpContent textoCentralizado "></p>
@@ -169,13 +181,8 @@
         <hr id="menuPosition" >
         <nav>
             <div class="menuContainer">
-
                 <?php echo $this->menu ?>
-
-
-
                 <div id="esconderHeader"></div>
-
             </div>
         </nav>
         <div class="content centralizado container">
@@ -220,171 +227,122 @@
             </center>
         </div>
     </footer>
+
     <!-- POS SCRIPTS -->
     <script src="publico/js/jquery/jquery-ui.js"></script>
-    <script src="publico/js/jquery/jquery.dataTables.js"></script>
-    <!--<script src="publico/js/jquery/jquery.datepick.js"></script>-->
-    <!--<script src="publico/js/jquery/jquery.datepick-pt-BR.js"></script>-->
-    <!--<script src='publico/js/jquery/jquery-ui-timepicker-addon.js'></script>--> 
     <script src='publico/js/jquery/jquery-ui-sliderAccess.js'></script> 
-    <!--<script src='publico/js/jquery/jquery.mask.min.js'></script>--> 
-    <script src='publico/js/jquery/jquery.maskedinput.js'></script> 
-    <!--<script src="publico/js/slimbox/slimbox2.js"></script>-->
-    <!--<script src="publico/js/slimbox/fix-urls.js"></script>-->
-    <!--<script src="publico/js/slimbox/autoactivation.js"></script>-->
-<!--    <script src='publico/js/jquery/jquery.fancybox.min.js'></script> 
-    <script src='publico/js/jquery/jquery.fancybox-buttons.js'></script> -->
-    <!--<script src='publico/js/jquery/jquery.mousewheel-3.0.6.min.js'></script>--> 
+    <script src="publico/js/jquery/jquery.dataTables.js"></script>
+    <script src='publico/js/jquery/jquery.maskedinput.js'></script>
     <script src='publico/js/jquery/jquery.jstree.js'></script> 
     <script src="publico/js/oTable.js" ></script>
     <script src="publico/js/bootstrap/bootstrap.js"></script> 
-    <!--<script src="publico/js/bootstrap/bootstrap-datetimepicker.min.js"></script>--> 
     <script src="publico/js/bootstrap/bootstrap-datepicker.js"></script>
     <script src="publico/js/bootstrap/bootstrap-datepicker.pt-BR.js"></script>
-    <!--<script src="publico/js/zoomerang/zoomerang.js"></script>-->
     <script src="publico/js/jquery/jquery.picbox.js"></script>
     <script src="publico/js/moment.js"></script>
-    <!--<script src="publico/js/daterangepicker.js"></script>-->
     <script src="publico/js/require.js"></script> 
+    <script src="publico/js/limiter.js"></script> 
 
     <script>
-                //Configurações globais para dataTables
-                $.extend($.fn.dataTable.defaults, {
-                    "bFilter": true,
-                    "bSort": true,
-                    "aaSorting": [[1, "desc"]],
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-                    "oLanguage": {
-                        "sUrl": "publico/js/jquery/dataTables.portugues.txt"
-                    },
-                    //Scrol horizontal
-                    "sScrollX": "100%",
-                    "sScrollXInner": "110%",
-                    "bScrollCollapse": true,
-                    // Salva o estado da tabela para ser exibida como da última vez
-                    //Um pouco de cuidado com essa opção, ela parece ter em certas
-                    //situações, efeitos negativos ao uso da datatable
-                    "bStateSave": true,
-                    "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
-                });
-
-                //COnfigurações de idioma para MomentJS
-                moment.lang('pt_BR', {
-                    months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outrubro", "Novembro", "Dezembro"],
-                    monthsShort: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
-                    weekdays: ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"],
-                    weekdaysShort: ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"],
-                    weekdaysMin: ["S", "T", "Q", "Q", "S", "S", "D"],
-                    longDateFormat: {
-                        LT: "HH:mm",
-                        L: "DD/MM/YYYY",
-                        LL: "D MMMM YYYY",
-                        LLL: "D MMMM YYYY LT",
-                        LLLL: "dddd D MMMM YYYY LT"
-                    },
-                    calendar: {
-                        sameDay: "[Hoje] LT",
-                        nextDay: '[Amanhã] LT',
-                        nextWeek: 'dddd [à] LT',
-                        lastDay: '[Ontem] LT',
-                        lastWeek: 'dddd [Semana passada] LT',
-                        sameElse: 'L'
-                    },
-                    relativeTime: {
-                        future: "em %s",
-                        past: "%s atrás",
-                        s: "agora a pouco",
-                        m: "um minuto",
-                        mm: "%d minutos",
-                        h: "uma hora",
-                        hh: "%d horas",
-                        d: "um dia",
-                        dd: "%d dias",
-                        M: "um mês",
-                        MM: "%d meses",
-                        y: "um ano",
-                        yy: "%d anos"
-                    },
-                    ordinal: function(number) {
-                        return number + (number === 1 ? 'º' : '');
-                    },
-                    week: {
-                        dow: 1, // Monday is the first day of the week.
-                        doy: 4  // The week that contains Jan 4th is the first week of the year.
-                    }
-                });
-                moment.lang('pt_BR');
-//                $.datepick.setDefaults({
-//                    dateFormat: 'dd/mm/yyyy'
-//                });
-//                $.datepick.setDefaults($.datepick.regional['pt-BR']);
-//                $.datepicker.regional['pt-BR'] = {
-//                    closeText: 'Fechar',
-//                    prevText: 'Anterior',
-//                    nextText: 'Próximo',
-//                    currentText: 'Atual',
-//                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-//                        'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-//                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
-//                        'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-//                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
-//                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
-//                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
-//                    weekHeader: 'Semana',
-//                    dateFormat: 'dd/mm/yy',
-//                    firstDay: 1,
-//                    isRTL: false,
-//                    showMonthAfterYear: true,
-//                    yearSuffix: ''
-//                };
-//                $.datepicker.setDefaults($.datepicker.regional['pt-BR']);
-//
-//                $.timepicker.regional['pt-BR'] = {
-//                    timeOnlyTitle: 'Apenas tempo',
-//                    timeText: 'Tempo',
-//                    hourText: 'Hora',
-//                    minuteText: 'Minuto',
-//                    secondText: 'Segundo',
-//                    millisecText: 'Milisegundo',
-//                    timezoneText: 'Região',
-//                    currentText: 'Agora',
-//                    closeText: 'OK',
-//                    timeFormat: 'HH:mm',
-//                    amNames: ['AM', 'A'],
-//                    pmNames: ['PM', 'P'],
-//                    isRTL: false
-//                };
-//                $.timepicker.setDefaults($.timepicker.regional['pt-BR']);
-
-                //Configura pequena função para criar limiter em textareas
-                (function($) {
-                    $.fn.extend({
-                        limiter: function(limit, elem) {
-                            $(this).on("keyup focus", function() {
-                                setCount(this, elem);
-                            });
-                            function setCount(src, elem) {
-                                var chars = src.value.length;
-                                if (chars > limit) {
-                                    src.value = src.value.substr(0, limit);
-                                    chars = limit;
-                                }
-                                elem.html(limit - chars);
-                            }
-                            setCount($(this)[0], elem);
+                $(document).ready(function() {
+                    //Configurações globais para dataTables
+                    $.extend($.fn.dataTable.defaults, {
+                        "bFilter": true,
+                        "bSort": true,
+                        "aaSorting": [[1, "desc"]],
+                        "bJQueryUI": true,
+                        "sPaginationType": "full_numbers",
+                        "oLanguage": {
+                            "sUrl": "publico/js/jquery/dataTables.portugues.txt"
+                        },
+                        //Scrol horizontal
+                        "sScrollX": "100%",
+                        "sScrollXInner": "110%",
+                        "bScrollCollapse": true,
+                        // Salva o estado da tabela para ser exibida como da última vez
+                        //Um pouco de cuidado com essa opção, ela parece ter em certas
+                        //situações, efeitos negativos ao uso da datatable
+                        "bStateSave": true,
+                        "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]]
+                    });
+                    //COnfigurações de idioma para MomentJS
+                    moment.lang('pt_BR', {
+                        months: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outrubro", "Novembro", "Dezembro"],
+                        monthsShort: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+                        weekdays: ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"],
+                        weekdaysShort: ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"],
+                        weekdaysMin: ["S", "T", "Q", "Q", "S", "S", "D"],
+                        longDateFormat: {
+                            LT: "HH:mm",
+                            L: "DD/MM/YYYY",
+                            LL: "D MMMM YYYY",
+                            LLL: "D MMMM YYYY LT",
+                            LLLL: "dddd D MMMM YYYY LT"
+                        },
+                        calendar: {
+                            sameDay: "[Hoje] LT",
+                            nextDay: '[Amanhã] LT',
+                            nextWeek: 'dddd [à] LT',
+                            lastDay: '[Ontem] LT',
+                            lastWeek: 'dddd [Semana passada] LT',
+                            sameElse: 'L'
+                        },
+                        relativeTime: {
+                            future: "em %s",
+                            past: "%s atrás",
+                            s: "agora a pouco",
+                            m: "um minuto",
+                            mm: "%d minutos",
+                            h: "uma hora",
+                            hh: "%d horas",
+                            d: "um dia",
+                            dd: "%d dias",
+                            M: "um mês",
+                            MM: "%d meses",
+                            y: "um ano",
+                            yy: "%d anos"
+                        },
+                        ordinal: function(number) {
+                            return number + (number === 1 ? 'º' : '');
+                        },
+                        week: {
+                            dow: 1, // Monday is the first day of the week.
+                            doy: 4  // The week that contains Jan 4th is the first week of the year.
                         }
                     });
-                })(jQuery);
-                //Configurar botão para tela cheia
-//                $("#fullscreen-toggle").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
-//                $("#fullscreen-off").tooltip({trigger: 'hover', container: 'body', delay: {show: 50, hide: 0}});
-                if (canToggleFullScreen()) {
-                    $("#botoesSuperiores").children(":first-child").before('<a id="fullscreen-toggle" title="Modo tela cheia" class="btn btn-small" href="javascript:void(0)" onclick="toggleFullScreen();"><i class="icon-fullscreen"></i></a>');
-                }
-                setTimeout(function() {
-                    $("#telaCarregando").fadeOut(150);
-                }, 150);
+                    moment.lang('pt_BR');
+
+                    //Configura o bootstrap-datepicker
+                    $.fn.datepicker.defaults.autoclose = true;
+                    $.fn.datepicker.defaults.beforeShowDay = $.noop;
+                    $.fn.datepicker.defaults.calendarWeeks = false;
+                    $.fn.datepicker.defaults.clearBtn = true;
+                    $.fn.datepicker.defaults.daysOfWeekDisabled = [];
+                    $.fn.datepicker.defaults.endDate = Infinity;
+                    $.fn.datepicker.defaults.forceParse = true;
+                    $.fn.datepicker.defaults.format = 'dd/mm/yyyy';
+                    $.fn.datepicker.defaults.keyboardNavigation = false;
+                    $.fn.datepicker.defaults.language = 'pt-BR';
+                    $.fn.datepicker.defaults.minViewMode = 0;
+                    $.fn.datepicker.defaults.multidate = false;
+                    $.fn.datepicker.defaults.multidateSeparator = ';';
+                    $.fn.datepicker.defaults.orientation = "auto";
+                    $.fn.datepicker.defaults.rtl = false;
+                    $.fn.datepicker.defaults.startDate = -Infinity;
+                    $.fn.datepicker.defaults.startView = 0;
+                    $.fn.datepicker.defaults.todayBtn = false;
+                    $.fn.datepicker.defaults.todayHighlight = true;
+                    $.fn.datepicker.defaults.weekStart = 0;
+
+                    //Configurar botão para tela cheia
+                    if (canToggleFullScreen()) {
+                        $("#botoesSuperiores").children(":first-child").before('<a id="fullscreen-toggle" title="Modo tela cheia" class="btn btn-small" href="javascript:void(0)" onclick="toggleFullScreen();"><i class="icon-fullscreen"></i></a>');
+                    }
+                    setTimeout(function() {
+                        $("#telaCarregando").fadeOut(150);
+                    }, 150);
+                });
+
     </script>
 
     <!-- FIM POS SCRIPTS -->

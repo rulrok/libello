@@ -44,7 +44,7 @@
 
 <script>
     $(document).ready(function() {
-        $("#dataSaida").datepick();
+        $("#dataSaida").datepicker();
         $(".line input").popover({trigger: 'focus', container: 'body'});
 //        $("select[name=papel]").on("change", function(e) {
 //            var id = $(this).val();

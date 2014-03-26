@@ -61,10 +61,12 @@
         clearTimeout(H)
     }
     function S() {
-        return I(y, true)
+//        return I(y, true)
+return false;
     }
     function R() {
-        return I(z, true)
+//        return I(z, true)
+return false;
     }
     function I(a, c) {
         if (a >= 0) {
@@ -176,7 +178,15 @@
     }
     var k = b(window), e, i, o = -1, D, y, z, ga = window.XMLHttpRequest == undefined && ActiveXObject != undefined, N, r, s, u, v, t, L, H, K, j = {}, W = new Image, X = new Image, l, $, h, w, x, n, J, V, C = "pbzoomed", A = "pbgreyed";
     b(document).ready(function() {
-        b(document.body).append(b([l = b('<div id="pbOverlay" />').click(Q).append($ = b('<div id="pbCloseBtn" />')[0])[0], h = b('<img id="pbImage" />').dblclick(Z)[0], n = b('<div id="pbBottom" />').append([J = b('<div id="pbCaption" />')[0], b('<div id="pbNav" />').append([w = b('<a id="pbPrevBtn" href="#" />').click(S)[0], zoomBtn = b('<a id="pbZoomBtn" href="#" />').click(Z)[0], x = b('<a id="pbNextBtn" href="#" />').click(R)[0]])[0], V = b('<div id="pbNumber" />')[0]])[0]]).css("display", "none"));
+        b(document.body).append(
+                b([l = b('<div id="pbOverlay" />').click(Q).append(
+                            $ = b('<div id="pbCloseBtn" />')[0]
+                            )[0], h = b('<img id="pbImage" />').dblclick(Z)[0], n = b('<div id="pbBottom" />').append(
+                            [J = b('<div id="pbCaption" />')[0], b('<div id="pbNav" />').append(
+                                        [w = b('<a id="pbPrevBtn" />').click(S)[0], zoomBtn = b('<a id="pbZoomBtn" href="#" />').click(Z)[0], x = b('<a id="pbNextBtn" />').click(R)[0]]
+                                        )[0], V = b('<div id="pbNumber" />')[0]]
+                            )[0]]).css("display", "none")
+                );
         (N = ga || l.currentStyle && l.currentStyle.position != "fixed") && b([l, $, h, n]).css("position", "absolute");
         b(h).tinyDrag(function() {
             var a = b(h), c = a.position();

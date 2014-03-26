@@ -21,7 +21,7 @@
         </div>
         <div class="line">
             <label for="dataNascimento">Data de nascimento</label>
-            <input type="text" readonly id="dataNascimento" class="campoData" name="dataNascimento" value="<?php echo $this->dataNascimento ?>" >
+            <input type="text" id="dataNascimento" class="campoData" name="dataNascimento" value="<?php echo $this->dataNascimento ?>" >
         </div>
         <br/>
         <fieldset>
@@ -98,7 +98,7 @@
     $(document).ready(function() {
         $('#cpf').mask('999.999.999-99');
         $("#ajuda").tooltip({placement: 'right'});
-        $("#dataNascimento").datepick();
+        $("#dataNascimento").datepicker();
 
         varrerCampos();
         formularioAjax();

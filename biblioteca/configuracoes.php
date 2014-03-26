@@ -1,9 +1,5 @@
 <?php
 
-//Manter essas duas linhas durante a fase de desenvolvimento
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 /*
  * Justificativa para usar defines ao invés de variáveis para o arquivo de configuração:
  * http://stackoverflow.com/questions/1225082/define-vs-variable-in-php 
@@ -72,4 +68,10 @@ if (!defined("APP_CONFIGS")) {
      */
     define('SECRET', md5("controleCEAD@2013"));
 }
-?>
+
+
+//Manter essas duas linhas durante a fase de desenvolvimento
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+ini_set("log_errors", 1);
+ini_set("error_log", ROOT . "php-error.log");

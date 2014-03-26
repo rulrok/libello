@@ -312,7 +312,8 @@
 					[this.element.find('input'), {
 						focus: $.proxy(this.show, this),
 						keyup: $.proxy(function(e){
-							if ($.inArray(e.keyCode, [27,37,39,38,40,32,13,9]) === -1)
+//							if ($.inArray(e.keyCode, [27,37,39,38,40,32,13,9]) === -1)
+							if ($.inArray(e.keyCode, [27,37,39,38,40,32,9]) === -1)
 								this.update();
 						}, this),
 						keydown: $.proxy(this.keydown, this)

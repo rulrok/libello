@@ -15,7 +15,7 @@
         </div>
         <div class="line">
             <label for="dataEntrada">Data de entrada</label>
-            <input type="text" readonly id="dataEntrada" class="campoData" id="dataEntrada" name="dataEntrada" value="<?php echo $this->dataEntrada ?>"/>
+            <input type="text" id="dataEntrada" class="campoData" id="dataEntrada" name="dataEntrada" value="<?php echo $this->dataEntrada ?>"/>
         </div>
         <hr/>
         <?php if ($this->equipamentoEditavel): ?>
@@ -79,7 +79,7 @@
         $("#descricao").limiter(1000, elem);
         varrerCampos();
         formularioAjax();
-        $("#dataEntrada").datepick();
+        $("#dataEntrada").datepicker();
         $(".line input").popover({trigger: 'focus', container: 'body'});
         $(".line textarea").popover({trigger: 'focus', container: 'body'});
 

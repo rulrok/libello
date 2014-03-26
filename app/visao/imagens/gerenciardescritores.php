@@ -197,14 +197,14 @@
         });
         return sucesso;
     }
-    function moverDescritor(idDescritor, idNovoPai, idAntigoPai) {
+    function moverDescritor(descritor, idNovoPai, idAntigoPai) {
         var sucesso;
         $.ajax({
             async: false
             , type: "POST"
             , url: "index.php?c=imagens&a=moverDescritor"
             , dataType: "json"
-            , data: {'idDescritor': idDescritor, 'idNovoPai': idNovoPai, 'idAntigoPai': idAntigoPai}
+            , data: {'idDescritor': descritor.id, nivel: descritor.original.nivel, 'idNovoPai': idNovoPai, 'idAntigoPai': idAntigoPai}
             , success: function(json) {
                 sucesso = json;
                 return json;
@@ -266,7 +266,7 @@
                         }
                         , "multiple": false
                     }
-                    , "plugins": ["unique", "json_data", "search"]
+                    , "plugins": ["unique", "json_data", "search", "sort"]
                 });
 
                 $('#jstree_div').addClass('hidden', 200);
@@ -448,7 +448,7 @@
                     return true;
                 }
             }
-            , "plugins": ["contextmenu", "unique", "json_data", "dnd", "search"]
+            , "plugins": ["contextmenu", "unique", "json_data", "dnd", "search","sort"]
         });
 
 
@@ -468,8 +468,8 @@
 //            });
 
         $('#jstree_div').on("move_node.jstree", function(e, data) {
-            if (!moverDescritor(data.node.id, data.parent, data.old_parent)) {
-                showPopUp("Falha ao mover", "erro");
+            if (!moverDescritor(data.node, data.parent, data.old_parent)) {
+                showPopUp("Falha ao mover.<br/>Recarregue a página.", "erro");
                 return false;
             } else {
                 return true;
