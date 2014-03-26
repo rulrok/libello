@@ -23,7 +23,7 @@ class ControladorViagens extends Controlador {
 
     public function acaoGerenciar() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->visao->viagens = (new viagemDAO())->consultar("idViagem,nomeCurso,concat(dataIda,' - ',horaIda) as ida,concat(dataVolta,' - ',horaVolta) as volta,motivo,estadoViagem,diarias,concat(IFNULL(nomePolo,''),IFNULL(outroDestino,'')) as destino");
+        $this->visao->viagens = (new viagemDAO())->consultar("idViagem,nomeCurso,concat_ws(' - ',dataIda,horaIda) as ida,concat_ws(' - ',dataVolta,horaVolta) as volta,motivo,estadoViagem,diarias,concat(IFNULL(nomePolo,''),IFNULL(outroDestino,'')) as destino");
         $i = 0;
         foreach ($this->visao->viagens as $value) {
             $value[0] = fnEncrypt($value[0]);

@@ -95,7 +95,7 @@ class imagensDAO extends abstractDAO {
 
         //Query do MAL!
         $sql = "SELECT"
-                . ' t.idImagem,t.titulo,t.observacoes,t.dificuldade,concat(PNome," ",UNome) as autor, '
+                . ' t.idImagem,t.titulo,t.observacoes,t.dificuldade,concat_ws(" ",PNome,UNome) as autor, '
                 . 't.ano,t.diretorio,t.diretorioMiniatura,t.nomeArquivo,t.nomeArquivoMiniatura,t.nomeArquivoVetorial, '
                 . 't.dataCadastro, '
 //                . 'concat(t1.rotulo," ",t1.nome) as nomedescritor1, '
@@ -673,4 +673,22 @@ class imagensDAO extends abstractDAO {
     }
 
 // </editor-fold>
+    
+    /* OUTROS MÉTODOS */
+    
+    /**
+     * Função para renomear os arquivos quando um usuário altera seu nome e consequentemente
+     * sua sigla cadastral.
+     * 
+     * @param int $idUsuario
+     */
+    public function atualizarSiglas($idUsuario){
+        $sql = "SELECT idImagem FROM imagem WHERE autor = :autor";
+        $params = array(
+            ':autor' => [$idUsuario,  PDO::PARAM_INT]
+        );
+        $resultado = $this->executarSelect($sql, $params);
+        
+        $this->atualizarNomeArquivoImagens($resultado);
+    }
 }

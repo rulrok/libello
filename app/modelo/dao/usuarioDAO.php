@@ -201,6 +201,7 @@ class usuarioDAO extends abstractDAO {
 
     /**
      * Retorna um objeto VO Usuário se o usuário existe E está ativo, ou então retorna NULL.
+     * Todos os seus dados cadastrados são inclusos, inclusive o ID atual.
      * @param mixed $email Uma string ou um array com um índice 'email'
      * @return Usuario Usuário que possui o email designado em $email ou null caso contrário
      */
