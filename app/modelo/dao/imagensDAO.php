@@ -95,13 +95,18 @@ class imagensDAO extends abstractDAO {
 
         //Query do MAL!
         $sql = "SELECT"
-                . ' t.idImagem,t.titulo,t.observacoes,t.dificuldade,t.cpfAutor,'
-                . 't.ano,t.diretorio,t.diretorioMiniatura,t.nomeArquivo,t.nomeArquivoMiniatura,t.nomeArquivoVetorial,'
-                . 'concat(t1.rotulo,". ",t1.nome) as nomedescritor1, '
-                . 'concat(t2.rotulo,". ",t2.nome) as nomedescritor2, '
-                . 'concat(t3.rotulo,". ",t3.nome) as nomedescritor3, '
-                . 'concat(t4.rotulo,". ",t4.nome) as nomedescritor4, '
-                . 'concat(t1.rotulo, "_", t2.rotulo, "_", t3.rotulo, "_", t4.rotulo) as rotulo '
+                . ' t.idImagem,t.titulo,t.observacoes,t.dificuldade,concat(PNome," ",UNome) as autor, '
+                . 't.ano,t.diretorio,t.diretorioMiniatura,t.nomeArquivo,t.nomeArquivoMiniatura,t.nomeArquivoVetorial, '
+                . 't.dataCadastro, '
+//                . 'concat(t1.rotulo," ",t1.nome) as nomedescritor1, '
+//                . 'concat(t2.rotulo," ",t2.nome) as nomedescritor2, '
+//                . 'concat(t3.rotulo," ",t3.nome) as nomedescritor3, '
+//                . 'concat(t4.rotulo," ",t4.nome) as nomedescritor4 '
+                . 't1.nome as nomedescritor1, '
+                . 't2.nome as nomedescritor2, '
+                . 't3.nome as nomedescritor3, '
+                . 't4.nome as nomedescritor4 '
+//                . 'concat(t1.nome, ", ", t2.nome, ", ", t3.nome, ", ", t4.nome) as descritores '
                 . ' FROM (SELECT * from `imagem` WHERE (titulo RLIKE :termoBusca OR idImagem IN '
                 . '( SELECT idImagem FROM imagem as a WHERE EXISTS '
                 . '( SELECT idDescritor FROM imagem_descritor as b WHERE b.nome RLIKE :termoBusca AND (b.idDescritor = a.descritor1 OR b.idDescritor = a.descritor2 OR b.idDescritor = a.descritor3 OR b.idDescritor = a.descritor4)))'
@@ -110,6 +115,7 @@ class imagensDAO extends abstractDAO {
                 . ' JOIN `imagem_descritor` t2 ON t2.idDescritor = t.descritor2'
                 . ' JOIN `imagem_descritor` t3 ON t3.idDescritor = t.descritor3'
                 . ' JOIN `imagem_descritor` t4 ON t4.idDescritor = t.descritor4 '
+                . ' JOIN `usuario` us ON autor = us.idUsuario '
                 . $query_where
                 . $limite;
 
@@ -256,9 +262,11 @@ class imagensDAO extends abstractDAO {
                 if (file_exists($diretorioMiniatura . $novoNomeMiniatura)) {
                     rename($diretorioMiniatura . $novoNomeMiniatura, $diretorioMiniatura . $antigoNomeMiniatura);
                 }
+                continue;
             }
         }
         chdir($antigoCaminho);
+        return true;
     }
 
 // </editor-fold>
@@ -638,7 +646,7 @@ class imagensDAO extends abstractDAO {
             $descritores = $this->consultarDescritoresCompletos($idDescritorExcluir);
         }
         foreach ($descritores as $desc) {
-            $arvore[] = ['id' => fnEncrypt($desc['idDescritor']), 'parent' => (fnEncrypt($desc['pai'])), 'text' => $desc['nome'], 'nivel' => $desc['nivel'], 'rotulo' => $desc['rotulo']];
+            $arvore[] = ['id' => fnEncrypt($desc['idDescritor']), 'parent' => (fnEncrypt($desc['pai'])), 'text' => $desc['rotulo'] . '.' . $desc['nome'], 'nivel' => $desc['nivel'], 'rotulo' => $desc['rotulo']];
         }
         return $arvore;
     }

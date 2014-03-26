@@ -14,7 +14,7 @@ if (filter_has_var(INPUT_GET, 'id')) {
 //    header("Content-Disposition: inline; filename='abc.$extensao'");
 //    readfile($arqImagem);
     passthru("cat $arqImagem");
-    ob_end_flush();
+//    ob_end_flush();
 //    ob_start();
 //    header("Content-Type: image/$extensao");
 ////    header("Content-Transfer-Encoding: BASE64");

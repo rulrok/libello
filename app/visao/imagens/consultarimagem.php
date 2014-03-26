@@ -139,6 +139,7 @@
     $(document).ready(function() {
 
         $('.input-daterange').datepicker({
+            autoclose: true,
             format: "dd/mm/yyyy",
             todayBtn: "linked",
             language: "pt-BR",
@@ -151,7 +152,6 @@
             var formato = "DD/MM/YYYY";
             if (dataInicio != "" && dataFim != "") {
                 if (moment(dataInicio, formato).isValid() && moment(dataFim, formato).isValid()) {
-                    console.log('foi');
                     buscar();
                 } else {
                     $("#limpar_datas").click();

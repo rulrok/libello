@@ -17,7 +17,7 @@
         </div>
         <div class="line">
             <label for="dataNascimento">Data de nascimento</label>
-            <input type="text" readonly id="dataNascimento" class="campoData" name="dataNascimento" value="<?php echo $this->dataNascimento ?>" />
+            <input type="text" id="dataNascimento" class="campoData" name="dataNascimento" value="<?php echo $this->dataNascimento ?>" />
         </div>
         <div class="line">
             <label for="papel">Papel no sistema</label>
@@ -60,6 +60,6 @@
                 $("#nomeusuarioHeader").html($("#nome").val());
             }
         });
-        $("#dataNascimento").datepick();
+        $("#dataNascimento").datepicker();
     });
 </script>

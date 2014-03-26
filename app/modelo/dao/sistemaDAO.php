@@ -10,7 +10,7 @@ class sistemaDAO extends abstractDAO {
         $sql = "INSERT INTO usuario_acessos(idUsuario,data,ip) VALUES (:idU, :d, :ip)";
         $params = array(
             ':idU' => [$idUsuario, PDO::PARAM_INT]
-            , ':d' => [time(),PDO::PARAM_INT]
+            , ':d' => [time(), PDO::PARAM_INT]
             , ':ip' => [$_SERVER['REMOTE_ADDR'], PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
