@@ -12,6 +12,10 @@ if (!defined("APP_CONFIGS")) {
     define('APP_COPYRIGHT', 'Copyright &copy; 2012 - 2014');
 
     define('APP_VERSION', "Alpha");
+    
+    define('APP_ADMIN_EMAIL','reuel@bcc.unifal-mg.edu.br');
+    
+    define('APP_SUPPORT_EMAIL','suporte@inep.gov.br');
 
     define('APP_ADMIN_EMAIL', 'reuel@bcc.unifal-mg.edu.br');
 
