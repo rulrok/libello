@@ -39,7 +39,7 @@ if (preg_match("#.*" . WEB_SERVER_FOLDER . "?.*#", $uri_requisicao)) {
     //Verificamos se é uma das páginas listadas como excessões, as quais não precisamos
     //verificar o acesso.
     $pasta_instalacao = WEB_SERVER_FOLDER;
-    $ret = preg_replace("#^/$pasta_instalacao(/((index|sair|logar|lembrarSenha)\.php(\?(m|tolken)=.*)?|biblioteca.*)?)?#", "", $uri_requisicao);
+    $ret = preg_replace("#^/$pasta_instalacao(/((index|sair|logar|lembrarSenha)\.php(\?(m|token)=.*)?|biblioteca.*)?)?#", "", $uri_requisicao);
     if ($ret !== "") {
         //É uma página que não pertence às excessões, definidas pela REGEX acima.
         //Verifica se uma requisição via AJAX está sendo feita, pois todas as páginas

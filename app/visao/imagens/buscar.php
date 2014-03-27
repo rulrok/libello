@@ -3,38 +3,41 @@
         <?php echo $this->paginacao; ?>
     </div>
 <?php endif; ?>
-<div class="container-fluid blocoBranco" >
-    <?php if ($this->temResultados): ?>
-        <div style="position: relative;"> <!-- Div para limitar até onde a preview se expande -->
-            <ul id="og-grid" class="og-grid">
-                <?php foreach ($this->resultados as $key => $imagem) : ?>
-                    <li>
-                        <a target="_blank" href="javascript:void(0)" 
-                           data-largesrc="index.php?c=imagens&a=visualizarImagem&id=<?php echo $imagem['idImagem']; ?>" 
-                           data-title="<?php echo $imagem['titulo']; ?>" 
-                           data-description="<?php echo $imagem['observacoes']; ?>" 
-                           data-desc1="<?php echo $imagem['nomedescritor1']; ?>" 
-                           data-desc2="<?php echo $imagem['nomedescritor2']; ?>" 
-                           data-desc3="<?php echo $imagem['nomedescritor3']; ?>" 
-                           data-desc4="<?php echo $imagem['nomedescritor4']; ?>" 
-                           data-autor="<?php echo $imagem['autor']; ?>" 
-                           data-cadastro="<?php echo $imagem['dataCadastro']; ?>" 
-                           data-imagem="<?php echo $imagem['idImagem']; ?>" 
-                           data-ano="<?php echo $imagem['ano']; ?>" 
-                           data-dificuldade="<?php echo $imagem['dificuldade']; ?>"
-                           >
-                            <img src="<?php echo $imagem['diretorioMiniatura'] . $imagem['nomeArquivoMiniatura']; ?>" alt="<?php echo truncarTexto($imagem['observacoes']); ?>"/>
-                        </a>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        </div> <!-- /Div para limitar até onde a preview se expande -->
+<!--<div class="" >-->
+<?php if ($this->temResultados): ?>
+    <!--<div style="position: relative;">  Div para limitar até onde a preview se expande -->
+    <ul id="og-grid" class="og-grid">
+        <?php foreach ($this->resultados as $key => $imagem) : ?>
+            <li>
+                <a target="_blank" href="javascript:void(0)" 
+                   data-largesrc="index.php?c=imagens&a=visualizarImagem&id=<?php echo $imagem['idImagem']; ?>" 
+                   data-title="<?php echo $imagem['titulo']; ?>" 
+                   data-description="<?php echo $imagem['observacoes']; ?>" 
+                   data-desc1="<?php echo $imagem['nomedescritor1']; ?>" 
+                   data-desc2="<?php echo $imagem['nomedescritor2']; ?>" 
+                   data-desc3="<?php echo $imagem['nomedescritor3']; ?>" 
+                   data-desc4="<?php echo $imagem['nomedescritor4']; ?>" 
+                   data-autor="<?php echo $imagem['autor']; ?>" 
+                   data-cadastro="<?php echo $imagem['dataCadastro']; ?>" 
+                   data-imagem="<?php echo $imagem['idImagem']; ?>" 
+                   data-ano="<?php echo $imagem['ano']; ?>" 
+                   data-dificuldade="<?php echo $imagem['dificuldade']; ?>"
+                   >
+                    <img src="<?php echo $imagem['diretorioMiniatura'] . $imagem['nomeArquivoMiniatura']; ?>" alt="<?php echo truncarTexto($imagem['observacoes']); ?>"/>
+                </a>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+    <!--</div>  /Div para limitar até onde a preview se expande--> 
 
-    <?php else: ?>
-        <p></p>
-        <p class="textoCentralizado">Nenhum resultado</p>
-    <?php endif; ?>
-</div>
+<?php else: ?>
+    <div class="imagem-nenhumresultado">
+        <img src="publico/imagens/caneca.gif" class="pull-left" alt="Caneca...">
+        <h2>Nenhum resultado...</h2>
+    </div>
+    <div class="clearfix"></div>
+<?php endif; ?>
+<!--</div>-->
 <br/>
 <?php echo "Tempo gasto: " . $this->tempoGasto . " segundos"; ?>
 <!-- Dependência do plugin thumbnail-grid -->

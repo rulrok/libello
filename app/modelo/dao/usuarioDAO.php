@@ -136,12 +136,22 @@ class usuarioDAO extends abstractDAO {
     }
 
     /**
-     * Gera um tolken e armazena na tabela 'usuario_recuperarsenha'.
+     * Gera um token e armazena na tabela 'usuario_recuperarsenha'.
+     * 
      * @param type $email
+     * @return boolean Indica se o token já existia cadastrado, ou seja,
+     * que o usuário já havia solicitado a recuperação de senha
      */
-    public function gerarTolkenRecuperarSenha($email) {
+    public function gerarTokenRecuperarSenha($email) {
         $usuario = $this->recuperarUsuario($email);
-        if ($usuario !== null) {
+        $sqlTokenExistente = "SELECT token FROM usuario_recuperarsenha WHERE idUsuario = :idUsuario";
+        $paramTokenExistente = array(
+            ':idUsuario' => [$usuario->get_idUsuario(), PDO::PARAM_INT]
+        );
+        $resultado = $this->executarSelect($sqlTokenExistente, $paramTokenExistente);
+        if ($resultado !== null && !empty($resultado)) {
+            return true;
+        } elseif ($usuario !== null) {
             $antigaSenhaMD5 = $usuario->get_senha();
             $hora = time();
             $idUsuario = $usuario->get_idUsuario();
@@ -151,37 +161,36 @@ class usuarioDAO extends abstractDAO {
                 ':idUsuario' => [$idUsuario, PDO::PARAM_INT]
                 , ':token' => [$token, PDO::PARAM_STR]
             );
-            return $this->executarQuery($sql, $params);
-        } else {
-            return false;
+            $this->executarQuery($sql, $params);
         }
+        return false;
     }
 
     /**
-     * Caso o usuário queira redefinir sua senha, um tolken é gerado e armazenado
-     * na tabela 'usuario_recuperarsenha'. Essa função retorna esse tolken, caso
+     * Caso o usuário queira redefinir sua senha, um token é gerado e armazenado
+     * na tabela 'usuario_recuperarsenha'. Essa função retorna esse token, caso
      * ele exista, ou NULL caso contrário.
      * 
      * @param type int
      * @return string Description
      */
-    public function consultarTolkenRecuperarSenha($idUsuario) {
-        $sql = 'SELECT tolken FROM usuario_recuperarsenha WHERE idUsuario = :idUsuario';
+    public function consultarTokenRecuperarSenha($idUsuario) {
+        $sql = 'SELECT token FROM usuario_recuperarsenha WHERE idUsuario = :idUsuario';
         $params = array(':idUsuario' => [$idUsuario, PDO::PARAM_INT]);
         return $this->executarSelect($sql, $params, false);
     }
 
     /**
-     * Consulta o usuário associado ao tolken, mas apenas se o usuário quis redefinir
+     * Consulta o usuário associado ao token, mas apenas se o usuário quis redefinir
      * sua senha.
-     * @param type $tolken
+     * @param type $token
      */
-    public function consultarIDUsuario_RecuperarSenha($tolken) {
-        $sql = "SELECT idUsuario FROM usuario_recuperarsenha WHERE tolken = :token";
-        $params = array(':token' => [$tolken, PDO::PARAM_INT]);
+    public function consultarIDUsuario_RecuperarSenha($token) {
+        $sql = "SELECT idUsuario FROM usuario_recuperarsenha WHERE token = :token";
+        $params = array(':token' => [$token, PDO::PARAM_INT]);
         $resultado = $this->executarSelect($sql, $params, false);
-        if ($resultado === false) {
-            throw new Exception('Tolken não encontrado');
+        if ($resultado === null) {
+            throw new Exception('Token não encontrado');
         }
         if (is_array($resultado)) {
             $resultado = $resultado[0];
@@ -190,11 +199,11 @@ class usuarioDAO extends abstractDAO {
     }
 
     /**
-     * Remove um tolken do banco de dados.
+     * Remove um token do banco de dados.
      * @param type $token
      */
-    public function removerTolken($token) {
-        $sql = "DELETE FROM usuario_recuperarsenha WHERE tolken = :token";
+    public function removerToken($token) {
+        $sql = "DELETE FROM usuario_recuperarsenha WHERE token = :token";
         $params = array(':token' => [$token, PDO::PARAM_STR]);
         return $this->executarQuery($sql, $params);
     }
@@ -203,7 +212,7 @@ class usuarioDAO extends abstractDAO {
      * Retorna um objeto VO Usuário se o usuário existe E está ativo, ou então retorna NULL.
      * Todos os seus dados cadastrados são inclusos, inclusive o ID atual.
      * @param mixed $email Uma string ou um array com um índice 'email'
-     * @return Usuario Usuário que possui o email designado em $email ou null caso contrário
+     * @return Usuario Usuário que possui o email designado em $email ou false caso contrário
      */
     public function recuperarUsuario($email) {
 

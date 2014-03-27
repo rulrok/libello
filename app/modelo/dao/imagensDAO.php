@@ -110,7 +110,7 @@ class imagensDAO extends abstractDAO {
                 . ' FROM (SELECT * from `imagem` WHERE (titulo RLIKE :termoBusca OR idImagem IN '
                 . '( SELECT idImagem FROM imagem as a WHERE EXISTS '
                 . '( SELECT idDescritor FROM imagem_descritor as b WHERE b.nome RLIKE :termoBusca AND (b.idDescritor = a.descritor1 OR b.idDescritor = a.descritor2 OR b.idDescritor = a.descritor3 OR b.idDescritor = a.descritor4)))'
-                . ') ORDER BY idImagem ) as t'
+                . ') ORDER BY idImagem DESC ) as t' //Ordenar pelas imagens mais recentes
                 . ' JOIN `imagem_descritor` t1 ON t1.idDescritor = t.descritor1'
                 . ' JOIN `imagem_descritor` t2 ON t2.idDescritor = t.descritor2'
                 . ' JOIN `imagem_descritor` t3 ON t3.idDescritor = t.descritor3'
@@ -145,8 +145,8 @@ class imagensDAO extends abstractDAO {
             , ':dificuldade' => [$imagem->get_dificuldade(), PDO::PARAM_STR]
             , ':cpfAutor' => [$imagem->get_cpfAutor(), PDO::PARAM_STR]
             , ':ano' => [$imagem->get_ano(), PDO::PARAM_STR]
-            , ':diretorio' => [$imagem->get_diretorio()]
-            , ':diretorioMiniatura' => [$imagem->get_diretorioMiniatura()]
+            , ':diretorio' => [$imagem->get_diretorio(),  PDO::PARAM_STR]
+            , ':diretorioMiniatura' => [$imagem->get_diretorioMiniatura(),  PDO::PARAM_STR]
             , ':nomeArquivo' => [$imagem->get_nomeArquivo(), PDO::PARAM_STR]
             , ':nomeArquivoMiniatura' => [$imagem->get_nomeArquivoMiniatura(), PDO::PARAM_STR]
             , ':nomeArquivoVetorial' => [$imagem->get_nomeArquivoVetorial(), PDO::PARAM_STR]

@@ -2,18 +2,19 @@
 
 require_once '../configuracoes.php';
 require_once APP_DIR . "modelo/dao/usuarioDAO.php";
+require_once APP_DIR . "modelo/Utils.php";
 require_once BIBLIOTECA_DIR . 'seguranca/criptografia.php';
 
 if (filter_has_var(INPUT_POST, 'email') && filter_input(INPUT_POST, 'email') != NULL && filter_input(INPUT_POST, 'email') != "") :
     $email = filter_input(INPUT_POST, 'email');
     $usuarioDAO = new usuarioDAO();
     $usuario = $usuarioDAO->recuperarUsuario($email);
-    if ($usuario !== null) :
+    if ($usuario && $usuario !== null) :
         $id = $usuario->get_idUsuario();
-        $usuarioDAO->gerarTolkenRecuperarSenha($email);
-        $tolken = $usuarioDAO->consultarTolkenRecuperarSenha($id);
+        $jaEnviado = $usuarioDAO->gerarTokenRecuperarSenha($email);
+        $token = $usuarioDAO->consultarTokenRecuperarSenha($id);
 
-        $link = WEB_SERVER_ADDRESS . "lembrarSenha.php?tolken=" . $tolken;
+        $link = WEB_SERVER_ADDRESS . "lembrarSenha.php?token=" . $token;
         $assunto = "Alteração de senha";
         $mensagem = "<p>Você está recebendo esse e-mail pois fez uma solicitação de recuperação da sua senha. Clique no link abaixo para redefinir a sua senha:</p><br/>";
         $mensagem .= "<a href=\"$link\">$link</a><br/>";
@@ -46,30 +47,34 @@ if (filter_has_var(INPUT_POST, 'email') && filter_input(INPUT_POST, 'email') != 
         $mail->CharSet = "UTF8";
 
         if (!$mail->Send()) {
-            echo "Mailer Error: " . $mail->ErrorInfo;
+            registrar_erro("Falha ao mandar email de recuperação de senha." . $mail->ErrorInfo);
+            echo "Não foi possível mandar seu email.";
         } else {
-            echo "Email enviado. Consulte sua caixa de entrada.";
+            if ($jaEnviado) {
+                echo "Email enviado novamente!.<br/> Caso não receba seu email, entre em contato com o suporte: <a href='" . APP_SUPPORT_EMAIL."'>".APP_SUPPORT_EMAIL."</a>";
+            } else {
+                echo "Email enviado. Consulte sua caixa de entrada.";
+            }
         }
     else :
         echo "<p>Verifique se seu email está correto!</p>";
-
     endif;
 elseif (filter_has_var(INPUT_POST, 'novaSenha') && filter_input(INPUT_POST, 'novaSenha') != NULL && filter_input(INPUT_POST, 'novaSenha') != ""):
-    $tolken = filter_input(INPUT_POST, 'tolken');
+    $token = filter_input(INPUT_POST, 'token');
     $novaSenha = filter_input(INPUT_POST, 'novaSenha');
 
     try {
         $usuarioDAO = new usuarioDAO();
-        $idUsuario = $usuarioDAO->consultarIDUsuario_RecuperarSenha($tolken);
+        $idUsuario = $usuarioDAO->consultarIDUsuario_RecuperarSenha($token);
         $email = $usuarioDAO->descobrirEmail($idUsuario);
         $usuario = new Usuario();
         $usuario->set_senha(encriptarSenha($novaSenha));
         $usuarioDAO->atualizar($email, $usuario);
-        $usuarioDAO->removerTolken($tolken);
+        $usuarioDAO->removerToken($token);
 
         echo "<p>Senha alterada com sucesso!</p>";
     } catch (Exception $e) {
-        echo "<p>Tolken inválido</p>";
+        echo "<p>Token inválido</p>";
     }
 else:
     header("Location: " . WEB_SERVER_ADDRESS);

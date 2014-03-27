@@ -2,6 +2,7 @@
 
 require_once BIBLIOTECA_DIR . 'configuracoes.php';
 require_once BIBLIOTECA_DIR . 'bancoDeDados/PDOconnectionFactory.php';
+require_once APP_DIR . 'modelo/Utils.php';
 
 /**
  * Centraliza as requisições para conexão com o banco de dados.
@@ -62,7 +63,7 @@ abstract class abstractDAO {
             return $retorno;
         } catch (Exception $e) {
             print_r($e);
-            error_log($e->getMessage());
+            registrar_erro($e->getMessage());
             return null;
         }
     }
@@ -91,7 +92,7 @@ abstract class abstractDAO {
         } catch (Exception $e) {
             //TODO Armazenar exceção para depuração do sistema
             print_r($e);
-            error_log($e->getMessage());
+            registrar_erro($e->getMessage());
             return false;
         }
     }
@@ -115,4 +116,5 @@ abstract class abstractDAO {
     public function transacaoEstaAberta() {
         return $this->getConexao()->inTransaction();
     }
+
 }

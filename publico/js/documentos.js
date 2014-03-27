@@ -88,7 +88,7 @@ function capturaNumOficio() {
     concatenarAssinaturas();
     $.getJSON('index.php?c=documentos&a=capturarNumDocumento', {valor: 1}, function(j) {
         $('#i_numOficio').val(j);
-        $("#b_submit").click();
+        $("#ajaxForm").submit();
 
     });
 
@@ -99,7 +99,7 @@ function capturaNumMemorando() {
 
     $.getJSON('index.php?c=documentos&a=capturarNumDocumento', {valor: 2}, function(j) {
         $('#i_numMemorando').val(j);
-        $("#b_submit").click();
+        $("#ajaxForm").submit();
 
     });
 }
@@ -110,7 +110,7 @@ function pad(d) {
 
 
 
-function Form() {
+function FormDocumentos() {
     // this.assinaturasCount = 1;
     //this.instancia = new Form();
     this.campoAssinatura = {0: '<div class="remetente_div" id="assinatura-', 1: '" >' +
@@ -126,20 +126,20 @@ function Form() {
                 '</div>'};
 }
 
-Form.instancia = new Form();
+FormDocumentos.instancia = new FormDocumentos();
 
-Form.assinaturasCount = 1;
+FormDocumentos.assinaturasCount = 1;
 
-Form.prototype.adicionarRemetente = function() {
+FormDocumentos.prototype.adicionarRemetente = function() {
 
-    $('#remetentes_holder').append(this.formaCampoDeAssinatura(Form.assinaturasCount++));
+    $('#remetentes_holder').append(this.formaCampoDeAssinatura(FormDocumentos.assinaturasCount++));
     var asn_count = $('.remetente_div').length;
     if (asn_count > 1) {
         $('.btn-remove-rmt').removeAttr('disabled');
     }
     liberarCadastro();
 };
-Form.prototype.removerRemetente = function(i) {
+FormDocumentos.prototype.removerRemetente = function(i) {
     $('#assinatura-' + i).remove();
     var asn_count = $('.remetente_div').length;
     if (asn_count == 1) {
@@ -148,7 +148,7 @@ Form.prototype.removerRemetente = function(i) {
 
 };
 
-Form.prototype.formaCampoDeAssinatura = function(i, j, k) {
+FormDocumentos.prototype.formaCampoDeAssinatura = function(i, j, k) {
     if (j == undefined)
         j = '';
     if (k == undefined) {
@@ -157,23 +157,23 @@ Form.prototype.formaCampoDeAssinatura = function(i, j, k) {
     return this.campoAssinatura[0] + i + this.campoAssinatura[1] + j + this.campoAssinatura[2] + k + this.campoAssinatura[3] + i + this.campoAssinatura[4];
 };
 
-Form.prototype.iniciarRemetentes = function() {
+FormDocumentos.prototype.iniciarRemetentes = function() {
     if ($('#remetente').val() == '' && $('#cargo_remetente').val() == '') {
-        $('#remetentes_holder').append(this.formaCampoDeAssinatura(Form.assinaturasCount));
-        Form.assinaturasCount++;
+        $('#remetentes_holder').append(this.formaCampoDeAssinatura(FormDocumentos.assinaturasCount));
+        FormDocumentos.assinaturasCount++;
 
     } else {
         var remetentes = $('#remetente').val().split(';');
         var cargos_remetentes = $('#cargo_remetente').val().split(';');
 
         var numAsn = remetentes.length > cargos_remetentes.lenght ? remetentes.length : cargos_remetentes.length;
-        for (var i = Form.assinaturasCount; i <= numAsn; i++, Form.assinaturasCount++) {
+        for (var i = FormDocumentos.assinaturasCount; i <= numAsn; i++, FormDocumentos.assinaturasCount++) {
             $('#remetentes_holder').append(this.formaCampoDeAssinatura(i, remetentes[i - 1], cargos_remetentes[i - 1]));
         }
     }
 };
 
-Form.prototype.diaMesDocumento = function(mesatual) {
+FormDocumentos.prototype.diaMesDocumento = function(mesatual) {
 
     var mes = new Array;
 
@@ -207,7 +207,7 @@ Form.prototype.diaMesDocumento = function(mesatual) {
 
 };
 
-Form.prototype.iniciarCombo = function() {
+FormDocumentos.prototype.iniciarCombo = function() {
     var d = new Date();
     var t = this;
     this.diaMesDocumento(d.getMonth());
@@ -216,7 +216,7 @@ Form.prototype.iniciarCombo = function() {
     });
 };
 
-Form.prototype.iniciarEditorDeTexto = function() {
+FormDocumentos.prototype.iniciarEditorDeTexto = function() {
     $('textarea').tinymce({
         // Location of TinyMCE script
         setup:function(ed){
@@ -268,7 +268,7 @@ Form.prototype.iniciarEditorDeTexto = function() {
 //    });
 };
 
-Form.prototype.acaoReset = function() {
+FormDocumentos.prototype.acaoReset = function() {
     $('.reset').on('click', function() {
         setTimeout(function() {
 
@@ -279,13 +279,13 @@ Form.prototype.acaoReset = function() {
     });
 };
 
-Form.prototype.liberarBotoes = function() {
+FormDocumentos.prototype.liberarBotoes = function() {
     $('input[type!=hidden]').on('keyup change', function() {
         liberarCadastro();
     });
 };
 
-Form.prototype.posicaoMenu = function() {
+FormDocumentos.prototype.posicaoMenu = function() {
     var documento_form = $('#documento_form');
     var posicao_doc = documento_form.position();
     var menu = $('#menu_documento');
@@ -298,7 +298,7 @@ Form.prototype.posicaoMenu = function() {
 
 
 
-Form.prototype.iniciarForm = function() {
+FormDocumentos.prototype.iniciarForm = function() {
     this.iniciarCombo();
     this.iniciarEditorDeTexto();
     this.acaoReset();

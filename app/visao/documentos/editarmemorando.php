@@ -1,53 +1,10 @@
 <title>Editar Memorando</title>
-
-<script src="publico/js/jquery/jquery-te-1.0.5.min.js" type="text/javascript"></script>
-<link href='publico/css/jquery-te-Style.css' rel='stylesheet' type="text/css"/>
 <link href='publico/css/documentos.css' rel='stylesheet' type="text/css"/>
 <script src="biblioteca/tinymce/js/tinymce/jquery.tinymce.min.js"></script>
 <script src="biblioteca/tinymce/js/tinymce/tinymce.min.js"></script>
 <script src="publico/js/documentos.js" type="text/javascript"></script>
-<script type="text/javascript">
 
-    $(document).ready(function() {
-        Form.instancia.iniciarForm();
-        
-        $('#b_gerar').on('click', function() {
-            bloqueia();
-            if (confirm('Atenção, o memorando será gerado e registrado permanentemente! Tem certeza?')) {
-                formularioAjax(undefined, undefined, null, function(i) {
-                    window.open('index.php?c=documentos&a=visualizarMemorando&idv=' + i.id, '_blank');
-                    document.paginaAlterada = false;
-                    document.location.hash = '#!documentos|gerarMemorando';
-                });
-
-                capturaNumOficio();
-            }
-            desbloqueia();
-        });
-
-        $('#b_salvar').on('click', function() {
-            bloqueia();
-            if (confirm('Atenção, o rascunho do memorando será salvo! Tem certeza?')) {
-                formularioAjax(undefined, undefined, null, function(i) {
-                    document.paginaAlterada = false;
-                    document.location.hash = '#!documentos|gerarMemorando';
-                });
-                $('#i_numMemorando').val('-1');
-                $('#b_submit').click();
-
-            }
-
-            desbloqueia();
-        });
-        
-        var sigla = $("#i_sigla");
-        $("#sigla").val(sigla.val());
-        liberarCadastro();
-    });
-
-</script>
 <form id="ajaxForm" name="form1" method="post" action='index.php?c=documentos&a=verificaratualizacaomemorando' target="_blank" >
-
 
     <div id="documento_form" style='' border="0" align="center">
         <div style="position: relative;padding:50px 90px;padding-bottom: 120px;">
@@ -97,5 +54,42 @@
     <input type="hidden" name="cargo_remetente" id="cargo_remetente" value="<?php echo($this->cargo_remetente); ?>"/>
     <input type="hidden" name="i_sigla" id="i_sigla" value="<?php echo($this->sigla); ?>"/>
     <input type="hidden" name="i_idmemorando" id="i_idmemorando" value="<?php echo $this->idmemorando; ?>"/>
-    <button type="submit" id="b_submit" style="display: none;"></button>
 </form>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        FormDocumentos.instancia.iniciarForm();
+
+        formularioAjax(undefined, undefined, null, function(i) {
+            if (i.id != undefined)
+                window.open('index.php?c=documentos&a=visualizarMemorando&idv=' + i.id, '_blank');
+            document.paginaAlterada = false;
+            document.location.hash = '#!documentos|gerarMemorando';
+        });
+        $('#b_gerar').on('click', function() {
+            bloqueia();
+            if (confirm('Atenção, o memorando será gerado e registrado permanentemente! Tem certeza?')) {
+
+                capturaNumOficio();
+            }
+            desbloqueia();
+        });
+
+        $('#b_salvar').on('click', function() {
+            bloqueia();
+            if (confirm('Atenção, o rascunho do memorando será salvo! Tem certeza?')) {
+                $('#i_numMemorando').val('-1');
+                $('#jaxForm').submit();
+
+            }
+
+            desbloqueia();
+        });
+
+        var sigla = $("#i_sigla");
+        $("#sigla").val(sigla.val());
+        liberarCadastro();
+    });
+
+</script>

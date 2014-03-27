@@ -1,12 +1,29 @@
 <?php
 
+include_once BIBLIOTECA_DIR . 'seguranca/seguranca.php';
+
+/**
+ * Função para registrar mensagens de logs em arquivo no servidor.
+ * 
+ * @param string $mensagem
+ * @return boolean TRUE em caso de sucesso, FALSE em caso de erro.
+ */
+function registrar_erro($mensagem) {
+    $u = obterUsuarioSessao();
+    if ($u !== null) {
+        $usuario = "[Usuário: " . $u->get_PNome() . ' ' . $u->get_UNome() . '(' . $u->get_iniciais() . '), ' . $u->get_email() . ', papel: ' . $u->get_idPapel() . ', id: ' . $u->get_idUsuario() . "]";
+    } else {
+        $usuario = "[Usuário não logado]";
+    }
+
+    return error_log("Mensagem: <" . $mensagem . ">\n" . $usuario . "\n");
+}
+
 function obterHoraAtual($formato = 'h:i:s') {
-    date_default_timezone_set(APP_TIME_ZONE);
     return date($formato);
 }
 
 function obterDataAtual($formato = 'Y-m-j') {
-    date_default_timezone_set(APP_TIME_ZONE);
     return date($formato);
 }
 
@@ -65,4 +82,16 @@ function truncarTexto($texto, $limite = 20, $append = "...") {
         $texto = substr($texto, 0, $pos[$limite]) . $append;
     }
     return $texto;
+}
+
+function rmdir_recursive($dir) {
+    foreach (scandir($dir) as $file) {
+        if ('.' === $file || '..' === $file)
+            continue;
+        if (is_dir("$dir/$file"))
+            rmdir_recursive("$dir/$file");
+        else
+            unlink("$dir/$file");
+    }
+    rmdir($dir);
 }

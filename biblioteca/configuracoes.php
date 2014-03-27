@@ -13,6 +13,10 @@ if (!defined("APP_CONFIGS")) {
 
     define('APP_VERSION', "Alpha");
 
+    define('APP_ADMIN_EMAIL', 'reuel@bcc.unifal-mg.edu.br');
+
+    define('APP_SUPPORT_EMAIL', 'suporte@inep.gov.br');
+
     /**
      * O novo da pasta de contém este programa instalado
      */
@@ -34,6 +38,7 @@ if (!defined("APP_CONFIGS")) {
     define('SMTP_SERVER_EMAIL', "cead-noreply@unifal-mg.edu.br");
 
     define('APP_TIME_ZONE', 'America/Sao_Paulo');
+    date_default_timezone_set(APP_TIME_ZONE);
 
     /*
      * Endereço das pastas
@@ -42,6 +47,15 @@ if (!defined("APP_CONFIGS")) {
     /**
      * Caminho completo até a pasta contendo o programa instalado.
      */
+    if (!isset($_SERVER['DOCUMENT_ROOT']) || empty($_SERVER['DOCUMENT_ROOT'])) {
+        //Diretório onde os sites estão armazenados. Necessário para poder executar
+        //o arquivo cron.php, que precisa deste arquivo de configurações.
+        //
+        //Quando uma página é requisitada através de um servidor web (pelo navegador),
+        //$_SERVER['DOCUMENT_ROOT'] possui o caminho já. Quando executado pelo cron ou
+        //linha de comando, não necessariamente.
+        $_SERVER['DOCUMENT_ROOT'] = "/var/www";
+    }
     define('ROOT', $_SERVER['DOCUMENT_ROOT'] . "/" . WEB_SERVER_FOLDER . '/');
 
     define('APP_DIR', ROOT . "app/");

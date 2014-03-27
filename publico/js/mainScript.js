@@ -1,4 +1,4 @@
-window.menuHadUpped = false;
+window.menuColou = false;
 //De fato a página está configurada para exibir ele, e o script para esconde-lo é executado
 //na primeira renderização da página, por tanto, window.footerHidden deve estar inicialmente
 //configurado como false.
@@ -24,136 +24,7 @@ if (navigator.appVersion.indexOf("X11") != -1)
     OSName = "UNIX";
 if (navigator.appVersion.indexOf("Linux") != -1)
     OSName = "Linux";
-//----------------------------------------------------------------------//
-//                          INICIALIZAÇÕES BÁSICAS                      //
-//----------------------------------------------------------------------//
-$(document).ready(function() {
 
-    //Carrega links passados com hash pela barra de endereço
-    // Bind an event to window.onhashchange that, when the history state changes,
-    // gets the url from the hash and displays either our cached content or fetches
-    // new content to be displayed.
-    $(window).bind('hashchange', function(e) {
-        if (document.ignorarHashChange === true) {
-            document.ignorarHashChange = false;
-            return;
-        }
-        if (document.paginaAlterada) {
-            var ignorarMudancas = confirm("Modificações não salvas. Continuar?");
-            if (!ignorarMudancas) {
-                var antigaURL = e.originalEvent.oldURL;
-                location.href = antigaURL;
-//                history.
-                document.ignorarHashChange = true;
-                return false;
-            }
-        }
-        try {
-            var url = location.hash;
-        } catch (ex) {
-            url = e.fragment;
-        }
-
-        if (url === "") {
-            url = "#!inicial|homepage";
-            history.replaceState(null, null, url); //Importante! Não apagar!
-        }
-
-        carregarPagina(url);
-        $("a[href^=#]").each(function(index) {
-            if (this.confirmarDados === undefined) {
-                this.confirmarDados = true;
-                $(this).bind("click", confirmarDadosNaoSalvos);
-                $(this).bind("click", requererPaginaAtual);
-            }
-        });
-        document.paginaAlterada = false;
-    });
-
-    // Since the event is only triggered when the hash changes, we need to trigger
-    // the event now, to handle the hash the page may have loaded with.
-    $(window).trigger('hashchange');
-
-
-
-    //Prepara algumas funções especiais e conteúdos para serem exibidos no início
-//    window.onload = function() {
-
-    //Função para centralizar elementos na página de acordo com o tamanho da tela
-    jQuery.fn.center = function() {
-        this.css("position", "absolute");
-        this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
-                $(window).scrollTop()) + "px");
-        this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
-                $(window).scrollLeft()) + "px");
-        return this;
-    };
-
-    //Para que quando a tela redimensionar e o popup com fundo cinza estiver sendo exibido,
-    //ele seja centralizado novamente, evitando exibições estranhas
-    $(window).bind("resize", function() {
-        $(".shaderFrameContent").center();
-    });
-
-    //Permite que o popup seja arrastado pela tela
-    $('.shaderFrameContent').draggable({cancel: ".shaderFrameContentWrap"});
-//
-    $(".shaderFrame").click(function() {
-        $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
-        $(".shaderFrameContent").css("visibility", "hidden").css("opacity", "0");
-    });
-
-    hideFooter();
-
-    $(".popUp").hide();
-    if (!String.prototype.trim) {
-        String.prototype.trim = function() {
-            return this.replace(/^\s+|\s+$/g, '');
-        };
-    }
-
-    //Associa uma função para todos os links do menu
-    var menus = $('.menuLink');
-    for (var i = 0; i < menus.length; i++) {
-        if (menus[i].id == "homeLink") {
-            $(menus[i]).bind("mouseup", function() {
-                if (document.paginaAlterada) { //Fix :p
-                    return false;
-                }
-                $(".menuLink.visited").removeClass("visited");
-                $(this).addClass("visited");
-                $(".actualTool").removeClass('actualTool');
-                $(this).addClass("actualTool");
-
-                hideSubMenu(150);
-                makeSubMenu(null);
-            });
-            continue;
-        }
-        $(menus[i]).bind("mouseup", function() {
-            var id = this.id;
-            if (!this.className.match(".*visited.*")) {
-                $(".menuLink.visited").removeClass("visited");
-                $(this).addClass("visited");
-                hideSubMenu(0);
-                makeSubMenu(this);
-                showSubMenu();
-            } else {
-//                if ($(".subMenu").css("opacity") == "1") {
-                if (!$(".subMenu").hasClass("hidden")) {
-                    hideSubMenu();
-                } else {
-                    showSubMenu();
-                }
-            }
-        });
-    }
-//    };
-
-    //Manter o menu 'colado' no topo da página quando ela desce muito
-    $(window).bind("scroll", acoplarMenu);
-
-});
 
 //----------------------------------------------------------------------//
 //                          FUNÇÕES                                     //
@@ -255,22 +126,11 @@ function getBrowser() {
     return {n: n, v: v, t: names[n] + " " + v}
 }
 
-
-//Função para centralizar elementos na página de acordo com o tamanho da tela
-jQuery.fn.center = function() {
-    this.css("position", "absolute");
-    this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
-            $(window).scrollTop()) + "px");
-    this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
-            $(window).scrollLeft()) + "px");
-    return this;
-};
-
 /**
  * Função para 'colar' o menu quando a página descer. Perceba que a função é otimizada.
  * Ela não fica refazendo operações desnecessárias, como atualizar o css do menu
  * sem necessidade. Em suma, ela detecta quando de fato o menu deve ser desprendido
- * e quando deve ser colado superiormente, através da variável window.menuHadUpped.
+ * e quando deve ser colado superiormente, através da variável window.menuColou.
  * 
  * @author Reuel
  * 
@@ -280,8 +140,8 @@ function acoplarMenu() {
     var menu = $("#menuPosition");
     var menuPosition = menu.position().top;
     var windowPosition = $(window).scrollTop();
-    if (!window.menuHadUpped && windowPosition >= menuPosition) {
-        window.menuHadUpped = true;
+    if (!window.menuColou && windowPosition >= menuPosition) {
+        window.menuColou = true;
         /*  MENU FIXADO  */
         hideSubMenu(400);
         $("#barra_superior").show(800);
@@ -309,8 +169,8 @@ function acoplarMenu() {
         $(".subMenu").mouseenter(function() {
             $(".menuContainer").css('background', 'url("publico/imagens/backgroundMenu.png")')
         })
-    } else if (window.menuHadUpped && windowPosition < menuPosition) {
-        window.menuHadUpped = false;
+    } else if (window.menuColou && windowPosition < menuPosition) {
+        window.menuColou = false;
         $("#barra_superior").hide(500);
         showSubMenu();
         /*  MENU NORMAL  */
@@ -917,37 +777,6 @@ function makeSubMenu(originMenu) {
     }
 }
 
-
-
-//// this function create an Array that contains the JS code of every <script> tag in parameter
-//// then apply the eval() to execute the code in every script collected
-//function parseScript(strcode) {
-//    var scripts = new Array();         // Array which will store the script's code
-//
-//    // Strip out tags
-//    while (strcode.indexOf("<script") > -1 || strcode.indexOf("</script") > -1) {
-//        var s = strcode.indexOf("<script");
-//        var s_e = strcode.indexOf(">", s);
-//        var e = strcode.indexOf("</script", s);
-//        var e_e = strcode.indexOf(">", e);
-//
-//        // Add to scripts array
-//        scripts.push(strcode.substring(s_e + 1, e));
-//        // Strip from strcode
-//        strcode = strcode.substring(0, s) + strcode.substring(e_e + 1);
-//    }
-//
-//    // Loop through every script collected and eval it
-//    for (var i = 0; i < scripts.length; i++) {
-//        try {
-//            eval(scripts[i]);
-//        }
-//        catch (ex) {
-//            // do what you want here when a script fails
-//        }
-//    }
-//}
-
 /**
  * Muda o título da página, mas mudando apenas o final. O título padrão é "Controle CEAD".
  * Caso você altere o título para "Nova página" o resultado então seria: "Controle CEAD | Nova página".
@@ -997,12 +826,3 @@ function extrairJSON(string) {
     }
     return json;
 }
-
-jQuery.fn.center = function() {
-    this.css("position", "absolute");
-    this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
-            $(window).scrollTop()) + "px");
-    this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
-            $(window).scrollLeft()) + "px");
-    return this;
-};

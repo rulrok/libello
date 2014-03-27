@@ -34,8 +34,10 @@ if (preg_match("#.*" . WEB_SERVER_FOLDER . "/?.*#", $_SERVER['REQUEST_URI'])) {
     }
 
     /**
-     * Obtem o VO com os dados do usuário logado atualmente
-     * @return Usuario
+     * Obtem o VO com os dados do usuário logado atualmente ou caso contrário, retorna
+     * NULL.
+     * 
+     * @return Usuario ou NULL
      */
     function obterUsuarioSessao() {
         if (sessaoIniciada()) {

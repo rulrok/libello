@@ -27,18 +27,9 @@ if (sessaoIniciada()) {
 
         <script src="publico/js/jquery/jquery-1.9.1.js"></script>
         <script src="publico/js/jquery/jquery-ui.js"></script>
+        <script src="publico/js/jquery/jquery.center.js"></script>
         <script src="publico/js/browser-detection.js"></script>
-        <script>
-            jQuery.fn.center = function() {
-                this.css("position", "absolute");
-                this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
-                        $(window).scrollTop()) + "px");
-                this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
-                        $(window).scrollLeft()) + "px");
-                return this;
-            };
-            document.paginaAlterada = false;
-        </script>
+
 
     </head>
     <body>
@@ -58,19 +49,21 @@ if (sessaoIniciada()) {
                     <fieldset>
                         <input hidden type="checkbox" class="hidden" id="fazendo_login" name="fazendo_login" checked>
                         <input hidden type="text" class="hidden" id="alvo" name="alvo" >
-                        <div class="line">
-                            <label for="email">Email</label>
-                            <input autofocus="true" required type="email" id="email" name="login">
+                        <div class="control-group">
+                            <!--<label for="email">Email</label>-->
+                            <input class="input-large" autofocus="true" required type="email" id="email" name="login" placeholder="Email">
                         </div>
-                        <div class="line">
-                            <label for="password">Senha</label>
-                            <input required type="password" id="password" name="senha" >
+                        <div class="control-group">
+                            <!--<label for="password">Senha</label>-->
+                            <input class="input-large" required type="password" id="password" name="senha" placeholder="Senha">
                         </div>
                         <br/>
-                        <button class="btn btn-right btn-info" name="identificacao" type="submit">Entrar</button>
-                        <?php if ($ocultarDetalhes): ?>
-                            <a href="lembrarSenha.php" class="btn btn-link">Esqueci a senha</a>
-                        <?php endif; ?>
+                        <div class="control-group">
+                            <button class="btn btn-right btn-info" name="identificacao" type="submit">Entrar</button>
+                            <?php if ($ocultarDetalhes): ?>
+                                <a href="lembrarSenha.php" class="btn btn-link">Esqueci a senha</a>
+                            <?php endif; ?>
+                        </div>
                     </fieldset>
 
                 </form>

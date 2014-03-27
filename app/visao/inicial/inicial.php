@@ -70,6 +70,7 @@
     <script src="publico/js/jquery/jquery.ba-hashchange.js"></script>
     <script src="publico/js/jquery/jquery.form.js"></script>
     <script src="publico/js/jquery/jquery.chosen.js"></script>
+    <script src="publico/js/jquery/jquery.center.js"></script>
     <script src="publico/js/mainScript.js"></script>
     <script src="publico/js/validarCampos.js"></script>
     <script src="publico/js/ajaxForms.js"></script>
@@ -210,17 +211,16 @@
                         </ul>
                     </div>
                     <div class="footerLinks" id="informacoes">
-                        <ul><lt>Informações</lt>
-                            <li><p>Este site é corretamente visualizado no <a href="http://www.google.com/chrome/" target="_blank">Google Chrome</a>, <a href="http://www.mozilla.org/pt-BR/firefox/fx/" target="_blank">Firefox</a> ou <a href="http://www.opera.com/download" target="_blank">Opera</a>.
+                        <ul><lt>Informação</lt>
+                            <li><p>Este site é corretamente visualizado no <a href="http://www.google.com/chrome/" target="_blank">Google&nbsp;Chrome</a>, <a href="http://www.mozilla.org/pt-BR/firefox/fx/" target="_blank">Mozilla&nbsp;Firefox</a> ou <a href="http://www.opera.com/download" target="_blank">Opera</a>.
                                     <br>
-                                    <i><b>Não há garantias de funcionar com o Internet Explorer nem com o Safari.</b></i></p>
+                                    <i><b>Não há garantias de funcionar com o Internet&nbsp;Explorer nem com o Safari.</b></i></p>
                             </li>
                         </ul>
                     </div>
                     <div class="footerLinks" id="suporte">
                         <ul><lt>Suporte</lt>
-                            <li>reuel@bcc.unifal-mg.edu.br</li>
-                            <li>a12033@bcc.unifal-mg.edu.br</li>
+                            <li><a target="_blank" href="mailto:<?php echo APP_SUPPORT_EMAIL; ?>"><?php echo APP_SUPPORT_EMAIL; ?></a></li>
                         </ul>
                     </div>
                 </nav>
@@ -244,7 +244,140 @@
     <script src="publico/js/limiter.js"></script> 
 
     <script>
+                //----------------------------------------------------------------------//
+                //                          INICIALIZAÇÕES BÁSICAS                      //
+                //----------------------------------------------------------------------//
                 $(document).ready(function() {
+
+                    //Carrega links passados com hash pela barra de endereço
+                    // Bind an event to window.onhashchange that, when the history state changes,
+                    // gets the url from the hash and displays either our cached content or fetches
+                    // new content to be displayed.
+                    $(window).bind('hashchange', function(e) {
+                        if (document.ignorarHashChange === true) {
+                            document.ignorarHashChange = false;
+                            return;
+                        }
+                        if (document.paginaAlterada) {
+                            var ignorarMudancas = confirm("Modificações não salvas. Continuar?");
+                            if (!ignorarMudancas) {
+                                var antigaURL = e.originalEvent.oldURL;
+                                location.href = antigaURL;
+//                history.
+                                document.ignorarHashChange = true;
+                                return false;
+                            }
+                        }
+                        try {
+                            var url = location.hash;
+                        } catch (ex) {
+                            url = e.fragment;
+                        }
+
+                        if (url === "") {
+                            url = "#!inicial|homepage";
+                            history.replaceState(null, null, url); //Importante! Não apagar!
+                        }
+
+                        carregarPagina(url);
+                        $("a[href^=#]").each(function(index) {
+                            if (this.confirmarDados === undefined) {
+                                this.confirmarDados = true;
+                                $(this).bind("click", confirmarDadosNaoSalvos);
+                                $(this).bind("click", requererPaginaAtual);
+                            }
+                        });
+                        document.paginaAlterada = false;
+                    });
+
+                    // Since the event is only triggered when the hash changes, we need to trigger
+                    // the event now, to handle the hash the page may have loaded with.
+                    $(window).trigger('hashchange');
+
+
+
+                    //Prepara algumas funções especiais e conteúdos para serem exibidos no início
+//    window.onload = function() {
+
+                    //Função para centralizar elementos na página de acordo com o tamanho da tela
+                    jQuery.fn.center = function() {
+                        this.css("position", "absolute");
+                        this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
+                                $(window).scrollTop()) + "px");
+                        this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
+                                $(window).scrollLeft()) + "px");
+                        return this;
+                    };
+
+                    //Para que quando a tela redimensionar e o popup com fundo cinza estiver sendo exibido,
+                    //ele seja centralizado novamente, evitando exibições estranhas
+                    $(window).bind("resize", function() {
+                        $(".shaderFrameContent").center();
+                    });
+
+                    //Permite que o popup seja arrastado pela tela
+                    $('.shaderFrameContent').draggable({cancel: ".shaderFrameContentWrap"});
+//
+                    $(".shaderFrame").click(function() {
+                        $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
+                        $(".shaderFrameContent").css("visibility", "hidden").css("opacity", "0");
+                    });
+
+                    hideFooter();
+                    showFooter();
+
+                    $(".popUp").hide();
+
+                    if (!String.prototype.trim) {
+                        String.prototype.trim = function() {
+                            return this.replace(/^\s+|\s+$/g, '');
+                        };
+                    }
+
+                    //Associa uma função para todos os links do menu
+                    var menus = $('.menuLink');
+                    for (var i = 0; i < menus.length; i++) {
+                        if (menus[i].id == "homeLink") {
+                            $(menus[i]).bind("mouseup", function() {
+                                if (document.paginaAlterada) { //Fix :p
+                                    return false;
+                                }
+                                $(".menuLink.visited").removeClass("visited");
+                                $(this).addClass("visited");
+                                $(".actualTool").removeClass('actualTool');
+                                $(this).addClass("actualTool");
+
+                                hideSubMenu(150);
+                                makeSubMenu(null);
+                            });
+                            continue;
+                        }
+                        $(menus[i]).bind("mouseup", function() {
+                            var id = this.id;
+                            if (!this.className.match(".*visited.*")) {
+                                $(".menuLink.visited").removeClass("visited");
+                                $(this).addClass("visited");
+                                hideSubMenu(0);
+                                makeSubMenu(this);
+                                showSubMenu();
+                            } else {
+//                if ($(".subMenu").css("opacity") == "1") {
+                                if (!$(".subMenu").hasClass("hidden")) {
+                                    hideSubMenu();
+                                } else {
+                                    showSubMenu();
+                                }
+                            }
+                        });
+                    }
+//    };
+
+                    //Manter o menu 'colado' no topo da página quando ela desce muito
+                    $(window).bind("scroll", acoplarMenu);
+
+                    //----------------------------------------------------------------------//
+                    //               CONFIGURAÇÕES DE COMPONENTES DE TERCEIROS              //
+                    //----------------------------------------------------------------------//
                     //Configurações globais para dataTables
                     $.extend($.fn.dataTable.defaults, {
                         "bFilter": true,

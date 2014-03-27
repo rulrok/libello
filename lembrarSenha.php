@@ -13,8 +13,8 @@
         <!-- SCRIPTS -->
         <script src="publico/js/jquery/jquery-1.9.1.js"></script>
         <script src="publico/js/jquery/jquery.form.js"></script>
-        <script src="publico/js/ajaxForms.js"></script>
         <script src="publico/js/mainScript.js"></script>
+        <script src="publico/js/ajaxForms.js"></script>
 
     </head>
     <body>
@@ -27,12 +27,12 @@
             <div id="logo_esquerda_paginas_iniciais"></div>
             <div id="logo_direita_paginas_iniciais"></div>
             <div id="loginArea">
-                <?php if (!filter_has_var(INPUT_GET, 'tolken')): ?>
+                <?php if (!filter_has_var(INPUT_GET, 'token')): ?>
                     <form class="tabela centralizado" id="ajaxForm" name="identificacao" action="./biblioteca/seguranca/lembrarSenha.php" method="post">
                         <fieldset>
-                            <div class="line">
-                                <label for="email">Email</label>
-                                <input required autofocus type="text" id="email" name="email">
+                            <div class="control-group">
+                                <!--<label for="email">Email</label>-->
+                                <input required autofocus type="email" id="email" name="email" placeholder="Email">
                             </div>
                             <br/>
                             <a href="logar.php" class="btn btn-mini"><i class='icon-arrow-left'></i> Voltar</a>
@@ -43,14 +43,14 @@
 
                     <form class="tabela centralizado" id="ajaxForm" name="identificacao" action="./biblioteca/seguranca/lembrarSenha.php" method="post" >
                         <fieldset>
-                            <div class="line">
-                                <label for="novaSenha">Nova senha</label>
-                                <input id="novaSenha" required type="password" name="novaSenha"/>
+                            <div class="control-group">
+                                <!--<label for="novaSenha">Nova senha</label>-->
+                                <input id="novaSenha" required type="password" name="novaSenha" placeholder="Nova senha"/>
                             </div>
-                            <input hidden="true" readonly id="tolken" required type="text" name="tolken" value="<?php echo filter_input(INPUT_GET, 'tolken'); ?>"/>
+                            <input hidden="true" readonly id="token" required type="text" name="token" value="<?php echo filter_input(INPUT_GET, 'token'); ?>"/>
                             <br/>
                             <a href="logar.php" class="btn btn-mini"><i class='icon-arrow-left'></i> Voltar</a>
-                   
+
                             <button disabled id="botaoEnviarNovaSenha" class="btn btn-info" name="identificacao" type="submit">Enviar</button>
                         </fieldset>
                     </form>

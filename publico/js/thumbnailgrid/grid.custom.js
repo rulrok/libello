@@ -191,7 +191,7 @@ var Grid = (function() {
             support = Modernizr.csstransitions,
             // default settings
             settings = {
-                minHeight: 350,
+                minHeight: 600,
                 speed: 350,
                 easing: 'ease'
             };
@@ -297,8 +297,8 @@ var Grid = (function() {
         scrollExtra = 0;
 
         // if a preview exists and previewPos is different (different row) from item´s top then close it
-        if (typeof preview != 'undefined') {
 
+        if (typeof preview != 'undefined') {
             // not in the same row
             if (previewPos !== position) {
                 // if position > previewPos then we need to take te current preview´s height in consideration when scrolling the window
@@ -326,7 +326,11 @@ var Grid = (function() {
     function hidePreview() {
         current = -1;
         var preview = $.data(this, 'preview');
-        preview.close();
+        try{
+            preview.close();
+        } catch(E){
+            
+        }
         $.removeData(this, 'preview');
     }
 
@@ -343,13 +347,15 @@ var Grid = (function() {
             // create Preview structure:
             this.$title = $('<h3></h3>');
             this.$description = $('<p></p>');
-            this.$hrefImg = $('<a>Baixar imagem</a>');
-            this.$hrefVct = $('<a>Baixar arquivo vetorial</a>');
-            this.$details = $('<div class="og-details"></div>').append(this.$title, this.$description, this.$hrefImg, this.$hrefVct);
+            this.$hrefImg = $('<a class="og-link">Baixar imagem</a>');
+            this.$hrefVct = $('<a class="og-link">Baixar arquivo vetorial</a>');
+            this.$details = $('<div class="og-details"></div>').append(this.$title, this.$description);
             this.$loading = $('<div class="og-loading"></div>');
             this.$fullimage = $('<div class="og-fullimg"></div>').append(this.$loading);
             this.$closePreview = $('<span class="og-close"></span>');
-            this.$previewInner = $('<div class="og-expander-inner"></div>').append(this.$closePreview, this.$fullimage, this.$details);
+            this.$centerLinks = $("<center></center>").append(this.$hrefImg, this.$hrefVct);
+            this.$botoes = $('<div class="og-links"></div>').append(this.$centerLinks);
+            this.$previewInner = $('<div class="og-expander-inner"></div>').append(this.$closePreview, this.$fullimage, this.$details, this.$botoes);
             this.$previewEl = $('<div class="og-expander"></div>').append(this.$previewInner);
             // append preview element to the item
             this.$item.append(this.getEl());
@@ -460,7 +466,8 @@ var Grid = (function() {
                 if (typeof this.$largeImg !== 'undefined') {
                     this.$largeImg.fadeOut('fast');
                 }
-                this.$previewEl.css('height', 0);
+//                this.$previewEl.css('height', 0);
+                this.$previewEl.css('display', 'none');
                 // the current expanded item (might be different from this.$item)
                 var $expandedItem = $items.eq(this.expandedIdx);
                 $expandedItem.css('height', $expandedItem.data('height')).on(transEndEventName, onEndFn);
@@ -476,15 +483,15 @@ var Grid = (function() {
         },
         calcHeight: function() {
 
-            var heightPreview = winsize.height - this.$item.data('height') - marginExpanded;
-                    itemHeight = winsize.height;
+            var heightPreview = winsize.height - this.$item.data('height') - marginExpanded,
+            itemHeight = winsize.height;
 
             if (heightPreview < settings.minHeight) {
                 heightPreview = settings.minHeight;
                 itemHeight = settings.minHeight + this.$item.data('height') + marginExpanded;
             }
 
-            this.height = heightPreview;
+            this.height = heightPreview+200;
             this.itemHeight = itemHeight;
 //            this.height = settings.minHeight;
 //            this.itemHeight = settings.minHeight + this.$item.data('height') + marginExpanded;

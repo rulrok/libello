@@ -32,11 +32,11 @@
             </div>
             <div class="line">
                 <label for="senha">Nova senha</label>
-                <input onblur="querMudarSenha()" id="senha" name="senha" type="password"/>
+                <input id="senha" name="senha" type="password"/>
             </div>
             <div class="line">
                 <label for="confSenha">Confirmar senha</label>
-                <input onblur="querMudarSenha()" id="confSenha" name="confSenha" type="password"/>
+                <input id="confSenha" name="confSenha" type="password"/>
             </div>
         </fieldset>
         <hr>
@@ -55,9 +55,12 @@
             , alwaysFn: function() {
                 $("#senhaAtual").val('');
             }
-            , completeFn: function() {
+            , successFn: function() {
                 $("#nomeusuarioHeader").empty();
                 $("#nomeusuarioHeader").html($("#nome").val());
+                $("#senhaAtual").val('');
+                $("#senha").val('');
+                $("#confSenha").val('');
             }
         });
         $("#dataNascimento").datepicker();
