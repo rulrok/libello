@@ -17,10 +17,6 @@ if (!defined("APP_CONFIGS")) {
     
     define('APP_SUPPORT_EMAIL','suporte@inep.gov.br');
 
-    define('APP_ADMIN_EMAIL', 'reuel@bcc.unifal-mg.edu.br');
-
-    define('APP_SUPPORT_EMAIL', 'suporte@inep.gov.br');
-
     /**
      * O novo da pasta de contém este programa instalado
      */
