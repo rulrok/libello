@@ -62,7 +62,7 @@ abstract class abstractDAO {
             }
             return $retorno;
         } catch (Exception $e) {
-            print_r($e);
+//            print_r($e);
             registrar_erro($e->getMessage());
             return null;
         }
@@ -91,7 +91,7 @@ abstract class abstractDAO {
             }
         } catch (Exception $e) {
             //TODO Armazenar exceção para depuração do sistema
-            print_r($e);
+//            print_r($e);
             registrar_erro($e->getMessage());
             return false;
         }

@@ -1,0 +1,26 @@
+[27-Mar-2014 20:08:38 America/Sao_Paulo] Mensagem: <SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '39116561813' for key 'cpf_UNIQUE'>
+[Usuário: Reuel Ramos Ribeiro(RRR), rulrok@gmail.com, papel: 2, id: 2]
+
+
+[27-Mar-2014 20:10:42 America/Sao_Paulo] Mensagem: <SQLSTATE[HY000]: General error: 1205 Lock wait timeout exceeded; try restarting transaction>
+[Usuário: Reuel Ramos Ribeiro(RRR), rulrok@gmail.com, papel: 2, id: 2]
+
+
+[27-Mar-2014 20:24:54 America/Sao_Paulo] PHP Notice:  Array to string conversion in /Applications/MAMP/htdocs/controle-cead/app/modelo/ferramentas/usuarios/verificarnovo.php on line 80
+[27-Mar-2014 20:24:54 America/Sao_Paulo] PHP Stack trace:
+[27-Mar-2014 20:24:54 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/controle-cead/index.php:0
+[27-Mar-2014 20:24:54 America/Sao_Paulo] PHP   2. Mvc->rodar() /Applications/MAMP/htdocs/controle-cead/index.php:19
+[27-Mar-2014 20:24:54 America/Sao_Paulo] PHP   3. ControladorUsuarios->acaoVerificarNovo() /Applications/MAMP/htdocs/controle-cead/biblioteca/Mvc/Mvc.php:97
+[27-Mar-2014 20:24:54 America/Sao_Paulo] PHP   4. Controlador->renderizar() /Applications/MAMP/htdocs/controle-cead/app/controlador/ControladorUsuarios.php:17
+[27-Mar-2014 20:24:54 America/Sao_Paulo] PHP   5. Visao->renderizar($diretorio = *uninitialized*, $arquivo = *uninitialized*) /Applications/MAMP/htdocs/controle-cead/biblioteca/Mvc/Controlador.php:17
+[27-Mar-2014 20:24:54 America/Sao_Paulo] PHP   6. require() /Applications/MAMP/htdocs/controle-cead/biblioteca/Mvc/Visao.php:23
+[27-Mar-2014 20:24:54 America/Sao_Paulo] PHP   7. verificadorFormularioAjax->verificar() /Applications/MAMP/htdocs/controle-cead/app/modelo/ferramentas/usuarios/verificarnovo.php:135
+[27-Mar-2014 20:24:54 America/Sao_Paulo] PHP   8. verificarNovoUsuario->_validar() /Applications/MAMP/htdocs/controle-cead/app/visao/verificadorFormularioAjax.php:40
+[27-Mar-2014 20:25:45 America/Sao_Paulo] Mensagem: <SQLSTATE[HY000]: General error: 1205 Lock wait timeout exceeded; try restarting transaction>
+[Usuário: Reuel Ramos Ribeiro(RRR), rulrok@gmail.com, papel: 2, id: 2]
+
+
+[27-Mar-2014 20:27:48 America/Sao_Paulo] Mensagem: <SQLSTATE[HY000]: General error: 1205 Lock wait timeout exceeded; try restarting transaction>
+[Usuário: Reuel Ramos Ribeiro(RRR), rulrok@gmail.com, papel: 2, id: 2]
+
+

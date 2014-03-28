@@ -1,5 +1,11 @@
 <?php
-require_once __DIR__ . '/../biblioteca/configuracoes.php';
+
+/*
+ * Este arquivo deve ser executado por uma versão do PHP superior a versão 5.3.0
+ * 
+ */
+
+require_once 'configuracoes.php';
 require_once BIBLIOTECA_DIR . 'bancoDeDados/PDOconnectionFactory.php';
 require_once APP_DIR . 'modelo/Utils.php';
 
@@ -29,7 +35,9 @@ if (is_dir(APP_TEMP_ABSOLUTE_DIR)) {
         }
 
         if (is_dir($arquivo)) {
-            rmdir_recursive($arquivo);
+            if (!rmdir_recursive($arquivo)) {
+                registrar_erro("Falha ao remover diretório $arquivo pelo script cron");
+            }
         } elseif (!unlink($arquivo)) {
             registrar_erro("Falha ao remover arquivo " . APP_TEMP_ABSOLUTE_DIR . $arquivo . " pelo script cron");
         }

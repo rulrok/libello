@@ -8,15 +8,34 @@ include_once BIBLIOTECA_DIR . 'seguranca/seguranca.php';
  * @param string $mensagem
  * @return boolean TRUE em caso de sucesso, FALSE em caso de erro.
  */
-function registrar_erro($mensagem) {
-    $u = obterUsuarioSessao();
-    if ($u !== null) {
-        $usuario = "[Usuário: " . $u->get_PNome() . ' ' . $u->get_UNome() . '(' . $u->get_iniciais() . '), ' . $u->get_email() . ', papel: ' . $u->get_idPapel() . ', id: ' . $u->get_idUsuario() . "]";
+function registrar_erro($mensagem, Usuario $usuarioAfetado = null) {
+
+
+
+    $usuarioLogado = obterUsuarioSessao();
+    if ($usuarioLogado !== null) {
+        $usuario = "[Usuário: " . _formatarDadosUsuario($usuarioLogado) . "]";
     } else {
         $usuario = "[Usuário não logado]";
     }
+    if ($usuarioAfetado !== null) {
+        $usuarioAlvo = "[Usuário alvo: " . _formatarDadosUsuario($usuarioAfetado) . "]";
+    } else {
+        $usuarioAlvo = "";
+    }
 
-    return error_log("Mensagem: <" . $mensagem . ">\n" . $usuario . "\n");
+    return error_log("Mensagem: <" . $mensagem . ">\n" . $usuario . "\n" . $usuarioAlvo . "\n");
+}
+
+/**
+ * Função para facilitar a linearização de alguns dados de um objeto Usuario para
+ * registrar no log de eventos do sistema.
+ * 
+ * @param Usuario
+ * @return string
+ */
+function _formatarDadosUsuario(Usuario $u) {
+    return $u->get_PNome() . ' ' . $u->get_UNome() . '(' . $u->get_iniciais() . '), ' . $u->get_email() . ', papel: ' . $u->get_idPapel() . ', id: ' . $u->get_idUsuario();
 }
 
 function obterHoraAtual($formato = 'h:i:s') {
@@ -93,5 +112,21 @@ function rmdir_recursive($dir) {
         else
             unlink("$dir/$file");
     }
-    rmdir($dir);
+    return rmdir($dir);
+}
+
+/**
+ * Gera uma senha aleatória para uso temporário por um usuário recem cadastrado.
+ * 
+ * @param int $tamanhoSenha
+ */
+function gerarSenhaUsuario($tamanhoSenha = 8) {
+    $alfabeto = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
+    $senha = array();
+    $tamanhoAlfabeto = strlen($alfabeto) - 1;
+    for ($i = 0; $i < $tamanhoSenha; $i++) {
+        $n = rand(0, $tamanhoAlfabeto);
+        $senha[] = $alfabeto[$n];
+    }
+    return implode($senha); //turn the array into a string
 }

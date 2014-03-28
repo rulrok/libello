@@ -9,6 +9,8 @@ if (sessaoIniciada()) {
     ob_end_flush();
     exit;
 }
+
+$email = filter_has_var(INPUT_GET, 'email') ? filter_input(INPUT_GET, 'email') : "";
 ?>
 <!DOCTYPE html">
 <html>
@@ -51,11 +53,11 @@ if (sessaoIniciada()) {
                         <input hidden type="text" class="hidden" id="alvo" name="alvo" >
                         <div class="control-group">
                             <!--<label for="email">Email</label>-->
-                            <input class="input-large" autofocus="true" required type="email" id="email" name="login" placeholder="Email">
+                            <input class="input-large" <?php echo empty($email) ? "autofocus" : ""; ?> required type="email" id="email" name="login" placeholder="Email" value="<?php echo $email; ?>">
                         </div>
                         <div class="control-group">
                             <!--<label for="password">Senha</label>-->
-                            <input class="input-large" required type="password" id="password" name="senha" placeholder="Senha">
+                            <input class="input-large" <?php echo empty($email) ? "" : "autofocus"; ?> required type="password" id="password" name="senha" placeholder="Senha">
                         </div>
                         <br/>
                         <div class="control-group">

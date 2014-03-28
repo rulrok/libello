@@ -19,7 +19,6 @@ class usuarioDAO extends abstractDAO {
 
         $dadosAntigos = $this->recuperarUsuario($email);
 
-        $condicao = " WHERE email = :email AND ativo = 1";
 
         $nome = $novosDados->get_PNome();
         if ($nome == null) {
@@ -48,8 +47,8 @@ class usuarioDAO extends abstractDAO {
             $cpf = $dadosAntigos->get_cpf();
         }
 
-        $sql = "UPDATE usuario SET idPapel = :idPapel, senha = :senha, PNome= :PNome, UNome = :UNome, dataNascimento = :dataNascimento, cpf = :cpf ";
-        $sql .= $condicao;
+        $sql = "UPDATE usuario SET idPapel = :idPapel, senha = :senha, PNome= :PNome, UNome = :UNome, dataNascimento = :dataNascimento, cpf = :cpf WHERE email = :email AND ativo = 1";
+
         $params = array(
             ':email' => [$email, PDO::PARAM_STR]
             , ':idPapel' => [$idPapel, PDO::PARAM_INT]

@@ -3,6 +3,9 @@
 <form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=usuarios&a=verificaredicao">
     <fieldset>
         <legend>Dados</legend>
+        <div class="hidden">
+            <input required id="userID" name="userID" type="text" value="<?php echo $this->userID; ?>">
+        </div>
         <div class="line">
             <label for="nome">Nome</label>
             <input required autofocus id="nome" name="nome" class="campoObrigatorio" type="text" value="<?php echo $this->nome ?>">
@@ -32,12 +35,6 @@
             </div>
             <div class="line">
                 <label for="papel">Papel no sistema</label>
-                <!--             <div>
-                                <label for="sugestaoInteligente" style="font-size: 10px;
-                                       line-height: 13px;
-                                       text-align: center;">Sugestão inteligente</label>
-                                <input id="sugestaoInteligente" type="checkbox" value="">
-                            </div>-->
                 <select required class="input-large" id="papel" name="papel">
                     <?php echo $this->comboPapel ?>
                 </select>
@@ -55,9 +52,6 @@
     <button disabled class=" btn btn-primary btn-right" type="submit">Atualizar dados</button>
 
 </form>
-
-
-
 
 <script>
     function preconfigurarPermissoes() {

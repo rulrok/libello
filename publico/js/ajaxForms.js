@@ -45,21 +45,19 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn
     var botaoAcao = $(aux);
     desabilitarBotaoAcao(botaoAcao);
 
-// pre-submit callback 
+
     function preProcessar(formData, jqForm, options) {
-        // formData is an array; here we use $.param to convert it to a string to display it 
-        // but the form plugin does this for you automatically when it submits the data 
-//        var queryString = $.param(formData);
-
-        // jqForm is a jQuery object encapsulating the form element.  To access the 
-        // DOM element for the form do this: 
-        // var formElement = jqForm[0]; 
-
-//        alert('About to submit: \n\n' + queryString);
-
-        // here we could return false to prevent the form from being submitted; 
-        // returning anything other than false will allow the form submit to continue 
+        //Retornando FALSE através dessa função, o envio do formulário será cancelado
+        //Qualquer outra coisa deixará o formulário ser enviado
+        $("input[type=submit],button[type=submit]").attr('disabled', true);
         return true;
+    }
+
+    function posProcessar(formData, jfForm, options) {
+        if (completeFn !== undefined && isFunction(completeFn)) {
+            completeFn();
+        }
+        $("input[type=submit],button[type=submit]").attr('disabled', false);
     }
 
     function sucesso(responseText, statusText, xhr, $form) {
@@ -73,9 +71,6 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn
         // if the ajaxSubmit method was passed an Options Object with the dataType 
         // property set to 'json' then the first argument to the success callback 
         // is the json data object returned by the server 
-
-//        alert('status: ' + statusText + '\n\nresponseText: \n' + responseText +
-//                '\n\nThe output div should have already been updated with the responseText.');
 
         var data = responseText;
         if (data !== null && data !== undefined) {
@@ -106,7 +101,7 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn
         target: recipient // target element(s) to be updated with server response 
         , beforeSubmit: preProcessar // pre-submit callback 
         , success: sucesso  // post-submit callback 
-        , complete: completeFn
+        , complete: posProcessar
         , aways: alwaysFn
         , url: $("#" + idFormulario).prop("action")         // override for form's 'action' attribute 
         , type: $("#" + idFormulario).prop("method")        // 'get' or 'post', override for form's 'method' attribute 

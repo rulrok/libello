@@ -29,10 +29,13 @@
             <label for="senha">Senha</label>
             <input required type="password" id="senha" name="senha" class="input-large" data-content="Quaisquer caracteres exceto 'espaço'.Mínimo de seis caracteres.">
         </div>
-
         <div class="line">
             <label for="confsenha">Confirmar Senha</label>
             <input required type="password" class="input-large" id="confsenha" name="confsenha" >
+        </div>
+        <div class="line">
+            <label for="enviarSenha">Enviar senha aleatória por email</label>
+            <input type="checkbox" name="enviarSenha" id="enviarSenha">
         </div>
         <br/>
         <fieldset>
@@ -101,5 +104,16 @@
         varrerCampos();
         formularioAjax();
         $("#ajuda").tooltip({placement: 'right'});
+
+        $("#enviarSenha").on('change', function() {
+            if (this.checked) {
+                $("#senha").attr('disabled', true).attr('readonly',true).val("************");
+                $("#confsenha").attr('disabled', true).attr('readonly',true).val("************");
+            } else {
+                $("#senha").attr('disabled', false).attr('readonly',false).val("");
+                $("#confsenha").attr('disabled', false).attr('readonly',false).val("");
+
+            }
+        });
     });
 </script>
