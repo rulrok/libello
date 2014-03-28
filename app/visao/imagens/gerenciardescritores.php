@@ -288,6 +288,7 @@
                 }
             }
         });
+        $("#busca_descritor").focus();
     }
 
     //======================================================================
@@ -392,7 +393,6 @@
                     switch (operation) {
                         case "move_node":
                             if (node.original !== undefined && node_parent.original != undefined && node.original.nivel - 1 == node_parent.original.nivel) {
-//                                    console.log("movendo...");
                                 check_passed = true;
                             }
                             break;
@@ -415,7 +415,6 @@
                             check_passed = renomearDescritor(node.id, node_position);
                             break;
                     }
-//                        console.log(check_passed);
                     return check_passed;
                 }
             }
@@ -486,12 +485,13 @@
 
         $('#jstree_div').on("create_node.jstree", function(e, data) {
             if (ultimoDescritorCriado !== undefined) {
-                $("#jstree_div").jstree(true).set_id(data.node, ultimoDescritorCriado.id);
-                $("#jstree_div").jstree(true).set_text(data.node, ultimoDescritorCriado.nome);
-                console.log(data)
+                var $tree = $("#jstree_div").jstree(true);
+                $tree.set_id(data.node, ultimoDescritorCriado.id);
+                $tree.set_text(data.node, ultimoDescritorCriado.nome);
+                data.instance.get_node(data.node).original.nivel = ultimoDescritorCriado.nivel;
+                console.log(data.instance.get_node(data.node))
                 ultimoDescritorCriado = undefined;
             }
-        });
-
+        }).jstree("refresh");
     }
 </script>

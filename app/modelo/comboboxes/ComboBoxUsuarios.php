@@ -48,7 +48,7 @@ class ComboBoxUsuarios {
                 $codigo .= "<optgroup label='$nomePapel'>\n";
                 if ($campoExtra !== null) {
                     for ($j = 0; $j < sizeof($usuarios); $j++) {
-                        $codigo .= "<option value=\"" . fnEncrypt($usuarios[$j]['idUsuario']) . "\">" . $usuarios[$j]['Nome'] . " (" . $usuarios[$j][$campoExtra] . ")</option>\n";
+                        $codigo .= "<option value=\"" . fnEncrypt($usuarios[$j]['idUsuario']) . "\">" . $usuarios[$j]['Nome'] . " ( " . $usuarios[$j][$campoExtra] . " )</option>\n";
                     }
                 } else {
                     for ($j = 0; $j < sizeof($usuarios); $j++) {

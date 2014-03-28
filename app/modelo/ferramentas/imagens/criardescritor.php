@@ -19,7 +19,7 @@ if (is_numeric($idPai) && !empty($nomeNormalizado)) {
                         'sucesso' => true
                         , 'id' => fnEncrypt($ultimoDescritor[0]['idDescritor'])
                         , 'nome' => $ultimoDescritor[0]['nome']
-                        , 'nivel' > $ultimoDescritor[0]['nivel']
+                        , 'nivel' => $ultimoDescritor[0]['nivel']
                     ]
             );
             $imagensDAO->encerrarTransacao();
