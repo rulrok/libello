@@ -44,7 +44,17 @@
         <br/>
         <fieldset>
             <legend>Permissões por ferramenta</legend>
-            <?php echo $this->comboPermissoes ?>
+            <table>
+                <tr>
+                    <th></th>
+                    <th>Sem acesso</th>
+                    <th>Consulta</th>
+                    <th>Escrita</th>
+                    <th>Gestor</th>
+                    <th>Administração</th>
+                </tr>
+                <?php echo $this->comboPermissoes ?>
+            </table>
         </fieldset>
 
     </fieldset>
@@ -108,7 +118,7 @@
 //        idFerramenta = element['idFerramenta'];
             idPermissao = element['idPermissao'];
 
-            $('[name$="' + nome + '"]').val(idPermissao);
+            $(':radio[value='+idPermissao+'][name$="'+nome+'"]').attr('checked',true);
         }
     });
 

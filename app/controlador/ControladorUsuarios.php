@@ -9,7 +9,8 @@ class ControladorUsuarios extends Controlador {
 
     public function acaoNovo() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
-        $this->visao->comboPermissoes = ComboBoxPermissoes::montarTodasPermissoes();
+        //$this->visao->comboPermissoes = ComboBoxPermissoes::montarTodasPermissoes(); //OBSOLETO: Para compreender, leia a documentação @deprecated do método que esta linha chama
+        $this->visao->comboPermissoes = ComboBoxPermissoes::montarTodasPermissoesRadio();
         $this->visao->comboPapeis = ComboBoxPapeis::montarPapeisRestritos(obterUsuarioSessao()->get_idPapel());
         $this->renderizar();
     }
@@ -41,7 +42,8 @@ class ControladorUsuarios extends Controlador {
             die("Você não tem permissão para fazer essa edição");
         }
 
-        $this->visao->comboPermissoes = ComboBoxPermissoes::montarTodasPermissoes();
+        //$this->visao->comboPermissoes = ComboBoxPermissoes::montarTodasPermissoes(); //OBSOLETO: Para compreender, leia a documentação @deprecated do método que esta linha chama
+        $this->visao->comboPermissoes = ComboBoxPermissoes::montarTodasPermissoesRadio();
         $email = $usuarioDAO->descobrirEmail($userID);
         $usuario = $usuarioDAO->recuperarUsuario($email);
         $this->visao->userID = filter_input(INPUT_GET, 'userID');

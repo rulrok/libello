@@ -54,7 +54,17 @@
         <br/>
         <fieldset>
             <legend>Permissões por ferramenta</legend>
+            <table>
+                <tr>
+                    <th></th>
+                    <th>Sem acesso</th>
+                    <th>Consulta</th>
+                    <th>Escrita</th>
+                    <th>Gestor</th>
+                    <th>Administração</th>
+                </tr>
             <?php echo $this->comboPermissoes ?>
+            </table>
         </fieldset>
     </fieldset>
     <button class="btn btn-large" type="reset">Limpar</button>
