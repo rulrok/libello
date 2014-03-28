@@ -8,16 +8,19 @@ require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
 class ControladorUsuarios extends Controlador {
 
     public function acaoNovo() {
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->visao->comboPermissoes = ComboBoxPermissoes::montarTodasPermissoes();
         $this->visao->comboPapeis = ComboBoxPapeis::montarPapeisRestritos(obterUsuarioSessao()->get_idPapel());
         $this->renderizar();
     }
 
     public function acaoVerificarNovo() {
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->renderizar();
     }
 
     public function acaoEditar() {
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         if (!filter_has_var(INPUT_GET, 'userID')) {
             die("Acesso indevido");
         }
@@ -56,18 +59,26 @@ class ControladorUsuarios extends Controlador {
     }
 
     public function acaoVerificarEdicao() {
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->renderizar();
     }
 
     public function acaoConsultarpermissoes() {
+        $this->visao->acessoMinimo = Permissao::CONSULTA;
         $this->renderizar();
     }
 
     public function acaoDesativar() {
+        $this->visao->acessoMinimo = Permissao::GESTOR;
+        $this->renderizar();
+    }
+    public function acaoAtivar() {
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }
 
     public function acaoGerenciar() {
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $usuarioDAO = new usuarioDAO();
         $idUsuario = (int) obterUsuarioSessao()->get_idUsuario();
         $idPapelUsuario = (int) obterUsuarioSessao()->get_idPapel();
@@ -85,6 +96,7 @@ class ControladorUsuarios extends Controlador {
     }
 
     public function acaoConsultar() {
+        $this->visao->acessoMinimo = Permissao::CONSULTA;
         $this->visao->usuarios = (new usuarioDAO())->consultar("idUsuario, concat_ws(' ',PNome,UNome),email,dataNascimento,nome");
         $i = 0;
         foreach ($this->visao->usuarios as $value) {
@@ -95,6 +107,14 @@ class ControladorUsuarios extends Controlador {
     }
 
     public function acaoRestaurar() {
+        $this->visao->acessoMinimo = Permissao::ADMINISTRADOR;
+        $usuarioDAO = new usuarioDAO();
+        $this->visao->usuarios = $usuarioDAO->consultar("idUsuario,concat_ws(' ',PNome,UNome),email,dataNascimento,cpf,nome", " ativo = 0 ",null,true);
+        $i = 0;
+        foreach ($this->visao->usuarios as $value) {
+            $value[0] = fnEncrypt($value[0]);
+            $this->visao->usuarios[$i++] = $value;
+        }
         $this->renderizar();
     }
 

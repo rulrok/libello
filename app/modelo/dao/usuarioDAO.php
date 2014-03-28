@@ -62,17 +62,25 @@ class usuarioDAO extends abstractDAO {
     }
 
     /**
-     * Retorna a lista com todos os usuários, com base nas colunas especificadas e nas condições de seleção.
+     * Retorna a lista com todos os usuários (ATIVOS), com base nas colunas especificadas e nas condições de seleção.
      * @param string $colunas Colunas a serem retornadas, por padrão, retorna
      * @param type $condicao A string que precede WHERE na cláusula SQL. Não é necessário escrever a palavra WHERE.
+     * @@param boolean $incluirDesativados Por padrão a consulta é feita apenas em usuários ativos no sistema. Passando
+     * TRUE para essa variável, a consulta também irá incluir usuários desativados.
      * @return type A tabela com o resultado da consulta.
      */
-    public function consultar($colunas = '*', $condicao = null, $parametros = null) {
+    public function consultar($colunas = '*', $condicao = null, $parametros = null, $incluirDesativados = false) {
 
-        if ($condicao == null) {
-            $condicao = 'WHERE ativo = 1';
+        if (!$incluirDesativados) {
+            if ($condicao === null) {
+                $condicao = 'WHERE ativo = 1';
+            } else {
+                $condicao = 'WHERE ativo = 1 AND ' . $condicao;
+            }
+        } elseif ($condicao === null) {
+            $condicao = "";
         } else {
-            $condicao = 'WHERE ativo = 1 AND ' . $condicao;
+            $condicao = " WHERE " . $condicao;
         }
         $sql = "SELECT  $colunas  FROM usuario NATURAL JOIN usuario_papel " . $condicao;
         return $this->executarSelect($sql, $parametros);
@@ -86,6 +94,21 @@ class usuarioDAO extends abstractDAO {
             $sql = 'UPDATE usuario SET ativo = 0 WHERE email = :email';
             $params = array(':email' => [$email, PDO::PARAM_STR]);
             return $this->executarQuery($sql, $params);
+        } else {
+            return false;
+        }
+    }
+
+    public function ativar($email) {
+        if ($email !== null) {
+            if (is_array($email)) {
+                $email = $email['email'];
+            }
+            $sql = 'UPDATE usuario SET ativo = 1 WHERE email = :email';
+            $params = array(':email' => [$email, PDO::PARAM_STR]);
+            return $this->executarQuery($sql, $params);
+        } else {
+            return false;
         }
     }
 
@@ -213,13 +236,19 @@ class usuarioDAO extends abstractDAO {
      * @param mixed $email Uma string ou um array com um índice 'email'
      * @return Usuario Usuário que possui o email designado em $email ou false caso contrário
      */
-    public function recuperarUsuario($email) {
+    public function recuperarUsuario($email, $incluirInativo = false) {
 
         if (is_array($email)) {
             $email = $email['email'];
         }
 
-        $sql = "SELECT * from usuario WHERE email = :email AND ativo = 1";
+        if (!$incluirInativo) {
+            $qAux = " AND ativo = 1";
+        } else {
+            $qAux = "";
+        }
+
+        $sql = "SELECT * from usuario WHERE email = :email " . $qAux;
         $params = array(':email' => [$email, PDO::PARAM_INT]);
         $resultado = $this->executarSelect($sql, $params, false, 'Usuario');
         return $resultado;

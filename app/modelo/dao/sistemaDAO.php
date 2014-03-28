@@ -26,13 +26,12 @@ class sistemaDAO extends abstractDAO {
      */
     public function registrarCadastroUsuario($idUsuarioFonte, $idUsuarioAlvo) {
         $tipo = TipoEventoSistema::CADASTRO_USUARIO;
-        $sql = "INSERT INTO sistema_eventosistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES (:idUF, :idUA, :t, :d, :h)";
+        $sql = "INSERT INTO sistema_eventosistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data) VALUES (:idUF, :idUA, :t, :d)";
         $params = array(
             ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
             , ':idUA' => [$idUsuarioAlvo, PDO::PARAM_INT]
             , ':t' => [$tipo, PDO::PARAM_INT]
-            , ':d' => [obterDataAtual(), PDO::PARAM_STR]
-            , ':h' => [obterHoraAtual(), PDO::PARAM_STR]
+            , ':d' => [time(), PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -44,38 +43,47 @@ class sistemaDAO extends abstractDAO {
      * @return boolean True em caso de sucesso, False em caso contrário.
      */
     public function registrarDesativacaoUsuario($idUsuarioFonte, $idUsuarioAlvo) {
-        $tipo = TipoEventoSistema::REMOCAO_USUARIO;
-        $sql = "INSERT INTO sistema_eventosistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES (:idUF, :idUA,:t, :d, :h)";
+        $tipo = TipoEventoSistema::DESATIVACAO_USUARIO;
+        $sql = "INSERT INTO sistema_eventosistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data) VALUES (:idUF, :idUA,:t, :d)";
         $params = array(
             ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
             , ':idUA' => [$idUsuarioAlvo, PDO::PARAM_INT]
             , ':t' => [$tipo, PDO::PARAM_INT]
-            , ':d' => [obterDataAtual(), PDO::PARAM_STR]
-            , ':h' => [obterHoraAtual(), PDO::PARAM_STR]
+            , ':d' => [time(), PDO::PARAM_INT]
+        );
+        return $this->executarQuery($sql, $params);
+    }
+
+    public function registrarAtivacaoUsuario($idUsuarioFonte, $idUsuarioAlvo) {
+        $tipo = TipoEventoSistema::ATIVACAO_USUARIO;
+        $sql = "INSERT INTO sistema_eventosistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data) VALUES (:idUF, :idUA,:t, :d)";
+        $params = array(
+            ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
+            , ':idUA' => [$idUsuarioAlvo, PDO::PARAM_INT]
+            , ':t' => [$tipo, PDO::PARAM_INT]
+            , ':d' => [time(), PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }
 
     public function registrarExclusaoCurso($idUsuarioFonte) {
         $tipo = TipoEventoSistema::REMOCAO_CURSO;
-        $sql = "INSERT INTO sistema_eventosistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES (:idUF, NULL, :t,:d, :h)";
+        $sql = "INSERT INTO sistema_eventosistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data) VALUES (:idUF, NULL, :t,:d)";
         $params = array(
             ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
             , ':t' => [$tipo, PDO::PARAM_INT]
-            , ':d' => [obterDataAtual(), PDO::PARAM_STR]
-            , ':h' => [obterHoraAtual(), PDO::PARAM_STR]
+            , ':d' => [time(), PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
 
     public function registrarExclusaoPolo($idUsuarioFonte) {
         $tipo = TipoEventoSistema::REMOCAO_POLO;
-        $sql = "INSERT INTO sistema_eventosistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES (:idUF, NULL, :t, :d, :h)";
+        $sql = "INSERT INTO sistema_eventosistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data) VALUES (:idUF, NULL, :t, :d)";
         $params = array(
             ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
             , ':t' => [$tipo, PDO::PARAM_INT]
-            , ':d' => [obterDataAtual(), PDO::PARAM_STR]
-            , ':h' => [obterHoraAtual(), PDO::PARAM_STR]
+            , ':d' => [time(), PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -88,13 +96,12 @@ class sistemaDAO extends abstractDAO {
      */
     public function registrarAlteracaoUsuario($idUsuarioFonte, $idUsuarioAlvo) {
         $tipo = TipoEventoSistema::ALTERACAO_USUARIO;
-        $sql = "INSERT INTO sistema_eventosistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data,hora) VALUES (:idUF,:idUA,:t,:d,:h)";
+        $sql = "INSERT INTO sistema_eventosistema(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data) VALUES (:idUF,:idUA,:t,:d)";
         $params = array(
             ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
             , ':idUA' => [$idUsuarioAlvo, PDO::PARAM_INT]
             , ':t' => [$tipo, PDO::PARAM_INT]
-            , ':d' => [obterDataAtual(), PDO::PARAM_STR]
-            , ':h' => [obterHoraAtual(), PDO::PARAM_STR]
+            , ':d' => [time(), PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }

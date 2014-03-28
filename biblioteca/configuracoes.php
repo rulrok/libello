@@ -13,7 +13,7 @@ if (!defined("APP_CONFIGS")) {
 
     define('APP_VERSION', "Alpha");
     
-    define('APP_ADMIN_EMAIL','reuel@bcc.unifal-mg.edu.br');
+    define('APP_ADMIN_EMAIL',$_SERVER['SERVER_ADMIN']);
     
     define('APP_SUPPORT_EMAIL','suporte@inep.gov.br');
 

@@ -15,6 +15,8 @@ function habilitarBotoes() {
     $('.btn-saida').prop('disabled', false);
     $('.btn-retorno').removeClass('disabled');
     $('.btn-retorno').prop('disabled', false);
+    $('.btn-ativar').removeClass('disabled');
+    $('.btn-ativar').prop('disabled', false);
 }
 
 /*
@@ -34,6 +36,8 @@ function desabilitarBotoes() {
     $('.btn-saida').prop('disabled', true);
     $('.btn-retorno').addClass('disabled');
     $('.btn-retorno').prop('disabled', true);
+    $('.btn-ativar').removeClass('disabled');
+    $('.btn-ativar').prop('disabled', true);
 }
 
 /*
@@ -76,6 +80,7 @@ function configurarTabela(parametros) {
     var acaoBaixa = parametros['baixa'];
     var acaoSaida = parametros['saida'];
     var acaoRetorno = parametros['retorno'];
+    var acaoAtivar = parametros['ativar'];
     var definicoesTabela = parametros['defs'];
 
     if (definicoesTabela === undefined) {
@@ -172,7 +177,11 @@ function configurarTabela(parametros) {
                 );
     }
     $(window).bind('resize', function() {
-        oTable.fnAdjustColumnSizing();
+        try {
+            oTable.fnAdjustColumnSizing();
+        } catch (e) {
+
+        }
     });
 
 //TODO
@@ -235,10 +244,52 @@ function configurarTabela(parametros) {
                 if (data.status !== undefined && data.mensagem !== undefined) {
                     showPopUp(data.mensagem, data.status);
                     if (data.status.toLowerCase() === "sucesso") {
-                        $("input[type=reset]").click(); //Limpar o formulário depois de cadastrado com sucesso.
+//                        $("input[type=reset]").click(); //Limpar o formulário depois de cadastrado com sucesso.
                         var pos = oTable.fnGetPosition(selectedElement);
                         oTable.fnDeleteRow(pos);
-                        $($("tr.odd")[0]).addClass("row_selected");
+                        $($("tr.odd")[0]).addClass(function() {
+                            var $this = $(this.children[0]);
+                            if (!$this.hasClass("dataTables_empty")) {
+                                return "row_selected";
+                            } else {
+                                desabilitarBotoes();
+                            }
+                        });
+                    }
+                } else {
+                    showPopUp("Houve algum problema na resposta do servidor.", "erro");
+                }
+            } else {
+                showPopUp("Houve algum problema na resposta do servidor.", "erro");
+            }
+
+        }
+    });
+
+    $(".btn-ativar").on('click', function() {
+        if ($('.row_selected').size() == 0) {
+            return false;
+        }
+        if (confirm('Deseja realmente fazer isso?')) {
+            var id = $("tr.row_selected>.campoID").html();
+            var data = ajax(acaoAtivar + id, null, false, false);
+            if (data !== null && data !== undefined) {
+                data = extrairJSON(data);
+
+                if (data.status !== undefined && data.mensagem !== undefined) {
+                    showPopUp(data.mensagem, data.status);
+                    if (data.status.toLowerCase() === "sucesso") {
+//                        $("input[type=reset]").click(); //Limpar o formulário depois de cadastrado com sucesso.
+                        var pos = oTable.fnGetPosition(selectedElement);
+                        oTable.fnDeleteRow(pos);
+                        $($("tr.odd")[0]).addClass(function() {
+                            var $this = $(this.children[0]);
+                            if (!$this.hasClass("dataTables_empty")) {
+                                return "row_selected";
+                            } else {
+                                desabilitarBotoes();
+                            }
+                        });
                     }
                 } else {
                     showPopUp("Houve algum problema na resposta do servidor.", "erro");

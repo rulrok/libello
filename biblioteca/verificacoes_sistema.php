@@ -61,6 +61,10 @@ class verificador_instalacao {
     }
 
     private function testar_diretorio($diretorio, $nomeDiretorio) {
+        if (!file_exists($diretorio)){
+            //Tenta criar o diretório
+            mkdir($diretorio);
+        }
         if (!file_exists($diretorio)) {
             $this->anexarMensagemErro("Diretório $nomeDiretorio não existe no servidor");
         } elseif (!is_writable($diretorio)) {
