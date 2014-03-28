@@ -83,7 +83,7 @@ class usuarioDAO extends abstractDAO {
             $condicao = " WHERE " . $condicao;
         }
         $sql = "SELECT  $colunas  FROM usuario NATURAL JOIN usuario_papel " . $condicao;
-        return $this->executarSelect($sql, $parametros,true,$fetchClass);
+        return $this->executarSelect($sql, $parametros, true, $fetchClass);
     }
 
     public function desativar($email) {
@@ -131,7 +131,7 @@ class usuarioDAO extends abstractDAO {
      * @return boolean
      */
     public function inserir(Usuario $vo) {
-        $sql = 'INSERT INTO usuario(idPapel,senha,PNome, UNome, email, dataNascimento, cpf) VALUES (  :idPapel, :senha, :PNome, :UNome, :email, :nasc, :cpf )';
+        $sql = 'INSERT INTO usuario(idPapel,senha,PNome, UNome, email, dataNascimento, cpf) VALUES (  :idPapel, :senha, :PNome, :UNome, :email, :nasc, :cpf, :dataCadastro, :ultimoAcesso )';
         $cpf = str_replace(array('.', '-'), '', $vo->get_cpf());
         $params = array(
             ':idPapel' => [$vo->get_idPapel(), PDO::PARAM_INT]
@@ -141,6 +141,8 @@ class usuarioDAO extends abstractDAO {
             , ':email' => [$vo->get_email(), PDO::PARAM_STR]
             , ':nasc' => [$vo->get_dataNascimento(), PDO::PARAM_STR]
             , ':cpf' => [$cpf, PDO::PARAM_STR]
+            , ':dataCadastro' => [microtime(), PDO::PARAM_INT]
+            , ':ultimoAcesso' => [0, PDO::PARAM_INT]
         );
 
         return $this->executarQuery($sql, $params);
