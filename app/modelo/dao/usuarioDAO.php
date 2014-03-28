@@ -69,7 +69,7 @@ class usuarioDAO extends abstractDAO {
      * TRUE para essa variável, a consulta também irá incluir usuários desativados.
      * @return type A tabela com o resultado da consulta.
      */
-    public function consultar($colunas = '*', $condicao = null, $parametros = null, $incluirDesativados = false) {
+    public function consultar($colunas = '*', $condicao = null, $parametros = null, $incluirDesativados = false, $fetchClass = null) {
 
         if (!$incluirDesativados) {
             if ($condicao === null) {
@@ -83,7 +83,7 @@ class usuarioDAO extends abstractDAO {
             $condicao = " WHERE " . $condicao;
         }
         $sql = "SELECT  $colunas  FROM usuario NATURAL JOIN usuario_papel " . $condicao;
-        return $this->executarSelect($sql, $parametros);
+        return $this->executarSelect($sql, $parametros,true,$fetchClass);
     }
 
     public function desativar($email) {

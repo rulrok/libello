@@ -231,7 +231,7 @@
     <!-- POS SCRIPTS -->
     <script src="publico/js/jquery/jquery-ui.js"></script>
     <script src='publico/js/jquery/jquery-ui-sliderAccess.js'></script> 
-    <script src="publico/js/jquery/jquery.dataTables.js"></script>
+    <script src="publico/js/jquery/jquery.dataTables.custom.js"></script>
     <script src='publico/js/jquery/jquery.maskedinput.js'></script>
     <script src='publico/js/jquery/jquery.jstree.js'></script> 
     <script src="publico/js/oTable.js" ></script>

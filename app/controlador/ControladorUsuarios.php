@@ -70,10 +70,40 @@ class ControladorUsuarios extends Controlador {
 
     public function acaoDesativar() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
+        $usuarioDAO = new usuarioDAO();
+        $userID = fnDecrypt(filter_input(INPUT_GET, 'userID'));
+        if ($userID == obterUsuarioSessao()->get_idUsuario()) {
+            registrar_erro("Usuário tentou desativar seu próprio perfil através da página de edição de usuários do sistema");
+            echo json_encode((new Mensagem())->set_mensagemErro("Você não pode fazer isso."));
+            exit;
+        }
+
+        $emailOriginal = $usuarioDAO->descobrirEmail($userID);
+        $usuarioOriginal = $usuarioDAO->recuperarUsuario($emailOriginal);
+        //Importante: Verifica se o usuário não colou o id criptografado de algum outro usuário com papel superior ao dele
+        //Esse id poderia ser obtido na tela de consultar usuários, por exemplo.
+        if (obterUsuarioSessao()->get_idPapel() > $usuarioOriginal->get_idPapel()) {
+            registrar_erro("Usuário tentou desativar um perfil de papel mais alto que o seu. (OBS: Papeis mais altos possuem valor numérico menor)", $usuarioOriginal);
+            echo json_encode((new Mensagem())->set_mensagemErro("Você não pode fazer isso."));
+            exit;
+        }
         $this->renderizar();
     }
+
     public function acaoAtivar() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
+        $usuarioDAO = new usuarioDAO();
+        $userID = fnDecrypt(filter_input(INPUT_GET, 'userID'));
+
+        $emailOriginal = $usuarioDAO->descobrirEmail($userID);
+        $usuarioOriginal = $usuarioDAO->recuperarUsuario($emailOriginal,true);
+        //Importante: Verifica se o usuário não colou o id criptografado de algum outro usuário com papel superior ao dele
+        //Esse id poderia ser obtido na tela de consultar usuários, por exemplo.
+        if (obterUsuarioSessao()->get_idPapel() > $usuarioOriginal->get_idPapel()) {
+            registrar_erro("Usuário tentou desativar um perfil de papel mais alto que o seu. (OBS: Papeis mais altos possuem valor numérico menor)", $usuarioOriginal);
+            echo json_encode((new Mensagem())->set_mensagemErro("Você não pode fazer isso."));
+            exit;
+        }
         $this->renderizar();
     }
 
@@ -109,7 +139,7 @@ class ControladorUsuarios extends Controlador {
     public function acaoRestaurar() {
         $this->visao->acessoMinimo = Permissao::ADMINISTRADOR;
         $usuarioDAO = new usuarioDAO();
-        $this->visao->usuarios = $usuarioDAO->consultar("idUsuario,concat_ws(' ',PNome,UNome),email,dataNascimento,cpf,nome", " ativo = 0 ",null,true);
+        $this->visao->usuarios = $usuarioDAO->consultar("idUsuario,concat_ws(' ',PNome,UNome),email,dataNascimento,cpf,nome", " ativo = 0 ", null, true);
         $i = 0;
         foreach ($this->visao->usuarios as $value) {
             $value[0] = fnEncrypt($value[0]);
