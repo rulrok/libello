@@ -33,9 +33,9 @@
             <label for="confsenha">Confirmar Senha</label>
             <input required type="password" class="input-large" id="confsenha" name="confsenha" >
         </div>
-        <div class="line">
+        <div class="line hidden">
             <label for="enviarSenha">Enviar senha aleatória por email</label>
-            <input type="checkbox" name="enviarSenha" id="enviarSenha">
+            <input disabled type="checkbox" name="enviarSenha" id="enviarSenha">
         </div>
         <br/>
         <fieldset>
