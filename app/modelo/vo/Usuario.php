@@ -11,6 +11,8 @@ class Usuario {
     var $dataNascimento;
     var $iniciais;
     var $cpf;
+    var $dataCadastro;
+    var $ultimoAcesso;
 
     public function get_idUsuario() {
         return $this->idUsuario;
@@ -92,6 +94,26 @@ class Usuario {
         $this->cpf = $cpf;
         return $this;
     }
+    
+    public function get_dataCadastro() {
+        return $this->dataCadastro;
+    }
+
+    public function get_ultimoAcesso() {
+        return $this->ultimoAcesso;
+    }
+
+    public function set_dataCadastro($dataCadastro) {
+        $this->dataCadastro = $dataCadastro;
+        return $this;
+    }
+
+    public function set_ultimoAcesso($ultimoAcesso) {
+        $this->ultimoAcesso = $ultimoAcesso;
+        return $this;
+    }
+
+
 
 }
 

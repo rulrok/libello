@@ -223,6 +223,11 @@
 		 */
 		function _fnAdjustColumnSizing ( oSettings )
 		{
+                    
+                        if (oSettings == undefined || oSettings == null){
+                            //Evitar exceções na página - @Reuel
+                            return false;
+                        }
 			/* Not interested in doing column width calculation if auto-width is disabled */
 			if ( oSettings.oFeatures.bAutoWidth === false )
 			{
