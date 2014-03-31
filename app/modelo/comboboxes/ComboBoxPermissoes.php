@@ -71,7 +71,7 @@ class ComboBoxPermissoes {
     
     private static function montarCaixaSelecaoPermissoesRadio($nome) {
         $codigo = "";
-        $codigo .= "<td> <center> <input type=\"radio\" name=\"permissoes $nome\" value=\"1\"> </center> </td>";
+        $codigo .= "<td> <center> <input type=\"radio\" name=\"permissoes $nome\" value=\"1\" checked > </center> </td>";
         $codigo .= "<td> <center> <input type=\"radio\" name=\"permissoes $nome\" value=\"10\"> </center> </td>";
         $codigo .= "<td> <center> <input type=\"radio\" name=\"permissoes $nome\" value=\"20\"> </center> </td>";
         $codigo .= "<td> <center> <input type=\"radio\" name=\"permissoes $nome\" value=\"30\"> </center> </td>";

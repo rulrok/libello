@@ -63,7 +63,7 @@
                     <th>Gestor</th>
                     <th>Administração</th>
                 </tr>
-            <?php echo $this->comboPermissoes ?>
+                <?php echo $this->comboPermissoes ?>
             </table>
         </fieldset>
     </fieldset>
@@ -98,14 +98,22 @@
                 escolha = 40;
                 break;
             default:
-                escolha = 0;
+                escolha = 1;
                 break;
         }
 
-        $("[name ^= 'permissoes']").each(function() {
-            $(this).val(escolha);
-        });
+//        $(":radio").each(function() { //Solução alternativa. Para usar, descomente.
+//            if (this.value == escolha){
+//                $(this).attr('checked',true);
+//            }
+        $(":radio[value='" + escolha + "']").prop('checked', true);
+//        });
+
+        /*$("[name ^= 'permissoes']").each(function() {  //Funciona para quando se usa Selects
+         $(this).val(escolha);
+         });*/
     }
+
     $(document).ready(function() {
         $("#dataNascimento").datepicker();
         $(".line input").popover({trigger: 'focus', container: 'body'});
@@ -117,11 +125,11 @@
 
         $("#enviarSenha").on('change', function() {
             if (this.checked) {
-                $("#senha").attr('disabled', true).attr('readonly',true).val("************");
-                $("#confsenha").attr('disabled', true).attr('readonly',true).val("************");
+                $("#senha").attr('disabled', true).attr('readonly', true).val("************");
+                $("#confsenha").attr('disabled', true).attr('readonly', true).val("************");
             } else {
-                $("#senha").attr('disabled', false).attr('readonly',false).val("");
-                $("#confsenha").attr('disabled', false).attr('readonly',false).val("");
+                $("#senha").attr('disabled', false).attr('readonly', false).val("");
+                $("#confsenha").attr('disabled', false).attr('readonly', false).val("");
 
             }
         });
