@@ -120,8 +120,8 @@ function FormDocumentos() {
                 '</div>' +
                 '<div style="padding-left: 152px;">' +
                 '<input type="text" required class="cargo_remetente" value="', 3: '" onkeyup="liberarCadastro()" size="25" /><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>' +
-                '</div><div><button type="button" title="Adicionar Remetente"  onclick="Form.instancia.adicionarRemetente();"  class="btn btn-add-rmt" ><i class="icon-plus"></i></button>' +
-                '<button type="button"  title="Remover Remetente" disabled  onclick="Form.instancia.removerRemetente(', 4: ');" class="btn btn-remove-rmt" ><i class="icon-minus"></i></button>' +
+                '</div><div><button type="button" title="Adicionar Remetente"  onclick="FormDocumentos.instancia.adicionarRemetente();"  class="btn btn-add-rmt" ><i class="icon-plus"></i></button>' +
+                '<button type="button"  title="Remover Remetente" disabled  onclick="FormDocumentos.instancia.removerRemetente(', 4: ');" class="btn btn-remove-rmt" ><i class="icon-minus"></i></button>' +
                 '</div>' +
                 '</div>'};
 }
@@ -211,7 +211,7 @@ FormDocumentos.prototype.iniciarCombo = function() {
     var d = new Date();
     var t = this;
     this.diaMesDocumento(d.getMonth());
-    $('#mes').on('change',  function() {
+    $('#mes').on('change', function() {
         t.diaMesDocumento($('#mes ').val() - 1);
     });
 };
@@ -219,9 +219,9 @@ FormDocumentos.prototype.iniciarCombo = function() {
 FormDocumentos.prototype.iniciarEditorDeTexto = function() {
     $('textarea').tinymce({
         // Location of TinyMCE script
-        setup:function(ed){
-            ed.on('change keyup',function(){
-                liberarCadastro() ;
+        setup: function(ed) {
+            ed.on('change keyup', function() {
+                liberarCadastro();
             });
         },
         toolbar: "forecolor backcolor",
@@ -293,6 +293,12 @@ FormDocumentos.prototype.posicaoMenu = function() {
     $('#menu_documento').css({left: (posicao_doc.left) + 'px', top: (posicao_doc.top + 300) + 'px'});
     $('#corpo').on('change', function() {
         $('#corpo').val('_');
+    });
+    $(window).on('resize', function() {
+        var documento_form = $('#documento_form');
+        var posicao_doc = documento_form.position();
+
+        $('#menu_documento').css({left: (posicao_doc.left) + 'px', top: (posicao_doc.top + 300) + 'px'});
     });
 };
 

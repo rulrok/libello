@@ -90,3 +90,16 @@
 .remetente_div, .remetente_div p{
     text-align: center;
 }
+
+@media all{
+     @media (max-width: 1150px){
+        .menuContainer{
+            height: inherit;
+        }
+    }
+    @media (max-width : 987px){
+        #documento_form{
+            width:inherit;
+        }
+    }
+}

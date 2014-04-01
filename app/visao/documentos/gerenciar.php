@@ -28,10 +28,17 @@
         vertical-align: baseline;
         text-align:center;
     }
-
+@media all{
+    @media (max-width: 1150px){
+        .menuContainer{
+            height: inherit;
+        }
+    }
+    
+}
 </style>
 
-
+ <link href="public/css/documentos.css" rel="stylesheet">
 
 <div style="text-align:center;">
     <button class="btn btn_oficio ignorar"
