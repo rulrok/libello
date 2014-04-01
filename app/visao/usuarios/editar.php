@@ -44,7 +44,17 @@
         <br/>
         <fieldset>
             <legend>Permissões por ferramenta</legend>
-            <?php echo $this->comboPermissoes ?>
+            <table>
+                <tr>
+                    <th></th>
+                    <th>Sem acesso</th>
+                    <th>Consulta</th>
+                    <th>Escrita</th>
+                    <th>Gestor</th>
+                    <th>Administração</th>
+                </tr>
+                <?php echo $this->comboPermissoes ?>
+            </table>
         </fieldset>
 
     </fieldset>
@@ -61,10 +71,10 @@
         var valorEscolhido = $(this).context.value;
         try {
             var nome = $(this).children()[valorEscolhido].text;
-        } catch (e) {
+            } catch (e) {
             nome = "";
         }
-
+        
         var escolha;
         switch (nome) {
             case "Aluno":
@@ -80,13 +90,20 @@
                 escolha = 40;
                 break;
             default:
-                escolha = 0;
+                escolha = 1;
                 break;
         }
 
-        $("[name ^= 'permissoes']").each(function() {
+//        $(":radio").each(function() { //Solução alternativa. Para usar, descomente.
+//            if (this.value == escolha){
+//                $(this).attr('checked',true);
+//            }
+              $(":radio[value='"+escolha+"']").prop('checked',true);
+//        });
+
+        /*$("[name ^= 'permissoes']").each(function() {  //Funciona para quando se usa Selects
             $(this).val(escolha);
-        });
+        });*/
     }
 
     $(document).ready(function() {
@@ -108,7 +125,7 @@
 //        idFerramenta = element['idFerramenta'];
             idPermissao = element['idPermissao'];
 
-            $('[name$="' + nome + '"]').val(idPermissao);
+            $(':radio[value='+idPermissao+'][name$="'+nome+'"]').attr('checked',true);
         }
     });
 
