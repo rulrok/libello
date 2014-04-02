@@ -74,6 +74,12 @@ class ControladorDocumentos extends Controlador {
         $this->visao->memorandosEmAberto = listarMemorandos('emAberto');
         $this->renderizar();
     }
+    
+    public function acaoGerenciarCabecalho(){
+        $this->visao->acessoMinimo = Permissao::GESTOR;
+        $this->renderizar();
+        
+    }
 
     public function acaoConsultar() {
         $this->visao->acessoMinimo = Permissao::CONSULTA;

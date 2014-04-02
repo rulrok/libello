@@ -131,6 +131,8 @@ class Menu {
                             case Permissao::GESTOR:
                                 $subMenuCode .= "<a href=\"#!documentos|gerenciar\"\">" . "\n";
                                 $subMenuCode .= "<li>Gerenciar histórico</li></a>" . "\n";
+                                $subMenuCode .= "<a href=\"#!documentos|gerenciarCabecalho\"\">" . "\n";
+                                $subMenuCode .= "<li>Gerenciar Cabeçalho</li></a>" . "\n";
                             case Permissao::ESCRITA:
                                 $subMenuCode .= "<a href=\"#!documentos|gerarOficio\"\">" . "\n";
                                 $subMenuCode .= "<li>Gerar ofício</li></a>" . "\n";
