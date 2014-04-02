@@ -73,7 +73,7 @@ $document = '
             <table class="tabela">
                 <tr>
                     <td style="width: 597px" align="center">
-                        <img src="publico/imagens/oficio/cabecalho.jpg"></img>
+                        <img src="publico/imagens/cabecalho-documentos/cabecalho.jpg"></img>
                     </td>
                 </tr>
                 <tr><td style="height: 30px;"></td></tr>

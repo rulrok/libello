@@ -8,7 +8,7 @@
 
     <div id="documento_form" style='' border="0" align="center">
         <div style="position: relative;padding:50px 90px;padding-bottom: 120px;">
-            <img id="cabecalho" style="" src="publico/imagens/oficio/cabecalho.jpg" />
+            <img id="cabecalho" style="" src="publico/imagens/cabecalho-documentos/cabecalho.jpg" />
             <div class="left_align" style="">
                 Ofício nº/Ano/CEAD -
                 <select id='sigla' name='sigla'>
