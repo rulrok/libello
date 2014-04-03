@@ -2,3 +2,4 @@
 [Usuário: Cead Ead(CE3), admin@cead.com, papel: 1, id: 1]
 
 
+[03-Apr-2014 01:19:16 America/Sao_Paulo] PHP Fatal error:  Class 'verificadorFormularioAjax' not found in C:\xampp\htdocs\controle-cead\app\modelo\ferramentas\documentos\verificarnovocabecalho.php on line 9

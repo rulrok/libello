@@ -61,6 +61,10 @@ class ControladorDocumentos extends Controlador {
     public function acaoDeletarmemorando() {
         $this->renderizar();
     }
+    
+    public function acaoVerificarnovocabecalho(){
+        $this->renderizar();
+    }
 
     public function acaoGerenciar() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
