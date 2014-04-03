@@ -1,6 +1,6 @@
 <?php
 
-include APP_DIR . "modelo/Mensagem.php";
+require_once APP_DIR . "modelo/Mensagem.php";
 require_once APP_DIR . "modelo/Utils.php";
 require_once APP_DIR . "modelo/vo/Imagem.php";
 require_once APP_DIR . "modelo/validadorCPF.php";

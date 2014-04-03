@@ -2,7 +2,7 @@
 
 include_once APP_DIR . "modelo/Mensagem.php";
 include_once APP_DIR . "visao/verificadorFormularioAjax.php";
-require_once BIBLIOTECA_DIR . 'seguranca/criptografia.php';
+require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/criptografia.php';
 
 class validarAlteracoesConta extends verificadorFormularioAjax {
 

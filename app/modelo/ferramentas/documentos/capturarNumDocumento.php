@@ -1,6 +1,6 @@
 <?php
 
-require_once BIBLIOTECA_DIR . 'configuracoes.php';
+require_once APP_LIBRARY_DIR . 'configuracoes.php';
 require_once APP_DIR . 'controlador/ControladorDocumentos.php';
 
 //header('Cache-Control: no-cache');

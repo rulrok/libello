@@ -1,7 +1,7 @@
 <?php
 
-include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
-require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
+include_once APP_LIBRARY_ABSOLUTE_DIR . 'Mvc/Controlador.php';
+require_once APP_LIBRARY_ABSOLUTE_DIR . "seguranca/criptografia.php";
 require_once APP_DIR . "modelo/comboboxes/ComboBoxDescritores.php";
 require_once APP_DIR . "modelo/comboboxes/ComboBoxUsuarios.php";
 require_once APP_DIR . "modelo/ferramentas/imagens/pesquisa.php";
@@ -44,13 +44,15 @@ class ControladorImagens extends Controlador {
 
             if (filter_has_var(INPUT_GET, 'de')) {
                 //TODO filtrar com FILTER_FLAG_EMPTY_STRING_NULL quando estiver implementado pelo PHP
-                $dataInicio = !empty(filter_input(INPUT_GET, 'de')) ? filter_input(INPUT_GET, 'de') : null;
+                $de = filter_input(INPUT_GET, 'de');
+                $dataInicio = !empty($de) ? filter_input(INPUT_GET, 'de') : null;
             } else {
                 $dataInicio = null;
             }
 
             if (filter_has_var(INPUT_GET, 'ate')) {
-                $dataFim = !empty(filter_input(INPUT_GET, 'ate')) ? filter_input(INPUT_GET, 'ate') : null;
+                $ate = filter_input(INPUT_GET, 'ate');
+                $dataFim = !empty($ate) ? filter_input(INPUT_GET, 'ate') : null;
             } else {
                 $dataFim = null;
             }

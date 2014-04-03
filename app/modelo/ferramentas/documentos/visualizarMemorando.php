@@ -2,10 +2,10 @@
 
 ob_clean();
 //incluindo o arquivo do fpdf
-require_once BIBLIOTECA_DIR . "configuracoes.php";
-require_once BIBLIOTECA_DIR . "dompdf/dompdf_config.inc.php";
-require_once BIBLIOTECA_DIR . "seguranca/seguranca.php";
-require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
+require_once APP_LIBRARY_DIR . "configuracoes.php";
+require_once APP_LIBRARY_DIR . "dompdf/dompdf_config.inc.php";
+require_once APP_LIBRARY_DIR . "seguranca/seguranca.php";
+require_once APP_LIBRARY_DIR . "seguranca/criptografia.php";
 require_once APP_DIR . "modelo/dao/documentoDAO.php";
 
 //-------------------

@@ -1,10 +1,20 @@
 <?php
 
-include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
-include_once BIBLIOTECA_DIR . 'seguranca/seguranca.php';
-include_once BIBLIOTECA_DIR . 'seguranca/Permissao.php';
+include_once APP_LIBRARY_ABSOLUTE_DIR . 'Mvc/Controlador.php';
+include_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/seguranca.php';
+include_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/Permissao.php';
 include_once __DIR__ . '/../modelo/dao/usuarioDAO.php';
 
+/**
+ * Diferente dos outros controladores, o controlador 'sistema' verifica as permissões
+ * ao acesso às funções de forma diferente.
+ * 
+ * Ao invés de definir nível mínimo de acesso, é definido apenas se há ou não, com 
+ * TRUE ou FALSE
+ * 
+ * Caso TRUE, um usuário deve ter papel administrativo para acessar a ação. Caso
+ * contrátrio, o acesso é liberado para qualquer usuário autenticado.
+ */
 class ControladorSistema extends Controlador {
 
     public function acaoInicial() {
@@ -41,7 +51,17 @@ class ControladorSistema extends Controlador {
     }
 
     public function acaoAdministracao() {
-        $this->visao->acessoMinimo = Permissao::ADMINISTRADOR;
+        $this->visao->acessoMinimo = true;
+        $this->renderizar();
+    }
+
+    public function acaoAtivarmanutencao() {
+        $this->visao->acessoMinimo = true;
+        $this->renderizar();
+    }
+
+    public function acaoDesativarmanutencao() {
+        $this->visao->acessoMinimo = true;
         $this->renderizar();
     }
 

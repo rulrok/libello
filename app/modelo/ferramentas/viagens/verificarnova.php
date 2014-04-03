@@ -16,10 +16,9 @@ class verificarnovaviagem extends verificadorFormularioAjax {
             $destinoAlternativo = filter_input(INPUT_POST, 'destinoManual');
         }
         $responsavel = fnDecrypt(filter_input(INPUT_POST, 'responsavel'));
-        $debug = print_r($_POST, true);
-        $dataIda = filter_input(INPUT_POST, 'dataIda');
+        $dataIda = filter_input(INPUT_POST, 'start');
         $horaIda = filter_input(INPUT_POST, 'horaIda');
-        $dataVolta = filter_input(INPUT_POST, 'dataVolta');
+        $dataVolta = filter_input(INPUT_POST, 'end');
         $horaVolta = filter_input(INPUT_POST, 'horaVolta');
         $motivo = filter_input(INPUT_POST, 'motivo');
         $estado = filter_input(INPUT_POST, 'estado');

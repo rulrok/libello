@@ -7,8 +7,8 @@ include_once APP_DIR . 'modelo/comboboxes/ComboBoxPapeis.php';
 include_once APP_DIR . 'modelo/validadorCPF.php';
 include_once APP_DIR . 'modelo/Utils.php';
 include_once APP_DIR . "visao/verificadorFormularioAjax.php";
-require_once BIBLIOTECA_DIR . 'seguranca/criptografia.php';
-require_once BIBLIOTECA_DIR . 'PHPMailer/Email.php';
+require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/criptografia.php';
+require_once APP_LIBRARY_ABSOLUTE_DIR . 'PHPMailer/Email.php';
 
 class verificarNovoUsuario extends verificadorFormularioAjax {
 
@@ -75,15 +75,16 @@ class verificarNovoUsuario extends verificadorFormularioAjax {
             $this->mensagemErro("Cpf <i>$cpf</i> já está em uso!");
         }
         $MailSender = new Email();
+        if ($enviarSenha !== null) {
         $MailSender->definirAssunto("Nova senha temporária");
         $nomeAplicativo = APP_NAME;
-        $link = WEB_SERVER_ADDRESS . 'logar.php?email=' . $email;
+            $link = WEB_SERVER_ADDRESS . 'logar/?email=' . $email;
         $mensagem = "<p>Seu cadastro foi concluído em <a href='$link' target='_blank'>$nomeAplicativo</a> e essa é sua senha para acesso: $senhaAleatoria </p>"
                 . "<p>Ao acessar pela primeira vez, lembre-se de alterar sua senha.</p>"
                 . "<br/>";
         $MailSender->definirMensagem($mensagem);
         $MailSender->definirDestinatario($email, "$nome $sobreNome");
-
+        }
         try {
             $usuarioDAO->iniciarTransacao();
             if ($usuarioDAO->inserir($usuario)) {
@@ -103,10 +104,12 @@ class verificarNovoUsuario extends verificadorFormularioAjax {
                     throw new Exception("Erro ao cadastrar permissões", 40);
                 }
                 $usuario = $usuarioDAO->recuperarUsuario($usuario->get_email());
-                (new sistemaDAO())->registrarCadastroUsuario(obterUsuarioSessao()->get_idUsuario(), $usuario->get_idUsuario());
+                $usuarioDAO->registrarCadastroUsuario(obterUsuarioSessao()->get_idUsuario(), $usuario->get_idUsuario());
+                if ($enviarSenha !== null) {
                 $MailSender->enviar();
                 if (!$MailSender->emailFoiEnviado()) {
                     throw new Exception("Falha ao enviar email. Cadastro não realizado.", 41);
+                }
                 }
                 $usuarioDAO->encerrarTransacao();
                 //Essa linha deve estar por último, ou o COMMIT não irá acontecer pelo banco de dados

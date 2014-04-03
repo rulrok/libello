@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../configuracoes.php';
 //if (preg_match("#.*" . WEB_SERVER_FOLDER . "/?.*#", $_SERVER['REQUEST_URI'])) {
-require_once BIBLIOTECA_DIR . 'bancoDeDados/PDOconnectionFactory.php';
+require_once APP_LIBRARY_ABSOLUTE_DIR . 'bancoDeDados/PDOconnectionFactory.php';
 require_once APP_DIR . 'modelo/vo/Usuario.php';
 require_once APP_DIR . 'modelo/dao/sistemaDAO.php';
 
@@ -124,7 +124,7 @@ function protegePaginaLogado() {
 function expulsaVisitante($msg_erro = null) {
     encerrarSessao();
 //    ob_start();
-    header("Location: " . WEB_SERVER_ADDRESS . "logar.php" . ($msg_erro != null ? "?m=" . $msg_erro : ""), true);
+    header("Location: " . WEB_SERVER_ADDRESS . "logar/" . ($msg_erro != null ? "?m=" . $msg_erro : ""), true);
 //    ob_end_flush();
     exit;
 }

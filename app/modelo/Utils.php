@@ -1,6 +1,6 @@
 <?php
 
-include_once BIBLIOTECA_DIR . 'seguranca/seguranca.php';
+include_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/seguranca.php';
 
 /**
  * Função para registrar mensagens de logs em arquivo no servidor.

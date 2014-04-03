@@ -8,7 +8,7 @@ require_once 'enumeracao/Ferramenta.php';
 require_once 'enumeracao/Area.php';
 require_once 'enumeracao/TipoCurso.php';
 require_once 'enumeracao/Papel.php';
-require_once BIBLIOTECA_DIR . 'seguranca/Permissao.php';
+require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/Permissao.php';
 
 class Menu {
 
@@ -235,5 +235,3 @@ class Menu {
     }
 
 }
-
-?>

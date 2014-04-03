@@ -149,7 +149,7 @@
     function esconder(id) {
         $(id).addClass('hidden');
         $(id).removeAttr('required');
-        $(id).prop('disabled', true);
+        $(id).attr('disabled', true);
         $(".campoVarrido").removeClass("campoVarrido");
         $(".imagemCampoObrigatorio").remove();
         varrerCampos();
@@ -157,7 +157,7 @@
     function exibir(id) {
         $(id).removeClass('hidden');
         $(id).attr('required', true);
-        $(id).removeProp('disabled');
+        $(id).removeAttr('disabled');
         $(".campoVarrido").removeClass("campoVarrido");
         $(".imagemCampoObrigatorio").remove();
         varrerCampos();
@@ -256,8 +256,8 @@
                 } else {
                     var aux = 4;
                     while (aux > desnum) {
-                        $("#descritor_"+aux).attr('disabled', true);
-                        $("#descritor_"+aux).load("index.php?c=imagens&a=obterDescritor");
+                        $("#descritor_" + aux).attr('disabled', true);
+                        $("#descritor_" + aux).load("index.php?c=imagens&a=obterDescritor");
                         aux--;
                     }
 
@@ -346,6 +346,9 @@
             } else {
                 esconder("#novo_descritor_4");
                 exibir("#descritor_4");
+                if ($("#descritor_3").attr('disabled') !== undefined) {
+                    $("#descritor_4").attr('disabled', true);
+                }
             }
         });
 

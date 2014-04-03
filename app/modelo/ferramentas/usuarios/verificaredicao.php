@@ -40,8 +40,8 @@ class verificarEdicaoUsuario extends verificadorFormularioAjax {
             $this->mensagemErro("Papel inválido");
         }
         
-        if($idPapel < obterUsuarioSessao()->get_idPapel()){
-            registrar_erro("Tentativa de alterar papel de usuário para um maior que o seu próprio (para valor $idPapel)",$usuarioOriginal);
+        if ($idPapel < obterUsuarioSessao()->get_idPapel()) {
+            registrar_erro("Tentativa de alterar papel de usuário para um maior que o seu próprio (para valor $idPapel)", $usuarioOriginal);
             $this->mensagemErro("Alteração não permitida");
         }
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -85,7 +85,7 @@ class verificarEdicaoUsuario extends verificadorFormularioAjax {
             $this->mensagemErro("Erro ao modificar. Nenhum alteração salva.");
         }
         $idUsuario = $usuarioDAO->recuperarUsuario($usuario->get_email())->get_idUsuario();
-        (new sistemaDAO())->registrarAlteracaoUsuario(obterUsuarioSessao()->get_idUsuario(), $idUsuario);
+        $usuarioDAO->registrarAlteracaoUsuario(obterUsuarioSessao()->get_idUsuario(), $idUsuario);
 
 //                $this->visao->permissoes = $usuarioDAO->obterPermissoes($usuarioDAO->recuperarUsuario($email)->get_id());
         $this->mensagemSucesso("Atualização concluída");

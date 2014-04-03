@@ -22,17 +22,21 @@
             </select>
         </div>
         <hr>
-        <div class="line">
+        <div class="line input-daterange" id="datepicker">
+
             <label for='dataIda'>Data ida</label>
-            <input type="text" readonly required id="dataIda" class=" input-large campoData" placeholder="Clique para escolher" name="dataIda" >
-            <label for='horaIda'>Hora ida</label>
-            <input type="text" readonly required id="horaIda" class=" input-large campoHora" placeholder="Clique para escolher" name="horaIda" >
-        </div>
-        <div class="line">
+            <input type="text" required id="dataIda" class=" input-large campoData" placeholder="Clique para escolher" name="start" >
+            &nbsp;
             <label for='dataVolta'>Data volta</label>
-            <input type="text" readonly required id="dataVolta" class=" input-large campoData" placeholder="Clique para escolher" name="dataVolta" >
+            <input type="text" required id="dataVolta" class=" input-large campoData" placeholder="Clique para escolher" name="end" >
+
+        </div>
+        <div class='line'>
+            <label for='horaIda'>Hora ida</label>
+            <input type="text" required id="horaIda" class=" input-large campoHora" placeholder="HH:MM" name="horaIda" >
+            &nbsp;
             <label for='horaVolta'>Hora volta</label>
-            <input type="text" readonly required id="horaVolta" class=" input-large campoHora" placeholder="Clique para escolher" name="horaVolta"  >
+            <input type="text" required id="horaVolta" class=" input-large campoHora" placeholder="HH:MM" name="horaVolta"  >
         </div>
         <hr>
         <div class="line">
@@ -79,7 +83,41 @@
 </form>
 <script src='publico/js/datasComRange.js' type='text/javascript'></script>
 <script>
+    function validarHora() {
+        var horaIda = moment($('#dataIda').val() + "-" + $('#horaIda').val(), "DD/MM/YYYY-HH:mm");
+        var horaVolta = moment($('#dataVolta').val() + "-" + $('#horaVolta').val(), "DD/MM/YYYY-HH:mm");
+
+        if (horaVolta.isBefore(horaIda)) {
+            $('#horaVolta').val('');
+        }
+    }
+
     $(document).ready(function() {
+
+        $('.input-daterange').datepicker({
+            autoclose: true,
+            format: "dd/mm/yyyy",
+            todayBtn: "linked",
+            language: "pt-BR",
+            multidate: false,
+            keyboardNavigation: false,
+            todayHighlight: true
+        }).on('hide', function(e) {
+            var dataInicio = $("#dataIda").val();
+            var dataFim = $("#dataVolta").val();
+            var formato = "DD/MM/YYYY";
+            if (dataInicio != "" && dataFim != "") {
+                if (!moment(dataInicio, formato).isValid() || !moment(dataFim, formato).isValid()) {
+                    $("#dataIda").val('');
+                    $("#dataVolta").val('');
+                }
+            }
+        });
+
+        $('#dataIda').on('change', validarHora);
+        $('#dataVolta').on('change', validarHora);
+        $('#horaIda').mask('99:99');
+        $('#horaVolta').mask('99:99').on('change', validarHora);
 
         //Descobre o SO para exibir texto correto sobre tecla CTRL ou Command (Mac)
         var teclaSpan = document.getElementById("tecla");
@@ -91,7 +129,7 @@
         teclaSpan.appendChild(texto);
 
 
-        configurarCamposDataHora('#dataIda', '#dataVolta');
+//        configurarCamposDataHora('#dataIda', '#dataVolta');
         varrerCampos();
         $("#responsavel").chosen({display_disabled_options: false, display_selected_options: true, inherit_select_classes: true, placeholder_text_multiple: "Selecione o responsavel pela viagem", width: "450px"});
         $("#passageiros").chosen({display_disabled_options: false, display_selected_options: false, inherit_select_classes: true, placeholder_text_multiple: "Selecione os passageiros", width: "750px"});

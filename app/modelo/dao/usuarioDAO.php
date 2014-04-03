@@ -4,8 +4,9 @@ require_once 'abstractDAO.php';
 require_once APP_DIR . 'modelo/vo/Usuario.php';
 require_once APP_DIR . 'modelo/vo/PermissoesFerramenta.php';
 require_once APP_DIR . 'modelo/enumeracao/Ferramenta.php';
-require_once BIBLIOTECA_DIR . 'seguranca/Permissao.php';
-require_once BIBLIOTECA_DIR . 'seguranca/criptografia.php';
+require_once APP_DIR . 'modelo/enumeracao/TipoEventoUsuarios.php';
+require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/Permissao.php';
+require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/criptografia.php';
 
 class usuarioDAO extends abstractDAO {
 
@@ -131,7 +132,7 @@ class usuarioDAO extends abstractDAO {
      * @return boolean
      */
     public function inserir(Usuario $vo) {
-        $sql = 'INSERT INTO usuario(idPapel,senha,PNome, UNome, email, dataNascimento, cpf) VALUES (  :idPapel, :senha, :PNome, :UNome, :email, :nasc, :cpf, :dataCadastro, :ultimoAcesso )';
+        $sql = 'INSERT INTO usuario(idPapel,senha,PNome, UNome, email, dataNascimento, cpf, dataCadastro, ultimoAcesso) VALUES (  :idPapel, :senha, :PNome, :UNome, :email, :nasc, :cpf, :dataCadastro, :ultimoAcesso )';
         $cpf = str_replace(array('.', '-'), '', $vo->get_cpf());
         $params = array(
             ':idPapel' => [$vo->get_idPapel(), PDO::PARAM_INT]
@@ -141,7 +142,7 @@ class usuarioDAO extends abstractDAO {
             , ':email' => [$vo->get_email(), PDO::PARAM_STR]
             , ':nasc' => [$vo->get_dataNascimento(), PDO::PARAM_STR]
             , ':cpf' => [$cpf, PDO::PARAM_STR]
-            , ':dataCadastro' => [microtime(), PDO::PARAM_INT]
+            , ':dataCadastro' => [time(), PDO::PARAM_INT]
             , ':ultimoAcesso' => [0, PDO::PARAM_INT]
         );
 
@@ -379,6 +380,72 @@ class usuarioDAO extends abstractDAO {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Registra um evento de cadastro de usuário no sistema.
+     * 
+     * @param type $idUsuarioFonte Usuário que está cadastrando
+     * @param type $idUsuarioAlvo Usuário que está sendo cadastrado
+     */
+    public function registrarCadastroUsuario($idUsuarioFonte, $idUsuarioAlvo) {
+        $tipo = TipoEventoUsuarios::CADASTRO_USUARIO;
+        $sql = "INSERT INTO usuario_evento(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data) VALUES (:idUF, :idUA, :t, :d)";
+        $params = array(
+            ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
+            , ':idUA' => [$idUsuarioAlvo, PDO::PARAM_INT]
+            , ':t' => [$tipo, PDO::PARAM_INT]
+            , ':d' => [time(), PDO::PARAM_INT]
+        );
+        return $this->executarQuery($sql, $params);
+}
+
+    /**
+     * Registra um evento de remoção de um usuário do sistema.
+     * @param type $idUsuarioFonte Usuário que está editando.
+     * @param type $idUsuarioAlvo Usuário que está sendo editado.
+     * @return boolean True em caso de sucesso, False em caso contrário.
+     */
+    public function registrarDesativacaoUsuario($idUsuarioFonte, $idUsuarioAlvo) {
+        $tipo = TipoEventoUsuarios::DESATIVACAO_USUARIO;
+        $sql = "INSERT INTO usuario_evento(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data) VALUES (:idUF, :idUA,:t, :d)";
+        $params = array(
+            ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
+            , ':idUA' => [$idUsuarioAlvo, PDO::PARAM_INT]
+            , ':t' => [$tipo, PDO::PARAM_INT]
+            , ':d' => [time(), PDO::PARAM_INT]
+        );
+        return $this->executarQuery($sql, $params);
+    }
+
+    public function registrarAtivacaoUsuario($idUsuarioFonte, $idUsuarioAlvo) {
+        $tipo = TipoEventoUsuarios::ATIVACAO_USUARIO;
+        $sql = "INSERT INTO usuario_evento(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data) VALUES (:idUF, :idUA,:t, :d)";
+        $params = array(
+            ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
+            , ':idUA' => [$idUsuarioAlvo, PDO::PARAM_INT]
+            , ':t' => [$tipo, PDO::PARAM_INT]
+            , ':d' => [time(), PDO::PARAM_INT]
+        );
+        return $this->executarQuery($sql, $params);
+    }
+
+    /**
+     * Registra um evento de alteração de um usuário do sistema.
+     * @param type $idUsuarioFonte Usuário que está editando.
+     * @param type $idUsuarioAlvo Usuário que está sendo editado.
+     * @return boolean True em caso de sucesso, False em caso contrário.
+     */
+    public function registrarAlteracaoUsuario($idUsuarioFonte, $idUsuarioAlvo) {
+        $tipo = TipoEventoUsuarios::ALTERACAO_USUARIO;
+        $sql = "INSERT INTO usuario_evento(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data) VALUES (:idUF,:idUA,:t,:d)";
+        $params = array(
+            ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
+            , ':idUA' => [$idUsuarioAlvo, PDO::PARAM_INT]
+            , ':t' => [$tipo, PDO::PARAM_INT]
+            , ':d' => [time(), PDO::PARAM_INT]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
 }

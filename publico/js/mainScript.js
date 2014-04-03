@@ -779,7 +779,7 @@ function makeSubMenu(originMenu) {
 
 /**
  * Muda o título da página, mas mudando apenas o final. O título padrão é "Controle CEAD".
- * Caso você altere o título para "Nova página" o resultado então seria: "Controle CEAD | Nova página".
+ * Caso você altere o título para "Nova página" o resultado então seria: "Nova página | Controle CEAD".
  * O título padrão pode ser omitido.
  * 
  * @author Reuel

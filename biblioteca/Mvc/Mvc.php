@@ -1,7 +1,7 @@
 <?php
 
 require_once ROOT . 'biblioteca/configuracoes.php';
-require_once BIBLIOTECA_DIR . 'seguranca/seguranca.php';
+require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/seguranca.php';
 
 class Mvc {
 

@@ -1,6 +1,6 @@
 <?php
 
-require_once BIBLIOTECA_DIR . "seguranca/Permissao.php";
+require_once APP_LIBRARY_ABSOLUTE_DIR . "seguranca/Permissao.php";
 require_once APP_DIR . "modelo/enumeracao/Ferramenta.php";
 
 class PermissoesFerramenta {
@@ -97,6 +97,7 @@ class PermissoesFerramenta {
 
     public function set_galeriaImagens($galeriaImagens) {
         $this->galeriaImagens = $galeriaImagens;
+        return $this;
     }
 
     public function get_galeriaImagens() {
