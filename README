@@ -137,7 +137,8 @@ estrutura de arquivos, uma breve explicação dos arquivos mais importantes:
         O próximo passo é a função rodar() localizada na classe 'Mvc' (que é um
     objeto singleton). Dentro dessa função, basicamente são recuperados os dois
     valores 'c' e 'a' passados por GET. Com essas duas informações, são então
-    inferidos o nome da classe do controlador.
+    inferidos o nome da classe do controlador. O nome será sempre formado pelo
+    padrão: Controlador[Nomedocontrolador]
 
         Ex.     index.php?c=usuarios&a=novo
 
@@ -156,7 +157,8 @@ estrutura de arquivos, uma breve explicação dos arquivos mais importantes:
 
         Caso a ação exista, é em seguida verificado se ela possui um método com
     o nome correspondente ao nome da ação. Igualmente, caso o método não exista,
-    uma página de erro 404 será retornada.
+    uma página de erro 404 será retornada. O nome do método será sempre formado
+    pelo padrão: acao[Nomedaacao]
 
 
     <?php
@@ -169,7 +171,100 @@ estrutura de arquivos, uma breve explicação dos arquivos mais importantes:
         }
             ...
     ?>
-        
+
+        Existindo a classe correta com o método adequado, ele é invocado.
+
+        Supondo a chamada index.php?c=exemplo&a=teste, nosso controlador seria
+    algo nesse sentido:
+
+    <?php
+            ...
+        class ControladorExemplo extends Controlador {
+            ...
+            public function acaoTeste(){
+                [$this->visao->acessoMinimo = Permissao::[tipoPermissao];]
+                    ...
+                $this->renderizar();
+            }
+            ...
+        }
+    ?>
+
+        A primeira linha apresentada é opcional. Deve ser utilizada quando for
+    necessário proteger o acesso à ferramente baseado na permissão do usuário
+    quanto a ferramenta. Isso é necessário pois, apesar do usuário não ter acesso
+    a uma ferramenta, ele poderia obter o link com alguém que possui permissões
+    e acessar sem que o sistema percebesse.
+        Caso a linha não seja declarada, qualquer um que digitar o link apropriado
+    poderá acessar o método.
+
+        Dentro dessas funções, podem ser atribuídas variáveis para serem utilizadas
+    nas páginas finais apresentadas para os usuários, basta apesar atribuí-las
+    da seguinte forma (dentro dos métodos):
+
+        $this->visao->novaVariavel = algumacoisa;
+
+        Ao final das ações necessárias, ao final do arquivo deve ser invocado o
+    método 'renderizar' da classe Controlador (classe pai).
+
+        $this->renderizar();
+
+        Dentro da classe controlador, teremos o método renderizar declarado da 
+    seguinte maneira:
+
+    <?php
+        abstract class Controlador {
+
+        protected $visao;
+                ...
+            public function renderizar() {
+                $diretorio = strtolower(Mvc::pegarInstancia()->pegarControlador());
+                $arquivo = strtolower(Mvc::pegarInstancia()->pegarAcao()) . ".php";
+                $this->visao->renderizar($diretorio, $arquivo);
+            }
+                ...
+        }
+    ?>
+    
+        Basicamente o que está acontecendo é que ele procura pelo arquivo que
+    possui o mesmo nome que o nome da ação invocada (sem a palavra 'acao') dentro
+    do diretório adequado através do método 'renderizar' da classe Visao.
+
+        A Classe Visao é declarada da seguinte forma:
+
+    <?php
+        class Visao {
+
+            public function renderizar($diretorio, $arquivo) {
+                $local = array('app/visao/', 'app/modelo/ferramentas/');
+                if (isset($this->acessoMinimo)) {
+                    ... //Verificações necessárias de segurança
+                }
+
+                $encontrou = false;
+                for ($i = 0; $i < sizeof($local); $i++) {
+                    if (file_exists(ROOT . $local[$i] . $diretorio . '/' . $arquivo)) {
+                        require ROOT . $local[$i] . $diretorio . '/' . $arquivo;
+                        $encontrou = true;
+                        break;
+                    }
+                }
+
+                if (!$encontrou) {
+                    require APP_DIR . "visao/paginaConstrucao.php";
+                }
+            }
+        }
+    ?>
+
+        Há o vetor $local onde estão os diretórios onde deverá ser buscado o
+    arquivo final apresentado ao usuário. Caso o arquivo não exista, uma página
+    com uma mensagem 'página em construção' será exibida.
+
+        Dentro do arquivo que será incluído pela Visao, as variáveis declaradas
+    dentro do controlador podem ser acessadas da seguinte maneira:
+
+        $this->novaVariavel (da mesma forma que foi declarado no controlador)
 
 ================================================================================
     2. Requisitos
