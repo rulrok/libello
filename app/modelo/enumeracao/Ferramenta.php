@@ -15,6 +15,7 @@ final class Ferramenta {
     const CONTROLE_VIAGENS = 6;
     const TAREFAS = 7;
     const GALERIA_IMAGENS = 8;
+    const PROCESSOS = 9;
 
     public static function get_codigo_ferramenta($nomeFerramenta) {
         $nomeFerramenta = strtolower($nomeFerramenta);
@@ -36,6 +37,8 @@ final class Ferramenta {
                 return Ferramenta::CONTROLE_VIAGENS;
             case "imagens":
                 return Ferramenta::GALERIA_IMAGENS;
+                case "processos":
+                return Ferramenta::PROCESSOS;
         }
     }
 
