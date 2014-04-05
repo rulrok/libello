@@ -5,7 +5,6 @@
 <script src="publico/js/documentos.js" type="text/javascript"></script>
 
 <form id="ajaxForm" name="form1" method="post" action='index.php?c=documentos&a=verificaratualizacaooficio' target="_blank" >
-
     <div id="documento_form" style='' border="0" align="center">
         <div style="position: relative;padding:50px 90px;padding-bottom: 120px;">
             <img id="cabecalho" style="" src="publico/imagens/cabecalho-documentos/cabecalho.jpg" />
@@ -87,8 +86,8 @@
             bloqueia();
             if (confirm('Atenção, o rascunho do ofício será salvo! Tem certeza?')) {
                 $('#i_numOficio').val('-1');
+                
                 $('#ajaxForm').submit();
-
             }
 
             desbloqueia();

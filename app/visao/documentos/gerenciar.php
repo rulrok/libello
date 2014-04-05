@@ -489,7 +489,8 @@
             var doc = $('tr.row_selected').attr('doc');
             var temp = doc[0].toUpperCase() + doc.slice(1);
             var id = $('tr.row_selected .campoID').text();
-            document.location.href = '#!documentos|editar' + temp + "&id=" + id;
+            document.location.href = '#!documentos|gerarOficio&id='+id;
+//            document.location.href = '#!documentos|editar' + temp + "&id=" + id;
         });
 
         $('.btn-aproveitar').on('click', function() {

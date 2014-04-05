@@ -3,3 +3,14 @@
 
 
 [03-Apr-2014 01:19:16 America/Sao_Paulo] PHP Fatal error:  Class 'verificadorFormularioAjax' not found in C:\xampp\htdocs\controle-cead\app\modelo\ferramentas\documentos\verificarnovocabecalho.php on line 9
+[03-Apr-2014 09:28:40 America/Sao_Paulo] PHP Fatal error:  Cannot redeclare class Mensagem in C:\xampp\htdocs\controle-cead\app\modelo\Mensagem.php on line 9
+[03-Apr-2014 09:34:50 America/Sao_Paulo] PHP Fatal error:  Cannot redeclare class Mensagem in C:\xampp\htdocs\controle-cead\app\modelo\Mensagem.php on line 9
+[03-Apr-2014 10:37:16 America/Sao_Paulo] PHP Notice:  Use of undefined constant id - assumed 'id' in C:\xampp\htdocs\controle-cead\app\visao\documentos\gerenciar.php on line 492
+[03-Apr-2014 11:06:17 America/Sao_Paulo] PHP Notice:  Undefined property: Visao::$teste in C:\xampp\htdocs\controle-cead\app\visao\documentos\geraroficio.php on line 6
+[03-Apr-2014 11:07:30 America/Sao_Paulo] PHP Notice:  Undefined property: Visao::$tratamento in C:\xampp\htdocs\controle-cead\app\visao\documentos\geraroficio.php on line 24
+[03-Apr-2014 15:13:15 America/Sao_Paulo] Mensagem: <SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '0' for key 'PRIMARY'>
+[Usuário: Cead Ead(CE3), admin@cead.com, papel: 1, id: 1]
+
+
+[03-Apr-2014 15:47:09 America/Sao_Paulo] PHP Fatal error:  Class 'verificadorFormularioAjax' not found in C:\xampp\htdocs\controle-cead\app\modelo\ferramentas\documentos\verificarnovooficio.php on line 6
+[04-Apr-2014 20:31:48 America/Sao_Paulo] PHP Fatal error:  Cannot redeclare class Mensagem in C:\xampp\htdocs\controle-cead\app\modelo\Mensagem.php on line 9

@@ -10,7 +10,6 @@
  *
  * @author Rodolfo
  */
-include APP_DIR . "modelo/Mensagem.php";
 require_once APP_DIR . "modelo/vo/Memorando.php";
 include APP_DIR . "visao/verificadorFormularioAjax.php";
 

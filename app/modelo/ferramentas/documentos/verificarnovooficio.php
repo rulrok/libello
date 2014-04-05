@@ -1,6 +1,5 @@
 <?php
 
-include APP_DIR . "modelo/Mensagem.php";
 require_once APP_DIR . "modelo/vo/Oficio.php";
 include APP_DIR . "visao/verificadorFormularioAjax.php";
 
@@ -9,6 +8,7 @@ class verificarnovooficio extends verificadorFormularioAjax {
     public function _validar() {
         try {
             $idusuario = obterUsuarioSessao()->get_idUsuario();
+            $idOficio = fnDecrypt(filter_input(INPUT_POST, 'i_idoficio'));
             $numOficio = filter_input(INPUT_POST, 'i_numOficio');
             $assunto = filter_input(INPUT_POST, 'assunto');
             $corpo = filter_input(INPUT_POST, 'corpo');
@@ -43,16 +43,22 @@ class verificarnovooficio extends verificadorFormularioAjax {
             if ($numOficio == -1) {
                 $estadoEdicao = 1;
             }
-
             $documento->set_estadoEdicao($estadoEdicao);
             $documento->set_numOficio($numOficio);
-
             $documentoDAO = new documentoDAO();
-            $problema = $documentoDAO->inserirOficio($documento);
+            if ($idOficio != -1) {
+                $documento->set_idOficio($idOficio);
+                $documentoDAO->update_oficio($documento);
+                $id = $idOficio;
+            } else {
 
-            if ($numOficio != -1) {
+                $problema = $documentoDAO->inserirOficio($documento);
                 $id = $documentoDAO->obterUltimoIdInserido();
-                $this->setId($id);
+            }
+
+            $this->setId($id);
+            if ($numOficio != -1) {
+                $this->setDocumento('gerar');
                 $this->mensagemSucesso("Oficio gerado com sucesso!");
             } else {
                 $this->mensagemSucesso("Oficio salvo com sucesso!");
@@ -62,7 +68,6 @@ class verificarnovooficio extends verificadorFormularioAjax {
         }
     }
 
-//put your code here
 }
 
 $verificar = new verificarnovooficio();

@@ -61,8 +61,8 @@ class ControladorDocumentos extends Controlador {
     public function acaoDeletarmemorando() {
         $this->renderizar();
     }
-    
-    public function acaoVerificarnovocabecalho(){
+
+    public function acaoVerificarnovocabecalho() {
         $this->renderizar();
     }
 
@@ -78,11 +78,10 @@ class ControladorDocumentos extends Controlador {
         $this->visao->memorandosEmAberto = listarMemorandos('emAberto');
         $this->renderizar();
     }
-    
-    public function acaoGerenciarCabecalho(){
+
+    public function acaoGerenciarCabecalho() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
-        
     }
 
     public function acaoConsultar() {
@@ -96,6 +95,40 @@ class ControladorDocumentos extends Controlador {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->visao->comboDia = ComboBoxDocumentos::comboDia();
         $this->visao->comboMes = ComboBoxDocumentos::comboMes();
+        
+        $this->visao->tratamento = '';
+        $this->visao->destino = '';
+        $this->visao->cargo_destino = '';
+        $this->visao->referencia = '';
+        $this->visao->assunto = '';
+        $this->visao->corpo = '';
+        $this->visao->remetente = '';
+        $this->visao->cargo_remetente = '';
+        $this->visao->sigla = 'TEC';
+        $this->visao->idoficio = fnEncrypt(-1);
+        
+        if (!isset($_GET['id'])) {
+            $this->visao->action = 'gerar';
+        } else {
+            $ofc = (new documentoDAO())->consultar('documento_oficio', 'idOficio = ' . fnDecrypt(filter_input(INPUT_GET, 'id')));
+            $oficioTmp = $ofc[0];
+
+            $this->visao->tratamento = $oficioTmp->get_tratamento();
+            $this->visao->destino = $oficioTmp->get_destino();
+            $this->visao->cargo_destino = $oficioTmp->get_cargo_destino();
+            $this->visao->referencia = $oficioTmp->get_referencia();
+            $this->visao->assunto = $oficioTmp->get_assunto();
+            $this->visao->corpo = $oficioTmp->get_corpo();
+            $this->visao->remetente = $oficioTmp->get_remetente();
+            $this->visao->cargo_remetente = $oficioTmp->get_cargo_remetente();
+            $this->visao->sigla = $oficioTmp->get_tipoSigla();
+            if ($oficioTmp->get_numOficio() != -1) {
+                $this->visao->action = 'aproveitar';
+            } else {
+                $this->visao->idoficio = $oficioTmp->get_idOficio();
+                $this->visao->action = 'editar';
+            }
+        }
         $this->renderizar();
     }
 
@@ -113,12 +146,12 @@ class ControladorDocumentos extends Controlador {
         $this->visao->corpo = $oficioTmp->get_corpo();
         $this->visao->remetente = $oficioTmp->get_remetente();
         $this->visao->cargo_remetente = $oficioTmp->get_cargo_remetente();
-//        $this->visao->remetente2 = $oficioTmp->getRemetente2();
-//        $this->visao->cargo_remetente2 = $oficioTmp->get_cargo_remetente2();
         $this->visao->sigla = $oficioTmp->get_tipoSigla();
 
         $this->visao->comboDia = ComboBoxDocumentos::comboDia();
         $this->visao->comboMes = ComboBoxDocumentos::comboMes();
+
+
 
         $this->renderizar();
     }
@@ -138,8 +171,6 @@ class ControladorDocumentos extends Controlador {
         $this->visao->corpo = $oficioTmp->get_corpo();
         $this->visao->remetente = $oficioTmp->get_remetente();
         $this->visao->cargo_remetente = $oficioTmp->get_cargo_remetente();
-//        $this->visao->remetente2 = $oficioTmp->getRemetente2();
-//        $this->visao->cargo_remetente2 = $oficioTmp->get_cargo_remetente2();
         $this->visao->sigla = $oficioTmp->get_tipoSigla();
 
         $this->visao->comboDia = ComboBoxDocumentos::comboDia();
@@ -174,8 +205,6 @@ class ControladorDocumentos extends Controlador {
         $this->visao->corpo = $memorandoTmp->get_corpo();
         $this->visao->remetente = $memorandoTmp->get_remetente();
         $this->visao->cargo_remetente = $memorandoTmp->get_cargo_remetente();
-//        $this->visao->remetente2 = $memorandoTmp->getRemetente2();
-//        $this->visao->cargo_remetente2 = $memorandoTmp->get_cargo_remetente2();
         $this->visao->sigla = $memorandoTmp->get_tipoSigla();
 
         $this->visao->comboDia = ComboBoxDocumentos::comboDia();

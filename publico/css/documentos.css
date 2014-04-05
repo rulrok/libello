@@ -54,9 +54,17 @@
     position: relative;
     margin-left: auto;
     margin-right: auto;
+
 }
 
+#documento_form > div{
+    padding:50px 90px;padding-bottom: 120px;
+}
 
+.remetente_div > div{
+    padding-left: 152px;
+    margin-bottom: 2px;
+}
 
 #cabecalho{
     display: block;
@@ -102,6 +110,15 @@
     @media (max-width : 987px){
         #documento_form{
             width:inherit;
+        }
+    }
+    @media (max-width:767px){
+        #documento_form > div{
+            padding: 10px;
+        }
+        .remetente_div > div{
+            padding-left: 0px;
+            margin-bottom: 2px;
         }
     }
 }
