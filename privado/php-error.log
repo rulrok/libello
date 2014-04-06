@@ -324,3 +324,6 @@
 [03-Apr-2014 14:31:17 America/Sao_Paulo] PHP   5. Visao->renderizar() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Controlador.php:18
 [03-Apr-2014 14:31:17 America/Sao_Paulo] PHP   6. require() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Visao.php:36
 [03-Apr-2014 14:31:17 America/Sao_Paulo] PHP   7. unlink() /Applications/MAMP/htdocs/libello/app/modelo/ferramentas/sistema/desativarmanutencao.php:3
+[06-Apr-2014 18:25:05 America/Sao_Paulo] PHP Fatal error:  Call to undefined method Memorando::get_destino() in C:\xampp\htdocs\libello\app\controlador\ControladorDocumentos.php on line 208
+[06-Apr-2014 18:33:59 America/Sao_Paulo] PHP Notice:  Undefined offset: 0 in C:\xampp\htdocs\libello\app\modelo\ferramentas\documentos\visualizarOficio.php on line 16
+[06-Apr-2014 18:33:59 America/Sao_Paulo] PHP Fatal error:  Call to a member function get_numOficio() on a non-object in C:\xampp\htdocs\libello\app\modelo\ferramentas\documentos\visualizarOficio.php on line 16

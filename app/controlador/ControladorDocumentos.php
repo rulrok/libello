@@ -38,9 +38,6 @@ class ControladorDocumentos extends Controlador {
         $this->renderizar();
     }
 
-//    public function acaoVerificaredicaooficio(){
-//        $this->renderizar();
-//    }
 
     public function acaoVerificaratualizacaomemorando() {
         $this->renderizar();
@@ -91,7 +88,7 @@ class ControladorDocumentos extends Controlador {
         $this->renderizar();
     }
 
-    public function acaoGeraroficio() {
+    public function acaoOficio() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->visao->comboDia = ComboBoxDocumentos::comboDia();
         $this->visao->comboMes = ComboBoxDocumentos::comboMes();
@@ -125,7 +122,7 @@ class ControladorDocumentos extends Controlador {
             if ($oficioTmp->get_numOficio() != -1) {
                 $this->visao->action = 'aproveitar';
             } else {
-                $this->visao->idoficio = $oficioTmp->get_idOficio();
+                $this->visao->idoficio = fnEncrypt($oficioTmp->get_idOficio());
                 $this->visao->action = 'editar';
             }
         }
@@ -184,7 +181,7 @@ class ControladorDocumentos extends Controlador {
         $this->renderizar();
     }
 
-    public function acaoGerarmemorando() {
+    public function acaoMemorando() {
         
           $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->visao->comboDia = ComboBoxDocumentos::comboDia();
@@ -208,7 +205,6 @@ class ControladorDocumentos extends Controlador {
             $oficioTmp = $ofc[0];
 
             $this->visao->tratamento = $oficioTmp->get_tratamento();
-            $this->visao->destino = $oficioTmp->get_destino();
             $this->visao->cargo_destino = $oficioTmp->get_cargo_destino();
             $this->visao->referencia = $oficioTmp->get_referencia();
             $this->visao->assunto = $oficioTmp->get_assunto();
@@ -219,7 +215,7 @@ class ControladorDocumentos extends Controlador {
             if ($oficioTmp->get_numMemorando() != -1) {
                 $this->visao->action = 'aproveitar';
             } else {
-                $this->visao->idoficio = $oficioTmp->get_idMemorando();
+                $this->visao->idmemorando = fnEncrypt($oficioTmp->get_idMemorando());
                 $this->visao->action = 'editar';
             }
         }
