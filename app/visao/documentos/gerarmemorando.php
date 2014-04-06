@@ -21,16 +21,16 @@
                 Alfenas, <?php echo $this->comboDia; ?> de <?php echo $this->comboMes; ?> de <?php echo date("Y"); ?>
             </div>
             <div class="left_align">
-                <input type="text" required id="tratamento" name="tratamento" onkeyup="liberarCadastro()" size="15"/><span class="classeExemploOficio"> Ex: Ao Sr.</span>
+                <input type="text" value="<?php echo $this->tratamento; ?>" required id="tratamento" name="tratamento" onkeyup="liberarCadastro()" size="15"/><span class="classeExemploOficio"> Ex: Ao Sr.</span>
             </div>
             <div  class="left_align">
-                <input type="text" required id="cargo_destino" name="cargo_destino" onkeyup="liberarCadastro()" size="40"/><span class="classeExemploOficio"> Ex: Chefe do departamento de Administração</span>
+                <input value="<?php echo $this->cargo_destino; ?>" type="text" required id="cargo_destino" name="cargo_destino" onkeyup="liberarCadastro()" size="40"/><span class="classeExemploOficio"> Ex: Chefe do departamento de Administração</span>
             </div>
             <div id="assunto_div" class="left_align">
-                Assunto: <input type="text" required id="assunto" name="assunto" onkeyup="liberarCadastro()" size="50"/><span class="classeExemploOficio"> Ex: Administração. Instalação de microcomputadores </span>
+                Assunto: <input type="text" value="<?php echo $this->assunto; ?>" required id="assunto" name="assunto" onkeyup="liberarCadastro()" size="50"/><span class="classeExemploOficio"> Ex: Administração. Instalação de microcomputadores </span>
             </div>
             <div id="corpo_div" >
-                <textarea style="" id="corpo" value="" name="corpo" ></textarea>
+                <textarea style="" id="corpo" value="" name="corpo" ><?php echo $this->corpo ;?></textarea>
             </div>
             <div style="margin-bottom: 80px;" class="left_align">
                 Atenciosamente,
@@ -48,9 +48,12 @@
         <div><button class="btn" type="button" title="Salvar Rascunho" disabled="true" name="b_salvar" id="b_salvar" ><i class="icon-save"></i></button></div>
         <div><button  class="btn" type="button" title="Gerar documento" disabled="true" name="b_gerar" id="b_gerar" ><i class="icon-gerar"></i></button></div>
     </div>
-    <input id='remetente' type='hidden' name='remetente' />
-    <input id='cargo_remetente' type='hidden' name='cargo_remetente'/>
+    <input id='remetente' value="<?php echo $this->remetente; ?>" type='hidden' name='remetente' />
+    <input id='cargo_remetente' value="<?php echo $this->cargo_remetente; ?>" type='hidden' name='cargo_remetente'/>
     <input type="hidden" name="i_numMemorando" value="-1" id="i_numMemorando"/>
+    <input type="hidden" name="i_sigla" id="i_sigla" value="<?php echo($this->sigla); ?>"/>
+    <input type="hidden" name="i_idmemorando" id="i_idmemorando" value="<?php echo $this->idmemorando; ?>"/>
+    <input type="hidden" name="nada" id="acao" value="<?php echo $this->action; ?>"/>
 
 
 </form>
@@ -60,9 +63,23 @@
 
         FormDocumentos.instancia.iniciarForm();
         formularioAjax(undefined, undefined, null, function(i) {
-            if (i.id != undefined)
+            if (i.documento != undefined) {
                 window.open('index.php?c=documentos&a=visualizarMemorando&idv=' + i.id, '_blank');
-        });
+                $('[type=reset]').click();
+                document.ignorarHashChange = true;
+                document.location.hash = '#!documentos|gerarMemorando';
+                $('#acao').val('gerar');
+                $('#i_idmemorando').val(i.id);
+            }
+            else {
+                 if ($('#acao').val() != "editar") {
+                    document.ignorarHashChange = true;
+                    document.location.hash = '#!documentos|gerarMemorando&id='+i.id;
+                    $('#acao').val('editar');
+                    $('#i_idmemorando').val(i.id);
+                }
+            }
+        },null, false);
 
         $('#b_gerar').on('click', function() {
             bloqueia();
@@ -75,11 +92,16 @@
         $('#b_salvar').on('click', function() {
             bloqueia();
             if (confirm('Atenção, o memorando será salvo! Tem certeza?')) {
+                concatenarAssinaturas();
                 $('#i_numMemorando').val('-1');
                 $('#ajaxForm').submit();
             }
             desbloqueia();
         });
+
+        var sigla = $("#i_sigla");
+        $("#sigla").val(sigla.val());
+        liberarCadastro();
 
     });
 </script>

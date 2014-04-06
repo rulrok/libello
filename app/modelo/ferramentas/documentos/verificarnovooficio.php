@@ -56,11 +56,12 @@ class verificarnovooficio extends verificadorFormularioAjax {
                 $id = $documentoDAO->obterUltimoIdInserido();
             }
 
-            $this->setId($id);
             if ($numOficio != -1) {
+                $this->setId(-1);
                 $this->setDocumento('gerar');
                 $this->mensagemSucesso("Oficio gerado com sucesso!");
             } else {
+                $this->setId($id);
                 $this->mensagemSucesso("Oficio salvo com sucesso!");
             }
         } catch (Exception $e) {

@@ -14,3 +14,11 @@
 
 [03-Apr-2014 15:47:09 America/Sao_Paulo] PHP Fatal error:  Class 'verificadorFormularioAjax' not found in C:\xampp\htdocs\controle-cead\app\modelo\ferramentas\documentos\verificarnovooficio.php on line 6
 [04-Apr-2014 20:31:48 America/Sao_Paulo] PHP Fatal error:  Cannot redeclare class Mensagem in C:\xampp\htdocs\controle-cead\app\modelo\Mensagem.php on line 9
+[05-Apr-2014 15:50:48 America/Sao_Paulo] Mensagem: <SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens>
+[Usuário: Cead Ead(CE3), admin@cead.com, papel: 1, id: 1]
+
+
+[05-Apr-2014 15:50:52 America/Sao_Paulo] Mensagem: <SQLSTATE[HY093]: Invalid parameter number: number of bound variables does not match number of tokens>
+[Usuário: Cead Ead(CE3), admin@cead.com, papel: 1, id: 1]
+
+

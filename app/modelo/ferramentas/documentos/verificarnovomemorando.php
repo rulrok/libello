@@ -21,6 +21,7 @@ class verificarnovomemorando extends verificadorFormularioAjax {
         try {
 
             $idusuario = obterUsuarioSessao()->get_idUsuario();
+            $idMemorando = fnDecrypt(filter_input(INPUT_POST, 'i_idmemorando'));
             $numMemorando = filter_input(INPUT_POST, 'i_numMemorando');
             $assunto = filter_input(INPUT_POST, 'assunto');
             $corpo = filter_input(INPUT_POST, 'corpo');
@@ -54,16 +55,22 @@ class verificarnovomemorando extends verificadorFormularioAjax {
                 $estadoEdicao = 1;
             }
 
-            $documento->set_estadoEdicao($estadoEdicao);
-            $documento->set_numMemorando($numMemorando);
-
             $documentoDAO = new documentoDAO();
-            $documentoDAO->inserirMemorando($documento);
-            if ($numMemorando != -1) {
+            if ($idMemorando != -1) {
+                $documento->set_idMemorando($idMemorando);
+                $documentoDAO->update_memorando($documento);
+                $id = $idMemorando;
+            } else {
+
+                $documentoDAO->inserirMemorando($documento);
                 $id = $documentoDAO->obterUltimoIdInserido();
-                $this->setId($id);
+            }
+
+            if ($numMemorando != -1) {
+                $this->setId(-1);
                 $this->mensagemSucesso("Memorando gerado com sucesso!");
             } else {
+                $this->setId($id);
                 $this->mensagemSucesso("Memorando salvo com sucesso!");
             }
         } catch (Exception $e) {
