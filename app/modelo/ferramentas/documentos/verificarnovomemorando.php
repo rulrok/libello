@@ -33,9 +33,6 @@ class verificarnovomemorando extends verificadorFormularioAjax {
             $remetente = filter_input(INPUT_POST, 'remetente');
             $cargo_remetente = filter_input(INPUT_POST, 'cargo_remetente');
 
-
-
-
             $tratamento = filter_input(INPUT_POST, 'tratamento');
             $cargo_destino = filter_input(INPUT_POST, 'cargo_destino');
 
@@ -55,6 +52,9 @@ class verificarnovomemorando extends verificadorFormularioAjax {
                 $estadoEdicao = 1;
             }
 
+            $documento->set_numMemorando($numMemorando);
+            $documento->set_estadoEdicao($estadoEdicao);
+            
             $documentoDAO = new documentoDAO();
             if ($idMemorando != -1) {
                 $documento->set_idMemorando($idMemorando);
