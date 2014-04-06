@@ -65,19 +65,20 @@
 <script type="text/javascript">
     $(document).ready(function() {
         FormDocumentos.instancia.iniciarForm();
-//        formularioAjax();
         formularioAjax(undefined, undefined, null, function(i) {
             if (i.documento != undefined) {
                 window.open('index.php?c=documentos&a=visualizarOficio&idv=' + i.id, '_blank');
-                    $('[type=reset]').click();
+                $('[type=reset]').click();
+                if (document.location.hash != '#!documentos|oficio') {
                     document.ignorarHashChange = true;
                     document.location.hash = '#!documentos|oficio';
-                    $('#acao').val('gerar');
-                    $('#i_idoficio').val('<?php echo fnEncrypt(-1); ?>');
+                }
+                $('#acao').val('gerar');
+                $('#i_idoficio').val('<?php echo fnEncrypt(-1); ?>');
             } else {
                 if ($('#acao').val() != "editar") {
                     document.ignorarHashChange = true;
-                    document.location.hash = '#!documentos|oficio&id='+i.id;
+                    document.location.hash = '#!documentos|oficio&id=' + i.id;
                     $('#acao').val('editar');
                     $('#i_idoficio').val(i.id);
                 }
@@ -95,7 +96,7 @@
         $('#b_salvar').on('click', function() {
             bloqueia();
             if (confirm('Atenção, o rascunho do ofício será salvo! Tem certeza?')) {
-                    
+
                 concatenarAssinaturas();
                 $('#i_numOficio').val('-1');
                 $('#ajaxForm').submit();
@@ -108,10 +109,5 @@
         liberarCadastro();
 
     });
-    
-//    function resetarCamposi(){
-//        $('#action').val('gerar');
-//        $('#i_numOficio').val('-1');
-//        
-//    }
+
 </script>

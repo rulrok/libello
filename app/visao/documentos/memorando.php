@@ -30,7 +30,7 @@
                 Assunto: <input type="text" value="<?php echo $this->assunto; ?>" required id="assunto" name="assunto" onkeyup="liberarCadastro()" size="50"/><span class="classeExemploOficio"> Ex: Administração. Instalação de microcomputadores </span>
             </div>
             <div id="corpo_div" >
-                <textarea style="" id="corpo" value="" name="corpo" ><?php echo $this->corpo ;?></textarea>
+                <textarea style="" id="corpo" value="" name="corpo" ><?php echo $this->corpo; ?></textarea>
             </div>
             <div style="margin-bottom: 80px;" class="left_align">
                 Atenciosamente,
@@ -66,20 +66,22 @@
             if (i.documento != undefined) {
                 window.open('index.php?c=documentos&a=visualizarMemorando&idv=' + i.id, '_blank');
                 $('[type=reset]').click();
-                document.ignorarHashChange = true;
-                document.location.hash = '#!documentos|memorando';
+                if (document.location.hash != '#!documentos|memorando'){
+                    document.ignorarHashChange = true;
+                    document.location.hash = '#!documentos|memorando';
+                }
                 $('#acao').val('gerar');
                 $('#i_idmemorando').val('<?php echo fnEncrypt(-1); ?>');
             }
             else {
-                 if ($('#acao').val() != "editar") {
+                if ($('#acao').val() != "editar") {
                     document.ignorarHashChange = true;
-                    document.location.hash = '#!documentos|memorando&id='+i.id;
+                    document.location.hash = '#!documentos|memorando&id=' + i.id;
                     $('#acao').val('editar');
                     $('#i_idmemorando').val(i.id);
                 }
             }
-        },null, false);
+        }, null, false);
 
         $('#b_gerar').on('click', function() {
             bloqueia();
