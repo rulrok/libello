@@ -1,3 +1,10 @@
+/**
+ * 
+ * @param {type} campoInicial
+ * @param {type} campoFinal
+ * @returns {unresolved}
+ * @deprecated Usado com antigo componente de calendário, não mais utilizado no programa
+ */
 function configurarCamposDataHora(campoInicial, campoFinal) {
     // Datepick script adaptado
 

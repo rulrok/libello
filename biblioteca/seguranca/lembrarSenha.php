@@ -3,7 +3,7 @@
 require_once '../configuracoes.php';
 require_once APP_DIR . "modelo/dao/usuarioDAO.php";
 require_once APP_DIR . "modelo/Utils.php";
-require_once BIBLIOTECA_DIR . 'seguranca/criptografia.php';
+require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/criptografia.php';
 
 if (filter_has_var(INPUT_POST, 'email') && filter_input(INPUT_POST, 'email') != NULL && filter_input(INPUT_POST, 'email') != "") :
     $email = filter_input(INPUT_POST, 'email');
@@ -28,7 +28,7 @@ if (filter_has_var(INPUT_POST, 'email') && filter_input(INPUT_POST, 'email') != 
             //This should be done in your php.ini, but this is how to do it if you don't have access to that
             date_default_timezone_set(APP_TIME_ZONE);
 
-            require BIBLIOTECA_DIR . 'PHPMailer/Email.php';
+            require APP_LIBRARY_ABSOLUTE_DIR . 'PHPMailer/Email.php';
 
             $mail = new Email();
             $mail->definirAssunto($assunto);
@@ -41,7 +41,7 @@ if (filter_has_var(INPUT_POST, 'email') && filter_input(INPUT_POST, 'email') != 
                 echo "Não foi possível mandar seu email.";
             } else {
                 if ($jaEnviado) {
-                    echo "Email enviado novamente!.<br/> Caso não receba seu email, entre em contato com o suporte: <a href='" . APP_SUPPORT_EMAIL . "'>" . APP_SUPPORT_EMAIL . "</a>";
+                    echo "Email enviado novamente!.<br/> Caso não receba seu email, entre em contato com o suporte: <a href='mailto:" . APP_SUPPORT_EMAIL . "'>" . APP_SUPPORT_EMAIL . "</a>";
                 } else {
                     echo "Email enviado. Consulte sua caixa de entrada.";
                 }

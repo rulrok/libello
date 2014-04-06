@@ -8,7 +8,7 @@ $email = $usuarioDAO->descobrirEmail($id);
 $mensagem = new Mensagem();
 
 if ($usuarioDAO->ativar($email)) {
-    (new sistemaDAO())->registrarAtivacaoUsuario(obterUsuarioSessao()->get_idUsuario(), $id);
+    $usuarioDAO->registrarAtivacaoUsuario(obterUsuarioSessao()->get_idUsuario(), $id);
     $mensagem->set_mensagemSucesso("Usuário ativado com sucesso.");
 } else {
     $mensagem->set_mensagem("Erro ao concluir a operação")->set_status(Mensagem::ERRO);

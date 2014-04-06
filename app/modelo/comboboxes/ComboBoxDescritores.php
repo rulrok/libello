@@ -1,6 +1,6 @@
 <?php
 
-require_once BIBLIOTECA_DIR . "configuracoes.php";
+require_once APP_LIBRARY_ABSOLUTE_DIR . "configuracoes.php";
 
 class ComboBoxDescritores {
 

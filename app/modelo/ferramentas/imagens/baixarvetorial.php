@@ -11,6 +11,7 @@ if (filter_has_var(INPUT_GET, 'idImagem')) {
         $nomeArquivoNormalizado = preg_filter("#_.*?\.#", '.', $nomeArquivo);
 
 
+        header("X-Robots-Tag: noindex, nofollow", true);
         preg_match("/(\..*)$/", $nomeArquivoNormalizado, $matches);
         if (empty($matches)) {
             header("Content-type: text/html");

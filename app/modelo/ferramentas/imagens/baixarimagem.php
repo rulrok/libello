@@ -16,7 +16,7 @@ if (filter_has_var(INPUT_GET, 'idImagem')) {
             $tipoImagem = 'png';
         }
 
-
+        header("X-Robots-Tag: noindex, nofollow", true);
         header("Content-disposition: attachment; filename=$nomeArquivoNormalizado");
         header("Content-type: image/$tipoImagem");
         readfile($diretorio . $nomeArquivo);

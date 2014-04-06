@@ -6,7 +6,7 @@
  */
 
 require_once 'configuracoes.php';
-require_once BIBLIOTECA_DIR . 'bancoDeDados/PDOconnectionFactory.php';
+require_once APP_LIBRARY_ABSOLUTE_DIR . 'bancoDeDados/PDOconnectionFactory.php';
 require_once APP_DIR . 'modelo/Utils.php';
 
 $conn = PDOconnectionFactory::obterConexao();

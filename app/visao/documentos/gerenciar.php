@@ -38,7 +38,7 @@
 }
 </style>
 
- <link href="public/css/documentos.css" rel="stylesheet">
+ <link href="publico/css/documentos.css" rel="stylesheet">
 
 <div style="text-align:center;">
     <button class="btn btn_oficio ignorar"

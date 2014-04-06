@@ -62,6 +62,11 @@
                 $("#senha").val('');
                 $("#confSenha").val('');
             }
+            , completeFn: function() {
+                $("#senhaAtual").val('');
+                $("#senha").val('');
+                $("#confSenha").val('');
+            }
         });
         $("#dataNascimento").datepicker();
     });

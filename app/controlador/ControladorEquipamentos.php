@@ -1,10 +1,10 @@
 <?php
 
-include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
+include_once APP_LIBRARY_DIR . 'Mvc/Controlador.php';
 require_once APP_DIR . "modelo/comboboxes/ComboBoxPapeis.php";
 require_once APP_DIR . "modelo/comboboxes/ComboBoxUsuarios.php";
 include_once APP_DIR . 'modelo/comboboxes/ComboBoxPolo.php';
-require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
+require_once APP_LIBRARY_DIR . "seguranca/criptografia.php";
 
 class ControladorEquipamentos extends Controlador {
 

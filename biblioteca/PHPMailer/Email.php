@@ -61,16 +61,16 @@ class Email {
         $mail->Debugoutput = 'html';
         $mail->Host = SMTP_SERVER_IP;
         $mail->Port = SMTP_SERVER_PORT;
-        $mail->SMTPSecure = 'tls';
+        $mail->SMTPSecure = SMTP_SECURE_MODE;
         $mail->SMTPAuth = true;
         $mail->Username = SMTP_SERVER_EMAIL;
         $mail->Password = SMTP_SERVER_PASSWORD;
-        $mail->SetFrom(SMTP_SERVER_EMAIL, 'CEAD - NOREPLY');
+        $mail->SetFrom(SMTP_SERVER_EMAIL, SMTP_SEND_FROM);
         $mail->AddAddress($this->destinatarioEmail, $this->destinatarioNome);
         $mail->Subject = $this->assunto;
         $mail->MsgHTML($this->mensagem);
         $mail->AltBody = $this->mensagem;
-        $mail->CharSet = "UTF8";
+        $mail->CharSet = SMTP_CHARSET;
 
         try {
             if ($mail->Send()) {
