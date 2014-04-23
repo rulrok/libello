@@ -329,11 +329,12 @@
 
                         //Permite que o popup seja arrastado pela tela
                         $('.shaderFrameContent').draggable({cancel: ".shaderFrameContentWrap"});
-                        //
-                        $(".shaderFrame").click(function() {
-                            $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
-                            $(".shaderFrameContent").css("visibility", "hidden").css("opacity", "0");
-                        });
+
+                        //Comentado para que não permita o fechamento do cinza esmacido ao ser clicado!
+//                        $(".shaderFrame").click(function() {
+//                            $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
+//                            $(".shaderFrameContent").css("visibility", "hidden").css("opacity", "0");
+//                        });
 
                         hideFooter();
                         showFooter();

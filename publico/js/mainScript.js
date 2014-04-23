@@ -650,13 +650,24 @@ function showPopUp(data, type) {
     $(".popUp").css('color', texto);
     $(".popUp").css('background-color', fundo);
     $(".popUp").css('border-color', borda);
+    $(".popUp").css('left', 480);
     $(".popUpContent").append(data);
     $(".popUp").show(200, function() {
         $(".botao_fechar").show(100, function() {
             $(".popUp").css("display", "table");
+            //Aplica o efeito de lightbox (esmaece o fundo e destaca o popUp)
+            $(".shaderFrame").css("visibility", "visible").animate({opacity: "0.5"}, 150);
         });
         $(this).effect("shake", {}, 500);
     });
+    
+    //Trecho sem efeito de esmaecimento
+    //    $(".popUp").show(200, function() {
+    //        $(".botao_fechar").show(100, function() {
+    //            $(".popUp").css("display", "table");
+    //        });
+    //        $(this).effect("shake", {}, 500);
+    //    });
 }
 
 /**
@@ -670,6 +681,8 @@ function hidePopUp() {
     $(".botao_fechar").hide(100, function() {
         $(".popUp").hide(200, function() {
             $(".sub_popUp").empty();
+            //Fecha o esmaecimento cinza ao fundo logo que se fechar o pop-up
+            $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
         });
     });
 
