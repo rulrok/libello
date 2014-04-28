@@ -826,7 +826,6 @@ function mudarTitulo(titulo, ignorarTituloPadrao) {
  * @returns {String} String para ser criado um Json, caso alguma seja encontrada.
  */
 function extrairJSON(string) {
-    console.log(string);
     var json = null;
     try {
         json = $.parseJSON(string);
