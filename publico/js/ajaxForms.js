@@ -88,7 +88,7 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn
                     }
                 }
             } else {
-                showPopUp("Houve algum problema na resposta do servidor.Teste2", "erro");
+                showPopUp("Houve algum problema na resposta do servidor.", "erro");
             }
         } else {
             showPopUp("Houve algum problema na resposta do servidor.", "erro");
