@@ -1,7 +1,7 @@
 <?php
 
 require_once ROOT . 'biblioteca/configuracoes.php';
-require_once BIBLIOTECA_DIR . 'seguranca/seguranca.php';
+require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/seguranca.php';
 
 class Mvc {
 
@@ -65,15 +65,6 @@ class Mvc {
     }
 
     public function rodar() {
-//        $usuario = new Usuario();
-//        session_start();
-//        if (!isset(obterUsuarioSessao())) {
-//            expulsaVisitante();
-//        }
-//        $usuario->set_email(obterUsuarioSessao()->get_email());
-//        $usuario->set_senha(obterUsuarioSessao()->get_senha());
-//        BIBLIOTECA_DIR . 'seguranca/seguranca.php' . autenticaUsuario($usuario);
-
 
         if (!sessaoIniciada()) {
             expulsaVisitante("Você precisa estar autenticado para realizar essa operação");
@@ -89,36 +80,22 @@ class Mvc {
         $nomeClasseControlador = 'Controlador' . $this->controlador;
         $nomeAcao = 'acao' . $this->acao;
 
-        try {
-            //verifica se a classe existe
-            if (!class_exists($nomeClasseControlador)) {
-                throw new Exception('Controlador nao existente.');
-            }
-            $controladorObjeto = new $nomeClasseControlador;
-
-            //verifica se o metodo existe
-            if (!method_exists($controladorObjeto, $nomeAcao)) {
-                throw new Exception('Acao nao existente.');
-            }
-//            if (usuarioAutorizado(obterUsuarioSessao(), $controladorObjeto, $nomeAcao)) {
-            $controladorObjeto->$nomeAcao();
-            return true;
-//            } else {
-//                //Carrega uma página de acesso proibido
-//                $controladorObjeto = new ControladorInicial();
-//                $this->controlador = "Inicial";
-//                $this->acao = "acessoProibido";
-//                $controladorObjeto->acaoAcessoProibido();
-//                return true;
-//            }
-        } catch (Exception $e) {
-            print_r($e);
-
-            $_GET['c'] = "Inicial";
-            $_GET['a'] = "404";
-            //TODO Verificar se isso não pode gerar uma recursão sem fim!
-            $this->rodar();
+        //verifica se a classe existe
+        if (!class_exists($nomeClasseControlador)) {
+            require APP_DIR . 'visao/404.php';
+            return false;
         }
+
+        $controladorObjeto = new $nomeClasseControlador;
+        //verifica se o metodo existe
+        if (!method_exists($controladorObjeto, $nomeAcao)) {
+            require APP_DIR . 'visao/404.php';
+            return false;
+        }
+        
+        //Tudo certo
+        $controladorObjeto->$nomeAcao();
+        return true;
     }
 
     private function __clone() {

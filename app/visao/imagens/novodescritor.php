@@ -1,5 +1,6 @@
 <title>Novo descritor</title>
 <!-- Início da página -->
+<br/>
 <form class="tabela centralizado" id="ajaxForm"  method="POST" action="index.php?c=imagens&a=verificarNovoDescritor">
     <fieldset>
         <legend>Inserir novo descritor</legend>

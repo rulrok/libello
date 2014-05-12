@@ -1,21 +1,22 @@
 <title>Nova imagem</title>
 <!-- Início da página -->
+<br/>
 <div id="showimg"> </div>
 
 <form class="tabela centralizado" id="upload-image-form-ajax" method="POST" action="index.php?c=imagens&a=verificarnovaimagem" enctype='multipart/form-data'>
     <fieldset>
         <legend>Dados da imagem</legend>
-        
+
         <div class="line">
             <label for='titulo'>Título</label>
-            <input required autofocus type="text" id="titulo" name="titulo" class="input-xlarge" placeholder="Nome da imagem" data-content="Título da imagem">
+            <input required autofocus type="text" id="titulo" name="titulo" class="input-xxlarge" placeholder="Nome da imagem" data-content="Título da imagem">
         </div>
         <div class="line">
             <label for='ano'>Ano</label>
-            <input required size="4" type="number" min="0" maxlength="4" id="ano" name="ano" class="input-xlarge" placeholder="Ano de criação da imagem">
+            <input required size="4" type="text" min="1990" minlength="4" maxlength="4" id="ano" name="ano" class="input-large" placeholder="Ano de criação da imagem">
         </div>
         <hr>
-        <p>Campos preenchidos automaticamente:</p>
+        <p><small>Campos preenchidos automaticamente:</small></p>
         <div class="line">
             <label for="cpfautor">CPF (autor)</label>
             <input required disabled type="text" maxlength="11" id="cpfautor" name="cpfautor" class="disabled input-xlarge" placeholder="___.___.___-__" data-content="Seu CPF cadastrado no sistema." value="<?php echo $this->cpfAutor; ?>">
@@ -32,25 +33,25 @@
         </div>
         <div class="line">
             <label for='descritor1'>Descritor 1</label>
-            <select required id="descritor_1" class="cb_descritor input-xlarge" name="descritor1">
+            <select required id="descritor_1" class="cb_descritor input-xlarge" name="descritor1" data-num="1">
                 <?php echo $this->comboBoxDescritor; ?>
             </select>
         </div>
         <div class="line">
             <label for='descritor2'>Descritor 2</label>
-            <select required id="descritor_2" class="cb_descritor input-xlarge" name="descritor2">
+            <select disabled required id="descritor_2" class="cb_descritor input-xlarge" name="descritor2" data-num="2">
                 <option value="default">-- Escolha um descritor acima --</option>
             </select>
         </div>
         <div class="line">
             <label for='descritor3'>Descritor 3</label>
-            <select required id="descritor_3" class="cb_descritor input-xlarge" name="descritor3">
+            <select disabled required id="descritor_3" class="cb_descritor input-xlarge" name="descritor3" data-num="3">
                 <option value="default">-- Escolha um descritor acima --</option>
             </select>
         </div>
         <div class="line">
             <label for='descritor4'>Descritor 4</label>
-            <select required id="descritor_4" class="cb_descritor input-xlarge" name="descritor4">
+            <select disabled required id="descritor_4" class="cb_descritor input-xlarge" name="descritor4" data-num="4">
                 <option value="default">-- Escolha um descritor acima --</option>
             </select>
             <input type="text" id="novo_descritor_4" name="novo_descritor_4" class="hidden input-xlarge"/>
@@ -89,7 +90,7 @@
             <div class="line" style="line-height: 45px;">
                 <label for="raw-image-upload">Arquivo vetorizado da imagem</label>
                 <input type="hidden" name="MAX_FILE_SIZE" value="3000000" />
-                <input required type="file" accept=".svg,.cdr,imagem/svg+xml" name="raw-image-upload" id="raw-image-upload" class="btn btn-small btn-warning"> 
+                <input required type="file" accept=".fh,.ai,.xcf,.dwg,.dwf,.wmd,.3ds,.cdr,image/xcf,image/svg+xml,application/cdr,application/postscript" name="raw-image-upload" id="raw-image-upload" class="btn btn-small btn-warning"> 
             </div>
 
             <div class="line" id="image-upload-line" style="line-height: 45px;">
@@ -148,7 +149,7 @@
     function esconder(id) {
         $(id).addClass('hidden');
         $(id).removeAttr('required');
-        $(id).prop('disabled', true);
+        $(id).attr('disabled', true);
         $(".campoVarrido").removeClass("campoVarrido");
         $(".imagemCampoObrigatorio").remove();
         varrerCampos();
@@ -156,7 +157,7 @@
     function exibir(id) {
         $(id).removeClass('hidden');
         $(id).attr('required', true);
-        $(id).removeProp('disabled');
+        $(id).removeAttr('disabled');
         $(".campoVarrido").removeClass("campoVarrido");
         $(".imagemCampoObrigatorio").remove();
         varrerCampos();
@@ -232,6 +233,7 @@
     function atualizar_combobox(combo_box) {
         $(combo_box).on('change', function() {
             var desnum = parseInt(this.id.substr(10));
+            //Verifica se é o combobox certo
             if (desnum > 0 && desnum < 4) {
                 var wrap_id = "#descritor_" + (desnum + 1);
 //                console.log(wrap_id);
@@ -239,6 +241,7 @@
                 if (this.selectedIndex !== 0) {
                     var $url = "index.php?c=imagens&a=obterDescritor&n=" + desnum + "&p=" + this.value;
 //                    console.log($url);
+                    $(wrap_id).attr('disabled', true);
                     $(wrap_id).load($url, function(response, status, xhr) {
                         if (status == "error") {
                             $(this).val("default");
@@ -248,9 +251,16 @@
 //                                liberarCadastro();
                             atualizar_combobox($("#descritor_" + (desnum + 1)));
                         }
+                        $(wrap_id).attr('disabled', false);
                     });
                 } else {
-                    $(wrap_id).load("index.php?c=imagens&a=obterDescritor");
+                    var aux = 4;
+                    while (aux > desnum) {
+                        $("#descritor_" + aux).attr('disabled', true);
+                        $("#descritor_" + aux).load("index.php?c=imagens&a=obterDescritor");
+                        aux--;
+                    }
+
                 }
             }
         });
@@ -258,6 +268,7 @@
 
     $(document).ready(function() {
 
+        //Verifica se o navegador possui os requisitos necessários para poder gerar a pré visualização da imagem
         if (window.File && window.FileReader && window.FileList && window.Blob) {
             $("#image-upload").on('change', handleFileSelect);
             $('#remove-image-upload').on('click', function(e)
@@ -277,7 +288,7 @@
                 return false;
             });
         } else {
-            alert('O seu navegador não suporta a API de arquivos.\nVisualizações estarão indisponíveis.');
+            alert('O seu navegador não suporta a API de arquivos.\nPré-visualizações estarão indisponíveis.\nConsidere fazer uma atualização do seu navegador.');
         }
 
         var botoes_radio_fake = $("#complexidade_botoes").children();
@@ -291,9 +302,9 @@
             });
         });
 
-        var cb_descritores = $(".cb_descritor");
+        var $cb_descritores = $(".cb_descritor");
 //        console.log(cb_descritores);
-        $.each(cb_descritores, function() {
+        $.each($cb_descritores, function() {
             atualizar_combobox(this);
         });
         formularioAjax();
@@ -335,6 +346,9 @@
             } else {
                 esconder("#novo_descritor_4");
                 exibir("#descritor_4");
+                if ($("#descritor_3").attr('disabled') !== undefined) {
+                    $("#descritor_4").attr('disabled', true);
+                }
             }
         });
 

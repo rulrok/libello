@@ -8,7 +8,7 @@ require_once 'enumeracao/Ferramenta.php';
 require_once 'enumeracao/Area.php';
 require_once 'enumeracao/TipoCurso.php';
 require_once 'enumeracao/Papel.php';
-require_once BIBLIOTECA_DIR . 'seguranca/Permissao.php';
+require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/Permissao.php';
 
 class Menu {
 
@@ -131,6 +131,8 @@ class Menu {
                             case Permissao::GESTOR:
                                 $subMenuCode .= "<a href=\"#!documentos|gerenciar\"\">" . "\n";
                                 $subMenuCode .= "<li>Gerenciar histórico</li></a>" . "\n";
+                                $subMenuCode .= "<a href=\"#!documentos|gerenciarCabecalho\"\">" . "\n";
+                                $subMenuCode .= "<li>Gerenciar Cabeçalho</li></a>" . "\n";
                             case Permissao::ESCRITA:
                                 $subMenuCode .= "<a href=\"#!documentos|gerarOficio\"\">" . "\n";
                                 $subMenuCode .= "<li>Gerar ofício</li></a>" . "\n";
@@ -214,6 +216,22 @@ class Menu {
                         }
                     }
                     break;
+                    case Ferramenta::PROCESSOS:
+                    if ($permissao_ferramenta['idPermissao'] != Permissao::SEM_ACESSO) {
+                        $menuCode .= "<a><li class=\"menuLink\" id=\"tarefasLink\">Tarefas</li></a>" . "\n";
+                        $subMenuCode .="<ul class=\"hiddenSubMenuLink tarefasSubMenu\">" . "\n";
+                        switch ($permissao_ferramenta['idPermissao']) {
+                            case Permissao::ADMINISTRADOR:
+                            case Permissao::GESTOR:
+                                $subMenuCode .= "<a href=\"#!tarefas|gerenciar\"\">" . "\n";
+                                $subMenuCode .= "<li>Gerenciar Tarefas</li></a>" . "\n";
+                            case Permissao::ESCRITA:
+                                $subMenuCode .= "<a href=\"#!tarefas|nova\"\">" . "\n";
+                                $subMenuCode .= "<li>Nova Tarefa</li></a>" . "\n";
+                            case Permissao::CONSULTA:
+                        }
+                    }
+                    break;
             endswitch;
 //            $subMenuCode .= '<a class="hideSubMenu" onclick="hideSubMenu();">'
 //                    . '<li class="visited">'
@@ -233,5 +251,3 @@ class Menu {
     }
 
 }
-
-?>

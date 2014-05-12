@@ -67,78 +67,33 @@ class ControladorProcessos extends Controlador {
         $this->renderizar();
     }
 
-    public function acaoConsultarimagem() {
-        $this->visao->acessoMinimo = Permissao::CONSULTA;
-        $this->renderizar();
-    }
 
-    public function acaoNovaImagem() {
-        $this->visao->acessoMinimo = Permissao::ESCRITA;
-        $this->visao->cpfAutor = obterUsuarioSessao()->get_cpf();
-        $this->visao->iniciaisAutor = obterUsuarioSessao()->get_iniciais();
-        $this->visao->comboBoxDescritor = ComboBoxDescritores::montarDescritorPrimeiroNivel();
-        $this->visao->nomeUsuario = obterUsuarioSessao()->get_PNome() . ' ' . obterUsuarioSessao()->get_UNome();
-        $this->renderizar();
-    }
 
-    public function acaoVerificarnovaimagem() {
-        $this->visao->acessoMinimo = Permissao::ESCRITA;
-        $this->renderizar();
-    }
 
-    public function acaoCriarthumb() {
-        $this->visao->acessoMinimo = Permissao::ESCRITA;
-        $this->renderizar();
-    }
-
-    public function acaoBaixarimagem() {
-        $this->visao->acessoMinimo = Permissao::CONSULTA;
-        $this->renderizar();
-    }
-
-    public function acaoBaixarvetorial() {
-        $this->visao->acessoMinimo = Permissao::CONSULTA;
-        $this->renderizar();
-    }
-
-    /*
-     * DESCRITORES
-     */
-
-    public function acaoObterdescritores() {
-        $this->visao->acessoMinimo = Permissao::ESCRITA;
-        $this->renderizar();
-    }
-
-    public function acaoDescritores() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->renderizar();
-    }
-
-    public function acaoNovodescritor() {
+    public function acaoNovoProcesso() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->visao->comboBoxDescritor = ComboBoxDescritores::montarDescritorPrimeiroNivel();
         $this->renderizar();
     }
 
-    public function acaoGerenciardescritores() {
+    public function acaoGerenciarProcessos() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
         $processosDAO = new processosDAO();
         $this->visao->descritores = $processosDAO->consultarDescritor('*', 'qtdFilhos = 0');
         $this->renderizar();
     }
 
-    public function acaoVerificarnovodescritor() {
+    public function acaoVerificarnovoProcesso() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }
 
-    public function acaoVerificaredicaodescritor() {
+    public function acaoVerificaredicaoProcesso() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }
 
-    public function acaoObterdescritor() {
+    public function acaoObterProcesso() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->renderizar();
     }
@@ -148,22 +103,22 @@ class ControladorProcessos extends Controlador {
         $this->renderizar();
     }
 
-    public function acaoRenomearDescritor() {
+    public function acaoRenomearPrcoesso() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }
 
-    public function acaoCriarDescritor() {
+    public function acaoCriarProcesso() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }
 
-    public function acaoMoverDescritor() {
+    public function acaoMoverProcesso() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }
 
-    public function acaoRemoverDescritor() {
+    public function acaoRemoverProcesso() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }

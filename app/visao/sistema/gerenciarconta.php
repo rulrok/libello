@@ -17,7 +17,7 @@
         </div>
         <div class="line">
             <label for="dataNascimento">Data de nascimento</label>
-            <input type="text" readonly id="dataNascimento" class="campoData" name="dataNascimento" value="<?php echo $this->dataNascimento ?>" />
+            <input type="text" id="dataNascimento" class="campoData" name="dataNascimento" value="<?php echo $this->dataNascimento ?>" />
         </div>
         <div class="line">
             <label for="papel">Papel no sistema</label>
@@ -32,11 +32,11 @@
             </div>
             <div class="line">
                 <label for="senha">Nova senha</label>
-                <input onblur="querMudarSenha()" id="senha" name="senha" type="password"/>
+                <input id="senha" name="senha" type="password"/>
             </div>
             <div class="line">
                 <label for="confSenha">Confirmar senha</label>
-                <input onblur="querMudarSenha()" id="confSenha" name="confSenha" type="password"/>
+                <input id="confSenha" name="confSenha" type="password"/>
             </div>
         </fieldset>
         <hr>
@@ -55,11 +55,19 @@
             , alwaysFn: function() {
                 $("#senhaAtual").val('');
             }
-            , completeFn: function() {
+            , successFn: function() {
                 $("#nomeusuarioHeader").empty();
                 $("#nomeusuarioHeader").html($("#nome").val());
+                $("#senhaAtual").val('');
+                $("#senha").val('');
+                $("#confSenha").val('');
+            }
+            , completeFn: function() {
+                $("#senhaAtual").val('');
+                $("#senha").val('');
+                $("#confSenha").val('');
             }
         });
-        $("#dataNascimento").datepick();
+        $("#dataNascimento").datepicker();
     });
 </script>

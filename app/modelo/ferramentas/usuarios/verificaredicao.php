@@ -10,6 +10,7 @@ include_once APP_DIR . "visao/verificadorFormularioAjax.php";
 class verificarEdicaoUsuario extends verificadorFormularioAjax {
 
     public function _validar() {
+        $userID = fnDecrypt(filter_input(INPUT_POST, 'userID'));
         $nome = filter_input(INPUT_POST, 'nome');
         $sobreNome = filter_input(INPUT_POST, 'sobrenome');
         $email = filter_input(INPUT_POST, 'email');
@@ -20,7 +21,12 @@ class verificarEdicaoUsuario extends verificadorFormularioAjax {
 
         $usuarioDAO = new usuarioDAO();
 
-        $usuarioOriginal = $usuarioDAO->recuperarUsuario($email);
+        $emailOriginal = $usuarioDAO->descobrirEmail($userID);
+        $usuarioOriginal = $usuarioDAO->recuperarUsuario($emailOriginal);
+        if (strcmp($email, $emailOriginal)) {
+            registrar_erro("Tentativa de modificar email do usuário para ($email), o que não é permitido", $usuarioOriginal);
+            $this->mensagemErro("Tentativa de alterar o email percebida.");
+        }
 
         if ($dataNascimento == '') {
             $dataNascimento = null;
@@ -32,6 +38,11 @@ class verificarEdicaoUsuario extends verificadorFormularioAjax {
 
         if ($idPapel == '' || !is_numeric($idPapel)) {
             $this->mensagemErro("Papel inválido");
+        }
+        
+        if ($idPapel < obterUsuarioSessao()->get_idPapel()) {
+            registrar_erro("Tentativa de alterar papel de usuário para um maior que o seu próprio (para valor $idPapel)", $usuarioOriginal);
+            $this->mensagemErro("Alteração não permitida");
         }
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $this->mensagemErro("Email inválido");
@@ -54,6 +65,7 @@ class verificarEdicaoUsuario extends verificadorFormularioAjax {
             if (!$usuarioDAO->atualizar($email, $usuario)) {
                 throw new Exception("Falha ao atualizar dados do usuário");
             }
+
             $permissoes = new PermissoesFerramenta();
             $permissoes->set_controleCursos(filter_input(INPUT_POST, 'permissoes_controle_de_cursos_e_polos'));
             $permissoes->set_controleDocumentos(filter_input(INPUT_POST, 'permissoes_controle_de_documentos'));
@@ -73,7 +85,7 @@ class verificarEdicaoUsuario extends verificadorFormularioAjax {
             $this->mensagemErro("Erro ao modificar. Nenhum alteração salva.");
         }
         $idUsuario = $usuarioDAO->recuperarUsuario($usuario->get_email())->get_idUsuario();
-        (new sistemaDAO())->registrarAlteracaoUsuario(obterUsuarioSessao()->get_idUsuario(), $idUsuario);
+        $usuarioDAO->registrarAlteracaoUsuario(obterUsuarioSessao()->get_idUsuario(), $idUsuario);
 
 //                $this->visao->permissoes = $usuarioDAO->obterPermissoes($usuarioDAO->recuperarUsuario($email)->get_id());
         $this->mensagemSucesso("Atualização concluída");

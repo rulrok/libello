@@ -22,21 +22,21 @@ class verificarnovooficio extends verificadorFormularioAjax {
             $remetente = filter_input(INPUT_POST, 'remetente');
             $cargo_remetente = filter_input(INPUT_POST, 'cargo_remetente');
 
-               $tratamento = filter_input(INPUT_POST, 'tratamento');
+            $tratamento = filter_input(INPUT_POST, 'tratamento');
             $cargo_destino = filter_input(INPUT_POST, 'cargo_destino');
 
-                $documento = new Oficio();
-                $documento->set_assunto($assunto);
-                $documento->set_idUsuario(trim($idusuario));
-                $documento->set_corpo($corpo);
-                $documento->set_destino($destino);
-                $documento->set_referencia($referencia);
-                $documento->set_data($data);
-                $documento->set_tipoSigla($tipoSigla);
-                $documento->set_remetente($remetente);
-                $documento->set_cargo_remetente($cargo_remetente);
-                $documento->set_tratamento($tratamento);
-                $documento->set_cargo_destino($cargo_destino);
+            $documento = new Oficio();
+            $documento->set_assunto($assunto);
+            $documento->set_idUsuario(trim($idusuario));
+            $documento->set_corpo($corpo);
+            $documento->set_destino($destino);
+            $documento->set_referencia($referencia);
+            $documento->set_data($data);
+            $documento->set_tipoSigla($tipoSigla);
+            $documento->set_remetente($remetente);
+            $documento->set_cargo_remetente($cargo_remetente);
+            $documento->set_tratamento($tratamento);
+            $documento->set_cargo_destino($cargo_destino);
 
             $estadoEdicao = 0;
 
@@ -49,10 +49,10 @@ class verificarnovooficio extends verificadorFormularioAjax {
 
             $documentoDAO = new documentoDAO();
             $problema = $documentoDAO->inserirOficio($documento);
-            $id = $documentoDAO->obterUltimoIdInserido();
-           
-            $this->setId($id);
+
             if ($numOficio != -1) {
+                $id = $documentoDAO->obterUltimoIdInserido();
+                $this->setId($id);
                 $this->mensagemSucesso("Oficio gerado com sucesso!");
             } else {
                 $this->mensagemSucesso("Oficio salvo com sucesso!");

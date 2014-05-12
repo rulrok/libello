@@ -28,10 +28,17 @@
         vertical-align: baseline;
         text-align:center;
     }
-
+@media all{
+    @media (max-width: 1150px){
+        .menuContainer{
+            height: inherit;
+        }
+    }
+    
+}
 </style>
 
-
+ <link href="publico/css/documentos.css" rel="stylesheet">
 
 <div style="text-align:center;">
     <button class="btn btn_oficio ignorar"
@@ -193,7 +200,7 @@
             }
 
         tab.$('tr').mousedown(function(e) {
-
+            $('tr.row_selected').removeClass('row_selected');
             $(this).parent().parent().find('tr.row_selected').removeClass('row_selected');
             $(this).addClass('row_selected');
             var selectedElement = this;
@@ -552,7 +559,7 @@
 if (filter_has_var(INPUT_GET, 'doc')) {//reload, delete ou invalidar usam isso para voltar na pagina certa
     ?>
     <script>
-        var doc_select = <?php echo filter_input(INPUT_GET, 'doc'); ?>;
+        var doc_select = '<?php echo filter_input(INPUT_GET, 'doc'); ?>';
         $(document).ready(function() {
             doc = doc_select;
             $('.btn_' + doc_select).click();
@@ -563,7 +570,7 @@ if (filter_has_var(INPUT_GET, 'doc')) {//reload, delete ou invalidar usam isso p
 if (filter_has_var(INPUT_GET, 'tipo')) {
     ?>
     <script>
-        var tipo_select = <?php echo filter_input(INPUT_GET, 'tipo'); ?>;
+        var tipo_select = '<?php echo filter_input(INPUT_GET, 'tipo'); ?>';
         $(document).ready(function() {
             ignorarhash = false;
             $('.visualizar-' + doc + ' .btn-' + tipo_select).click();

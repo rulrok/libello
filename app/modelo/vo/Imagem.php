@@ -12,6 +12,8 @@ class Imagem {
     var $utilizadoAvaliacao;
     var $avaliacao;
     var $anoAvaliacao;
+    var $diretorio;
+    var $diretorioMiniatura;
     var $nomeArquivo;
     var $nomeArquivoMiniatura;
     var $nomeArquivoVetorial;
@@ -182,6 +184,26 @@ class Imagem {
         $this->descritor4 = $descritor4;
         return $this;
     }
+    
+    public function get_diretorio() {
+        return $this->diretorio;
+    }
+
+    public function get_diretorioMiniatura() {
+        return $this->diretorioMiniatura;
+    }
+
+    public function set_diretorio($diretorio) {
+        $this->diretorio = $diretorio;
+        return $this;
+    }
+
+    public function set_diretorioMiniatura($diretorioMiniatura) {
+        $this->diretorioMiniatura = $diretorioMiniatura;
+        return $this;
+    }
+
+
 
 }
 

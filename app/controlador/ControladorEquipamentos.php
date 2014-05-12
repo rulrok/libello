@@ -1,10 +1,10 @@
 <?php
 
-include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
+include_once APP_LIBRARY_DIR . 'Mvc/Controlador.php';
 require_once APP_DIR . "modelo/comboboxes/ComboBoxPapeis.php";
 require_once APP_DIR . "modelo/comboboxes/ComboBoxUsuarios.php";
 include_once APP_DIR . 'modelo/comboboxes/ComboBoxPolo.php';
-require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
+require_once APP_LIBRARY_DIR . "seguranca/criptografia.php";
 
 class ControladorEquipamentos extends Controlador {
 
@@ -87,7 +87,7 @@ class ControladorEquipamentos extends Controlador {
 
     public function acaoRetorno() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
-        $this->visao->saidas = (new equipamentoDAO())->consultarSaidas("idSaida, nomeEquipamento, numeroPatrimonio, concat(PNome,' ',UNome) AS `responsavel`,destino,nomePolo,quantidadeSaida,dataSaida");
+        $this->visao->saidas = (new equipamentoDAO())->consultarSaidas("idSaida, nomeEquipamento, numeroPatrimonio, concat_ws(' ',PNome,UNome) AS `responsavel`,destino,nomePolo,quantidadeSaida,dataSaida");
         /*
          * 0 - idSaída
          * 1 - nomeEquipamento
@@ -225,7 +225,7 @@ class ControladorEquipamentos extends Controlador {
 
     public function acaoGerenciar_saidas() {
         $this->visao->acessoMinimo = Permissao::ADMINISTRADOR;
-        $this->visao->saidas = (new equipamentoDAO())->consultarSaidas("idSaida,nomeEquipamento,dataSaida,quantidadeSaidaOriginal,concat(PNome,' ',UNome) as `responsavel`");
+        $this->visao->saidas = (new equipamentoDAO())->consultarSaidas("idSaida,nomeEquipamento,dataSaida,quantidadeSaidaOriginal,concat_ws(' ',PNome,UNome) as `responsavel`");
         $i = 0;
         foreach ($this->visao->saidas as $value) {
             $value[0] = fnEncrypt($value[0]);

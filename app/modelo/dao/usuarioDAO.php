@@ -4,8 +4,9 @@ require_once 'abstractDAO.php';
 require_once APP_DIR . 'modelo/vo/Usuario.php';
 require_once APP_DIR . 'modelo/vo/PermissoesFerramenta.php';
 require_once APP_DIR . 'modelo/enumeracao/Ferramenta.php';
-require_once BIBLIOTECA_DIR . 'seguranca/Permissao.php';
-require_once BIBLIOTECA_DIR . 'seguranca/criptografia.php';
+require_once APP_DIR . 'modelo/enumeracao/TipoEventoUsuarios.php';
+require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/Permissao.php';
+require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/criptografia.php';
 
 class usuarioDAO extends abstractDAO {
 
@@ -19,7 +20,6 @@ class usuarioDAO extends abstractDAO {
 
         $dadosAntigos = $this->recuperarUsuario($email);
 
-        $condicao = " WHERE email = :email AND ativo = 1";
 
         $nome = $novosDados->get_PNome();
         if ($nome == null) {
@@ -48,8 +48,8 @@ class usuarioDAO extends abstractDAO {
             $cpf = $dadosAntigos->get_cpf();
         }
 
-        $sql = "UPDATE usuario SET idPapel = :idPapel, senha = :senha, PNome= :PNome, UNome = :UNome, dataNascimento = :dataNascimento, cpf = :cpf ";
-        $sql .= $condicao;
+        $sql = "UPDATE usuario SET idPapel = :idPapel, senha = :senha, PNome= :PNome, UNome = :UNome, dataNascimento = :dataNascimento, cpf = :cpf WHERE email = :email AND ativo = 1";
+
         $params = array(
             ':email' => [$email, PDO::PARAM_STR]
             , ':idPapel' => [$idPapel, PDO::PARAM_INT]
@@ -63,20 +63,28 @@ class usuarioDAO extends abstractDAO {
     }
 
     /**
-     * Retorna a lista com todos os usuários, com base nas colunas especificadas e nas condições de seleção.
+     * Retorna a lista com todos os usuários (ATIVOS), com base nas colunas especificadas e nas condições de seleção.
      * @param string $colunas Colunas a serem retornadas, por padrão, retorna
      * @param type $condicao A string que precede WHERE na cláusula SQL. Não é necessário escrever a palavra WHERE.
+     * @@param boolean $incluirDesativados Por padrão a consulta é feita apenas em usuários ativos no sistema. Passando
+     * TRUE para essa variável, a consulta também irá incluir usuários desativados.
      * @return type A tabela com o resultado da consulta.
      */
-    public function consultar($colunas = '*', $condicao = null, $parametros = null) {
+    public function consultar($colunas = '*', $condicao = null, $parametros = null, $incluirDesativados = false, $fetchClass = null) {
 
-        if ($condicao == null) {
-            $condicao = 'WHERE ativo = 1';
+        if (!$incluirDesativados) {
+            if ($condicao === null) {
+                $condicao = 'WHERE ativo = 1';
+            } else {
+                $condicao = 'WHERE ativo = 1 AND ' . $condicao;
+            }
+        } elseif ($condicao === null) {
+            $condicao = "";
         } else {
-            $condicao = 'WHERE ativo = 1 AND ' . $condicao;
+            $condicao = " WHERE " . $condicao;
         }
         $sql = "SELECT  $colunas  FROM usuario NATURAL JOIN usuario_papel " . $condicao;
-        return $this->executarSelect($sql, $parametros);
+        return $this->executarSelect($sql, $parametros, true, $fetchClass);
     }
 
     public function desativar($email) {
@@ -87,6 +95,21 @@ class usuarioDAO extends abstractDAO {
             $sql = 'UPDATE usuario SET ativo = 0 WHERE email = :email';
             $params = array(':email' => [$email, PDO::PARAM_STR]);
             return $this->executarQuery($sql, $params);
+        } else {
+            return false;
+        }
+    }
+
+    public function ativar($email) {
+        if ($email !== null) {
+            if (is_array($email)) {
+                $email = $email['email'];
+            }
+            $sql = 'UPDATE usuario SET ativo = 1 WHERE email = :email';
+            $params = array(':email' => [$email, PDO::PARAM_STR]);
+            return $this->executarQuery($sql, $params);
+        } else {
+            return false;
         }
     }
 
@@ -109,7 +132,7 @@ class usuarioDAO extends abstractDAO {
      * @return boolean
      */
     public function inserir(Usuario $vo) {
-        $sql = 'INSERT INTO usuario(idPapel,senha,PNome, UNome, email, dataNascimento, cpf) VALUES (  :idPapel, :senha, :PNome, :UNome, :email, :nasc, :cpf )';
+        $sql = 'INSERT INTO usuario(idPapel,senha,PNome, UNome, email, dataNascimento, cpf, dataCadastro, ultimoAcesso) VALUES (  :idPapel, :senha, :PNome, :UNome, :email, :nasc, :cpf, :dataCadastro, :ultimoAcesso )';
         $cpf = str_replace(array('.', '-'), '', $vo->get_cpf());
         $params = array(
             ':idPapel' => [$vo->get_idPapel(), PDO::PARAM_INT]
@@ -119,6 +142,8 @@ class usuarioDAO extends abstractDAO {
             , ':email' => [$vo->get_email(), PDO::PARAM_STR]
             , ':nasc' => [$vo->get_dataNascimento(), PDO::PARAM_STR]
             , ':cpf' => [$cpf, PDO::PARAM_STR]
+            , ':dataCadastro' => [time(), PDO::PARAM_INT]
+            , ':ultimoAcesso' => [0, PDO::PARAM_INT]
         );
 
         return $this->executarQuery($sql, $params);
@@ -136,12 +161,22 @@ class usuarioDAO extends abstractDAO {
     }
 
     /**
-     * Gera um tolken e armazena na tabela 'usuario_recuperarsenha'.
+     * Gera um token e armazena na tabela 'usuario_recuperarsenha'.
+     * 
      * @param type $email
+     * @return boolean Indica se o token já existia cadastrado, ou seja,
+     * que o usuário já havia solicitado a recuperação de senha
      */
-    public function gerarTolkenRecuperarSenha($email) {
+    public function gerarTokenRecuperarSenha($email) {
         $usuario = $this->recuperarUsuario($email);
-        if ($usuario !== null) {
+        $sqlTokenExistente = "SELECT token FROM usuario_recuperarsenha WHERE idUsuario = :idUsuario";
+        $paramTokenExistente = array(
+            ':idUsuario' => [$usuario->get_idUsuario(), PDO::PARAM_INT]
+        );
+        $resultado = $this->executarSelect($sqlTokenExistente, $paramTokenExistente);
+        if ($resultado !== null && !empty($resultado)) {
+            return true;
+        } elseif ($usuario !== null) {
             $antigaSenhaMD5 = $usuario->get_senha();
             $hora = time();
             $idUsuario = $usuario->get_idUsuario();
@@ -151,37 +186,36 @@ class usuarioDAO extends abstractDAO {
                 ':idUsuario' => [$idUsuario, PDO::PARAM_INT]
                 , ':token' => [$token, PDO::PARAM_STR]
             );
-            return $this->executarQuery($sql, $params);
-        } else {
-            return false;
+            $this->executarQuery($sql, $params);
         }
+        return false;
     }
 
     /**
-     * Caso o usuário queira redefinir sua senha, um tolken é gerado e armazenado
-     * na tabela 'usuario_recuperarsenha'. Essa função retorna esse tolken, caso
+     * Caso o usuário queira redefinir sua senha, um token é gerado e armazenado
+     * na tabela 'usuario_recuperarsenha'. Essa função retorna esse token, caso
      * ele exista, ou NULL caso contrário.
      * 
      * @param type int
      * @return string Description
      */
-    public function consultarTolkenRecuperarSenha($idUsuario) {
-        $sql = 'SELECT tolken FROM usuario_recuperarsenha WHERE idUsuario = :idUsuario';
+    public function consultarTokenRecuperarSenha($idUsuario) {
+        $sql = 'SELECT token FROM usuario_recuperarsenha WHERE idUsuario = :idUsuario';
         $params = array(':idUsuario' => [$idUsuario, PDO::PARAM_INT]);
         return $this->executarSelect($sql, $params, false);
     }
 
     /**
-     * Consulta o usuário associado ao tolken, mas apenas se o usuário quis redefinir
+     * Consulta o usuário associado ao token, mas apenas se o usuário quis redefinir
      * sua senha.
-     * @param type $tolken
+     * @param type $token
      */
-    public function consultarIDUsuario_RecuperarSenha($tolken) {
-        $sql = "SELECT idUsuario FROM usuario_recuperarsenha WHERE tolken = :token";
-        $params = array(':token' => [$tolken, PDO::PARAM_INT]);
+    public function consultarIDUsuario_RecuperarSenha($token) {
+        $sql = "SELECT idUsuario FROM usuario_recuperarsenha WHERE token = :token";
+        $params = array(':token' => [$token, PDO::PARAM_INT]);
         $resultado = $this->executarSelect($sql, $params, false);
-        if ($resultado === false) {
-            throw new Exception('Tolken não encontrado');
+        if ($resultado === null) {
+            throw new Exception('Token não encontrado');
         }
         if (is_array($resultado)) {
             $resultado = $resultado[0];
@@ -190,27 +224,34 @@ class usuarioDAO extends abstractDAO {
     }
 
     /**
-     * Remove um tolken do banco de dados.
+     * Remove um token do banco de dados.
      * @param type $token
      */
-    public function removerTolken($token) {
-        $sql = "DELETE FROM usuario_recuperarsenha WHERE tolken = :token";
+    public function removerToken($token) {
+        $sql = "DELETE FROM usuario_recuperarsenha WHERE token = :token";
         $params = array(':token' => [$token, PDO::PARAM_STR]);
         return $this->executarQuery($sql, $params);
     }
 
     /**
      * Retorna um objeto VO Usuário se o usuário existe E está ativo, ou então retorna NULL.
+     * Todos os seus dados cadastrados são inclusos, inclusive o ID atual.
      * @param mixed $email Uma string ou um array com um índice 'email'
-     * @return Usuario Usuário que possui o email designado em $email ou null caso contrário
+     * @return Usuario Usuário que possui o email designado em $email ou false caso contrário
      */
-    public function recuperarUsuario($email) {
+    public function recuperarUsuario($email, $incluirInativo = false) {
 
         if (is_array($email)) {
             $email = $email['email'];
         }
 
-        $sql = "SELECT * from usuario WHERE email = :email AND ativo = 1";
+        if (!$incluirInativo) {
+            $qAux = " AND ativo = 1";
+        } else {
+            $qAux = "";
+        }
+
+        $sql = "SELECT * from usuario WHERE email = :email " . $qAux;
         $params = array(':email' => [$email, PDO::PARAM_INT]);
         $resultado = $this->executarSelect($sql, $params, false, 'Usuario');
         return $resultado;
@@ -339,6 +380,72 @@ class usuarioDAO extends abstractDAO {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Registra um evento de cadastro de usuário no sistema.
+     * 
+     * @param type $idUsuarioFonte Usuário que está cadastrando
+     * @param type $idUsuarioAlvo Usuário que está sendo cadastrado
+     */
+    public function registrarCadastroUsuario($idUsuarioFonte, $idUsuarioAlvo) {
+        $tipo = TipoEventoUsuarios::CADASTRO_USUARIO;
+        $sql = "INSERT INTO usuario_evento(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data) VALUES (:idUF, :idUA, :t, :d)";
+        $params = array(
+            ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
+            , ':idUA' => [$idUsuarioAlvo, PDO::PARAM_INT]
+            , ':t' => [$tipo, PDO::PARAM_INT]
+            , ':d' => [time(), PDO::PARAM_INT]
+        );
+        return $this->executarQuery($sql, $params);
+}
+
+    /**
+     * Registra um evento de remoção de um usuário do sistema.
+     * @param type $idUsuarioFonte Usuário que está editando.
+     * @param type $idUsuarioAlvo Usuário que está sendo editado.
+     * @return boolean True em caso de sucesso, False em caso contrário.
+     */
+    public function registrarDesativacaoUsuario($idUsuarioFonte, $idUsuarioAlvo) {
+        $tipo = TipoEventoUsuarios::DESATIVACAO_USUARIO;
+        $sql = "INSERT INTO usuario_evento(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data) VALUES (:idUF, :idUA,:t, :d)";
+        $params = array(
+            ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
+            , ':idUA' => [$idUsuarioAlvo, PDO::PARAM_INT]
+            , ':t' => [$tipo, PDO::PARAM_INT]
+            , ':d' => [time(), PDO::PARAM_INT]
+        );
+        return $this->executarQuery($sql, $params);
+    }
+
+    public function registrarAtivacaoUsuario($idUsuarioFonte, $idUsuarioAlvo) {
+        $tipo = TipoEventoUsuarios::ATIVACAO_USUARIO;
+        $sql = "INSERT INTO usuario_evento(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data) VALUES (:idUF, :idUA,:t, :d)";
+        $params = array(
+            ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
+            , ':idUA' => [$idUsuarioAlvo, PDO::PARAM_INT]
+            , ':t' => [$tipo, PDO::PARAM_INT]
+            , ':d' => [time(), PDO::PARAM_INT]
+        );
+        return $this->executarQuery($sql, $params);
+    }
+
+    /**
+     * Registra um evento de alteração de um usuário do sistema.
+     * @param type $idUsuarioFonte Usuário que está editando.
+     * @param type $idUsuarioAlvo Usuário que está sendo editado.
+     * @return boolean True em caso de sucesso, False em caso contrário.
+     */
+    public function registrarAlteracaoUsuario($idUsuarioFonte, $idUsuarioAlvo) {
+        $tipo = TipoEventoUsuarios::ALTERACAO_USUARIO;
+        $sql = "INSERT INTO usuario_evento(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data) VALUES (:idUF,:idUA,:t,:d)";
+        $params = array(
+            ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
+            , ':idUA' => [$idUsuarioAlvo, PDO::PARAM_INT]
+            , ':t' => [$tipo, PDO::PARAM_INT]
+            , ':d' => [time(), PDO::PARAM_INT]
+        );
+        return $this->executarQuery($sql, $params);
     }
 
 }

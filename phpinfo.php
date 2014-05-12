@@ -1,18 +1,21 @@
 <?php
 
+//echo '<big>$_SERVER:</big><br/>';
 //echo '<table>';
 //foreach ($_SERVER as $key => $value) {
 //    echo '<tr>';
 //    echo '<td>'.$key . '</td><td> ' . $value . '</td>';
 //    echo '</tr>';
 //}
-//echo '</table>';
+//echo '</table><br/>';
+//
+//
+echo phpinfo();
 
-echo  ini_get( 'upload_max_filesize' ) ;
-
-//echo phpinfo();
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-?>
+//include_once './biblioteca/seguranca/criptografia.php';
+//
+//$a = fnEncrypt("Reuel");
+//$b = fnEncrypt($a);
+//$c = fnDecrypt($b);
+//$d = fnDecrypt($c);
+//echo $d;

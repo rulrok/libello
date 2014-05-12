@@ -1,8 +1,8 @@
 <?php
 
 require_once '../configuracoes.php';
-require_once BIBLIOTECA_DIR . "seguranca/seguranca.php";
-require_once BIBLIOTECA_DIR . 'seguranca/criptografia.php';
+require_once APP_LIBRARY_ABSOLUTE_DIR . "seguranca/seguranca.php";
+require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/criptografia.php';
 
 if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') == 'POST') {
     if (filter_has_var(INPUT_POST, 'fazendo_login')) {
@@ -16,7 +16,7 @@ if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') == 'POST') {
             $usuario->set_email($email);
             $usuario->set_senha($senha);
 
-            if (autenticaUsuario($usuario)) {
+            if (autenticarUsuario($usuario)) {
                 (new sistemaDAO())->registrarAccesso(obterUsuarioSessao()->get_idUsuario());
                 header("Location: " . WEB_SERVER_ADDRESS . filter_input(INPUT_POST, 'alvo'));
             } else {

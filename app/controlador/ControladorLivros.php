@@ -1,12 +1,12 @@
 <?php
 
-include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
+include_once APP_LIBRARY_DIR . 'Mvc/Controlador.php';
 require_once APP_DIR . "modelo/comboboxes/ComboBoxPapeis.php";
 require_once APP_DIR . "modelo/comboboxes/ComboBoxUsuarios.php";
 include_once APP_DIR . 'modelo/comboboxes/ComboBoxPolo.php';
 include_once APP_DIR . 'modelo/comboboxes/ComboBoxAreas.php';
-require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
-require_once BIBLIOTECA_DIR . "seguranca/Permissao.php";
+require_once APP_LIBRARY_DIR . "seguranca/criptografia.php";
+require_once APP_LIBRARY_DIR . "seguranca/Permissao.php";
 
 class ControladorLivros extends Controlador {
 
@@ -92,7 +92,7 @@ class ControladorLivros extends Controlador {
 
     public function acaoRetorno() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
-        $this->visao->saidas = (new livroDAO())->consultarSaidas("idSaida, nomelivro, numeroPatrimonio, concat(PNome,' ',UNome) AS `responsavel`, coalesce(destino,nomePolo),quantidadeSaida,dataSaida");
+        $this->visao->saidas = (new livroDAO())->consultarSaidas("idSaida, nomelivro, numeroPatrimonio, concat_ws(' ',PNome,UNome) AS `responsavel`, coalesce(destino,nomePolo),quantidadeSaida,dataSaida");
         $i = 0;
         foreach ($this->visao->saidas as $value) {
             $value[0] = fnEncrypt($value[0]);
@@ -216,7 +216,7 @@ class ControladorLivros extends Controlador {
 
     public function acaoGerenciar_saidas() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->visao->saidas = (new livroDAO())->consultarSaidas("idSaida,nomelivro,grafica,dataSaida,quantidadeSaidaOriginal,coalesce(destino,nomePolo),concat(PNome,' ',UNome) as `responsavel`");
+        $this->visao->saidas = (new livroDAO())->consultarSaidas("idSaida,nomelivro,grafica,dataSaida,quantidadeSaidaOriginal,coalesce(destino,nomePolo),concat_ws(' ',PNome,UNome) as `responsavel`");
         $i = 0;
         foreach ($this->visao->saidas as $value) {
             $value[0] = fnEncrypt($value[0]);

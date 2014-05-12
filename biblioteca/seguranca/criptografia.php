@@ -37,13 +37,3 @@ function encriptarSenha($senha) {
     //TODO Melhorar método de encriptação de senha. MD5 é fraco para isso. Ver: https://phpbestpractices.org/#passwords
     return md5($senha);
 }
-
-//$inicial = time();
-//$crypt = fnEncrypt("20");
-//echo $crypt . "<br/>";
-//$final = time();
-//echo fnDecrypt($crypt)."<br/>";
-//echo "Inicial: ".$inicial."<br/>";
-//echo "Final: ".$final;
-//if (isset($_GET['id']))
-//    echo fnDecrypt($_GET['id']);

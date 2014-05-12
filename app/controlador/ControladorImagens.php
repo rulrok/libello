@@ -1,8 +1,9 @@
 <?php
 
-include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
-require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
+include_once APP_LIBRARY_ABSOLUTE_DIR . 'Mvc/Controlador.php';
+require_once APP_LIBRARY_ABSOLUTE_DIR . "seguranca/criptografia.php";
 require_once APP_DIR . "modelo/comboboxes/ComboBoxDescritores.php";
+require_once APP_DIR . "modelo/comboboxes/ComboBoxUsuarios.php";
 require_once APP_DIR . "modelo/ferramentas/imagens/pesquisa.php";
 require_once APP_DIR . "modelo/enumeracao/Ferramenta.php";
 require_once APP_DIR . "modelo/enumeracao/Papel.php";
@@ -14,6 +15,8 @@ class ControladorImagens extends Controlador {
 
     public function acaoBuscar() {
         $this->visao->acessoMinimo = Permissao::CONSULTA;
+        
+        
 
         $papel = obterUsuarioSessao()->get_idPapel();
 
@@ -28,14 +31,39 @@ class ControladorImagens extends Controlador {
             } else {
                 $itensPorPagina = 10;
             }
+
+            if (filter_has_var(INPUT_GET, 'u')) {
+                if (filter_input(INPUT_GET, 'u') != "default") {
+                    $idAutor = fnDecrypt(filter_input(INPUT_GET, 'u'));
+                } else {
+                    $idAutor = null;
+                }
+            } else {
+                $idAutor = null;
+            }
+
+            if (filter_has_var(INPUT_GET, 'de')) {
+                //TODO filtrar com FILTER_FLAG_EMPTY_STRING_NULL quando estiver implementado pelo PHP
+                $de = filter_input(INPUT_GET, 'de');
+                $dataInicio = !empty($de) ? filter_input(INPUT_GET, 'de') : null;
+            } else {
+                $dataInicio = null;
+            }
+
+            if (filter_has_var(INPUT_GET, 'ate')) {
+                $ate = filter_input(INPUT_GET, 'ate');
+                $dataFim = !empty($ate) ? filter_input(INPUT_GET, 'ate') : null;
+            } else {
+                $dataFim = null;
+            }
             $termo = filter_input(INPUT_GET, 'q');
             $pesquisa = new pesquisa();
             $acessoTotal = $papel <= Papel::GESTOR;
-            if ($termo == "") {
-                $pesquisa->obterTodas($pagina, $itensPorPagina, $acessoTotal);
-            } else {
-                $pesquisa->buscar($termo, $pagina, $itensPorPagina, $acessoTotal);
-            }
+//            if ($termo == "") {
+//                $pesquisa->obterTodas($pagina, $itensPorPagina, $acessoTotal);
+//            } else {
+            $pesquisa->buscar($termo, $pagina, $itensPorPagina, $acessoTotal, $idAutor, $dataInicio, $dataFim);
+//            }
             if ($pesquisa->temResultados()) {
                 $this->visao->temResultados = true;
                 $this->visao->resultados = $pesquisa->obterResultados();
@@ -64,11 +92,14 @@ class ControladorImagens extends Controlador {
                 $this->visao->paginacao = null;
             }
         }
+        $this->visao->tempoGasto = $pesquisa->obterTempoGasto();
         $this->renderizar();
     }
 
     public function acaoConsultarimagem() {
         $this->visao->acessoMinimo = Permissao::CONSULTA;
+        $this->visao->acessoTotal = obterUsuarioSessao()->get_idPapel() <= Papel::GESTOR;
+        $this->visao->todosUsuarios = ComboBoxUsuarios::listarTodosUsuarios(ComboBoxUsuarios::LISTAR_COM_CPF, "");
         $this->renderizar();
     }
 
@@ -97,6 +128,11 @@ class ControladorImagens extends Controlador {
     }
 
     public function acaoBaixarvetorial() {
+        $this->visao->acessoMinimo = Permissao::CONSULTA;
+        $this->renderizar();
+    }
+
+    public function acaoVisualizarimagem() {
         $this->visao->acessoMinimo = Permissao::CONSULTA;
         $this->renderizar();
     }
@@ -173,17 +209,7 @@ class ControladorImagens extends Controlador {
      */
 
     public function acaoArvoreDescritores() {
-        $imagensDAO = new imagensDAO();
-        if (filter_has_var(INPUT_GET, 'completa') && filter_input(INPUT_GET, 'completa')) {
-            if (filter_has_var(INPUT_GET, 'descritorExcluir')) {
-                $descritorExcluido = fnDecrypt(filter_input(INPUT_GET, 'descritorExcluir'));
-            } else {
-                $descritorExcluido = null;
-            }
-            $this->visao->arvore = $imagensDAO->arvoreDescritores(true, $descritorExcluido);
-        } else {
-            $this->visao->arvore = $imagensDAO->arvoreDescritores();
-        }
+        $this->visao->acessoMinimo = Permissao::GESTOR;
         $this->renderizar();
     }
 

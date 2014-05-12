@@ -14,7 +14,7 @@
         </div>
         <div class="line">
             <label for="dataEntrada">Data de entrada</label>
-            <input type="text" readonly id="dataEntrada" class="campoData" name="dataEntrada" />
+            <input type="text" id="dataEntrada" class="campoData" name="dataEntrada" />
         </div>
         <hr/>
         <div class="line">
@@ -76,7 +76,7 @@
             varrerCampos();
             formularioAjax();
 
-            $("#dataEntrada").datepick();
+            $("#dataEntrada").datepicker();
 
         });
 </script>

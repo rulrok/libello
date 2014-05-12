@@ -2,10 +2,10 @@
 
 ob_clean();
 //incluindo o arquivo do fpdf
-require_once BIBLIOTECA_DIR . "configuracoes.php";
-require_once BIBLIOTECA_DIR . "dompdf/dompdf_config.inc.php";
-require_once BIBLIOTECA_DIR . "seguranca/seguranca.php";
-require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
+require_once APP_LIBRARY_DIR . "configuracoes.php";
+require_once APP_LIBRARY_DIR . "dompdf/dompdf_config.inc.php";
+require_once APP_LIBRARY_DIR . "seguranca/seguranca.php";
+require_once APP_LIBRARY_DIR . "seguranca/criptografia.php";
 require_once APP_DIR . "modelo/dao/documentoDAO.php";
 
 //-------------------
@@ -16,7 +16,6 @@ $numMemorando = $memorando[0]->get_numMemorando();
 $tipoSigla = $memorando[0]->get_tipoSigla();
 $data = explode('/', $memorando[0]->get_data());
 $dia = $data[0];
-$mes = $data[1];
 $ano = $data[2];
 $tratamento = $memorando[0]->get_tratamento();
 $cargo_destino = $memorando[0]->get_cargo_destino();
@@ -29,7 +28,7 @@ $remetentes = explode(';',$remetente);
 $cargos_remetentes = explode(';',$cargo_remetente);
 //$mes = retornaMes($mes);
 setlocale(LC_ALL, 'portuguese-brazilian', 'ptb', 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8');
-$mes = $monthName = date("F", mktime(0, 0, 0, $mes, 10));
+$mes = utf8_encode(strftime("%B", mktime(0, 0, 0, $data[1], 10)));
 $data = $dia . '/' . $mes . '/' . date('Y');
 //-------------------
 $document = '<<<EOF
@@ -53,10 +52,21 @@ $document = '<<<EOF
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />        
         </head>
         <body>
+        <script type="text/php">
+
+       if ( isset($pdf) ) {
+
+         $font = Font_Metrics::get_font("helvetica", "bold");
+         $w = $pdf->get_width();
+         $h = $pdf->get_height();
+         $pdf->page_text($w-72, $h-30, utf8_encode("Página {PAGE_NUM}/{PAGE_COUNT}"), $font, 8, array(0,0,0));
+
+       }
+       </script>
             <table class="tabela">
                 <tr>
                     <td style="width: 580px" align="center">
-                       <img src="publico/imagens/oficio/cabecalho.jpg"></img>
+                       <img src="publico/imagens/cabecalho-documentos/cabecalho.jpg"></img>
                     </td>
                 </tr>
                 <tr><td style="height: 30px;"></td></tr>

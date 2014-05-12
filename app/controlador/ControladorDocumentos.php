@@ -1,8 +1,8 @@
 <?php
 
-include_once BIBLIOTECA_DIR . 'Mvc/Controlador.php';
-require_once BIBLIOTECA_DIR . "seguranca/Permissao.php";
-require_once BIBLIOTECA_DIR . "seguranca/criptografia.php";
+include_once APP_LIBRARY_DIR . 'Mvc/Controlador.php';
+require_once APP_LIBRARY_DIR . "seguranca/Permissao.php";
+require_once APP_LIBRARY_DIR . "seguranca/criptografia.php";
 include_once APP_DIR . 'modelo/dao/documentoDAO.php';
 include_once APP_DIR . 'modelo/comboboxes/ComboBoxDocumentos.php';
 include_once APP_DIR . 'modelo/enumeracao/Ferramenta.php';
@@ -61,6 +61,10 @@ class ControladorDocumentos extends Controlador {
     public function acaoDeletarmemorando() {
         $this->renderizar();
     }
+    
+    public function acaoVerificarnovocabecalho(){
+        $this->renderizar();
+    }
 
     public function acaoGerenciar() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
@@ -73,6 +77,12 @@ class ControladorDocumentos extends Controlador {
         $this->visao->memorandosInvalidos = listarMemorandos('invalidos');
         $this->visao->memorandosEmAberto = listarMemorandos('emAberto');
         $this->renderizar();
+    }
+    
+    public function acaoGerenciarCabecalho(){
+        $this->visao->acessoMinimo = Permissao::GESTOR;
+        $this->renderizar();
+        
     }
 
     public function acaoConsultar() {

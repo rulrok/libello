@@ -117,6 +117,10 @@ html {
     outline-offset: -2px;
 }*/
 
+input {
+    padding-left: 5px;
+}
+
 input,select,textarea {
     /*    border-radius: 0px !important;
         border: #ccc solid 2px;*/
@@ -147,6 +151,7 @@ td {
     margin-right: 2px;
     margin-bottom: 1px;
     min-width: 120px;
+    text-align: left!important;
 }
 
 .campoHora {
@@ -204,14 +209,6 @@ input[type=search]{
     padding-left: 5px;
 }
 
-/*.botaoAlternarTelaCheia{
-    
-}
-.botaoAlternarTelaCheia:-webkit-full-screen	{ width: 100% }
-.botaoAlternarTelaCheia:-moz-full-screen	{ width: 100% }
-.botaoAlternarTelaCheia:-ms-full-screen		{ width: 100% }
-.botaoAlternarTelaCheia:-o-full-screen		{ width: 100% }
-.botaoAlternarTelaCheia:full-screen		{ width: 100% }*/
 /* FIM DO GERAL */
 
 /* POP-UP */
@@ -270,12 +267,6 @@ input[type=search]{
     font-size: 95%;
 }
 
-/*nav {
-        width: 100%;
-        height: 100%;
-}
-
-*/
 #frameConteudo {
     height: auto;
     min-height: 100%;
@@ -353,6 +344,38 @@ input[type=search]{
     background-color: white;
     padding: 20px;
 }
+
+.zoom {
+    cursor: -webkit-zoom-in;
+    cursor: -moz-zoom-in;
+    cursor: zoom-in;
+}
+
+.imagem-nenhumresultado > img{
+    width: 35%;
+    margin-left: 5px;
+    
+    border: none;
+}
+
+.imagem-nenhumresultado h2 {
+    color: darkgrey;
+    font-size: 4em;
+    font-weight: lighter;
+    font-style: italic;
+    font-family: serif;
+    text-rendering: optimizeLegibility;
+    position: absolute;
+    top: 50%;
+    left: 35%;
+    word-break: break-word;
+}
+
+.versaoRodape{
+    position: fixed;
+    bottom: 5px;
+    right: 5px;
+}
 /* FIM DO CONTENT */
 /*================================================*/
 /* FOOTER */
@@ -387,7 +410,7 @@ footer{
     height: 10px;
     max-height: 300px;
     /*background: steelblue;*/
-    background: url("../imagens/candidato1.png");
+    background: url("../imagens/backgroundFooter.png");
     position: relative;
     bottom:0;
     margin: 0;
@@ -410,7 +433,7 @@ footer p{
     height:100%;
     max-height: 300px;
     /*background: lavender;*/
-    background: url("../imagens/candidato1.png");
+    /*background: url("../imagens/backgroundFooter.png");*/
     border-color: #c8d7dc;
     -webkit-box-shadow: 10px 2px 12px rgba(50, 50, 50, 0.1) inset ;
     -moz-box-shadow:    10px 2px 12px rgba(50, 50, 50, 0.1) inset;
@@ -448,6 +471,11 @@ footer p{
     padding-right: 5px;
 }
 
+/* FIM FOOTER */
+/*================================================*/
+/* HEADER */
+
+
 #fullscreen-toggle{
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -462,9 +490,6 @@ footer p{
     -o-user-select: none;
     user-select: none;  
 }
-/* FIM FOOTER */
-/*================================================*/
-/* HEADER */
 
 #barraSuperior {
     margin: 0;
@@ -506,6 +531,18 @@ footer p{
     text-align: center;
     font-family: sans-serif;
     color: #555555; 
+}
+
+header .tituloFixo{
+    font-size: 3em;
+    font-weight: lighter;
+    font-family: sans-serif;
+    color: #CC002B;
+}
+
+header .descricaoSite{
+    color: #808080;
+
 }
 header{
     /*border-top: #3871a6 4px solid;*/
@@ -1027,20 +1064,33 @@ input[type="submit"].btn-right {
     float: right;
 }
 
+.btn-buscainterna {
+    display: inline-block;
+
+    height: 25px; 
+    /* position: absolute!important; */
+    float: right; 
+    /* right: 0; */
+    /* top: 0; */
+    border: none!important;
+    background: transparent!important;
+}
 .input-xxzlarge {
     width: 590px;
 }
 
-.thumbnail{
-    cursor: pointer;
-}
-
-.thumbnail.clicada{
-    cursor: default;
-}
-
 .caption {
     padding: 0;
+}
+
+/*Alguns componentes do bootstrap estão sendo exibidos desalinhados */
+.fix_position {
+    position: relative;
+    top: 6px;
+}
+
+.text-justify {
+    text-align: justify;
 }
 /*  FIM BOOTSTRAP FIXES */
 /*================================================*/

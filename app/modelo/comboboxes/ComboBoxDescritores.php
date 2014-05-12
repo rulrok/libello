@@ -1,6 +1,6 @@
 <?php
 
-require_once BIBLIOTECA_DIR . "configuracoes.php";
+require_once APP_LIBRARY_ABSOLUTE_DIR . "configuracoes.php";
 
 class ComboBoxDescritores {
 
@@ -20,7 +20,7 @@ class ComboBoxDescritores {
         if ($idCategoriaPai !== null) {
             $codigo = "";
             $imagensDAO = new imagensDAO();
-            $subcategorias = $imagensDAO->consultarDescritoresFilhos("*", "pai = $idCategoriaPai ");
+            $subcategorias = $imagensDAO->consultarDescritoresFilhos($idCategoriaPai);
             if (sizeof($subcategorias) == 0) {
 //                $caminho = $imagensDAO->consultarCaminhoDescritores($idCategoriaPai);
                 $codigo .="<option value=\"default\" selected=\"selected\"> -- Não existem descritores cadastrados --</option>\n";

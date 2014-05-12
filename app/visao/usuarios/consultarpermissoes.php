@@ -6,7 +6,7 @@
     $usuarioDAO = new usuarioDAO();
     $email = $usuarioDAO->descobrirEmail($idUsuario);
     if ($email != NULL) {
-        $usuario = $usuarioDAO->recuperarUsuario($email);
+        $usuario = $usuarioDAO->recuperarUsuario($email,true);
         echo "<h3 id=\"myModalLabel\">Usuário: " . $usuario->get_PNome() . " " . $usuario->get_UNome() . "</h3>";
         if ($usuario instanceof Usuario) :
             $resultado = $usuarioDAO->obterPermissoes($idUsuario);

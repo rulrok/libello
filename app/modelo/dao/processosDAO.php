@@ -7,7 +7,7 @@ require_once APP_DIR . 'modelo/enumeracao/ImagensDescritor.php';
 
 class processosDAO extends abstractDAO {
 
-     public function consultarGaleria($nomeGaleria) {
+     public function consultarArvore($nomeGaleria) {
         $sql = "SELECT idGaleria FROM imagem_galeria WHERE nomeGaleria = :nomeGaleria";
         $params = array(
             ':nomeGaleria' => [$nomeGaleria, PDO::PARAM_STR]
@@ -15,7 +15,7 @@ class processosDAO extends abstractDAO {
         return $this->executarSelect($sql, $params, false);
     }
 
-    public function cadastrarGaleria($nomeGaleria) {
+    public function cadastrarArvoreNó($nomeGaleria) {
         $sql = "INSERT INTO imagem_galeria(nomeGaleria,qtdFotos,dataCriacao) VALUES (:nomeGaleria,0,:data)";
         $params = array(
             ':nomeGaleria' => [$nomeGaleria, PDO::PARAM_STR]
@@ -25,7 +25,7 @@ class processosDAO extends abstractDAO {
         return $this->executarQuery($sql, $params);
     }
 
-    public function consultarNomeDescritores() {
+    public function consultarNomeProcesso() {
         $sql = "SELECT DISTINCT nome FROM `processo_arvore` WHERE nome <> 'NIL'";
         return $this->executarSelect($sql);
     }
@@ -36,7 +36,7 @@ class processosDAO extends abstractDAO {
      * @param type $idDescritorPai
      * @return type
      */
-    public function cadastrarDescritor(Descritor $descritor, $idDescritorPai) {
+    public function cadastrarProcesso(Descritor $descritor, $idDescritorPai) {
         $sql = 'INSERT INTO processo_arvore_aux_inserir(nome,pai) VALUES (:nome,:pai)';
         $params = array(
             ':nome' => [$descritor->get_nome(), PDO::PARAM_STR]
@@ -45,17 +45,11 @@ class processosDAO extends abstractDAO {
         return $this->executarQuery($sql, $params);
     }
 
-    public function cadastrarDescritorNivel1(Descritor $descritor) {
+    public function cadastrarProcessoNivel1(Descritor $descritor) {
         return $this->cadastrarDescritor($descritor, ImagensDescritor::ID_RAIZ_NIVEL_ZERO);
     }
 
-    public function consultarImagem($idImagem) {
-        $sql = 'SELECT * FROM imagem WHERE idImagem = :idImagem';
-        $params = array(
-            ':idImagem' => [$idImagem, PDO::PARAM_INT]
-        );
-        return $this->executarSelect($sql, $params, false, 'Imagem');
-    }
+
 
     public function consultarTodasAsImagens($limit = null, $acessoTotal = false) {
         return $this->pesquisarImagem('', $limit, $acessoTotal);

@@ -1,6 +1,7 @@
 <?php
 
-include_once BIBLIOTECA_DIR . 'Mvc/Visao.php';
+include_once APP_LIBRARY_ABSOLUTE_DIR . 'Mvc/Visao.php';
+require_once APP_DIR . 'modelo/Mensagem.php';
 
 abstract class Controlador {
 

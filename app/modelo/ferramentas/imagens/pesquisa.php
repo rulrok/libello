@@ -7,6 +7,8 @@ class pesquisa {
     var $paginacao;
     var $resultados;
     var $temResultados;
+    var $tempoInicial;
+    var $tempoFinal;
 
     public function temResultados() {
 //        if ($this->paginacao != null && !empty($this->resultados)) {
@@ -16,13 +18,30 @@ class pesquisa {
         return $this->temResultados;
     }
 
-    private function ofuscarIds(){
+    private function ofuscarIds() {
         foreach ($this->resultados as $key => $value) {
             $this->resultados[$key]['idImagem'] = fnEncrypt($value['idImagem']);
             $this->resultados[$key][0] = $this->resultados[$key]['idImagem'];
         }
     }
-    
+
+    private function processarTipos() {
+
+        function getExtension($str) {
+            $i = strrpos($str, ".");
+            if (!$i) {
+                return "";
+            }
+            $l = strlen($str) - $i;
+            $ext = substr($str, $i + 1, $l);
+            return $ext;
+        }
+
+        foreach ($this->resultados as $key => $value) {
+            $this->resultados[$key]['tipo'] = getExtension($value['nomeArquivo']);
+        }
+    }
+
     private function criarPaginacao($pagina, $ultimaPagina) {
         $centerPages = "";
         $centerPages .= '<div class="pagination pagination-centered "><ul>';
@@ -69,43 +88,31 @@ class pesquisa {
         $this->paginacao .= '<span class="paginationNumbers">' . $centerPages . '</span>';
     }
 
-    public function obterTodas($pagina, $itensPorPagina = 10, $acessoTotal = false) {
-        $imagensDAO = new imagensDAO();
-        $res1 = $imagensDAO->consultarTodasAsImagens(null, $acessoTotal);
-        $nr = sizeof($res1);
-        $this->temResultados = ($nr != 0);
-        if (!$this->temResultados) {
-            $this->paginacao = null;
-            $this->resultados = array();
-            exit;
-        }
-
-        $pagina = preg_replace('#[^0-9]#i', '', $pagina);
-
-        $ultimaPagina = ceil($nr / $itensPorPagina);
-
-        if ($pagina < 1) {
-            $pagina = 1;
-        } else if ($pagina > $ultimaPagina) {
-            $pagina = $ultimaPagina;
-        }
-
-        $limite = 'LIMIT ' . ($pagina - 1) * $itensPorPagina . ',' . $itensPorPagina;
-
-        $this->resultados = $imagensDAO->consultarTodasAsImagens($limite, $acessoTotal);
-
-        $this->criarPaginacao($pagina, $ultimaPagina);
-        $this->ofuscarIds();
+    public function obterTodas($pagina, $itensPorPagina = 10, $acessoTotal = false, $autor = null) {
+        return $this->buscar('', $pagina, $itensPorPagina, $acessoTotal, $autor);
     }
 
-    public function buscar($termoBusca, $pagina, $itensPorPagina = 10, $acessoTotal = false) {
+    /**
+     * 
+     * @param type $termoBusca
+     * @param type $pagina
+     * @param type $itensPorPagina
+     * @param type $acessoTotal
+     * @param type $autor id do usuario autor
+     * @param type $dataInicio Unix timestamp
+     * @param type $dataFim Unix timestamp
+     * @return type
+     */
+    public function buscar($termoBusca, $pagina, $itensPorPagina = 10, $acessoTotal = false, $autor = null, $dataInicio = null, $dataFim = null) {
+        $this->tempoInicial = microtime(true);
         $imagensDAO = new imagensDAO();
-        $res1 = $imagensDAO->pesquisarImagem($termoBusca, null, $acessoTotal);
+        $res1 = $imagensDAO->pesquisarImagem($termoBusca, null, $acessoTotal, $autor, $dataInicio, $dataFim);
         $nr = sizeof($res1);
         $this->temResultados = ($nr != 0);
         if (!$this->temResultados) {
             $this->paginacao = null;
             $this->resultados = array();
+            $this->tempoFinal = microtime(true);
             return;
         }
 
@@ -119,13 +126,14 @@ class pesquisa {
             $pagina = $ultimaPagina;
         }
 
-        $limite = 'LIMIT ' . ($pagina - 1) * $itensPorPagina . ',' . $itensPorPagina;
+        $limite = ' LIMIT ' . ($pagina - 1) * $itensPorPagina . ',' . $itensPorPagina;
 
-        $this->resultados = $imagensDAO->pesquisarImagem($termoBusca, $limite, $acessoTotal);
+        $this->resultados = $imagensDAO->pesquisarImagem($termoBusca, $limite, $acessoTotal, $autor, $dataInicio, $dataFim);
 
         $this->criarPaginacao($pagina, $ultimaPagina);
         $this->ofuscarIds();
-//        }
+        $this->processarTipos();
+        $this->tempoFinal = microtime(true);
     }
 
     public function obterResultados() {
@@ -134,6 +142,10 @@ class pesquisa {
 
     public function obterPaginacao() {
         return $this->paginacao;
+    }
+
+    public function obterTempoGasto() {
+        return number_format($this->tempoFinal - $this->tempoInicial, 5);
     }
 
 }

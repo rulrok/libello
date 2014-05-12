@@ -2,7 +2,7 @@
 
 include_once APP_DIR . "modelo/Mensagem.php";
 include_once APP_DIR . "visao/verificadorFormularioAjax.php";
-require_once BIBLIOTECA_DIR . 'seguranca/criptografia.php';
+require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/criptografia.php';
 
 class validarAlteracoesConta extends verificadorFormularioAjax {
 
@@ -40,14 +40,23 @@ class validarAlteracoesConta extends verificadorFormularioAjax {
         } else {
             $usuario->set_senha($senha);
         }
+        $antigasIniciais = $usuario->get_iniciais();
+
         $usuario->set_PNome($nome)->set_UNome($sobreNome);
         $usuario->set_email($email);
         $usuario->set_dataNascimento($dataNascimento);
 
         //Se não quer alterar a senha
         if ($usuarioDAO->atualizar(obterUsuarioSessao()->get_email(), $usuario)) {
-            atualizarUsuarioSessao($usuario);
-            $this->mensagemSucesso("Alteração concluída com sucesso");
+            $usuarioAtualizado = $usuarioDAO->recuperarUsuario(obterUsuarioSessao()->get_email());
+            atualizarUsuarioSessao($usuarioAtualizado);
+            $novasIniciais = $usuarioAtualizado->get_iniciais();
+            if (strcmp($antigasIniciais, $novasIniciais)) {
+                //Iniciais mudaram, devemos atualizar o nome dos arquivos
+                $imagensDAO = new imagensDAO();
+                $imagensDAO->atualizarSiglas(obterUsuarioSessao()->get_idUsuario());
+            }
+            $this->mensagemSucesso("Perfil salvo");
         } else {
             $this->mensagemErro("Erro ao inserir no banco de dados.");
         }
@@ -57,4 +66,3 @@ class validarAlteracoesConta extends verificadorFormularioAjax {
 
 $validarAlteracoesConta = new validarAlteracoesConta();
 $validarAlteracoesConta->verificar();
-?>

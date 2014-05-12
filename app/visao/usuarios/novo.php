@@ -23,16 +23,19 @@
         </div>
         <div class="line">
             <label for="dataNascimento">Data de nascimento</label>
-            <input type="text" readonly id="dataNascimento" class=" input-large campoData" placeholder="Clique para escolher" name="dataNascimento" >
+            <input type="text" id="dataNascimento" class=" input-large campoData" placeholder="Clique para escolher" name="dataNascimento" >
         </div>
         <div class="line">
             <label for="senha">Senha</label>
             <input required type="password" id="senha" name="senha" class="input-large" data-content="Quaisquer caracteres exceto 'espaço'.Mínimo de seis caracteres.">
         </div>
-
         <div class="line">
             <label for="confsenha">Confirmar Senha</label>
             <input required type="password" class="input-large" id="confsenha" name="confsenha" >
+        </div>
+        <div class="line hidden">
+            <label for="enviarSenha">Enviar senha aleatória por email</label>
+            <input disabled type="checkbox" name="enviarSenha" id="enviarSenha">
         </div>
         <br/>
         <fieldset>
@@ -51,7 +54,17 @@
         <br/>
         <fieldset>
             <legend>Permissões por ferramenta</legend>
-            <?php echo $this->comboPermissoes ?>
+            <table>
+                <tr>
+                    <th></th>
+                    <th>Sem acesso</th>
+                    <th>Consulta</th>
+                    <th>Escrita</th>
+                    <th>Gestor</th>
+                    <th>Administração</th>
+                </tr>
+                <?php echo $this->comboPermissoes ?>
+            </table>
         </fieldset>
     </fieldset>
     <button class="btn btn-large" type="reset">Limpar</button>
@@ -85,21 +98,40 @@
                 escolha = 40;
                 break;
             default:
-                escolha = 0;
+                escolha = 1;
                 break;
         }
 
-        $("[name ^= 'permissoes']").each(function() {
-            $(this).val(escolha);
-        });
+//        $(":radio").each(function() { //Solução alternativa. Para usar, descomente.
+//            if (this.value == escolha){
+//                $(this).attr('checked',true);
+//            }
+        $(":radio[value='" + escolha + "']").prop('checked', true);
+//        });
+
+        /*$("[name ^= 'permissoes']").each(function() {  //Funciona para quando se usa Selects
+         $(this).val(escolha);
+         });*/
     }
+
     $(document).ready(function() {
-        $("#dataNascimento").datepick();
+        $("#dataNascimento").datepicker();
         $(".line input").popover({trigger: 'focus', container: 'body'});
         $("#papel").on('change', preconfigurarPermissoes);
         $('#cpf').mask('999.999.999-99');
         varrerCampos();
         formularioAjax();
         $("#ajuda").tooltip({placement: 'right'});
+
+        $("#enviarSenha").on('change', function() {
+            if (this.checked) {
+                $("#senha").attr('disabled', true).attr('readonly', true).val("************");
+                $("#confsenha").attr('disabled', true).attr('readonly', true).val("************");
+            } else {
+                $("#senha").attr('disabled', false).attr('readonly', false).val("");
+                $("#confsenha").attr('disabled', false).attr('readonly', false).val("");
+
+            }
+        });
     });
 </script>
