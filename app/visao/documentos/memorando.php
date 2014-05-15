@@ -7,7 +7,8 @@
 <form  id="ajaxForm" name="form1" target="_blank" action='index.php?c=documentos&a=verificarnovomemorando' method="post">
     <div id="documento_form" style='' border="0" align="center">
         <div style="position: relative;padding:50px 90px;padding-bottom: 120px;">
-            <img id="cabecalho" style="" src="publico/imagens/cabecalho-documentos/cabecalho.jpg" />
+            <!--"microtime" força o navegador a puxar a imagem sem uso do cache-->
+            <img id="cabecalho" style="" src="publico/imagens/cabecalho-documentos/cabecalho.jpg?<?php echo microtime();?>" />
             <div class="left_align" style="">
                 Mem. nº/Ano/CEAD -
                 <select id='sigla' name='sigla'>

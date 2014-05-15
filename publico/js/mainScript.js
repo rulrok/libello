@@ -611,7 +611,7 @@ function showFooter() {
 }
 
 /**
- * Exibe um balão de aviso no canto direito da tela. Você pode personalizar o
+ * Exibe um balão de aviso no centro da tela. Você pode personalizar o
  * tipo de aviso.
  * 
  * @author Reuel
@@ -671,7 +671,7 @@ function showPopUp(data, type) {
 }
 
 /**
- * Esconde o pop-up direito superior da página.
+ * Esconde o pop-up central da página.
  * 
  * @author Reuel
  * 

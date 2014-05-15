@@ -27,7 +27,6 @@ class verificarnovocabecalho extends verificadorFormularioAjax {
             $this->mensagemErro("Tamanho máximo permitido para a imagem: " . ($tamanhoMaximo / 1024) . " Kb.");
         }
         $imagemCopiada = copy($_FILES[$arquivoImagem]['tmp_name'], ROOT . $destinoImagem . $nomeArquivo);
-
         if (!$imagemCopiada) {
             $this->mensagemErro("Erro ao mover imagem para a pasta do servidor");
         }

@@ -7,7 +7,8 @@
 <form id="ajaxForm" name="form1" method="post" action='index.php?c=documentos&a=verificarnovooficio' target="_blank" >
     <div id="documento_form" style='' border="0" align="center">
         <div style="position: relative;">
-            <img id="cabecalho" style="" src="publico/imagens/cabecalho-documentos/cabecalho.jpg" />
+            <!--"microtime" força o navegador a puxar a imagem sem uso do cache-->
+            <img id="cabecalho" style="" src="publico/imagens/cabecalho-documentos/cabecalho.jpg?<?php echo microtime();?>" />
             <div class="left_align" style="">
                 Ofício nº/Ano/CEAD -
                 <select id='sigla' name='sigla'>
