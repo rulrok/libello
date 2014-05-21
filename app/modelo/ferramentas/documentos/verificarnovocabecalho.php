@@ -6,6 +6,7 @@
  * and open the template in the editor.
  */
 include APP_DIR . "visao/verificadorFormularioAjax.php";
+include("resize-class.php");
 
 class verificarnovocabecalho extends verificadorFormularioAjax {
 
@@ -26,7 +27,16 @@ class verificarnovocabecalho extends verificadorFormularioAjax {
         if ($tamanhoImagem > APP_MAX_UPLOAD_SIZE) {
             $this->mensagemErro("Tamanho máximo permitido para a imagem: " . ($tamanhoMaximo / 1024) . " Kb.");
         }
-        $imagemCopiada = copy($_FILES[$arquivoImagem]['tmp_name'], ROOT . $destinoImagem . $nomeArquivo);
+        
+        $resize = new ResizeImage($_FILES[$arquivoImagem]['tmp_name']);
+        $resize->resizeTo(580, 90, 'exact');
+        $imagemCopiada = $resize->saveImage(ROOT . $destinoImagem . $nomeArquivo);
+        
+        
+//A linha a baixo era a antiga implementação, quando não se usava redimensionamendo (feito pela classe "resize-class")
+//        $imagemCopiada = copy($_FILES[$arquivoImagem]['tmp_name'], ROOT . $destinoImagem . $nomeArquivo);
+
+//Antigo plotador de mensagem, atualmente, feito via ajax
         if (!$imagemCopiada) {
             $this->mensagemErro("Erro ao mover imagem para a pasta do servidor");
         }

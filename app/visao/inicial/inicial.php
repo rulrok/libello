@@ -54,7 +54,7 @@
             //delas possam ser executados
             window.onerror = function(msg, url, linenumber) {
                 ocorreuExcecaoJS = true;
-                alert("Um erro ocorreu no aplicativo e a página pode não ser exibida corretamente.\nTente recarregar a sua página.\nPersistindo o erro, entre em contato com suporte@bi.com.br");
+//                alert("Um erro ocorreu no aplicativo e a página pode não ser exibida corretamente.\nTente recarregar a sua página.\nPersistindo o erro, entre em contato com suporte@bi.com.br");
                 console.log("Exceção ocorrida na página " + url);
                 console.log(linenumber + ": " + msg);
                 return false;
