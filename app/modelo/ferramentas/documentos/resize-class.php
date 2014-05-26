@@ -91,16 +91,14 @@ class ResizeImage
 	        case 'image/jpeg':
 	        	// Check PHP supports this file type
 	            if (imagetypes() & IMG_JPG) {
-	                imagejpeg($this->newImage, $savePath, $imageQuality);
-                        return true;
+	                return imagejpeg($this->newImage, $savePath, $imageQuality);
 	            }
 	            break;
 
 	        case 'image/gif':
 	        	// Check PHP supports this file type
 	            if (imagetypes() & IMG_GIF) {
-	                imagegif($this->newImage, $savePath);
-                        return true;
+	                return imagegif($this->newImage, $savePath);
 	            }
 	            break;
 
@@ -109,8 +107,7 @@ class ResizeImage
 
 	            // Check PHP supports this file type
 	            if (imagetypes() & IMG_PNG) {
-	                imagepng($this->newImage, $savePath, $invertScaleQuality);
-                        return true;
+	                return imagepng($this->newImage, $savePath, $invertScaleQuality);
 	            }
 	            break;
 	    }
