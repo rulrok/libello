@@ -216,7 +216,7 @@
                         <?php // if ($this->administrador):  ?>
                                 <!--<a class="btn btn-small" href="#!sistema|administracao"><i class="icon-fire"></i> Administração</a>-->
                         <?php // endif;  ?>
-                        <a class="btn btn-small" href="#!processos|caixaProcessos" target="_blank"><i class="icon-tasks"></i> Processos</a>
+                        <a class="btn btn-small" href="#!processos|processos"><i class="icon-tasks"></i> Processos</a>
                         <a class="btn btn-small" href="sair.php"><i class="icon-off"></i> Sair</a>
                     </div>
                 </div>

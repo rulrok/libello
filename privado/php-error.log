@@ -348,3 +348,532 @@
 [Usuário: Cead Ead(CE3), admin@cead.com, papel: 1, id: 1]
 
 
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP Notice:  Use of undefined constant BIBLIOTECA_DIR - assumed 'BIBLIOTECA_DIR' in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP Stack trace:
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP Warning:  include_once(BIBLIOTECA_DIRMvc/Controlador.php): failed to open stream: No such file or directory in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP Stack trace:
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening 'BIBLIOTECA_DIRMvc/Controlador.php' for inclusion (include_path='.;C:\php\pear') in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP Stack trace:
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP Fatal error:  Class 'Controlador' not found in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 6
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP Stack trace:
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[12-May-2014 10:39:49 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP Notice:  Use of undefined constant BIBLIOTECA_DIR - assumed 'BIBLIOTECA_DIR' in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP Stack trace:
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP Warning:  include_once(BIBLIOTECA_DIRMvc/Controlador.php): failed to open stream: No such file or directory in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP Stack trace:
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening 'BIBLIOTECA_DIRMvc/Controlador.php' for inclusion (include_path='.;C:\php\pear') in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP Stack trace:
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP Fatal error:  Class 'Controlador' not found in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 6
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP Stack trace:
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[12-May-2014 10:46:52 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP Notice:  Use of undefined constant BIBLIOTECA_DIR - assumed 'BIBLIOTECA_DIR' in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP Stack trace:
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP Warning:  include_once(BIBLIOTECA_DIRMvc/Controlador.php): failed to open stream: No such file or directory in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP Stack trace:
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening 'BIBLIOTECA_DIRMvc/Controlador.php' for inclusion (include_path='.;C:\php\pear') in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP Stack trace:
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP Fatal error:  Class 'Controlador' not found in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 6
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP Stack trace:
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[12-May-2014 10:49:50 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP Notice:  Use of undefined constant BIBLIOTECA_DIR - assumed 'BIBLIOTECA_DIR' in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP Warning:  include_once(BIBLIOTECA_DIRMvc/Controlador.php): failed to open stream: No such file or directory in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening 'BIBLIOTECA_DIRMvc/Controlador.php' for inclusion (include_path='.;C:\php\pear') in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP Fatal error:  Class 'Controlador' not found in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 6
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:07:31 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:08:11 America/Sao_Paulo] PHP Notice:  Use of undefined constant BIBLIOTECA_DIR - assumed 'BIBLIOTECA_DIR' in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:08:11 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:08:11 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:08:11 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:08:11 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:08:11 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:08:11 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:08:11 America/Sao_Paulo] PHP Warning:  include_once(BIBLIOTECA_DIRMvc/Controlador.php): failed to open stream: No such file or directory in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:08:11 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:08:11 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:08:11 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:08:11 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:08:11 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:08:12 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:08:12 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening 'BIBLIOTECA_DIRMvc/Controlador.php' for inclusion (include_path='.;C:\php\pear') in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:08:12 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:08:12 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:08:12 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:08:12 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:08:12 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:08:12 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:08:12 America/Sao_Paulo] PHP Fatal error:  Class 'Controlador' not found in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 6
+[15-May-2014 10:08:12 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:08:12 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:08:12 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:08:12 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:08:12 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:08:12 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP Notice:  Use of undefined constant BIBLIOTECA_DIR - assumed 'BIBLIOTECA_DIR' in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP Warning:  include_once(BIBLIOTECA_DIRMvc/Controlador.php): failed to open stream: No such file or directory in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening 'BIBLIOTECA_DIRMvc/Controlador.php' for inclusion (include_path='.;C:\php\pear') in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP Fatal error:  Class 'Controlador' not found in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 6
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:08:59 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP Notice:  Use of undefined constant BIBLIOTECA_DIR - assumed 'BIBLIOTECA_DIR' in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP Warning:  include_once(BIBLIOTECA_DIRMvc/Controlador.php): failed to open stream: No such file or directory in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening 'BIBLIOTECA_DIRMvc/Controlador.php' for inclusion (include_path='.;C:\php\pear') in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP Fatal error:  Class 'Controlador' not found in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 6
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:09:06 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP Notice:  Use of undefined constant BIBLIOTECA_DIR - assumed 'BIBLIOTECA_DIR' in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP Warning:  include_once(BIBLIOTECA_DIRMvc/Controlador.php): failed to open stream: No such file or directory in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening 'BIBLIOTECA_DIRMvc/Controlador.php' for inclusion (include_path='.;C:\php\pear') in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP Fatal error:  Class 'Controlador' not found in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 6
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:13:50 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP Notice:  Use of undefined constant BIBLIOTECA_DIR - assumed 'BIBLIOTECA_DIR' in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP Warning:  include_once(BIBLIOTECA_DIRMvc/Controlador.php): failed to open stream: No such file or directory in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening 'BIBLIOTECA_DIRMvc/Controlador.php' for inclusion (include_path='.;C:\php\pear') in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP Fatal error:  Class 'Controlador' not found in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 6
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:13:59 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP Notice:  Use of undefined constant BIBLIOTECA_DIR - assumed 'BIBLIOTECA_DIR' in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP Warning:  include_once(BIBLIOTECA_DIRMvc/Controlador.php): failed to open stream: No such file or directory in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening 'BIBLIOTECA_DIRMvc/Controlador.php' for inclusion (include_path='.;C:\php\pear') in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP Fatal error:  Class 'Controlador' not found in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 6
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:16:06 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP Notice:  Use of undefined constant BIBLIOTECA_DIR - assumed 'BIBLIOTECA_DIR' in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP Warning:  include_once(BIBLIOTECA_DIRMvc/Controlador.php): failed to open stream: No such file or directory in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening 'BIBLIOTECA_DIRMvc/Controlador.php' for inclusion (include_path='.;C:\php\pear') in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP Fatal error:  Class 'Controlador' not found in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 6
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:16:07 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP Notice:  Use of undefined constant BIBLIOTECA_DIR - assumed 'BIBLIOTECA_DIR' in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP Warning:  include_once(BIBLIOTECA_DIRMvc/Controlador.php): failed to open stream: No such file or directory in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening 'BIBLIOTECA_DIRMvc/Controlador.php' for inclusion (include_path='.;C:\php\pear') in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP Fatal error:  Class 'Controlador' not found in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 6
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:16:08 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP Notice:  Use of undefined constant BIBLIOTECA_DIR - assumed 'BIBLIOTECA_DIR' in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP Warning:  include_once(BIBLIOTECA_DIRMvc/Controlador.php): failed to open stream: No such file or directory in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening 'BIBLIOTECA_DIRMvc/Controlador.php' for inclusion (include_path='.;C:\php\pear') in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP Fatal error:  Class 'Controlador' not found in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 6
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:19:58 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP Notice:  Use of undefined constant BIBLIOTECA_DIR - assumed 'BIBLIOTECA_DIR' in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP Warning:  include_once(BIBLIOTECA_DIRMvc/Controlador.php): failed to open stream: No such file or directory in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening 'BIBLIOTECA_DIRMvc/Controlador.php' for inclusion (include_path='.;C:\php\pear') in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP Fatal error:  Class 'Controlador' not found in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 6
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP Notice:  Use of undefined constant BIBLIOTECA_DIR - assumed 'BIBLIOTECA_DIR' in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP Warning:  include_once(BIBLIOTECA_DIRMvc/Controlador.php): failed to open stream: No such file or directory in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening 'BIBLIOTECA_DIRMvc/Controlador.php' for inclusion (include_path='.;C:\php\pear') in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP Fatal error:  Class 'Controlador' not found in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 6
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:20:07 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP Notice:  Use of undefined constant BIBLIOTECA_DIR - assumed 'BIBLIOTECA_DIR' in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP Warning:  include_once(BIBLIOTECA_DIRMvc/Controlador.php): failed to open stream: No such file or directory in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening 'BIBLIOTECA_DIRMvc/Controlador.php' for inclusion (include_path='.;C:\php\pear') in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP Fatal error:  Class 'Controlador' not found in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 6
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:26:49 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP Notice:  Use of undefined constant BIBLIOTECA_DIR - assumed 'BIBLIOTECA_DIR' in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP Warning:  include_once(BIBLIOTECA_DIRMvc/Controlador.php): failed to open stream: No such file or directory in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening 'BIBLIOTECA_DIRMvc/Controlador.php' for inclusion (include_path='.;C:\php\pear') in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 3
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP Fatal error:  Class 'Controlador' not found in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 6
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:28:11 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:28:28 America/Sao_Paulo] PHP Fatal error:  Class 'Controlador' not found in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 4
+[15-May-2014 10:28:28 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:28:28 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:28:28 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:28:28 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:28:28 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:28:28 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:29:54 America/Sao_Paulo] PHP Fatal error:  Class 'Controlador' not found in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 4
+[15-May-2014 10:29:54 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:29:54 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:29:54 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:29:54 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:29:54 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:29:54 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[15-May-2014 10:29:55 America/Sao_Paulo] PHP Fatal error:  Class 'Controlador' not found in C:\wamp\www\libello\app\controlador\ControladorProcessos.php on line 4
+[15-May-2014 10:29:55 America/Sao_Paulo] PHP Stack trace:
+[15-May-2014 10:29:55 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[15-May-2014 10:29:55 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[15-May-2014 10:29:55 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[15-May-2014 10:29:55 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[15-May-2014 10:29:55 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[23-May-2014 10:32:45 America/Sao_Paulo] PHP Warning:  require_once(C:/wamp/www/libello/app/modelo/vo/Processo.php): failed to open stream: No such file or directory in C:\wamp\www\libello\app\modelo\dao\processosDAO.php on line 4
+[23-May-2014 10:32:45 America/Sao_Paulo] PHP Stack trace:
+[23-May-2014 10:32:45 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[23-May-2014 10:32:45 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[23-May-2014 10:32:45 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[23-May-2014 10:32:45 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[23-May-2014 10:32:45 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[23-May-2014 10:32:45 America/Sao_Paulo] PHP   6. include_once() C:\wamp\www\libello\app\controlador\ControladorProcessos.php:3
+[23-May-2014 10:32:45 America/Sao_Paulo] PHP Fatal error:  require_once(): Failed opening required 'C:/wamp/www/libello/app/modelo/vo/Processo.php' (include_path='.;C:\php\pear') in C:\wamp\www\libello\app\modelo\dao\processosDAO.php on line 4
+[23-May-2014 10:32:45 America/Sao_Paulo] PHP Stack trace:
+[23-May-2014 10:32:45 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[23-May-2014 10:32:45 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[23-May-2014 10:32:45 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[23-May-2014 10:32:45 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[23-May-2014 10:32:45 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[23-May-2014 10:32:45 America/Sao_Paulo] PHP   6. include_once() C:\wamp\www\libello\app\controlador\ControladorProcessos.php:3
+[23-May-2014 10:33:44 America/Sao_Paulo] PHP Warning:  require_once(C:/wamp/www/libello/app/modelo/vo/Processo.php): failed to open stream: No such file or directory in C:\wamp\www\libello\app\modelo\dao\processosDAO.php on line 4
+[23-May-2014 10:33:44 America/Sao_Paulo] PHP Stack trace:
+[23-May-2014 10:33:44 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[23-May-2014 10:33:44 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[23-May-2014 10:33:44 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[23-May-2014 10:33:44 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[23-May-2014 10:33:44 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[23-May-2014 10:33:44 America/Sao_Paulo] PHP   6. include_once() C:\wamp\www\libello\app\controlador\ControladorProcessos.php:3
+[23-May-2014 10:33:44 America/Sao_Paulo] PHP Fatal error:  require_once(): Failed opening required 'C:/wamp/www/libello/app/modelo/vo/Processo.php' (include_path='.;C:\php\pear') in C:\wamp\www\libello\app\modelo\dao\processosDAO.php on line 4
+[23-May-2014 10:33:44 America/Sao_Paulo] PHP Stack trace:
+[23-May-2014 10:33:44 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[23-May-2014 10:33:44 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[23-May-2014 10:33:44 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:84
+[23-May-2014 10:33:44 America/Sao_Paulo] PHP   4. CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[23-May-2014 10:33:44 America/Sao_Paulo] PHP   5. require() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:20
+[23-May-2014 10:33:44 America/Sao_Paulo] PHP   6. include_once() C:\wamp\www\libello\app\controlador\ControladorProcessos.php:3
