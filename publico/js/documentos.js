@@ -115,12 +115,12 @@ function FormDocumentos() {
     //this.instancia = new Form();
     this.campoAssinatura = {0: '<div class="remetente_div" id="assinatura-', 1: '" >' +
                 '<p>______________________________________</p>' +
-                '<div style="padding-left: 152px;margin-bottom: 2px">' +
+                '<div style="">' +
                 '<input type="text" required class="remetente" value="', 2: '" onkeyup="liberarCadastro()" size="50" /><span class="classeExemploOficio"> Ex: Prof. Dr. Gabriel G... </span>' +
                 '</div>' +
-                '<div style="padding-left: 152px;">' +
+                '<div style="">' +
                 '<input type="text" required class="cargo_remetente" value="', 3: '" onkeyup="liberarCadastro()" size="25" /><span class="classeExemploOficio"> Ex: Coordenador CEAD</span>' +
-                '</div><div><button type="button" title="Adicionar Remetente"  onclick="FormDocumentos.instancia.adicionarRemetente();"  class="btn btn-add-rmt" ><i class="icon-plus"></i></button>' +
+                '</div><div style="padding:0px;"><button type="button" title="Adicionar Remetente"  onclick="FormDocumentos.instancia.adicionarRemetente();"  class="btn btn-add-rmt" ><i class="icon-plus"></i></button>' +
                 '<button type="button"  title="Remover Remetente" disabled  onclick="FormDocumentos.instancia.removerRemetente(', 4: ');" class="btn btn-remove-rmt" ><i class="icon-minus"></i></button>' +
                 '</div>' +
                 '</div>'};

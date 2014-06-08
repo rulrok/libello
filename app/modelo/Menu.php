@@ -134,9 +134,9 @@ class Menu {
                                 $subMenuCode .= "<a href=\"#!documentos|gerenciarCabecalho\"\">" . "\n";
                                 $subMenuCode .= "<li>Gerenciar Cabeçalho</li></a>" . "\n";
                             case Permissao::ESCRITA:
-                                $subMenuCode .= "<a href=\"#!documentos|gerarOficio\"\">" . "\n";
+                                $subMenuCode .= "<a href=\"#!documentos|oficio\"\">" . "\n";
                                 $subMenuCode .= "<li>Gerar ofício</li></a>" . "\n";
-                                $subMenuCode .= "<a href=\"#!documentos|gerarMemorando\"\">" . "\n";
+                                $subMenuCode .= "<a href=\"#!documentos|memorando\"\">" . "\n";
                                 $subMenuCode .= "<li>Gerar memorando</li></a>" . "\n";
 //                                $subMenuCode .= "<a href=\"javascript:void(0)\" onclick=\"ajax('index.php?c=documentos&a=gerarRelatorio')\">" . "\n";
 //                                $subMenuCode .= "<li>Gerar relatório</li></a>" . "\n";

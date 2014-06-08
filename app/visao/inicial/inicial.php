@@ -54,7 +54,7 @@
             //delas possam ser executados
             window.onerror = function(msg, url, linenumber) {
                 ocorreuExcecaoJS = true;
-                alert("Um erro ocorreu no aplicativo e a página pode não ser exibida corretamente.\nTente recarregar a sua página.\nPersistindo o erro, entre em contato com suporte@bi.com.br");
+//                alert("Um erro ocorreu no aplicativo e a página pode não ser exibida corretamente.\nTente recarregar a sua página.\nPersistindo o erro, entre em contato com suporte@bi.com.br");
                 console.log("Exceção ocorrida na página " + url);
                 console.log(linenumber + ": " + msg);
                 return false;
@@ -192,6 +192,7 @@
                         include $this->conteudo;
                     }
                     ?>
+
                     <div id="avisos" class="centralizado alert alert-error">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
                         <?php
@@ -229,6 +230,7 @@
             <div class="shaderFrameContentWrap centralizado">
                 <div class="loading_background">
                     <img src="publico/imagens/ajax-loader.gif"> Carregando...
+
                 </div>
             </div>
         </div>
@@ -366,11 +368,20 @@
 
                         //Permite que o popup seja arrastado pela tela
                         $('.shaderFrameContent').draggable({cancel: ".shaderFrameContentWrap"});
+
                         //
                         $(".shaderFrame").click(function() {
                             $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
                             $(".shaderFrameContent").css("visibility", "hidden").css("opacity", "0");
                         });
+
+
+                        //Comentado para que não permita o fechamento do cinza esmacido ao ser clicado!
+//                        $(".shaderFrame").click(function() {
+//                            $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
+//                            $(".shaderFrameContent").css("visibility", "hidden").css("opacity", "0");
+//                        });
+
 
                         hideFooter();
                         showFooter();

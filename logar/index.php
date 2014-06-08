@@ -88,7 +88,9 @@ $email = filter_has_var(INPUT_GET, 'email') ? filter_input(INPUT_GET, 'email') :
                 <div class="error text-center">
                     <?php
                     if (filter_has_var(INPUT_GET, 'm')) {
-                        echo filter_input(INPUT_GET, 'm');
+                        if (filter_input(INPUT_GET, 'm') != "Você precisa estar autenticado para realizar essa operação") {
+                            echo filter_input(INPUT_GET, 'm');
+                        }
                     }
                     ?>
                 </div>

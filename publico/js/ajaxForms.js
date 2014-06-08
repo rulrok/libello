@@ -74,10 +74,9 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn
 
         var data = responseText;
         if (data !== null && data !== undefined) {
-            console.log(data);
             data = extrairJSON(data);
-
             if (data.status !== undefined && data.mensagem !== undefined) {
+
                 showPopUp(data.mensagem, data.status);
                 if (data.status.toLowerCase() === "sucesso") {
                     document.paginaAlterada = false;

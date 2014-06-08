@@ -56,19 +56,6 @@
 
 <div id="tabela1" class="tabelaConteudo" style="display: none;">
 
-    <!--    <div style="text-align:center;cursor:default;" >
-            <div align="right" style="" class="label_oficio_memorando">Visualizar: </div>
-            <label style="text-align:center;display:inline-block;">
-                <select id="comboOficioTipo" name="comboOficioTipo" class="ignorar">
-                    <option id="option_oficio_default" value="default" selected="selected" >--Selecione uma opção--</option>
-                    <option id="option_oficio_todos" value="todos">Todos</option>
-                    <option id="option_oficio_validos" value="validos">Válidos</option>
-                    <option id="option_oficio_invalidos" value="invalidos">Invalidados</option>
-                    <option id="option_oficio_aberto" value="aberto">Em aberto</option>
-                </select>
-            </label>
-        </div>-->
-
     <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
     <?php require('estruturas_auxiliares/visualizarOficio.php'); ?>
     <div style="" id="todosOficios">
@@ -112,21 +99,6 @@
 
 </div>
 <div id="tabela2" class="tabelaConteudo" style="display: none;">
-
-
-    <!--    <div style="text-align:center;cursor:default;" >
-            <div align="right" style="" class="label_oficio_memorando">Visualizar: </div>
-            <label style="text-align:center;display:inline-block;">
-                <select id="comboMemorandoTipo" name="comboMemorandoTipo" class="ignorar">
-                    <option id="option_memorando_default" value="default" selected="selected" >--Selecione uma opção--</option>
-                    <option id="option_memorando_todos" value="todos">Todos</option>
-                    <option id="option_memorando_validos" value="validos">Válidos</option>
-                    <option id="option_memorando_invalidos" value="invalidos">Inválidos</option>
-                    <option id="option_memorando_aberto" value="aberto">Em aberto</option>                                                
-                </select>
-            </label>
-        </div>-->
-
 
     <?php require('estruturas_auxiliares/menuGerenciar.php'); ?>
     <?php require('estruturas_auxiliares/visualizarMemorando.php'); ?>
@@ -316,10 +288,6 @@
 
                             tab_todosInvalidos.fnAdjustColumnSizing();
                         }
-//                        if(!tab_todosInvalidos.find('td:first').hasClass('dataTables_empty'))
-//                    else
-//                        tab_todosInvalidos.fnDraw();
-                        //      select(tab_todosInvalidos);
                         if (tipo_oficio != '&tipo=invalidos') {
                             tipo_oficio = '&tipo=invalidos';
                             document.ignorarHashChange = ignorarhash;
@@ -414,22 +382,19 @@
             }
         });
 
+
+        //função botão visualizar
+        //mostra o documento de acordo com o tipo da tabela visivel
         $('.btn-visualizar').on('click', function() {
             if ($('#tabela1').css('display') != 'none') {
-//                            $('#form_visualizar').attr('action', 'app/modelo/documentos/visualizarOficio.php');
-//                            $('#idv').val($('.row_selected td.campoID').text());
-//                            $('#form_visualizar').submit();
                 window.open('index.php?c=documentos&a=visualizarOficio&idv=' + $('.row_selected td.campoID').text());
-//                            carregarPagina('#!documentos|visualizarOficio&idv='+$('.row_selected td.campoID').text());
             }
             else if ($('#tabela2').css('display') != 'none') {
                 window.open('index.php?c=documentos&a=visualizarMemorando&idv=' + $('.row_selected td.campoID').text());
-//                            $('#form_visualizar').attr('action', 'app/modelo/documentos/visualizarMemorando.php');
-//                            $('#idv').val($('.row_selected td.campoID').text());
-//                            $('#form_visualizar').submit();
             }
         });
 
+        //função botão invalidar
         $('.btn-invalidar').on('click', function() {
             var r = confirm("Tem certeza? O documento será permanentemente invalidado!");
             if (r) {
@@ -457,15 +422,13 @@
             }
         });
 
+        //função botão deletar
         $('.btn-deletar').on('click', function() {
             var r = confirm("Tem certeza? O documento será permanentemente excluido!");
             if (r) {
                 var id = $('tr.row_selected .campoID').text();
                 var doc = $('tr.row_selected').attr('doc');
                 var acaoDeletar = "index.php?c=documentos&a=deletar" + doc + "&i_id" + doc + "=";
-//                            window.open("#!documentos|invalidar" + doc + "&i_id" + doc + "=" + id);
-//                            ajax("#!documentos|invalidar" + doc + "&i_id" + doc + "=" + id, null, false, false);
-                //var id = $("tr.row_selected>.campoID").html();
                 var data = ajax(acaoDeletar + id, null, false, false);
                 if (data !== null && data !== undefined) {
                     data = extrairJSON(data);
@@ -485,19 +448,22 @@
             }
         });
 
+        //função botão editar
         $('.btn-editar').on('click', function() {
             var doc = $('tr.row_selected').attr('doc');
             var temp = doc[0].toUpperCase() + doc.slice(1);
             var id = $('tr.row_selected .campoID').text();
-            document.location.href = '#!documentos|editar' + temp + "&id=" + id;
+            document.location.href = '#!documentos|'+doc+'&id='+id;
         });
 
+        //função botão aproveitar
         $('.btn-aproveitar').on('click', function() {
             var doc = $('tr.row_selected').attr('doc');
             var temp = doc[0].toUpperCase() + doc.slice(1);
             var id = $('tr.row_selected .campoID').text();
-            document.location.href = '#!documentos|aproveitar' + temp + '&id=' + id;
+            document.location.href = '#!documentos|' + doc + '&id=' + id;
         });
+        
 <?php if (!isset($_GET['tipo'])) { ?>
             $('.btn-todos').click();
 <?php } ?>

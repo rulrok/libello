@@ -45,8 +45,14 @@ abstract class verificadorFormularioAjax {
         }
     }
 
+    //duas setId e setDocumento são referentes a parte de gerar documentos,
+    //id do documento gerado ou salvo para que possa ser visualizado ou editado
     public function setId($id){
         $this->mensagem->id = fnEncrypt($id);
+    }
+    
+    public function setDocumento($doc){
+        $this->mensagem->documento = $doc;
     }
     
     public function mensagemSucesso($mensagem) {

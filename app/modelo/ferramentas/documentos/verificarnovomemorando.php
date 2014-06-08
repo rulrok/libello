@@ -10,7 +10,6 @@
  *
  * @author Rodolfo
  */
-include APP_DIR . "modelo/Mensagem.php";
 require_once APP_DIR . "modelo/vo/Memorando.php";
 include APP_DIR . "visao/verificadorFormularioAjax.php";
 
@@ -22,6 +21,7 @@ class verificarnovomemorando extends verificadorFormularioAjax {
         try {
 
             $idusuario = obterUsuarioSessao()->get_idUsuario();
+            $idMemorando = fnDecrypt(filter_input(INPUT_POST, 'i_idmemorando'));
             $numMemorando = filter_input(INPUT_POST, 'i_numMemorando');
             $assunto = filter_input(INPUT_POST, 'assunto');
             $corpo = filter_input(INPUT_POST, 'corpo');
@@ -32,9 +32,6 @@ class verificarnovomemorando extends verificadorFormularioAjax {
             $tipoSigla = filter_input(INPUT_POST, 'sigla');
             $remetente = filter_input(INPUT_POST, 'remetente');
             $cargo_remetente = filter_input(INPUT_POST, 'cargo_remetente');
-
-
-
 
             $tratamento = filter_input(INPUT_POST, 'tratamento');
             $cargo_destino = filter_input(INPUT_POST, 'cargo_destino');
@@ -55,16 +52,30 @@ class verificarnovomemorando extends verificadorFormularioAjax {
                 $estadoEdicao = 1;
             }
 
-            $documento->set_estadoEdicao($estadoEdicao);
             $documento->set_numMemorando($numMemorando);
-
+            $documento->set_estadoEdicao($estadoEdicao);
+            
             $documentoDAO = new documentoDAO();
-            $documentoDAO->inserirMemorando($documento);
-            if ($numMemorando != -1) {
+            if ($idMemorando != -1) {
+                $documento->set_idMemorando($idMemorando);
+                $documentoDAO->update_memorando($documento);
+                $id = $idMemorando;
+            } else {
+
+                $documentoDAO->inserirMemorando($documento);
                 $id = $documentoDAO->obterUltimoIdInserido();
+            }
+
+            if ($numMemorando != -1) {
+
+               $id = $documentoDAO->obterUltimoIdInserido();
                 $this->setId($id);
+
+                $this->setId(-1);
+
                 $this->mensagemSucesso("Memorando gerado com sucesso!");
             } else {
+                $this->setId($id);
                 $this->mensagemSucesso("Memorando salvo com sucesso!");
             }
         } catch (Exception $e) {

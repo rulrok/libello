@@ -1,14 +1,14 @@
-<title>Aproveitar Ofício</title>
-<script src="biblioteca/tinymce/js/tinymce/tinymce.min.js"></script>
-<script src="biblioteca/tinymce/js/tinymce/jquery.tinymce.min.js"></script>
-<link href='publico/css/documentos.css' rel='stylesheet' type="text/css"/>
+<title>Oficio</title>
 <script src="publico/js/documentos.js" type="text/javascript"></script>
+<script src="biblioteca/tinymce/js/tinymce/jquery.tinymce.min.js"></script>
+<script src="biblioteca/tinymce/js/tinymce/tinymce.min.js"></script>
+<link href='publico/css/documentos.css' rel='stylesheet' type="text/css"/>
 
 <form id="ajaxForm" name="form1" method="post" action='index.php?c=documentos&a=verificarnovooficio' target="_blank" >
-
     <div id="documento_form" style='' border="0" align="center">
-        <div style="position: relative;padding:50px 90px;padding-bottom: 120px;">
-            <img id="cabecalho" style="" src="publico/imagens/cabecalho-documentos/cabecalho.jpg" />
+        <div style="position: relative;">
+            <!--"microtime" força o navegador a puxar a imagem sem uso do cache-->
+            <img id="cabecalho" style="" src="publico/imagens/cabecalho-documentos/cabecalho.jpg?<?php echo microtime();?>" />
             <div class="left_align" style="">
                 Ofício nº/Ano/CEAD -
                 <select id='sigla' name='sigla'>
@@ -22,22 +22,22 @@
                 Alfenas, <?php echo $this->comboDia; ?> de <?php echo $this->comboMes; ?> de <?php echo date("Y"); ?>
             </div>
             <div class="left_align">
-                <input type="text" required id="tratamento" value="<?php echo $this->tratamento; ?>" name="tratamento"  size="15"/><span class="classeExemploOficio"> Ex: Ao Sr.</span>
+                <input type="text" required id="tratamento" value="<?php echo $this->tratamento; ?>" name="tratamento" onkeyup="liberarCadastro()" size="15"/><span class="classeExemploOficio"> Ex: Ao Sr.</span>
             </div>
             <div class="left_align">
-                <input type="text" required id="destino" value="<?php echo $this->destino; ?>" name="destino"  size="30"/><span class="classeExemploOficio"> Ex: Paulo Márcio de Faria e Silva</span>
+                <input type="text" required id="destino" value="<?php echo $this->destino; ?>" name="destino" onkeyup="liberarCadastro()" size="30"/><span class="classeExemploOficio"> Ex: Paulo Márcio de Faria e Silva</span>
             </div>
             <div  class="left_align">
-                <input type="text" required id="cargo_destino"  value="<?php echo $this->cargo_destino; ?>"  name="cargo_destino"  size="40"/><span class="classeExemploOficio"> Ex: Reitor da Universidade Federal de Alfenas</span>
+                <input type="text" required id="cargo_destino"  value="<?php echo $this->cargo_destino; ?>"  name="cargo_destino" onkeyup="liberarCadastro()" size="40"/><span class="classeExemploOficio"> Ex: Reitor da Universidade Federal de Alfenas</span>
             </div>
             <div id="assunto_div" class="left_align">
-                Assunto: <input type="text" required id="assunto" value="<?php echo $this->assunto; ?>"  name="assunto" size="50"/><span class="classeExemploOficio"> Ex: Indicação de nome para... </span>
+                Assunto: <input type="text" required id="assunto" value="<?php echo $this->assunto; ?>"  name="assunto" onkeyup="liberarCadastro()" size="50"/><span class="classeExemploOficio"> Ex: Indicação de nome para... </span>
             </div>
             <div class="left_align">
-                <input type="text" required id="referencia" value="<?php echo $this->referencia; ?>"  name="referencia"  size="25"/><span class="classeExemploOficio"> Ex: Magnífico Reitor, </span>
+                <input type="text" required id="referencia" value="<?php echo $this->referencia; ?>"  name="referencia" onkeyup="liberarCadastro()" size="25"/><span class="classeExemploOficio"> Ex: Magnífico Reitor, </span>
             </div>
             <div id="corpo_div" >
-                <textarea style="" id="corpo" value=""  name="corpo" ><?php echo $this->corpo; ?></textarea>
+                <textarea style="" id="corpo" value="" name="corpo" ><?php echo $this->corpo; ?></textarea>
             </div>
             <div style="margin-bottom: 80px;" class="left_align">
                 Atenciosamente,
@@ -59,20 +59,33 @@
     <input type="hidden" name="remetente" id="remetente" value="<?php echo($this->remetente); ?>"/>
     <input type="hidden" name="cargo_remetente" id="cargo_remetente" value="<?php echo($this->cargo_remetente); ?>"/>
     <input type="hidden" name="i_sigla" id="i_sigla" value="<?php echo($this->sigla); ?>"/>
-</form>
+    <input type="hidden" name="i_idoficio" id="i_idoficio" value="<?php echo $this->idoficio; ?>"/>
+    <input type="hidden" name="nada" id="acao" value="<?php echo $this->action; ?>"/>
+</form>           
 
 <script type="text/javascript">
-
     $(document).ready(function() {
         FormDocumentos.instancia.iniciarForm();
-
-
         formularioAjax(undefined, undefined, null, function(i) {
-            if (i.id != undefined)
+            if (i.documento != undefined) {
                 window.open('index.php?c=documentos&a=visualizarOficio&idv=' + i.id, '_blank');
-            document.paginaAlterada = false;
-            document.location.hash = '#!documentos|gerarOficio';
-        });
+                $('[type=reset]').click();
+                if (document.location.hash != '#!documentos|oficio') {
+                    document.ignorarHashChange = true;
+                    document.location.hash = '#!documentos|oficio';
+                }
+                $('#acao').val('gerar');
+                $('#i_idoficio').val('<?php echo fnEncrypt(-1); ?>');
+            } else {
+                if ($('#acao').val() != "editar") {
+                    document.ignorarHashChange = true;
+                    document.location.hash = '#!documentos|oficio&id=' + i.id;
+                    $('#acao').val('editar');
+                    $('#i_idoficio').val(i.id);
+                }
+            }
+        }, null, false);
+
         $('#b_gerar').on('click', function() {
             bloqueia();
             if (confirm('Atenção, o ofício será gerado e registrado permanentemente! Tem certeza?')) {
@@ -84,18 +97,18 @@
         $('#b_salvar').on('click', function() {
             bloqueia();
             if (confirm('Atenção, o rascunho do ofício será salvo! Tem certeza?')) {
+
+                concatenarAssinaturas();
                 $('#i_numOficio').val('-1');
                 $('#ajaxForm').submit();
-
             }
-
             desbloqueia();
         });
 
-        liberarCadastro();
         var sigla = $("#i_sigla");
         $("#sigla").val(sigla.val());
+        liberarCadastro();
+
     });
 
 </script>
-

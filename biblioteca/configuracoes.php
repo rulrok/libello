@@ -31,9 +31,10 @@ if (!defined("APP_CONFIGS")) {
     define('DATABASE_SERVER_IP', "127.0.0.1");
     define('DATABASE_SERVER_PORT', "3306");
     define('DATABASE_SERVER_DBNAME', "libello");
+    define('DATABASE_SERVER_PORT', "3307");
+    define('DATABASE_SERVER_DBNAME', "novo_controle_cead");
     define('DATABASE_SERVER_USER', "root");
     define('DATABASE_SERVER_PASSWORD', "13_66_18");
-
     define('SMTP_SERVER_IP', "200.131.224.99");
     define('SMTP_SERVER_PORT', "587");
     define('SMTP_SERVER_PASSWORD', "CeAd-N000");
