@@ -1,8 +1,8 @@
 <?php
 
-include APP_DIR . "modelo/Mensagem.php";
+include_once APP_DIR . "modelo/Mensagem.php";
 require_once APP_DIR . "modelo/vo/Viagem.php";
-include APP_DIR . "visao/verificadorFormularioAjax.php";
+include_once APP_DIR . "visao/verificadorFormularioAjax.php";
 
 class verificarnovaviagem extends verificadorFormularioAjax {
 

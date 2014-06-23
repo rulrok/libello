@@ -31,6 +31,7 @@
 
 <script>
     $(document).ready(function() {
+        $("#dataBaixa").datepicker();
         var elem = $("#chars");
         $("#observacoes").limiter(1000, elem);
         var dataMinima = "<?php echo $this->dataMinima; ?>";

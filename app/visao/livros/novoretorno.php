@@ -32,6 +32,7 @@
 
 <script>
     $(document).ready(function() {
+        $("#dataRetorno").datepicker();
         var dataMinima = "<?php echo $this->dataSaida; ?>";
         dataMinima = dataMinima.split("/");
         dataMinima = dataMinima[1] + "/" + dataMinima[0] + "/" + dataMinima[2];

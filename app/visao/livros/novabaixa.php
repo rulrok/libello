@@ -25,12 +25,13 @@
             <div id="chars">1000</div>
         </div>
     </fieldset>
-    <button disabled class="btn btn-large btn-success btn-primary btn-right" type="submit" disabled>Cadastrar</button>
+    <button disabled class="btn btn-large btn-success btn-primary btn-right" type="submit" >Cadastrar</button>
 
 </form>
 
 <script>
     $(document).ready(function() {
+        $("#dataBaixa").datepicker();
         var elem = $("#chars");
         $("#observacoes").limiter(1000, elem);
         var dataMinima = "<?php echo $this->dataMinima; ?>";
@@ -42,16 +43,29 @@
         });
         $(".line input").popover({trigger: 'focus', container: 'body'});
         $(".line textarea").popover({trigger: 'focus', container: 'body'});
-        formularioAjax("ajaxForm", undefined,
-                function() {
-                    $("input[type=submit]").prop("disabled", true);
-                },
-                function() {
-                    setTimeout(function() {
-                        document.paginaAlterada = false;
-                        history.back();
-                    }, 1000);
-                }
+//        formularioAjax("ajaxForm", undefined,
+//                function() {
+//                    $("input[type=submit]").prop("disabled", true);
+//                },
+//                function() {
+//                    setTimeout(function() {
+//                        document.paginaAlterada = false;
+//                        history.back();
+//                    }, 1000);
+//                }
+//        );
+        formularioAjax({
+            idFormulario: "ajaxForm",
+            successFn: function() {
+                setTimeout(function() {
+                    document.paginaAlterada = false;
+                    history.back();
+                }, 1000);
+            },
+            completeFn: function() {
+                $("button[type=submit]").prop("disabled", true);
+            }}
+
         );
         varrerCampos();
     });
