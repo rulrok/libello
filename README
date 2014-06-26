@@ -1,0 +1,574 @@
+    |)[-_\~[-|\|\/()|_\/||)() |^()/? /?[-|_|[-|_ /?/\|\/|()_\~ /?|]3[-|/?() 
+##################################   README  ###################################
+
+ ██████╗ ██████╗  ██████╗   ██╗     ██╗██████╗ ███████╗██╗     ██╗      ██████╗ 
+██╔═══██╗██╔══██╗██╔════╝   ██║     ██║██╔══██╗██╔════╝██║     ██║     ██╔═══██╗
+██║   ██║██████╔╝██║  ███╗  ██║     ██║██████╔╝█████╗  ██║     ██║     ██║   ██║
+██║   ██║██╔══██╗██║   ██║  ██║     ██║██╔══██╗██╔══╝  ██║     ██║     ██║   ██║
+╚██████╔╝██║  ██║╚██████╔╝  ███████╗██║██████╔╝███████╗███████╗███████╗╚██████╔╝
+ ╚═════╝ ╚═╝  ╚═╝ ╚═════╝   ╚══════╝╚═╝╚═════╝ ╚══════╝╚══════╝╚══════╝ ╚═════╝ 
+                                                                                  
+
+################################################################################
+    |)[-_\~[-|\|\/()|_\/||)() |^()/? /?[-|_|[-|_ /?/\|\/|()_\~ /?|]3[-|/?() 
+
+================================================================================
+    0. Estrutura do documento
+================================================================================
+
+    1.      O sistema
+     1.1.   O fluxo do MVC a cada requisição
+    2.      Requisitos
+    3.      Instalação
+    4.      O arquivo de configuração
+    5.      Tipos de arquivos permitidos para a galeria de imagens
+    6.      Protegendo arquivos de chamadas diretas
+    7.      Colocando o sistema em modo de manutenção
+
+================================================================================
+    1. O sistema
+================================================================================
+
+    O sistema orgLibello (referenciado apenas como Libello, que significa 'caderneta'
+em latim) foi desenvolvido com tecnologia PHP utilizando MySQL para a gestão de 
+informações diversas (por isso o nome derivado de caderneta).
+    Foi desenvolvido e testado com Apache2 e Nginx rodando corretamente em ambos
+
+    Foi construído sobre uma forma simplificada de MVC e apresenta a seguinte 
+estrutura de arquivos, uma breve explicação dos arquivos mais importantes:
+
+    ( Reticências indicam que existem outros arquivos no diretório )
+
+-libello/
+        |---app/    * Diretório que contém todas as páginas e lógicas de negócios do portal
+        |   |
+        |   |---Modelo/         * Queries ao banco, geração de opções para componentes HTML e etc...
+        |   |   |...
+        |   |
+        |   |---Visao/          * Páginas que serão visualizadas pelos usuários
+        |   |   |...
+        |   |
+        |   |---Controlador/    * Tratam as chamadas das páginas feitas através do portal
+        |   |   |...
+        |   |
+        |---biblioteca/
+        |   |
+        |   |---seguranca/
+        |   |   |
+        |   |   |---verificarChamada.php    * Protege arquivos de serem chamados diretamente
+        |   |   |---seguranca.php           * Rotinas principais de gerência da sessão do usuário e etc
+        |   |   |---criptografia.php        * Funções para codificar e decodificar valores
+        |   |   |   ...
+        |   |   
+        |   |---configuracoes.php   * Arquivo de configurações principal. Cada opção será explicada posteriormente
+        |   |---cron.php            * Arquivo para executar tarefas de manutenção como limpeza da pasta temporária e tabelas do banco
+        |   |   ...
+        |
+        |---privado/            * Pasta que deve ser protegida ao acesso dos usuários pelo servidor web
+        |   |
+        |   |---galerias/       * Repositório para as imagens enviadas pelo portal. Cada usuário possuirá uma pasta dentro desta.
+        |   |---instalacao/     * Arquivos utilizados para poder configurar sua instalação (manualmente)
+        |   |   |
+        |   |   |---configuracao_apache     * Regras para o servidor para proteger o diretório privado
+        |   |   |---banco_dados.sql         * Dump limpo do banco para ser importado em uma base de dados MySQL
+        |   |   
+        |   |---temp/               * Pasta de arquivos temporários de uso geral pela aplicação
+        |   |---php-error.log       * Log de eventos gerais do sistema, como erros ou tentativas de burlar o sistema por parte dos usuários
+        |
+        |---publico/                * Pasta onde estarão os arquivos de imagens do portal, códigos JavaScript e folhas de estilo CSS
+        |   ...
+        |
+        |---no-js.php       * Página a ser exibida automaticamente para usuários com o JavaScript desabilitados
+        |   ...
+    
+
+        Note que a arquitetura do código não segue exatamente como um MVC deve-se
+    comportar. Atualmente a visão não é atualizada automaticamente quando o modelo
+    muda. O MVC utilizado aqui então está mais relacionado a organização do código
+    em suas respectivas pastas.
+
+================================================================================
+     1.1 O fluxo do MVC a cada requisição
+================================================================================
+
+        Como dito antes, é utilizado uma estrutura simples de MVC. Abaixo, uma
+    explicação do fluxo para que uma página seja carregada
+
+        As chamadas às páginas são direcionadas ao arquivo index.php localizado
+    no diretório raiz da aplicação. Dois parâmetros GET são fundamentais para
+    a requisição de uma página: o parâmetro 'c' e o perâmetro 'a'.
+
+        'c' -   Nome do controlador
+        'a' -   Ação desejada pelo controlador
+
+        Um link de chamada fica na seguinte estrutura:
+
+        Ex. 1)  /index.php?c=algumControlador&a=algumaAcao
+
+    * OBS: Na barra de endereços o link é exibida de uma forma um pouco mais bonita,
+    sendo possível uma tradução 1:1 entre elas
+
+        Um link na forma enxuta
+        Ex. 2)  /#!algumControlador|algumaAcao
+
+        Isso é necessário porque as páginas são carregadas por AJAX e é mantido
+    um histórico de navegação para não perder as funções nativas de 'avançar/voltar'
+    do navegador. A tradução do exemplo 2 é direta para o exemplo 1. Outros
+    parâmetros GET podem ser passados pelo link
+
+        Ex. 3)  /!#algumControlador|algumaAcao&param1=algumParametroGet&param2=...
+
+    O fluxo inicia-se portanto no arquivo index.php (diretório raiz) que é bem
+    simples:
+
+    <?php
+        ...
+    require_once 'biblioteca/Mvc/CarregadorAutomatico.php';
+    require_once 'biblioteca/Mvc/Mvc.php';
+        ...
+    CarregadorAutomatico::registrar();
+    Mvc::pegarInstancia()->rodar();
+        ...
+    ?>
+
+        Outros pequenos trechos que auxiliam em outras verificações podem ser 
+    adicionados ao arquivo, mas para grandes verificações não é o objetivo do arquivo.
+
+        O próximo passo é a função rodar() localizada na classe 'Mvc' (que é um
+    objeto singleton). Dentro dessa função, basicamente são recuperados os dois
+    valores 'c' e 'a' passados por GET. Com essas duas informações, são então
+    inferidos o nome da classe do controlador. O nome será sempre formado pelo
+    padrão: Controlador[Nomedocontrolador]
+
+        Ex.     index.php?c=usuarios&a=novo
+
+        Nesse caso, será verificado se existe a classe 'ControladorUsuarios'. Caso
+    não exista essa classe, uma página de erro 404 será retornada ao usuário. 
+
+    <?php
+            ...
+        //verifica se a classe existe
+        if (!class_exists($nomeClasseControlador)) {
+            require APP_DIR . 'visao/404.php';
+            return false;
+        }
+            ...
+    ?>
+
+        Caso a ação exista, é em seguida verificado se ela possui um método com
+    o nome correspondente ao nome da ação. Igualmente, caso o método não exista,
+    uma página de erro 404 será retornada. O nome do método será sempre formado
+    pelo padrão: acao[Nomedaacao]
+
+
+    <?php
+            ...
+        $controladorObjeto = new $nomeClasseControlador;
+        //verifica se o metodo existe
+        if (!method_exists($controladorObjeto, $nomeAcao)) {
+            require APP_DIR . 'visao/404.php';
+            return false;
+        }
+            ...
+    ?>
+
+        Existindo a classe correta com o método adequado, ele é invocado.
+
+        Supondo a chamada index.php?c=exemplo&a=teste, nosso controlador seria
+    algo nesse sentido:
+
+    <?php
+            ...
+        class ControladorExemplo extends Controlador {
+            ...
+            public function acaoTeste(){
+                [$this->visao->acessoMinimo = Permissao::[tipoPermissao];]
+                    ...
+                $this->renderizar();
+            }
+            ...
+        }
+    ?>
+
+        A primeira linha apresentada é opcional. Deve ser utilizada quando for
+    necessário proteger o acesso à ferramente baseado na permissão do usuário
+    quanto a ferramenta. Isso é necessário pois, apesar do usuário não ter acesso
+    a uma ferramenta, ele poderia obter o link com alguém que possui permissões
+    e acessar sem que o sistema percebesse.
+        Caso a linha não seja declarada, qualquer um que digitar o link apropriado
+    poderá acessar o método.
+
+        Dentro dessas funções, podem ser atribuídas variáveis para serem utilizadas
+    nas páginas finais apresentadas para os usuários, basta apesar atribuí-las
+    da seguinte forma (dentro dos métodos):
+
+        $this->visao->novaVariavel = algumacoisa;
+
+        Ao final das ações necessárias, ao final do arquivo deve ser invocado o
+    método 'renderizar' da classe Controlador (classe pai).
+
+        $this->renderizar();
+
+        Dentro da classe controlador, teremos o método renderizar declarado da 
+    seguinte maneira:
+
+    <?php
+        abstract class Controlador {
+
+        protected $visao;
+                ...
+            public function renderizar() {
+                $diretorio = strtolower(Mvc::pegarInstancia()->pegarControlador());
+                $arquivo = strtolower(Mvc::pegarInstancia()->pegarAcao()) . ".php";
+                $this->visao->renderizar($diretorio, $arquivo);
+            }
+                ...
+        }
+    ?>
+    
+        Basicamente o que está acontecendo é que ele procura pelo arquivo que
+    possui o mesmo nome que o nome da ação invocada (sem a palavra 'acao') dentro
+    do diretório adequado através do método 'renderizar' da classe Visao.
+
+        A Classe Visao é declarada da seguinte forma:
+
+    <?php
+        class Visao {
+
+            public function renderizar($diretorio, $arquivo) {
+                $local = array('app/visao/', 'app/modelo/ferramentas/');
+                if (isset($this->acessoMinimo)) {
+                    ... //Verificações necessárias de segurança
+                }
+
+                $encontrou = false;
+                for ($i = 0; $i < sizeof($local); $i++) {
+                    if (file_exists(ROOT . $local[$i] . $diretorio . '/' . $arquivo)) {
+                        require ROOT . $local[$i] . $diretorio . '/' . $arquivo;
+                        $encontrou = true;
+                        break;
+                    }
+                }
+
+                if (!$encontrou) {
+                    require APP_DIR . "visao/paginaConstrucao.php";
+                }
+            }
+        }
+    ?>
+
+        Há o vetor $local onde estão os diretórios onde deverá ser buscado o
+    arquivo final apresentado ao usuário. Caso o arquivo não exista, uma página
+    com uma mensagem 'página em construção' será exibida.
+
+        Dentro do arquivo que será incluído pela Visao, as variáveis declaradas
+    dentro do controlador podem ser acessadas da seguinte maneira:
+
+        $this->novaVariavel (da mesma forma que foi declarado no controlador)
+
+================================================================================
+    2. Requisitos
+================================================================================
+
+    PHP
+
+        * Versão 5.4.4 ou superior
+        * Driver PDO/Mysql - http://br2.php.net/manual/en/pdo.installation.php
+        * Módulo php5-mcrypt - http://br2.php.net/manual/en/mcrypt.installation.php
+
+    MySQL
+
+        * Versão 5.5 ou superior
+
+    Apache ou Nginx recentes
+
+
+================================================================================
+    3. Instalação
+================================================================================
+
+    O processo de instalação deve ser feita de forma manual atualmente.
+    No diretório 'libello/privado/instalacao' você encontrará os arquivos
+necessários para configurar seu ambiente para o Libello, configurando uma base
+de dados inicial mínima para o funcionamento do portal.
+
+    Arquivo 'banco_dados.sql'
+        Um dump SQL com um usuário padrão configurado como administrador.
+        Usuário: admin@cead.com (email fictício)
+          Senha: mudar123
+
+
+    * Observação sobre o Banco de imagens
+
+        Outra observação importante que pode não ser tão óbvia é sobre a tabela
+    imagem_descritor que DEVE conter a seguinte linha inserida para o correto
+    funcionamento do módulo de galeria de imagens:
+    
+
+    |  idDescritor  |   nome   |   pai   |   nivel   | rotulo  | qtdFilhos |
+    |       0       |   'NIL'  |   NULL  |     0     |    0    |     0     |
+
+
+    Arquivo 'configuracao_apache'
+        Regras mínimas para serem adicionadas ao apache para proteger o diretório
+        'privado'.
+
+    Arquivo 'configuracao_nginx'
+        Semelhante ao arquivo acima, mas para o Nginx
+
+    Geralmente configura-se as permissão para o diretório do Libello dentro da
+pasta do servidor do web com o usuário e grupo como www-data (ou o nome de usuário
+do ser serviço) com as permissões padrões dos arquivos.
+    A pasta 'privado' precisa ser gravável pelo php, ou as imagens não poderão
+ser enviadas ao portal. Uma mensagem de erro irá alertar qualquer administrador
+que esteja autenticado no site, com as respectivas mensagens de erro logo na
+parte superior do portal. Outros usuáriosnão visualizam essas mensagens.
+
+    Concluída a instalação, deve-se remover, renomear ou retirar as permissões
+da pasta 'instalacao' para que o servidor web não os acesse.
+    Essas configurações de permissões devem ser verificadas pelo administrador
+do seu servidor.
+
+================================================================================
+    4. O arquivo de configuração
+================================================================================
+
+    A seguir, uma breve explicação sobre as constantes definidas pelo arquivo
+configuracoes.php
+    Note que nesse arquivo estão expostas senhas do sistema, por isso, certifique-se
+de que as permissões deste arquivo façam com que apenas o servidor WEB possa ler
+o arquivo e mais nenhum outro usuário do seu sistema.
+
+    * APP_NAME
+                    Nome do aplicativo que será exibido como título e em todas
+                as outras menções ao mesmo no portal. Recomenda-se que o
+                nome inicie-se com uma letra maiúscula.
+                Uma observação: O título da página HTML é controlado pela função
+                mudarTitulo() localizado no script 'mainScript.js' e deverá ser 
+                modificado manualmente nesse arquivo para alterar o título das 
+                páginas no navegador.
+
+    * APP_DESCRIPTION
+                    Nome utilizado para subtítulo do aplicativo
+
+    * APP_COPYRIGHT
+                    Mensagem de copyright para ser exibida no rodapé da página
+                de login/recuperar senha e em demais outros lugares que venha a
+                ser necessário.
+
+    * APP_VERSION
+                    Versão do aplicativo. Atualmente é exibido discretamente no
+                rodapé da página após autenticado.
+
+    * APP_ADMIN_EMAIL   7
+                    Email do administrador do servidor. Atualmente não é exibido
+                em nenhum momento. Por padrão, o email cadastrado no PHP
+                é utilizado.
+
+    * APP_SUPPORT_EMAIL
+                    Email que será exibido em rodapés, mensagens de erro,
+                algumas páginas onde for pertinete.
+
+    * WEB_SERVER_FOLDER 
+                    Nome do diretório que conterá a aplicação (Libello).
+                O diretório que ficará dentro da pasta escutada pelo servidor web
+                (geralmente /var/www).
+                Se o portal está configurado no diretório: /var/www/bi,
+                o valor para essa variável será 'bi' neste caso.
+
+    * WEB_SERVER_ADDRESS
+                    Endereço pelo qual o servidor deverá ser acessado.
+                Caso o usuário acesso diretamente pelo IP ao invés do nome DNS,
+                ele será redirecionado para o endereço dessa variável.
+
+    * DATABASE_SERVER_IP
+                    Endereço do banco de dados (não necessariamente um IP,
+                'localhost' também será aceito.
+
+    * DATABASE_SERVER_PORT
+                    Porta onde o banco de dados atualmente escut no endereço
+                configurado por DATABASE_SERVER_IP
+
+    * DATABASE_SERVER_DBNAME
+                    Nome do database (schema) contendo a base de dados da aplicação.
+                Por padrão esse valor será 'libello'
+
+    * DATABASE_SERVER_USER
+                    Usuário do banco de dados
+
+    * DATABASE_SERVER_PASSWORD
+                    Senha para acesso ao banco de dados
+
+    * SMTP_SERVER_IP
+                    Endereço do servidor de emails. Sem essa configuração, não
+                será possível mandar emails de recuperação de senha para os
+                usuários.
+
+    * SMTP_SERVER_PORT
+                    Porta onde o servidor de emails escuta
+
+    * SMTP_SERVER_PASSWORD
+                    Senha do servidor SMTP
+
+    * SMTP_SERVER_EMAIL
+                    Email remetente exibida na mensagem recebida pelos usuários
+
+    * SMTP_SEND_FROM
+                    Nome exibido como remetente da mensagem
+
+    * SMTP_SECURE_MODE
+                    Modo de autenticação. TLS e SSL são aceitos
+
+    * SMTP_CHARSET
+                    Charset utilizado para codificar os emails
+
+    * APP_TIME_ZONE
+                    Timezone. America/Sao_Paulo por padrão
+
+        ! OBSERVAÇÃO:
+                Todas as variáveis de caminhos relativos DEVEM terminar com '/'
+                São as variáveis no formato APP_(nome)_DIR
+                As variáveis de caminhos absolutos por sua vez, apenas aplicam o
+            caminho para a pasta do servidor web ao começo do caminho relativo
+                São essas as variáveis no formato APP_(nome)_ABSOLUTE_DIR
+                Essas variáveis não precisam ser configuradas, pois elas apenas
+            dependem das variáveis de caminho relativo, que devem ser configuradas
+
+    * ROOT
+                    Caminho absoluto para a pasta escutada pelo servidor web
+                que contém o portal instalado
+
+    * APP_DIR
+                    Diretório que contém dentro as pastas que compõe o MVC da
+                aplicação, i.g, controlador, modelo e visao
+
+    * Demais variáveis do tipo APP_(nome)[_ABSOLUTE]_DIR
+                    Todas essas variáveis dependem da variável ROOT
+                    Serão explicadas apenas as de caminhos relativos
+
+    * APP_LIBRARY_DIR
+                    Diretório da biblioteca da aplicação, que contém funções de
+                segurança, verificação de login, bibliotecas de terceiros e outras
+                partes fundamentais para a aplicação
+
+    * APP_PRIVATE_DIR
+                    Diretório de acesso restrito aos usuários externos que
+                navegam pelo portal através do navegador
+
+    * APP_GALLERY_DIR
+                    Diretório onde serão armazenadas as galerias dos usuários
+                com suas imagens enviadas ao sistema
+
+    * APP_TEMP_DIR
+                    Diretório de propósito geral para arquivos temporários
+
+    * APP_MAX_UPLOAD_SIZE
+                    Tamanho máximo (em bytes) permitido para uploads ao servidor
+                Essa variável deve ser menor ou igual ao parâmetro 'upload_max_filesize'
+                definido no arquivo php.ini do seu servidor web
+
+    * SECRET
+                    Qualquer string longa para ser usada como segredo para
+                criptografar/descriptografar informações no sistema
+                    Links com passagem de parâmetro por GET as vezes podem
+                mostrar informações que causariam algumas brechas de segurança,
+                permitindo que ele colocasse outros valores desejados. Tal criptografia
+                gera valores do tipo: 7Di134wVtIdZx7l5Swi7MfcNP15X2aVbp+MlkvjE2FQ=
+                    Usuários do site não devem conhecer o valor de SECRET pois
+                poderiam reverter esses valores codificados aos seus originais
+
+    Ao final do arquivo, existem ainda quatro linhas de arquivos adicionais.
+    As duas primeiras devem permanecer comentadas para ambientes de produção e
+as outras duas configuram o local para armazenamento de mensagens geradas pelo
+PHP. Tais mensagens podem ser exceções lançadas pelo programa, tentativas de
+acessos indevidos ou outras tentativas de obter privilégios no portal por parte
+dos usuários.
+
+================================================================================
+    5. Tipos de arquivos permitidos para a galeria de imagens
+================================================================================
+
+        Os tipos de arquivos permitidos para envio através do site atualmente são:
+
+        jpg|jpeg|png    -   svg|cdr|fh|ai|wmd|dwg|dwf|3ds|xcf
+
+        São os tipos básicos de arquivos de imagens e formatos vetorizados.
+
+        Para alterar os tipos permitidos pela aplicação será necessário editar
+    cinco arquivos:
+
+    * libello/app/modelo/ferramentas/imagens/verificarnova.php
+
+    Próximo da linha 27 haverá dois vetores que irão conter as extensões aceitas
+    pelo servidor quando o usuário tentar enviar sua imagem pela tela de envio.
+
+    * libello/app/modelo/ferramentas/imagens/baixarimagem.php
+
+        Editar de forma a mandar um cabeçalho no formato
+    "Content-type: image/<formato_imagem>"
+
+    * libello/app/modelo/ferramentas/imagens/baixarvetorial.php
+
+        Editar de forma a mandar o cabeçalho apropriado de acordo com o tipo do
+    arquivo vetorial
+
+    * libello/app/visao/imagens/novaimagem.php
+
+        Próximo da linha 90 haverá os dois elementos <input>, uma para a imagem e
+    outro para o arquivo vetorial. Deve-se alterar os valores do atributo 'accept'
+    para que o navegador ao abrir uma janela de seleção de arquivos, permita o
+    usuário selecionar um arquivo para enviar. Isso é apenas uma comodidade para
+    que o usuário selecione apenas o que seja apropriado, mas pode ser burlado
+    caso o usuário edite o DOM do elemento.
+
+    * Arquivo de configurações do servidor apache ou nginx
+
+        Deve-se alterar a diretiva 'FilesMatch' para refletir os novos padrões 
+    que se deseja configurar
+
+================================================================================
+    6. Protegendo arquivos de chamadas diretas
+================================================================================
+
+        As páginas de conteúdo do portal são carregadas via AJAX
+        Quando uma página da visão é solicitada pelo MVC, é possível que a
+    requisição esteja sendo feita de duas maneiras:
+
+        1) O usuário está seguindo os links de navegação do portal
+
+        2) O usuário digita a url diretamente no navegador, como por exemplo:
+
+            index.php?c=imagens&a=novaimagem
+
+        Para proteger as páginas desse tipo de chamada, você pode incluir as
+    seguintes linhas de código:
+
+        <?php
+            include_once APP_LIBRARY_DIR . 'seguranca/verificarChamada.php';
+            verificarChamada();
+        ?>
+
+================================================================================
+    7. Colocando o sistema em modo de manutenção
+================================================================================
+
+        Quando é necessário barrar o uso por parte dos usuários ao sistema,
+    por qualquer motivo ou problema, há a opção (apenas para administradores)
+    de ativar o modo de manutenção. Quando ativado, nenhum usuário consiguirá
+    acessar o site, os atuais usuários não administradores também terão suas
+    sessões no portal encerradas e apenas os administradores continuarão tendo
+    acesso aos recursos do sistema.
+
+        Há duas formas de ativar o modo de manutenção
+
+        1) Pela interface do portal, na caixa de ações localizada no canto
+    direito superior da página, haverá um botão com a ação correspondente ao
+    estado do sistema (em manutenção ou não) e ao clicar o portal será 
+    recarregado modificando o estado
+
+        2) Manualmente, criando um arquivo em branco no diretório raiz da
+    aplicação com o nome 'manutencao.php'. Removendo esse arquivo, o portal
+    deixará o modo de manutenção
+
+################################################################################
+    |)[-_\~[-|\|\/()|_\/||)() |^()/? /?[-|_|[-|_ /?/\|\/|()_\~ /?|]3[-|/?()
