@@ -292,11 +292,21 @@ estrutura de arquivos, uma breve explicação dos arquivos mais importantes:
 necessários para configurar seu ambiente para o Libello, configurando uma base
 de dados inicial mínima para o funcionamento do portal.
 
-    Arquivo 'banco_dados.sql'
+    - Arquivo 'banco_dados.sql'
         Um dump SQL com um usuário padrão configurado como administrador.
         Usuário: admin@cead.com (email fictício)
-          Senha: mudar123
+          Senha: 123
 
+    Por questões de padronização, antes de subir o arquivo 'banco_dados.sql'
+para o BD local ou até mesmo para o BD do servidor, deve-se criar um usuário com
+o nome 'libello_cead' e senha '!l1b3ll0_c34d!' e após isto, criar um schema com 
+o nome 'libello' e dentro, importar o arquivo de dump 'banco_dados.sql'.
+Atente-se às aspas, que NÃO fazem parte do usuário e nem da senha.
+
+    Também por questões de padronização, deve-se colocar os arquivos deste
+sistema dentro de uma pasta denominada 'libello', tanto no diretório de origem,
+quanto no diretório de cópia (/var/www/ ou /var/www/html ou C:/xampp/htdocs ou
+Applications/MAMP/htdocs ou outro diretório web do seu Sistema Operacional).
 
     * Observação sobre o Banco de imagens
 
@@ -309,25 +319,31 @@ de dados inicial mínima para o funcionamento do portal.
     |       0       |   'NIL'  |   NULL  |     0     |    0    |     0     |
 
 
-    Arquivo 'configuracao_apache'
+    - Arquivo 'configuracao_apache'
         Regras mínimas para serem adicionadas ao apache para proteger o diretório
         'privado'.
 
-    Arquivo 'configuracao_nginx'
+    - Arquivo 'configuracao_nginx'
         Semelhante ao arquivo acima, mas para o Nginx
 
-    Geralmente configura-se as permissão para o diretório do Libello dentro da
-pasta do servidor do web com o usuário e grupo como www-data (ou o nome de usuário
-do ser serviço) com as permissões padrões dos arquivos.
-    A pasta 'privado' precisa ser gravável pelo php, ou as imagens não poderão
-ser enviadas ao portal. Uma mensagem de erro irá alertar qualquer administrador
-que esteja autenticado no site, com as respectivas mensagens de erro logo na
-parte superior do portal. Outros usuáriosnão visualizam essas mensagens.
+
+
+    Deve-se, por fim, configurar as permissões do diretório 'libello', dentro
+da pasta do servidor web, com usuário e grupo como 'www-data', que representa
+o usuário padrão do serviço web 'nginx' e 'apache', ou então, com o padrão do 
+serviço web que está sendo usado.
+
+    A pasta 'privado' precisa ser gravável pelo php (por isto, deve-se efetuar a
+modificação descrita acima), ou as imagens não poderão ser enviadas ao portal.
+Uma mensagem de erro irá alertar qualquer administrador que esteja autenticado
+no site, com as respectivas mensagens de erro logo na parte superior do portal.
+Outros usuários não visualizam essas mensagens.
 
     Concluída a instalação, deve-se remover, renomear ou retirar as permissões
 da pasta 'instalacao' para que o servidor web não os acesse.
-    Essas configurações de permissões devem ser verificadas pelo administrador
-do seu servidor.
+
+    Estas configurações de permissões são de suma importancia e devem ser
+verificadas pelo administrador do seu servidor.
 
 ================================================================================
     4. O arquivo de configuração
