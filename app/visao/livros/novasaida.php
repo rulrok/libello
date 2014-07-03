@@ -16,7 +16,9 @@
         <div class="line">
             <label for="polo">Polo de Destino</label>
             <!--<input required type="text" class="input-xlarge" id="destino" name="destino" title="Destino" data-content="A localização para onde o livro está saindo." />-->           
-            <?php echo $this->polos; ?>
+            <select id="polo" name="polo">
+                <?php echo $this->polos; ?>
+            </select>
         </div>
 
         <div class="line">
@@ -28,7 +30,9 @@
             <legend>Responsável</legend>
             <div class="line">
                 <label for="responsavel">Responsável</label>
-                <?php echo $this->responsavel; ?>
+                <select id="responsavel" name="responsavel">
+                    <?php echo $this->responsavel; ?>
+                </select>
             </div>
         </fieldset>
 

@@ -25,7 +25,7 @@
             <div id="chars">1000</div>
         </div>
     </fieldset>
-    <button disabled class="btn btn-large btn-success btn-primary btn-right" type="submit" disabled>Cadastrar</button>
+    <button disabled class="btn btn-large btn-success btn-primary btn-right" type="submit" >Cadastrar</button>
 
 </form>
 
@@ -36,7 +36,7 @@
         var dataMinima = "<?php echo $this->dataMinima; ?>";
         dataMinima = dataMinima.split("/");
         dataMinima = dataMinima[1] + "/" + dataMinima[0] + "/" + dataMinima[2];
-        $("#dataBaixa").datepick({
+        $("#dataBaixa").datepicker({
             dateFormat: 'dd/mm/yyyy',
             minDate: new Date(dataMinima)
         });

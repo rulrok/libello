@@ -142,7 +142,8 @@ class ControladorLivros extends Controlador {
             $this->visao->comboboxPapeis = ComboBoxPapeis::montarTodosPapeis();
             $this->visao->livro = (new livroDAO())->recuperarlivro(fnDecrypt(filter_input(INPUT_GET, 'livroID')));
             $this->visao->livroID = fnEncrypt($this->visao->livro->get_idLivro());
-            $this->visao->responsavel = ComboBoxUsuarios::montarResponsavelViagem();
+//            $this->visao->responsavel = ComboBoxUsuarios::montarResponsavelViagem();
+            $this->visao->responsavel = ComboBoxUsuarios::listarTodosUsuarios();
             $this->visao->polos = ComboBoxPolo::montarTodosOsPolos();
             $this->renderizar();
         } else {

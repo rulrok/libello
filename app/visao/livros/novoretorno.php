@@ -35,7 +35,7 @@
         var dataMinima = "<?php echo $this->dataSaida; ?>";
         dataMinima = dataMinima.split("/");
         dataMinima = dataMinima[1] + "/" + dataMinima[0] + "/" + dataMinima[2];
-        $("#dataRetorno").datepick({
+        $("#dataRetorno").datepicker({
             dateFormat: 'dd/mm/yyyy',
             minDate: new Date(dataMinima)
         });
