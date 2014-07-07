@@ -138,6 +138,7 @@
                                     <a id="ativarManutencao" class="btn btn-small" ><i class="icon-wrench"></i> Ativar manutenção</a>
                                 <?php endif; ?>
                             <?php endif; ?>
+                                    <a class="btn btn-small" href="#!processos|arvoreProcessos"><i class="icon-tasks"></i>Processos</a>
                             <a class="btn btn-small" href="sair.php"><i class="icon-off"></i> Sair</a>
                         </div>
                     </div>
