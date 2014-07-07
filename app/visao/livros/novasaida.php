@@ -58,7 +58,7 @@
                 setTimeout(function() {
                     document.paginaAlterada = false;
                     history.back();
-                }, 1000);
+                }, 5000);
             },
             completeFn: function() {
                 $("button[type=submit]").prop("disabled", true);
