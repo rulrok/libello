@@ -650,7 +650,8 @@ function showPopUp(data, type) {
     $(".popUp").css('color', texto);
     $(".popUp").css('background-color', fundo);
     $(".popUp").css('border-color', borda);
-    $(".popUp").css('left', 480);
+//    $(".popUp").css('left', 480);
+    $(".popUp").css('left', 570);
     $(".popUpContent").append(data);
     $(".popUp").show(200, function() {
         $(".botao_fechar").show(100, function() {
