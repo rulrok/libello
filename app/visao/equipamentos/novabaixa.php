@@ -50,7 +50,7 @@
                     setTimeout(function() {
                         document.paginaAlterada = false;
                         history.back();
-                    }, 1000);
+                    }, 5000);
                 }
         );
         varrerCampos();

@@ -31,9 +31,9 @@ class registrarSaida extends verificadorFormularioAjax {
             $id = $livroDAO->obterUltimoIdInserido();
             $livroDAO->registrarRetorno($id);
             if ($quantidade > 1) {
-                $this->mensagemSucesso("livros retornados");
+                $this->mensagemSucesso("Livros Retornados");
             } else {
-                $this->mensagemSucesso("livro retornado");
+                $this->mensagemSucesso("Livro Retornado");
             }
         } else {
             $this->mensagemErro("Erro ao cadastrar no banco")->set_status(Mensagem::ERRO);

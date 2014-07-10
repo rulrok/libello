@@ -1,13 +1,12 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.6
+-- version 4.1.6
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 28, 2014 at 11:38 AM
--- Server version: 5.5.33
--- PHP Version: 5.5.3
+-- Tempo de geração: 09/07/2014 às 11:00
+-- Versão do servidor: 5.5.35-0ubuntu0.12.10.2
+-- Versão do PHP: 5.4.6-1ubuntu1.8
 
-SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
@@ -18,12 +17,12 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `novo_controle_cead`
+-- Banco de dados: `libello`
 --
 
 DELIMITER $$
 --
--- Functions
+-- Funções
 --
 CREATE DEFINER=`root`@`localhost` FUNCTION `getNameInitials`(`fullname` VARCHAR(70), `idUsuarioAtual` INT(11)) RETURNS varchar(70) CHARSET utf8 COLLATE utf8_unicode_ci
     DETERMINISTIC
@@ -118,17 +117,17 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cursospolos_area`
+-- Estrutura para tabela `cursospolos_area`
 --
 
-CREATE TABLE `cursospolos_area` (
+CREATE TABLE IF NOT EXISTS `cursospolos_area` (
   `idArea` int(11) NOT NULL AUTO_INCREMENT,
   `nomeArea` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`idArea`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
 
 --
--- Dumping data for table `cursospolos_area`
+-- Fazendo dump de dados para tabela `cursospolos_area`
 --
 
 INSERT INTO `cursospolos_area` (`idArea`, `nomeArea`) VALUES
@@ -145,10 +144,10 @@ INSERT INTO `cursospolos_area` (`idArea`, `nomeArea`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cursospolos_curso`
+-- Estrutura para tabela `cursospolos_curso`
 --
 
-CREATE TABLE `cursospolos_curso` (
+CREATE TABLE IF NOT EXISTS `cursospolos_curso` (
   `idCurso` int(11) NOT NULL AUTO_INCREMENT,
   `nomeCurso` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
   `area` int(11) DEFAULT NULL,
@@ -159,7 +158,7 @@ CREATE TABLE `cursospolos_curso` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=51 ;
 
 --
--- Dumping data for table `cursospolos_curso`
+-- Fazendo dump de dados para tabela `cursospolos_curso`
 --
 
 INSERT INTO `cursospolos_curso` (`idCurso`, `nomeCurso`, `area`, `tipo`) VALUES
@@ -168,10 +167,10 @@ INSERT INTO `cursospolos_curso` (`idCurso`, `nomeCurso`, `area`, `tipo`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cursospolos_polo`
+-- Estrutura para tabela `cursospolos_polo`
 --
 
-CREATE TABLE `cursospolos_polo` (
+CREATE TABLE IF NOT EXISTS `cursospolos_polo` (
   `idPolo` int(11) NOT NULL AUTO_INCREMENT,
   `nomePolo` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
   `cidade` varchar(45) CHARACTER SET latin1 NOT NULL,
@@ -180,7 +179,7 @@ CREATE TABLE `cursospolos_polo` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
 
 --
--- Dumping data for table `cursospolos_polo`
+-- Fazendo dump de dados para tabela `cursospolos_polo`
 --
 
 INSERT INTO `cursospolos_polo` (`idPolo`, `nomePolo`, `cidade`, `estado`) VALUES
@@ -189,17 +188,17 @@ INSERT INTO `cursospolos_polo` (`idPolo`, `nomePolo`, `cidade`, `estado`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cursospolos_tipocurso`
+-- Estrutura para tabela `cursospolos_tipocurso`
 --
 
-CREATE TABLE `cursospolos_tipocurso` (
+CREATE TABLE IF NOT EXISTS `cursospolos_tipocurso` (
   `idTipoCurso` int(11) NOT NULL AUTO_INCREMENT,
   `nomeTipoCurso` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`idTipoCurso`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
--- Dumping data for table `cursospolos_tipocurso`
+-- Fazendo dump de dados para tabela `cursospolos_tipocurso`
 --
 
 INSERT INTO `cursospolos_tipocurso` (`idTipoCurso`, `nomeTipoCurso`) VALUES
@@ -210,10 +209,10 @@ INSERT INTO `cursospolos_tipocurso` (`idTipoCurso`, `nomeTipoCurso`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `documento_memorando`
+-- Estrutura para tabela `documento_memorando`
 --
 
-CREATE TABLE `documento_memorando` (
+CREATE TABLE IF NOT EXISTS `documento_memorando` (
   `idMemorando` int(11) NOT NULL AUTO_INCREMENT,
   `idUsuario` int(11) NOT NULL,
   `assunto` varchar(300) COLLATE utf8_unicode_ci NOT NULL,
@@ -234,10 +233,10 @@ CREATE TABLE `documento_memorando` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `documento_oficio`
+-- Estrutura para tabela `documento_oficio`
 --
 
-CREATE TABLE `documento_oficio` (
+CREATE TABLE IF NOT EXISTS `documento_oficio` (
   `idOficio` int(11) NOT NULL,
   `assunto` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `corpo` longtext COLLATE utf8_unicode_ci NOT NULL,
@@ -258,7 +257,7 @@ CREATE TABLE `documento_oficio` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `documento_oficio`
+-- Fazendo dump de dados para tabela `documento_oficio`
 --
 
 INSERT INTO `documento_oficio` (`idOficio`, `assunto`, `corpo`, `idUsuario`, `estadoValidacao`, `estadoEdicao`, `destino`, `numOficio`, `data`, `tipoSigla`, `referencia`, `remetente`, `cargo_remetente`, `tratamento`, `cargo_destino`) VALUES
@@ -268,10 +267,10 @@ INSERT INTO `documento_oficio` (`idOficio`, `assunto`, `corpo`, `idUsuario`, `es
 -- --------------------------------------------------------
 
 --
--- Table structure for table `equipamento`
+-- Estrutura para tabela `equipamento`
 --
 
-CREATE TABLE `equipamento` (
+CREATE TABLE IF NOT EXISTS `equipamento` (
   `idEquipamento` int(11) NOT NULL AUTO_INCREMENT,
   `nomeEquipamento` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `quantidade` int(11) NOT NULL,
@@ -285,10 +284,10 @@ CREATE TABLE `equipamento` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `equipamento_baixa`
+-- Estrutura para tabela `equipamento_baixa`
 --
 
-CREATE TABLE `equipamento_baixa` (
+CREATE TABLE IF NOT EXISTS `equipamento_baixa` (
   `idBaixa` int(11) NOT NULL AUTO_INCREMENT,
   `equipamento` int(11) NOT NULL,
   `saida` int(11) DEFAULT NULL,
@@ -301,7 +300,7 @@ CREATE TABLE `equipamento_baixa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
--- Triggers `equipamento_baixa`
+-- Gatilhos `equipamento_baixa`
 --
 DROP TRIGGER IF EXISTS `eliminar_baixa_equipamento`;
 DELIMITER //
@@ -327,10 +326,10 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `equipamento_evento`
+-- Estrutura para tabela `equipamento_evento`
 --
 
-CREATE TABLE `equipamento_evento` (
+CREATE TABLE IF NOT EXISTS `equipamento_evento` (
   `idEquipamentoEvento` int(11) NOT NULL AUTO_INCREMENT,
   `tipoEvento` int(11) NOT NULL,
   `usuario` int(11) NOT NULL,
@@ -351,10 +350,10 @@ CREATE TABLE `equipamento_evento` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `equipamento_retorno`
+-- Estrutura para tabela `equipamento_retorno`
 --
 
-CREATE TABLE `equipamento_retorno` (
+CREATE TABLE IF NOT EXISTS `equipamento_retorno` (
   `idRetorno` int(11) NOT NULL AUTO_INCREMENT,
   `saida` int(11) NOT NULL,
   `dataRetorno` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
@@ -365,7 +364,7 @@ CREATE TABLE `equipamento_retorno` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
--- Triggers `equipamento_retorno`
+-- Gatilhos `equipamento_retorno`
 --
 DROP TRIGGER IF EXISTS `novo_retorno_equipamento`;
 DELIMITER //
@@ -380,10 +379,10 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `equipamento_saida`
+-- Estrutura para tabela `equipamento_saida`
 --
 
-CREATE TABLE `equipamento_saida` (
+CREATE TABLE IF NOT EXISTS `equipamento_saida` (
   `idSaida` int(11) NOT NULL AUTO_INCREMENT,
   `equipamento` int(11) NOT NULL,
   `responsavel` int(11) NOT NULL,
@@ -399,7 +398,7 @@ CREATE TABLE `equipamento_saida` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
--- Triggers `equipamento_saida`
+-- Gatilhos `equipamento_saida`
 --
 DROP TRIGGER IF EXISTS `eliminar_saida_equipamento`;
 DELIMITER //
@@ -417,17 +416,17 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `equipamento_tipoevento`
+-- Estrutura para tabela `equipamento_tipoevento`
 --
 
-CREATE TABLE `equipamento_tipoevento` (
+CREATE TABLE IF NOT EXISTS `equipamento_tipoevento` (
   `idTipoEvento` int(11) NOT NULL,
   `nomeEvento` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`idTipoEvento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `equipamento_tipoevento`
+-- Fazendo dump de dados para tabela `equipamento_tipoevento`
 --
 
 INSERT INTO `equipamento_tipoevento` (`idTipoEvento`, `nomeEvento`) VALUES
@@ -443,10 +442,10 @@ INSERT INTO `equipamento_tipoevento` (`idTipoEvento`, `nomeEvento`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `imagem`
+-- Estrutura para tabela `imagem`
 --
 
-CREATE TABLE `imagem` (
+CREATE TABLE IF NOT EXISTS `imagem` (
   `idImagem` int(11) NOT NULL AUTO_INCREMENT,
   `idGaleria` int(11) NOT NULL,
   `autor` int(11) NOT NULL,
@@ -478,7 +477,7 @@ CREATE TABLE `imagem` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=17 ;
 
 --
--- Dumping data for table `imagem`
+-- Fazendo dump de dados para tabela `imagem`
 --
 
 INSERT INTO `imagem` (`idImagem`, `idGaleria`, `autor`, `cpfAutor`, `titulo`, `observacoes`, `dificuldade`, `ano`, `utilizadoAvaliacao`, `avaliacao`, `anoAvaliacao`, `diretorio`, `diretorioMiniatura`, `nomeArquivo`, `nomeArquivoMiniatura`, `nomeArquivoVetorial`, `descritor1`, `descritor2`, `descritor3`, `descritor4`, `dataCadastro`) VALUES
@@ -493,7 +492,7 @@ INSERT INTO `imagem` (`idImagem`, `idGaleria`, `autor`, `cpfAutor`, `titulo`, `o
 (16, 2, 1, '11111111111', 'Imagem', '', 'C', '1980', '0', NULL, NULL, 'privado/galerias/11111111111/', 'privado/galerias/miniaturas/11111111111/', '2-1-1-C-CE3_1396013912.png', '2-1-1-C-CE3_thumb_1396013912.png', '2-1-1-C-CE3_vetorial_1396013912.xcf', 15, 18, 19, 23, 1396013912);
 
 --
--- Triggers `imagem`
+-- Gatilhos `imagem`
 --
 DROP TRIGGER IF EXISTS `imagem_imagemCadastrada`;
 DELIMITER //
@@ -511,10 +510,10 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `imagem_descritor`
+-- Estrutura para tabela `imagem_descritor`
 --
 
-CREATE TABLE `imagem_descritor` (
+CREATE TABLE IF NOT EXISTS `imagem_descritor` (
   `idDescritor` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `pai` int(11) DEFAULT NULL,
@@ -527,7 +526,7 @@ CREATE TABLE `imagem_descritor` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=70 ;
 
 --
--- Dumping data for table `imagem_descritor`
+-- Fazendo dump de dados para tabela `imagem_descritor`
 --
 
 INSERT INTO `imagem_descritor` (`idDescritor`, `nome`, `pai`, `nivel`, `rotulo`, `qtdFilhos`) VALUES
@@ -564,10 +563,10 @@ INSERT INTO `imagem_descritor` (`idDescritor`, `nome`, `pai`, `nivel`, `rotulo`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `imagem_descritor_aux_inserir`
+-- Estrutura para tabela `imagem_descritor_aux_inserir`
 --
 
-CREATE TABLE `imagem_descritor_aux_inserir` (
+CREATE TABLE IF NOT EXISTS `imagem_descritor_aux_inserir` (
   `idDescritorAux` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   `pai` int(11) NOT NULL,
@@ -576,7 +575,7 @@ CREATE TABLE `imagem_descritor_aux_inserir` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Auxilia na manutenção dos valores ''nível'', ''rotulo'' e ''qtdFilhos'' de imagens_descritor, o MySQL ainda não permite triggers que modificam a  tabela que ativou-o' AUTO_INCREMENT=41 ;
 
 --
--- Dumping data for table `imagem_descritor_aux_inserir`
+-- Fazendo dump de dados para tabela `imagem_descritor_aux_inserir`
 --
 
 INSERT INTO `imagem_descritor_aux_inserir` (`idDescritorAux`, `nome`, `pai`) VALUES
@@ -622,7 +621,7 @@ INSERT INTO `imagem_descritor_aux_inserir` (`idDescritorAux`, `nome`, `pai`) VAL
 (40, 'Em casa', 67);
 
 --
--- Triggers `imagem_descritor_aux_inserir`
+-- Gatilhos `imagem_descritor_aux_inserir`
 --
 DROP TRIGGER IF EXISTS `imagem_descritor_aux`;
 DELIMITER //
@@ -644,10 +643,10 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `imagem_descritor_aux_remover`
+-- Estrutura para tabela `imagem_descritor_aux_remover`
 --
 
-CREATE TABLE `imagem_descritor_aux_remover` (
+CREATE TABLE IF NOT EXISTS `imagem_descritor_aux_remover` (
   `idDescritor` int(11) NOT NULL AUTO_INCREMENT,
   `pai` int(11) NOT NULL,
   `descritor` int(11) NOT NULL,
@@ -655,7 +654,7 @@ CREATE TABLE `imagem_descritor_aux_remover` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Auxilia na manutenção dos valores ''nível'', ''rotulo'' e ''qtdFilhos'' de imagens_descritor, o MySQL ainda não permite triggers que modificam a  tabela que ativou-o' AUTO_INCREMENT=1 ;
 
 --
--- Triggers `imagem_descritor_aux_remover`
+-- Gatilhos `imagem_descritor_aux_remover`
 --
 DROP TRIGGER IF EXISTS `imagem_descritor_aux_remover`;
 DELIMITER //
@@ -672,10 +671,10 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `imagem_evento`
+-- Estrutura para tabela `imagem_evento`
 --
 
-CREATE TABLE `imagem_evento` (
+CREATE TABLE IF NOT EXISTS `imagem_evento` (
   `idEvento` int(11) NOT NULL AUTO_INCREMENT,
   `tipoEvento` int(11) NOT NULL,
   `usuario` int(11) NOT NULL,
@@ -695,10 +694,10 @@ CREATE TABLE `imagem_evento` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `imagem_galeria`
+-- Estrutura para tabela `imagem_galeria`
 --
 
-CREATE TABLE `imagem_galeria` (
+CREATE TABLE IF NOT EXISTS `imagem_galeria` (
   `idGaleria` int(11) NOT NULL AUTO_INCREMENT,
   `nomeGaleria` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `qtdFotos` int(11) DEFAULT '0',
@@ -709,7 +708,7 @@ CREATE TABLE `imagem_galeria` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
 
 --
--- Dumping data for table `imagem_galeria`
+-- Fazendo dump de dados para tabela `imagem_galeria`
 --
 
 INSERT INTO `imagem_galeria` (`idGaleria`, `nomeGaleria`, `qtdFotos`, `dataCriacao`, `autor`) VALUES
@@ -719,17 +718,17 @@ INSERT INTO `imagem_galeria` (`idGaleria`, `nomeGaleria`, `qtdFotos`, `dataCriac
 -- --------------------------------------------------------
 
 --
--- Table structure for table `imagem_tipoevento`
+-- Estrutura para tabela `imagem_tipoevento`
 --
 
-CREATE TABLE `imagem_tipoevento` (
+CREATE TABLE IF NOT EXISTS `imagem_tipoevento` (
   `idTipoEvento` int(11) NOT NULL AUTO_INCREMENT,
   `nomeEvento` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`idTipoEvento`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=24 ;
 
 --
--- Dumping data for table `imagem_tipoevento`
+-- Fazendo dump de dados para tabela `imagem_tipoevento`
 --
 
 INSERT INTO `imagem_tipoevento` (`idTipoEvento`, `nomeEvento`) VALUES
@@ -743,10 +742,10 @@ INSERT INTO `imagem_tipoevento` (`idTipoEvento`, `nomeEvento`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `livro`
+-- Estrutura para tabela `livro`
 --
 
-CREATE TABLE `livro` (
+CREATE TABLE IF NOT EXISTS `livro` (
   `idLivro` int(11) NOT NULL AUTO_INCREMENT,
   `nomeLivro` varchar(45) CHARACTER SET latin1 NOT NULL,
   `quantidade` int(11) NOT NULL,
@@ -762,10 +761,10 @@ CREATE TABLE `livro` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `livro_baixa`
+-- Estrutura para tabela `livro_baixa`
 --
 
-CREATE TABLE `livro_baixa` (
+CREATE TABLE IF NOT EXISTS `livro_baixa` (
   `idBaixa` int(11) NOT NULL AUTO_INCREMENT,
   `livro` int(11) NOT NULL,
   `saida` int(11) DEFAULT NULL,
@@ -778,7 +777,7 @@ CREATE TABLE `livro_baixa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
--- Triggers `livro_baixa`
+-- Gatilhos `livro_baixa`
 --
 DROP TRIGGER IF EXISTS `eliminar_baixa_livro`;
 DELIMITER //
@@ -804,10 +803,10 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `livro_estado`
+-- Estrutura para tabela `livro_estado`
 --
 
-CREATE TABLE `livro_estado` (
+CREATE TABLE IF NOT EXISTS `livro_estado` (
   `idEstado` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
   `descricao` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
@@ -817,10 +816,10 @@ CREATE TABLE `livro_estado` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `livro_evento`
+-- Estrutura para tabela `livro_evento`
 --
 
-CREATE TABLE `livro_evento` (
+CREATE TABLE IF NOT EXISTS `livro_evento` (
   `idLivroEvento` int(11) NOT NULL AUTO_INCREMENT,
   `tipoEvento` int(11) NOT NULL,
   `usuario` int(11) NOT NULL,
@@ -841,10 +840,10 @@ CREATE TABLE `livro_evento` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `livro_retorno`
+-- Estrutura para tabela `livro_retorno`
 --
 
-CREATE TABLE `livro_retorno` (
+CREATE TABLE IF NOT EXISTS `livro_retorno` (
   `idRetorno` int(11) NOT NULL AUTO_INCREMENT,
   `saida` int(11) NOT NULL,
   `dataRetorno` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
@@ -855,7 +854,7 @@ CREATE TABLE `livro_retorno` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
--- Triggers `livro_retorno`
+-- Gatilhos `livro_retorno`
 --
 DROP TRIGGER IF EXISTS `novo_retorno_livro`;
 DELIMITER //
@@ -870,10 +869,10 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `livro_saida`
+-- Estrutura para tabela `livro_saida`
 --
 
-CREATE TABLE `livro_saida` (
+CREATE TABLE IF NOT EXISTS `livro_saida` (
   `idSaida` int(11) NOT NULL AUTO_INCREMENT,
   `livro` int(11) NOT NULL,
   `responsavel` int(11) NOT NULL,
@@ -889,7 +888,7 @@ CREATE TABLE `livro_saida` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
--- Triggers `livro_saida`
+-- Gatilhos `livro_saida`
 --
 DROP TRIGGER IF EXISTS `eliminar_saida_livro`;
 DELIMITER //
@@ -907,17 +906,17 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `livro_tipoevento`
+-- Estrutura para tabela `livro_tipoevento`
 --
 
-CREATE TABLE `livro_tipoevento` (
+CREATE TABLE IF NOT EXISTS `livro_tipoevento` (
   `idTipoEvento` int(11) NOT NULL AUTO_INCREMENT,
   `nomeEvento` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`idTipoEvento`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=42 ;
 
 --
--- Dumping data for table `livro_tipoevento`
+-- Fazendo dump de dados para tabela `livro_tipoevento`
 --
 
 INSERT INTO `livro_tipoevento` (`idTipoEvento`, `nomeEvento`) VALUES
@@ -933,10 +932,10 @@ INSERT INTO `livro_tipoevento` (`idTipoEvento`, `nomeEvento`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sistema_eventosistema`
+-- Estrutura para tabela `sistema_eventosistema`
 --
 
-CREATE TABLE `sistema_eventosistema` (
+CREATE TABLE IF NOT EXISTS `sistema_eventosistema` (
   `ideventoSistema` int(11) NOT NULL AUTO_INCREMENT,
   `idUsuario` int(11) NOT NULL,
   `idUsuarioAlvo` int(11) DEFAULT NULL,
@@ -953,17 +952,17 @@ CREATE TABLE `sistema_eventosistema` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sistema_ferramenta`
+-- Estrutura para tabela `sistema_ferramenta`
 --
 
-CREATE TABLE `sistema_ferramenta` (
+CREATE TABLE IF NOT EXISTS `sistema_ferramenta` (
   `idferramenta` int(11) NOT NULL,
   `nome` varchar(45) CHARACTER SET latin1 NOT NULL,
   PRIMARY KEY (`idferramenta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `sistema_ferramenta`
+-- Fazendo dump de dados para tabela `sistema_ferramenta`
 --
 
 INSERT INTO `sistema_ferramenta` (`idferramenta`, `nome`) VALUES
@@ -978,7 +977,7 @@ INSERT INTO `sistema_ferramenta` (`idferramenta`, `nome`) VALUES
 (9, 'Processos');
 
 --
--- Triggers `sistema_ferramenta`
+-- Gatilhos `sistema_ferramenta`
 --
 DROP TRIGGER IF EXISTS `nova_ferramenta`;
 DELIMITER //
@@ -1005,10 +1004,10 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sistema_tipoevento`
+-- Estrutura para tabela `sistema_tipoevento`
 --
 
-CREATE TABLE `sistema_tipoevento` (
+CREATE TABLE IF NOT EXISTS `sistema_tipoevento` (
   `idTipoEventoSistema` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
   PRIMARY KEY (`idTipoEventoSistema`),
@@ -1018,10 +1017,10 @@ CREATE TABLE `sistema_tipoevento` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuario`
+-- Estrutura para tabela `usuario`
 --
 
-CREATE TABLE `usuario` (
+CREATE TABLE IF NOT EXISTS `usuario` (
   `idUsuario` int(11) NOT NULL AUTO_INCREMENT,
   `idPapel` int(11) NOT NULL,
   `senha` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
@@ -1032,28 +1031,31 @@ CREATE TABLE `usuario` (
   `ativo` tinyint(1) NOT NULL DEFAULT '1',
   `cpf` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
   `iniciais` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `dataCadastro` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
+  `ultimoAcesso` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`idUsuario`),
   UNIQUE KEY `cpf_UNIQUE` (`cpf`),
   UNIQUE KEY `iniciais` (`iniciais`),
   KEY `fk_usuarios_papel` (`idPapel`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=24 ;
 
 --
--- Dumping data for table `usuario`
+-- Fazendo dump de dados para tabela `usuario`
 --
 
-INSERT INTO `usuario` (`idUsuario`, `idPapel`, `senha`, `PNome`, `UNome`, `email`, `dataNascimento`, `ativo`, `cpf`, `iniciais`) VALUES
-(1, 1, '202cb962ac59075b964b07152d234b70', 'Cead', 'Ead', 'admin@cead.com', '28/09/1991', 1, '11111111111', 'CE3'),
-(2, 2, 'e10adc3949ba59abbe56e057f20f883e', 'Reuel', 'Ramos Ribeiro', 'rulrok@gmail.com', '28/09/1991', 1, '39116561813', 'RRR'),
-(3, 2, 'e10adc3949ba59abbe56e057f20f883e', 'Gabriel', 'Hornink Souza', 'gabriel@gmail.com', '01/01/2020', 1, '22082879836', 'GHS'),
-(4, 2, '202cb962ac59075b964b07152d234b70', 'Usuário', 'de testes', 'teste@cead.com', '31/01/2014', 0, '44444444444', 'Ut2'),
-(6, 4, '6603dc207862ec39af10d91adfc02bc0', 'Cead', 'Ester', 'eliblue34@gmail.com', '06/02/2014', 0, '66666666666', 'CE2'),
-(7, 2, 'e10adc3949ba59abbe56e057f20f883e', 'Luciene', 'Gouveia', 'ceadunifal.luciene@gmail.com', '03/02/2014', 0, '77777777777', 'LG2'),
-(9, 2, 'e10adc3949ba59abbe56e057f20f883e', 'Marcos', 'Mazzon Filho', 'marcos.mazzonifilho@gmail.com', '05/02/2014', 1, '99999999999', 'MMF'),
-(22, 2, '4297f44b13955235245b2497399d7a93', 'Reuel', 'Ribeiro', 'a11021@bcc.unifal-mg.edu.br', NULL, 1, '22222222222', 'RR');
+INSERT INTO `usuario` (`idUsuario`, `idPapel`, `senha`, `PNome`, `UNome`, `email`, `dataNascimento`, `ativo`, `cpf`, `iniciais`, `dataCadastro`, `ultimoAcesso`) VALUES
+(1, 1, '202cb962ac59075b964b07152d234b70', 'Cead', 'Ead', 'admin@cead.com', '28/09/1991', 1, '11111111111', 'CE3', '', ''),
+(2, 2, 'e10adc3949ba59abbe56e057f20f883e', 'Reuel', 'Ramos Ribeiro', 'rulrok@gmail.com', '28/09/1991', 1, '39116561813', 'RRR', '', ''),
+(3, 2, 'e10adc3949ba59abbe56e057f20f883e', 'Gabriel', 'Hornink Souza', 'gabriel@gmail.com', '01/01/2020', 1, '22082879836', 'GHS', '', ''),
+(4, 2, '202cb962ac59075b964b07152d234b70', 'Usuário', 'de testes', 'teste@cead.com', '31/01/2014', 0, '44444444444', 'Ut2', '', ''),
+(6, 4, '6603dc207862ec39af10d91adfc02bc0', 'Cead', 'Ester', 'eliblue34@gmail.com', '06/02/2014', 0, '66666666666', 'CE2', '', ''),
+(7, 2, 'e10adc3949ba59abbe56e057f20f883e', 'Luciene', 'Gouveia', 'ceadunifal.luciene@gmail.com', '03/02/2014', 0, '77777777777', 'LG2', '', ''),
+(9, 2, 'e10adc3949ba59abbe56e057f20f883e', 'Marcos', 'Mazzon Filho', 'marcos.mazzonifilho@gmail.com', '05/02/2014', 1, '99999999999', 'MMF', '', ''),
+(22, 2, '4297f44b13955235245b2497399d7a93', 'Reuel', 'Ribeiro', 'a11021@bcc.unifal-mg.edu.br', NULL, 1, '22222222222', 'RR', '', ''),
+(23, 4, 'e10adc3949ba59abbe56e057f20f883e', 'Aluno', 'Teste', 'aluno@cead.com', '09/07/2014', 1, '35185311827', 'AT', '1404914391', '0');
 
 --
--- Triggers `usuario`
+-- Gatilhos `usuario`
 --
 DROP TRIGGER IF EXISTS `atualizar_iniciais`;
 DELIMITER //
@@ -1073,10 +1075,10 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuario_acessos`
+-- Estrutura para tabela `usuario_acessos`
 --
 
-CREATE TABLE `usuario_acessos` (
+CREATE TABLE IF NOT EXISTS `usuario_acessos` (
   `idLog` int(11) NOT NULL AUTO_INCREMENT,
   `idUsuario` int(11) DEFAULT NULL,
   `data` bigint(20) NOT NULL COMMENT 'Unix timestamp',
@@ -1086,7 +1088,7 @@ CREATE TABLE `usuario_acessos` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=69 ;
 
 --
--- Dumping data for table `usuario_acessos`
+-- Fazendo dump de dados para tabela `usuario_acessos`
 --
 
 INSERT INTO `usuario_acessos` (`idLog`, `idUsuario`, `data`, `ip`) VALUES
@@ -1133,10 +1135,10 @@ INSERT INTO `usuario_acessos` (`idLog`, `idUsuario`, `data`, `ip`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuario_papel`
+-- Estrutura para tabela `usuario_papel`
 --
 
-CREATE TABLE `usuario_papel` (
+CREATE TABLE IF NOT EXISTS `usuario_papel` (
   `idpapel` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
   `descricao` varchar(45) CHARACTER SET latin1 DEFAULT 'Sem descrição',
@@ -1144,7 +1146,7 @@ CREATE TABLE `usuario_papel` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
--- Dumping data for table `usuario_papel`
+-- Fazendo dump de dados para tabela `usuario_papel`
 --
 
 INSERT INTO `usuario_papel` (`idpapel`, `nome`, `descricao`) VALUES
@@ -1156,10 +1158,10 @@ INSERT INTO `usuario_papel` (`idpapel`, `nome`, `descricao`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuario_permissao`
+-- Estrutura para tabela `usuario_permissao`
 --
 
-CREATE TABLE `usuario_permissao` (
+CREATE TABLE IF NOT EXISTS `usuario_permissao` (
   `idPermissao` int(11) NOT NULL,
   `tipo` varchar(45) CHARACTER SET latin1 NOT NULL,
   `descricao` varchar(65) CHARACTER SET latin1 DEFAULT NULL,
@@ -1168,7 +1170,7 @@ CREATE TABLE `usuario_permissao` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `usuario_permissao`
+-- Fazendo dump de dados para tabela `usuario_permissao`
 --
 
 INSERT INTO `usuario_permissao` (`idPermissao`, `tipo`, `descricao`) VALUES
@@ -1181,10 +1183,10 @@ INSERT INTO `usuario_permissao` (`idPermissao`, `tipo`, `descricao`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuario_recuperarsenha`
+-- Estrutura para tabela `usuario_recuperarsenha`
 --
 
-CREATE TABLE `usuario_recuperarsenha` (
+CREATE TABLE IF NOT EXISTS `usuario_recuperarsenha` (
   `idUsuario` int(11) NOT NULL,
   `token` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`idUsuario`),
@@ -1192,7 +1194,7 @@ CREATE TABLE `usuario_recuperarsenha` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `usuario_recuperarsenha`
+-- Fazendo dump de dados para tabela `usuario_recuperarsenha`
 --
 
 INSERT INTO `usuario_recuperarsenha` (`idUsuario`, `token`) VALUES
@@ -1201,10 +1203,10 @@ INSERT INTO `usuario_recuperarsenha` (`idUsuario`, `token`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuario_x_permissao_x_ferramenta`
+-- Estrutura para tabela `usuario_x_permissao_x_ferramenta`
 --
 
-CREATE TABLE `usuario_x_permissao_x_ferramenta` (
+CREATE TABLE IF NOT EXISTS `usuario_x_permissao_x_ferramenta` (
   `idUsuario` int(11) NOT NULL,
   `idFerramenta` int(11) NOT NULL,
   `idPermissao` int(11) NOT NULL,
@@ -1215,7 +1217,7 @@ CREATE TABLE `usuario_x_permissao_x_ferramenta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `usuario_x_permissao_x_ferramenta`
+-- Fazendo dump de dados para tabela `usuario_x_permissao_x_ferramenta`
 --
 
 INSERT INTO `usuario_x_permissao_x_ferramenta` (`idUsuario`, `idFerramenta`, `idPermissao`) VALUES
@@ -1238,6 +1240,14 @@ INSERT INTO `usuario_x_permissao_x_ferramenta` (`idUsuario`, `idFerramenta`, `id
 (6, 5, 10),
 (6, 6, 10),
 (7, 1, 10),
+(23, 1, 10),
+(23, 2, 10),
+(23, 3, 10),
+(23, 4, 10),
+(23, 5, 10),
+(23, 6, 10),
+(23, 7, 10),
+(23, 8, 10),
 (2, 2, 20),
 (2, 3, 20),
 (2, 4, 20),
@@ -1293,10 +1303,10 @@ INSERT INTO `usuario_x_permissao_x_ferramenta` (`idUsuario`, `idFerramenta`, `id
 -- --------------------------------------------------------
 
 --
--- Table structure for table `viagem`
+-- Estrutura para tabela `viagem`
 --
 
-CREATE TABLE `viagem` (
+CREATE TABLE IF NOT EXISTS `viagem` (
   `idViagem` int(11) NOT NULL AUTO_INCREMENT,
   `idCurso` int(11) NOT NULL,
   `idPolo` int(11) DEFAULT NULL,
@@ -1316,7 +1326,7 @@ CREATE TABLE `viagem` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=26 ;
 
 --
--- Dumping data for table `viagem`
+-- Fazendo dump de dados para tabela `viagem`
 --
 
 INSERT INTO `viagem` (`idViagem`, `idCurso`, `idPolo`, `responsavel`, `dataIda`, `horaIda`, `dataVolta`, `horaVolta`, `motivo`, `estadoViagem`, `diarias`, `outroDestino`) VALUES
@@ -1325,10 +1335,10 @@ INSERT INTO `viagem` (`idViagem`, `idCurso`, `idPolo`, `responsavel`, `dataIda`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `viagem_passageiros`
+-- Estrutura para tabela `viagem_passageiros`
 --
 
-CREATE TABLE `viagem_passageiros` (
+CREATE TABLE IF NOT EXISTS `viagem_passageiros` (
   `idViagem` int(11) NOT NULL,
   `idUsuario` int(11) NOT NULL,
   PRIMARY KEY (`idViagem`,`idUsuario`),
@@ -1337,7 +1347,7 @@ CREATE TABLE `viagem_passageiros` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `viagem_passageiros`
+-- Fazendo dump de dados para tabela `viagem_passageiros`
 --
 
 INSERT INTO `viagem_passageiros` (`idViagem`, `idUsuario`) VALUES
@@ -1346,37 +1356,37 @@ INSERT INTO `viagem_passageiros` (`idViagem`, `idUsuario`) VALUES
 (25, 9);
 
 --
--- Constraints for dumped tables
+-- Restrições para dumps de tabelas
 --
 
 --
--- Constraints for table `cursospolos_curso`
+-- Restrições para tabelas `cursospolos_curso`
 --
 ALTER TABLE `cursospolos_curso`
   ADD CONSTRAINT `fk_curso_area` FOREIGN KEY (`area`) REFERENCES `cursospolos_area` (`idArea`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_curso_tipo` FOREIGN KEY (`tipo`) REFERENCES `cursospolos_tipocurso` (`idTipoCurso`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `documento_memorando`
+-- Restrições para tabelas `documento_memorando`
 --
 ALTER TABLE `documento_memorando`
   ADD CONSTRAINT `fk_memorando_usuario1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `documento_oficio`
+-- Restrições para tabelas `documento_oficio`
 --
 ALTER TABLE `documento_oficio`
   ADD CONSTRAINT `fk_oficio_usuario1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `equipamento_baixa`
+-- Restrições para tabelas `equipamento_baixa`
 --
 ALTER TABLE `equipamento_baixa`
   ADD CONSTRAINT `fk_equipamento_baixa_equipamento1` FOREIGN KEY (`equipamento`) REFERENCES `equipamento` (`idEquipamento`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_equipamento_baixa_equipamento_saida1` FOREIGN KEY (`saida`) REFERENCES `equipamento_saida` (`idSaida`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `equipamento_evento`
+-- Restrições para tabelas `equipamento_evento`
 --
 ALTER TABLE `equipamento_evento`
   ADD CONSTRAINT `fk_equipamento_evento_equipamento1` FOREIGN KEY (`equipamento`) REFERENCES `equipamento` (`idEquipamento`) ON DELETE SET NULL ON UPDATE CASCADE,
@@ -1387,13 +1397,13 @@ ALTER TABLE `equipamento_evento`
   ADD CONSTRAINT `fk_equipamento_evento_usuario1` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`idUsuario`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `equipamento_retorno`
+-- Restrições para tabelas `equipamento_retorno`
 --
 ALTER TABLE `equipamento_retorno`
   ADD CONSTRAINT `fk_equipamento_retorno_equipamento_saida1` FOREIGN KEY (`saida`) REFERENCES `equipamento_saida` (`idSaida`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `equipamento_saida`
+-- Restrições para tabelas `equipamento_saida`
 --
 ALTER TABLE `equipamento_saida`
   ADD CONSTRAINT `fk_equipamento_saida_equipamento1` FOREIGN KEY (`equipamento`) REFERENCES `equipamento` (`idEquipamento`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -1401,7 +1411,7 @@ ALTER TABLE `equipamento_saida`
   ADD CONSTRAINT `fk_equipamento_saida_usuario1` FOREIGN KEY (`responsavel`) REFERENCES `usuario` (`idUsuario`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `imagem`
+-- Restrições para tabelas `imagem`
 --
 ALTER TABLE `imagem`
   ADD CONSTRAINT `fk_imagens_imagem_imagens_descritor1` FOREIGN KEY (`descritor1`) REFERENCES `imagem_descritor` (`idDescritor`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -1412,13 +1422,13 @@ ALTER TABLE `imagem`
   ADD CONSTRAINT `fk_imagens_imagem_usuario1` FOREIGN KEY (`autor`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `imagem_descritor`
+-- Restrições para tabelas `imagem_descritor`
 --
 ALTER TABLE `imagem_descritor`
   ADD CONSTRAINT `fk_imagens_descritor_imagens_descritor1` FOREIGN KEY (`pai`) REFERENCES `imagem_descritor` (`idDescritor`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `imagem_evento`
+-- Restrições para tabelas `imagem_evento`
 --
 ALTER TABLE `imagem_evento`
   ADD CONSTRAINT `fk_imagens_evento_imagens_categoria1` FOREIGN KEY (`categoria`) REFERENCES `imagem_descritor` (`idDescritor`) ON DELETE SET NULL ON UPDATE CASCADE,
@@ -1428,26 +1438,26 @@ ALTER TABLE `imagem_evento`
   ADD CONSTRAINT `fk_imagens_evento_usuario1` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`idUsuario`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `imagem_galeria`
+-- Restrições para tabelas `imagem_galeria`
 --
 ALTER TABLE `imagem_galeria`
   ADD CONSTRAINT `fk_imagem_galeria_usuario1` FOREIGN KEY (`autor`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `livro`
+-- Restrições para tabelas `livro`
 --
 ALTER TABLE `livro`
   ADD CONSTRAINT `fk_livro_area` FOREIGN KEY (`area`) REFERENCES `cursospolos_area` (`idArea`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Constraints for table `livro_baixa`
+-- Restrições para tabelas `livro_baixa`
 --
 ALTER TABLE `livro_baixa`
   ADD CONSTRAINT `fk_livro_baixa_livro1` FOREIGN KEY (`livro`) REFERENCES `livro` (`idLivro`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_livro_baixa_livro_saida1` FOREIGN KEY (`saida`) REFERENCES `livro_saida` (`idSaida`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `livro_evento`
+-- Restrições para tabelas `livro_evento`
 --
 ALTER TABLE `livro_evento`
   ADD CONSTRAINT `fk_livro_evento_livro1` FOREIGN KEY (`livro`) REFERENCES `livro` (`idLivro`) ON UPDATE CASCADE,
@@ -1458,13 +1468,13 @@ ALTER TABLE `livro_evento`
   ADD CONSTRAINT `fk_livro_evento_usuario1` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`idUsuario`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `livro_retorno`
+-- Restrições para tabelas `livro_retorno`
 --
 ALTER TABLE `livro_retorno`
   ADD CONSTRAINT `fk_livro_retorno_livro_saida1` FOREIGN KEY (`saida`) REFERENCES `livro_saida` (`idSaida`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `livro_saida`
+-- Restrições para tabelas `livro_saida`
 --
 ALTER TABLE `livro_saida`
   ADD CONSTRAINT `fk_livro_saida_livro1` FOREIGN KEY (`livro`) REFERENCES `livro` (`idLivro`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -1472,7 +1482,7 @@ ALTER TABLE `livro_saida`
   ADD CONSTRAINT `fk_livro_saida_usuario1` FOREIGN KEY (`responsavel`) REFERENCES `usuario` (`idUsuario`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `sistema_eventosistema`
+-- Restrições para tabelas `sistema_eventosistema`
 --
 ALTER TABLE `sistema_eventosistema`
   ADD CONSTRAINT `fk_eventoSistema_alvo` FOREIGN KEY (`idUsuarioAlvo`) REFERENCES `usuario` (`idUsuario`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -1480,25 +1490,25 @@ ALTER TABLE `sistema_eventosistema`
   ADD CONSTRAINT `fk_eventoSistema_evento` FOREIGN KEY (`idTipoEventoSistema`) REFERENCES `sistema_tipoevento` (`idTipoEventoSistema`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `usuario`
+-- Restrições para tabelas `usuario`
 --
 ALTER TABLE `usuario`
   ADD CONSTRAINT `fk_usuarios_papel` FOREIGN KEY (`idPapel`) REFERENCES `usuario_papel` (`idpapel`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `usuario_acessos`
+-- Restrições para tabelas `usuario_acessos`
 --
 ALTER TABLE `usuario_acessos`
   ADD CONSTRAINT `fk_usuarios_acessos` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
--- Constraints for table `usuario_recuperarsenha`
+-- Restrições para tabelas `usuario_recuperarsenha`
 --
 ALTER TABLE `usuario_recuperarsenha`
   ADD CONSTRAINT `fk_usuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `usuario_x_permissao_x_ferramenta`
+-- Restrições para tabelas `usuario_x_permissao_x_ferramenta`
 --
 ALTER TABLE `usuario_x_permissao_x_ferramenta`
   ADD CONSTRAINT `fk_usuarios_permissoes_1` FOREIGN KEY (`idPermissao`) REFERENCES `usuario_permissao` (`idPermissao`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -1506,7 +1516,7 @@ ALTER TABLE `usuario_x_permissao_x_ferramenta`
   ADD CONSTRAINT `fk_usuarios_permissoes_3` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `viagem`
+-- Restrições para tabelas `viagem`
 --
 ALTER TABLE `viagem`
   ADD CONSTRAINT `fk_viagem_curso1` FOREIGN KEY (`idCurso`) REFERENCES `cursospolos_curso` (`idCurso`) ON UPDATE CASCADE,
@@ -1514,12 +1524,11 @@ ALTER TABLE `viagem`
   ADD CONSTRAINT `fk_viagem_usuario1` FOREIGN KEY (`responsavel`) REFERENCES `usuario` (`idUsuario`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `viagem_passageiros`
+-- Restrições para tabelas `viagem_passageiros`
 --
 ALTER TABLE `viagem_passageiros`
   ADD CONSTRAINT `fk_viagem_has_usuario_usuario1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_viagem_has_usuario_viagem1` FOREIGN KEY (`idViagem`) REFERENCES `viagem` (`idViagem`) ON DELETE CASCADE ON UPDATE CASCADE;
-SET FOREIGN_KEY_CHECKS=1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

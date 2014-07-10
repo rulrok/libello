@@ -60,8 +60,10 @@ class equipamentoDAO extends abstractDAO {
     public function removerBaixa($baixaID) {
         if (is_array($baixaID)) {
             $idEquipamento = $idEquipamento['baixaID'];
+        } else {
+            $idEquipamento = $baixaID;
         }
-
+        
         $sql = "DELETE from equipamento_baixa WHERE idBaixa = :idBaixa";
         $params = array(
             ':idBaixa' => [$idEquipamento, PDO::PARAM_INT]
