@@ -8,7 +8,7 @@
 
         <span class="line">
             <label for="nomecurso">Curso</label>
-            <input required autofocus type="text" class="input-xlarge" id="nomecurso" name="nomecurso" value="<?php echo $this->curso ?>" />
+            <input required autofocus type="text" class="input-xlarge" id="nomecurso" value="<?php echo $this->curso ?>" name="nomecurso"  data-content="Não aceita números, use letras para representar algarismos romanos. " />
         </span>
         <span class="line">
             <label for="area">Área</label>
@@ -30,6 +30,9 @@
 </form>
 
 <script>
+    var elem = $("#chars");
+    $(".line input").popover({trigger: 'focus', container: 'body'});
+
     $(document).ready(function() {
         varrerCampos();
         formularioAjax();
