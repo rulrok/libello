@@ -14,8 +14,7 @@
             <input type="text" autofocus required id="dataSaida" on class="campoData" name="dataSaida" />
         </div>
         <div class="line">
-            <label for="polo">Polo de Destino</label>
-            <!--<input required type="text" class="input-xlarge" id="destino" name="destino" title="Destino" data-content="A localização para onde o livro está saindo." />-->           
+            <label for="polo">Polo de Destino</label> 
             <select id="polo" name="polo">
                 <?php echo $this->polos; ?>
             </select>
