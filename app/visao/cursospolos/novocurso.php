@@ -5,7 +5,7 @@
         <legend>Inserir novo curso</legend>
         <span class="line">
             <label for="nomecurso">Curso</label>
-            <input required autofocus type="text" class="input-xlarge" id="nomecurso" name="nomecurso" />
+            <input required autofocus type="text" class="input-xlarge" id="nomecurso" name="nomecurso" data-content="Não aceita números, use letras para representar algarismos romanos. " />
         </span>
         <span class="line">
             <label for="area">Área</label>
@@ -27,6 +27,9 @@
 
 <script src="publico/js/cidades-estados.js"></script>
 <script>
+    var elem = $("#chars");
+    $(".line input").popover({trigger: 'focus', container: 'body' });
+    
     $(document).ready(function() {
         varrerCampos();
         formularioAjax();

@@ -43,6 +43,9 @@
     </div>
 </div>
 <script>
+    
+    $("#dataSaida").datepicker();
+    $(".line input").popover({trigger: 'focus', container: 'body'});
     //Este script configura as ações para os botões da página.
     $(document).ready(function() {
         configurarTabela({
