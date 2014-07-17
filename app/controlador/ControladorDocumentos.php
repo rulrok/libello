@@ -38,7 +38,6 @@ class ControladorDocumentos extends Controlador {
         $this->renderizar();
     }
 
-
     public function acaoVerificaratualizacaomemorando() {
         $this->renderizar();
     }
@@ -92,7 +91,7 @@ class ControladorDocumentos extends Controlador {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->visao->comboDia = ComboBoxDocumentos::comboDia();
         $this->visao->comboMes = ComboBoxDocumentos::comboMes();
-        
+
         $this->visao->tratamento = '';
         $this->visao->destino = '';
         $this->visao->cargo_destino = '';
@@ -103,7 +102,7 @@ class ControladorDocumentos extends Controlador {
         $this->visao->cargo_remetente = '';
         $this->visao->sigla = 'TEC';
         $this->visao->idoficio = fnEncrypt(-1);
-        
+
         if (!isset($_GET['id'])) {
             $this->visao->action = 'gerar';
         } else {
@@ -182,22 +181,20 @@ class ControladorDocumentos extends Controlador {
     }
 
     public function acaoMemorando() {
-        
-          $this->visao->acessoMinimo = Permissao::ESCRITA;
+
+        $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->visao->comboDia = ComboBoxDocumentos::comboDia();
         $this->visao->comboMes = ComboBoxDocumentos::comboMes();
-        
+
         $this->visao->tratamento = '';
-        $this->visao->destino = '';
         $this->visao->cargo_destino = '';
-        $this->visao->referencia = '';
         $this->visao->assunto = '';
         $this->visao->corpo = '';
         $this->visao->remetente = '';
         $this->visao->cargo_remetente = '';
         $this->visao->sigla = 'TEC';
         $this->visao->idmemorando = fnEncrypt(-1);
-        
+
         if (!isset($_GET['id'])) {
             $this->visao->action = 'gerar';
         } else {
@@ -206,7 +203,7 @@ class ControladorDocumentos extends Controlador {
 
             $this->visao->tratamento = $oficioTmp->get_tratamento();
             $this->visao->cargo_destino = $oficioTmp->get_cargo_destino();
-            $this->visao->referencia = $oficioTmp->get_referencia();
+//            $this->visao->referencia = $oficioTmp->get_referencia();
             $this->visao->assunto = $oficioTmp->get_assunto();
             $this->visao->corpo = $oficioTmp->get_corpo();
             $this->visao->remetente = $oficioTmp->get_remetente();
@@ -220,9 +217,6 @@ class ControladorDocumentos extends Controlador {
             }
         }
         $this->renderizar();
-        
-        
-       
     }
 
     public function acaoEditarMemorando() {

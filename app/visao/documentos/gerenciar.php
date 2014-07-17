@@ -28,17 +28,17 @@
         vertical-align: baseline;
         text-align:center;
     }
-@media all{
-    @media (max-width: 1150px){
-        .menuContainer{
-            height: inherit;
+    @media all{
+        @media (max-width: 1150px){
+            .menuContainer{
+                height: inherit;
+            }
         }
+
     }
-    
-}
 </style>
 
- <link href="publico/css/documentos.css" rel="stylesheet">
+<link href="publico/css/documentos.css" rel="stylesheet">
 
 <div style="text-align:center;">
     <button class="btn btn_oficio ignorar"
@@ -410,7 +410,8 @@
                         showPopUp(data.mensagem, data.status);
                         if (data.status.toLowerCase() === "sucesso") {
                             document.paginaAlterada = false;
-                            document.location.reload();
+//                            document.location.reload();
+                            $('tr.row_selected').hide();
                         }
                     } else {
                         showPopUp("Houve algum problema na resposta do servidor.1", "erro");
@@ -437,7 +438,9 @@
                         showPopUp(data.mensagem, data.status);
                         if (data.status.toLowerCase() === "sucesso") {
                             document.paginaAlterada = false;
-                            document.location.reload();
+//                            document.location.reload();
+                            $('tr.row_selected').hide();
+
                         }
                     } else {
                         showPopUp("Houve algum problema na resposta do servidor.1", "erro");
@@ -453,7 +456,7 @@
             var doc = $('tr.row_selected').attr('doc');
             var temp = doc[0].toUpperCase() + doc.slice(1);
             var id = $('tr.row_selected .campoID').text();
-            document.location.href = '#!documentos|'+doc+'&id='+id;
+            document.location.href = '#!documentos|' + doc + '&id=' + id;
         });
 
         //função botão aproveitar
@@ -463,7 +466,7 @@
             var id = $('tr.row_selected .campoID').text();
             document.location.href = '#!documentos|' + doc + '&id=' + id;
         });
-        
+
 <?php if (!isset($_GET['tipo'])) { ?>
             $('.btn-todos').click();
 <?php } ?>
@@ -472,6 +475,7 @@
 
     function mostraOpcao(opcao) {
         if (opcao == 'oficio') {
+            $(".editavel").hide(); //ESconde os botoes de vizualização/ediçao/exclusao
             $('#b_oficio').addClass('active');
             $('#b_memorando').removeClass('active');
             $('#tabela1').show();
@@ -496,6 +500,7 @@
             }
 
         } else if (opcao == 'memorando') {
+            $(".editavel").hide(); //ESconde os botoes de vizualização/ediçao/exclusao
             $('#b_memorando').addClass('active');
             $('#b_oficio').removeClass('active');
             $('#tabela1').hide();
