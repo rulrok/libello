@@ -34,6 +34,22 @@ class ControladorViagens extends Controlador {
 
     public function acaoEditar() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
+       /* if (filter_has_var(INPUT_GET, 'viagemID') || filter_has_var(INPUT_POST, 'viagemID')) {
+            $idViagem = fnDecrypt($_REQUEST['viagemID']); //TODO mudar para filter_input() quando INPUT_REQUEST estiver implementado no PHP
+            $viagemDAO = new viagemDAO();
+            $this->visao->viagemID = $_REQUEST['viagemID'];
+            $viagem = $viagemDAO->recuperarviagem($idviagem);
+            $this->visao->comboBoxAreas = ComboBoxAreas::montarTodasAsAreas();
+            $this->visao->descricao = $livro->get_descricao();
+            $this->visao->livro = $livro->get_nomelivro();
+            $this->visao->quantidade = $livro->get_quantidade();
+            $this->visao->dataEntrada = $livro->get_dataEntrada();
+            $this->visao->numeroPatrimonio = $livro->get_numeroPatrimonio();
+            $this->visao->grafica = $livro->get_grafica();
+            $this->visao->area = $livro->get_area();
+        } else {
+            die("Acesso indevido");
+        }*/
         $this->renderizar();
     }
 
@@ -41,10 +57,7 @@ class ControladorViagens extends Controlador {
         return Ferramenta::CONTROLE_VIAGENS;
     }
 
-    public function acaoAcoes() {
-        $this->visao->acessoMinimo = Permissao::ESCRITA;
-        $this->renderizar();
-    }
+    
 
 }
 
