@@ -116,7 +116,10 @@ class documentoDAO extends abstractDAO {
 
     public function update_memorando(Memorando $obj) {
 
-        $sql = 'UPDATE documento_memorando SET assunto = :assunto, corpo = :corpo, estadoEdicao = :estadoEdicao, tratamento = :tratamento, cargo_destino = :cargo_destino, data = :data, tipoSigla = :tipoSigla, remetente = :remetente, cargo_remetente = :cargo_remetente, numMemorando = :numMemorando) WHERE idMemorando = :idMemorando';
+        $sql = 'UPDATE documento_memorando SET assunto = :assunto, corpo = :corpo, estadoEdicao = :estadoEdicao, '
+                . 'tratamento = :tratamento, cargo_destino = :cargo_destino, data = :data, tipoSigla = :tipoSigla, '
+                . 'remetente = :remetente, cargo_remetente = :cargo_remetente, numMemorando = :numMemorando '
+                . 'WHERE idMemorando = :idMemorando';
 
         $params = array(
             ':assunto' => [$obj->get_assunto(), PDO::PARAM_STR]
@@ -129,6 +132,7 @@ class documentoDAO extends abstractDAO {
             , ':remetente' => [$obj->get_remetente(), PDO::PARAM_STR]
             , ':cargo_remetente' => [$obj->get_cargo_remetente(), PDO::PARAM_STR]
             , ':numMemorando' => [$obj->get_numMemorando(), PDO::PARAM_INT]
+            , ':idMemorando' => [$obj->get_idMemorando(), PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }
