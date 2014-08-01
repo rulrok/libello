@@ -104,29 +104,7 @@ function capturaNumMemorando() {
     });
 }
 
-//function validarOficio(idOficio) {
-//    concatenarAssinaturas();
-////
-////    $.getJSON('index.php?c=documentos&a=validarOficio', function() {
-////        $('#i_numMemorando').val(idOficio);
-////        $("#ajaxForm").submit();
-////
-////    });
-//    $.ajax({
-//        type: 'POST',
-////        url: '../libello/app/modelo/ferramentas/documentos/validarOficio.php',
-//        url: 'index.php?c=documentos&a=validarOficio',
-////        data: "id=" + idOficio,
-//        data: {id: idOficio},
-//        success: function(resp) {
-//            console.log("sucesso");
-//        },
-//        error: function(req, status, err) {
-//            console.log("erro");
-//        }
-//    });
-//
-//}
+
 
 function pad(d) {
     return (d < 10) ? '0' + d.toString() : d.toString();
