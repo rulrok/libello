@@ -55,7 +55,7 @@
 <!--                                        <input type="button" class="btn" value="Voltar" name="b_voltar" name="b_voltar" onclick=""/>-->
     </div>            
 
-    <input type="hidden" name="i_numOficio" id="i_numOficio" value='-1'/>
+    <input type="hidden" name="i_numOficio" id="i_numOficio" value=''/>
     <input type="hidden" name="remetente" id="remetente" value="<?php echo($this->remetente); ?>"/>
     <input type="hidden" name="cargo_remetente" id="cargo_remetente" value="<?php echo($this->cargo_remetente); ?>"/>
     <input type="hidden" name="i_sigla" id="i_sigla" value="<?php echo($this->sigla); ?>"/>
@@ -87,11 +87,36 @@
         }, null, false);
 
         $('#b_gerar').on('click', function() {
-            bloqueia();
-            if (confirm('Atenção, o ofício será gerado e registrado permanentemente! Tem certeza?')) {
-                capturaNumOficio();
+//            bloqueia();
+//            if (confirm('Atenção, o ofício será gerado e registrado permanentemente! Tem certeza?')) {
+////                capturaNumOficio();
+//            }
+//            desbloqueia();
+
+        
+            var r = confirm("Atenção, o ofício será gerado e registrado permanentemente! Tem certeza?");
+            if (r) {
+//                var id = document.getElementsByName("i_idoficio")[0].value;
+                var id = $('#i_idoficio').val();
+                var tipo = "oficio";
+                var acaoGerar = "index.php?c=documentos&a=validar" + tipo + "&i_id" + tipo + "=";
+                var data = ajax(acaoGerar + id, null, false, false);
+                if (data !== null && data !== undefined) {
+                    data = extrairJSON(data);
+                    if (data.status !== undefined && data.mensagem !== undefined) {
+                        showPopUp(data.mensagem, data.status);
+                        if (data.status.toLowerCase() === "sucesso") {
+                            document.paginaAlterada = false;
+//                            document.location.reload();
+                        }
+                    } else {
+                        showPopUp("Houve algum problema na resposta do servidor", "erro");
+                    }
+                } else {
+                    showPopUp("Houve algum problema na resposta do servidor.", "erro");
+                }
             }
-            desbloqueia();
+
         });
 
         $('#b_salvar').on('click', function() {
@@ -99,7 +124,7 @@
             if (confirm('Atenção, o rascunho do ofício será salvo! Tem certeza?')) {
 
                 concatenarAssinaturas();
-                $('#i_numOficio').val('-1');
+//                $('#i_numOficio').val('-1');
                 $('#ajaxForm').submit();
             }
             desbloqueia();

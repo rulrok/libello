@@ -31,7 +31,7 @@ $remetentes = explode(';', $remetente);
 $cargos_remetentes = explode(';', $cargo_remetente);
 
 setlocale(LC_ALL, 'portuguese-brazilian', 'ptb', 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8', 'pt-BR');
-$mes = utf8_encode(strftime("%B", mktime(0, 0, 0, $data[1], 10)));
+$mes = (strftime("%B", mktime(0, 0, 0, $data[1], 10)));
 $data = $dia . '/' . $mes . '/' . $ano;
 
 //-------------------
@@ -79,7 +79,7 @@ $document = '
                 <tr><td style="height: 30px;"></td></tr>
                 <tr>
                     <td>
-                        Ofício nº' . $numOficio . '/' . $ano . '/CEAD - ' . $tipoSigla . '
+                        Ofício nº' . $numOficio . '/CEAD - ' . $tipoSigla . '
                     </td>
                 </tr>
                 <tr><td style="height: 40px;"></td></tr>

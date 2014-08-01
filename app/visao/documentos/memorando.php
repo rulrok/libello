@@ -51,12 +51,10 @@
     </div>
     <input id='remetente' value="<?php echo $this->remetente; ?>" type='hidden' name='remetente' />
     <input id='cargo_remetente' value="<?php echo $this->cargo_remetente; ?>" type='hidden' name='cargo_remetente'/>
-    <input type="hidden" name="i_numMemorando" value="-1" id="i_numMemorando"/>
+    <input type="hidden" name="i_numMemorando" value="" id="i_numMemorando"/>
     <input type="hidden" name="i_sigla" id="i_sigla" value="<?php echo($this->sigla); ?>"/>
     <input type="hidden" name="i_idmemorando" id="i_idmemorando" value="<?php echo $this->idmemorando; ?>"/>
     <input type="hidden" name="nada" id="acao" value="<?php echo $this->action; ?>"/>
-
-
 </form>
 
 <script type="text/javascript">
@@ -85,18 +83,41 @@
         }, null, false);
 
         $('#b_gerar').on('click', function() {
-            bloqueia();
-            if (confirm('Atenção, o memorando será gerado e registrado permanentemente! Tem certeza?')) {
-                capturaNumMemorando();
+//            bloqueia();
+//            if (confirm('Atenção, o memorando será gerado e registrado permanentemente! Tem certeza?')) {
+//                capturaNumMemorando();
+//            }
+//            desbloqueia();
+//            
+//            
+            var r = confirm("Atenção, o ofício será gerado e registrado permanentemente! Tem certeza?");
+            if (r) {
+                var id = $('#i_idmemorando').val();
+                var tipo = "memorando";
+                var acaoGerar = "index.php?c=documentos&a=validar" + tipo + "&i_id" + tipo + "=";
+                var data = ajax(acaoGerar + id, null, false, false);
+                if (data !== null && data !== undefined) {
+                    data = extrairJSON(data);
+                    if (data.status !== undefined && data.mensagem !== undefined) {
+                        showPopUp(data.mensagem, data.status);
+                        if (data.status.toLowerCase() === "sucesso") {
+                            document.paginaAlterada = false;
+//                            document.location.reload();
+                        }
+                    } else {
+                        showPopUp("Houve algum problema na resposta do servidor", "erro");
+                    }
+                } else {
+                    showPopUp("Houve algum problema na resposta do servidor.", "erro");
+                }
             }
-            desbloqueia();
         });
 
         $('#b_salvar').on('click', function() {
             bloqueia();
             if (confirm('Atenção, o memorando será salvo! Tem certeza?')) {
                 concatenarAssinaturas();
-                $('#i_numMemorando').val('-1');
+//                $('#i_numMemorando').val('-1');
                 $('#ajaxForm').submit();
             }
             desbloqueia();

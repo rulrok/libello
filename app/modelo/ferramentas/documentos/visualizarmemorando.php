@@ -28,7 +28,7 @@ $remetentes = explode(';',$remetente);
 $cargos_remetentes = explode(';',$cargo_remetente);
 //$mes = retornaMes($mes);
 setlocale(LC_ALL, 'portuguese-brazilian', 'ptb', 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8');
-$mes = utf8_encode(strftime("%B", mktime(0, 0, 0, $data[1], 10)));
+$mes = (strftime("%B", mktime(0, 0, 0, $data[1], 10)));
 $data = $dia . '/' . $mes . '/' . date('Y');
 //-------------------
 $document = '<<<EOF
@@ -72,7 +72,7 @@ $document = '<<<EOF
                 <tr><td style="height: 30px;"></td></tr>
                 <tr>
                     <td>
-                        Mem. nº' . $numMemorando . '/' . $ano . '/CEAD - ' . $tipoSigla . '
+                        Mem. nº' . $numMemorando .'/CEAD - ' . $tipoSigla . '
                     </td>
                 </tr>
                 <tr><td style="height: 40px;"></td></tr>

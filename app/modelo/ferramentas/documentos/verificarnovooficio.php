@@ -9,7 +9,7 @@ class verificarnovooficio extends verificadorFormularioAjax {
         try {
             $idusuario = obterUsuarioSessao()->get_idUsuario();
             $idOficio = fnDecrypt(filter_input(INPUT_POST, 'i_idoficio'));
-            $numOficio = filter_input(INPUT_POST, 'i_numOficio');
+//            $numOficio = filter_input(INPUT_POST, 'i_numOficio');
             $assunto = filter_input(INPUT_POST, 'assunto');
             $corpo = filter_input(INPUT_POST, 'corpo');
             $destino = filter_input(INPUT_POST, 'destino');
@@ -38,31 +38,35 @@ class verificarnovooficio extends verificadorFormularioAjax {
             $documento->set_tratamento($tratamento);
             $documento->set_cargo_destino($cargo_destino);
 
-            $estadoEdicao = 0;
+            $estadoEdicao = 1;
 
-            if ($numOficio == -1) {
-                $estadoEdicao = 1;
-            }
+//            if ($numOficio == -1) {
+//                $estadoEdicao = 1;
+//            }
             $documento->set_estadoEdicao($estadoEdicao);
-            $documento->set_numOficio($numOficio);
+//            $documento->set_numOficio($numOficio);
             $documentoDAO = new documentoDAO();
             if ($idOficio != -1) {
                 $documento->set_idOficio($idOficio);
-                $documentoDAO->update_oficio($documento);
-                $id = $idOficio;
+                $verifica = $documentoDAO->update_oficio($documento);
+//                $id = $idOficio;
             } else {
-
-                $problema = $documentoDAO->inserirOficio($documento);
-                $id = $documentoDAO->obterUltimoIdInserido();
+                $verifica = $documentoDAO->inserirOficio($documento);
+//                $id = $documentoDAO->obterUltimoIdInserido();
             }
 
-                $this->setId($id);
-            if ($numOficio != -1) {
-                $this->setDocumento('gerar');
-                $this->mensagemSucesso("Oficio gerado com sucesso!");
-            } else {
+//                $this->setId($id);
+//            if ($numOficio != -1) {
+//                $this->setDocumento('gerar');
+//                $this->mensagemSucesso("Oficio gerado com sucesso!");
+//            } else {
+            if ($verifica){
                 $this->mensagemSucesso("Oficio salvo com sucesso!");
+            } else {
+                $this->mensagemErro("Erro ao salvar ofício!");
             }
+                
+//            }
         } catch (Exception $e) {
             $this->mensagemErro($e->getMessage());
         }

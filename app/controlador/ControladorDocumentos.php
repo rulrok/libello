@@ -58,6 +58,14 @@ class ControladorDocumentos extends Controlador {
         $this->renderizar();
     }
 
+    public function acaoValidarmemorando() {
+        $this->renderizar();
+    }
+
+    public function acaoValidaroficio() {
+        $this->renderizar();
+    }
+
     public function acaoVerificarnovocabecalho() {
         $this->renderizar();
     }
@@ -118,8 +126,11 @@ class ControladorDocumentos extends Controlador {
             $this->visao->remetente = $oficioTmp->get_remetente();
             $this->visao->cargo_remetente = $oficioTmp->get_cargo_remetente();
             $this->visao->sigla = $oficioTmp->get_tipoSigla();
-            if ($oficioTmp->get_numOficio() != -1) {
-                $this->visao->action = 'aproveitar';
+//            if ($oficioTmp->get_numOficio() != -1) {
+            if (isset($_GET['acao'])) {
+                if ($_GET['acao'] == 'aproveitar') {
+                    $this->visao->action = 'aproveitar';
+                }
             } else {
                 $this->visao->idoficio = fnEncrypt($oficioTmp->get_idOficio());
                 $this->visao->action = 'editar';
@@ -209,8 +220,12 @@ class ControladorDocumentos extends Controlador {
             $this->visao->remetente = $oficioTmp->get_remetente();
             $this->visao->cargo_remetente = $oficioTmp->get_cargo_remetente();
             $this->visao->sigla = $oficioTmp->get_tipoSigla();
-            if ($oficioTmp->get_numMemorando() != -1) {
-                $this->visao->action = 'aproveitar';
+            
+//            if ($oficioTmp->get_numMemorando() != -1) {
+            if (isset($_GET['acao'])) {
+                if ($_GET['acao'] == 'aproveitar') {
+                    $this->visao->action = 'aproveitar';
+                }
             } else {
                 $this->visao->idmemorando = fnEncrypt($oficioTmp->get_idMemorando());
                 $this->visao->action = 'editar';

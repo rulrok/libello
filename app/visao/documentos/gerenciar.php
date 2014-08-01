@@ -158,7 +158,8 @@
         });
         var selectedElement = $($('#' + tab.attr('id') + ' tr')[1]).addClass('row_selected');
         if ($(".numeracao", selectedElement).text() != '')
-            if ($(".numeracao", selectedElement).text() != "Em aberto") {
+//            if ($(".numeracao", selectedElement).text() != "Em aberto") {
+            if ($(".validacao", selectedElement).text() != "Em aberto") {
                 $(".n_editavel").show();
                 if ($('.validacao', selectedElement).text() === 'Inválido') {
                     $('.btn-invalidar').addClass('disabled');
@@ -176,7 +177,8 @@
             $(this).parent().parent().find('tr.row_selected').removeClass('row_selected');
             $(this).addClass('row_selected');
             var selectedElement = this;
-            if ($(".numeracao", selectedElement).text() != "Em aberto") {
+//            if ($(".numeracao", selectedElement).text() != "Em aberto") {
+            if ($(".validacao", selectedElement).text() != "Em aberto") {
                 $(".n_editavel").show();
                 $(".editavel").hide();
                 if ($('.validacao', selectedElement).text() === 'Inválido') {
@@ -383,6 +385,11 @@
         });
 
 
+
+/**
+ * Abaixo, botões de ação e visualizacao 
+ *
+ */
         //função botão visualizar
         //mostra o documento de acordo com o tipo da tabela visivel
         $('.btn-visualizar').on('click', function() {
@@ -407,14 +414,48 @@
                     data = extrairJSON(data);
 
                     if (data.status !== undefined && data.mensagem !== undefined) {
+                        console.log(data.mensagem + "\n\n");
+                        console.log(data.status);
                         showPopUp(data.mensagem, data.status);
                         if (data.status.toLowerCase() === "sucesso") {
                             document.paginaAlterada = false;
+
+                            //Desabilitando os botões após a invalidação e antes da tela ser atualizada
+                            $('.btn-invalidar').addClass('disabled');
+                            $('.btn-invalidar').attr({disabled: true});
+
+                            $('.btn-visualizar').addClass('disabled');
+                            $('.btn-visualizar').attr({disabled: true});
+
+                            $('.btn-aproveitar').addClass('disabled');
+                            $('.btn-aproveitar').attr({disabled: true});
+
+                            $('.btn-todos').addClass('disabled');
+                            $('.btn-todos').attr({disabled: true});
+
+                            $('.btn-validos').addClass('disabled');
+                            $('.btn-validos').attr({disabled: true});
+
+                            $('.btn-invalidos').addClass('disabled');
+                            $('.btn-invalidos').attr({disabled: true});
+
+                            $('.btn-em-aberto').addClass('disabled');
+                            $('.btn-em-aberto').attr({disabled: true});
+
+                            $('.btn_oficio').addClass('disabled');
+                            $('.btn_oficio').attr({disabled: true});
+
+                            $('.btn_memorando').addClass('disabled');
+                            $('.btn_memorando').attr({disabled: true});
+
+                            setTimeout(function() {
+                                document.location.reload();
+                            }, 2500);
 //                            document.location.reload();
-                            $('tr.row_selected').hide();
+//                            $('tr.row_selected').hide();
                         }
                     } else {
-                        showPopUp("Houve algum problema na resposta do servidor.1", "erro");
+                        showPopUp("Houve algum problema na resposta do servidor", "erro");
                     }
                 } else {
                     showPopUp("Houve algum problema na resposta do servidor.", "erro");
@@ -429,6 +470,7 @@
             if (r) {
                 var id = $('tr.row_selected .campoID').text();
                 var doc = $('tr.row_selected').attr('doc');
+
                 var acaoDeletar = "index.php?c=documentos&a=deletar" + doc + "&i_id" + doc + "=";
                 var data = ajax(acaoDeletar + id, null, false, false);
                 if (data !== null && data !== undefined) {
@@ -438,12 +480,44 @@
                         showPopUp(data.mensagem, data.status);
                         if (data.status.toLowerCase() === "sucesso") {
                             document.paginaAlterada = false;
-//                            document.location.reload();
+
+                            //Desabilitando os botões após deletar a linha e antes da tela ser atualizada
+                            $('.btn-visualizar').addClass('disabled');
+                            $('.btn-visualizar').attr({disabled: true});
+
+                            $('.btn-editar').addClass('disabled');
+                            $('.btn-editar').attr({disabled: true});
+
+                            $('.btn-deletar').addClass('disabled');
+                            $('.btn-deletar').attr({disabled: true});
+
+                            $('.btn-todos').addClass('disabled');
+                            $('.btn-todos').attr({disabled: true});
+
+                            $('.btn-validos').addClass('disabled');
+                            $('.btn-validos').attr({disabled: true});
+
+                            $('.btn-invalidos').addClass('disabled');
+                            $('.btn-invalidos').attr({disabled: true});
+
+                            $('.btn-em-aberto').addClass('disabled');
+                            $('.btn-em-aberto').attr({disabled: true});
+
+                            $('.btn_oficio').addClass('disabled');
+                            $('.btn_oficio').attr({disabled: true});
+
+                            $('.btn_memorando').addClass('disabled');
+                            $('.btn_memorando').attr({disabled: true});
+
+                            //Ocultando a linha que acabou de ser apagada
                             $('tr.row_selected').hide();
 
+                            setTimeout(function() {
+                                document.location.reload();
+                            }, 2500);
                         }
                     } else {
-                        showPopUp("Houve algum problema na resposta do servidor.1", "erro");
+                        showPopUp("Houve algum problema na resposta do servidor", "erro");
                     }
                 } else {
                     showPopUp("Houve algum problema na resposta do servidor.", "erro");
@@ -464,7 +538,8 @@
             var doc = $('tr.row_selected').attr('doc');
             var temp = doc[0].toUpperCase() + doc.slice(1);
             var id = $('tr.row_selected .campoID').text();
-            document.location.href = '#!documentos|' + doc + '&id=' + id;
+            document.location.href = '#!documentos|' + doc + '&id=' + id + '&acao=aproveitar';
+//document.location.href = '#!documentos|' + doc + '&id=' + id;
         });
 
 <?php if (!isset($_GET['tipo'])) { ?>
@@ -475,7 +550,8 @@
 
     function mostraOpcao(opcao) {
         if (opcao == 'oficio') {
-            $(".editavel").hide(); //ESconde os botoes de vizualização/ediçao/exclusao
+            $(".editavel").hide(); //Esconde os botoes de vizualização/ediçao/exclusao
+            $(".n_editavel").hide(); //Esconde os botoes de visualizar/aproveitar/invalidar
             $('#b_oficio').addClass('active');
             $('#b_memorando').removeClass('active');
             $('#tabela1').show();
@@ -500,7 +576,8 @@
             }
 
         } else if (opcao == 'memorando') {
-            $(".editavel").hide(); //ESconde os botoes de vizualização/ediçao/exclusao
+            $(".editavel").hide(); //Esconde os botoes de vizualização/ediçao/exclusao
+            $(".n_editavel").hide(); //Esconde os botoes de visualizar/aproveitar/invalidar
             $('#b_memorando').addClass('active');
             $('#b_oficio').removeClass('active');
             $('#tabela1').hide();
