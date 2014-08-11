@@ -15,13 +15,17 @@ class ComboBoxCurso {
         return $codigo;
     }
 
-    public static function montarTodosOsCursos() {
+    public static function montarTodosOsCursos($tipo = null) {
         $codigo = "";
         $cursos = (new cursoDAO())->consultar();
         if (sizeof($cursos) == 0) {
             $codigo .= '<option value="default" selected="selected"> -- Não existem cursos cadastrados --</option>';
         } else {
+            if(!$tipo){
             $codigo .= '<option value="default" selected="selected"> -- Selecione uma opção --</option>';
+            }else{
+                $codigo .= '<option value="default" selected="selected"> Selecionado: '. $tipo . ' </option>';
+            }
             for ($i = 0; $i < sizeof($cursos); $i++) {
                 $codigo .= "<option value=\"" . fnEncrypt($cursos[$i]['idCurso']) . "\">" . $cursos[$i]['nomeCurso'] . "</option>";
             }

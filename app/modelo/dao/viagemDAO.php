@@ -94,7 +94,58 @@ class viagemDAO extends abstractDAO {
         $this->encerrarTransacao();
         return true;
     }
+    
+     public function recuperarViagem($idViagem) {
+         if (is_array($idViagem)) {
+            $idViagem = $idViagem['viagemID'];
+        }
 
+        $sql = "SELECT * from viagem WHERE idViagem = :idViagem";
+        $params = array(
+            ':idViagem' => [$idViagem, PDO::PARAM_INT]
+        );
+        return $this->executarSelect($sql, $params, false, 'Viagem');
+     }
+     
+    public function recuperarResponsavel($idResponsavel){
+        $sql = "SELECT PNome,UNome from usuario WHERE idUsuario = :idResponsavel";
+        $params = array(
+            ':idResponsavel' => [$idResponsavel, PDO::PARAM_INT]
+        );
+        $array =   $this->executarSelect($sql, $params);
+        $responsavel = $array[0][0] . " " . $array[0][1];
+        return $responsavel;
+    }
+    
+    public function recuperarCurso($idCurso){
+        $sql = "SELECT nomeCurso from cursospolos_curso WHERE idCurso = :idCurso";
+        $params = array(
+            ':idCurso' => [$idCurso, PDO::PARAM_INT]
+        );
+        $array =   $this->executarSelect($sql, $params);
+        $curso = $array[0][0];
+        return $curso;
+    }
+    
+    public function recuperarDestino($idDestino){
+        $sql = "SELECT nomePolo from cursospolos_polo WHERE idPolo = :idDestino";
+        $params = array(
+            ':idDestino' => [$idDestino, PDO::PARAM_INT]
+        );
+        $array = $this->executarSelect($sql, $params);
+        $destino = $array[0][0];
+        return $destino;
+    }
+    
+    public function recuperarDestinoAlternativo($idDestino){
+        $sql = "SELECT outroDestino from viagem WHERE idViagem = :idDestino";
+        $params = array(
+            ':idDestino' => [$idDestino, PDO::PARAM_INT]
+        );
+        $array = $this->executarSelect($sql,$params);
+        $destino = $array[0][0];
+        return $destino;
+    }
 }
 
 ?>

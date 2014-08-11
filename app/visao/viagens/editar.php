@@ -18,31 +18,34 @@
         <div class="line">
             <label for="responsavel">Responsável</label>
             <select required size="7" class="input-xxxlarge" id="responsavel" name="responsavel">
+                <option value="default" selected><?php echo $this->responsavel ?></option>
                 <?php echo $this->usuarios; ?>
             </select>
         </div>
         <hr>
+        <input type="button" onclick="esconderDatas()" value="Datas não devem ser re definidas."/>
         <div class="line input-daterange" id="datepicker">
 
             <label for='dataIda'>Data ida</label>
-            <input type="text" required id="dataIda" class=" input-large campoData" placeholder="Clique para escolher" name="start" >
+            <input type="text" required id="dataIda" class=" input-large campoData" placeholder="Clique para escolher" name="start"  >
             &nbsp;
             <label for='dataVolta'>Data volta</label>
             <input type="text" required id="dataVolta" class=" input-large campoData" placeholder="Clique para escolher" name="end" >
 
         </div>
-        <div class='line'>
+        <input type="button" onclick="esconderHoras()" value="Horas não devem ser re definidas."/>
+        <div class='line'id="timepicker">
             <label for='horaIda'>Hora ida</label>
-            <input type="text" required id="horaIda" class=" input-large campoHora" placeholder="HH:MM" name="horaIda" >
+            <input type="text" required id="horaIda" class=" input-large campoHora"   placeholder="Clique para escolher" name="horaIda"  >
             &nbsp;
             <label for='horaVolta'>Hora volta</label>
-            <input type="text" required id="horaVolta" class=" input-large campoHora" placeholder="HH:MM" name="horaVolta"  >
+            <input type="text" required id="horaVolta" class=" input-large campoHora" placeholder="Clique para escolher"name="horaVolta"  >
         </div>
         <hr>
         <div class="line">
             <label for='motivo'>Motivo da viagem</label>
             <select required id="motivo" class="input-xlarge" name="motivo">
-                <option value="default" selected>-- Escolha um motivo --</option>
+                <option value="default" selected><?php echo $this->motivo ?></option>
                 <option value="acompanhamento">Acompanhamento</option>
                 <option value="aula">Aula</option>
                 <option value="avaliação">Avaliação</option>
@@ -53,13 +56,13 @@
         <div class="line">
             <label for='estado'>Estado da viagem</label>
             <select required id="estado" class="input-xlarge" name="estado">
-                <option value="default">-- Escolha uma opção --</option>
+                <option value="default"><?php echo $this->estadoViagem ?></option>
                 <option value="planejada">Planejada</option>
             </select>
         </div>
         <div class="line">
             <label for='diarias'>Diárias</label>
-            <input required type="number" min="0.5" step="0.5" id="diarias" class=" input-large" name="diarias"  title='Quantidade de diárias' data-content="Valores como 0.5, 1, 1.5, 2, 2.5 etc">
+            <input required type="number" min="0.5" step="0.5" id="diarias" class=" input-large" name="diarias"  value="<?php echo $this->diarias ?>" title='Quantidade de diárias' data-content="Valores como 0.5, 1, 1.5, 2, 2.5 etc">
         </div>
         <hr>
         <fieldset>
@@ -78,7 +81,7 @@
         </fieldset>
     </fieldset>
     <button class="btn btn-large" type="reset">Limpar</button>
-    <button class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit">Cadastrar</button>
+    <button class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit">Atualizar dados</button>
 
 </form>
 <script src='publico/js/datasComRange.js' type='text/javascript'></script>
@@ -186,4 +189,11 @@
             }
         });
     });
+    
+    function esconderHoras(){
+        document.getElementById("timepicker").style.display = "none";
+    }
+    function esconderDatas(){
+        document.getElementById("datepicker").style.display = "none";
+    }
 </script>
