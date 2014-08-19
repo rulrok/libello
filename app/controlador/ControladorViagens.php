@@ -50,9 +50,9 @@ class ControladorViagens extends Controlador {
                 $this->visao->polos = ComboBoxPolo::montarTodosOsPolos($viagemDAO->recuperarDestino($viagem->get_idPolo()));
             }
             $this->visao->dataIda = $viagem->get_dataIda();
-            $this->visao->dataVotlta = $viagem->get_dataVolta();
+            $this->visao->dataVolta = $viagem->get_dataVolta();
             $this->visao->horaIda = $viagem->get_horaIda();
-            $this->visao->horaVotlta = $viagem->get_horaVolta();
+            $this->visao->horaVolta = $viagem->get_horaVolta();
             $this->visao->motivo = $viagem->get_motivo();
             $this->visao->estadoViagem = $viagem->get_estado();
             $this->visao->diarias = $viagem->get_diarias();

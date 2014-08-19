@@ -23,24 +23,26 @@
             </select>
         </div>
         <hr>
-        <input type="button" onclick="esconderDatas()" value="Datas não devem ser re definidas."/>
         <div class="line input-daterange" id="datepicker">
 
             <label for='dataIda'>Data ida</label>
-            <input type="text" required id="dataIda" class=" input-large campoData" placeholder="Clique para escolher" name="start"  >
+            <input type="text" required id="dataIda" class=" input-large campoData" placeholder="Clique para escolher" name="start" value="<?php echo $this->dataIda ?>"  >
             &nbsp;
             <label for='dataVolta'>Data volta</label>
-            <input type="text" required id="dataVolta" class=" input-large campoData" placeholder="Clique para escolher" name="end" >
+            <input type="text" required id="dataVolta" class=" input-large campoData" placeholder="Clique para escolher" name="end" value="<?php echo $this->dataVolta ?>" >
 
         </div>
-        <input type="button" onclick="esconderHoras()" value="Horas não devem ser re definidas."/>
+        
+        <br>
+        
         <div class='line'id="timepicker">
             <label for='horaIda'>Hora ida</label>
-            <input type="text" required id="horaIda" class=" input-large campoHora"   placeholder="Clique para escolher" name="horaIda"  >
+            <input type="text" required id="horaIda" class=" input-large campoHora"   placeholder="Clique para escolher" name="horaIda" value="<?php echo $this->horaIda ?>" >
             &nbsp;
             <label for='horaVolta'>Hora volta</label>
-            <input type="text" required id="horaVolta" class=" input-large campoHora" placeholder="Clique para escolher"name="horaVolta"  >
+            <input type="text" required id="horaVolta" class=" input-large campoHora" placeholder="Clique para escolher"name="horaVolta" value="<?php echo $this->horaVolta ?>"  >
         </div>
+        
         <hr>
         <div class="line">
             <label for='motivo'>Motivo da viagem</label>
@@ -81,7 +83,7 @@
         </fieldset>
     </fieldset>
     <button class="btn btn-large" type="reset">Limpar</button>
-    <button class="btn btn-large btn-success btn-primary btn-right" disabled id="submit" type="submit">Atualizar dados</button>
+    <button disabled class=" btn btn-primary btn-right" type="submit">Atualizar dados</button>
 
 </form>
 <script src='publico/js/datasComRange.js' type='text/javascript'></script>
@@ -164,7 +166,7 @@
             $("div.chosen-container li.search-field").addClass("default");
             setTimeout(function() {
                 liberarCadastro();
-            }, "200");
+            }, "2");
         });
 
         var campoPolo = document.getElementById("polo");
@@ -189,11 +191,4 @@
             }
         });
     });
-    
-    function esconderHoras(){
-        document.getElementById("timepicker").style.display = "none";
-    }
-    function esconderDatas(){
-        document.getElementById("datepicker").style.display = "none";
-    }
 </script>

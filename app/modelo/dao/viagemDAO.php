@@ -95,7 +95,60 @@ class viagemDAO extends abstractDAO {
         return true;
     }
     
-     public function recuperarViagem($idViagem) {
+    public function atualizar(){
+        
+    }
+    
+//    public function atualizar($idLivro, Livro $novosDados) {
+//
+//        $idLivro = (int) $idLivro;
+//        $dadosAntigos = livroDAO::recuperarLivro($idLivro);
+//
+//
+//        $nome = $novosDados->get_nomeLivro();
+//        if ($nome == null) {
+//            $nome = $dadosAntigos->get_nomeLivro();
+//        }
+//
+//        $quantidade = $novosDados->get_quantidade();
+//        if ($quantidade === null) {
+//            $quantidade = $dadosAntigos->get_quantidade();
+//        }
+//
+//        $dataEntrada = $novosDados->get_dataEntrada();
+//        if ($dataEntrada == null) {
+//            $dataEntrada = $dadosAntigos->get_dataEntrada();
+//        }
+//
+//        $numeroPatrimonio = $novosDados->get_numeroPatrimonio();
+//
+//        $descricao = $novosDados->get_descricao();
+//
+//        $grafica = $novosDados->get_grafica();
+//        if ($grafica == null) {
+//            $grafica = $dadosAntigos->get_grafica();
+//        }
+//
+//        $area = $novosDados->get_area();
+//        if ($area === null) {
+//            $area = $dadosAntigos->get_idArea();
+//        }
+//
+//        $sql = "UPDATE livro SET nomeLivro = :nome ,quantidade = :quantidade ,dataEntrada = :dataEntrada ,numeroPatrimonio = :numeroPatrimonio ,descricao= :descricao, grafica= :grafica, area= :area WHERE idLivro = :idLivro";
+//        $params = array(
+//            ':nome' => [$nome, PDO::PARAM_STR]
+//            , ':quantidade' => [$quantidade, PDO::PARAM_INT]
+//            , ':dataEntrada' => [$dataEntrada, $dataEntrada !== null ? PDO::PARAM_STR : PDO::PARAM_NULL]
+//            , ':numeroPatrimonio' => [$numeroPatrimonio, $numeroPatrimonio !== null ? PDO::PARAM_STR : PDO::PARAM_NULL] //TODO mudar o nome da variável para algo mais intuitivo
+//            , ':descricao' => [$descricao, $descricao !== null ? PDO::PARAM_STR : PDO::PARAM_NULL]
+//            , ':grafica' => [$grafica, PDO::PARAM_STR]
+//            , ':area' => [$area, PDO::PARAM_INT]
+//            , ':idLivro' => [$idLivro, PDO::PARAM_INT]
+//        );
+//        return $this->executarQuery($sql, $params);
+//    }
+    
+    public function recuperarViagem($idViagem) {
          if (is_array($idViagem)) {
             $idViagem = $idViagem['viagemID'];
         }
