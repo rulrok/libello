@@ -59,6 +59,10 @@
                 </span>
                 <span>&nbsp;&nbsp;&nbsp;Quantidade de itens:</span>
                 <span id="quantidadePatrimonios">1</span>              
+                <span class="hidden">
+                    <input type="number" name="quantidadePatrimoniosInput" id="quantidadePatrimoniosInput" value="1"/>
+                    <!--value=1 para que funcione para o caso de existir apenas um numero de matrimonio-->
+                </span>
             </span>
             <div id="linhasPatrimonios">
                 <span class="line patrimonio-1">
@@ -88,6 +92,8 @@
         $("#removerPatrimonio").prop("disabled", false);
         $("#quantidadePatrimonios").text(" " + quantidadePatrimonios);
 
+        $("#quantidadePatrimoniosInput").val(quantidadePatrimonios);
+        
         $("span.patrimonio-" + (quantidadePatrimonios - 1)).after(novoCodigoHtml());
         varrerCampos();
     }
@@ -109,8 +115,8 @@
         return codigoHtml.
                 replace("<n>", quantidadePatrimonios).
                 replace("<n>", quantidadePatrimonios).
+                replace("<n>", quantidadePatrimonios).
                 replace("<n>", quantidadePatrimonios);
-
     }
 
     function botaoLimpar() {
@@ -169,7 +175,7 @@
 //                                    $("input[id^=numeroPatrimonio]").after("<img class=\"obrigatorio\" src=\"publico/imagens/icones/campo_obrigatorio.png\">");
 //                                }
             if (codigoHtml === "") {
-                codigoHtml = $("#linhasPatrimonios").last().html().replace("-1", "-<n>").replace("-1", "-<n>").replace("-1", "-<n>");
+                codigoHtml = $("#linhasPatrimonios").last().html().replace("-1", "-<n>").replace("-1", "-<n>").replace("-1", "-<n>").replace("-1", "-<n>");
                 varrerCampos();
             }
 

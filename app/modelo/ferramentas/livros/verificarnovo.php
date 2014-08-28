@@ -36,7 +36,8 @@ class verificarnovolivro extends verificadorFormularioAjax {
         $livroDAO = new livroDAO();
         if ($tipo == "patrimonio") {
 
-            $quantidadePatrimonios = filter_input(INPUT_POST, 'quantidadePatrimonios');
+//            $quantidadePatrimonios = filter_input(INPUT_POST, 'quantidadePatrimonios');
+            $quantidadePatrimonios = filter_input(INPUT_POST, 'quantidadePatrimoniosInput');
 
 //                $colecaolivros = [];
             $aux = new livro();
