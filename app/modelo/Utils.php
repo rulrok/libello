@@ -10,7 +10,9 @@ include_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/seguranca.php';
  */
 function registrar_erro($mensagem, Usuario $usuarioAfetado = null) {
 
-
+    //O lançamento abaixo é feito para que seja capturado pelo modelo da ação, de forma que seja printado
+    //na tela o erro para o usuário. Talvez futuramente este lançamento deva ser aprimorado de alguma forma.
+    throw new Exception($mensagem);
 
     $usuarioLogado = obterUsuarioSessao();
     if ($usuarioLogado !== null) {
