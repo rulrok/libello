@@ -48,6 +48,12 @@
                 </span>
                 <span>&nbsp;&nbsp;&nbsp;Quantidade de itens:</span>
                 <span id="quantidadePatrimonios">1</span>
+                
+                <span class="hidden">
+                    <input type="number" name="quantidadePatrimoniosInput" id="quantidadePatrimoniosInput" value="1"/>
+                    <!--value=1 para que funcione para o caso de existir apenas um numero de matrimonio-->
+                </span>
+                
             </span>
             <div id="linhasPatrimonios">
                 <span class="line patrimonio-1">

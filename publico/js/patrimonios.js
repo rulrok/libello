@@ -6,6 +6,8 @@ function adicionarNovoPatrimonio() {
     $("#removerPatrimonio").removeClass("disabled");
     $("#removerPatrimonio").prop("disabled", false);
     $("#quantidadePatrimonios").text(quantidadePatrimonios);
+    
+    $("#quantidadePatrimoniosInput").val(quantidadePatrimonios);
 
     $("span.patrimonio-" + (quantidadePatrimonios - 1)).after(novoCodigoHtml());
     varrerCampos();

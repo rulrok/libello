@@ -20,7 +20,9 @@ class verificarnovoequipamento extends verificadorFormularioAjax {
         $equipamento->set_nomeEquipamento($nomeEquipamento)->set_dataEntrada($dataEntrada)->set_descricao($descricao);
 
         if ($tipo == "patrimonio") {
-            $quantidade = filter_input(INPUT_POST, 'quantidadePatrimonios');
+//            $quantidade = filter_input(INPUT_POST, 'quantidadePatrimonios');
+            $quantidade = filter_input(INPUT_POST, 'quantidadePatrimoniosInput');
+            
 
 //            $colecaoEquipamentos = [];
             $aux = new Equipamento();
