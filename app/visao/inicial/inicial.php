@@ -25,6 +25,7 @@
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.dataTables_themeroller.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.chosen.css"/>
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.jstree.css"/> 
+        <link type="text/css" rel="stylesheet" href="publico/css/jquery.toastmessage.css"/> 
         <link type="text/css" rel="stylesheet" media="screen" href="publico/css/browser-detection.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/thumbnailgrid/component.css"/> 
         <link type="text/css" rel="stylesheet" href="publico/css/picbox/picbox.css"/>
@@ -234,6 +235,7 @@
         <script src="publico/js/jquery/jquery.dataTables.custom.js"></script>
         <script src='publico/js/jquery/jquery.maskedinput.js'></script>
         <script src='publico/js/jquery/jquery.jstree.js'></script> 
+        <script src='publico/js/jquery/jquery.toastmessage.js'></script> 
         <script src="publico/js/oTable.js" ></script>
         <script src="publico/js/bootstrap/bootstrap.js"></script> 
         <script src="publico/js/bootstrap/bootstrap-datepicker.js"></script>

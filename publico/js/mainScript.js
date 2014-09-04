@@ -631,36 +631,40 @@ function showPopUp(data, type) {
             texto = "#3a87ad !important";
             fundo = "#d9edf7";
             borda = "#bce8f1";
+            type="showNoticeToast";
             break;
         case "error":
         case "erro":
             texto = "#b94a48 !important";
             fundo = "#f2dede";
             borda = "#eed3d7";
+            type="showErrorToast";
             break;
         case "sucesso":
         case "success":
             texto = "#468847 !important";
             fundo = "#dff0d8";
             borda = "#d6e9c6";
+            type="showSuccessToast";
             break;
     }
+    $().toastmessage(type, data);
 
-    $(".popUpContent").empty();
-    $(".popUp").css('color', texto);
-    $(".popUp").css('background-color', fundo);
-    $(".popUp").css('border-color', borda);
-//    $(".popUp").css('left', 480);
-    $(".popUp").css('left', 570);
-    $(".popUpContent").append(data);
-    $(".popUp").show(200, function() {
-        $(".botao_fechar").show(100, function() {
-            $(".popUp").css("display", "table");
-            //Aplica o efeito de lightbox (esmaece o fundo e destaca o popUp)
-            $(".shaderFrame").css("visibility", "visible").animate({opacity: "0.5"}, 150);
-        });
-        $(this).effect("shake", {}, 500);
-    });
+//    $(".popUpContent").empty();
+//    $(".popUp").css('color', texto);
+//    $(".popUp").css('background-color', fundo);
+//    $(".popUp").css('border-color', borda);
+////    $(".popUp").css('left', 480);
+//    $(".popUp").css('left', 570);
+//    $(".popUpContent").append(data);
+//    $(".popUp").show(200, function() {
+//        $(".botao_fechar").show(100, function() {
+//            $(".popUp").css("display", "table");
+//            //Aplica o efeito de lightbox (esmaece o fundo e destaca o popUp)
+//            $(".shaderFrame").css("visibility", "visible").animate({opacity: "0.5"}, 150);
+//        });
+//        $(this).effect("shake", {}, 500);
+//    });
     
     //Trecho sem efeito de esmaecimento
     //    $(".popUp").show(200, function() {

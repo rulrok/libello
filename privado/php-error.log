@@ -1,329 +1,39 @@
-[03-Apr-2014 09:24:15 America/Sao_Paulo] PHP Warning:  require_once(biblioteca/seguranca/seguranca.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:24:15 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:24:15 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:24:15 America/Sao_Paulo] PHP Fatal error:  require_once(): Failed opening required 'biblioteca/seguranca/seguranca.php' (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:24:15 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:24:15 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:24:35 America/Sao_Paulo] PHP Warning:  require_once(biblioteca/seguranca/seguranca.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:24:35 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:24:35 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:24:35 America/Sao_Paulo] PHP Fatal error:  require_once(): Failed opening required 'biblioteca/seguranca/seguranca.php' (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:24:35 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:24:35 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:24:36 America/Sao_Paulo] PHP Warning:  require_once(biblioteca/seguranca/seguranca.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:24:36 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:24:36 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:24:36 America/Sao_Paulo] PHP Fatal error:  require_once(): Failed opening required 'biblioteca/seguranca/seguranca.php' (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:24:36 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:24:36 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:24:37 America/Sao_Paulo] PHP Warning:  require_once(biblioteca/seguranca/seguranca.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:24:37 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:24:37 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:24:37 America/Sao_Paulo] PHP Fatal error:  require_once(): Failed opening required 'biblioteca/seguranca/seguranca.php' (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:24:37 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:24:37 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:24:56 America/Sao_Paulo] PHP Warning:  require_once(biblioteca/seguranca/seguranca.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:24:56 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:24:56 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:24:56 America/Sao_Paulo] PHP Fatal error:  require_once(): Failed opening required 'biblioteca/seguranca/seguranca.php' (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:24:56 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:24:56 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:25:58 America/Sao_Paulo] PHP Warning:  require_once(biblioteca/seguranca/seguranca.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:25:58 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:25:58 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:25:58 America/Sao_Paulo] PHP Fatal error:  require_once(): Failed opening required 'biblioteca/seguranca/seguranca.php' (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:25:58 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:25:58 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:25:59 America/Sao_Paulo] PHP Warning:  require_once(biblioteca/seguranca/seguranca.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:25:59 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:25:59 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:25:59 America/Sao_Paulo] PHP Fatal error:  require_once(): Failed opening required 'biblioteca/seguranca/seguranca.php' (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:25:59 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:25:59 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:25:59 America/Sao_Paulo] PHP Warning:  require_once(biblioteca/seguranca/seguranca.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:25:59 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:25:59 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:25:59 America/Sao_Paulo] PHP Fatal error:  require_once(): Failed opening required 'biblioteca/seguranca/seguranca.php' (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:25:59 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:25:59 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:26:00 America/Sao_Paulo] PHP Warning:  require_once(biblioteca/seguranca/seguranca.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:26:00 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:26:00 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:26:00 America/Sao_Paulo] PHP Fatal error:  require_once(): Failed opening required 'biblioteca/seguranca/seguranca.php' (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:26:00 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:26:00 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:26:31 America/Sao_Paulo] PHP Warning:  require_once(biblioteca/seguranca/seguranca.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:26:31 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:26:31 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:26:31 America/Sao_Paulo] PHP Fatal error:  require_once(): Failed opening required 'biblioteca/seguranca/seguranca.php' (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:26:31 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:26:31 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:26:32 America/Sao_Paulo] PHP Warning:  require_once(biblioteca/seguranca/seguranca.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:26:32 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:26:32 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:26:32 America/Sao_Paulo] PHP Fatal error:  require_once(): Failed opening required 'biblioteca/seguranca/seguranca.php' (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:26:32 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:26:32 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:26:32 America/Sao_Paulo] PHP Warning:  require_once(biblioteca/seguranca/seguranca.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:26:32 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:26:32 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:26:32 America/Sao_Paulo] PHP Fatal error:  require_once(): Failed opening required 'biblioteca/seguranca/seguranca.php' (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:26:32 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:26:32 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:26:38 America/Sao_Paulo] PHP Warning:  require_once(biblioteca/seguranca/seguranca.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:26:38 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:26:38 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:26:38 America/Sao_Paulo] PHP Fatal error:  require_once(): Failed opening required 'biblioteca/seguranca/seguranca.php' (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 10
-[03-Apr-2014 09:26:38 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:26:38 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/manutencao/index.php:0
-[03-Apr-2014 09:28:18 America/Sao_Paulo] PHP Warning:  require_once(./../biblioteca/configuracoes.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 2
-[03-Apr-2014 09:28:18 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:28:18 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:28:18 America/Sao_Paulo] PHP   2. require() /Applications/MAMP/htdocs/libello/index.php:30
-[03-Apr-2014 09:28:18 America/Sao_Paulo] PHP Fatal error:  require_once(): Failed opening required './../biblioteca/configuracoes.php' (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 2
-[03-Apr-2014 09:28:18 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:28:18 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:28:18 America/Sao_Paulo] PHP   2. require() /Applications/MAMP/htdocs/libello/index.php:30
-[03-Apr-2014 09:28:54 America/Sao_Paulo] PHP Warning:  include_once(./../biblioteca/configuracoes.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 2
-[03-Apr-2014 09:28:54 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:28:54 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:28:54 America/Sao_Paulo] PHP   2. require() /Applications/MAMP/htdocs/libello/index.php:30
-[03-Apr-2014 09:28:54 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening './../biblioteca/configuracoes.php' for inclusion (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 2
-[03-Apr-2014 09:28:54 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:28:54 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:28:54 America/Sao_Paulo] PHP   2. require() /Applications/MAMP/htdocs/libello/index.php:30
-[03-Apr-2014 09:29:05 America/Sao_Paulo] PHP Warning:  include_once(./../biblioteca/configuracoes.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 2
-[03-Apr-2014 09:29:05 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:29:05 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:29:05 America/Sao_Paulo] PHP   2. require() /Applications/MAMP/htdocs/libello/index.php:30
-[03-Apr-2014 09:29:05 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening './../biblioteca/configuracoes.php' for inclusion (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 2
-[03-Apr-2014 09:29:05 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:29:05 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:29:05 America/Sao_Paulo] PHP   2. require() /Applications/MAMP/htdocs/libello/index.php:30
-[03-Apr-2014 09:29:07 America/Sao_Paulo] PHP Warning:  include_once(./../biblioteca/configuracoes.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 2
-[03-Apr-2014 09:29:07 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:29:07 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:29:07 America/Sao_Paulo] PHP   2. require() /Applications/MAMP/htdocs/libello/index.php:30
-[03-Apr-2014 09:29:07 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening './../biblioteca/configuracoes.php' for inclusion (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 2
-[03-Apr-2014 09:29:07 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:29:07 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:29:07 America/Sao_Paulo] PHP   2. require() /Applications/MAMP/htdocs/libello/index.php:30
-[03-Apr-2014 09:29:19 America/Sao_Paulo] PHP Warning:  include_once(./../biblioteca/configuracoes.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 2
-[03-Apr-2014 09:29:19 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:29:19 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:29:19 America/Sao_Paulo] PHP   2. require() /Applications/MAMP/htdocs/libello/index.php:30
-[03-Apr-2014 09:29:19 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening './../biblioteca/configuracoes.php' for inclusion (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 2
-[03-Apr-2014 09:29:19 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:29:19 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:29:19 America/Sao_Paulo] PHP   2. require() /Applications/MAMP/htdocs/libello/index.php:30
-[03-Apr-2014 09:29:25 America/Sao_Paulo] PHP Warning:  include_once(./../biblioteca/configuracoes.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 2
-[03-Apr-2014 09:29:25 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:29:25 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:29:25 America/Sao_Paulo] PHP   2. require() /Applications/MAMP/htdocs/libello/index.php:30
-[03-Apr-2014 09:29:25 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening './../biblioteca/configuracoes.php' for inclusion (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 2
-[03-Apr-2014 09:29:25 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:29:25 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:29:25 America/Sao_Paulo] PHP   2. require() /Applications/MAMP/htdocs/libello/index.php:30
-[03-Apr-2014 09:29:44 America/Sao_Paulo] PHP Warning:  include_once(./../biblioteca/configuracoes.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 2
-[03-Apr-2014 09:29:44 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:29:44 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:29:44 America/Sao_Paulo] PHP   2. require() /Applications/MAMP/htdocs/libello/index.php:30
-[03-Apr-2014 09:29:44 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening './../biblioteca/configuracoes.php' for inclusion (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 2
-[03-Apr-2014 09:29:44 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:29:44 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:29:44 America/Sao_Paulo] PHP   2. require() /Applications/MAMP/htdocs/libello/index.php:30
-[03-Apr-2014 09:30:28 America/Sao_Paulo] PHP Warning:  include_once(./../biblioteca/configuracoes.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 2
-[03-Apr-2014 09:30:28 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:30:28 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:30:28 America/Sao_Paulo] PHP   2. require() /Applications/MAMP/htdocs/libello/index.php:30
-[03-Apr-2014 09:30:28 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening './../biblioteca/configuracoes.php' for inclusion (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 2
-[03-Apr-2014 09:30:28 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:30:28 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:30:28 America/Sao_Paulo] PHP   2. require() /Applications/MAMP/htdocs/libello/index.php:30
-[03-Apr-2014 09:31:12 America/Sao_Paulo] PHP Warning:  include_once(./../biblioteca/configuracoes.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 2
-[03-Apr-2014 09:31:12 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:31:12 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:31:12 America/Sao_Paulo] PHP   2. require() /Applications/MAMP/htdocs/libello/index.php:30
-[03-Apr-2014 09:31:12 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening './../biblioteca/configuracoes.php' for inclusion (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/manutencao/index.php on line 2
-[03-Apr-2014 09:31:12 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:31:12 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:31:12 America/Sao_Paulo] PHP   2. require() /Applications/MAMP/htdocs/libello/index.php:30
-[03-Apr-2014 09:34:25 America/Sao_Paulo] PHP Warning:  filesize(): stat failed for /Applications/MAMP/htdocs/libello/privado/galerias/11111111111/2-1-1-D-CE3_1395664633.png in /Applications/MAMP/htdocs/libello/app/modelo/ferramentas/imagens/visualizarimagem.php on line 13
-[03-Apr-2014 09:34:25 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:34:25 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:34:25 America/Sao_Paulo] PHP   2. Mvc->rodar() /Applications/MAMP/htdocs/libello/index.php:37
-[03-Apr-2014 09:34:25 America/Sao_Paulo] PHP   3. ControladorImagens->acaoVisualizarimagem() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:97
-[03-Apr-2014 09:34:25 America/Sao_Paulo] PHP   4. Controlador->renderizar() /Applications/MAMP/htdocs/libello/app/controlador/ControladorImagens.php:137
-[03-Apr-2014 09:34:25 America/Sao_Paulo] PHP   5. Visao->renderizar() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Controlador.php:18
-[03-Apr-2014 09:34:25 America/Sao_Paulo] PHP   6. require() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Visao.php:36
-[03-Apr-2014 09:34:25 America/Sao_Paulo] PHP   7. filesize() /Applications/MAMP/htdocs/libello/app/modelo/ferramentas/imagens/visualizarimagem.php:13
-[03-Apr-2014 09:34:28 America/Sao_Paulo] PHP Warning:  filesize(): stat failed for /Applications/MAMP/htdocs/libello/privado/galerias/11111111111/2-1-1-C-CE3_1395664416.png in /Applications/MAMP/htdocs/libello/app/modelo/ferramentas/imagens/visualizarimagem.php on line 13
-[03-Apr-2014 09:34:28 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:34:28 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:34:28 America/Sao_Paulo] PHP   2. Mvc->rodar() /Applications/MAMP/htdocs/libello/index.php:37
-[03-Apr-2014 09:34:28 America/Sao_Paulo] PHP   3. ControladorImagens->acaoVisualizarimagem() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:97
-[03-Apr-2014 09:34:28 America/Sao_Paulo] PHP   4. Controlador->renderizar() /Applications/MAMP/htdocs/libello/app/controlador/ControladorImagens.php:137
-[03-Apr-2014 09:34:28 America/Sao_Paulo] PHP   5. Visao->renderizar() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Controlador.php:18
-[03-Apr-2014 09:34:28 America/Sao_Paulo] PHP   6. require() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Visao.php:36
-[03-Apr-2014 09:34:28 America/Sao_Paulo] PHP   7. filesize() /Applications/MAMP/htdocs/libello/app/modelo/ferramentas/imagens/visualizarimagem.php:13
-[03-Apr-2014 09:38:37 America/Sao_Paulo] PHP Fatal error:  Class 'TipoEventoUsuarios' not found in /Applications/MAMP/htdocs/libello/app/modelo/dao/usuarioDAO.php on line 439
-[03-Apr-2014 09:38:37 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:38:37 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:38:37 America/Sao_Paulo] PHP   2. Mvc->rodar() /Applications/MAMP/htdocs/libello/index.php:37
-[03-Apr-2014 09:38:37 America/Sao_Paulo] PHP   3. ControladorUsuarios->acaoVerificarEdicao() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:97
-[03-Apr-2014 09:38:37 America/Sao_Paulo] PHP   4. Controlador->renderizar() /Applications/MAMP/htdocs/libello/app/controlador/ControladorUsuarios.php:63
-[03-Apr-2014 09:38:37 America/Sao_Paulo] PHP   5. Visao->renderizar() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Controlador.php:18
-[03-Apr-2014 09:38:37 America/Sao_Paulo] PHP   6. require() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Visao.php:36
-[03-Apr-2014 09:38:37 America/Sao_Paulo] PHP   7. verificadorFormularioAjax->verificar() /Applications/MAMP/htdocs/libello/app/modelo/ferramentas/usuarios/verificaredicao.php:97
-[03-Apr-2014 09:38:37 America/Sao_Paulo] PHP   8. verificarEdicaoUsuario->_validar() /Applications/MAMP/htdocs/libello/app/visao/verificadorFormularioAjax.php:40
-[03-Apr-2014 09:38:37 America/Sao_Paulo] PHP   9. usuarioDAO->registrarAlteracaoUsuario() /Applications/MAMP/htdocs/libello/app/modelo/ferramentas/usuarios/verificaredicao.php:88
-[03-Apr-2014 09:42:33 America/Sao_Paulo] PHP Warning:  require_once(/Applications/MAMP/htdocs/libello/app/modelo/enumeracao/TipoEventoSistema.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/app/modelo/dao/sistemaDAO.php on line 4
-[03-Apr-2014 09:42:33 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:42:33 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:42:33 America/Sao_Paulo] PHP   2. require_once() /Applications/MAMP/htdocs/libello/index.php:15
-[03-Apr-2014 09:42:33 America/Sao_Paulo] PHP   3. require_once() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:4
-[03-Apr-2014 09:42:33 America/Sao_Paulo] PHP   4. require_once() /Applications/MAMP/htdocs/libello/biblioteca/seguranca/seguranca.php:7
-[03-Apr-2014 09:42:33 America/Sao_Paulo] PHP Fatal error:  require_once(): Failed opening required '/Applications/MAMP/htdocs/libello/app/modelo/enumeracao/TipoEventoSistema.php' (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/app/modelo/dao/sistemaDAO.php on line 4
-[03-Apr-2014 09:42:33 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:42:33 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:42:33 America/Sao_Paulo] PHP   2. require_once() /Applications/MAMP/htdocs/libello/index.php:15
-[03-Apr-2014 09:42:33 America/Sao_Paulo] PHP   3. require_once() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:4
-[03-Apr-2014 09:42:33 America/Sao_Paulo] PHP   4. require_once() /Applications/MAMP/htdocs/libello/biblioteca/seguranca/seguranca.php:7
-[03-Apr-2014 09:43:17 America/Sao_Paulo] PHP Fatal error:  Class 'TipoEventoUsuarios' not found in /Applications/MAMP/htdocs/libello/app/modelo/dao/usuarioDAO.php on line 439
-[03-Apr-2014 09:43:17 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:43:17 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:43:17 America/Sao_Paulo] PHP   2. Mvc->rodar() /Applications/MAMP/htdocs/libello/index.php:37
-[03-Apr-2014 09:43:17 America/Sao_Paulo] PHP   3. ControladorUsuarios->acaoVerificarEdicao() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:97
-[03-Apr-2014 09:43:17 America/Sao_Paulo] PHP   4. Controlador->renderizar() /Applications/MAMP/htdocs/libello/app/controlador/ControladorUsuarios.php:63
-[03-Apr-2014 09:43:17 America/Sao_Paulo] PHP   5. Visao->renderizar() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Controlador.php:18
-[03-Apr-2014 09:43:17 America/Sao_Paulo] PHP   6. require() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Visao.php:36
-[03-Apr-2014 09:43:17 America/Sao_Paulo] PHP   7. verificadorFormularioAjax->verificar() /Applications/MAMP/htdocs/libello/app/modelo/ferramentas/usuarios/verificaredicao.php:97
-[03-Apr-2014 09:43:17 America/Sao_Paulo] PHP   8. verificarEdicaoUsuario->_validar() /Applications/MAMP/htdocs/libello/app/visao/verificadorFormularioAjax.php:40
-[03-Apr-2014 09:43:17 America/Sao_Paulo] PHP   9. usuarioDAO->registrarAlteracaoUsuario() /Applications/MAMP/htdocs/libello/app/modelo/ferramentas/usuarios/verificaredicao.php:88
-[03-Apr-2014 09:44:05 America/Sao_Paulo] Mensagem: <SQLSTATE[42S02]: Base table or view not found: 1146 Table 'novo_controle_cead.usuario_evento' doesn't exist>
+[31-Aug-2014 19:28:43 America/Sao_Paulo] Mensagem: <SQLSTATE[42S02]: Base table or view not found: 1146 Table 'libello.usuario_evento' doesn't exist>
 [Usuário: Cead Ead(CE3), admin@cead.com, papel: 1, id: 1]
 
-
-[03-Apr-2014 09:46:48 America/Sao_Paulo] Mensagem: <SQLSTATE[42S02]: Base table or view not found: 1146 Table 'novo_controle_cead.usuario_evento' doesn't exist>
+
+[31-Aug-2014 19:29:59 America/Sao_Paulo] PHP Warning:  filesize(): stat failed for C:/wamp/www//libello/privado/galerias/11111111111/2-1-1-B-CE3_1395751275.png in C:\wamp\www\libello\app\modelo\ferramentas\imagens\visualizarimagem.php on line 13
+[31-Aug-2014 19:29:59 America/Sao_Paulo] PHP Stack trace:
+[31-Aug-2014 19:29:59 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[31-Aug-2014 19:29:59 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[31-Aug-2014 19:29:59 America/Sao_Paulo] PHP   3. ControladorImagens->acaoVisualizarimagem() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:97
+[31-Aug-2014 19:29:59 America/Sao_Paulo] PHP   4. Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorImagens.php:137
+[31-Aug-2014 19:29:59 America/Sao_Paulo] PHP   5. Visao->renderizar() C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:18
+[31-Aug-2014 19:29:59 America/Sao_Paulo] PHP   6. require() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:36
+[31-Aug-2014 19:29:59 America/Sao_Paulo] PHP   7. filesize() C:\wamp\www\libello\app\modelo\ferramentas\imagens\visualizarimagem.php:13
+[31-Aug-2014 19:30:07 America/Sao_Paulo] PHP Warning:  filesize(): stat failed for C:/wamp/www//libello/privado/galerias/11111111111/2-1-1-C-CE3_1395664416.png in C:\wamp\www\libello\app\modelo\ferramentas\imagens\visualizarimagem.php on line 13
+[31-Aug-2014 19:30:07 America/Sao_Paulo] PHP Stack trace:
+[31-Aug-2014 19:30:07 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[31-Aug-2014 19:30:07 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[31-Aug-2014 19:30:07 America/Sao_Paulo] PHP   3. ControladorImagens->acaoVisualizarimagem() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:97
+[31-Aug-2014 19:30:07 America/Sao_Paulo] PHP   4. Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorImagens.php:137
+[31-Aug-2014 19:30:07 America/Sao_Paulo] PHP   5. Visao->renderizar() C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:18
+[31-Aug-2014 19:30:07 America/Sao_Paulo] PHP   6. require() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:36
+[31-Aug-2014 19:30:07 America/Sao_Paulo] PHP   7. filesize() C:\wamp\www\libello\app\modelo\ferramentas\imagens\visualizarimagem.php:13
+[31-Aug-2014 19:30:08 America/Sao_Paulo] PHP Warning:  readfile(privado/galerias/11111111111/2-1-1-C-CE3_1395664416.png): failed to open stream: No such file or directory in C:\wamp\www\libello\app\modelo\ferramentas\imagens\baixarimagem.php on line 22
+[31-Aug-2014 19:30:08 America/Sao_Paulo] PHP Stack trace:
+[31-Aug-2014 19:30:08 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[31-Aug-2014 19:30:08 America/Sao_Paulo] PHP   2. Mvc->rodar() C:\wamp\www\libello\index.php:37
+[31-Aug-2014 19:30:08 America/Sao_Paulo] PHP   3. ControladorImagens->acaoBaixarimagem() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:97
+[31-Aug-2014 19:30:08 America/Sao_Paulo] PHP   4. Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorImagens.php:127
+[31-Aug-2014 19:30:08 America/Sao_Paulo] PHP   5. Visao->renderizar() C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:18
+[31-Aug-2014 19:30:08 America/Sao_Paulo] PHP   6. require() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:36
+[31-Aug-2014 19:30:08 America/Sao_Paulo] PHP   7. readfile() C:\wamp\www\libello\app\modelo\ferramentas\imagens\baixarimagem.php:22
+[04-Sep-2014 12:28:58 America/Sao_Paulo] Mensagem: <SQLSTATE[42S02]: Base table or view not found: 1146 Table 'libello.usuario_evento' doesn't exist>
 [Usuário: Cead Ead(CE3), admin@cead.com, papel: 1, id: 1]
 
-
-[03-Apr-2014 09:46:56 America/Sao_Paulo] Mensagem: <SQLSTATE[42S02]: Base table or view not found: 1146 Table 'novo_controle_cead.usuario_evento' doesn't exist>
+
+[04-Sep-2014 12:29:05 America/Sao_Paulo] Mensagem: <SQLSTATE[42S02]: Base table or view not found: 1146 Table 'libello.usuario_evento' doesn't exist>
 [Usuário: Cead Ead(CE3), admin@cead.com, papel: 1, id: 1]
 
-
-[03-Apr-2014 09:47:08 America/Sao_Paulo] Mensagem: <SQLSTATE[42S02]: Base table or view not found: 1146 Table 'novo_controle_cead.usuario_evento' doesn't exist>
-[Usuário: Cead Ead(CE3), admin@cead.com, papel: 1, id: 1]
-
-
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP Notice:  Use of undefined constant APP_LIBRARY_DIR - assumed 'APP_LIBRARY_DIR' in /Applications/MAMP/htdocs/libello/app/controlador/ControladorCursospolos.php on line 3
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   2. Mvc->rodar() /Applications/MAMP/htdocs/libello/index.php:37
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   3. class_exists() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   4. spl_autoload_call() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   5. CarregadorAutomatico::carregar() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:0
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   6. require() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/CarregadorAutomatico.php:20
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP Warning:  include_once(APP_LIBRARY_DIRMvc/Controlador.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/app/controlador/ControladorCursospolos.php on line 3
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   2. Mvc->rodar() /Applications/MAMP/htdocs/libello/index.php:37
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   3. class_exists() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   4. spl_autoload_call() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   5. CarregadorAutomatico::carregar() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:0
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   6. require() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/CarregadorAutomatico.php:20
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening 'APP_LIBRARY_DIRMvc/Controlador.php' for inclusion (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/app/controlador/ControladorCursospolos.php on line 3
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   2. Mvc->rodar() /Applications/MAMP/htdocs/libello/index.php:37
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   3. class_exists() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   4. spl_autoload_call() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   5. CarregadorAutomatico::carregar() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:0
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   6. require() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/CarregadorAutomatico.php:20
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP Notice:  Use of undefined constant APP_LIBRARY_DIR - assumed 'APP_LIBRARY_DIR' in /Applications/MAMP/htdocs/libello/app/controlador/ControladorCursospolos.php on line 4
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   2. Mvc->rodar() /Applications/MAMP/htdocs/libello/index.php:37
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   3. class_exists() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   4. spl_autoload_call() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   5. CarregadorAutomatico::carregar() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:0
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   6. require() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/CarregadorAutomatico.php:20
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP Warning:  include_once(APP_LIBRARY_DIRseguranca/criptografia.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/app/controlador/ControladorCursospolos.php on line 4
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   2. Mvc->rodar() /Applications/MAMP/htdocs/libello/index.php:37
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   3. class_exists() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   4. spl_autoload_call() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   5. CarregadorAutomatico::carregar() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:0
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   6. require() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/CarregadorAutomatico.php:20
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening 'APP_LIBRARY_DIRseguranca/criptografia.php' for inclusion (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/app/controlador/ControladorCursospolos.php on line 4
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   2. Mvc->rodar() /Applications/MAMP/htdocs/libello/index.php:37
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   3. class_exists() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   4. spl_autoload_call() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   5. CarregadorAutomatico::carregar() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:0
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   6. require() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/CarregadorAutomatico.php:20
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP Notice:  Use of undefined constant APP_LIBRARY_DIR - assumed 'APP_LIBRARY_DIR' in /Applications/MAMP/htdocs/libello/app/controlador/ControladorCursospolos.php on line 5
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   2. Mvc->rodar() /Applications/MAMP/htdocs/libello/index.php:37
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   3. class_exists() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:51 America/Sao_Paulo] PHP   4. spl_autoload_call() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   5. CarregadorAutomatico::carregar() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:0
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   6. require() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/CarregadorAutomatico.php:20
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP Warning:  include_once(APP_LIBRARY_DIRseguranca/Permissao.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/app/controlador/ControladorCursospolos.php on line 5
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   2. Mvc->rodar() /Applications/MAMP/htdocs/libello/index.php:37
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   3. class_exists() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   4. spl_autoload_call() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   5. CarregadorAutomatico::carregar() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:0
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   6. require() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/CarregadorAutomatico.php:20
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening 'APP_LIBRARY_DIRseguranca/Permissao.php' for inclusion (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/app/controlador/ControladorCursospolos.php on line 5
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   2. Mvc->rodar() /Applications/MAMP/htdocs/libello/index.php:37
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   3. class_exists() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   4. spl_autoload_call() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   5. CarregadorAutomatico::carregar() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:0
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   6. require() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/CarregadorAutomatico.php:20
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP Notice:  Use of undefined constant APP_LIBRARY_DIR - assumed 'APP_LIBRARY_DIR' in /Applications/MAMP/htdocs/libello/app/modelo/comboboxes/ComboBoxAreas.php on line 3
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   2. Mvc->rodar() /Applications/MAMP/htdocs/libello/index.php:37
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   3. class_exists() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   4. spl_autoload_call() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   5. CarregadorAutomatico::carregar() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:0
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   6. require() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/CarregadorAutomatico.php:20
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   7. include_once() /Applications/MAMP/htdocs/libello/app/controlador/ControladorCursospolos.php:7
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP Warning:  require_once(APP_LIBRARY_DIRconfiguracoes.php): failed to open stream: No such file or directory in /Applications/MAMP/htdocs/libello/app/modelo/comboboxes/ComboBoxAreas.php on line 3
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   2. Mvc->rodar() /Applications/MAMP/htdocs/libello/index.php:37
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   3. class_exists() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   4. spl_autoload_call() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   5. CarregadorAutomatico::carregar() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:0
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   6. require() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/CarregadorAutomatico.php:20
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   7. include_once() /Applications/MAMP/htdocs/libello/app/controlador/ControladorCursospolos.php:7
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP Fatal error:  require_once(): Failed opening required 'APP_LIBRARY_DIRconfiguracoes.php' (include_path='.:/Applications/MAMP/bin/php/php5.5.3/lib/php:/Applications/MAMP/bin/php/php5.5.3/includes/php/libs') in /Applications/MAMP/htdocs/libello/app/modelo/comboboxes/ComboBoxAreas.php on line 3
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   2. Mvc->rodar() /Applications/MAMP/htdocs/libello/index.php:37
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   3. class_exists() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   4. spl_autoload_call() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:84
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   5. CarregadorAutomatico::carregar() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:0
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   6. require() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/CarregadorAutomatico.php:20
-[03-Apr-2014 09:47:52 America/Sao_Paulo] PHP   7. include_once() /Applications/MAMP/htdocs/libello/app/controlador/ControladorCursospolos.php:7
-[03-Apr-2014 14:31:17 America/Sao_Paulo] PHP Warning:  unlink(/Applications/MAMP/htdocs/libello/manutencao.php): No such file or directory in /Applications/MAMP/htdocs/libello/app/modelo/ferramentas/sistema/desativarmanutencao.php on line 3
-[03-Apr-2014 14:31:17 America/Sao_Paulo] PHP Stack trace:
-[03-Apr-2014 14:31:17 America/Sao_Paulo] PHP   1. {main}() /Applications/MAMP/htdocs/libello/index.php:0
-[03-Apr-2014 14:31:17 America/Sao_Paulo] PHP   2. Mvc->rodar() /Applications/MAMP/htdocs/libello/index.php:37
-[03-Apr-2014 14:31:17 America/Sao_Paulo] PHP   3. ControladorSistema->acaoDesativarmanutencao() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Mvc.php:97
-[03-Apr-2014 14:31:17 America/Sao_Paulo] PHP   4. Controlador->renderizar() /Applications/MAMP/htdocs/libello/app/controlador/ControladorSistema.php:65
-[03-Apr-2014 14:31:17 America/Sao_Paulo] PHP   5. Visao->renderizar() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Controlador.php:18
-[03-Apr-2014 14:31:17 America/Sao_Paulo] PHP   6. require() /Applications/MAMP/htdocs/libello/biblioteca/Mvc/Visao.php:36
-[03-Apr-2014 14:31:17 America/Sao_Paulo] PHP   7. unlink() /Applications/MAMP/htdocs/libello/app/modelo/ferramentas/sistema/desativarmanutencao.php:3
-[06-Apr-2014 18:25:05 America/Sao_Paulo] PHP Fatal error:  Call to undefined method Memorando::get_destino() in C:\xampp\htdocs\libello\app\controlador\ControladorDocumentos.php on line 208
-[06-Apr-2014 18:33:59 America/Sao_Paulo] PHP Notice:  Undefined offset: 0 in C:\xampp\htdocs\libello\app\modelo\ferramentas\documentos\visualizarOficio.php on line 16
-[06-Apr-2014 18:33:59 America/Sao_Paulo] PHP Fatal error:  Call to a member function get_numOficio() on a non-object in C:\xampp\htdocs\libello\app\modelo\ferramentas\documentos\visualizarOficio.php on line 16
+
