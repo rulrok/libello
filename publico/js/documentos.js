@@ -218,6 +218,10 @@ FormDocumentos.prototype.iniciarCombo = function() {
     });
 };
 
+//O plugin de editor de texto rico, utilizado aqui é o tinyMCE.
+//Possui boa documentação, pode ser encontrado aqui: http://www.tinymce.com e esta sendo usado em conjunto com um plugin de upload de imagens, o jbimages, que pode ser encontrado aqui: http://justboil.me/ (o upload nativo do tinyMCE não faz upload de arquivos do computador, somente arquivos online, o que não é interessante).
+//Ambos de facil configuração. A trandução pt_BR também não é nativa. Deve ser baixada.
+//Para add algum plugin, assim como o jbimages, basta colocar a pasta descompactada do mesmo dentro do diretório "plugins" do tinyMCE e add o nome do plugin abaixo no toolbar ou no context menu, conforme documentação.
 FormDocumentos.prototype.iniciarEditorDeTexto = function() {
     $('textarea').tinymce({
         // Location of TinyMCE script
@@ -226,11 +230,23 @@ FormDocumentos.prototype.iniciarEditorDeTexto = function() {
                 liberarCadastro();
             });
         },
-        toolbar: "forecolor backcolor",
+//        toolbar: "forecolor backcolor",
+//        tools: 'inserttable',
+//        skin: 'lightgray',
+////        theme: 'advanced', 
+//        relative_urls: 'false',
+////        plugins: 'contextmenu advlist directionality charmap preview visualblocks image table textcolor spellchecker link jbimages',
+//        plugins: 'contextmenu advlist directionality charmap preview visualblocks table textcolor spellchecker link jbimages',
+//        contextmenu: "link image inserttable | cell row column deletetable | forecolor backcolor"
+
+        toolbar: 'forecolor backcolor | jbimages | alignleft aligncenter alignright alignjustify |  bold italic |  bullist numlist outdent indent',
         tools: 'inserttable',
+        language: 'pt_BR',
         skin: 'lightgray',
-        plugins: 'contextmenu advlist directionality charmap preview visualblocks image table textcolor spellchecker link',
+        relative_urls: 'false',
+        plugins: 'contextmenu advlist directionality charmap preview visualblocks table textcolor link jbimages',
         contextmenu: "link image inserttable | cell row column deletetable | forecolor backcolor"
+
                 // General options
 //                        theme : "advanced",
 //                        plugins : "pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
@@ -262,10 +278,13 @@ FormDocumentos.prototype.iniciarEditorDeTexto = function() {
     });
 
 //    tinymce.init({selector: 'textarea',
-//        toolbar: "forecolor backcolor",
+//        
+//        toolbar: "forecolor backcolor | link image jbimages",
 //        tools: 'inserttable',
+//        language : 'pt_BR',
 //        skin: 'lightgray',
-//        plugins: 'contextmenu advlist directionality charmap preview visualblocks image table textcolor spellchecker link',
+//        relative_urls: 'false',
+//        plugins: 'contextmenu advlist directionality charmap preview visualblocks image table textcolor link jbimages',
 //        contextmenu: "link image inserttable | cell row column deletetable | forecolor backcolor"
 //    });
 };

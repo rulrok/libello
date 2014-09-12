@@ -392,9 +392,13 @@ function ajax(link, place, hidePop, async, ignorePageChanges) {
         if (hidePop === undefined) {
             hidePop = true;
         }
-        if (hidePop === true) {
-            hidePopUp();
-        }
+        
+//A função "hidePopup" foi desativada, pois atualmente o sistema
+//utiliza uma espécie de "framework" para os popups.        
+//        if (hidePop === true) {
+//            hidePopUp();
+//        }
+
 //        return data;
     });
     var erro = request.error(function(jqXHR, textStatus, errorThrown) {
@@ -682,18 +686,18 @@ function showPopUp(data, type) {
  * 
  * @returns {undefined}
  */
-function hidePopUp() {
-    $(".botao_fechar").hide(100, function() {
-        $(".popUp").hide(200, function() {
-            $(".sub_popUp").empty();
-            //Fecha o esmaecimento cinza ao fundo logo que se fechar o pop-up
-            $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
-        });
-    });
-
-
-
-}
+//function hidePopUp() {
+//    $(".botao_fechar").hide(100, function() {
+//        $(".popUp").hide(200, function() {
+//            $(".sub_popUp").empty();
+//            //Fecha o esmaecimento cinza ao fundo logo que se fechar o pop-up
+//            $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
+//        });
+//    });
+//
+//
+//
+//}
 
 /**
  * Esconde o sub-menu.

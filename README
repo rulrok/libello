@@ -303,6 +303,28 @@ o nome 'libello_cead' e senha '!l1b3ll0_c34d!' e após isto, criar um schema com
 o nome 'libello' e dentro, importar o arquivo de dump 'banco_dados.sql'.
 Atente-se às aspas, que NÃO fazem parte do usuário e nem da senha.
 
+    É extremamente necessário configurar as permissões do diretório 'libello', 
+dentro da pasta do servidor web, com usuário o configurado como
+'www-data', que representa o usuário padrão do serviço web 'nginx' e 'apache',
+ou então, com o padrão do serviço web que está sendo usado. Se seu S.O. for o
+linux, você pode fazer isto facilmente com o comando: 
+"sudo chown -R www-data:[SEU_USUÁRIO] libello/".
+    Sem esta configuração o sistema não funcionará em sua plenitude e apresentará
+diversos problemas relacionados à permissão de escrita nas pastas do servidor.
+
+    As pastas 'privado' e 'público' e precisam ser graváveis pelo php
+(por isto, deve-se efetuar a modificação descrita acima), ou as imagens não
+poderão ser enviadas ao portal. Uma mensagem de erro irá alertar qualquer
+administrador que esteja autenticado no site, com as respectivas mensagens 
+de erro logo na parte superior do portal.
+Outros usuários não visualizam essas mensagens, apenas administradores.
+
+    Concluída a instalação, deve-se remover, renomear ou retirar as permissões
+da pasta 'instalacao' para que o servidor web não os acesse.
+
+    Estas configurações de permissões são de suma importancia e devem ser
+verificadas pelo administrador do seu servidor.
+
     Também por questões de padronização, deve-se colocar os arquivos deste
 sistema dentro de uma pasta denominada 'libello', tanto no diretório de origem,
 quanto no diretório de cópia (/var/www/ ou /var/www/html ou C:/xampp/htdocs ou
@@ -326,24 +348,6 @@ Applications/MAMP/htdocs ou outro diretório web do seu Sistema Operacional).
     - Arquivo 'configuracao_nginx'
         Semelhante ao arquivo acima, mas para o Nginx
 
-
-
-    Deve-se, por fim, configurar as permissões do diretório 'libello', dentro
-da pasta do servidor web, com usuário e grupo como 'www-data', que representa
-o usuário padrão do serviço web 'nginx' e 'apache', ou então, com o padrão do 
-serviço web que está sendo usado.
-
-    A pasta 'privado' precisa ser gravável pelo php (por isto, deve-se efetuar a
-modificação descrita acima), ou as imagens não poderão ser enviadas ao portal.
-Uma mensagem de erro irá alertar qualquer administrador que esteja autenticado
-no site, com as respectivas mensagens de erro logo na parte superior do portal.
-Outros usuários não visualizam essas mensagens.
-
-    Concluída a instalação, deve-se remover, renomear ou retirar as permissões
-da pasta 'instalacao' para que o servidor web não os acesse.
-
-    Estas configurações de permissões são de suma importancia e devem ser
-verificadas pelo administrador do seu servidor.
 
 ================================================================================
     4. O arquivo de configuração
