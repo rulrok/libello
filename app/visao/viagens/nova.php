@@ -1,5 +1,6 @@
 <title>Nova viagem</title>
 <!-- Início da página -->
+<span></span>
 <form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=viagens&a=verificarnova">
     <fieldset>
         <legend>Dados da viagem</legend>

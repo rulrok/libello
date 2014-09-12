@@ -8,6 +8,7 @@ require_once APP_DIR . "modelo/dao/viagemDAO.php";
 
 
 if (filter_input(INPUT_GET, 'alterar') == "alterarEstado") {
+            $rodrigo;
     $id_viagem = fnDecrypt($_REQUEST['idViagem']);
     $status = $_REQUEST['estadoViagem'];
     $retorno = (new viagemDAO())->atualizarEstadoViagem($id_viagem, $status);

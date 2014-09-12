@@ -7,6 +7,7 @@ include_once APP_DIR . "visao/verificadorFormularioAjax.php";
 class verificarnovaviagem extends verificadorFormularioAjax {
 
     public function _validar() {
+                $rodrigo;
         $curso = fnDecrypt(filter_input(INPUT_POST, 'curso'));
         if (!filter_has_var(INPUT_POST, 'destinoManual')) {
             $polo = fnDecrypt(filter_input(INPUT_POST, 'polo'));

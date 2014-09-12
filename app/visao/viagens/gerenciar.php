@@ -1,5 +1,6 @@
 <title>Gerenciar viagens</title>
 <!-- Início da páginas -->
+<span></span>
 <div class="btn-toolbar">
     <div class="btn-group">
         <a href="#!viagens|nova" class="btn btn-adicionar"><i class="icon-plane"></i> Adicionar nova</a>

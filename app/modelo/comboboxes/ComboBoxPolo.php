@@ -5,6 +5,7 @@ require_once APP_LIBRARY_DIR . "configuracoes.php";
 class ComboBoxPolo {
 
     public static function montarTodosOsPolos($tipo = null) {
+        $rodrigo;
         $codigo = "";
         $polos = (new poloDAO())->consultar();
         if (sizeof($polos) == 0) {

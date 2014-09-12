@@ -49,7 +49,7 @@ class viagemDAO extends abstractDAO {
         $sql .= " VALUES (:idCurso, :idPolo, :responsavel, :dataIda, :horaIda, :dataVolta, :horaVolta, :motivo, :estadoViagem, :diarias, :outroDestino);";
         $params = array(
             ':idCurso' => [$idCurso, PDO::PARAM_INT]
-            , ':idPolo' => [$idPolo, PDO::PARAM_INT]
+            , ':idPolo' => [$idPolo, $idPolo === null ? PDO::PARAM_NULL : PDO::PARAM_INT]
             , ':responsavel' => [$responsavel, PDO::PARAM_STR]
             , ':dataIda' => [$dataIda, PDO::PARAM_STR]
             , ':horaIda' => [$horaIda, PDO::PARAM_STR]
@@ -95,44 +95,90 @@ class viagemDAO extends abstractDAO {
         return true;
     }
     
-    public function atualizar(){
+    public function atualizar($idViagem, Viagem $novosDados){
+        $idViagem = (int) $idViagem;
+        $dadosAntigos = viagemDAO::recuperarViagem($idViagem);
         
+        $idCurso = $novosDados->idCurso;
+        if( $idCurso ===  null){
+             $idCurso = $dadosAntigos->idCurso;
+        }
+        
+        $idPolo = $novosDados->$idPolo;
+        if($idPolo === null){
+            $idPolo = $dadosAntigos->idPolo;
+        }
+        
+        $responsavel = $novosDados->responsavel;
+        if($responsavel === null){
+            $responsavel = $dadosAntigos->responsavel;
+        }
+        
+        $dataIda = $novosDados->dataIda;
+        if($dataIda === null){
+            $dataIda = $dadosAntigos->dataIda;
+        }
+        
+        $dataVolta = $novosDados->dataVolta;
+        if($dataVolta === null){
+            $dataVolta = $dadosAntigos->dataVolta;
+        }
+        
+        $horaIda = $novosDados->horaIda;
+        if($horaIda === null){
+            $horaIda = $dadosAntigos->horaIda;
+        }
+        
+        $horaVolta = $novosDados->horaVolta;
+        if($horaVolta === null){
+            $horaVolta = $dadosAntigos->horaVolta;
+        }
+        
+        $motivo = $novosDados->motivo;
+        if($motivo === null){
+            $motivo = $dadosAntigos->motivo;
+        }
+        
+        $estadoViagem = $novosDados->estadoViagem;
+        if($estadoViagem === null){
+            $estadoViagem = $dadosAntigos->estadoViagem;
+        }
+        
+        $diarias = $novosDados->diarias;
+        if($diarias === null){
+            $diarias = $dadosAntigos->diarias;
+        }
+
+        $passageiros = $novosDados->passageiros;
+        if($passageiros === null){
+            $passageiros = $dadosAntigos->passageiros;
+        }
+        
+        $destinoAlternativo = $novosDados->destinoAlternativo;
+        if($destinoAlternativo === null){
+            $destinoAlternativo = $dadosAntigos->destinoAlternativo;
+        } 
+        
+        $sql = "UPDATE viagem SET idViagem = :idViagem, idCurso = :idCurso, idPolo = :idPolo, responsavel = :responsavel, dataIda = :dataIda,horaIda = :horaIda, dataVolta = :dataVolta, horaVolta = :horaVolta, motivo = :motivo, estadoViagem = :estadoViagem, diarias = :diarias, outroDestino = :destinoAlternativo";
+        $params = array(
+            ':idCurso' => [$idCurso, PDO::PARAM_INT]
+            , ':idPolo' => [$idPolo, $idPolo === null ? PDO::PARAM_NULL : PDO::PARAM_INT]
+            , ':responsavel' => [$responsavel, PDO::PARAM_STR]
+            , ':dataIda' => [$dataIda, PDO::PARAM_STR]
+            , ':horaIda' => [$horaIda, PDO::PARAM_STR]
+            , ':dataVolta' => [$dataVolta, PDO::PARAM_STR]
+            , ':horaVolta' => [$horaVolta, PDO::PARAM_STR]
+            , ':motivo' => [$motivo, PDO::PARAM_STR]
+            , ':estadoViagem' => [$estado, PDO::PARAM_STR]
+            , ':diarias' => [$diarias, PDO::PARAM_STR]
+            , ':outroDestino' => [$destinoAlternativo, $destinoAlternativo === null ? PDO::PARAM_NULL : PDO::PARAM_STR]
+        );
+
+        return $this->executarQuery($sql, $params);
     }
     
-//    public function atualizar($idLivro, Livro $novosDados) {
-//
-//        $idLivro = (int) $idLivro;
-//        $dadosAntigos = livroDAO::recuperarLivro($idLivro);
-//
-//
-//        $nome = $novosDados->get_nomeLivro();
-//        if ($nome == null) {
-//            $nome = $dadosAntigos->get_nomeLivro();
-//        }
-//
-//        $quantidade = $novosDados->get_quantidade();
-//        if ($quantidade === null) {
-//            $quantidade = $dadosAntigos->get_quantidade();
-//        }
-//
-//        $dataEntrada = $novosDados->get_dataEntrada();
-//        if ($dataEntrada == null) {
-//            $dataEntrada = $dadosAntigos->get_dataEntrada();
-//        }
-//
-//        $numeroPatrimonio = $novosDados->get_numeroPatrimonio();
-//
-//        $descricao = $novosDados->get_descricao();
-//
-//        $grafica = $novosDados->get_grafica();
-//        if ($grafica == null) {
-//            $grafica = $dadosAntigos->get_grafica();
-//        }
-//
-//        $area = $novosDados->get_area();
-//        if ($area === null) {
-//            $area = $dadosAntigos->get_idArea();
-//        }
+
+
 //
 //        $sql = "UPDATE livro SET nomeLivro = :nome ,quantidade = :quantidade ,dataEntrada = :dataEntrada ,numeroPatrimonio = :numeroPatrimonio ,descricao= :descricao, grafica= :grafica, area= :area WHERE idLivro = :idLivro";
 //        $params = array(

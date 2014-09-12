@@ -132,7 +132,6 @@ class Viagem {
 
     public function get_destinoAlternativo() {
         return $this->destinoAlternativo;
-        echo "passou aqui";
     }
 
     public function set_destinoAlternativo($destinoAlternativo) {

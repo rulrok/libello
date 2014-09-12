@@ -1,23 +1,23 @@
 <title>Editar viagem</title>
 <!-- Início da página -->
-<form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=viagens&a=verificarnova">
+<form class="tabela centralizado" id="ajaxForm" method="post" action="index.php?c=viagens&a=verificaredicao">
     <fieldset>
         <legend>Dados da viagem</legend>
         <div class="line">
             <label for='curso'>Curso vinculado</label>
-            <select required class="input-large" id="curso" name="curso">
+            <select  class="input-large" id="curso" name="curso">
                 <?php echo $this->cursos; ?>
             </select>
         </div>
         <div class="line" >
             <label for='polo'>Polo destino</label>
-            <select required class="input-large" id="polo" name="polo">
+            <select  class="input-large" id="polo" name="polo">
                 <?php echo $this->polos; ?>
             </select>
         </div>
         <div class="line">
             <label for="responsavel">Responsável</label>
-            <select required size="7" class="input-xxxlarge" id="responsavel" name="responsavel">
+            <select  size="7" class="input-xxxlarge" id="responsavel" name="responsavel">
                 <option value="default" selected><?php echo $this->responsavel ?></option>
                 <?php echo $this->usuarios; ?>
             </select>
@@ -37,16 +37,16 @@
         
         <div class='line'id="timepicker">
             <label for='horaIda'>Hora ida</label>
-            <input type="text" required id="horaIda" class=" input-large campoHora"   placeholder="Clique para escolher" name="horaIda" value="<?php echo $this->horaIda ?>" >
+            <input type="text"  id="horaIda" class=" input-large campoHora"   placeholder="Clique para escolher" name="horaIda" value="<?php echo $this->horaIda ?>" >
             &nbsp;
             <label for='horaVolta'>Hora volta</label>
-            <input type="text" required id="horaVolta" class=" input-large campoHora" placeholder="Clique para escolher"name="horaVolta" value="<?php echo $this->horaVolta ?>"  >
+            <input type="text"  id="horaVolta" class=" input-large campoHora" placeholder="Clique para escolher"name="horaVolta" value="<?php echo $this->horaVolta ?>"  >
         </div>
         
         <hr>
         <div class="line">
             <label for='motivo'>Motivo da viagem</label>
-            <select required id="motivo" class="input-xlarge" name="motivo">
+            <select  id="motivo" class="input-xlarge" name="motivo">
                 <option value="default" selected><?php echo $this->motivo ?></option>
                 <option value="acompanhamento">Acompanhamento</option>
                 <option value="aula">Aula</option>
@@ -57,14 +57,14 @@
         </div>
         <div class="line">
             <label for='estado'>Estado da viagem</label>
-            <select required id="estado" class="input-xlarge" name="estado">
+            <select  id="estado" class="input-xlarge" name="estado">
                 <option value="default"><?php echo $this->estadoViagem ?></option>
                 <option value="planejada">Planejada</option>
             </select>
         </div>
         <div class="line">
             <label for='diarias'>Diárias</label>
-            <input required type="number" min="0.5" step="0.5" id="diarias" class=" input-large" name="diarias"  value="<?php echo $this->diarias ?>" title='Quantidade de diárias' data-content="Valores como 0.5, 1, 1.5, 2, 2.5 etc">
+            <input  type="number" min="0.5" step="0.5" id="diarias" class=" input-large" name="diarias"  value="<?php echo $this->diarias ?>" title='Quantidade de diárias' data-content="Valores como 0.5, 1, 1.5, 2, 2.5 etc">
         </div>
         <hr>
         <fieldset>
@@ -75,7 +75,7 @@
             </div>
             <div class="line" style='display: table'>
                 <!--<label for='passageiros'>Passageiros</label>-->
-                <select required multiple size="7" class="input-xxxlarge" id="passageiros" name="passageiros[]">
+                <select  multiple size="7" class="input-xxxlarge" id="passageiros" name="passageiros[]">
                     <?php echo $this->usuarios ?>
                 </select>
             </div>
@@ -83,7 +83,7 @@
         </fieldset>
     </fieldset>
     <button class="btn btn-large" type="reset">Limpar</button>
-    <button disabled class=" btn btn-primary btn-right" type="submit">Atualizar dados</button>
+    <button class=" btn btn-primary btn-right" type="submit">Atualizar dados</button>
 
 </form>
 <script src='publico/js/datasComRange.js' type='text/javascript'></script>

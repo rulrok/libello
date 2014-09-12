@@ -1,5 +1,4 @@
 <?php
-
 include_once APP_LIBRARY_DIR . 'Mvc/Controlador.php';
 include_once APP_LIBRARY_DIR . 'seguranca/criptografia.php';
 include_once APP_DIR . 'modelo/comboboxes/ComboBoxCurso.php';
@@ -65,9 +64,6 @@ class ControladorViagens extends Controlador {
     public function idFerramentaAssociada() {
         return Ferramenta::CONTROLE_VIAGENS;
     }
-
-    
-
 }
 
 ?>
