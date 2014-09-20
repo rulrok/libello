@@ -1,6 +1,6 @@
 <?php
 
-include APP_DIR . "visao/verificadorFormularioAjax.php";
+include APP_DIR . "modelo/verificadorFormularioAjax.php";
 
 class verificarnovodescritor extends verificadorFormularioAjax {
 
@@ -20,12 +20,12 @@ class verificarnovodescritor extends verificadorFormularioAjax {
             $nomeDescritor4 = normalizarNomeDescritor(filter_input(INPUT_POST, 'novo_descritor_4'));
 
             if ($nomeDescritor1 == "" || $nomeDescritor2 == "" || $nomeDescritor3 == "" || $nomeDescritor4 == "") {
-                $this->mensagemErro("Todos os descritores são obrigatórios.");
+                $this->adicionarMensagemErro("Todos os descritores são obrigatórios.");
             }
             $imagensDAO = new imagensDAO();
             $aux = $imagensDAO->consultarDescritoresNivel1('count(idDescritor) as qtd', "nome = '$nomeDescritor1' ");
             if ($aux != null && $aux[0]['qtd'] > 0) {
-                $this->mensagemErro("Já existe o descritor '$nomeDescritor1' cadastrado como nível 1.");
+                $this->adicionarMensagemErro("Já existe o descritor '$nomeDescritor1' cadastrado como nível 1.");
             }
             try {
                 $imagensDAO->iniciarTransacao();
@@ -75,11 +75,11 @@ class verificarnovodescritor extends verificadorFormularioAjax {
                 }
 
                 $imagensDAO->encerrarTransacao();
-                $this->mensagemSucesso("Cadastrado com sucesso");
+                $this->adicionarMensagemSucesso("Cadastrado com sucesso");
             } catch (Exception $e) {
                 $imagensDAO->rollback();
                 $message = $e->getMessage();
-                $this->mensagemErro("Erro:<br/>$message<br/>Nenhuma alteração feita no sistema.");
+                $this->adicionarMensagemErro("Erro:<br/>$message<br/>Nenhuma alteração feita no sistema.");
             }
         } elseif (filter_has_var(INPUT_POST, 'inserir_novo_descritor_2')) {
             //Vai cadastrar a partir do segundo nível
@@ -91,12 +91,12 @@ class verificarnovodescritor extends verificadorFormularioAjax {
 
 
             if ($nomeDescritor2 == "" || $nomeDescritor3 == "" || $nomeDescritor4 == "") {
-                $this->mensagemErro("Todos os descritores são obrigatórios.");
+                $this->adicionarMensagemErro("Todos os descritores são obrigatórios.");
             }
             $imagensDAO = new imagensDAO();
             $aux = $imagensDAO->consultarDescritor('count(idDescritor) as qtd', "pai = $idDescritor1 AND nome = '$nomeDescritor2' ");
             if ($aux != null && $aux[0]['qtd'] > 0) {
-                $this->mensagemErro("Já existe o descritor '$nomeDescritor2' cadastrado para esses descritores.");
+                $this->adicionarMensagemErro("Já existe o descritor '$nomeDescritor2' cadastrado para esses descritores.");
             }
             try {
                 $imagensDAO->iniciarTransacao();
@@ -125,11 +125,11 @@ class verificarnovodescritor extends verificadorFormularioAjax {
                 }
 
                 $imagensDAO->encerrarTransacao();
-                $this->mensagemSucesso("Cadastrado com sucesso");
+                $this->adicionarMensagemSucesso("Cadastrado com sucesso");
             } catch (Exception $e) {
                 $imagensDAO->rollback();
                 $message = $e->getMessage();
-                $this->mensagemErro("Erro:<br/>$message<br/>Nenhuma alteração feita no sistema.");
+                $this->adicionarMensagemErro("Erro:<br/>$message<br/>Nenhuma alteração feita no sistema.");
             }
         } elseif (filter_has_var(INPUT_POST, 'inserir_novo_descritor_3')) {
             //Vai cadastrar a partir do terceiro nível
@@ -138,12 +138,12 @@ class verificarnovodescritor extends verificadorFormularioAjax {
             $nomeDescritor3 = normalizarNomeDescritor(filter_input(INPUT_POST, 'novo_descritor_3'));
             $nomeDescritor4 = normalizarNomeDescritor(filter_input(INPUT_POST, 'novo_descritor_4'));
             if ($nomeDescritor3 == "" || $nomeDescritor4 == "") {
-                $this->mensagemErro("Todos os descritores são obrigatórios.");
+                $this->adicionarMensagemErro("Todos os descritores são obrigatórios.");
             }
             $imagensDAO = new imagensDAO();
             $aux = $imagensDAO->consultarDescritor('count(idDescritor) as qtd', "pai = $idDescritor2 AND nome = '$nomeDescritor3' ");
             if ($aux != null && $aux[0]['qtd'] > 0) {
-                $this->mensagemErro("Já existe o descritor '$nomeDescritor3' cadastrado para esses descritores.");
+                $this->adicionarMensagemErro("Já existe o descritor '$nomeDescritor3' cadastrado para esses descritores.");
             }
             try {
                 $imagensDAO->iniciarTransacao();
@@ -164,11 +164,11 @@ class verificarnovodescritor extends verificadorFormularioAjax {
                 }
 
                 $imagensDAO->encerrarTransacao();
-                $this->mensagemSucesso("Cadastrado com sucesso");
+                $this->adicionarMensagemSucesso("Cadastrado com sucesso");
             } catch (Exception $e) {
                 $imagensDAO->rollback();
                 $message = $e->getMessage();
-                $this->mensagemErro("Erro:<br/>$message<br/>Nenhuma alteração feita no sistema.");
+                $this->adicionarMensagemErro("Erro:<br/>$message<br/>Nenhuma alteração feita no sistema.");
             }
         } else {
             //Vai cadastrar no último nível
@@ -177,12 +177,12 @@ class verificarnovodescritor extends verificadorFormularioAjax {
             $idDescritor3 = fnDecrypt(filter_input(INPUT_POST, 'descritor_3'));
             $nomeDescritor4 = normalizarNomeDescritor(filter_input(INPUT_POST, 'novo_descritor_4'));
             if ($nomeDescritor4 == "") {
-                $this->mensagemErro("Todos os descritores são obrigatórios.");
+                $this->adicionarMensagemErro("Todos os descritores são obrigatórios.");
             }
             $imagensDAO = new imagensDAO();
             $aux = $imagensDAO->consultarDescritor('count(idDescritor) as qtd', "pai = $idDescritor3 AND nome = '$nomeDescritor4' ");
             if ($aux != null && $aux[0]['qtd'] > 0) {
-                $this->mensagemErro("Já existe o descritor '$nomeDescritor4' cadastrado para esses descritores.");
+                $this->adicionarMensagemErro("Já existe o descritor '$nomeDescritor4' cadastrado para esses descritores.");
             }
             try {
                 $imagensDAO->iniciarTransacao();
@@ -195,16 +195,16 @@ class verificarnovodescritor extends verificadorFormularioAjax {
                 }
 
                 $imagensDAO->encerrarTransacao();
-                $this->mensagemSucesso("Cadastrado com sucesso");
+                $this->adicionarMensagemSucesso("Cadastrado com sucesso");
             } catch (Exception $e) {
                 $imagensDAO->rollback();
                 $message = $e->getMessage();
-                $this->mensagemErro("Erro:<br/>$message<br/>Nenhuma alteração feita no sistema.");
+                $this->adicionarMensagemErro("Erro:<br/>$message<br/>Nenhuma alteração feita no sistema.");
             }
         }
     }
 
 }
 
-$verificarnovodescritor = new verificarnovodescritor();
-$verificarnovodescritor->verificar();
+//$verificarnovodescritor = new verificarnovodescritor();
+//$verificarnovodescritor->executar();

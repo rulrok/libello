@@ -94,7 +94,7 @@
 //        document.paginaAlterada = false;
 //        var retorno = ajax("index.php?c=equipamentos&a=listarUsuarios&idPapel=" + idPapel, null, false, false);
 //        document.paginaAlterada = true;
-//        var json = extrairJSON(retorno);
+//        var json = filtrarJSON(retorno);
 //        var cb;
 //        if (json.length > 0) {
 //            cb = '<option value="default">-- Selecione um usuário --</option>';

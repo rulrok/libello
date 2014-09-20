@@ -1,17 +1,23 @@
 <?php
 
 require_once APP_DIR . "modelo/Mensagem.php";
+require_once APP_DIR . "modelo/PaginaDeAcao.php";
 
-$id = fnDecrypt(filter_input(INPUT_GET, 'userID'));
-$usuarioDAO = new usuarioDAO();
-$email = $usuarioDAO->descobrirEmail($id);
-$mensagem = new Mensagem();
+class desativarUsuario extends PaginaDeAcao {
 
-if ($usuarioDAO->desativar($email)) {
-    $usuarioDAO->registrarDesativacaoUsuario(obterUsuarioSessao()->get_idUsuario(), $id);
-    $mensagem->set_mensagemSucesso("Usuário desativado com sucesso.");
-} else {
-    $mensagem->set_mensagem("Erro ao concluir a operação")->set_status(Mensagem::ERRO);
+    public function _acaoPadrao() {
+        $id = fnDecrypt(filter_input(INPUT_GET, 'userID'));
+        $usuarioDAO = new usuarioDAO();
+        $email = $usuarioDAO->descobrirEmail($id);
+
+        if ($usuarioDAO->desativar($email)) {
+//            $usuarioDAO->registrarDesativacaoUsuario(obterUsuarioSessao()->get_idUsuario(), $id);
+            $this->adicionarMensagemSucesso("Usuário desativado com sucesso.");
+        } else {
+            $this->adicionarMensagemErro("Erro ao concluir a operação");
+        }
+    }
+
 }
-echo json_encode($mensagem);
+
 ?>

@@ -411,7 +411,7 @@
                 var data = ajax(acaoDeletar + id, null, false, false);
 
                 if (data !== null && data !== undefined) {
-                    data = extrairJSON(data);
+                    data = filtrarJSON(data);
 
                     if (data.status !== undefined && data.mensagem !== undefined) {
                         console.log(data.mensagem + "\n\n");
@@ -474,7 +474,7 @@
                 var acaoDeletar = "index.php?c=documentos&a=deletar" + doc + "&i_id" + doc + "=";
                 var data = ajax(acaoDeletar + id, null, false, false);
                 if (data !== null && data !== undefined) {
-                    data = extrairJSON(data);
+                    data = filtrarJSON(data);
 
                     if (data.status !== undefined && data.mensagem !== undefined) {
                         showPopUp(data.mensagem, data.status);

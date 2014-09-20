@@ -6,7 +6,7 @@ include_once APP_DIR . 'modelo/comboboxes/ComboBoxPermissoes.php';
 include_once APP_DIR . 'modelo/comboboxes/ComboBoxPapeis.php';
 include_once APP_DIR . 'modelo/validadorCPF.php';
 include_once APP_DIR . 'modelo/Utils.php';
-include_once APP_DIR . "visao/verificadorFormularioAjax.php";
+include_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/criptografia.php';
 require_once APP_LIBRARY_ABSOLUTE_DIR . 'PHPMailer/Email.php';
 
@@ -29,9 +29,11 @@ class verificarNovoUsuario extends verificadorFormularioAjax {
         $cpf = filter_input(INPUT_POST, 'cpf');
         $cpf = validadorCPF::normalizarCPF($cpf);
 
+        $erro_ocorrido = false;
         if ($papel < obterUsuarioSessao()->get_idPapel()) {
             registrar_erro("Tentativa de cadastrar um usuário com um papel maior que o seu próprio");
-            $this->mensagemErro("Cadastro não autorizado");
+            $this->adicionarMensagemErro("Cadastro não autorizado");
+            $this->abortarExecucao();
         }
 
         $usuario = new Usuario();
@@ -47,43 +49,55 @@ class verificarNovoUsuario extends verificadorFormularioAjax {
         $usuario->set_dataNascimento($dataNascimento);
 
         if ($senha != $confSenha) {
-            $this->mensagemErro("Senhas não conferem");
+            $this->adicionarMensagemErro("Senhas não conferem");
+            $erro_ocorrido = true;
         }
         $usuarioDAO = new usuarioDAO();
 
         if ($nome == '' || $sobreNome == '') {
-            $this->mensagemErro("Nome e sobrenome são campos obrigatórios");
+            $this->adicionarMensagemErro("Nome e sobrenome são campos obrigatórios");
+            $erro_ocorrido = true;
         }
         if ($senha == '') {
-            $this->mensagemErro("Informe a senha");
+            $this->adicionarMensagemErro("Informe a senha");
+            $erro_ocorrido = true;
         }
         if ($papel == '' || !is_numeric($papel)) {
-            $this->mensagemErro("Papel inválido");
+            $this->adicionarMensagemErro("Papel inválido");
+            $erro_ocorrido = true;
         }
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $this->mensagemErro("Email inválido");
+            $this->adicionarMensagemErro("Email inválido");
+            $erro_ocorrido = true;
         }
         if (!validadorCPF::validarCPF($cpf)) {
-            $this->mensagemErro("CPF inválido");
+            $this->adicionarMensagemErro("CPF inválido");
+            $erro_ocorrido = true;
         }
         $paramEmail = array(':email' => [$email, PDO::PARAM_STR]);
         if (count($usuarioDAO->consultar("email", "email = :email", $paramEmail)) > 0) {
-            $this->mensagemErro("Email <i>$email</i> já está em uso!");
+            $this->adicionarMensagemErro("Email <i>$email</i> já está em uso!");
+            $erro_ocorrido = true;
         }
         $paramCpf = array(':cpf' => [$cpf, PDO::PARAM_STR]);
         if (count($usuarioDAO->consultar("cpf", "cpf = :cpf", $paramCpf)) > 0) {
-            $this->mensagemErro("Cpf <i>$cpf</i> já está em uso!");
+            $this->adicionarMensagemErro("Cpf <i>$cpf</i> já está em uso!");
+            $erro_ocorrido = true;
         }
+        if ($erro_ocorrido) {
+            $this->abortarExecucao();
+        }
+
         $MailSender = new Email();
         if ($enviarSenha !== null) {
-        $MailSender->definirAssunto("Nova senha temporária");
-        $nomeAplicativo = APP_NAME;
+            $MailSender->definirAssunto("Nova senha temporária");
+            $nomeAplicativo = APP_NAME;
             $link = WEB_SERVER_ADDRESS . 'logar/?email=' . $email;
-        $mensagem = "<p>Seu cadastro foi concluído em <a href='$link' target='_blank'>$nomeAplicativo</a> e essa é sua senha para acesso: $senhaAleatoria </p>"
-                . "<p>Ao acessar pela primeira vez, lembre-se de alterar sua senha.</p>"
-                . "<br/>";
-        $MailSender->definirMensagem($mensagem);
-        $MailSender->definirDestinatario($email, "$nome $sobreNome");
+            $mensagem = "<p>Seu cadastro foi concluído em <a href='$link' target='_blank'>$nomeAplicativo</a> e essa é sua senha para acesso: $senhaAleatoria </p>"
+                    . "<p>Ao acessar pela primeira vez, lembre-se de alterar sua senha.</p>"
+                    . "<br/>";
+            $MailSender->definirMensagem($mensagem);
+            $MailSender->definirDestinatario($email, "$nome $sobreNome");
         }
         try {
             $usuarioDAO->iniciarTransacao();
@@ -106,14 +120,14 @@ class verificarNovoUsuario extends verificadorFormularioAjax {
                 $usuario = $usuarioDAO->recuperarUsuario($usuario->get_email());
                 $usuarioDAO->registrarCadastroUsuario(obterUsuarioSessao()->get_idUsuario(), $usuario->get_idUsuario());
                 if ($enviarSenha !== null) {
-                $MailSender->enviar();
-                if (!$MailSender->emailFoiEnviado()) {
-                    throw new Exception("Falha ao enviar email. Cadastro não realizado.", 41);
-                }
+                    $MailSender->enviar();
+                    if (!$MailSender->emailFoiEnviado()) {
+                        throw new Exception("Falha ao enviar email. Cadastro não realizado.", 41);
+                    }
                 }
                 $usuarioDAO->encerrarTransacao();
                 //Essa linha deve estar por último, ou o COMMIT não irá acontecer pelo banco de dados
-                $this->mensagemSucesso("Cadastro realizado com sucesso");
+                $this->adicionarMensagemSucesso("Cadastro realizado com sucesso");
             } else {
                 throw new Exception("Erro ao cadastrar no banco", 42);
             }
@@ -123,17 +137,18 @@ class verificarNovoUsuario extends verificadorFormularioAjax {
                 case 40:
                 case 41:
                 case 42:
-                    $this->mensagemErro($e->getMessage());
+                    $this->adicionarMensagemErro($e->getMessage());
                     break;
                 default:
-                    $this->mensagemErro("Erro ao inserir. Nenhuma alteração foi feita");
+                    $this->adicionarMensagemErro("Erro ao inserir. Nenhuma alteração foi feita");
                     break;
             }
+            $this->abortarExecucao();
         }
     }
 
 }
 
-$verificarNovoUsuario = new verificarNovoUsuario();
-$verificarNovoUsuario->verificar();
+//$verificarNovoUsuario = new verificarNovoUsuario();
+//$verificarNovoUsuario->executar();
 ?>

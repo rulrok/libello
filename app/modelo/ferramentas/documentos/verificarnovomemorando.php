@@ -11,7 +11,7 @@
  * @author Rodolfo
  */
 require_once APP_DIR . "modelo/vo/Memorando.php";
-include APP_DIR . "visao/verificadorFormularioAjax.php";
+include APP_DIR . "modelo/verificadorFormularioAjax.php";
 
 class verificarnovomemorando extends verificadorFormularioAjax {
 
@@ -71,21 +71,21 @@ class verificarnovomemorando extends verificadorFormularioAjax {
 //            } else {
 //                $this->setId($id);
             if ($verifica){
-                $this->mensagemSucesso("Memorando salvo com sucesso!");
+                $this->adicionarMensagemSucesso("Memorando salvo com sucesso!");
             } else {
-                $this->mensagemErro("Erro ao salvar memorando!");
+                $this->adicionarMensagemErro("Erro ao salvar memorando!");
             }
                 
 //            }
         } catch (Exception $e) {
-            $this->mensagemErro($e->getMessage());
+            $this->adicionarMensagemErro($e->getMessage());
         }
     }
 
 }
 
-$verificar = new verificarnovomemorando();
-$verificar->verificar();
+//$verificar = new verificarnovomemorando();
+//$verificar->executar();
 ?>
 
 

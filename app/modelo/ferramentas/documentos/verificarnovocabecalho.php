@@ -5,7 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-include APP_DIR . "visao/verificadorFormularioAjax.php";
+include APP_DIR . "modelo/verificadorFormularioAjax.php";
 include("resize-class.php");
 
 class verificarnovocabecalho extends verificadorFormularioAjax {
@@ -21,11 +21,11 @@ class verificarnovocabecalho extends verificadorFormularioAjax {
 
 
         if (!in_array($tipoImagem, $formatosPermitidosImagens)) {
-            $this->mensagemErro("Tipo de imagem inválido.<br/>Utilize apenas arquivos jpg/jpeg");
+            $this->adicionarMensagemErro("Tipo de imagem inválido.<br/>Utilize apenas arquivos jpg/jpeg");
         }
         $tamanhoImagem = filesize($_FILES[$arquivoImagem]['tmp_name']);
         if ($tamanhoImagem > APP_MAX_UPLOAD_SIZE) {
-            $this->mensagemErro("Tamanho máximo permitido para a imagem: " . ($tamanhoMaximo / 1024) . " Kb.");
+            $this->adicionarMensagemErro("Tamanho máximo permitido para a imagem: " . ($tamanhoMaximo / 1024) . " Kb.");
         }
         
         $resize = new ResizeImage($_FILES[$arquivoImagem]['tmp_name']);
@@ -38,12 +38,12 @@ class verificarnovocabecalho extends verificadorFormularioAjax {
 
 //Antigo plotador de mensagem, atualmente, feito via ajax
         if (!$imagemCopiada) {
-            $this->mensagemErro("Erro ao mover imagem para a pasta do servidor");
+            $this->adicionarMensagemErro("Erro ao mover imagem para a pasta do servidor");
         }
-        $this->mensagemSucesso("Cabeçalho alterado com sucesso!");
+        $this->adicionarMensagemSucesso("Cabeçalho alterado com sucesso!");
     }
 
 }
 
-$verificar = new verificarnovocabecalho();
-$verificar->verificar();
+//$verificar = new verificarnovocabecalho();
+//$verificar->executar();

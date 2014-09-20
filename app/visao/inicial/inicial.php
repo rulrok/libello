@@ -139,7 +139,7 @@
                                     <a id="ativarManutencao" class="btn btn-small" ><i class="icon-wrench"></i> Ativar manutenção</a>
                                 <?php endif; ?>
                             <?php endif; ?>
-                            <!--<a class="btn btn-small" href="#!processos|arvoreProcessos"><i class="icon-tasks"></i>Processos</a>-->
+<!--<a class="btn btn-small" href="#!processos|arvoreProcessos"><i class="icon-tasks"></i>Processos</a>-->
                             <a class="btn btn-small" href="sair.php"><i class="icon-off"></i> Sair</a>
                         </div>
                     </div>
@@ -175,6 +175,17 @@
             <div class="popUp tabela" style="display: none;">
                 <div class="botao_fechar" onclick="hidePopUp();"></div>
                 <p class="popUpContent textoCentralizado " onclick="hidePopUp();"></p>
+            </div>
+
+            <div class="debug_div_helper">
+
+                <div class="debug_div_border">
+                    <p>Debug window <small>(duplo-clique para minimizar)</small></p>
+                    <div class="debug_div">
+
+                    </div>
+                </div>
+
             </div>
 
             <!-- Fim dos conteúdos auxiliares -->
@@ -251,6 +262,46 @@
                     //----------------------------------------------------------------------//
                     $(document).ready(function() {
 
+                        $(".debug_div_border").resizable({
+                            handles: 'n'
+                            , grid: 20
+                            , minHeight: 20
+                            , maxHeight: 500
+//                            , alsoResize: ".debug_div"
+//                            , animate: true
+//                            , helper: "ui-resizable-helper"
+                            , resize: function(event, ui) {
+                                $(".debug_div_border").css({
+                                    position: "relative !important",
+                                    top: "",
+                                    left: "0 !important"
+                                });
+                            }
+                            , start: function(event, ui) {
+                                $(".debug_div_border").css({
+                                    position: "relative !important",
+                                    top: "",
+                                    left: "0 !important"
+                                });
+                            }
+                            , stop: function(event, ui) {
+                                $(".debug_div_border").css({
+                                    position: "absolute",
+                                    bottom: "0",
+                                    top: "",
+                                    left: ""
+                                });
+                            }
+                        });
+                        $(".debug_div, .debug_div_border").dblclick(function() {
+                            setTimeout(
+                                    function() {
+                                        $(".debug_div_border").css({
+                                            height: 20
+                                        });
+                                    }
+                            , 50);
+                        })
                         $("#ativarManutencao").on('click', function() {
                             var resultado = confirm("Deseja realmente fazer isso?\nTodos os usuários serão desconectados do portal (exceto administradores).");
                             if (resultado) {

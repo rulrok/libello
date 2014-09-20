@@ -1,17 +1,24 @@
 <?php
 
 require_once APP_DIR . "modelo/Mensagem.php";
+require_once APP_DIR . "modelo/PaginaDeAcao.php";
 
-$id = fnDecrypt(filter_input(INPUT_GET, 'userID'));
-$usuarioDAO = new usuarioDAO();
-$email = $usuarioDAO->descobrirEmail($id);
-$mensagem = new Mensagem();
+class ativarUsuario extends PaginaDeAcao {
 
-if ($usuarioDAO->ativar($email)) {
-    $usuarioDAO->registrarAtivacaoUsuario(obterUsuarioSessao()->get_idUsuario(), $id);
-    $mensagem->set_mensagemSucesso("Usuário ativado com sucesso.");
-} else {
-    $mensagem->set_mensagem("Erro ao concluir a operação")->set_status(Mensagem::ERRO);
+    public function _acaoPadrao() {
+        $id = fnDecrypt(filter_input(INPUT_GET, 'userID'));
+        $usuarioDAO = new usuarioDAO();
+        $email = $usuarioDAO->descobrirEmail($id);
+
+        if ($usuarioDAO->ativar($email)) {
+//            $usuarioDAO->registrarAtivacaoUsuario(obterUsuarioSessao()->get_idUsuario(), $id);
+            $this->adicionarMensagemSucesso("Usuário ativado com sucesso.");
+            $this->adicionarMensagemInfo(print_r(__NAMESPACE__,true));
+        } else {
+            $this->adicionarMensagemErro("Erro ao concluir a operação");
+        }
+    }
+
 }
-echo json_encode($mensagem);
+
 ?>

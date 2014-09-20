@@ -20,18 +20,18 @@ class VerificarEdicaoCurso extends verificadorFormularioAjax {
         $curso = $cursoDAO->recuperarCurso($cursoID);
 
         if ($curso->get_nome() == "") {
-            $this->mensagemErro("Nome inconsistentes");
+            $this->adicionarMensagemErro("Nome inconsistentes");
         }
 
         if ($cursoDAO->atualizar($cursoID, $cursoNovo)) {
-            $this->mensagemSucesso("Atualização concluída");
+            $this->adicionarMensagemSucesso("Atualização concluída");
         } else {
-            $this->mensagemErro("Atualização mal sucedida");
+            $this->adicionarMensagemErro("Atualização mal sucedida");
         }
     }
 
 }
 
-$verificarEdicaoCurso = new VerificarEdicaoCurso();
-$verificarEdicaoCurso->verificar();
+//$verificarEdicaoCurso = new VerificarEdicaoCurso();
+//$verificarEdicaoCurso->executar();
 ?>

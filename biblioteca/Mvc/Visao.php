@@ -33,7 +33,17 @@ class Visao {
         $encontrou = false;
         for ($i = 0; $i < sizeof($local); $i++) {
             if (file_exists(ROOT . $local[$i] . $diretorio . '/' . $arquivo)) {
-                require ROOT . $local[$i] . $diretorio . '/' . $arquivo;
+                $caminho_completo = ROOT . $local[$i] . $diretorio . '/' . $arquivo;
+                require $caminho_completo;
+                
+                //Verifica se o arquivo possui definicão de classe que implemente
+                //a classe 'PaginaDeAcao' e executa ela.
+                $classe = get_php_classes($caminho_completo);
+                if (!empty($classe)) {
+                    $a = new $classe[0];
+                    $a->executar();
+//                    register_shutdown_function('executar');
+                }
                 $encontrou = true;
                 break;
             }

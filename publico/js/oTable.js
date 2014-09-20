@@ -239,12 +239,13 @@ function configurarTabela(parametros) {
             var id = $("tr.row_selected>.campoID").html();
             var data = ajax(acaoDeletar + id, null, false, false);
             if (data !== null && data !== undefined) {
-                data = extrairJSON(data);
+                data = filtrarJSON(data);
 
-                if (data.status !== undefined && data.mensagem !== undefined) {
-                    showPopUp(data.mensagem, data.status);
-                    if (data.status.toLowerCase() === "sucesso") {
-//                        $("input[type=reset]").click(); //Limpar o formulário depois de cadastrado com sucesso.
+                if (data !== undefined && data.status !== undefined) {
+
+
+                    processarMensagens(data);
+                    if (data.status === "sucesso") {
                         var pos = oTable.fnGetPosition(selectedElement);
                         oTable.fnDeleteRow(pos);
                         $($("tr.odd")[0]).addClass(function() {
@@ -257,10 +258,10 @@ function configurarTabela(parametros) {
                         });
                     }
                 } else {
-                    showPopUp("Houve algum problema na resposta do servidor.", "erro");
+                    showPopUp("Houve algum problema na resposta do servidor.", "pop_erro");
                 }
             } else {
-                showPopUp("Houve algum problema na resposta do servidor.", "erro");
+                showPopUp("Houve algum problema na resposta do servidor.", "pop_erro");
             }
 
         }
@@ -274,12 +275,14 @@ function configurarTabela(parametros) {
             var id = $("tr.row_selected>.campoID").html();
             var data = ajax(acaoAtivar + id, null, false, false);
             if (data !== null && data !== undefined) {
-                data = extrairJSON(data);
+                data = filtrarJSON(data);
 
-                if (data.status !== undefined && data.mensagem !== undefined) {
-                    showPopUp(data.mensagem, data.status);
-                    if (data.status.toLowerCase() === "sucesso") {
-//                        $("input[type=reset]").click(); //Limpar o formulário depois de cadastrado com sucesso.
+
+                if (data !== undefined && data.status !== undefined) {
+
+
+                    processarMensagens(data);
+                    if (data.status === "sucesso") {
                         var pos = oTable.fnGetPosition(selectedElement);
                         oTable.fnDeleteRow(pos);
                         $($("tr.odd")[0]).addClass(function() {
@@ -292,10 +295,12 @@ function configurarTabela(parametros) {
                         });
                     }
                 } else {
-                    showPopUp("Houve algum problema na resposta do servidor.", "erro");
+                    showPopUp("Houve algum problema na resposta do servidor.", "pop_erro");
                 }
+
+
             } else {
-                showPopUp("Houve algum problema na resposta do servidor.", "erro");
+                showPopUp("Houve algum problema na resposta do servidor.", "pop_erro");
             }
 
         }

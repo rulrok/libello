@@ -10,7 +10,7 @@ require_once APP_DIR . "modelo/Mensagem.php";
 require_once APP_DIR . "modelo/vo/Polo.php";
 require_once APP_DIR . "modelo/vo/Curso.php";
 require_once APP_DIR . "modelo/enumeracao/Ferramenta.php";
-require_once APP_DIR . "visao/verificadorFormularioAjax.php";
+require_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 
 class ControladorCursospolos extends Controlador {
 

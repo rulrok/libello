@@ -1,7 +1,7 @@
 <?php
 
 require_once APP_DIR . "modelo/vo/Equipamento.php";
-require_once APP_DIR . "visao/verificadorFormularioAjax.php";
+require_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 
 class verificarEdicao extends verificadorFormularioAjax {
 
@@ -16,7 +16,7 @@ class verificarEdicao extends verificadorFormularioAjax {
         $tipoEquipamento = filter_input(INPUT_POST, 'tipo');
 
         if ($equipamentoNome == "") {
-            $this->mensagemErro("Nome é um campo obrigatório");
+            $this->adicionarMensagemErro("Nome é um campo obrigatório");
         }
         $equipamentoDAO = new equipamentoDAO();
 
@@ -25,32 +25,32 @@ class verificarEdicao extends verificadorFormularioAjax {
 
         if ($tipoEquipamento === "custeio") {
             if (($numPatrimonio != "") && !$equipamentoDAO->equipamentoPodeTerTipoAlterado($equipamentoID)) {
-                $this->mensagemErro("Não é possível alterar o tipo");
+                $this->adicionarMensagemErro("Não é possível alterar o tipo");
             }
             //É um item de custeio
             $numeroPatrimonio = null;
         } else {
             if ($numPatrimonio === null && !$equipamentoDAO->equipamentoPodeTerTipoAlterado($equipamentoID)) {
-                $this->mensagemErro("Não é possível alterar o tipo");
+                $this->adicionarMensagemErro("Não é possível alterar o tipo");
             }
             //É um patrimônio
             $quantidade = 1;
         }
         if ($quantidade <= 0) {
-            $this->mensagemErro("Quantidade inválida");
+            $this->adicionarMensagemErro("Quantidade inválida");
         }
         $equipamento->set_nomeEquipamento($equipamentoNome)->set_dataEntrada($dataEntrada)->set_numeroPatrimonio($numeroPatrimonio)->set_quantidade($quantidade)->set_descricao($descricao);
 
         if ($equipamentoDAO->atualizar($equipamentoID, $equipamento)) {
             $equipamentoDAO->registrarAlteracaoEquipamento($equipamentoID);
-            $this->mensagemSucesso("Atualizado com sucesso");
+            $this->adicionarMensagemSucesso("Atualizado com sucesso");
         } else {
-            $this->mensagemErro("Um erro ocorreu ao cadastrar no banco");
+            $this->adicionarMensagemErro("Um erro ocorreu ao cadastrar no banco");
         }
     }
 
 }
 
-$verificarEdicao = new verificarEdicao();
-$verificarEdicao->verificar();
+//$verificarEdicao = new verificarEdicao();
+//$verificarEdicao->executar();
 ?>

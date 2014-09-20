@@ -2,7 +2,7 @@
 
 require_once APP_DIR . "modelo/Mensagem.php";
 require_once APP_DIR . "modelo/vo/Equipamento.php";
-require_once APP_DIR . "visao/verificadorFormularioAjax.php";
+require_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 
 class verificarnovoequipamento extends verificadorFormularioAjax {
 
@@ -46,10 +46,10 @@ class verificarnovoequipamento extends verificadorFormularioAjax {
             }
             if ($patrimoniosInvalidos === '') {
                 //Todos foram cadastrados com sucesso
-                $this->mensagemSucesso("Todos os patrimônios foram cadastrados com sucesso");
+                $this->adicionarMensagemSucesso("Todos os patrimônios foram cadastrados com sucesso");
             } else {
                 //Alguns não puderam ser cadastrados
-                $this->mensagemAviso("Os patrimônios:<br/><ul style=\"text-align: left;\"> " . $patrimoniosInvalidos . "</ul>não puderam ser cadastrados.<br/>Verifique se os mesmos já não foram cadastrados!");
+                $this->adicionarMensagemAviso("Os patrimônios:<br/><ul style=\"text-align: left;\"> " . $patrimoniosInvalidos . "</ul>não puderam ser cadastrados.<br/>Verifique se os mesmos já não foram cadastrados!");
             }
         } else {
             if ($quantidade > 0) {
@@ -62,18 +62,18 @@ class verificarnovoequipamento extends verificadorFormularioAjax {
                     $equipamentoDAO->cadastrarEquipamento($equipamento);
                     $id = $equipamentoDAO->obterUltimoIdInserido();
                     $equipamentoDAO->registrarInsercaoEquipamento($id);
-                    $this->mensagemSucesso("Cadastrado com sucesso.");
+                    $this->adicionarMensagemSucesso("Cadastrado com sucesso.");
                 } catch (Exception $e) {
-                    $this->mensagemErro("Erro ao cadastrar no banco de dados.");
+                    $this->adicionarMensagemErro("Erro ao cadastrar no banco de dados.");
                 }
             } else {
-                $this->mensagemErro("Quantidade deve ser maior que 0");
+                $this->adicionarMensagemErro("Quantidade deve ser maior que 0");
             }
         }
     }
 
 }
 
-$verificar = new verificarnovoequipamento();
-$verificar->verificar();
+//$verificar = new verificarnovoequipamento();
+//$verificar->executar();
 ?>

@@ -1,7 +1,7 @@
 <?php
 
 include_once APP_DIR . "modelo/Mensagem.php";
-include_once APP_DIR . "visao/verificadorFormularioAjax.php";
+include_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 
 class registrarSaida extends verificadorFormularioAjax {
 
@@ -16,35 +16,35 @@ class registrarSaida extends verificadorFormularioAjax {
 
 
         if ($dataRetorno == '') {
-            $this->mensagemErro("Data é um campo obrigatório");
+            $this->adicionarMensagemErro("Data é um campo obrigatório");
         }
 
         if ($quantidade <= 0 || $quantidade > $quantidadeMaxima) {
-            $this->mensagemErro("Quantidade inválida");
+            $this->adicionarMensagemErro("Quantidade inválida");
         }
 
 
         $equipamentoDAO = new equipamentoDAO();
         $recuperarSaidaEquipamento = $equipamentoDAO->recuperarSaidaEquipamento($saidaID);
         if ($recuperarSaidaEquipamento['quantidadeSaida'] != $quantidadeMaxima) {
-            $this->mensagemErro("Dados inconsistentes");
+            $this->adicionarMensagemErro("Dados inconsistentes");
         }
 
         if ($equipamentoDAO->cadastrarRetorno($saidaID, $dataRetorno, $quantidade, $observacoes)) {
             if ($quantidade > 1) {
-                $this->mensagemSucesso("Equipamentos retornados");
+                $this->adicionarMensagemSucesso("Equipamentos retornados");
             } else {
-                $this->mensagemSucesso("Equipamento retornado");
+                $this->adicionarMensagemSucesso("Equipamento retornado");
             }
             $id = $equipamentoDAO->obterUltimoIdInserido();
             $equipamentoDAO->registrarRetorno($id);
         } else {
-            $this->mensagemErro("Erro ao cadastrar no banco");
+            $this->adicionarMensagemErro("Erro ao cadastrar no banco");
         }
     }
 
 }
 
-$registrarSaida = new registrarSaida();
-$registrarSaida->verificar();
+//$registrarSaida = new registrarSaida();
+//$registrarSaida->executar();
 ?>

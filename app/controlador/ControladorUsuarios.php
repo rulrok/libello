@@ -74,6 +74,7 @@ class ControladorUsuarios extends Controlador {
         $userID = fnDecrypt(filter_input(INPUT_GET, 'userID'));
         if ($userID == obterUsuarioSessao()->get_idUsuario()) {
             registrar_erro("Usuário tentou desativar seu próprio perfil através da página de edição de usuários do sistema");
+            //TODO alterar isso, mover para classe superior como um método geral
             echo json_encode((new Mensagem())->set_mensagemErro("Você não pode fazer isso."));
             exit;
         }

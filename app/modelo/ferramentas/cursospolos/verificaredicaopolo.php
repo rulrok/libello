@@ -18,18 +18,18 @@ class VerificarEdicaoPolo extends verificadorFormularioAjax {
         $polo = $poloDAO->recuperarPolo($poloID);
 
         if ($polo->get_nome() == "") {
-            $this->mensagemErro("Nome inválido");
+            $this->adicionarMensagemErro("Nome inválido");
         }
 
         if ($poloDAO->atualizar($poloID, $poloNovo)) {
-            $this->mensagemSucesso("Atualização concluída");
+            $this->adicionarMensagemSucesso("Atualização concluída");
         } else {
-            $this->mensagemErro("Atualização mal sucedida");
+            $this->adicionarMensagemErro("Atualização mal sucedida");
         }
     }
 
 }
 
-$verificarEdicaoPolo = new VerificarEdicaoPolo();
-$verificarEdicaoPolo->verificar();
+//$verificarEdicaoPolo = new VerificarEdicaoPolo();
+//$verificarEdicaoPolo->executar();
 ?>

@@ -1,7 +1,7 @@
 <?php
 
 require_once APP_DIR . "modelo/vo/Livro.php";
-require_once APP_DIR . "visao/verificadorFormularioAjax.php";
+require_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 
 class verificarEdicao extends verificadorFormularioAjax {
 
@@ -18,16 +18,16 @@ class verificarEdicao extends verificadorFormularioAjax {
         $area = filter_input(INPUT_POST, 'area', FILTER_VALIDATE_INT);
 
         if ($livroNome == "") {
-            $this->mensagemErro("Nome inválido");
+            $this->adicionarMensagemErro("Nome inválido");
         }
         if ($grafica == "") {
-            $this->mensagemErro("Nome da gráfica inválido");
+            $this->adicionarMensagemErro("Nome da gráfica inválido");
         }
         if (!is_int($area)) {
-            $this->mensagemErro("Área inválida");
+            $this->adicionarMensagemErro("Área inválida");
         }
         if ($quantidade <= 0) {
-            $this->mensagemErro("Quantidade informada inválida");
+            $this->adicionarMensagemErro("Quantidade informada inválida");
         }
         $livroDAO = new livroDAO();
         $livro = $livroDAO->recuperarlivro($livroID);
@@ -36,14 +36,14 @@ class verificarEdicao extends verificadorFormularioAjax {
 
         if ($tipolivro === "custeio") {
             if (($numPatrimonio != "") && !$livroDAO->livroPodeTerTipoAlterado($livroID)) {
-                $this->mensagemErro("Não é possível alterar o tipo");
+                $this->adicionarMensagemErro("Não é possível alterar o tipo");
                 return;
             }
             //É um item de custeio
             $numeroPatrimonio = null;
         } else {
             if ($numPatrimonio === null && !$livroDAO->livroPodeTerTipoAlterado($livroID)) {
-                $this->mensagemErro("Não é possível alterar o tipo");
+                $this->adicionarMensagemErro("Não é possível alterar o tipo");
                 return;
             }
             //É um patrimônio
@@ -53,14 +53,14 @@ class verificarEdicao extends verificadorFormularioAjax {
 
         if ($livroDAO->atualizar($livroID, $livro)) {
             $livroDAO->registrarAlteracaolivro($livroID);
-            $this->mensagemSucesso("Atualizado com sucesso");
+            $this->adicionarMensagemSucesso("Atualizado com sucesso");
         } else {
-            $this->mensagemErro("Um erro ocorreu ao cadastrar no banco");
+            $this->adicionarMensagemErro("Um erro ocorreu ao cadastrar no banco");
         }
     }
 
 }
 
-$verificarEdicao = new verificarEdicao();
-$verificarEdicao->verificar();
+//$verificarEdicao = new verificarEdicao();
+//$verificarEdicao->executar();
 ?>

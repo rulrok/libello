@@ -1,7 +1,7 @@
 <?php
 
 include_once APP_DIR . "modelo/Mensagem.php";
-include_once APP_DIR . "visao/verificadorFormularioAjax.php";
+include_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 
 class registrarSaida extends verificadorFormularioAjax {
 
@@ -19,27 +19,27 @@ class registrarSaida extends verificadorFormularioAjax {
         $responsavel = fnDecrypt(filter_input(INPUT_POST, 'responsavel'));
 
         if ($dataSaida == "") {
-            $this->mensagemErro("Data é um campo obrigatório");
+            $this->adicionarMensagemErro("Data é um campo obrigatório");
         }
         if ($quantidade <= 0) {
-            $this->mensagemErro("Quantidade inválida");
+            $this->adicionarMensagemErro("Quantidade inválida");
         }
 
         if (($destino == null || $destino == "" || $destinoAlternativo !== null) && ($destino !== null || $destinoAlternativo === "")) {
-            $this->mensagemErro("Destino inválido");
+            $this->adicionarMensagemErro("Destino inválido");
         }
         $equipamentoDAO = new equipamentoDAO();
         if ($equipamentoDAO->cadastrarSaida($equipamentoID, $responsavel, $destino, $destinoAlternativo, $quantidade, $dataSaida)) {
             $id = $equipamentoDAO->obterUltimoIdInserido();
             $equipamentoDAO->registrarCadastroSaida($id);
-            $this->mensagemSucesso("Saída registrada");
+            $this->adicionarMensagemSucesso("Saída registrada");
         } else {
-            $this->mensagemErro("Erro ao cadastrar no banco");
+            $this->adicionarMensagemErro("Erro ao cadastrar no banco");
         }
     }
 
 }
 
-$registrarSaida = new registrarSaida();
-$registrarSaida->verificar();
+//$registrarSaida = new registrarSaida();
+//$registrarSaida->executar();
 ?>

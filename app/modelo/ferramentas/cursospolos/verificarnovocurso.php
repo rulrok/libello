@@ -1,7 +1,7 @@
 <?php
 
 require_once APP_DIR . "modelo/vo/Curso.php";
-require_once APP_DIR . "visao/verificadorFormularioAjax.php";
+require_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 
 class VerificarNovoCurso extends verificadorFormularioAjax {
 
@@ -11,13 +11,13 @@ class VerificarNovoCurso extends verificadorFormularioAjax {
         $tipocurso = filter_input(INPUT_POST, 'tipocurso', FILTER_VALIDATE_INT);
 
         if (!is_int($tipocurso)) {
-            $this->mensagemErro("Tipo de curso inválido");
+            $this->adicionarMensagemErro("Tipo de curso inválido");
         }
         if (!is_int($area)) {
-            $this->mensagemErro("Área inválida");
+            $this->adicionarMensagemErro("Área inválida");
         }
         if ($curso == "") {
-            $this->mensagemErro("Nome do curso inválido");
+            $this->adicionarMensagemErro("Nome do curso inválido");
         }
 
         $novocurso = new Curso();
@@ -27,17 +27,17 @@ class VerificarNovoCurso extends verificadorFormularioAjax {
         $cursoDAO = new cursoDAO();
         if ($cursoDAO->consultarCurso($novocurso) == 0) {
             if ($cursoDAO->cadastrarCurso($novocurso)) {
-                $this->mensagemSucesso("Cadastrado com sucesso.");
+                $this->adicionarMensagemSucesso("Cadastrado com sucesso.");
             } else {
-                $this->mensagemErro("Erro ao cadastrar no banco");
+                $this->adicionarMensagemErro("Erro ao cadastrar no banco");
             }
         } else {
-            $this->mensagemAviso("Curso já existe!");
+            $this->adicionarMensagemAviso("Curso já existe!");
         }
     }
 
 }
 
-$verificarNovoCurso = new VerificarNovoCurso();
-$verificarNovoCurso->verificar();
+//$verificarNovoCurso = new VerificarNovoCurso();
+//$verificarNovoCurso->executar();
 ?>

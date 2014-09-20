@@ -4,7 +4,7 @@ require_once APP_DIR . "modelo/Mensagem.php";
 require_once APP_DIR . "modelo/Utils.php";
 require_once APP_DIR . "modelo/vo/Imagem.php";
 require_once APP_DIR . "modelo/validadorCPF.php";
-include APP_DIR . "visao/verificadorFormularioAjax.php";
+include APP_DIR . "modelo/verificadorFormularioAjax.php";
 
 /**
  * Verifica se o formulário de cadastro de imagem e seus dados estão todos corretos
@@ -36,9 +36,9 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             $origemErro = (!empty($_FILES[$arquivoImagem]['error'])) ? $arquivoImagem : $arquivoVetorial;
             $this->processarErroImagem($_FILES[$origemErro]['error'], $_FILES[$origemErro]['name']);
         } elseif (empty($_FILES[$arquivoImagem]['tmp_name']) || $_FILES[$arquivoImagem]['tmp_name'] == 'none') {
-            $this->mensagemErro("Arquivo da imagem não pôde ser enviado.");
+            $this->adicionarMensagemErro("Arquivo da imagem não pôde ser enviado.");
         } elseif (empty($_FILES[$arquivoVetorial]['tmp_name']) || $_FILES[$arquivoVetorial]['tmp_name'] == 'none') {
-            $this->mensagemErro("Arquivo vetorizado não pôde ser enviado.");
+            $this->adicionarMensagemErro("Arquivo vetorizado não pôde ser enviado.");
         } else {
 
             //Campos do formulário obtidos diretamente do sistema
@@ -52,7 +52,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
 
             if (!file_exists(APP_GALLERY_ABSOLUTE_DIR)) {
                 if (!mkdir(APP_GALLERY_ABSOLUTE_DIR)) {
-                    $this->mensagemErro("Falha ao configurar o diretório de imagens.<br/>Contate o suporte informando o erro.");
+                    $this->adicionarMensagemErro("Falha ao configurar o diretório de imagens.<br/>Contate o suporte informando o erro.");
                 }
             }
 
@@ -63,7 +63,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             $dirMiniaturas = APP_GALLERY_ABSOLUTE_DIR . "miniaturas/";
             if (!file_exists($dirMiniaturas)) {
                 if (!mkdir($dirMiniaturas)) {
-                    $this->mensagemErro("Falha ao configurar o diretório de miniaturas.<br/>Contate o suporte informando o erro.");
+                    $this->adicionarMensagemErro("Falha ao configurar o diretório de miniaturas.<br/>Contate o suporte informando o erro.");
                 }
             }
             $dirMiniaturaAutor = APP_GALLERY_ABSOLUTE_DIR . "miniaturas/$cpfAutor/";
@@ -90,7 +90,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
 
 
             if (!in_array($tipoImagem, $formatosPermitidosImagens)) {
-                $this->mensagemErro("Tipo de imagem inválido.<br/>Utilize apenas arquivos jpg/jpeg ou png.");
+                $this->adicionarMensagemErro("Tipo de imagem inválido.<br/>Utilize apenas arquivos jpg/jpeg ou png.");
             }
 
             $nomeImagemVetorial = $_FILES[$arquivoVetorial]['name'];
@@ -98,12 +98,12 @@ class verificarnovaimagem extends verificadorFormularioAjax {
 
             //TODO Verificar quais serão os tipos válidos
             if (!in_array($tipoImagemVetorial, $formatosPermitidosVetoriais)) {
-                $this->mensagemErro("Arquivo vetorial não permitido.");
+                $this->adicionarMensagemErro("Arquivo vetorial não permitido.");
             }
 
             $tamanhoImagem = filesize($_FILES[$arquivoImagem]['tmp_name']);
             if ($tamanhoImagem > APP_MAX_UPLOAD_SIZE) {
-                $this->mensagemErro("Tamanho máximo permitido para a imagem: " . ($tamanhoMaximo / 1024) . " Kb.");
+                $this->adicionarMensagemErro("Tamanho máximo permitido para a imagem: " . ($tamanhoMaximo / 1024) . " Kb.");
             }
 
             $descritor1 = fnDecrypt(filter_input(INPUT_POST, 'descritor1'));
@@ -116,7 +116,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             $idGaleria = $imagensDAO->consultarGaleria($cpfAutor)[0][0];
             if (empty($idGaleria)) {
                 if (!$imagensDAO->cadastrarGaleria($cpfAutor, $idAutor)) {
-                    $this->mensagemErro("Problema ao criar galeria");
+                    $this->adicionarMensagemErro("Problema ao criar galeria");
                 } else {
                     $idGaleria = $imagensDAO->consultarGaleria($cpfAutor);
                 }
@@ -141,7 +141,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
                     if ($imagensDAO->cadastrarDescritor($novo_descritor, $descritor3)) {
                         $descritor4 = $this->auxiliar_ultimo_id_inserido($imagensDAO, $novo_descritor_nome);
                     } else {
-                        $this->mensagemErro("Não foi possível cadastrar o novo descritor");
+                        $this->adicionarMensagemErro("Não foi possível cadastrar o novo descritor");
                     }
                 } else {
                     $descritorExistente = $resultado[0];
@@ -181,7 +181,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             $imagemCopiada = copy($_FILES[$arquivoImagem]['tmp_name'], ROOT . $destinoImagem . $nomeArquivo);
 
             if (!$imagemCopiada) {
-                $this->mensagemErro("Erro ao mover imagem para a pasta do servidor");
+                $this->adicionarMensagemErro("Erro ao mover imagem para a pasta do servidor");
             }
 
             //--------------    Trata o arquivo vetorial    -------------
@@ -190,7 +190,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
 
             $imagemVetorialCopiada = copy($_FILES[$arquivoVetorial]['tmp_name'], ROOT . $destinoImagemVetorial . $nomeArquivoVetorial);
             if (!$imagemVetorialCopiada) {
-                $this->mensagemErro("Erro ao mover arquivo vetorial para a pasta do servidor");
+                $this->adicionarMensagemErro("Erro ao mover arquivo vetorial para a pasta do servidor");
             }
 
             //--------------    Trata o arquivo de miniatura    -------------
@@ -199,7 +199,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             $this->make_thumb(ROOT . $destinoImagem . $nomeArquivo, ROOT . $destinoImagemMiniatura . $nomeArquivoMiniatura, LARGURA_THUMB, ALTURA_THUMB);
 
             if (!file_exists(ROOT . $destinoImagemMiniatura . $nomeArquivoMiniatura)) {
-                $this->mensagemErro("Erro ao criar a miniatura para a imagem");
+                $this->adicionarMensagemErro("Erro ao criar a miniatura para a imagem");
             }
 
             /*
@@ -224,12 +224,12 @@ class verificarnovaimagem extends verificadorFormularioAjax {
                 if ($imagensDAO->cadastrarImagem($imagemVO)) {
                     //TODO recuperar o ID da imagem
 //                    imagensDAO::registrarCadastroImagem($idImagem);
-                    $this->mensagemSucesso("Imagem cadastrada.");
+                    $this->adicionarMensagemSucesso("Imagem cadastrada.");
                 } else {
-                    $this->mensagemErro("Falha ao cadastrar a imagem.");
+                    $this->adicionarMensagemErro("Falha ao cadastrar a imagem.");
                 }
             } catch (Exception $ex) {
-                $this->mensagemErro($ex->getMessage());
+                $this->adicionarMensagemErro($ex->getMessage());
             }
         }
     }
@@ -238,28 +238,28 @@ class verificarnovaimagem extends verificadorFormularioAjax {
         switch ($erro) {
             case '1':
 //                    $error = 'The uploaded file exceeds the upload_max_filesize directive in php.ini';
-                $this->mensagemErro("Arquivo muito grande para o servidor!<br/>Tente um arquivo menor.");
+                $this->adicionarMensagemErro("Arquivo muito grande para o servidor!<br/>Tente um arquivo menor.");
             case '2':
 //                    $error = 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form';
-                $this->mensagemErro("Tamanho da imagem inválido.");
+                $this->adicionarMensagemErro("Tamanho da imagem inválido.");
             case '3':
 //                    $error = 'The uploaded file was only partially uploaded';
-                $this->mensagemErro("O arquivo $arquivo não pode ser carregado completamente.<br/>Tente novamente.");
+                $this->adicionarMensagemErro("O arquivo $arquivo não pode ser carregado completamente.<br/>Tente novamente.");
             case '4':
 //                    $error = 'No file was uploaded.';
-                $this->mensagemErro("Nenhum arquivo foi selecionado.");
+                $this->adicionarMensagemErro("Nenhum arquivo foi selecionado.");
             case '6':
 //                    $error = 'Missing a temporary folder';
-                $this->mensagemErro("Erro ao salvar o arquivo no servidor.");
+                $this->adicionarMensagemErro("Erro ao salvar o arquivo no servidor.");
             case '7':
 //                    $error = 'Failed to write file to disk';
-                $this->mensagemErro("Erro ao salvar o arquivo no servidor.");
+                $this->adicionarMensagemErro("Erro ao salvar o arquivo no servidor.");
             case '8':
 //                    $error = 'File upload stopped by extension';
-                $this->mensagemErro("Operação interrompida pelo servidor.");
+                $this->adicionarMensagemErro("Operação interrompida pelo servidor.");
             default:
 //                    $error = 'No error code avaiable';
-                $this->mensagemErro("Erro desconhecido.");
+                $this->adicionarMensagemErro("Erro desconhecido.");
         }
     }
 
@@ -326,5 +326,5 @@ class verificarnovaimagem extends verificadorFormularioAjax {
 
 }
 
-$verificar = new verificarnovaimagem();
-$verificar->verificar();
+//$verificar = new verificarnovaimagem();
+//$verificar->executar();

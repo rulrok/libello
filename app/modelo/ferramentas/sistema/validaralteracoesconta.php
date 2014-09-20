@@ -1,7 +1,7 @@
 <?php
 
 include_once APP_DIR . "modelo/Mensagem.php";
-include_once APP_DIR . "visao/verificadorFormularioAjax.php";
+include_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/criptografia.php';
 
 class validarAlteracoesConta extends verificadorFormularioAjax {
@@ -23,11 +23,11 @@ class validarAlteracoesConta extends verificadorFormularioAjax {
 //        $this->visao->papel = $usuarioDAO->consultarPapel($_SESSION['email']);
 
         if ($usuario->get_senha() != $senha) {
-            $this->mensagemErro('Senha incorreta');
+            $this->adicionarMensagemErro('Senha incorreta');
         }
 
         if ($nome == "" || $sobreNome == "") {
-            $this->mensagemErro('Nome e sobrenome são campos obrigatórios');
+            $this->adicionarMensagemErro('Nome e sobrenome são campos obrigatórios');
         }
 
         if ($novaSenha != "") {
@@ -35,7 +35,7 @@ class validarAlteracoesConta extends verificadorFormularioAjax {
             if ($novaSenha == $confSenha) {
                 $usuario->set_senha($novaSenha);
             } else {
-                $this->mensagemErro("Senhas não conferem");
+                $this->adicionarMensagemErro("Senhas não conferem");
             }
         } else {
             $usuario->set_senha($senha);
@@ -56,13 +56,13 @@ class validarAlteracoesConta extends verificadorFormularioAjax {
                 $imagensDAO = new imagensDAO();
                 $imagensDAO->atualizarSiglas(obterUsuarioSessao()->get_idUsuario());
             }
-            $this->mensagemSucesso("Perfil salvo");
+            $this->adicionarMensagemSucesso("Perfil salvo");
         } else {
-            $this->mensagemErro("Erro ao inserir no banco de dados.");
+            $this->adicionarMensagemErro("Erro ao inserir no banco de dados.");
         }
     }
 
 }
 
-$validarAlteracoesConta = new validarAlteracoesConta();
-$validarAlteracoesConta->verificar();
+//$validarAlteracoesConta = new validarAlteracoesConta();
+//$validarAlteracoesConta->executar();

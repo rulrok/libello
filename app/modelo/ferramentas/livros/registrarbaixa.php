@@ -1,7 +1,7 @@
 <?php
 
 include_once APP_DIR . "modelo/Mensagem.php";
-include_once APP_DIR . "visao/verificadorFormularioAjax.php";
+include_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 
 class registrarBaixa extends verificadorFormularioAjax {
 
@@ -23,38 +23,38 @@ class registrarBaixa extends verificadorFormularioAjax {
         $livroDAO = new livroDAO();
         if ($dataBaixa == '') {
             //TODO verificar se é uma data mesmo, ao invés de apenas verificar se não é uma string vazia
-            $this->mensagemErro('Data da baixa inválida');
+            $this->adicionarMensagemErro('Data da baixa inválida');
         }
 //        $recuperarBaixalivro = $livroDAO->recuperarBaixalivro($saidaID);
 //        if ($recuperarBaixalivro['quantidadeBaixa'] != $quantidadeMaxima) {
 //            $this->mensagemErro("Dados inconsistentes");
 //        }
         if ($quantidade <= 0 || $quantidade > $quantidadeMaxima) {
-            $this->mensagemErro("Quantidade informada inválida");
+            $this->adicionarMensagemErro("Quantidade informada inválida");
         }
         if ($saidaID !== "") {
             //É uma saída
             if ($livroDAO->cadastrarBaixa($livroID, $dataBaixa, $quantidade, $observacoes, $saidaID)) {
                 $id = $livroDAO->obterUltimoIdInserido();
                 $livroDAO->registrarCadastroBaixa($id);
-                $this->mensagemSucesso("Baixa realizada com sucesso");
+                $this->adicionarMensagemSucesso("Baixa realizada com sucesso");
             } else {
-                $this->mensagemErro("Erro ao cadastrar baixa");
+                $this->adicionarMensagemErro("Erro ao cadastrar baixa");
             }
         } else {
             //É um livro no CEAD
             if ($livroDAO->cadastrarBaixa($livroID, $dataBaixa, $quantidade, $observacoes)) {
                 $id = $livroDAO->obterUltimoIdInserido();
                 $livroDAO->registrarCadastroBaixa($id);
-                $this->mensagemSucesso("Baixa realizada com sucesso");
+                $this->adicionarMensagemSucesso("Baixa realizada com sucesso");
             } else {
-                $this->mensagemErro("Erro ao cadastrar baixa");
+                $this->adicionarMensagemErro("Erro ao cadastrar baixa");
             }
         }
     }
 
 }
 
-$registrarBaixa = new registrarBaixa();
-$registrarBaixa->verificar();
+//$registrarBaixa = new registrarBaixa();
+//$registrarBaixa->executar();
 ?>

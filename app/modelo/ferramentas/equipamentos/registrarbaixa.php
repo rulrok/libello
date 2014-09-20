@@ -1,7 +1,7 @@
 <?php
 
 include_once APP_DIR . "modelo/Mensagem.php";
-include_once APP_DIR . "visao/verificadorFormularioAjax.php";
+include_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 
 class registrarBaixa extends verificadorFormularioAjax {
 
@@ -22,11 +22,11 @@ class registrarBaixa extends verificadorFormularioAjax {
 
 
         if ($dataBaixa == '') {
-            $this->mensagemErro("Data de baixa inválida");
+            $this->adicionarMensagemErro("Data de baixa inválida");
         }
 
         if ($quantidade <= 0 || $quantidade > $quantidadeMaxima) {
-            $this->mensagemErro("Quantidade inválida");
+            $this->adicionarMensagemErro("Quantidade inválida");
         }
 
 
@@ -36,24 +36,24 @@ class registrarBaixa extends verificadorFormularioAjax {
             if ($equipamentoDAO->cadastrarBaixa($equipamentoID, $dataBaixa, $quantidade, $observacoes, $saidaID)) {
                 $idBaixa = $equipamentoDAO->obterUltimoIdInserido();
                 $equipamentoDAO->registrarCadastroBaixa($idBaixa);
-                $this->mensagemSucesso("Baixa realizada com sucesso");
+                $this->adicionarMensagemSucesso("Baixa realizada com sucesso");
             } else {
-                $this->mensagemErro("Erro ao cadastrar baixa");
+                $this->adicionarMensagemErro("Erro ao cadastrar baixa");
             }
         } else {
             //É um equipamento no CEAD
             if ($equipamentoDAO->cadastrarBaixa($equipamentoID, $dataBaixa, $quantidade, $observacoes)) {
                 $idBaixa = $equipamentoDAO->obterUltimoIdInserido();
                 $equipamentoDAO->registrarCadastroBaixa($idBaixa);
-                $this->mensagemSucesso("Baixa realizada com sucesso");
+                $this->adicionarMensagemSucesso("Baixa realizada com sucesso");
             } else {
-                $this->mensagemErro("Erro ao cadastrar baixa");
+                $this->adicionarMensagemErro("Erro ao cadastrar baixa");
             }
         }
     }
 
 }
 
-$registrarBaixa = new registrarBaixa();
-$registrarBaixa->verificar();
+//$registrarBaixa = new registrarBaixa();
+//$registrarBaixa->executar();
 ?>

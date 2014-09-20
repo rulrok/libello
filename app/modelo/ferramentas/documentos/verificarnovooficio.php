@@ -1,7 +1,7 @@
 <?php
 
 require_once APP_DIR . "modelo/vo/Oficio.php";
-include APP_DIR . "visao/verificadorFormularioAjax.php";
+include APP_DIR . "modelo/verificadorFormularioAjax.php";
 
 class verificarnovooficio extends verificadorFormularioAjax {
 
@@ -61,19 +61,19 @@ class verificarnovooficio extends verificadorFormularioAjax {
 //                $this->mensagemSucesso("Oficio gerado com sucesso!");
 //            } else {
             if ($verifica){
-                $this->mensagemSucesso("Oficio salvo com sucesso!");
+                $this->adicionarMensagemSucesso("Oficio salvo com sucesso!");
             } else {
-                $this->mensagemErro("Erro ao salvar ofício!");
+                $this->adicionarMensagemErro("Erro ao salvar ofício!");
             }
                 
 //            }
         } catch (Exception $e) {
-            $this->mensagemErro($e->getMessage());
+            $this->adicionarMensagemErro($e->getMessage());
         }
     }
 
 }
 
-$verificar = new verificarnovooficio();
-$verificar->verificar();
+//$verificar = new verificarnovooficio();
+//$verificar->executar();
 ?>

@@ -102,7 +102,7 @@
                 var acaoGerar = "index.php?c=documentos&a=validar" + tipo + "&i_id" + tipo + "=";
                 var data = ajax(acaoGerar + id, null, false, false);
                 if (data !== null && data !== undefined) {
-                    data = extrairJSON(data);
+                    data = filtrarJSON(data);
                     if (data.status !== undefined && data.mensagem !== undefined) {
                         showPopUp(data.mensagem, data.status);
                         if (data.status.toLowerCase() === "sucesso") {

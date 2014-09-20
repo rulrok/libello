@@ -9,11 +9,11 @@
 class Mensagem {
 
     const __length = 3;
-    const SUCESSO = "Sucesso";
-    const ERRO = "Erro";
-    const INFO = "Informacao";
+    const SUCESSO = "pop_sucesso";
+    const ERRO = "pop_erro";
+    const INFO = "pop_info";
 
-    var $status;
+    var $tipo;
     var $mensagem;
 
     /**
@@ -21,16 +21,16 @@ class Mensagem {
      * @return string
      */
     public function get_status() {
-        return $this->status;
+        return $this->tipo;
     }
 
     /**
      * 
-     * @param string $status
+     * @param string $tipo
      * @return \Mensagem
      */
-    private function set_status($status) {
-        $this->status = $status;
+    private function set_tipo($tipo) {
+        $this->tipo = $tipo;
         return $this;
     }
 
@@ -59,7 +59,7 @@ class Mensagem {
      */
     public function set_mensagemSucesso($mensagem) {
         $this->set_mensagem($mensagem);
-        $this->set_status(self::SUCESSO);
+        $this->set_tipo(self::SUCESSO);
         return $this;
     }
 
@@ -70,7 +70,7 @@ class Mensagem {
      */
     public function set_mensagemErro($mensagem) {
         $this->set_mensagem($mensagem);
-        $this->set_status(self::ERRO);
+        $this->set_tipo(self::ERRO);
         return $this;
     }
 
@@ -81,8 +81,18 @@ class Mensagem {
      */
     public function set_mensagemInfo($mensagem) {
         $this->set_mensagem($mensagem);
-        $this->set_status(self::INFO);
+        $this->set_tipo(self::INFO);
         return $this;
+    }
+
+    /**
+     * 
+     * @param type $mensagem
+     * @param type $tipo
+     */
+    public function set_mensagemPersonalizada($tipo, $mensagem) {
+        $this->set_mensagem($mensagem);
+        $this->set_tipo($tipo);
     }
 
 }

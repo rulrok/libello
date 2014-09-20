@@ -1,7 +1,7 @@
 <?php
 
 require_once APP_DIR . "modelo/vo/Polo.php";
-require_once APP_DIR . "visao/verificadorFormularioAjax.php";
+require_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 
 class VerificarNovoPolo extends verificadorFormularioAjax {
 
@@ -11,13 +11,13 @@ class VerificarNovoPolo extends verificadorFormularioAjax {
         $nome = filter_input(INPUT_POST, 'nomepolo');
 
         if ($estado == "" || $estado == "default") {
-            $this->mensagemErro("Estado inválido");
+            $this->adicionarMensagemErro("Estado inválido");
         }
         if ($cidade == "" || $cidade == "default") {
-            $this->mensagemErro("Cidade inválida");
+            $this->adicionarMensagemErro("Cidade inválida");
         }
         if ($nome == "") {
-            $this->mensagemErro("Nome do Polo inválido");
+            $this->adicionarMensagemErro("Nome do Polo inválido");
         }
         $polo = new Polo();
         $polo->set_nome($nome);
@@ -26,17 +26,17 @@ class VerificarNovoPolo extends verificadorFormularioAjax {
         $poloDAO = new poloDAO();
         if ($poloDAO->consultarPolo($polo) == 0) {
             if ($poloDAO->cadastrarPolo($polo)) {
-                $this->mensagemSucesso("Cadastrado com sucesso");
+                $this->adicionarMensagemSucesso("Cadastrado com sucesso");
             } else {
-                $this->mensagemErro("Erro ao cadastrar no banco");
+                $this->adicionarMensagemErro("Erro ao cadastrar no banco");
             }
         } else {
-            $this->mensagemAviso("Polo já existe!");
+            $this->adicionarMensagemAviso("Polo já existe!");
         }
     }
 
 }
 
-$verificarNovoPolo = new VerificarNovoPolo();
-$verificarNovoPolo->verificar();
+//$verificarNovoPolo = new VerificarNovoPolo();
+//$verificarNovoPolo->executar();
 ?>

@@ -1,7 +1,7 @@
 <?php
 
 include_once APP_DIR . "modelo/Mensagem.php";
-include_once APP_DIR . "visao/verificadorFormularioAjax.php";
+include_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 
 class registrarSaida extends verificadorFormularioAjax {
 
@@ -20,26 +20,26 @@ class registrarSaida extends verificadorFormularioAjax {
 
 
         if ($dataSaida == "") {
-            $this->mensagemErro("Data de saída inválida");
+            $this->adicionarMensagemErro("Data de saída inválida");
         }
         if (($destino == null || $destino == "" || $destinoAlternativo !== null) && ($destino !== null || $destinoAlternativo === "")) {
-            $this->mensagemErro("Destino inválido");
+            $this->adicionarMensagemErro("Destino inválido");
         }
         if ($quantidade <= 0) {
-            $this->mensagemErro("Quantidade informada inválida");
+            $this->adicionarMensagemErro("Quantidade informada inválida");
         }
         $livroDAO = new livroDAO();
         if ($livroDAO->cadastrarSaida($livroID, $responsavel, $destino, $destinoAlternativo, $quantidade, $dataSaida)) {
             $id = $livroDAO->obterUltimoIdInserido();
             $livroDAO->registrarCadastroSaida($id);
-            $this->mensagemSucesso("Saída registrada");
+            $this->adicionarMensagemSucesso("Saída registrada");
         } else {
-            $this->mensagemErro("Erro ao cadastrar no banco");
+            $this->adicionarMensagemErro("Erro ao cadastrar no banco");
         }
     }
 
 }
 
-$registrarSaida = new registrarSaida();
-$registrarSaida->verificar();
+//$registrarSaida = new registrarSaida();
+//$registrarSaida->executar();
 ?>

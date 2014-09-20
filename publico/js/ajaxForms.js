@@ -46,21 +46,21 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn
     desabilitarBotaoAcao(botaoAcao);
 
 
-    function preProcessar(formData, jqForm, options) {
+    function _preProcessar(formData, jqForm, options) {
         //Retornando FALSE através dessa função, o envio do formulário será cancelado
         //Qualquer outra coisa deixará o formulário ser enviado
         $("input[type=submit],button[type=submit]").attr('disabled', true);
         return true;
     }
 
-    function posProcessar(formData, jfForm, options) {
+    function _posProcessar(formData, jfForm, options) {
         if (completeFn !== undefined && isFunction(completeFn)) {
             completeFn();
         }
         $("input[type=submit],button[type=submit]").attr('disabled', false);
     }
 
-    function sucesso(responseText, statusText, xhr, $form) {
+    function _sucesso(responseText, statusText, xhr, $form) {
         // for normal html responses, the first argument to the success callback 
         // is the XMLHttpRequest object's responseText property 
 
@@ -74,11 +74,13 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn
 
         var data = responseText;
         if (data !== null && data !== undefined) {
-            data = extrairJSON(data);
-            if (data.status !== undefined && data.mensagem !== undefined) {
+            data = filtrarJSON(data);
+            if (data !== undefined && data.status !== undefined) {
 
-                showPopUp(data.mensagem, data.status);
-                if (data.status.toLowerCase() === "sucesso") {
+
+                processarMensagens(data);
+//                showPopUp(data.mensagem, data.status);
+                if (data.status === "sucesso") {
                     document.paginaAlterada = false;
                     if (successFn !== undefined && isFunction(successFn)) {
                         successFn(data);
@@ -88,19 +90,19 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn
                     }
                 }
             } else {
-                showPopUp("Houve algum problema na resposta do servidor.", "erro");
+                showPopUp("Houve algum problema na resposta do servidor.", "pop_erro");
             }
         } else {
-            showPopUp("Houve algum problema na resposta do servidor.", "erro");
+            showPopUp("Houve algum problema na resposta do servidor.", "pop_erro");
         }
     }
 
 
     var opcoes = {
         target: recipient // target element(s) to be updated with server response 
-        , beforeSubmit: preProcessar // pre-submit callback 
-        , success: sucesso  // post-submit callback 
-        , complete: posProcessar
+        , beforeSubmit: _preProcessar // pre-submit callback 
+        , success: _sucesso  // post-submit callback 
+        , complete: _posProcessar
         , aways: alwaysFn
         , url: $("#" + idFormulario).prop("action")         // override for form's 'action' attribute 
         , type: $("#" + idFormulario).prop("method")        // 'get' or 'post', override for form's 'method' attribute 
@@ -115,7 +117,7 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn
 //        var post = $.post($("#" + idFormulario).attr("action"), $("#" + idFormulario).serialize(), function(data) {
 //            if (data !== null && data !== undefined) {
 //                console.log(data);
-//                data = extrairJSON(data);
+//                data = filtrarJSON(data);
 //
 //                if (data.status !== undefined && data.mensagem !== undefined) {
 //                    showPopUp(data.mensagem, data.status);

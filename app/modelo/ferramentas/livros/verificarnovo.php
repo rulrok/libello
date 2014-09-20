@@ -2,7 +2,7 @@
 
 require_once APP_DIR . "modelo/Mensagem.php";
 require_once APP_DIR . "modelo/vo/Livro.php";
-require_once APP_DIR . "visao/verificadorFormularioAjax.php";
+require_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 
 class verificarnovolivro extends verificadorFormularioAjax {
 
@@ -20,16 +20,16 @@ class verificarnovolivro extends verificadorFormularioAjax {
         $livro = new livro();
 
         if ($nomelivro == "") {
-            $this->mensagemErro("Nome inválido");
+            $this->adicionarMensagemErro("Nome inválido");
         }
 //        if ($dataEntrada == "") {
 //            $this->mensagemErro("Data de entrada inválida");
 //        }
         if (!is_int($area)) {
-            $this->mensagemErro("Área inválida");
+            $this->adicionarMensagemErro("Área inválida");
         }
         if ($grafica == "") {
-            $this->mensagemErro("Nome da gráfica inválido");
+            $this->adicionarMensagemErro("Nome da gráfica inválido");
         }
         $livro->set_nomelivro($nomelivro)->set_dataEntrada($dataEntrada)->set_descricao($descricao)->set_area($area)->set_grafica($grafica);
 
@@ -59,14 +59,14 @@ class verificarnovolivro extends verificadorFormularioAjax {
             }
             if ($patrimoniosInvalidos === '') {
                 //Todos foram cadastrados com sucesso
-                $this->mensagemSucesso("Todos os patrimônios foram cadastrados com sucesso");
+                $this->adicionarMensagemSucesso("Todos os patrimônios foram cadastrados com sucesso");
             } else {
                 //Alguns não puderam ser cadastrados
-                $this->mensagemAviso("Os patrimônios:<br/><ul style=\"text-align: left;\"> " . $patrimoniosInvalidos . "</ul>não puderam ser cadastrados.<br/>Verifique se os mesmos já não foram cadastrados!");
+                $this->adicionarMensagemAviso("Os patrimônios:<br/><ul style=\"text-align: left;\"> " . $patrimoniosInvalidos . "</ul>não puderam ser cadastrados.<br/>Verifique se os mesmos já não foram cadastrados!");
             }
         } else {
             if ($quantidade <= 0) {
-                $this->mensagemErro("Quantidade deve ser maior que 0");
+                $this->adicionarMensagemErro("Quantidade deve ser maior que 0");
             }
             //É do tipo custeio
             $livro->set_quantidade($quantidade);
@@ -75,15 +75,15 @@ class verificarnovolivro extends verificadorFormularioAjax {
             if ($livroDAO->cadastrarlivro($livro)) {
                 $id = $livroDAO->obterUltimoIdInserido();
                 $livroDAO->registrarInsercaolivro($id);
-                $this->mensagemSucesso("Cadastrado com sucesso.");
+                $this->adicionarMensagemSucesso("Cadastrado com sucesso.");
             } else {
-                $this->mensagemErro("Erro ao cadastrar no banco de dados.");
+                $this->adicionarMensagemErro("Erro ao cadastrar no banco de dados.");
             }
         }
     }
 
 }
 
-$verificar = new verificarnovolivro();
-$verificar->verificar();
+//$verificar = new verificarnovolivro();
+//$verificar->executar();
 ?>

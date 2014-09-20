@@ -392,7 +392,7 @@ function ajax(link, place, hidePop, async, ignorePageChanges) {
         if (hidePop === undefined) {
             hidePop = true;
         }
-        
+
 //A função "hidePopup" foi desativada, pois atualmente o sistema
 //utiliza uma espécie de "framework" para os popups.        
 //        if (hidePop === true) {
@@ -626,30 +626,27 @@ function showFooter() {
  */
 function showPopUp(data, type) {
     if (type === undefined || type === null) {
-        type = "informacao";
+        type = "pop_info";
     }
     var texto, fundo, borda;
     switch (type.toLocaleLowerCase()) {
-        case "informacao":
-        case "info":
+        case "pop_info":
             texto = "#3a87ad !important";
             fundo = "#d9edf7";
             borda = "#bce8f1";
-            type="showNoticeToast";
+            type = "showNoticeToast";
             break;
-        case "error":
-        case "erro":
+        case "pop_erro":
             texto = "#b94a48 !important";
             fundo = "#f2dede";
             borda = "#eed3d7";
-            type="showErrorToast";
+            type = "showErrorToast";
             break;
-        case "sucesso":
-        case "success":
+        case "pop_sucesso":
             texto = "#468847 !important";
             fundo = "#dff0d8";
             borda = "#d6e9c6";
-            type="showSuccessToast";
+            type = "showSuccessToast";
             break;
     }
     $().toastmessage(type, data);
@@ -669,7 +666,7 @@ function showPopUp(data, type) {
 //        });
 //        $(this).effect("shake", {}, 500);
 //    });
-    
+
     //Trecho sem efeito de esmaecimento
     //    $(".popUp").show(200, function() {
     //        $(".botao_fechar").show(100, function() {
@@ -832,18 +829,116 @@ function mudarTitulo(titulo, ignorarTituloPadrao) {
  * @author Reuel
  *  
  * @param {String} string Texto qualquer. Nesse caso, trata-se do retorno das páginas solicitadas via Ajax.
- * @returns {String} String para ser criado um Json, caso alguma seja encontrada.
+ * @returns {String} 
  */
-function extrairJSON(string) {
-    var json = null;
-    try {
-        json = $.parseJSON(string);
-    } catch (ex) {
-        var index = string.lastIndexOf('{"status":');
-        if (index > -1)
-            return extrairJSON(string.substring(index));
-        else
-            json = '{"status":"Informacao","mensagem":"Ocorreu algum erro no processamento da resposta do servidor.<br/>Verifique manualmente se o dado foi cadastrado."}';
+function filtrarJSON(string) {
+    console.log(string);
+    $(".debug_div").empty();
+    $(".debug_div").append(string);
+//    $(".debug_div_border").css({
+//        height: 40
+//    });
+    var data = new RespostaJSON();
+
+    var regex = /\[(\[\"sys_msgs\"\]).*?}\]/g;
+    var match = regex.exec(string);
+
+    if (match != undefined) {
+//        console.log(JSON.parse(match[0]));
+        var resultados = JSON.parse(match[0]);
+        if (resultados[0][0] == "sys_msgs") {
+            for (var i = 1; i < resultados.length; i++) {
+                switch (resultados[i]['tipo']) {
+                    case 'pop_sucesso':
+                        data.addMensagemSucesso(resultados[i]['mensagem']);
+                        break;
+                    case 'pop_erro':
+                        data.addMensagemErro(resultados[i]['mensagem']);
+                        break;
+                    case 'pop_info':
+                        data.addMensagemInfo(resultados[i]['mensagem']);
+                        break;
+                    case 'sys_status':
+                        data.status = resultados[i]['mensagem'];
+                        break;
+                    default:
+                        //TODO errado, precisa tmb adicionar o 'tipo', visto que nao é mensagem padrao
+                        data.addMensagemPersonalizada(resultados[i]['mensagem']);
+                        break;
+                }
+            }
+        } else {
+            data.status = "indefinido";
+        }
+    } else {
+        data.status = "indefinido";
     }
-    return json;
+
+    return data;
+}
+
+function processarMensagens(data) {
+    var erros = data.getMensagensErro();
+    for (var i = 0; i < erros.length; i++) {
+        showPopUp(erros[i], 'pop_erro');
+    }
+    var sucessos = data.getMensagensSucesso();
+    for (var i = 0; i < sucessos.length; i++) {
+        showPopUp(sucessos[i], 'pop_sucesso');
+    }
+
+    var infos = data.getMensagensInfo();
+    for (var i = 0; i < infos.length; i++) {
+        showPopUp(infos[i], 'pop_info');
+    }
+}
+
+function RespostaJSON() {
+    this.status = "indefinido";
+//    this.mensagens = [];
+    this.mensagensSucesso = [];
+    this.mensagensErro = [];
+    this.mensagensInfo = [];
+    this.mensagensPersonalizadas = [];
+
+    this.getMensagensSucesso = function() {
+        return this.mensagensSucesso;
+    }
+    this.getMensagensInfo = function() {
+        return this.mensagensInfo;
+    }
+    this.getMensagensErro = function() {
+        return this.mensagensErro;
+    }
+    this.getMensagensPersonalizadas = function() {
+        return this.mensagensPersonalizadas;
+    }
+
+    this.addMensagemSucesso = function(mensagem) {
+//        this.mensagens[this.mensagens.length] = mensagem;
+        this.mensagensSucesso[this.mensagensSucesso.length] = mensagem;
+    }
+
+    this.addMensagemErro = function(mensagem) {
+//        this.mensagens[this.mensagens.length] = mensagem;
+        this.mensagensErro[this.mensagensErro.length] = mensagem;
+    }
+
+    this.addMensagemInfo = function(mensagem) {
+//        this.mensagens[this.mensagens.length] = mensagem;
+        this.mensagensInfo[this.mensagensInfo.length] = mensagem;
+    }
+
+    this.addMensagemPersonalizada = function(mensagem) {
+//        this.mensagens[this.mensagens.length] = mensagem;
+        this.mensagensPersonalizadas[this.mensagensPersonalizadas.length] = mensagem;
+    }
+
+    function sucesso() {
+        return this.status == "sucesso";
+    }
+
+//    function getQuantidadeMensagens() {
+//        return this.mensagens.length;
+//    }
 }

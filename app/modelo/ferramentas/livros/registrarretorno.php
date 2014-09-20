@@ -1,7 +1,7 @@
 <?php
 
 include_once APP_DIR . "modelo/Mensagem.php";
-include_once APP_DIR . "visao/verificadorFormularioAjax.php";
+include_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 
 class registrarSaida extends verificadorFormularioAjax {
 
@@ -17,31 +17,31 @@ class registrarSaida extends verificadorFormularioAjax {
         $livroDAO = new livroDAO();
         if ($dataRetorno == '') {
             //TODO Verificar se a data de retorno não é inferior a data de saída
-            $this->mensagemErro("Data de retorno inválida");
+            $this->adicionarMensagemErro("Data de retorno inválida");
         }
         $recuperarSaidalivro = $livroDAO->recuperarSaidalivro($saidaID);
         if ($recuperarSaidalivro['quantidadeSaida'] != $quantidadeMaxima) {
-            $this->mensagemErro("Dados inconsistentes");
+            $this->adicionarMensagemErro("Dados inconsistentes");
         }
         if ($quantidade <= 0 || $quantidade > $quantidadeMaxima) {
-            $this->mensagemErro("Quantidade informada inválida");
+            $this->adicionarMensagemErro("Quantidade informada inválida");
         }
 
         if ($livroDAO->cadastrarRetorno($saidaID, $dataRetorno, $quantidade, $observacoes)) {
             $id = $livroDAO->obterUltimoIdInserido();
             $livroDAO->registrarRetorno($id);
             if ($quantidade > 1) {
-                $this->mensagemSucesso("Livros Retornados");
+                $this->adicionarMensagemSucesso("Livros Retornados");
             } else {
-                $this->mensagemSucesso("Livro Retornado");
+                $this->adicionarMensagemSucesso("Livro Retornado");
             }
         } else {
-            $this->mensagemErro("Erro ao cadastrar no banco")->set_status(Mensagem::ERRO);
+            $this->adicionarMensagemErro("Erro ao cadastrar no banco")->set_status(Mensagem::ERRO);
         }
     }
 
 }
 
-$registrarSaida = new registrarSaida();
-$registrarSaida->verificar();
+//$registrarSaida = new registrarSaida();
+//$registrarSaida->executar();
 ?>

@@ -5,7 +5,7 @@ require_once APP_DIR . "modelo/vo/Usuario.php";
 include_once APP_DIR . 'modelo/validadorCPF.php';
 include_once APP_DIR . 'modelo/comboboxes/ComboBoxPapeis.php';
 include_once APP_DIR . 'modelo/comboboxes/ComboBoxPermissoes.php';
-include_once APP_DIR . "visao/verificadorFormularioAjax.php";
+include_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 
 class verificarEdicaoUsuario extends verificadorFormularioAjax {
 
@@ -23,9 +23,12 @@ class verificarEdicaoUsuario extends verificadorFormularioAjax {
 
         $emailOriginal = $usuarioDAO->descobrirEmail($userID);
         $usuarioOriginal = $usuarioDAO->recuperarUsuario($emailOriginal);
+        
+        $erro_ocorrido = false;
         if (strcmp($email, $emailOriginal)) {
             registrar_erro("Tentativa de modificar email do usuário para ($email), o que não é permitido", $usuarioOriginal);
-            $this->mensagemErro("Tentativa de alterar o email percebida.");
+            $this->adicionarMensagemErro("Tentativa de alterar o email percebida.");
+            $this->abortarExecucao();
         }
 
         if ($dataNascimento == '') {
@@ -33,24 +36,32 @@ class verificarEdicaoUsuario extends verificadorFormularioAjax {
         }
 
         if ($nome == '' || $sobreNome == '') {
-            $this->mensagemErro("Nome e sobrenome são campos obrigatórios");
+            $this->adicionarMensagemErro("Nome e sobrenome são campos obrigatórios");
+            $erro_ocorrido = true;
         }
 
         if ($idPapel == '' || !is_numeric($idPapel)) {
-            $this->mensagemErro("Papel inválido");
+            $this->adicionarMensagemErro("Papel inválido");
+            $erro_ocorrido = true;
         }
         
         if ($idPapel < obterUsuarioSessao()->get_idPapel()) {
             registrar_erro("Tentativa de alterar papel de usuário para um maior que o seu próprio (para valor $idPapel)", $usuarioOriginal);
-            $this->mensagemErro("Alteração não permitida");
+            $this->adicionarMensagemErro("Alteração não permitida");
+            $erro_ocorrido = true;
         }
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $this->mensagemErro("Email inválido");
+            $this->adicionarMensagemErro("Email inválido");
+            $erro_ocorrido = true;
         }
         if (!validadorCPF::validarCPF($cpf)) {
-            $this->mensagemErro("CPF inválido");
+            $this->adicionarMensagemErro("CPF inválido");
+            $erro_ocorrido = true;
         }
 
+        if ($erro_ocorrido){
+            $this->abortarExecucao();
+        }
         $usuario = new Usuario();
         $usuario->set_PNome($nome);
         $usuario->set_UNome($sobreNome);
@@ -82,17 +93,18 @@ class verificarEdicaoUsuario extends verificadorFormularioAjax {
             $usuarioDAO->encerrarTransacao();
         } catch (Exception $e) {
             $usuarioDAO->rollback();
-            $this->mensagemErro("Erro ao modificar. Nenhum alteração salva.");
+            $this->adicionarMensagemErro("Erro ao modificar. Nenhum alteração salva.");
+            $this->terminarExecucao();
         }
         $idUsuario = $usuarioDAO->recuperarUsuario($usuario->get_email())->get_idUsuario();
-        $usuarioDAO->registrarAlteracaoUsuario(obterUsuarioSessao()->get_idUsuario(), $idUsuario);
+//        $usuarioDAO->registrarAlteracaoUsuario(obterUsuarioSessao()->get_idUsuario(), $idUsuario);
 
 //                $this->visao->permissoes = $usuarioDAO->obterPermissoes($usuarioDAO->recuperarUsuario($email)->get_id());
-        $this->mensagemSucesso("Atualização concluída");
+        $this->adicionarMensagemSucesso("Atualização concluída");
     }
 
 }
 
-$verificarEdicaoUsuario = new verificarEdicaoUsuario();
-$verificarEdicaoUsuario->verificar();
+//$verificarEdicaoUsuario = new verificarEdicaoUsuario();
+//$verificarEdicaoUsuario->executar();
 ?>
