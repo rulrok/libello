@@ -14,12 +14,16 @@ class documentoDAO extends abstractDAO {
      * @return O inteiro correspondente ao ultimo valor desejado
      */
     public function consultaUltimoRegistroValidacao($nomeTabelaDocumento, $campoUltimoRegistroDesejado, $chavePrimariaTabela) {
-        $sql = "SELECT MAX(". $chavePrimariaTabela. ") FROM " .$nomeTabelaDocumento;
+        $sql = "SELECT MAX(" . $chavePrimariaTabela . ") FROM " . $nomeTabelaDocumento;
         $ultimoIdInserido = $this->executarSelect($sql);
 
-        $sql = "SELECT " . $campoUltimoRegistroDesejado . " FROM " . $nomeTabelaDocumento . " WHERE " . $chavePrimariaTabela . " = " . $ultimoIdInserido[0][0];
-        $resultado = $this->executarSelect($sql);
-        return $resultado[0][0];
+        if ($ultimoIdInserido[0][0]=="") {
+            return "";
+        } else {
+            $sql = "SELECT " . $campoUltimoRegistroDesejado . " FROM " . $nomeTabelaDocumento . " WHERE " . $chavePrimariaTabela . " = " . $ultimoIdInserido[0][0];
+            $resultado = $this->executarSelect($sql);
+            return $resultado[0][0];
+        }
     }
 
     public function consultar($documento = "documento_oficio", $condicao = null) {
@@ -121,7 +125,6 @@ class documentoDAO extends abstractDAO {
         );
         return $this->executarQuery($sql, $params);
     }
-    
 
     public function validarMemorando($idMemorando) { //mesmo que "gerar"
         $sql = "UPDATE documento_memorando SET estadoValidacao = 1, estadoEdicao = 0 WHERE idMemorando = :idMemorando";
