@@ -298,10 +298,21 @@ de dados inicial mínima para o funcionamento do portal.
           Senha: 123
 
     Por questões de padronização, antes de subir o arquivo 'banco_dados.sql'
-para o BD local ou até mesmo para o BD do servidor, deve-se criar um usuário com
-o nome 'libello_cead' e senha '!l1b3ll0_c34d!' e após isto, criar um schema com 
-o nome 'libello' e dentro, importar o arquivo de dump 'banco_dados.sql'.
-Atente-se às aspas, que NÃO fazem parte do usuário e nem da senha.
+para o BD local ou até mesmo para o BD do servidor, deve-se criar um usuário,
+senha e um schema assim como se segue:
+
+        Schema: 'libello' 
+        Usuário: 'libello_cead'
+        Senha: '!l1b3ll0_c34d!'
+
+    E dentro, importar o arquivo de dump 'banco_dados.sql'. Atente-se às aspas,
+que NÃO fazem parte do usuário e nem da senha. De modo a facilitar este processo,
+segue os comandos básicos do SQL para tal:
+
+        - mysql -u seu_usuario_root -p
+        - create user 'libello_cead'@'localhost';
+        - set password for 'libello_cead'@'localhost' = password('!l1b3ll0_c34d!');
+        - grant all on libello.* to 'libello_cead'@'localhost';
 
     É extremamente necessário configurar as permissões do diretório 'libello', 
 dentro da pasta do servidor web, com usuário o configurado como
@@ -347,6 +358,17 @@ Applications/MAMP/htdocs ou outro diretório web do seu Sistema Operacional).
 
     - Arquivo 'configuracao_nginx'
         Semelhante ao arquivo acima, mas para o Nginx
+
+
+
+
+IMPORTANTE:
+    
+    Durante a manutenção do sistema, se for necessário executar algum DUMP, é de
+extrema importancia que se execute o comando adicionando o parâmetro: '--routines' 
+assim como se segue:
+
+        - mysqldump -u root -p --routines libello > banco_dados.sql
 
 
 ================================================================================

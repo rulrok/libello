@@ -65,6 +65,7 @@ CREATE TABLE `cursospolos_curso` (
 
 LOCK TABLES `cursospolos_curso` WRITE;
 /*!40000 ALTER TABLE `cursospolos_curso` DISABLE KEYS */;
+INSERT INTO `cursospolos_curso` VALUES (50,'Retórica II',8,1);
 /*!40000 ALTER TABLE `cursospolos_curso` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,6 +91,7 @@ CREATE TABLE `cursospolos_polo` (
 
 LOCK TABLES `cursospolos_polo` WRITE;
 /*!40000 ALTER TABLE `cursospolos_polo` DISABLE KEYS */;
+INSERT INTO `cursospolos_polo` VALUES (5,'Japaguá','Varginha','MG');
 /*!40000 ALTER TABLE `cursospolos_polo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -150,6 +152,7 @@ CREATE TABLE `documento_memorando` (
 
 LOCK TABLES `documento_memorando` WRITE;
 /*!40000 ALTER TABLE `documento_memorando` DISABLE KEYS */;
+INSERT INTO `documento_memorando` VALUES (27,1,' Administração. Instalação de microcomputadores','01/08/2014','TEC','1/2014',0,1,'Ao Sr','Chefe do departamento de Administração','<p>Teste editor&nbsp;<span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span><span style=\"font-size: 11px;\">Teste editor&nbsp;</span></p>','Prof. Dr. Luiz Eduardo ','Coordenador CEAD');
 /*!40000 ALTER TABLE `documento_memorando` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -188,6 +191,7 @@ CREATE TABLE `documento_oficio` (
 
 LOCK TABLES `documento_oficio` WRITE;
 /*!40000 ALTER TABLE `documento_oficio` DISABLE KEYS */;
+INSERT INTO `documento_oficio` VALUES (29,'Indicação de nome para....','<p>teste editor&nbsp;<span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span><span style=\"font-size: 11px;\">teste editor&nbsp;</span></p>',1,0,1,'Luiz Eduardo da Silva','1/2014','01/08/2014','TEC','Magnifico Reitor','Prof. Dr. Luiz','Coordenador CEAD','Ao Sr.','Coordenador do núcleo CEAD');
 /*!40000 ALTER TABLE `documento_oficio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -793,10 +797,9 @@ CREATE TABLE `livro` (
   `area` int(11) DEFAULT NULL,
   `grafica` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
   PRIMARY KEY (`idLivro`),
-  UNIQUE KEY `numeroPatrimonio` (`numeroPatrimonio`),
   KEY `fk_livro_area` (`area`),
   CONSTRAINT `fk_livro_area` FOREIGN KEY (`area`) REFERENCES `cursospolos_area` (`idArea`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -805,6 +808,7 @@ CREATE TABLE `livro` (
 
 LOCK TABLES `livro` WRITE;
 /*!40000 ALTER TABLE `livro` DISABLE KEYS */;
+INSERT INTO `livro` VALUES (1,'Para baixa',1,'Para baixa','17/07/2014',NULL,4,'Para baixa');
 /*!40000 ALTER TABLE `livro` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -932,7 +936,7 @@ CREATE TABLE `livro_evento` (
   CONSTRAINT `fk_livro_evento_livro_saida1` FOREIGN KEY (`saida`) REFERENCES `livro_saida` (`idSaida`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `fk_livro_evento_livro_tipoEvento1` FOREIGN KEY (`tipoEvento`) REFERENCES `livro_tipoevento` (`idTipoEvento`) ON UPDATE CASCADE,
   CONSTRAINT `fk_livro_evento_usuario1` FOREIGN KEY (`usuario`) REFERENCES `usuario` (`idUsuario`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -941,6 +945,7 @@ CREATE TABLE `livro_evento` (
 
 LOCK TABLES `livro_evento` WRITE;
 /*!40000 ALTER TABLE `livro_evento` DISABLE KEYS */;
+INSERT INTO `livro_evento` VALUES (1,1,1,1,NULL,NULL,NULL,1405604697),(2,41,1,NULL,NULL,NULL,1,1405604737);
 /*!40000 ALTER TABLE `livro_evento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -969,6 +974,7 @@ CREATE TABLE `livro_retorno` (
 
 LOCK TABLES `livro_retorno` WRITE;
 /*!40000 ALTER TABLE `livro_retorno` DISABLE KEYS */;
+INSERT INTO `livro_retorno` VALUES (1,1,'17/07/2014',1,'RETORNOU');
 /*!40000 ALTER TABLE `livro_retorno` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1023,6 +1029,7 @@ CREATE TABLE `livro_saida` (
 
 LOCK TABLES `livro_saida` WRITE;
 /*!40000 ALTER TABLE `livro_saida` DISABLE KEYS */;
+INSERT INTO `livro_saida` VALUES (1,1,1,NULL,0,1,'17/07/2014',5);
 /*!40000 ALTER TABLE `livro_saida` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1239,7 +1246,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,1,'202cb962ac59075b964b07152d234b70','Cead','Ead','admin@cead.com','28/09/1991',1,'11111111111','CE3','','1406902429'),(2,2,'e10adc3949ba59abbe56e057f20f883e','Reuel','Ramos Ribeiro','rulrok@gmail.com','28/09/1991',1,'39116561813','RRR','',''),(3,2,'e10adc3949ba59abbe56e057f20f883e','Gabriel','Hornink Souza','gabriel@gmail.com','01/01/2020',1,'22082879836','GHS','',''),(6,4,'6603dc207862ec39af10d91adfc02bc0','Cead','Ester','eliblue34@gmail.com','06/02/2014',0,'66666666666','CE2','',''),(7,2,'e10adc3949ba59abbe56e057f20f883e','Luciene','Gouveia','ceadunifal.luciene@gmail.com','03/02/2014',0,'77777777777','LG2','',''),(9,2,'e10adc3949ba59abbe56e057f20f883e','Marcos','Mazzon Filho','marcos.mazzonifilho@gmail.com','05/02/2014',1,'99999999999','MMF','',''),(22,2,'4297f44b13955235245b2497399d7a93','Reuel','Ribeiro','a11021@bcc.unifal-mg.edu.br',NULL,1,'22222222222','RR','','');
+INSERT INTO `usuario` VALUES (1,1,'202cb962ac59075b964b07152d234b70','Cead','Ead','admin@cead.com','28/09/1991',1,'11111111111','CE3','','1406902429'),(2,2,'e10adc3949ba59abbe56e057f20f883e','Reuel','Ramos Ribeiro','rulrok@gmail.com','28/09/1991',1,'39116561813','RRR','',''),(3,2,'e10adc3949ba59abbe56e057f20f883e','Gabriel','Hornink Souza','gabriel@gmail.com','01/01/2020',1,'22082879836','GHS','',''),(4,2,'202cb962ac59075b964b07152d234b70','Usuário','de testes','teste@cead.com','31/01/2014',0,'44444444444','Ut2','',''),(6,4,'6603dc207862ec39af10d91adfc02bc0','Cead','Ester','eliblue34@gmail.com','06/02/2014',0,'66666666666','CE2','',''),(7,2,'e10adc3949ba59abbe56e057f20f883e','Luciene','Gouveia','ceadunifal.luciene@gmail.com','03/02/2014',0,'77777777777','LG2','',''),(9,2,'e10adc3949ba59abbe56e057f20f883e','Marcos','Mazzon Filho','marcos.mazzonifilho@gmail.com','05/02/2014',1,'99999999999','MMF','',''),(22,2,'4297f44b13955235245b2497399d7a93','Reuel','Ribeiro','a11021@bcc.unifal-mg.edu.br',NULL,1,'22222222222','RR','',''),(23,4,'e10adc3949ba59abbe56e057f20f883e','Aluno','Teste','aluno@cead.com','09/07/2014',1,'35185311827','AT','1404914391','0'),(24,2,'e10adc3949ba59abbe56e057f20f883e','Luiz','da Silva','luiz@cead.com','01/08/2014',1,'78596682708','LS','1406902527','0');
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1409,7 +1416,7 @@ CREATE TABLE `usuario_x_permissao_x_ferramenta` (
 
 LOCK TABLES `usuario_x_permissao_x_ferramenta` WRITE;
 /*!40000 ALTER TABLE `usuario_x_permissao_x_ferramenta` DISABLE KEYS */;
-INSERT INTO `usuario_x_permissao_x_ferramenta` VALUES (3,7,1),(3,8,1),(6,7,1),(6,8,1),(6,9,1),(7,7,1),(7,8,1),(7,9,1),(6,1,10),(6,2,10),(6,3,10),(6,4,10),(6,5,10),(6,6,10),(7,1,10),(2,2,20),(2,3,20),(2,4,20),(2,5,20),(2,6,20),(2,8,20),(9,1,20),(9,2,20),(9,3,20),(9,4,20),(9,5,20),(9,6,20),(9,7,20),(9,8,20),(9,9,20),(2,7,30),(3,1,30),(3,2,30),(3,3,30),(3,4,30),(3,5,30),(3,6,30),(7,2,30),(7,3,30),(7,4,30),(7,5,30),(7,6,30),(22,1,30),(22,2,30),(22,3,30),(22,4,30),(22,5,30),(22,6,30),(22,7,30),(22,8,30),(1,1,40),(1,2,40),(1,3,40),(1,4,40),(1,5,40),(1,6,40),(1,7,40),(1,8,40),(1,9,40),(2,1,40),(2,9,40);
+INSERT INTO `usuario_x_permissao_x_ferramenta` VALUES (3,7,1),(3,8,1),(4,6,1),(4,7,1),(4,8,1),(4,9,1),(6,7,1),(6,8,1),(6,9,1),(7,7,1),(7,8,1),(7,9,1),(6,1,10),(6,2,10),(6,3,10),(6,4,10),(6,5,10),(6,6,10),(7,1,10),(23,1,10),(23,2,10),(23,3,10),(23,4,10),(23,5,10),(23,6,10),(23,7,10),(23,8,10),(2,2,20),(2,3,20),(2,4,20),(2,5,20),(2,6,20),(2,8,20),(9,1,20),(9,2,20),(9,3,20),(9,4,20),(9,5,20),(9,6,20),(9,7,20),(9,8,20),(9,9,20),(2,7,30),(3,1,30),(3,2,30),(3,3,30),(3,4,30),(3,5,30),(3,6,30),(4,1,30),(4,2,30),(4,3,30),(4,4,30),(4,5,30),(7,2,30),(7,3,30),(7,4,30),(7,5,30),(7,6,30),(22,1,30),(22,2,30),(22,3,30),(22,4,30),(22,5,30),(22,6,30),(22,7,30),(22,8,30),(24,1,30),(24,2,30),(24,3,30),(24,4,30),(24,5,30),(24,6,30),(24,7,30),(24,8,30),(1,1,40),(1,2,40),(1,3,40),(1,4,40),(1,5,40),(1,6,40),(1,7,40),(1,8,40),(1,9,40),(2,1,40),(2,9,40);
 /*!40000 ALTER TABLE `usuario_x_permissao_x_ferramenta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1449,6 +1456,7 @@ CREATE TABLE `viagem` (
 
 LOCK TABLES `viagem` WRITE;
 /*!40000 ALTER TABLE `viagem` DISABLE KEYS */;
+INSERT INTO `viagem` VALUES (25,3,1,2,'06/02/2014','00:00','20/02/2014','10:00','acompanhamento','Executada/controle-cead','2456',NULL);
 /*!40000 ALTER TABLE `viagem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1476,6 +1484,7 @@ CREATE TABLE `viagem_passageiros` (
 
 LOCK TABLES `viagem_passageiros` WRITE;
 /*!40000 ALTER TABLE `viagem_passageiros` DISABLE KEYS */;
+INSERT INTO `viagem_passageiros` VALUES (25,1),(25,6),(25,9);
 /*!40000 ALTER TABLE `viagem_passageiros` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1608,4 +1617,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-09-20 18:46:59
+-- Dump completed on 2014-08-01 11:31:02

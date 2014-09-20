@@ -49,11 +49,12 @@ class verificarnovolivro extends verificadorFormularioAjax {
                 $numeroPatrimonio = filter_input(INPUT_POST, 'numeroPatrimonio-' . ($i + 1));
                 $aux->set_numeroPatrimonio($numeroPatrimonio)->set_quantidade(1);
 
-                if ($livroDAO->cadastrarlivro($aux)) {
+                try {
+                    $livroDAO->cadastrarlivro($aux);
                     $id = $livroDAO->obterUltimoIdInserido();
                     $livroDAO->registrarInsercaolivro($id);
                     $patrimoniosValidos .= $numeroPatrimonio . "<br/>";
-                } else {
+                } catch (Exception $ex) {
                     $patrimoniosInvalidos .= "<li>" . $numeroPatrimonio . "</li>";
                 }
             }
