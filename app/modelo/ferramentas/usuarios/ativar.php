@@ -2,7 +2,6 @@
 
 namespace app\modelo\ferramentas\usuarios;
 
-require_once APP_DIR . "modelo/Mensagem.php";
 require_once APP_DIR . "modelo/PaginaDeAcao.php";
 
 class ativar extends \app\modelo\PaginaDeAcao {

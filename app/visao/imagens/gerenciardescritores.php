@@ -71,13 +71,15 @@
         //Abrir todos os Nodes
         //
 
+        
         $.ajax({
             async: true,
             type: "GET",
             url: "index.php?c=imagens&a=arvoredescritores",
             dataType: "json",
             success: function(json) {
-                criarArvore(json);
+                //TODO Utilizar o sistema centralizado de respostas do servidor ao invés do um ajax próprio
+                criarArvore(JSON.parse(json[1]['mensagem']));
                 configurarBarraFerramentas('#jstree_div');
             },
             error: function(xhr, ajaxOptions, thrownError) {

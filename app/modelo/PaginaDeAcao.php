@@ -1,4 +1,5 @@
 <?php
+
 namespace app\modelo;
 
 require_once APP_DIR . "modelo/Mensagem.php";
@@ -31,9 +32,10 @@ require_once APP_DIR . "modelo/Mensagem.php";
 abstract class PaginaDeAcao {
 
     private $mensagensRetorno = array(['sys_msgs']);
+    private $omitirMensagens = false;
 
     protected abstract function _acaoPadrao();
-    
+
     public function executar() {
         $this->_acaoPadrao();
         $this->terminarExecucao();
@@ -51,8 +53,29 @@ abstract class PaginaDeAcao {
         $this->mensagensRetorno[] = (new Mensagem())->set_mensagemInfo($mensagem);
     }
 
-    public function adicionarMensagem(Mensagem $mensagem) {
+    public function adicionarMensagemPersonalizada($tipo, $mensagem) {
+        $this->mensagensRetorno[] = (new Mensagem())->set_mensagemPersonalizada($tipo, $mensagem);
+    }
+
+    private function adicionarMensagem(Mensagem $mensagem) {
         $this->mensagensRetorno[] = $mensagem;
+    }
+
+    /**
+     * Impede que quaisque informações extra sejam enviadas para o cliente ao final
+     * da execusão de uma página. Página que processam o download de imagens, por
+     * exemplo, irão precisar disso pois elas precisam enviar um fluxo 'limpo'
+     * como resposta. Qualquer outra informação extra corromperia o fluxo.
+     */
+    public function omitirMensagens() {
+        $this->omitirMensagens = true;
+    }
+
+    /**
+     * Reverte a ação tomada pelo método <code>omitirMensagens</code>.
+     */
+    public function permitirMensagens() {
+        $this->omitirMensagens = false;
     }
 
     /**
@@ -68,6 +91,9 @@ abstract class PaginaDeAcao {
      * erro para o cliente (indicando que a operação como um todo não foi bem sucedida)
      */
     public function abortarExecucao() {
+        if ($this->omitirMensagens) {
+            exit;
+        }
         $msg = new Mensagem();
         $msg->set_mensagemPersonalizada("sys_status", "erro");
         $this->adicionarMensagem($msg);
@@ -81,6 +107,9 @@ abstract class PaginaDeAcao {
      * sucesso para o cliente (indicando que a operação como um todo foi bem sucedida)
      */
     public function terminarExecucao() {
+        if ($this->omitirMensagens) {
+            exit;
+        }
         $msg = new Mensagem();
         $msg->set_mensagemPersonalizada("sys_status", "sucesso");
         $this->adicionarMensagem($msg);

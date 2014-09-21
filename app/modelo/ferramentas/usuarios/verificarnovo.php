@@ -31,7 +31,7 @@ class verificarnovo extends Modelo\verificadorFormularioAjax {
         $email = filter_input(INPUT_POST, 'email');
         $dataNascimento = filter_input(INPUT_POST, 'dataNascimento');
         $cpf = filter_input(INPUT_POST, 'cpf');
-        $cpf = \validadorCPF::normalizarCPF($cpf);
+        $cpf = Modelo\validadorCPF::normalizarCPF($cpf);
 
         $erro_ocorrido = false;
         if ($papel < obterUsuarioSessao()->get_idPapel()) {
@@ -74,7 +74,7 @@ class verificarnovo extends Modelo\verificadorFormularioAjax {
             $this->adicionarMensagemErro("Email inválido");
             $erro_ocorrido = true;
         }
-        if (!\validadorCPF::validarCPF($cpf)) {
+        if (!Modelo\validadorCPF::validarCPF($cpf)) {
             $this->adicionarMensagemErro("CPF inválido");
             $erro_ocorrido = true;
         }

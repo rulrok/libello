@@ -22,10 +22,10 @@ function fnDecrypt($sValue, $sSecretKey = SECRET) {
         if ($fValue !== false) {
             $fValue = preg_replace("#@[a-zA-Z]+[0-9]+#", "", $fValue);
             if ($fValue === false) {
-                die("Erro ao decodificar ID. Erro 0x0061");
+                die("Erro ao decodificar ID. Erro 0x0062");
             }
         } else {
-            die("Erro ao decodificar ID. Erro 0x0062");
+            die("Erro ao decodificar ID. Erro 0x0061");
         }
         return $fValue;
     } else {

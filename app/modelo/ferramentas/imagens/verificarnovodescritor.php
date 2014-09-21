@@ -1,8 +1,12 @@
 <?php
 
+namespace app\modelo\ferramentas\imagens;
+
 include APP_DIR . "modelo/verificadorFormularioAjax.php";
 
-class verificarnovodescritor extends verificadorFormularioAjax {
+use \app\modelo as Modelo;
+
+class verificarnovodescritor extends \app\modelo\verificadorFormularioAjax {
 
     private function auxiliar_ultimo_id_inserido(imagensDAO $dao, $nomeDescritor) {
         $resultado = $dao->consultarDescritor("idDescritor", "nome = '$nomeDescritor' ORDER BY idDescritor DESC LIMIT 1");
@@ -21,8 +25,9 @@ class verificarnovodescritor extends verificadorFormularioAjax {
 
             if ($nomeDescritor1 == "" || $nomeDescritor2 == "" || $nomeDescritor3 == "" || $nomeDescritor4 == "") {
                 $this->adicionarMensagemErro("Todos os descritores são obrigatórios.");
+                $this->abortarExecucao();
             }
-            $imagensDAO = new imagensDAO();
+            $imagensDAO = new Modelo\imagensDAO();
             $aux = $imagensDAO->consultarDescritoresNivel1('count(idDescritor) as qtd', "nome = '$nomeDescritor1' ");
             if ($aux != null && $aux[0]['qtd'] > 0) {
                 $this->adicionarMensagemErro("Já existe o descritor '$nomeDescritor1' cadastrado como nível 1.");
@@ -30,10 +35,10 @@ class verificarnovodescritor extends verificadorFormularioAjax {
             try {
                 $imagensDAO->iniciarTransacao();
                 //Descritor 1
-                $descritor1 = new Descritor();
+                $descritor1 = new Modelo\Descritor();
                 $descritor1->set_nome($nomeDescritor1);
                 if (!$imagensDAO->cadastrarDescritorNivel1($descritor1)) {
-                    throw new Exception("Falha ao cadastrar descritor nível 1");
+                    throw new \Exception("Falha ao cadastrar descritor nível 1");
                 }
                 /*
                  *  ! IMPORTANTE !
@@ -52,31 +57,31 @@ class verificarnovodescritor extends verificadorFormularioAjax {
                 $idDescritor1 = $this->auxiliar_ultimo_id_inserido($imagensDAO, $nomeDescritor1);
 
                 //Descritor 2
-                $descritor2 = new Descritor();
+                $descritor2 = new Modelo\Descritor();
                 $descritor2->set_nome($nomeDescritor2);
                 if (!$imagensDAO->cadastrarDescritor($descritor2, $idDescritor1)) {
-                    throw new Exception("Falha ao cadastrar descritor nível 2");
+                    throw new \Exception("Falha ao cadastrar descritor nível 2");
                 }
                 $idDescritor2 = $this->auxiliar_ultimo_id_inserido($imagensDAO, $nomeDescritor2);
 
                 //Descritor 3
-                $descritor3 = new Descritor();
+                $descritor3 = new Modelo\Descritor();
                 $descritor3->set_nome($nomeDescritor3);
                 if (!$imagensDAO->cadastrarDescritor($descritor3, $idDescritor2)) {
-                    throw new Exception("Falha ao cadastrar descritor nível 3");
+                    throw new \Exception("Falha ao cadastrar descritor nível 3");
                 }
                 $idDescritor4 = $this->auxiliar_ultimo_id_inserido($imagensDAO, $nomeDescritor3);
 
                 //Descritor 4
-                $descritor4 = new Descritor();
+                $descritor4 = new Modelo\Descritor();
                 $descritor4->set_nome($nomeDescritor4);
                 if (!$imagensDAO->cadastrarDescritor($descritor4, $idDescritor4)) {
-                    throw new Exception("Falha ao cadastrar descritor nível 4");
+                    throw new \Exception("Falha ao cadastrar descritor nível 4");
                 }
 
                 $imagensDAO->encerrarTransacao();
                 $this->adicionarMensagemSucesso("Cadastrado com sucesso");
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $imagensDAO->rollback();
                 $message = $e->getMessage();
                 $this->adicionarMensagemErro("Erro:<br/>$message<br/>Nenhuma alteração feita no sistema.");
@@ -93,7 +98,7 @@ class verificarnovodescritor extends verificadorFormularioAjax {
             if ($nomeDescritor2 == "" || $nomeDescritor3 == "" || $nomeDescritor4 == "") {
                 $this->adicionarMensagemErro("Todos os descritores são obrigatórios.");
             }
-            $imagensDAO = new imagensDAO();
+            $imagensDAO = new Modelo\imagensDAO();
             $aux = $imagensDAO->consultarDescritor('count(idDescritor) as qtd', "pai = $idDescritor1 AND nome = '$nomeDescritor2' ");
             if ($aux != null && $aux[0]['qtd'] > 0) {
                 $this->adicionarMensagemErro("Já existe o descritor '$nomeDescritor2' cadastrado para esses descritores.");
@@ -102,31 +107,31 @@ class verificarnovodescritor extends verificadorFormularioAjax {
                 $imagensDAO->iniciarTransacao();
 
                 //Descritor 2
-                $descritor2 = new Descritor();
+                $descritor2 = new Modelo\Descritor();
                 $descritor2->set_nome($nomeDescritor2);
                 if (!$imagensDAO->cadastrarDescritor($descritor2, $idDescritor1)) {
-                    throw new Exception("Falha ao cadastrar descritor nível 2");
+                    throw new \Exception("Falha ao cadastrar descritor nível 2");
                 }
                 $idDescritor2 = $this->auxiliar_ultimo_id_inserido($imagensDAO, $nomeDescritor2);
 
                 //Descritor 3
-                $descritor3 = new Descritor();
+                $descritor3 = new Modelo\Descritor();
                 $descritor3->set_nome($nomeDescritor3);
                 if (!$imagensDAO->cadastrarDescritor($descritor3, $idDescritor2)) {
-                    throw new Exception("Falha ao cadastrar descritor nível 3");
+                    throw new \Exception("Falha ao cadastrar descritor nível 3");
                 }
                 $idDescritor3 = $this->auxiliar_ultimo_id_inserido($imagensDAO, $nomeDescritor3);
 
                 //Descritor 4
-                $descritor4 = new Descritor();
+                $descritor4 = new Modelo\Descritor();
                 $descritor4->set_nome($nomeDescritor4);
                 if (!$imagensDAO->cadastrarDescritor($descritor4, $idDescritor3)) {
-                    throw new Exception("Falha ao cadastrar descritor nível 4");
+                    throw new \Exception("Falha ao cadastrar descritor nível 4");
                 }
 
                 $imagensDAO->encerrarTransacao();
                 $this->adicionarMensagemSucesso("Cadastrado com sucesso");
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $imagensDAO->rollback();
                 $message = $e->getMessage();
                 $this->adicionarMensagemErro("Erro:<br/>$message<br/>Nenhuma alteração feita no sistema.");
@@ -140,7 +145,7 @@ class verificarnovodescritor extends verificadorFormularioAjax {
             if ($nomeDescritor3 == "" || $nomeDescritor4 == "") {
                 $this->adicionarMensagemErro("Todos os descritores são obrigatórios.");
             }
-            $imagensDAO = new imagensDAO();
+            $imagensDAO = new Modelo\imagensDAO();
             $aux = $imagensDAO->consultarDescritor('count(idDescritor) as qtd', "pai = $idDescritor2 AND nome = '$nomeDescritor3' ");
             if ($aux != null && $aux[0]['qtd'] > 0) {
                 $this->adicionarMensagemErro("Já existe o descritor '$nomeDescritor3' cadastrado para esses descritores.");
@@ -149,23 +154,23 @@ class verificarnovodescritor extends verificadorFormularioAjax {
                 $imagensDAO->iniciarTransacao();
 
                 //Descritor 3
-                $descritor3 = new Descritor();
+                $descritor3 = new Modelo\Descritor();
                 $descritor3->set_nome($nomeDescritor3);
                 if (!$imagensDAO->cadastrarDescritor($descritor3, $idDescritor2)) {
-                    throw new Exception("Falha ao cadastrar descritor nível 3");
+                    throw new \Exception("Falha ao cadastrar descritor nível 3");
                 }
                 $idDescritor3 = $this->auxiliar_ultimo_id_inserido($imagensDAO, $nomeDescritor3);
 
                 //Descritor 4
-                $descritor4 = new Descritor();
+                $descritor4 = new Modelo\Descritor();
                 $descritor4->set_nome($nomeDescritor4);
                 if (!$imagensDAO->cadastrarDescritor($descritor4, $idDescritor3)) {
-                    throw new Exception("Falha ao cadastrar descritor nível 4");
+                    throw new \Exception("Falha ao cadastrar descritor nível 4");
                 }
 
                 $imagensDAO->encerrarTransacao();
                 $this->adicionarMensagemSucesso("Cadastrado com sucesso");
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $imagensDAO->rollback();
                 $message = $e->getMessage();
                 $this->adicionarMensagemErro("Erro:<br/>$message<br/>Nenhuma alteração feita no sistema.");
@@ -179,7 +184,7 @@ class verificarnovodescritor extends verificadorFormularioAjax {
             if ($nomeDescritor4 == "") {
                 $this->adicionarMensagemErro("Todos os descritores são obrigatórios.");
             }
-            $imagensDAO = new imagensDAO();
+            $imagensDAO = new Modelo\imagensDAO();
             $aux = $imagensDAO->consultarDescritor('count(idDescritor) as qtd', "pai = $idDescritor3 AND nome = '$nomeDescritor4' ");
             if ($aux != null && $aux[0]['qtd'] > 0) {
                 $this->adicionarMensagemErro("Já existe o descritor '$nomeDescritor4' cadastrado para esses descritores.");
@@ -188,15 +193,15 @@ class verificarnovodescritor extends verificadorFormularioAjax {
                 $imagensDAO->iniciarTransacao();
 
                 //Descritor 4
-                $descritor4 = new Descritor();
+                $descritor4 = new Modelo\Descritor();
                 $descritor4->set_nome($nomeDescritor4);
                 if (!$imagensDAO->cadastrarDescritor($descritor4, $idDescritor3)) {
-                    throw new Exception("Falha ao cadastrar descritor nível 4");
+                    throw new \Exception("Falha ao cadastrar descritor nível 4");
                 }
 
                 $imagensDAO->encerrarTransacao();
                 $this->adicionarMensagemSucesso("Cadastrado com sucesso");
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $imagensDAO->rollback();
                 $message = $e->getMessage();
                 $this->adicionarMensagemErro("Erro:<br/>$message<br/>Nenhuma alteração feita no sistema.");

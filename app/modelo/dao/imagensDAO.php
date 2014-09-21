@@ -1,7 +1,10 @@
 <?php
+
 namespace app\modelo;
+
 require_once 'abstractDAO.php';
 require_once APP_DIR . 'modelo/vo/Descritor.php';
+require_once APP_DIR . 'modelo/vo/Imagem.php';
 require_once APP_DIR . 'modelo/enumeracao/TipoEventoImagens.php';
 require_once APP_DIR . 'modelo/enumeracao/ImagensDescritor.php';
 
@@ -145,8 +148,8 @@ class imagensDAO extends abstractDAO {
             , ':dificuldade' => [$imagem->get_dificuldade(), \PDO::PARAM_STR]
             , ':cpfAutor' => [$imagem->get_cpfAutor(), \PDO::PARAM_STR]
             , ':ano' => [$imagem->get_ano(), \PDO::PARAM_STR]
-            , ':diretorio' => [$imagem->get_diretorio(),  \PDO::PARAM_STR]
-            , ':diretorioMiniatura' => [$imagem->get_diretorioMiniatura(),  \PDO::PARAM_STR]
+            , ':diretorio' => [$imagem->get_diretorio(), \PDO::PARAM_STR]
+            , ':diretorioMiniatura' => [$imagem->get_diretorioMiniatura(), \PDO::PARAM_STR]
             , ':nomeArquivo' => [$imagem->get_nomeArquivo(), \PDO::PARAM_STR]
             , ':nomeArquivoMiniatura' => [$imagem->get_nomeArquivoMiniatura(), \PDO::PARAM_STR]
             , ':nomeArquivoVetorial' => [$imagem->get_nomeArquivoVetorial(), \PDO::PARAM_STR]
@@ -646,7 +649,7 @@ class imagensDAO extends abstractDAO {
             $descritores = $this->consultarDescritoresCompletos($idDescritorExcluir);
         }
         foreach ($descritores as $desc) {
-            $arvore[] = ['id' => fnEncrypt($desc['idDescritor']), 'parent' => (fnEncrypt($desc['pai'])), 'text' =>  $desc['nome'], 'nivel' => $desc['nivel'], 'rotulo' => $desc['rotulo']];
+            $arvore[] = ['id' => fnEncrypt($desc['idDescritor']), 'parent' => (fnEncrypt($desc['pai'])), 'text' => $desc['nome'], 'nivel' => $desc['nivel'], 'rotulo' => $desc['rotulo']];
         }
         return $arvore;
     }
@@ -673,22 +676,23 @@ class imagensDAO extends abstractDAO {
     }
 
 // </editor-fold>
-    
+
     /* OUTROS MÉTODOS */
-    
+
     /**
      * Função para renomear os arquivos quando um usuário altera seu nome e consequentemente
      * sua sigla cadastral.
      * 
      * @param int $idUsuario
      */
-    public function atualizarSiglas($idUsuario){
+    public function atualizarSiglas($idUsuario) {
         $sql = "SELECT idImagem FROM imagem WHERE autor = :autor";
         $params = array(
-            ':autor' => [$idUsuario,  \PDO::PARAM_INT]
+            ':autor' => [$idUsuario, \PDO::PARAM_INT]
         );
         $resultado = $this->executarSelect($sql, $params);
-        
+
         $this->atualizarNomeArquivoImagens($resultado);
     }
+
 }

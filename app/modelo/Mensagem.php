@@ -93,6 +93,7 @@ class Mensagem {
     public function set_mensagemPersonalizada($tipo, $mensagem) {
         $this->set_mensagem($mensagem);
         $this->set_tipo($tipo);
+        return $this;
     }
 
 }

@@ -20,7 +20,7 @@ class verificaredicao extends Modelo\verificadorFormularioAjax {
         $dataNascimento = filter_input(INPUT_POST, 'dataNascimento');
         $idPapel = (int) filter_input(INPUT_POST, 'papel');
         $cpf = filter_input(INPUT_POST, 'cpf');
-        $cpf = \validadorCPF::normalizarCPF($cpf); //Retira os pontos e o traço do CPF
+        $cpf = Modelo\validadorCPF::normalizarCPF($cpf); //Retira os pontos e o traço do CPF
 
         $usuarioDAO = new Modelo\usuarioDAO();
 
@@ -57,7 +57,7 @@ class verificaredicao extends Modelo\verificadorFormularioAjax {
             $this->adicionarMensagemErro("Email inválido");
             $erro_ocorrido = true;
         }
-        if (!\validadorCPF::validarCPF($cpf)) {
+        if (!Modelo\validadorCPF::validarCPF($cpf)) {
             $this->adicionarMensagemErro("CPF inválido");
             $erro_ocorrido = true;
         }

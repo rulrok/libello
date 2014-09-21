@@ -1,18 +1,22 @@
 <?php
 
+namespace app\modelo\ferramentas\imagens;
+
 require_once APP_DIR . "modelo/Mensagem.php";
 require_once APP_DIR . "modelo/Utils.php";
 require_once APP_DIR . "modelo/vo/Imagem.php";
 require_once APP_DIR . "modelo/validadorCPF.php";
 include APP_DIR . "modelo/verificadorFormularioAjax.php";
 
+use \app\modelo as Modelo;
+
 /**
  * Verifica se o formulário de cadastro de imagem e seus dados estão todos corretos
  * para poder registrar a nova imagem na base de dados.
  */
-class verificarnovaimagem extends verificadorFormularioAjax {
+class verificarnovaimagem extends Modelo\verificadorFormularioAjax {
 
-    private function auxiliar_ultimo_id_inserido(imagensDAO $dao, $nomeDescritor) {
+    private function auxiliar_ultimo_id_inserido(Modelo\imagensDAO $dao, $nomeDescritor) {
         $resultado = $dao->consultarDescritor("idDescritor", "nome = '$nomeDescritor' ORDER BY idDescritor DESC LIMIT 1");
         return $resultado[0][0];
     }
@@ -25,7 +29,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
         define("LARGURA_THUMB", "350");
         define("ALTURA_THUMB", "150");
         $formatosPermitidosImagens = array("jpg", "jpeg", "png");
-        $formatosPermitidosVetoriais = array("svg", "cdr","fh","ai","wmd","dwg","dwf","3ds","xcf");
+        $formatosPermitidosVetoriais = array("svg", "cdr", "fh", "ai", "wmd", "dwg", "dwf", "3ds", "xcf");
         $galerias_dir = APP_GALLERY_DIR;
 
         $tamanhoMaximo = filter_input(INPUT_POST, 'MAX_FILE_SIZE');
@@ -37,12 +41,14 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             $this->processarErroImagem($_FILES[$origemErro]['error'], $_FILES[$origemErro]['name']);
         } elseif (empty($_FILES[$arquivoImagem]['tmp_name']) || $_FILES[$arquivoImagem]['tmp_name'] == 'none') {
             $this->adicionarMensagemErro("Arquivo da imagem não pôde ser enviado.");
+            $this->abortarExecucao();
         } elseif (empty($_FILES[$arquivoVetorial]['tmp_name']) || $_FILES[$arquivoVetorial]['tmp_name'] == 'none') {
             $this->adicionarMensagemErro("Arquivo vetorizado não pôde ser enviado.");
+            $this->abortarExecucao();
         } else {
 
             //Campos do formulário obtidos diretamente do sistema
-            $cpfAutor = validadorCPF::normalizarCPF(obterUsuarioSessao()->get_cpf());
+            $cpfAutor = Modelo\validadorCPF::normalizarCPF(obterUsuarioSessao()->get_cpf());
             $iniciais = obterUsuarioSessao()->get_iniciais();
             $idAutor = obterUsuarioSessao()->get_idUsuario();
 
@@ -53,6 +59,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             if (!file_exists(APP_GALLERY_ABSOLUTE_DIR)) {
                 if (!mkdir(APP_GALLERY_ABSOLUTE_DIR)) {
                     $this->adicionarMensagemErro("Falha ao configurar o diretório de imagens.<br/>Contate o suporte informando o erro.");
+                    $this->abortarExecucao();
                 }
             }
 
@@ -64,6 +71,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             if (!file_exists($dirMiniaturas)) {
                 if (!mkdir($dirMiniaturas)) {
                     $this->adicionarMensagemErro("Falha ao configurar o diretório de miniaturas.<br/>Contate o suporte informando o erro.");
+                    $this->abortarExecucao();
                 }
             }
             $dirMiniaturaAutor = APP_GALLERY_ABSOLUTE_DIR . "miniaturas/$cpfAutor/";
@@ -91,6 +99,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
 
             if (!in_array($tipoImagem, $formatosPermitidosImagens)) {
                 $this->adicionarMensagemErro("Tipo de imagem inválido.<br/>Utilize apenas arquivos jpg/jpeg ou png.");
+                $this->abortarExecucao();
             }
 
             $nomeImagemVetorial = $_FILES[$arquivoVetorial]['name'];
@@ -99,24 +108,27 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             //TODO Verificar quais serão os tipos válidos
             if (!in_array($tipoImagemVetorial, $formatosPermitidosVetoriais)) {
                 $this->adicionarMensagemErro("Arquivo vetorial não permitido.");
+                $this->abortarExecucao();
             }
 
             $tamanhoImagem = filesize($_FILES[$arquivoImagem]['tmp_name']);
             if ($tamanhoImagem > APP_MAX_UPLOAD_SIZE) {
                 $this->adicionarMensagemErro("Tamanho máximo permitido para a imagem: " . ($tamanhoMaximo / 1024) . " Kb.");
+                $this->abortarExecucao();
             }
 
             $descritor1 = fnDecrypt(filter_input(INPUT_POST, 'descritor1'));
             $descritor2 = fnDecrypt(filter_input(INPUT_POST, 'descritor2'));
             $descritor3 = fnDecrypt(filter_input(INPUT_POST, 'descritor3'));
 
-            $imagensDAO = new imagensDAO();
+            $imagensDAO = new Modelo\imagensDAO();
 
             //Verifica a galeria do usuário no banco
             $idGaleria = $imagensDAO->consultarGaleria($cpfAutor)[0][0];
             if (empty($idGaleria)) {
                 if (!$imagensDAO->cadastrarGaleria($cpfAutor, $idAutor)) {
                     $this->adicionarMensagemErro("Problema ao criar galeria");
+                    $this->abortarExecucao();
                 } else {
                     $idGaleria = $imagensDAO->consultarGaleria($cpfAutor);
                 }
@@ -142,6 +154,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
                         $descritor4 = $this->auxiliar_ultimo_id_inserido($imagensDAO, $novo_descritor_nome);
                     } else {
                         $this->adicionarMensagemErro("Não foi possível cadastrar o novo descritor");
+                        $this->abortarExecucao();
                     }
                 } else {
                     $descritorExistente = $resultado[0];
@@ -182,6 +195,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
 
             if (!$imagemCopiada) {
                 $this->adicionarMensagemErro("Erro ao mover imagem para a pasta do servidor");
+                $this->abortarExecucao();
             }
 
             //--------------    Trata o arquivo vetorial    -------------
@@ -191,6 +205,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
             $imagemVetorialCopiada = copy($_FILES[$arquivoVetorial]['tmp_name'], ROOT . $destinoImagemVetorial . $nomeArquivoVetorial);
             if (!$imagemVetorialCopiada) {
                 $this->adicionarMensagemErro("Erro ao mover arquivo vetorial para a pasta do servidor");
+                $this->abortarExecucao();
             }
 
             //--------------    Trata o arquivo de miniatura    -------------
@@ -200,13 +215,14 @@ class verificarnovaimagem extends verificadorFormularioAjax {
 
             if (!file_exists(ROOT . $destinoImagemMiniatura . $nomeArquivoMiniatura)) {
                 $this->adicionarMensagemErro("Erro ao criar a miniatura para a imagem");
+                $this->abortarExecucao();
             }
 
             /*
              * Todos os dados e arquivos prontos para serem cadastrados.
              * Preparando a imagem para ser cadastrada.
              */
-            $imagemVO = new Imagem();
+            $imagemVO = new Modelo\Imagem();
 
             $imagemVO->set_idGaleria($idGaleria)->set_descritor1($descritor1)->set_descritor2($descritor2)->set_descritor3($descritor3)->set_descritor4($descritor4);
 
@@ -227,9 +243,11 @@ class verificarnovaimagem extends verificadorFormularioAjax {
                     $this->adicionarMensagemSucesso("Imagem cadastrada.");
                 } else {
                     $this->adicionarMensagemErro("Falha ao cadastrar a imagem.");
+                    $this->abortarExecucao();
                 }
             } catch (Exception $ex) {
                 $this->adicionarMensagemErro($ex->getMessage());
+                $this->abortarExecucao();
             }
         }
     }
@@ -261,6 +279,7 @@ class verificarnovaimagem extends verificadorFormularioAjax {
 //                    $error = 'No error code avaiable';
                 $this->adicionarMensagemErro("Erro desconhecido.");
         }
+        $this->abortarExecucao();
     }
 
     function montarNome($nomes, $separador = '-') {
@@ -326,5 +345,3 @@ class verificarnovaimagem extends verificadorFormularioAjax {
 
 }
 
-//$verificar = new verificarnovaimagem();
-//$verificar->executar();

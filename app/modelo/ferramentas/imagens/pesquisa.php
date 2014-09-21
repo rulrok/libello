@@ -1,6 +1,10 @@
 <?php
 
+namespace app\modelo\ferramentas\imagens;
+
 require_once APP_DIR . "modelo/dao/imagensDAO.php";
+
+use \app\modelo as Modelo;
 
 class pesquisa {
 
@@ -105,7 +109,7 @@ class pesquisa {
      */
     public function buscar($termoBusca, $pagina, $itensPorPagina = 10, $acessoTotal = false, $autor = null, $dataInicio = null, $dataFim = null) {
         $this->tempoInicial = microtime(true);
-        $imagensDAO = new imagensDAO();
+        $imagensDAO = new Modelo\imagensDAO();
         $res1 = $imagensDAO->pesquisarImagem($termoBusca, null, $acessoTotal, $autor, $dataInicio, $dataFim);
         $nr = sizeof($res1);
         $this->temResultados = ($nr != 0);

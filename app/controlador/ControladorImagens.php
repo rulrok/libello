@@ -4,11 +4,14 @@ namespace app\controlador;
 
 include_once APP_LIBRARY_ABSOLUTE_DIR . 'Mvc/Controlador.php';
 require_once APP_LIBRARY_ABSOLUTE_DIR . "seguranca/criptografia.php";
+require_once APP_DIR . "modelo/dao/ImagensDAO.php";
 require_once APP_DIR . "modelo/comboboxes/ComboBoxDescritores.php";
 require_once APP_DIR . "modelo/comboboxes/ComboBoxUsuarios.php";
 require_once APP_DIR . "modelo/ferramentas/imagens/pesquisa.php";
 require_once APP_DIR . "modelo/enumeracao/Ferramenta.php";
 require_once APP_DIR . "modelo/enumeracao/Papel.php";
+
+use \app\modelo as Modelo;
 
 class ControladorImagens extends Controlador {
     /*
@@ -59,8 +62,8 @@ class ControladorImagens extends Controlador {
                 $dataFim = null;
             }
             $termo = filter_input(INPUT_GET, 'q');
-            $pesquisa = new pesquisa();
-            $acessoTotal = $papel <= Papel::GESTOR;
+            $pesquisa = new Modelo\ferramentas\imagens\pesquisa();
+            $acessoTotal = $papel <= Modelo\Papel::GESTOR;
 //            if ($termo == "") {
 //                $pesquisa->obterTodas($pagina, $itensPorPagina, $acessoTotal);
 //            } else {
@@ -100,7 +103,7 @@ class ControladorImagens extends Controlador {
 
     public function acaoConsultarimagem() {
         $this->visao->acessoMinimo = Modelo\Permissao::CONSULTA;
-        $this->visao->acessoTotal = obterUsuarioSessao()->get_idPapel() <= Papel::GESTOR;
+        $this->visao->acessoTotal = obterUsuarioSessao()->get_idPapel() <= Modelo\Papel::GESTOR;
         $this->visao->todosUsuarios = Modelo\ComboBoxUsuarios::listarTodosUsuarios(Modelo\ComboBoxUsuarios::LISTAR_COM_CPF, "");
         $this->renderizar();
     }
@@ -216,7 +219,7 @@ class ControladorImagens extends Controlador {
     }
 
     public function idFerramentaAssociada() {
-        return Ferramenta::GALERIA_IMAGENS;
+        return Modelo\Ferramenta::GALERIA_IMAGENS;
     }
 
 }

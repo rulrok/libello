@@ -933,12 +933,4 @@ function RespostaJSON() {
 //        this.mensagens[this.mensagens.length] = mensagem;
         this.mensagensPersonalizadas[this.mensagensPersonalizadas.length] = mensagem;
     }
-
-    function sucesso() {
-        return this.status == "sucesso";
-    }
-
-//    function getQuantidadeMensagens() {
-//        return this.mensagens.length;
-//    }
 }
