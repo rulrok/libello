@@ -37,8 +37,8 @@ class documentoDAO extends abstractDAO {
         $ultimaInsercao = $documentoDAO->consultaUltimoRegistroValidacao("documento_oficio", "numOficio", "idOficio"); //Busca o ultimo registro de oficio
         //Caso o oficio a ser inserido não seja o primeiro
         if ($ultimaInsercao != null || $ultimaInsercao != "") {
-            $ultimaInsercao = split("/", $ultimaInsercao); //Extrai o numero do ultimo oficio. O modelo é NUMERO/ANO_ATUAL
-            $ultimaInsercao = $ultimaInsercao[0]; //A posição zero resultante deste split é o numero do ultimo ofício
+            $ultimaInsercao = explode("/", $ultimaInsercao); //Extrai o numero do ultimo oficio. O modelo é NUMERO/ANO_ATUAL
+            $ultimaInsercao = $ultimaInsercao[0]; //A posição zero resultante deste explode é o numero do ultimo ofício
             //Caso o oficio a ser inserido seja o primeiro
         } else {
             $ultimaInsercao = 0;
@@ -145,8 +145,8 @@ class documentoDAO extends abstractDAO {
         $ultimaInsercao = $documentoDAO->consultaUltimoRegistroValidacao("documento_memorando", "numMemorando", "idMemorando"); //Busca o ultimo registro de oficio
         //Caso o oficio a ser inserido não seja o primeiro
         if ($ultimaInsercao != null || $ultimaInsercao != "") {
-            $ultimaInsercao = split("/", $ultimaInsercao); //Extrai o numero do ultimo oficio. O modelo é NUMERO/ANO_ATUAL
-            $ultimaInsercao = $ultimaInsercao[0]; //A posição zero resultante deste split é o numero do ultimo ofício
+            $ultimaInsercao = explode("/", $ultimaInsercao); //Extrai o numero do ultimo oficio. O modelo é NUMERO/ANO_ATUAL
+            $ultimaInsercao = $ultimaInsercao[0]; //A posição zero resultante deste explode é o numero do ultimo ofício
             //Caso o oficio a ser inserido seja o primeiro
         } else {
             $ultimaInsercao = 0;

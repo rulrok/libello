@@ -6,7 +6,7 @@
  * @return string contendo o html montado já com os dados vindos do BD
  */
 function listarOficios($tipo = 'todos') {
-        $oficios = (new documentoDAO())->consultar();
+        $oficios = (new \app\modelo\documentoDAO())->consultar();
         $num_linhas = count($oficios);
         $retorno = '';
         for ($i = 0; $i < $num_linhas; $i++) {
@@ -55,7 +55,7 @@ function listarOficios($tipo = 'todos') {
     }
 
     function listarMemorandos($tipo = 'todos') {
-        $oficios = (new documentoDAO())->consultar('documento_memorando');
+        $oficios = (new \app\modelo\documentoDAO())->consultar('documento_memorando');
         $num_linhas = count($oficios);
         
         $retorno ='';

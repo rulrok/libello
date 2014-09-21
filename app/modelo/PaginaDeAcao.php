@@ -31,21 +31,34 @@ require_once APP_DIR . "modelo/Mensagem.php";
  */
 abstract class PaginaDeAcao {
 
+    const SUCESSO = 'sucesso';
+    const ERRO = 'erro';
+    const INDEFINIDO = 'indefinido';
+
+    private $status = PaginaDeAcao::INDEFINIDO;
     private $mensagensRetorno = array(['sys_msgs']);
     private $omitirMensagens = false;
 
+    /**
+     * Ação padrão a ser executada por uma página. 
+     * <b>Este método não deve ser invocado diretamente.</b>
+     */
     protected abstract function _acaoPadrao();
 
     public function executar() {
         $this->_acaoPadrao();
-        $this->terminarExecucao();
+        $this->_terminarExecucao();
     }
 
     public function adicionarMensagemSucesso($mensagem) {
+        if ($this->status !== PaginaDeAcao::ERRO) {
+            $this->status = PaginaDeAcao::SUCESSO;
+        }
         $this->mensagensRetorno[] = (new Mensagem())->set_mensagemSucesso($mensagem);
     }
 
     public function adicionarMensagemErro($mensagem) {
+        $this->status = PaginaDeAcao::ERRO;
         $this->mensagensRetorno[] = (new Mensagem())->set_mensagemErro($mensagem);
     }
 
@@ -65,7 +78,8 @@ abstract class PaginaDeAcao {
      * Impede que quaisque informações extra sejam enviadas para o cliente ao final
      * da execusão de uma página. Página que processam o download de imagens, por
      * exemplo, irão precisar disso pois elas precisam enviar um fluxo 'limpo'
-     * como resposta. Qualquer outra informação extra corromperia o fluxo.
+     * como resposta. Qualquer outra informação extra corromperia o fluxo. Páginas
+     * que renderizam PDFs também necessitam chamar esse método.
      */
     public function omitirMensagens() {
         $this->omitirMensagens = true;
@@ -91,30 +105,43 @@ abstract class PaginaDeAcao {
      * erro para o cliente (indicando que a operação como um todo não foi bem sucedida)
      */
     public function abortarExecucao() {
+        $this->_terminarExecucao();
+    }
+
+    /**
+     * Função padrão que será chamada ao final da execução de uma página.
+     */
+    private function _terminarExecucao() {
         if ($this->omitirMensagens) {
             exit;
         }
-        $msg = new Mensagem();
-        $msg->set_mensagemPersonalizada("sys_status", "erro");
-        $this->adicionarMensagem($msg);
+        $this->_processarStatus();
         echo json_encode($this->mensagensRetorno);
         exit;
     }
 
     /**
-     * Encerra a execução da página no ponto onde a função foi invocada, enviando
-     * todas as mensagens até então adicionadas para o cliente com um sinal de
-     * sucesso para o cliente (indicando que a operação como um todo foi bem sucedida)
+     * Uso interno somente. A função verifica qual foi o resultado final da operação.
+     * Em resumo, caso qualquer mensagem de erro tenha sido adicionada previamente,
+     * automaticamente o status será de erro. Outras (possíveis) mensagens de sucesso
+     * e info, caso existam, serão juntamente encaminhadas com as mensagens de erro
+     * para o cliente ao final da execução da página, porém o status informado ao
+     * cliente será de erro na execução como um todo.
      */
-    public function terminarExecucao() {
-        if ($this->omitirMensagens) {
-            exit;
-        }
+    private function _processarStatus() {
         $msg = new Mensagem();
-        $msg->set_mensagemPersonalizada("sys_status", "sucesso");
+        switch ($this->status) {
+            case PaginaDeAcao::INDEFINIDO:
+                $msg->set_mensagemPersonalizada("sys_status", "indefinido");
+                break;
+            case PaginaDeAcao::ERRO:
+                $msg->set_mensagemPersonalizada("sys_status", "erro");
+                break;
+            case PaginaDeAcao::SUCESSO:
+                $msg->set_mensagemPersonalizada("sys_status", "sucesso");
+                break;
+        }
         $this->adicionarMensagem($msg);
-        echo json_encode($this->mensagensRetorno);
-        exit;
     }
 
 }

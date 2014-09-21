@@ -1,9 +1,6 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+namespace app\modelo\ferramentas\documentos;
 
 /**
  * Description of verificarnovomemorando
@@ -13,7 +10,9 @@
 require_once APP_DIR . "modelo/vo/Memorando.php";
 include APP_DIR . "modelo/verificadorFormularioAjax.php";
 
-class verificarnovomemorando extends verificadorFormularioAjax {
+use \app\modelo as Modelo;
+
+class verificarnovomemorando extends Modelo\verificadorFormularioAjax {
 
     //essa classe sera responsavel por gerar um novo memorando ou salvar um novo quando o numMemorando = -1
 
@@ -36,7 +35,7 @@ class verificarnovomemorando extends verificadorFormularioAjax {
             $tratamento = filter_input(INPUT_POST, 'tratamento');
             $cargo_destino = filter_input(INPUT_POST, 'cargo_destino');
 
-            $documento = new Memorando();
+            $documento = new Modelo\Memorando();
             $documento->set_assunto($assunto);
             $documento->set_idUsuario(trim($idusuario));
             $documento->set_corpo($corpo);
@@ -51,11 +50,10 @@ class verificarnovomemorando extends verificadorFormularioAjax {
 //            if ($numMemorando == -1) {
 //                $estadoEdicao = 1;
 //            }
-
 //            $documento->set_numMemorando($numMemorando);
             $documento->set_estadoEdicao($estadoEdicao);
-            
-            $documentoDAO = new documentoDAO();
+
+            $documentoDAO = new Modelo\documentoDAO();
             if ($idMemorando != -1) {
                 $documento->set_idMemorando($idMemorando);
                 $verifica = $documentoDAO->update_memorando($documento);
@@ -70,12 +68,12 @@ class verificarnovomemorando extends verificadorFormularioAjax {
 //                $this->mensagemSucesso("Memorando gerado com sucesso!");
 //            } else {
 //                $this->setId($id);
-            if ($verifica){
+            if ($verifica) {
                 $this->adicionarMensagemSucesso("Memorando salvo com sucesso!");
             } else {
                 $this->adicionarMensagemErro("Erro ao salvar memorando!");
             }
-                
+
 //            }
         } catch (Exception $e) {
             $this->adicionarMensagemErro($e->getMessage());
@@ -84,8 +82,6 @@ class verificarnovomemorando extends verificadorFormularioAjax {
 
 }
 
-//$verificar = new verificarnovomemorando();
-//$verificar->executar();
 ?>
 
 

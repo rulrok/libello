@@ -1,4 +1,4 @@
-<title>Oficio</title>
+<title>Ofício</title>
 <script src="publico/js/documentos.js" type="text/javascript"></script>
 <script src="biblioteca/tinymce/js/tinymce/jquery.tinymce.min.js"></script>
 <script src="biblioteca/tinymce/js/tinymce/tinymce.min.js"></script>

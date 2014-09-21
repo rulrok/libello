@@ -10,6 +10,8 @@ include_once APP_DIR . 'modelo/comboboxes/ComboBoxDocumentos.php';
 include_once APP_DIR . 'modelo/enumeracao/Ferramenta.php';
 require_once APP_DIR . 'modelo/ferramentas/documentos/listarDocumentos.php';
 
+use \app\modelo as Modelo;
+
 class ControladorDocumentos extends Controlador {
 
     public function acaoSalvar() {
@@ -280,7 +282,7 @@ class ControladorDocumentos extends Controlador {
     }
 
     public function idFerramentaAssociada() {
-        return Ferramenta::CONTROLE_DOCUMENTOS;
+        return Modelo\Ferramenta::CONTROLE_DOCUMENTOS;
     }
 
 }

@@ -97,7 +97,7 @@ class verificaredicao extends Modelo\verificadorFormularioAjax {
         } catch (Exception $e) {
             $usuarioDAO->rollback();
             $this->adicionarMensagemErro("Erro ao modificar. Nenhum alteração salva.");
-            $this->terminarExecucao();
+            $this->abortarExecucao();
         }
         $idUsuario = $usuarioDAO->recuperarUsuario($usuario->get_email())->get_idUsuario();
 //        $usuarioDAO->registrarAlteracaoUsuario(obterUsuarioSessao()->get_idUsuario(), $idUsuario);

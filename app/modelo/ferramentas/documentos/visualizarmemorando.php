@@ -1,6 +1,7 @@
 <?php
 
-ob_clean();
+namespace app\modelo\ferramentas\documentos;
+
 //incluindo o arquivo do fpdf
 require_once APP_LIBRARY_DIR . "configuracoes.php";
 require_once APP_LIBRARY_DIR . "dompdf/dompdf_config.inc.php";
@@ -8,30 +9,38 @@ require_once APP_LIBRARY_DIR . "seguranca/seguranca.php";
 require_once APP_LIBRARY_DIR . "seguranca/criptografia.php";
 require_once APP_DIR . "modelo/dao/documentoDAO.php";
 
-//-------------------
-//definindo variaveis
-$id = fnDecrypt($_REQUEST['idv']);
-$memorando = (new documentoDAO())->consultar('documento_memorando', 'idMemorando = ' . $id);
-$numMemorando = $memorando[0]->get_numMemorando();
-$tipoSigla = $memorando[0]->get_tipoSigla();
-$data = explode('/', $memorando[0]->get_data());
-$dia = $data[0];
-$ano = $data[2];
-$tratamento = $memorando[0]->get_tratamento();
-$cargo_destino = $memorando[0]->get_cargo_destino();
-$assunto = $memorando[0]->get_assunto();
-$corpo = $memorando[0]->get_corpo();
-$remetente = $memorando[0]->get_remetente();
-$cargo_remetente = $memorando[0]->get_cargo_remetente();
+use \app\modelo as Modelo;
 
-$remetentes = explode(';',$remetente);
-$cargos_remetentes = explode(';',$cargo_remetente);
+class visualizarmemorando extends Modelo\PaginaDeAcao {
+
+    protected function _acaoPadrao() {
+        $this->omitirMensagens();
+        ob_clean();
+        header('Content-Type: text/plain; charset=UTF-8');
+        //-------------------
+        //definindo variaveis
+        $id = fnDecrypt($_REQUEST['idv']);
+        $memorando = (new Modelo\documentoDAO())->consultar('documento_memorando', 'idMemorando = ' . $id);
+        $numMemorando = $memorando[0]->get_numMemorando();
+        $tipoSigla = $memorando[0]->get_tipoSigla();
+        $data = explode('/', $memorando[0]->get_data());
+        $dia = $data[0];
+        $ano = $data[2];
+        $tratamento = $memorando[0]->get_tratamento();
+        $cargo_destino = $memorando[0]->get_cargo_destino();
+        $assunto = $memorando[0]->get_assunto();
+        $corpo = $memorando[0]->get_corpo();
+        $remetente = $memorando[0]->get_remetente();
+        $cargo_remetente = $memorando[0]->get_cargo_remetente();
+
+        $remetentes = explode(';', $remetente);
+        $cargos_remetentes = explode(';', $cargo_remetente);
 //$mes = retornaMes($mes);
-setlocale(LC_ALL, 'portuguese-brazilian', 'ptb', 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8');
-$mes = (strftime("%B", mktime(0, 0, 0, $data[1], 10)));
-$data = $dia . '/' . $mes . '/' . date('Y');
+        setlocale(LC_ALL, 'portuguese-brazilian', 'ptb', 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8');
+        $mes = (strftime("%B", mktime(0, 0, 0, $data[1], 10)));
+        $data = $dia . '/' . $mes . '/' . date('Y');
 //-------------------
-$document = '<<<EOF
+        $document = '<<<EOF
     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br">       
         <head>
@@ -72,7 +81,7 @@ $document = '<<<EOF
                 <tr><td style="height: 30px;"></td></tr>
                 <tr>
                     <td>
-                        Mem. nº' . $numMemorando .'/CEAD - ' . $tipoSigla . '
+                        Mem. nº' . $numMemorando . '/CEAD - ' . $tipoSigla . '
                     </td>
                 </tr>
                 <tr><td style="height: 40px;"></td></tr>
@@ -115,8 +124,8 @@ $document = '<<<EOF
                 <tr>
                     <td>
                         ';
-for($i = 0;$i<count($remetentes);$i++){
-    $document.= '<div >
+        for ($i = 0; $i < count($remetentes); $i++) {
+            $document.= '<div >
                             <table align="center">
                                 <tr>
                                     <td style="height: 20px;">
@@ -135,26 +144,26 @@ for($i = 0;$i<count($remetentes);$i++){
                                 </tr>
                             </table>
                         </div><br>';
-}
-                      
-$document .= '</table>
+        }
+
+        $document .= '</table>
         </body>
     </html>';
-//echo $document; die();
+        //echo $document; die();
 
-$dompdf = new DOMPDF();
-//$tamanho = array(0, 0, 596.4, 843.48);
-$dompdf->parse_default_view('A4', 'portrait');
-$dompdf->set_paper('A4', 'portrait');
-$dompdf->load_html($document);
-$dompdf->render();
-//$dompdf->;
-$options = array(
-    'Attachment' => 0
-);
-$dompdf->stream($ano . " - Memorando n" . $numMemorando, $options);
+        $dompdf = new \DOMPDF();
+        //$tamanho = array(0, 0, 596.4, 843.48);
+        $dompdf->parse_default_view('A4', 'portrait');
+        $dompdf->set_paper('A4', 'portrait');
+        $dompdf->load_html($document);
+        $dompdf->render();
+        //$dompdf->;
+        $options = array(
+            'Attachment' => 0
+        );
+        $dompdf->stream($ano . " - Memorando n" . $numMemorando, $options);
+    }
 
-
-
+}
 ?>
     

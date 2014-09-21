@@ -1,9 +1,13 @@
 <?php
 
+namespace app\modelo\ferramentas\documentos;
+
 require_once APP_DIR . "modelo/vo/Oficio.php";
 include APP_DIR . "modelo/verificadorFormularioAjax.php";
 
-class verificarnovooficio extends verificadorFormularioAjax {
+use \app\modelo as Modelo;
+
+class verificarnovooficio extends Modelo\verificadorFormularioAjax {
 
     public function _validar() {
         try {
@@ -25,7 +29,7 @@ class verificarnovooficio extends verificadorFormularioAjax {
             $tratamento = filter_input(INPUT_POST, 'tratamento');
             $cargo_destino = filter_input(INPUT_POST, 'cargo_destino');
 
-            $documento = new Oficio();
+            $documento = new Modelo\Oficio();
             $documento->set_assunto($assunto);
             $documento->set_idUsuario(trim($idusuario));
             $documento->set_corpo($corpo);
@@ -45,7 +49,7 @@ class verificarnovooficio extends verificadorFormularioAjax {
 //            }
             $documento->set_estadoEdicao($estadoEdicao);
 //            $documento->set_numOficio($numOficio);
-            $documentoDAO = new documentoDAO();
+            $documentoDAO = new Modelo\documentoDAO();
             if ($idOficio != -1) {
                 $documento->set_idOficio($idOficio);
                 $verifica = $documentoDAO->update_oficio($documento);
@@ -60,20 +64,20 @@ class verificarnovooficio extends verificadorFormularioAjax {
 //                $this->setDocumento('gerar');
 //                $this->mensagemSucesso("Oficio gerado com sucesso!");
 //            } else {
-            if ($verifica){
+            if ($verifica) {
                 $this->adicionarMensagemSucesso("Oficio salvo com sucesso!");
             } else {
                 $this->adicionarMensagemErro("Erro ao salvar ofício!");
+                $this->abortarExecucao();
             }
-                
+
 //            }
         } catch (Exception $e) {
             $this->adicionarMensagemErro($e->getMessage());
+            $this->abortarExecucao();
         }
     }
 
 }
 
-//$verificar = new verificarnovooficio();
-//$verificar->executar();
 ?>

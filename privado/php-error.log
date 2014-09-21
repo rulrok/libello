@@ -127,3 +127,201 @@
 [21-Sep-2014 15:50:27 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
 [21-Sep-2014 15:50:27 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
 [21-Sep-2014 15:50:27 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoGerenciar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 16:07:46 America/Sao_Paulo] PHP Fatal error:  Class 'documentoDAO' not found in C:\wamp\www\libello\app\modelo\ferramentas\documentos\listarDocumentos.php on line 9
+[21-Sep-2014 16:07:46 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 16:07:46 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 16:07:46 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 16:07:46 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoGerenciar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 16:07:46 America/Sao_Paulo] PHP   4. listarOficios($tipo = *uninitialized*) C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:79
+[21-Sep-2014 16:08:38 America/Sao_Paulo] PHP Fatal error:  Class 'documentoDAO' not found in C:\wamp\www\libello\app\modelo\ferramentas\documentos\listarDocumentos.php on line 9
+[21-Sep-2014 16:08:38 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 16:08:38 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 16:08:38 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 16:08:38 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoGerenciar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 16:08:38 America/Sao_Paulo] PHP   4. listarOficios($tipo = *uninitialized*) C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:79
+[21-Sep-2014 16:08:43 America/Sao_Paulo] PHP Fatal error:  Class 'documentoDAO' not found in C:\wamp\www\libello\app\modelo\ferramentas\documentos\listarDocumentos.php on line 9
+[21-Sep-2014 16:08:43 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 16:08:43 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 16:08:43 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 16:08:43 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoConsultar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 16:08:43 America/Sao_Paulo] PHP   4. listarOficios($tipo = *uninitialized*) C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:97
+[21-Sep-2014 16:08:45 America/Sao_Paulo] PHP Fatal error:  Class 'documentoDAO' not found in C:\wamp\www\libello\app\modelo\ferramentas\documentos\listarDocumentos.php on line 9
+[21-Sep-2014 16:08:45 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 16:08:45 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 16:08:45 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 16:08:45 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoGerenciar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 16:08:45 America/Sao_Paulo] PHP   4. listarOficios($tipo = *uninitialized*) C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:79
+[21-Sep-2014 16:10:32 America/Sao_Paulo] PHP Fatal error:  Class 'documentoDAO' not found in C:\wamp\www\libello\app\modelo\ferramentas\documentos\listarDocumentos.php on line 58
+[21-Sep-2014 16:10:32 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 16:10:32 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 16:10:32 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 16:10:32 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoGerenciar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 16:10:32 America/Sao_Paulo] PHP   4. listarMemorandos($tipo = *uninitialized*) C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:83
+[21-Sep-2014 16:13:16 America/Sao_Paulo] PHP Fatal error:  Class 'documentoDAO' not found in C:\wamp\www\libello\app\modelo\ferramentas\documentos\visualizarmemorando.php on line 14
+[21-Sep-2014 16:13:16 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 16:13:16 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 16:13:16 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 16:13:16 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoVisualizarMemorando() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 16:13:16 America/Sao_Paulo] PHP   4. app\controlador\Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:30
+[21-Sep-2014 16:13:16 America/Sao_Paulo] PHP   5. app\controlador\Visao->renderizar($diretorio = *uninitialized*, $arquivo = *uninitialized*) C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:19
+[21-Sep-2014 16:13:16 America/Sao_Paulo] PHP   6. require() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:45
+[21-Sep-2014 16:19:43 America/Sao_Paulo] PHP Fatal error:  Class 'verificadorFormularioAjax' not found in C:\wamp\www\libello\app\modelo\ferramentas\documentos\verificarnovooficio.php on line 6
+[21-Sep-2014 16:19:43 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 16:19:43 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 16:19:43 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 16:19:43 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoVerificarnovooficio() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 16:19:43 America/Sao_Paulo] PHP   4. app\controlador\Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:22
+[21-Sep-2014 16:19:43 America/Sao_Paulo] PHP   5. app\controlador\Visao->renderizar($diretorio = *uninitialized*, $arquivo = *uninitialized*) C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:19
+[21-Sep-2014 16:19:43 America/Sao_Paulo] PHP   6. require() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:45
+[21-Sep-2014 16:21:03 America/Sao_Paulo] PHP Fatal error:  Class 'verificadorFormularioAjax' not found in C:\wamp\www\libello\app\modelo\ferramentas\documentos\verificarnovocabecalho.php on line 11
+[21-Sep-2014 16:21:03 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 16:21:03 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 16:21:03 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 16:21:03 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoVerificarnovocabecalho() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 16:21:03 America/Sao_Paulo] PHP   4. app\controlador\Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:74
+[21-Sep-2014 16:21:03 America/Sao_Paulo] PHP   5. app\controlador\Visao->renderizar($diretorio = *uninitialized*, $arquivo = *uninitialized*) C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:19
+[21-Sep-2014 16:21:04 America/Sao_Paulo] PHP   6. require() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:45
+[21-Sep-2014 16:21:04 America/Sao_Paulo] PHP Fatal error:  Class 'verificadorFormularioAjax' not found in C:\wamp\www\libello\app\modelo\ferramentas\documentos\verificarnovocabecalho.php on line 11
+[21-Sep-2014 16:21:04 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 16:21:04 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 16:21:04 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 16:21:04 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoVerificarnovocabecalho() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 16:21:04 America/Sao_Paulo] PHP   4. app\controlador\Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:74
+[21-Sep-2014 16:21:04 America/Sao_Paulo] PHP   5. app\controlador\Visao->renderizar($diretorio = *uninitialized*, $arquivo = *uninitialized*) C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:19
+[21-Sep-2014 16:21:04 America/Sao_Paulo] PHP   6. require() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:45
+[21-Sep-2014 16:22:46 America/Sao_Paulo] PHP Fatal error:  Class 'app\modelo\ferramentas\documentos\ResizeImage' not found in C:\wamp\www\libello\app\modelo\ferramentas\documentos\verificarnovocabecalho.php on line 37
+[21-Sep-2014 16:22:46 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 16:22:46 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 16:22:46 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 16:22:46 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoVerificarnovocabecalho() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 16:22:46 America/Sao_Paulo] PHP   4. app\controlador\Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:74
+[21-Sep-2014 16:22:46 America/Sao_Paulo] PHP   5. app\controlador\Visao->renderizar($diretorio = *uninitialized*, $arquivo = *uninitialized*) C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:19
+[21-Sep-2014 16:22:46 America/Sao_Paulo] PHP   6. app\modelo\PaginaDeAcao->executar() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:52
+[21-Sep-2014 16:22:46 America/Sao_Paulo] PHP   7. app\modelo\verificadorFormularioAjax->_acaoPadrao() C:\wamp\www\libello\app\modelo\PaginaDeAcao.php:40
+[21-Sep-2014 16:22:46 America/Sao_Paulo] PHP   8. app\modelo\ferramentas\documentos\verificarnovocabecalho->_validar() C:\wamp\www\libello\app\modelo\verificadorFormularioAjax.php:25
+[21-Sep-2014 16:22:47 America/Sao_Paulo] PHP Fatal error:  Class 'app\modelo\ferramentas\documentos\ResizeImage' not found in C:\wamp\www\libello\app\modelo\ferramentas\documentos\verificarnovocabecalho.php on line 37
+[21-Sep-2014 16:22:47 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 16:22:47 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 16:22:47 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 16:22:47 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoVerificarnovocabecalho() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 16:22:47 America/Sao_Paulo] PHP   4. app\controlador\Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:74
+[21-Sep-2014 16:22:47 America/Sao_Paulo] PHP   5. app\controlador\Visao->renderizar($diretorio = *uninitialized*, $arquivo = *uninitialized*) C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:19
+[21-Sep-2014 16:22:47 America/Sao_Paulo] PHP   6. app\modelo\PaginaDeAcao->executar() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:52
+[21-Sep-2014 16:22:47 America/Sao_Paulo] PHP   7. app\modelo\verificadorFormularioAjax->_acaoPadrao() C:\wamp\www\libello\app\modelo\PaginaDeAcao.php:40
+[21-Sep-2014 16:22:47 America/Sao_Paulo] PHP   8. app\modelo\ferramentas\documentos\verificarnovocabecalho->_validar() C:\wamp\www\libello\app\modelo\verificadorFormularioAjax.php:25
+[21-Sep-2014 16:26:42 America/Sao_Paulo] PHP Fatal error:  Class 'verificadorFormularioAjax' not found in C:\wamp\www\libello\app\modelo\ferramentas\documentos\verificarnovooficio.php on line 6
+[21-Sep-2014 16:26:42 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 16:26:42 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 16:26:42 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 16:26:42 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoVerificarnovooficio() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 16:26:42 America/Sao_Paulo] PHP   4. app\controlador\Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:22
+[21-Sep-2014 16:26:42 America/Sao_Paulo] PHP   5. app\controlador\Visao->renderizar($diretorio = *uninitialized*, $arquivo = *uninitialized*) C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:19
+[21-Sep-2014 16:26:42 America/Sao_Paulo] PHP   6. require() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:45
+[21-Sep-2014 16:27:17 America/Sao_Paulo] PHP Fatal error:  Class 'app\modelo\ferramentas\documentos\verificadorFormularioAjax' not found in C:\wamp\www\libello\app\modelo\ferramentas\documentos\verificarnovooficio.php on line 10
+[21-Sep-2014 16:27:17 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 16:27:17 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 16:27:17 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 16:27:17 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoVerificarnovooficio() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 16:27:17 America/Sao_Paulo] PHP   4. app\controlador\Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:22
+[21-Sep-2014 16:27:17 America/Sao_Paulo] PHP   5. app\controlador\Visao->renderizar($diretorio = *uninitialized*, $arquivo = *uninitialized*) C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:19
+[21-Sep-2014 16:27:17 America/Sao_Paulo] PHP   6. require() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:45
+[21-Sep-2014 16:27:26 America/Sao_Paulo] PHP Fatal error:  Class 'app\modelo\ferramentas\documentos\Oficio' not found in C:\wamp\www\libello\app\modelo\ferramentas\documentos\verificarnovooficio.php on line 32
+[21-Sep-2014 16:27:26 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 16:27:26 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 16:27:26 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 16:27:26 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoVerificarnovooficio() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 16:27:26 America/Sao_Paulo] PHP   4. app\controlador\Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:22
+[21-Sep-2014 16:27:26 America/Sao_Paulo] PHP   5. app\controlador\Visao->renderizar($diretorio = *uninitialized*, $arquivo = *uninitialized*) C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:19
+[21-Sep-2014 16:27:26 America/Sao_Paulo] PHP   6. app\modelo\PaginaDeAcao->executar() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:52
+[21-Sep-2014 16:27:26 America/Sao_Paulo] PHP   7. app\modelo\verificadorFormularioAjax->_acaoPadrao() C:\wamp\www\libello\app\modelo\PaginaDeAcao.php:40
+[21-Sep-2014 16:27:26 America/Sao_Paulo] PHP   8. app\modelo\ferramentas\documentos\verificarnovooficio->_validar() C:\wamp\www\libello\app\modelo\verificadorFormularioAjax.php:25
+[21-Sep-2014 16:27:35 America/Sao_Paulo] PHP Fatal error:  Class 'app\modelo\ferramentas\documentos\documentoDAO' not found in C:\wamp\www\libello\app\modelo\ferramentas\documentos\verificarnovooficio.php on line 52
+[21-Sep-2014 16:27:35 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 16:27:35 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 16:27:35 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 16:27:35 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoVerificarnovooficio() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 16:27:35 America/Sao_Paulo] PHP   4. app\controlador\Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:22
+[21-Sep-2014 16:27:35 America/Sao_Paulo] PHP   5. app\controlador\Visao->renderizar($diretorio = *uninitialized*, $arquivo = *uninitialized*) C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:19
+[21-Sep-2014 16:27:35 America/Sao_Paulo] PHP   6. app\modelo\PaginaDeAcao->executar() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:52
+[21-Sep-2014 16:27:35 America/Sao_Paulo] PHP   7. app\modelo\verificadorFormularioAjax->_acaoPadrao() C:\wamp\www\libello\app\modelo\PaginaDeAcao.php:40
+[21-Sep-2014 16:27:35 America/Sao_Paulo] PHP   8. app\modelo\ferramentas\documentos\verificarnovooficio->_validar() C:\wamp\www\libello\app\modelo\verificadorFormularioAjax.php:25
+[21-Sep-2014 16:28:08 America/Sao_Paulo] PHP Deprecated:  Function split() is deprecated in C:\wamp\www\libello\app\modelo\dao\documentoDAO.php on line 40
+[21-Sep-2014 16:28:08 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 16:28:08 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 16:28:08 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 16:28:08 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoVerificarnovooficio() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 16:28:08 America/Sao_Paulo] PHP   4. app\controlador\Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:22
+[21-Sep-2014 16:28:08 America/Sao_Paulo] PHP   5. app\controlador\Visao->renderizar($diretorio = *uninitialized*, $arquivo = *uninitialized*) C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:19
+[21-Sep-2014 16:28:08 America/Sao_Paulo] PHP   6. app\modelo\PaginaDeAcao->executar() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:52
+[21-Sep-2014 16:28:08 America/Sao_Paulo] PHP   7. app\modelo\verificadorFormularioAjax->_acaoPadrao() C:\wamp\www\libello\app\modelo\PaginaDeAcao.php:40
+[21-Sep-2014 16:28:08 America/Sao_Paulo] PHP   8. app\modelo\ferramentas\documentos\verificarnovooficio->_validar() C:\wamp\www\libello\app\modelo\verificadorFormularioAjax.php:25
+[21-Sep-2014 16:28:08 America/Sao_Paulo] PHP   9. app\modelo\documentoDAO->inserirOficio($obj = *uninitialized*) C:\wamp\www\libello\app\modelo\ferramentas\documentos\verificarnovooficio.php:58
+[21-Sep-2014 16:38:04 America/Sao_Paulo] PHP Fatal error:  Class 'Mensagem' not found in C:\wamp\www\libello\app\modelo\ferramentas\documentos\validaroficio.php on line 7
+[21-Sep-2014 16:38:04 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 16:38:04 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 16:38:04 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 16:38:04 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoValidaroficio() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 16:38:04 America/Sao_Paulo] PHP   4. app\controlador\Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:70
+[21-Sep-2014 16:38:04 America/Sao_Paulo] PHP   5. app\controlador\Visao->renderizar($diretorio = *uninitialized*, $arquivo = *uninitialized*) C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:19
+[21-Sep-2014 16:38:04 America/Sao_Paulo] PHP   6. require() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:45
+[21-Sep-2014 18:00:25 America/Sao_Paulo] PHP Catchable fatal error:  Object of class app\modelo\ferramentas\documentos\validaroficio could not be converted to string in C:\wamp\www\libello\app\modelo\ferramentas\documentos\validaroficio.php on line 15
+[21-Sep-2014 18:00:25 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 18:00:25 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 18:00:25 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 18:00:25 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoValidaroficio() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 18:00:25 America/Sao_Paulo] PHP   4. app\controlador\Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:70
+[21-Sep-2014 18:00:25 America/Sao_Paulo] PHP   5. app\controlador\Visao->renderizar() C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:19
+[21-Sep-2014 18:00:25 America/Sao_Paulo] PHP   6. app\modelo\PaginaDeAcao->executar() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:52
+[21-Sep-2014 18:00:25 America/Sao_Paulo] PHP   7. app\modelo\ferramentas\documentos\validaroficio->_acaoPadrao() C:\wamp\www\libello\app\modelo\PaginaDeAcao.php:49
+[21-Sep-2014 18:00:36 America/Sao_Paulo] PHP Catchable fatal error:  Object of class app\modelo\ferramentas\documentos\validaroficio could not be converted to string in C:\wamp\www\libello\app\modelo\ferramentas\documentos\validaroficio.php on line 15
+[21-Sep-2014 18:00:36 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 18:00:36 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 18:00:36 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 18:00:36 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoValidaroficio() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 18:00:36 America/Sao_Paulo] PHP   4. app\controlador\Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:70
+[21-Sep-2014 18:00:36 America/Sao_Paulo] PHP   5. app\controlador\Visao->renderizar($diretorio = *uninitialized*, $arquivo = *uninitialized*) C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:19
+[21-Sep-2014 18:00:36 America/Sao_Paulo] PHP   6. app\modelo\PaginaDeAcao->executar() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:52
+[21-Sep-2014 18:00:36 America/Sao_Paulo] PHP   7. app\modelo\ferramentas\documentos\validaroficio->_acaoPadrao() C:\wamp\www\libello\app\modelo\PaginaDeAcao.php:49
+[21-Sep-2014 18:02:46 America/Sao_Paulo] PHP Fatal error:  Class 'documentoDAO' not found in C:\wamp\www\libello\app\modelo\ferramentas\documentos\visualizaroficio.php on line 15
+[21-Sep-2014 18:02:46 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 18:02:46 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 18:02:46 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 18:02:46 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoVisualizarOficio() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 18:02:46 America/Sao_Paulo] PHP   4. app\controlador\Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:26
+[21-Sep-2014 18:02:46 America/Sao_Paulo] PHP   5. app\controlador\Visao->renderizar($diretorio = *uninitialized*, $arquivo = *uninitialized*) C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:19
+[21-Sep-2014 18:02:46 America/Sao_Paulo] PHP   6. require() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:45
+[21-Sep-2014 18:09:05 America/Sao_Paulo] PHP Fatal error:  Class 'documentoDAO' not found in C:\wamp\www\libello\app\modelo\ferramentas\documentos\visualizaroficio.php on line 15
+[21-Sep-2014 18:09:05 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 18:09:05 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 18:09:05 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 18:09:05 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoVisualizarOficio() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 18:09:05 America/Sao_Paulo] PHP   4. app\controlador\Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:26
+[21-Sep-2014 18:09:05 America/Sao_Paulo] PHP   5. app\controlador\Visao->renderizar($diretorio = *uninitialized*, $arquivo = *uninitialized*) C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:19
+[21-Sep-2014 18:09:05 America/Sao_Paulo] PHP   6. require() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:45
+[21-Sep-2014 18:10:54 America/Sao_Paulo] PHP Fatal error:  Class 'app\modelo\ferramentas\documentos\documentoDAO' not found in C:\wamp\www\libello\app\modelo\ferramentas\documentos\visualizarmemorando.php on line 22
+[21-Sep-2014 18:10:54 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 18:10:54 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 18:10:54 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 18:10:54 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoVisualizarMemorando() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 18:10:54 America/Sao_Paulo] PHP   4. app\controlador\Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:30
+[21-Sep-2014 18:10:54 America/Sao_Paulo] PHP   5. app\controlador\Visao->renderizar($diretorio = *uninitialized*, $arquivo = *uninitialized*) C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:19
+[21-Sep-2014 18:10:54 America/Sao_Paulo] PHP   6. app\modelo\PaginaDeAcao->executar() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:52
+[21-Sep-2014 18:10:54 America/Sao_Paulo] PHP   7. app\modelo\ferramentas\documentos\visualizarmemorando->_acaoPadrao() C:\wamp\www\libello\app\modelo\PaginaDeAcao.php:49
+[21-Sep-2014 18:12:39 America/Sao_Paulo] PHP Fatal error:  Class 'app\modelo\ferramentas\documentos\documentoDAO' not found in C:\wamp\www\libello\app\modelo\ferramentas\documentos\visualizarmemorando.php on line 22
+[21-Sep-2014 18:12:39 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 18:12:39 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 18:12:39 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 18:12:39 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoVisualizarMemorando() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 18:12:39 America/Sao_Paulo] PHP   4. app\controlador\Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:30
+[21-Sep-2014 18:12:39 America/Sao_Paulo] PHP   5. app\controlador\Visao->renderizar($diretorio = *uninitialized*, $arquivo = *uninitialized*) C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:19
+[21-Sep-2014 18:12:39 America/Sao_Paulo] PHP   6. app\modelo\PaginaDeAcao->executar() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:52
+[21-Sep-2014 18:12:39 America/Sao_Paulo] PHP   7. app\modelo\ferramentas\documentos\visualizarmemorando->_acaoPadrao() C:\wamp\www\libello\app\modelo\PaginaDeAcao.php:49
+[21-Sep-2014 18:12:59 America/Sao_Paulo] PHP Fatal error:  Class 'app\modelo\ferramentas\documentos\DOMPDF' not found in C:\wamp\www\libello\app\modelo\ferramentas\documentos\visualizarmemorando.php on line 153
+[21-Sep-2014 18:12:59 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 18:12:59 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 18:12:59 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 18:12:59 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoVisualizarMemorando() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 18:12:59 America/Sao_Paulo] PHP   4. app\controlador\Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorDocumentos.php:30
+[21-Sep-2014 18:12:59 America/Sao_Paulo] PHP   5. app\controlador\Visao->renderizar($diretorio = *uninitialized*, $arquivo = *uninitialized*) C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:19
+[21-Sep-2014 18:12:59 America/Sao_Paulo] PHP   6. app\modelo\PaginaDeAcao->executar() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:52
+[21-Sep-2014 18:12:59 America/Sao_Paulo] PHP   7. app\modelo\ferramentas\documentos\visualizarmemorando->_acaoPadrao() C:\wamp\www\libello\app\modelo\PaginaDeAcao.php:49

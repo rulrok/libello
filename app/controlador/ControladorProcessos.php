@@ -3,11 +3,11 @@
 namespace app\controlador;
 
 include_once APP_LIBRARY_DIR . 'Mvc/Controlador.php';
-
-
 require_once APP_DIR . "modelo/enumeracao/Ferramenta.php";
 require_once APP_DIR . "modelo/vo/Processo.php";
 require_once APP_DIR . "modelo/enumeracao/Papel.php";
+
+use \app\modelo as Modelo;
 
 class ControladorProcessos extends controlador {
 
@@ -22,7 +22,7 @@ class ControladorProcessos extends controlador {
     }
 
     public function idFerramentaAssociada() {
-        return Ferramenta::PROCESSOS;
+        return Modelo\Ferramenta::PROCESSOS;
     }
 
 }

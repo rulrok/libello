@@ -5,6 +5,8 @@ namespace app\controlador;
 include_once APP_LIBRARY_DIR . 'Mvc/Controlador.php';
 include_once APP_DIR . 'modelo/enumeracao/Ferramenta.php';
 
+use \app\modelo as Modelo;
+
 class ControladorTarefas extends Controlador {
 
     function acaoGerenciar() {
@@ -16,7 +18,7 @@ class ControladorTarefas extends Controlador {
     }
 
     public function idFerramentaAssociada() {
-        return Ferramenta::TAREFAS;
+        return Modelo\Ferramenta::TAREFAS;
     }
 
 }
