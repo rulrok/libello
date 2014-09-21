@@ -8,8 +8,9 @@ require_once APP_DIR . 'modelo/Menu.php';
 require_once APP_DIR . 'modelo/enumeracao/Papel.php';
 
 use \app\modelo as Modelo;
+use \app\mvc as MVC;
 
-class ControladorInicial extends Controlador {
+class ControladorInicial extends MVC\Controlador {
 
     public function acaoInicial() {
         $usuario = obterUsuarioSessao();

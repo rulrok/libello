@@ -1,4 +1,5 @@
 <?php
+
 namespace app\controlador;
 
 include_once APP_LIBRARY_ABSOLUTE_DIR . 'Mvc/Controlador.php';
@@ -16,7 +17,10 @@ include_once __DIR__ . '/../modelo/dao/usuarioDAO.php';
  * Caso TRUE, um usuário deve ter papel administrativo para acessar a ação. Caso
  * contrátrio, o acesso é liberado para qualquer usuário autenticado.
  */
-class ControladorSistema extends Controlador {
+use \app\modelo as Modelo;
+use \app\mvc as MVC;
+
+class ControladorSistema extends MVC\Controlador {
 
     public function acaoInicial() {
         $this->renderizar();
@@ -36,7 +40,7 @@ class ControladorSistema extends Controlador {
             $this->visao->sobrenome = obterUsuarioSessao()->get_UNome();
             $this->visao->email = obterUsuarioSessao()->get_email();
             $this->visao->dataNascimento = obterUsuarioSessao()->get_dataNascimento();
-            $this->visao->papel = (new \app\modelo\usuarioDAO())->consultarPapel(obterUsuarioSessao()->get_email());
+            $this->visao->papel = (new Modelo\usuarioDAO())->consultarPapel(obterUsuarioSessao()->get_email());
         } else {
             if ($this->visao->mensagem_usuario == NULL || $this->visao->mensagem_usuario == "") {
                 $this->visao->mensagem_usuario = "Informações inválidas.";
@@ -67,7 +71,7 @@ class ControladorSistema extends Controlador {
     }
 
     public function idFerramentaAssociada() {
-        return Ferramenta::DESCONHECIDO;
+        return Modelo\Ferramenta::DESCONHECIDO;
     }
 
 }

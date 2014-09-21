@@ -10,8 +10,9 @@ include_once APP_DIR . 'modelo/comboboxes/ComboBoxPolo.php';
 require_once APP_LIBRARY_DIR . "seguranca/criptografia.php";
 
 use \app\modelo as Modelo;
+use \app\mvc as MVC;
 
-class ControladorEquipamentos extends Controlador {
+class ControladorEquipamentos extends MVC\Controlador {
 
     var $tipoPadrao = "custeio";
 

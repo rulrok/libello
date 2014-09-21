@@ -1,5 +1,5 @@
 <?php
-namespace app\controlador;
+namespace app\mvc;
 
 class CarregadorAutomatico {
 
@@ -27,7 +27,7 @@ class CarregadorAutomatico {
     }
 
     public static function registrar() {
-        spl_autoload_register('\app\controlador\CarregadorAutomatico::carregar');
+        spl_autoload_register('\app\mvc\CarregadorAutomatico::carregar');
     }
 
 }

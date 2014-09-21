@@ -11,8 +11,9 @@ include_once APP_DIR . 'modelo/enumeracao/Ferramenta.php';
 require_once APP_DIR . 'modelo/ferramentas/documentos/listarDocumentos.php';
 
 use \app\modelo as Modelo;
+use \app\mvc as MVC;
 
-class ControladorDocumentos extends Controlador {
+class ControladorDocumentos extends MVC\Controlador {
 
     public function acaoSalvar() {
         $this->renderizar();

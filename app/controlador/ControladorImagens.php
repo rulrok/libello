@@ -12,8 +12,9 @@ require_once APP_DIR . "modelo/enumeracao/Ferramenta.php";
 require_once APP_DIR . "modelo/enumeracao/Papel.php";
 
 use \app\modelo as Modelo;
+use \app\mvc as MVC;
 
-class ControladorImagens extends Controlador {
+class ControladorImagens extends MVC\Controlador {
     /*
      * IMAGEM
      */

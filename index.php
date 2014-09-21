@@ -32,8 +32,8 @@ if (file_exists(ROOT . 'manutencao.php')) {
     }
 }
 
-app\controlador\CarregadorAutomatico::registrar();
+app\mvc\CarregadorAutomatico::registrar();
 
-app\controlador\Mvc::pegarInstancia()->rodar();
+app\mvc\Mvc::pegarInstancia()->rodar();
 ob_end_flush();
 

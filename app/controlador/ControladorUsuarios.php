@@ -9,8 +9,9 @@ include_once APP_DIR . 'modelo/comboboxes/ComboBoxPapeis.php';
 require_once APP_LIBRARY_ABSOLUTE_DIR . "seguranca/criptografia.php";
 
 use \app\modelo as Modelo;
+use \app\mvc as MVC;
 
-class ControladorUsuarios extends Controlador {
+class ControladorUsuarios extends MVC\Controlador {
 
     public function acaoNovo() {
         $this->visao->acessoMinimo = Modelo\Permissao::ESCRITA;

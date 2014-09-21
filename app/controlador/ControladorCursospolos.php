@@ -17,8 +17,9 @@ require_once APP_DIR . "modelo/enumeracao/Ferramenta.php";
 require_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 
 use \app\modelo as Modelo;
+use \app\mvc as MVC;
 
-class ControladorCursospolos extends Controlador {
+class ControladorCursospolos extends MVC\Controlador {
 
     public function acaoNovoPolo() {
         $this->visao->acessoMinimo = Modelo\Permissao::ESCRITA;

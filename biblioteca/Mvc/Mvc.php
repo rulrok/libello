@@ -1,6 +1,6 @@
 <?php
 
-namespace app\controlador;
+namespace app\mvc;
 
 require_once ROOT . 'biblioteca/configuracoes.php';
 require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/seguranca.php';

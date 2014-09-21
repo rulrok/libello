@@ -71,14 +71,14 @@ function atualizarUsuarioSessao(\app\modelo\Usuario $usuario) {
 //    spl_autoload_register("carregarVisao");
 
 function usuarioAutorizado(\app\modelo\Usuario $usuario, $acessoMinimo) {
-    $diretorio = strtolower(\app\controlador\Mvc::pegarInstancia()->pegarControlador());
+    $diretorio = strtolower(\app\mvc\Mvc::pegarInstancia()->pegarControlador());
 //        $arquivo = strtolower(Mvc::pegarInstancia()->pegarAcao());
 
     $nomeClasseControlador = 'Controlador' . ucfirst($diretorio);
     $nome = "\\app\\controlador\\".$nomeClasseControlador;
     $controlador = new $nome();
 
-    if ($controlador instanceof \app\controlador\ControladorInicial) {
+    if ($controlador instanceof \app\mvc\ControladorInicial) {
         return true;
     }
 

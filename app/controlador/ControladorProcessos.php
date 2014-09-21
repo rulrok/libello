@@ -8,8 +8,9 @@ require_once APP_DIR . "modelo/vo/Processo.php";
 require_once APP_DIR . "modelo/enumeracao/Papel.php";
 
 use \app\modelo as Modelo;
+use \app\mvc as MVC;
 
-class ControladorProcessos extends controlador {
+class ControladorProcessos extends MVC\Controlador {
 
     public function acaoNovoProcesso() {
         //$this->visao->acessoMinimo = Modelo\Permissao::ESCRITA;

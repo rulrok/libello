@@ -6,8 +6,9 @@ include_once APP_LIBRARY_DIR . 'Mvc/Controlador.php';
 include_once APP_DIR . 'modelo/enumeracao/Ferramenta.php';
 
 use \app\modelo as Modelo;
+use \app\mvc as MVC;
 
-class ControladorTarefas extends Controlador {
+class ControladorTarefas extends MVC\Controlador {
 
     function acaoGerenciar() {
         $this->renderizar();

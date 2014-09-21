@@ -1,11 +1,14 @@
 <?php
+
 namespace app\modelo\ferramentas\sistema;
 
 include_once APP_DIR . "modelo/Mensagem.php";
 include_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/criptografia.php';
 
-class validarAlteracoesConta extends \app\modelo\verificadorFormularioAjax {
+use \app\modelo as Modelo;
+
+class validarAlteracoesConta extends Modelo\verificadorFormularioAjax {
 
     public function _validar() {
         $nome = filter_input(INPUT_POST, 'nome');
@@ -19,16 +22,19 @@ class validarAlteracoesConta extends \app\modelo\verificadorFormularioAjax {
         $senha = encriptarSenha(filter_input(INPUT_POST, 'senhaAtual'));
         $dataNascimento = filter_input(INPUT_POST, 'dataNascimento');
 
-        $usuarioDAO = new \app\modelo\usuarioDAO();
+        $usuarioDAO = new Modelo\usuarioDAO();
         $usuario = $usuarioDAO->recuperarUsuario(obterUsuarioSessao()->get_email());
 //        $this->visao->papel = $usuarioDAO->consultarPapel($_SESSION['email']);
 
+        $ocorreu_erro = false;
         if ($usuario->get_senha() != $senha) {
             $this->adicionarMensagemErro('Senha incorreta');
+            $ocorreu_erro = true;
         }
 
         if ($nome == "" || $sobreNome == "") {
             $this->adicionarMensagemErro('Nome e sobrenome são campos obrigatórios');
+            $ocorreu_erro = true;
         }
 
         if ($novaSenha != "") {
@@ -37,9 +43,14 @@ class validarAlteracoesConta extends \app\modelo\verificadorFormularioAjax {
                 $usuario->set_senha($novaSenha);
             } else {
                 $this->adicionarMensagemErro("Senhas não conferem");
+                $ocorreu_erro = true;
             }
         } else {
             $usuario->set_senha($senha);
+        }
+
+        if ($ocorreu_erro) {
+            $this->abortarExecucao();
         }
         $antigasIniciais = $usuario->get_iniciais();
 

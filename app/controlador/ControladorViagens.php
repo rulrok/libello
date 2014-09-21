@@ -10,8 +10,9 @@ include_once APP_DIR . 'modelo/comboboxes/ComboBoxPolo.php';
 include_once APP_DIR . 'modelo/comboboxes/ComboBoxUsuarios.php';
 
 use \app\modelo as Modelo;
+use \app\mvc as MVC;
 
-class ControladorViagens extends Controlador {
+class ControladorViagens extends MVC\Controlador {
 
     public function acaoNova() {
         $this->visao->acessoMinimo = Modelo\Permissao::ESCRITA;
@@ -25,6 +26,7 @@ class ControladorViagens extends Controlador {
         $this->visao->acessoMinimo = Modelo\Permissao::ESCRITA;
         $this->renderizar();
     }
+
     public function acaoVerificaredicao() {
         $this->visao->acessoMinimo = Modelo\Permissao::ESCRITA;
         $this->renderizar();

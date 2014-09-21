@@ -12,8 +12,9 @@ require_once APP_LIBRARY_DIR . "seguranca/criptografia.php";
 require_once APP_LIBRARY_DIR . "seguranca/Permissao.php";
 
 use \app\modelo as Modelo;
+use \app\mvc as MVC;
 
-class ControladorLivros extends Controlador {
+class ControladorLivros extends MVC\Controlador {
 
     var $tipoPadrao = "custeio";
 
