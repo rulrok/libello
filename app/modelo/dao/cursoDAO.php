@@ -1,5 +1,7 @@
 <?php
+
 namespace app\modelo;
+
 require_once 'abstractDAO.php';
 require_once APP_DIR . "modelo/vo/Curso.php";
 

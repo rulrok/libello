@@ -12,9 +12,9 @@ class ControladorViagens extends Controlador {
 
     public function acaoNova() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
-        $this->visao->cursos = ComboBoxCurso::montarTodosOsCursos();
-        $this->visao->polos = ComboBoxPolo::montarTodosOsPolos();
-        $this->visao->usuarios = ComboBoxUsuarios::listarTodosUsuarios();
+        $this->visao->cursos = Modelo\ComboBoxCurso::montarTodosOsCursos();
+        $this->visao->polos = Modelo\ComboBoxPolo::montarTodosOsPolos();
+        $this->visao->usuarios = Modelo\ComboBoxUsuarios::listarTodosUsuarios();
         $this->renderizar();
     }
 
@@ -37,19 +37,19 @@ class ControladorViagens extends Controlador {
     public function acaoEditar() {
         $this->visao->acessoMinimo = Permissao::GESTOR;
         if (filter_has_var(INPUT_GET, 'viagemID') || filter_has_var(INPUT_POST, 'viagemID')) {
-            $this->visao->usuarios = ComboBoxUsuarios::listarTodosUsuarios();
+            $this->visao->usuarios = Modelo\ComboBoxUsuarios::listarTodosUsuarios();
             $idViagem = fnDecrypt($_REQUEST['viagemID']); //TODO mudar para filter_input() quando INPUT_REQUEST estiver implementado no PHP
             $viagemDAO = new viagemDAO();
             $this->visao->viagemID = $_REQUEST['viagemID'];
             $viagem = $viagemDAO->recuperarViagem($idViagem);
             $this->visao->responsavel = $viagemDAO->recuperarResponsavel($viagem->get_responsavel());
             $this->visao->curso = $viagemDAO->recuperarCurso($viagem->get_idCurso());
-            $this->visao->cursos = ComboBoxCurso::montarTodosOsCursos($this->visao->curso);
+            $this->visao->cursos = Modelo\ComboBoxCurso::montarTodosOsCursos($this->visao->curso);
             if (!$viagem->get_idPolo()) {
                 $this->visao->destinoAlternativo = $viagemDAO->recuperarDestinoAlternativo($viagem->get_idViagem());
-                $this->visao->polos = ComboBoxPolo::montarTodosOsPolos($this->visao->destinoAlternativo);
+                $this->visao->polos = Modelo\ComboBoxPolo::montarTodosOsPolos($this->visao->destinoAlternativo);
             } else {
-                $this->visao->polos = ComboBoxPolo::montarTodosOsPolos($viagemDAO->recuperarDestino($viagem->get_idPolo()));
+                $this->visao->polos = Modelo\ComboBoxPolo::montarTodosOsPolos($viagemDAO->recuperarDestino($viagem->get_idPolo()));
             }
             $this->visao->dataIda = $viagem->get_dataIda();
             $this->visao->dataVolta = $viagem->get_dataVolta();

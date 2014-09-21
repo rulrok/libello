@@ -1,6 +1,10 @@
 <?php
 
-class VerificarEdicaoPolo extends verificadorFormularioAjax {
+namespace app\modelo\ferramentas\cursospolos;
+
+use \app\modelo as Modelo;
+
+class verificaredicaopolo extends Modelo\verificadorFormularioAjax {
 
     public function _validar() {
 
@@ -9,12 +13,12 @@ class VerificarEdicaoPolo extends verificadorFormularioAjax {
         $nomepolo = filter_input(INPUT_POST, 'nomepolo');
         $poloID = fnDecrypt(filter_input(INPUT_POST, 'poloID'));
 
-        $poloNovo = new Polo();
+        $poloNovo = new Modelo\Polo();
         $poloNovo->set_nome($nomepolo);
         $poloNovo->set_estado($estado);
         $poloNovo->set_cidade($cidade);
 
-        $poloDAO = new poloDAO();
+        $poloDAO = new Modelo\poloDAO();
         $polo = $poloDAO->recuperarPolo($poloID);
 
         if ($polo->get_nome() == "") {

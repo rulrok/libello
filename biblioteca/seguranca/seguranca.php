@@ -5,6 +5,7 @@ require_once __DIR__ . '/../configuracoes.php';
 require_once APP_LIBRARY_ABSOLUTE_DIR . 'bancoDeDados/PDOconnectionFactory.php';
 require_once APP_DIR . 'modelo/vo/Usuario.php';
 require_once APP_DIR . 'modelo/dao/sistemaDAO.php';
+require_once APP_DIR . 'modelo/dao/usuarioDAO.php';
 
 session_start();
 

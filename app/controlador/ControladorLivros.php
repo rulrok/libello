@@ -16,7 +16,7 @@ class ControladorLivros extends Controlador {
 
     public function acaoNovo() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
-        $this->visao->comboBoxAreas = ComboBoxAreas::montarTodasAsAreas();
+        $this->visao->comboBoxAreas = Modelo\ComboBoxAreas::montarTodasAsAreas();
         $this->renderizar();
     }
 
@@ -67,7 +67,7 @@ class ControladorLivros extends Controlador {
             $this->visao->livroEditavel = $livroDAO->livroPodeTerTipoAlterado($idlivro);
             $this->visao->livroID = $_REQUEST['livroID'];
             $livro = $livroDAO->recuperarlivro($idlivro);
-            $this->visao->comboBoxAreas = ComboBoxAreas::montarTodasAsAreas();
+            $this->visao->comboBoxAreas = Modelo\ComboBoxAreas::montarTodasAsAreas();
             $this->visao->descricao = $livro->get_descricao();
             $this->visao->livro = $livro->get_nomelivro();
             $this->visao->quantidade = $livro->get_quantidade();
@@ -141,12 +141,12 @@ class ControladorLivros extends Controlador {
     public function acaoNovasaida() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
         if (filter_has_var(INPUT_GET, 'livroID')) {
-            $this->visao->comboboxPapeis = ComboBoxPapeis::montarTodosPapeis();
+            $this->visao->comboboxPapeis = Modelo\ComboBoxPapeis::montarTodosPapeis();
             $this->visao->livro = (new livroDAO())->recuperarlivro(fnDecrypt(filter_input(INPUT_GET, 'livroID')));
             $this->visao->livroID = fnEncrypt($this->visao->livro->get_idLivro());
-            //$this->visao->responsavel = ComboBoxUsuarios::montarResponsavelLivros();
-            $this->visao->responsavel = ComboBoxUsuarios::listarTodosUsuarios();
-            $this->visao->polos = ComboBoxPolo::montarTodosOsPolos();
+            //$this->visao->responsavel = Modelo\ComboBoxUsuarios::montarResponsavelLivros();
+            $this->visao->responsavel = Modelo\ComboBoxUsuarios::listarTodosUsuarios();
+            $this->visao->polos = Modelo\ComboBoxPolo::montarTodosOsPolos();
             $this->renderizar();
         } else {
             die("Acesso indevido.");

@@ -1,6 +1,10 @@
 <?php
 
-class VerificarEdicaoCurso extends verificadorFormularioAjax {
+namespace app\modelo\ferramentas\cursospolos;
+
+use \app\modelo as Modelo;
+
+class verificaredicaocurso extends Modelo\verificadorFormularioAjax {
 
     public function _validar() {
 
@@ -11,12 +15,12 @@ class VerificarEdicaoCurso extends verificadorFormularioAjax {
         $cursoID = fnDecrypt(filter_input(INPUT_POST, 'cursoID'));
 
 
-        $cursoNovo = new Curso();
+        $cursoNovo = new Modelo\Curso();
         $cursoNovo->set_nome($nomeCurso);
         $cursoNovo->set_idArea($area);
         $cursoNovo->set_idTipo($tipoCurso);
 
-        $cursoDAO = new cursoDAO();
+        $cursoDAO = new Modelo\cursoDAO();
         $curso = $cursoDAO->recuperarCurso($cursoID);
 
         if ($curso->get_nome() == "") {

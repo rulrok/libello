@@ -99,8 +99,8 @@ class ControladorDocumentos extends Controlador {
 
     public function acaoOficio() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
-        $this->visao->comboDia = ComboBoxDocumentos::comboDia();
-        $this->visao->comboMes = ComboBoxDocumentos::comboMes();
+        $this->visao->comboDia = Modelo\ComboBoxDocumentos::comboDia();
+        $this->visao->comboMes = Modelo\ComboBoxDocumentos::comboMes();
 
         $this->visao->tratamento = '';
         $this->visao->destino = '';
@@ -157,8 +157,8 @@ class ControladorDocumentos extends Controlador {
         $this->visao->cargo_remetente = $oficioTmp->get_cargo_remetente();
         $this->visao->sigla = $oficioTmp->get_tipoSigla();
 
-        $this->visao->comboDia = ComboBoxDocumentos::comboDia();
-        $this->visao->comboMes = ComboBoxDocumentos::comboMes();
+        $this->visao->comboDia = Modelo\ComboBoxDocumentos::comboDia();
+        $this->visao->comboMes = Modelo\ComboBoxDocumentos::comboMes();
 
 
 
@@ -182,8 +182,8 @@ class ControladorDocumentos extends Controlador {
         $this->visao->cargo_remetente = $oficioTmp->get_cargo_remetente();
         $this->visao->sigla = $oficioTmp->get_tipoSigla();
 
-        $this->visao->comboDia = ComboBoxDocumentos::comboDia();
-        $this->visao->comboMes = ComboBoxDocumentos::comboMes();
+        $this->visao->comboDia = Modelo\ComboBoxDocumentos::comboDia();
+        $this->visao->comboMes = Modelo\ComboBoxDocumentos::comboMes();
 
         $this->renderizar();
     }
@@ -196,8 +196,8 @@ class ControladorDocumentos extends Controlador {
     public function acaoMemorando() {
 
         $this->visao->acessoMinimo = Permissao::ESCRITA;
-        $this->visao->comboDia = ComboBoxDocumentos::comboDia();
-        $this->visao->comboMes = ComboBoxDocumentos::comboMes();
+        $this->visao->comboDia = Modelo\ComboBoxDocumentos::comboDia();
+        $this->visao->comboMes = Modelo\ComboBoxDocumentos::comboMes();
 
         $this->visao->tratamento = '';
         $this->visao->cargo_destino = '';
@@ -251,8 +251,8 @@ class ControladorDocumentos extends Controlador {
         $this->visao->cargo_remetente = $memorandoTmp->get_cargo_remetente();
         $this->visao->sigla = $memorandoTmp->get_tipoSigla();
 
-        $this->visao->comboDia = ComboBoxDocumentos::comboDia();
-        $this->visao->comboMes = ComboBoxDocumentos::comboMes();
+        $this->visao->comboDia = Modelo\ComboBoxDocumentos::comboDia();
+        $this->visao->comboMes = Modelo\ComboBoxDocumentos::comboMes();
 
         $this->renderizar();
     }
@@ -273,8 +273,8 @@ class ControladorDocumentos extends Controlador {
 //        $this->visao->cargo_remetente2 = $memorandoTmp->get_cargo_remetente2();
         $this->visao->sigla = $memorandoTmp->get_tipoSigla();
 
-        $this->visao->comboDia = ComboBoxDocumentos::comboDia();
-        $this->visao->comboMes = ComboBoxDocumentos::comboMes();
+        $this->visao->comboDia = Modelo\ComboBoxDocumentos::comboDia();
+        $this->visao->comboMes = Modelo\ComboBoxDocumentos::comboMes();
 
         $this->renderizar();
     }

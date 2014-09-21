@@ -101,7 +101,7 @@ class ControladorImagens extends Controlador {
     public function acaoConsultarimagem() {
         $this->visao->acessoMinimo = Permissao::CONSULTA;
         $this->visao->acessoTotal = obterUsuarioSessao()->get_idPapel() <= Papel::GESTOR;
-        $this->visao->todosUsuarios = ComboBoxUsuarios::listarTodosUsuarios(ComboBoxUsuarios::LISTAR_COM_CPF, "");
+        $this->visao->todosUsuarios = Modelo\ComboBoxUsuarios::listarTodosUsuarios(Modelo\ComboBoxUsuarios::LISTAR_COM_CPF, "");
         $this->renderizar();
     }
 
@@ -109,7 +109,7 @@ class ControladorImagens extends Controlador {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
         $this->visao->cpfAutor = obterUsuarioSessao()->get_cpf();
         $this->visao->iniciaisAutor = obterUsuarioSessao()->get_iniciais();
-        $this->visao->comboBoxDescritor = ComboBoxDescritores::montarDescritorPrimeiroNivel();
+        $this->visao->comboBoxDescritor = Modelo\ComboBoxDescritores::montarDescritorPrimeiroNivel();
         $this->visao->nomeUsuario = obterUsuarioSessao()->get_PNome() . ' ' . obterUsuarioSessao()->get_UNome();
         $this->renderizar();
     }
@@ -155,7 +155,7 @@ class ControladorImagens extends Controlador {
 
     public function acaoNovodescritor() {
         $this->visao->acessoMinimo = Permissao::ESCRITA;
-        $this->visao->comboBoxDescritor = ComboBoxDescritores::montarDescritorPrimeiroNivel();
+        $this->visao->comboBoxDescritor = Modelo\ComboBoxDescritores::montarDescritorPrimeiroNivel();
         $this->renderizar();
     }
 

@@ -79,7 +79,7 @@ class ControladorUsuarios extends Controlador {
         if ($userID == obterUsuarioSessao()->get_idUsuario()) {
             registrar_erro("Usuário tentou desativar seu próprio perfil através da página de edição de usuários do sistema");
             //TODO alterar isso, mover para classe superior como um método geral
-            echo json_encode((new Mensagem())->set_mensagemErro("Você não pode fazer isso."));
+            echo json_encode((new Modelo\Mensagem())->set_mensagemErro("Você não pode fazer isso."));
             exit;
         }
 
@@ -106,7 +106,8 @@ class ControladorUsuarios extends Controlador {
         //Esse id poderia ser obtido na tela de consultar usuários, por exemplo.
         if (obterUsuarioSessao()->get_idPapel() > $usuarioOriginal->get_idPapel()) {
             registrar_erro("Usuário tentou desativar um perfil de papel mais alto que o seu. (OBS: Papeis mais altos possuem valor numérico menor)", $usuarioOriginal);
-            echo json_encode((new Mensagem())->set_mensagemErro("Você não pode fazer isso."));
+            //TODO Mudar esse encode para classe superior
+            echo json_encode((new Modelo\Mensagem())->set_mensagemErro("Você não pode fazer isso."));
             exit;
         }
         $this->renderizar();

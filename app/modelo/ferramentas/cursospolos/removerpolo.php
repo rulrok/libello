@@ -1,13 +1,22 @@
 <?php
 
-$id = fnDecrypt(filter_input(INPUT_GET, 'poloID'));
-$mensagem = new Mensagem();
+namespace app\modelo\ferramentas\cursospolos;
 
-if ((new poloDAO())->remover($id)) {
+use \app\modelo as Modelo;
+
+class removerpolo extends Modelo\PaginaDeAcao {
+
+    protected function _acaoPadrao() {
+        $id = fnDecrypt(filter_input(INPUT_GET, 'poloID'));
+
+        if ((new Modelo\poloDAO())->remover($id)) {
 //    (new sistemaDAO())->registrarExclusaoPolo(obterUsuarioSessao()->get_idUsuario());
-    $mensagem->set_mensagemSucesso("Excluído com sucesso.");
-} else {
-    $mensagem->set_mensagemErro("Erro ao excluir");
+            $this->adicionarMensagemSucesso("Excluído com sucesso.");
+        } else {
+            $this->adicionarMensagemErro("Erro ao excluir");
+        }
+    }
+
 }
-echo json_encode($mensagem);
+
 ?>

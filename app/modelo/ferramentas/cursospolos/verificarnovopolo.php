@@ -1,9 +1,13 @@
 <?php
 
+namespace app\modelo\ferramentas\cursospolos;
+
 require_once APP_DIR . "modelo/vo/Polo.php";
 require_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 
-class VerificarNovoPolo extends verificadorFormularioAjax {
+use \app\modelo as Modelo;
+
+class verificarnovopolo extends Modelo\verificadorFormularioAjax {
 
     public function _validar() {
         $estado = filter_input(INPUT_POST, 'estado');
@@ -19,11 +23,11 @@ class VerificarNovoPolo extends verificadorFormularioAjax {
         if ($nome == "") {
             $this->adicionarMensagemErro("Nome do Polo inválido");
         }
-        $polo = new Polo();
+        $polo = new Modelo\Polo();
         $polo->set_nome($nome);
         $polo->set_cidade($cidade);
         $polo->set_estado($estado);
-        $poloDAO = new poloDAO();
+        $poloDAO = new Modelo\poloDAO();
         if ($poloDAO->consultarPolo($polo) == 0) {
             if ($poloDAO->cadastrarPolo($polo)) {
                 $this->adicionarMensagemSucesso("Cadastrado com sucesso");
