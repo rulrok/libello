@@ -1,13 +1,15 @@
 <?php
 
-include_once APP_DIR . "modelo/Mensagem.php";
-require_once APP_DIR . "modelo/vo/Viagem.php";
-include_once APP_DIR . "modelo/verificadorFormularioAjax.php";
+namespace app\modelo\ferramentas\viagens;
 
-class verificarnovaviagem extends verificadorFormularioAjax {
+require_once APP_DIR . "modelo/vo/Viagem.php";
+require_once APP_DIR . "modelo/verificadorFormularioAjax.php";
+
+use \app\modelo as Modelo;
+
+class verificarnova extends Modelo\verificadorFormularioAjax {
 
     public function _validar() {
-                $rodrigo;
         $curso = fnDecrypt(filter_input(INPUT_POST, 'curso'));
         if (!filter_has_var(INPUT_POST, 'destinoManual')) {
             $polo = fnDecrypt(filter_input(INPUT_POST, 'polo'));
@@ -29,27 +31,26 @@ class verificarnovaviagem extends verificadorFormularioAjax {
             $passageiros[$i] = fnDecrypt($passageiros[$i]);
         }
 
-        $viagem = new Viagem();
+        $viagem = new Modelo\Viagem();
 
         try {
             if ($curso != "" && (($polo != null && $polo != "" && $destinoAlternativo === null) || ($polo === null && $destinoAlternativo !== "")) && $responsavel != "" && $dataIda != "" && $horaIda != "" && $dataVolta != "" && $horaVolta != "" && $motivo != "" && $estado != "" && $diarias != "" && sizeof($passageiros) > 0) {
                 $viagem->set_idCurso($curso)->set_idPolo($polo)->set_responsavel($responsavel)->set_dataIda($dataIda)->set_horaIda($horaIda)->set_dataVolta($dataVolta)->set_horaVolta($horaVolta)->set_motivo($motivo)->set_estado($estado)->set_diarias($diarias)->set_passageiros($passageiros)->set_destinoAlternativo($destinoAlternativo);
-                if ((new viagemDAO())->inserir($viagem)) {
+                if ((new Modelo\viagemDAO())->inserir($viagem)) {
                     $this->adicionarMensagemSucesso("Cadastro com sucesso");
                 } else {
                     $this->adicionarMensagemErro("Problema ao cadastrar no banco de dados.");
+                    $this->abortarExecucao();
                 }
             } else {
                 $this->adicionarMensagemAviso("Preencha todos os campos obrigatórios!");
             }
         } catch (Exception $e) {
             $this->adicionarMensagemErro("Erro");
-            print_r($e);
+            $this->abortarExecucao();
         }
     }
 
 }
 
-//$verificar = new verificarnovaviagem();
-//$verificar->executar();
 ?>

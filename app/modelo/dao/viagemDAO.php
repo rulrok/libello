@@ -1,4 +1,5 @@
 <?php
+
 namespace app\modelo;
 
 require_once 'abstractDAO.php';
@@ -95,71 +96,71 @@ class viagemDAO extends abstractDAO {
         $this->encerrarTransacao();
         return true;
     }
-    
-    public function atualizar($idViagem, Viagem $novosDados){
+
+    public function atualizar($idViagem, Viagem $novosDados) {
         $idViagem = (int) $idViagem;
         $dadosAntigos = viagemDAO::recuperarViagem($idViagem);
-        
+
         $idCurso = $novosDados->idCurso;
-        if( $idCurso ===  null){
-             $idCurso = $dadosAntigos->idCurso;
+        if ($idCurso === null) {
+            $idCurso = $dadosAntigos->idCurso;
         }
-        
+
         $idPolo = $novosDados->$idPolo;
-        if($idPolo === null){
+        if ($idPolo === null) {
             $idPolo = $dadosAntigos->idPolo;
         }
-        
+
         $responsavel = $novosDados->responsavel;
-        if($responsavel === null){
+        if ($responsavel === null) {
             $responsavel = $dadosAntigos->responsavel;
         }
-        
+
         $dataIda = $novosDados->dataIda;
-        if($dataIda === null){
+        if ($dataIda === null) {
             $dataIda = $dadosAntigos->dataIda;
         }
-        
+
         $dataVolta = $novosDados->dataVolta;
-        if($dataVolta === null){
+        if ($dataVolta === null) {
             $dataVolta = $dadosAntigos->dataVolta;
         }
-        
+
         $horaIda = $novosDados->horaIda;
-        if($horaIda === null){
+        if ($horaIda === null) {
             $horaIda = $dadosAntigos->horaIda;
         }
-        
+
         $horaVolta = $novosDados->horaVolta;
-        if($horaVolta === null){
+        if ($horaVolta === null) {
             $horaVolta = $dadosAntigos->horaVolta;
         }
-        
+
         $motivo = $novosDados->motivo;
-        if($motivo === null){
+        if ($motivo === null) {
             $motivo = $dadosAntigos->motivo;
         }
-        
+
         $estadoViagem = $novosDados->estadoViagem;
-        if($estadoViagem === null){
+        if ($estadoViagem === null) {
             $estadoViagem = $dadosAntigos->estadoViagem;
         }
-        
+
         $diarias = $novosDados->diarias;
-        if($diarias === null){
+        if ($diarias === null) {
             $diarias = $dadosAntigos->diarias;
         }
 
         $passageiros = $novosDados->passageiros;
-        if($passageiros === null){
+        if ($passageiros === null) {
             $passageiros = $dadosAntigos->passageiros;
         }
-        
+
         $destinoAlternativo = $novosDados->destinoAlternativo;
-        if($destinoAlternativo === null){
+        if ($destinoAlternativo === null) {
             $destinoAlternativo = $dadosAntigos->destinoAlternativo;
-        } 
-        
+        }
+
         $sql = "UPDATE viagem SET idViagem = :idViagem, idCurso = :idCurso, idPolo = :idPolo, responsavel = :responsavel, dataIda = :dataIda,horaIda = :horaIda, dataVolta = :dataVolta, horaVolta = :horaVolta, motivo = :motivo, estadoViagem = :estadoViagem, diarias = :diarias, outroDestino = :destinoAlternativo";
         $params = array(
             ':idCurso' => [$idCurso, \PDO::PARAM_INT]
@@ -177,8 +178,6 @@ class viagemDAO extends abstractDAO {
 
         return $this->executarQuery($sql, $params);
     }
-    
-
 
 //
 //        $sql = "UPDATE livro SET nomeLivro = :nome ,quantidade = :quantidade ,dataEntrada = :dataEntrada ,numeroPatrimonio = :numeroPatrimonio ,descricao= :descricao, grafica= :grafica, area= :area WHERE idLivro = :idLivro";
@@ -194,9 +193,9 @@ class viagemDAO extends abstractDAO {
 //        );
 //        return $this->executarQuery($sql, $params);
 //    }
-    
+
     public function recuperarViagem($idViagem) {
-         if (is_array($idViagem)) {
+        if (is_array($idViagem)) {
             $idViagem = $idViagem['viagemID'];
         }
 
@@ -205,30 +204,44 @@ class viagemDAO extends abstractDAO {
             ':idViagem' => [$idViagem, \PDO::PARAM_INT]
         );
         return $this->executarSelect($sql, $params, false, 'Viagem');
-     }
-     
-    public function recuperarResponsavel($idResponsavel){
+    }
+
+    public function recuperarResponsavel($idResponsavel) {
         $sql = "SELECT PNome,UNome from usuario WHERE idUsuario = :idResponsavel";
         $params = array(
             ':idResponsavel' => [$idResponsavel, \PDO::PARAM_INT]
         );
-        $array =   $this->executarSelect($sql, $params);
+        $array = $this->executarSelect($sql, $params);
         $responsavel = $array[0][0] . " " . $array[0][1];
         return $responsavel;
     }
-    
-    public function recuperarCurso($idCurso){
+
+    public function recuperarCurso($idCurso) {
         $sql = "SELECT nomeCurso from cursospolos_curso WHERE idCurso = :idCurso";
         $params = array(
             ':idCurso' => [$idCurso, \PDO::PARAM_INT]
         );
-        $array =   $this->executarSelect($sql, $params);
+        $array = $this->executarSelect($sql, $params);
         $curso = $array[0][0];
         return $curso;
     }
-    
-    public function recuperarDestino($idDestino){
+
+    public function recuperarDestino($idDestino) {
         $sql = "SELECT nomePolo from cursospolos_polo WHERE idPolo = :idDestino";
+        $params = array(
+            ':idDestino' => [$idDestino, \PDO::PARAM_INT]
+        );
+        $array = $this->executarSelect($sql, $params);
+        if (!empty($array)) {
+            $destino = $array[0][0];
+        } else {
+            $destino = "";
+        }
+        return $destino;
+    }
+
+    public function recuperarDestinoAlternativo($idDestino) {
+        $sql = "SELECT outroDestino from viagem WHERE idViagem = :idDestino";
         $params = array(
             ':idDestino' => [$idDestino, \PDO::PARAM_INT]
         );
@@ -236,16 +249,7 @@ class viagemDAO extends abstractDAO {
         $destino = $array[0][0];
         return $destino;
     }
-    
-    public function recuperarDestinoAlternativo($idDestino){
-        $sql = "SELECT outroDestino from viagem WHERE idViagem = :idDestino";
-        $params = array(
-            ':idDestino' => [$idDestino, \PDO::PARAM_INT]
-        );
-        $array = $this->executarSelect($sql,$params);
-        $destino = $array[0][0];
-        return $destino;
-    }
+
 }
 
 ?>

@@ -642,3 +642,70 @@ Stack trace:
 [21-Sep-2014 01:51:08 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
 [21-Sep-2014 01:51:08 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
 [21-Sep-2014 01:51:08 America/Sao_Paulo] PHP   3. app\controlador\ControladorViagens->acaoGerenciar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 01:52:32 America/Sao_Paulo] PHP Fatal error:  Class 'app\modelo\viagemDAO' not found in C:\wamp\www\libello\app\controlador\ControladorViagens.php on line 30
+[21-Sep-2014 01:52:32 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 01:52:32 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 01:52:32 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 01:52:32 America/Sao_Paulo] PHP   3. app\controlador\ControladorViagens->acaoGerenciar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 01:52:32 America/Sao_Paulo] PHP Fatal error:  Class 'app\modelo\cursoDAO' not found in C:\wamp\www\libello\app\modelo\comboboxes\ComboBoxCurso.php on line 21
+[21-Sep-2014 01:52:32 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 01:52:32 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 01:52:32 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 01:52:32 America/Sao_Paulo] PHP   3. app\controlador\ControladorViagens->acaoNova() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 01:52:32 America/Sao_Paulo] PHP   4. app\modelo\ComboBoxCurso::montarTodosOsCursos() C:\wamp\www\libello\app\controlador\ControladorViagens.php:17
+[21-Sep-2014 01:52:33 America/Sao_Paulo] PHP Fatal error:  Class 'app\modelo\viagemDAO' not found in C:\wamp\www\libello\app\controlador\ControladorViagens.php on line 30
+[21-Sep-2014 01:52:33 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 01:52:33 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 01:52:33 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 01:52:33 America/Sao_Paulo] PHP   3. app\controlador\ControladorViagens->acaoGerenciar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 01:52:53 America/Sao_Paulo] PHP Fatal error:  Class 'app\modelo\viagemDAO' not found in C:\wamp\www\libello\app\controlador\ControladorViagens.php on line 30
+[21-Sep-2014 01:52:53 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 01:52:53 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 01:52:53 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 01:52:53 America/Sao_Paulo] PHP   3. app\controlador\ControladorViagens->acaoGerenciar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 01:52:54 America/Sao_Paulo] PHP Fatal error:  Class 'app\modelo\cursoDAO' not found in C:\wamp\www\libello\app\modelo\comboboxes\ComboBoxCurso.php on line 21
+[21-Sep-2014 01:52:54 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 01:52:54 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 01:52:54 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 01:52:54 America/Sao_Paulo] PHP   3. app\controlador\ControladorViagens->acaoNova() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 01:52:54 America/Sao_Paulo] PHP   4. app\modelo\ComboBoxCurso::montarTodosOsCursos() C:\wamp\www\libello\app\controlador\ControladorViagens.php:17
+[21-Sep-2014 01:52:55 America/Sao_Paulo] PHP Fatal error:  Class 'app\modelo\viagemDAO' not found in C:\wamp\www\libello\app\controlador\ControladorViagens.php on line 30
+[21-Sep-2014 01:52:55 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 01:52:55 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 01:52:55 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 01:52:55 America/Sao_Paulo] PHP   3. app\controlador\ControladorViagens->acaoGerenciar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 01:53:20 America/Sao_Paulo] PHP Fatal error:  Class 'app\modelo\cursoDAO' not found in C:\wamp\www\libello\app\modelo\comboboxes\ComboBoxCurso.php on line 21
+[21-Sep-2014 01:53:20 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 01:53:20 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 01:53:20 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 01:53:20 America/Sao_Paulo] PHP   3. app\controlador\ControladorViagens->acaoNova() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 01:53:20 America/Sao_Paulo] PHP   4. app\modelo\ComboBoxCurso::montarTodosOsCursos() C:\wamp\www\libello\app\controlador\ControladorViagens.php:18
+[21-Sep-2014 01:53:33 America/Sao_Paulo] PHP Fatal error:  Class 'app\modelo\Modelo\cursoDAO' not found in C:\wamp\www\libello\app\modelo\comboboxes\ComboBoxCurso.php on line 21
+[21-Sep-2014 01:53:33 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 01:53:33 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 01:53:33 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 01:53:33 America/Sao_Paulo] PHP   3. app\controlador\ControladorViagens->acaoNova() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 01:53:33 America/Sao_Paulo] PHP   4. app\modelo\ComboBoxCurso::montarTodosOsCursos() C:\wamp\www\libello\app\controlador\ControladorViagens.php:18
+[21-Sep-2014 01:53:52 America/Sao_Paulo] PHP Fatal error:  Class 'app\modelo\cursoDAO' not found in C:\wamp\www\libello\app\modelo\comboboxes\ComboBoxCurso.php on line 24
+[21-Sep-2014 01:53:52 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 01:53:52 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 01:53:52 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 01:53:52 America/Sao_Paulo] PHP   3. app\controlador\ControladorViagens->acaoNova() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 01:53:52 America/Sao_Paulo] PHP   4. app\modelo\ComboBoxCurso::montarTodosOsCursos() C:\wamp\www\libello\app\controlador\ControladorViagens.php:18
+[21-Sep-2014 01:54:48 America/Sao_Paulo] PHP Fatal error:  Class 'app\controlador\Modelo\Permissao' not found in C:\wamp\www\libello\app\controlador\ControladorImagens.php on line 109
+[21-Sep-2014 01:54:48 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 01:54:48 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 01:54:48 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 01:54:48 America/Sao_Paulo] PHP   3. app\controlador\ControladorImagens->acaoNovaImagem() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 01:55:31 America/Sao_Paulo] PHP Notice:  Undefined offset: 0 in C:\wamp\www\libello\app\modelo\dao\viagemDAO.php on line 236
+[21-Sep-2014 01:55:31 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 01:55:31 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 01:55:31 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 01:55:31 America/Sao_Paulo] PHP   3. app\controlador\ControladorViagens->acaoEditar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 01:55:31 America/Sao_Paulo] PHP   4. app\modelo\viagemDAO->recuperarDestino($idDestino = *uninitialized*) C:\wamp\www\libello\app\controlador\ControladorViagens.php:55
+[21-Sep-2014 01:56:13 America/Sao_Paulo] PHP Notice:  Undefined offset: 0 in C:\wamp\www\libello\app\modelo\dao\viagemDAO.php on line 236
+[21-Sep-2014 01:56:13 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 01:56:13 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 01:56:13 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 01:56:13 America/Sao_Paulo] PHP   3. app\controlador\ControladorViagens->acaoEditar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 01:56:13 America/Sao_Paulo] PHP   4. app\modelo\viagemDAO->recuperarDestino($idDestino = *uninitialized*) C:\wamp\www\libello\app\controlador\ControladorViagens.php:55

@@ -1,4 +1,5 @@
 <?php
+
 namespace app\controlador;
 
 include_once APP_LIBRARY_ABSOLUTE_DIR . 'Mvc/Controlador.php';
@@ -101,7 +102,7 @@ class ControladorUsuarios extends Controlador {
         $userID = fnDecrypt(filter_input(INPUT_GET, 'userID'));
 
         $emailOriginal = $usuarioDAO->descobrirEmail($userID);
-        $usuarioOriginal = $usuarioDAO->recuperarUsuario($emailOriginal,true);
+        $usuarioOriginal = $usuarioDAO->recuperarUsuario($emailOriginal, true);
         //Importante: Verifica se o usuário não colou o id criptografado de algum outro usuário com papel superior ao dele
         //Esse id poderia ser obtido na tela de consultar usuários, por exemplo.
         if (obterUsuarioSessao()->get_idPapel() > $usuarioOriginal->get_idPapel()) {

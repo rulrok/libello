@@ -4,9 +4,12 @@ namespace app\controlador;
 
 include_once APP_LIBRARY_DIR . 'Mvc/Controlador.php';
 include_once APP_LIBRARY_DIR . 'seguranca/criptografia.php';
+include_once APP_DIR . 'modelo/dao/viagemDAO.php';
 include_once APP_DIR . 'modelo/comboboxes/ComboBoxCurso.php';
 include_once APP_DIR . 'modelo/comboboxes/ComboBoxPolo.php';
 include_once APP_DIR . 'modelo/comboboxes/ComboBoxUsuarios.php';
+
+use \app\modelo as Modelo;
 
 class ControladorViagens extends Controlador {
 
@@ -19,6 +22,10 @@ class ControladorViagens extends Controlador {
     }
 
     public function acaoVerificarnova() {
+        $this->visao->acessoMinimo = Modelo\Permissao::ESCRITA;
+        $this->renderizar();
+    }
+    public function acaoVerificaredicao() {
         $this->visao->acessoMinimo = Modelo\Permissao::ESCRITA;
         $this->renderizar();
     }
@@ -65,7 +72,7 @@ class ControladorViagens extends Controlador {
     }
 
     public function idFerramentaAssociada() {
-        return Ferramenta::CONTROLE_VIAGENS;
+        return Modelo\Ferramenta::CONTROLE_VIAGENS;
     }
 
 }
