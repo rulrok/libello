@@ -1,16 +1,23 @@
 <?php
 
-require_once APP_DIR . "modelo/Mensagem.php";
+namespace app\modelo\ferramentas\equipamentos;
 
-$saidaID = fnDecrypt(filter_input(INPUT_GET, 'saidaID'));
-$mensagem = new Mensagem();
+use \app\modelo as Modelo;
 
-$equipamentoDAO = new equipamentoDAO();
-if ($equipamentoDAO->removerSaida($saidaID)) {
-    $mensagem->set_mensagemSucesso("Saída removida com sucesso.");
-    $equipamentoDAO->registrarRemocaoSaida($saidaID);
-} else {
-    $mensagem->set_mensagemErro("Erro ao excluir");
+class remover_saida extends Modelo\PaginaDeAcao {
+
+    protected function _acaoPadrao() {
+        $saidaID = fnDecrypt(filter_input(INPUT_GET, 'saidaID'));
+
+        $equipamentoDAO = new Modelo\equipamentoDAO();
+        if ($equipamentoDAO->removerSaida($saidaID)) {
+            $this->adicionarMensagemSucesso("Saída removida com sucesso.");
+//            $equipamentoDAO->registrarRemocaoSaida($saidaID);
+        } else {
+            $this->adicionarMensagemErro("Erro ao excluir");
+        }
+    }
+
 }
-echo json_encode($mensagem);
+
 ?>

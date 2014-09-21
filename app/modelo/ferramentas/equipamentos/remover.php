@@ -1,18 +1,26 @@
 <?php
 
-require_once APP_DIR . "modelo/Mensagem.php";
+namespace app\modelo\ferramentas\equipamentos;
 
-$id = fnDecrypt(filter_input(INPUT_GET, 'equipamentoID'));
-$mensagem = new Mensagem();
-$equipamentoDAO = new equipamentoDAO();
-$novosDados = clone $equipamentoDAO->recuperarEquipamento($id);
-$novosDados->set_quantidade(0);
-$novosDados->set_numeroPatrimonio(null);
-if ($equipamentoDAO->atualizar($id, $novosDados)) {
-    $mensagem->set_mensagemSucesso("Equipamento removido com sucesso.");
-    $equipamentoDAO->registrarExclusaoEquipamento($id);
-} else {
-    $mensagem->set_mensagemErro("Erro ao excluir");
+use \app\modelo as Modelo;
+
+class remover extends Modelo\PaginaDeAcao {
+
+    protected function _acaoPadrao() {
+        $id = fnDecrypt(filter_input(INPUT_GET, 'equipamentoID'));
+        $equipamentoDAO = new Modelo\equipamentoDAO();
+        $novosDados = clone $equipamentoDAO->recuperarEquipamento($id);
+        $novosDados->set_quantidade(0);
+        $novosDados->set_numeroPatrimonio(null);
+        if ($equipamentoDAO->atualizar($id, $novosDados)) {
+            $this->adicionarMensagemSucesso("Equipamento removido com sucesso.");
+            //TODO Sistema de registro de eventos precisa ser reelaborado
+//            $equipamentoDAO->registrarExclusaoEquipamento($id);
+        } else {
+            $this->adicionarMensagemErro("Erro ao excluir");
+        }
+    }
+
 }
-echo json_encode($mensagem);
+
 ?>

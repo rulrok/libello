@@ -1,10 +1,13 @@
 <?php
 
-require_once APP_DIR . "modelo/Mensagem.php";
-require_once APP_DIR . "modelo/vo/Equipamento.php";
-require_once APP_DIR . "modelo/verificadorFormularioAjax.php";
+namespace app\modelo\ferramentas\equipamentos;
 
-class verificarnovoequipamento extends verificadorFormularioAjax {
+include_once APP_DIR . "modelo/verificadorFormularioAjax.php";
+
+use \app\modelo as Modelo;
+
+//TODO Revisar o código desse arquivo
+class verificarnovo extends Modelo\verificadorFormularioAjax {
 
     public function _validar() {
         $nomeEquipamento = filter_input(INPUT_POST, 'equipamento');
@@ -15,20 +18,20 @@ class verificarnovoequipamento extends verificadorFormularioAjax {
         $numeroPatrimonio;
 
 
-        $equipamento = new Equipamento();
+        $equipamento = new Modelo\Equipamento();
 
         $equipamento->set_nomeEquipamento($nomeEquipamento)->set_dataEntrada($dataEntrada)->set_descricao($descricao);
 
         if ($tipo == "patrimonio") {
 //            $quantidade = filter_input(INPUT_POST, 'quantidadePatrimonios');
             $quantidade = filter_input(INPUT_POST, 'quantidadePatrimoniosInput');
-            
+
 
 //            $colecaoEquipamentos = [];
-            $aux = new Equipamento();
+            $aux = new Modelo\Equipamento();
             $patrimoniosValidos = 'Patrimônios ';
             $patrimoniosInvalidos = '';
-            $equipamentoDAO = new equipamentoDAO();
+            $equipamentoDAO = new Modelo\equipamentoDAO();
             for ($i = 0; $i < $quantidade; $i++) {
                 //TODO Verificar uma forma
                 $aux = clone $equipamento;
@@ -41,6 +44,8 @@ class verificarnovoequipamento extends verificadorFormularioAjax {
                     $equipamentoDAO->registrarInsercaoEquipamento($id);
                     $patrimoniosValidos .= $numeroPatrimonio . "<br/>";
                 } catch (Exception $e) {
+                    //TODO Agora é possível mandar pop-ups separados para cada erro
+                    //TODO Talvez seja mais interessante do que mandar todos dentro de um único pop-up
                     $patrimoniosInvalidos .= "<li>" . $numeroPatrimonio . "</li>";
                 }
             }
@@ -58,16 +63,18 @@ class verificarnovoequipamento extends verificadorFormularioAjax {
                 $equipamento->set_numeroPatrimonio(null);
                 //Vai tentar cadastrar
                 try {
-                    $equipamentoDAO = new equipamentoDAO();
+                    $equipamentoDAO = new Modelo\equipamentoDAO();
                     $equipamentoDAO->cadastrarEquipamento($equipamento);
                     $id = $equipamentoDAO->obterUltimoIdInserido();
                     $equipamentoDAO->registrarInsercaoEquipamento($id);
                     $this->adicionarMensagemSucesso("Cadastrado com sucesso.");
                 } catch (Exception $e) {
                     $this->adicionarMensagemErro("Erro ao cadastrar no banco de dados.");
+                    $this->abortarExecucao();
                 }
             } else {
                 $this->adicionarMensagemErro("Quantidade deve ser maior que 0");
+                $this->abortarExecucao();
             }
         }
     }

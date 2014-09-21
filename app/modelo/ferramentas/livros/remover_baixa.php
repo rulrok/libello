@@ -11,7 +11,7 @@ class remover_baixa extends Modelo\PaginaDeAcao {
         $livroDAO = new Modelo\livroDAO();
         if ($livroDAO->removerBaixa($baixaID)) {
             $this->adicionarMensagemSucesso("Baixa removida com sucesso.");
-            $livroDAO->registrarRemocaoBaixa($baixaID);
+//            $livroDAO->registrarRemocaoBaixa($baixaID);
         } else {
             $this->adicionarMensagemErro("Erro ao excluir");
         }

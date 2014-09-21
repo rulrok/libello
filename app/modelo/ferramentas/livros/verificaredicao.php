@@ -65,7 +65,7 @@ class verificaredicao extends Modelo\verificadorFormularioAjax {
         $livro->set_nomelivro($livroNome)->set_dataEntrada($dataEntrada)->set_numeroPatrimonio($numeroPatrimonio)->set_quantidade($quantidade)->set_descricao($descricao)->set_grafica($grafica)->set_area($area);
 
         if ($livroDAO->atualizar($livroID, $livro)) {
-            $livroDAO->registrarAlteracaolivro($livroID);
+//            $livroDAO->registrarAlteracaolivro($livroID);
             $this->adicionarMensagemSucesso("Atualizado com sucesso");
         } else {
             $this->adicionarMensagemErro("Um erro ocorreu ao cadastrar no banco");

@@ -14,7 +14,7 @@ class remover extends Modelo\PaginaDeAcao {
         $novosDados->set_numeroPatrimonio(null);
         if ($livroDAO->atualizar($id, $novosDados)) {
             $this->adicionarMensagemSucesso("Livro removido com sucesso.");
-            $livroDAO->registrarExclusaoLivro($id);
+//            $livroDAO->registrarExclusaoLivro($id);
         } else {
             $this->adicionarMensagemErro("Erro ao excluir");
         }

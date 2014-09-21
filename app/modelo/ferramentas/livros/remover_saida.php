@@ -11,7 +11,7 @@ class remover_saida extends Modelo\PaginaDeAcao {
         $livroDAO = new Modelo\livroDAO();
         if ($livroDAO->removerSaida($saidaID)) {
             $this->adicionarMensagemSucesso("Saída removida com sucesso.");
-            $livroDAO->registrarRemocaoSaida($saidaID);
+//            $livroDAO->registrarRemocaoSaida($saidaID);
         } else {
             $$this->adicionarMensagemErro("Erro ao excluir");
         }

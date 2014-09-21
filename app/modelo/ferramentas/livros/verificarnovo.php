@@ -76,7 +76,7 @@ class verificarnovo extends Modelo\verificadorFormularioAjax {
             //Vai tentar cadastrar
             if ($livroDAO->cadastrarlivro($livro)) {
                 $id = $livroDAO->obterUltimoIdInserido();
-                $livroDAO->registrarInsercaolivro($id);
+//                $livroDAO->registrarInsercaolivro($id);
                 $this->adicionarMensagemSucesso("Cadastrado com sucesso.");
             } else {
                 $this->adicionarMensagemErro("Erro ao cadastrar no banco de dados.");

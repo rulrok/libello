@@ -565,3 +565,80 @@ Stack trace:
 #3 C:\wamp\www\libello\app\modelo\PaginaDeAcao.php(38): app\modelo\ferramentas\livros\remover_saida->_acaoPadrao()
 #4 C:\wamp\www\libello\biblioteca\Mvc\Visao.php(52): app\modelo\PaginaDeAcao->executar()
 #5 C:\wamp\www\libello\biblioteca\Mvc\Controlador.php(19): app\controlador\Visao->ren in C:\wamp\www\libello\app\modelo\dao\abstractDAO.php on line 89
+[21-Sep-2014 00:47:48 America/Sao_Paulo] PHP Fatal error:  Class 'app\controlador\Modelo\Permissao' not found in C:\wamp\www\libello\app\controlador\ControladorEquipamentos.php on line 208
+[21-Sep-2014 00:47:48 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 00:47:48 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 00:47:48 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 00:47:48 America/Sao_Paulo] PHP   3. app\controlador\ControladorEquipamentos->acaoGerenciarbaixasesaidas() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 00:47:51 America/Sao_Paulo] PHP Fatal error:  Class 'app\controlador\Modelo\Permissao' not found in C:\wamp\www\libello\app\controlador\ControladorEquipamentos.php on line 49
+[21-Sep-2014 00:47:51 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 00:47:51 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 00:47:51 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 00:47:51 America/Sao_Paulo] PHP   3. app\controlador\ControladorEquipamentos->acaoGerenciar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP Warning:  include_once(C:/wamp/www//libello/app/modelo/dao/equipamentosDAO.php): failed to open stream: No such file or directory in C:\wamp\www\libello\app\controlador\ControladorEquipamentos.php on line 6
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:89
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP   4. spl_autoload_call() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:89
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP   5. app\controlador\CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP   6. require_once() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:21
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP Warning:  include_once(): Failed opening 'C:/wamp/www//libello/app/modelo/dao/equipamentosDAO.php' for inclusion (include_path='.;C:\php\pear') in C:\wamp\www\libello\app\controlador\ControladorEquipamentos.php on line 6
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP   3. class_exists() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:89
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP   4. spl_autoload_call() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:89
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP   5. app\controlador\CarregadorAutomatico::carregar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:0
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP   6. require_once() C:\wamp\www\libello\biblioteca\Mvc\CarregadorAutomatico.php:21
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP Fatal error:  Class 'app\controlador\Ferramenta' not found in C:\wamp\www\libello\app\controlador\ControladorEquipamentos.php on line 248
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP   3. app\controlador\ControladorEquipamentos->acaoGerenciarbaixasesaidas() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP   4. app\controlador\Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorEquipamentos.php:212
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP   5. app\controlador\Visao->renderizar() C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:19
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP   6. usuarioAutorizado() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:18
+[21-Sep-2014 00:49:15 America/Sao_Paulo] PHP   7. app\controlador\ControladorEquipamentos->idFerramentaAssociada() C:\wamp\www\libello\biblioteca\seguranca\seguranca.php:85
+[21-Sep-2014 00:49:25 America/Sao_Paulo] PHP Fatal error:  Class 'app\controlador\Ferramenta' not found in C:\wamp\www\libello\app\controlador\ControladorEquipamentos.php on line 248
+[21-Sep-2014 00:49:25 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 00:49:25 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 00:49:25 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 00:49:25 America/Sao_Paulo] PHP   3. app\controlador\ControladorEquipamentos->acaoGerenciarbaixasesaidas() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 00:49:25 America/Sao_Paulo] PHP   4. app\controlador\Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorEquipamentos.php:212
+[21-Sep-2014 00:49:25 America/Sao_Paulo] PHP   5. app\controlador\Visao->renderizar($diretorio = *uninitialized*, $arquivo = *uninitialized*) C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:19
+[21-Sep-2014 00:49:25 America/Sao_Paulo] PHP   6. usuarioAutorizado($usuario = *uninitialized*, $acessoMinimo = *uninitialized*) C:\wamp\www\libello\biblioteca\Mvc\Visao.php:18
+[21-Sep-2014 00:49:25 America/Sao_Paulo] PHP   7. app\controlador\ControladorEquipamentos->idFerramentaAssociada() C:\wamp\www\libello\biblioteca\seguranca\seguranca.php:85
+[21-Sep-2014 01:43:10 America/Sao_Paulo] PHP Fatal error:  Class 'verificadorFormularioAjax' not found in C:\wamp\www\libello\app\modelo\ferramentas\equipamentos\verificarnovo.php on line 7
+[21-Sep-2014 01:43:10 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 01:43:10 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 01:43:10 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 01:43:10 America/Sao_Paulo] PHP   3. app\controlador\ControladorEquipamentos->acaoVerificarNovo() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 01:43:10 America/Sao_Paulo] PHP   4. app\controlador\Controlador->renderizar() C:\wamp\www\libello\app\controlador\ControladorEquipamentos.php:25
+[21-Sep-2014 01:43:10 America/Sao_Paulo] PHP   5. app\controlador\Visao->renderizar($diretorio = *uninitialized*, $arquivo = *uninitialized*) C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:19
+[21-Sep-2014 01:43:10 America/Sao_Paulo] PHP   6. require() C:\wamp\www\libello\biblioteca\Mvc\Visao.php:45
+[21-Sep-2014 01:51:04 America/Sao_Paulo] PHP Fatal error:  Class 'app\controlador\Modelo\Permissao' not found in C:\wamp\www\libello\app\controlador\ControladorDocumentos.php on line 76
+[21-Sep-2014 01:51:04 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 01:51:04 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 01:51:04 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 01:51:04 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoGerenciar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 01:51:05 America/Sao_Paulo] PHP Fatal error:  Class 'app\controlador\Modelo\Permissao' not found in C:\wamp\www\libello\app\controlador\ControladorDocumentos.php on line 89
+[21-Sep-2014 01:51:05 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 01:51:05 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 01:51:05 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 01:51:05 America/Sao_Paulo] PHP   3. app\controlador\ControladorDocumentos->acaoGerenciarCabecalho() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 01:51:06 America/Sao_Paulo] PHP Fatal error:  Class 'app\controlador\Modelo\Permissao' not found in C:\wamp\www\libello\app\controlador\ControladorViagens.php on line 27
+[21-Sep-2014 01:51:06 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 01:51:06 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 01:51:06 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 01:51:06 America/Sao_Paulo] PHP   3. app\controlador\ControladorViagens->acaoGerenciar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 01:51:07 America/Sao_Paulo] PHP Fatal error:  Class 'app\controlador\Modelo\Permissao' not found in C:\wamp\www\libello\app\controlador\ControladorViagens.php on line 14
+[21-Sep-2014 01:51:07 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 01:51:07 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 01:51:07 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 01:51:07 America/Sao_Paulo] PHP   3. app\controlador\ControladorViagens->acaoNova() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[21-Sep-2014 01:51:08 America/Sao_Paulo] PHP Fatal error:  Class 'app\controlador\Modelo\Permissao' not found in C:\wamp\www\libello\app\controlador\ControladorViagens.php on line 27
+[21-Sep-2014 01:51:08 America/Sao_Paulo] PHP Stack trace:
+[21-Sep-2014 01:51:08 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[21-Sep-2014 01:51:08 America/Sao_Paulo] PHP   2. app\controlador\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[21-Sep-2014 01:51:08 America/Sao_Paulo] PHP   3. app\controlador\ControladorViagens->acaoGerenciar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102

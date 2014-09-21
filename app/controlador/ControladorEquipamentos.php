@@ -3,10 +3,13 @@
 namespace app\controlador;
 
 include_once APP_LIBRARY_DIR . 'Mvc/Controlador.php';
+include_once APP_DIR . 'modelo/dao/equipamentoDAO.php';
 require_once APP_DIR . "modelo/comboboxes/ComboBoxPapeis.php";
 require_once APP_DIR . "modelo/comboboxes/ComboBoxUsuarios.php";
 include_once APP_DIR . 'modelo/comboboxes/ComboBoxPolo.php';
 require_once APP_LIBRARY_DIR . "seguranca/criptografia.php";
+
+use \app\modelo as Modelo;
 
 class ControladorEquipamentos extends Controlador {
 
@@ -242,7 +245,7 @@ class ControladorEquipamentos extends Controlador {
     }
 
     public function idFerramentaAssociada() {
-        return Ferramenta::CONTROLE_EQUIPAMENTOS;
+        return Modelo\Ferramenta::CONTROLE_EQUIPAMENTOS;
     }
 
 }
