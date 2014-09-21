@@ -1,5 +1,7 @@
 <?php
 
+namespace app\modelo;
+
 require_once APP_DIR . "modelo/dao/ferramentaDAO.php";
 
 final class Ferramenta {

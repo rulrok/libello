@@ -1,5 +1,5 @@
 <?php
-
+namespace app\modelo;
 require_once 'abstractDAO.php';
 require_once APP_DIR . "modelo/vo/Equipamento.php";
 require_once APP_DIR . 'modelo/enumeracao/TipoEventoEquipamento.php';
@@ -11,11 +11,11 @@ class equipamentoDAO extends abstractDAO {
         $sql .= "(:nome,:quantidade,:descricao,:dataEntrada,:numeroPatrimonio)";
 
         $params = array(
-            ':nome' => [$equipamento->get_nomeEquipamento(), PDO::PARAM_STR]
-            , ':quantidade' => [$equipamento->get_quantidade(), PDO::PARAM_INT]
-            , ':descricao' => [$equipamento->get_descricao(), PDO::PARAM_STR]
-            , ':dataEntrada' => [$equipamento->get_dataEntrada(), PDO::PARAM_STR]
-            , ':numeroPatrimonio' => [$equipamento->get_numeroPatrimonio(), PDO::PARAM_STR]
+            ':nome' => [$equipamento->get_nomeEquipamento(), \PDO::PARAM_STR]
+            , ':quantidade' => [$equipamento->get_quantidade(), \PDO::PARAM_INT]
+            , ':descricao' => [$equipamento->get_descricao(), \PDO::PARAM_STR]
+            , ':dataEntrada' => [$equipamento->get_dataEntrada(), \PDO::PARAM_STR]
+            , ':numeroPatrimonio' => [$equipamento->get_numeroPatrimonio(), \PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -44,7 +44,7 @@ class equipamentoDAO extends abstractDAO {
 
         $sql = "SELECT * from equipamento WHERE idEquipamento = :idEquipamento";
         $params = array(
-            ':idEquipamento' => [$idEquipamento, PDO::PARAM_INT]
+            ':idEquipamento' => [$idEquipamento, \PDO::PARAM_INT]
         );
         return $this->executarSelect($sql, $params, false, 'Equipamento');
     }
@@ -66,7 +66,7 @@ class equipamentoDAO extends abstractDAO {
         
         $sql = "DELETE from equipamento_baixa WHERE idBaixa = :idBaixa";
         $params = array(
-            ':idBaixa' => [$idEquipamento, PDO::PARAM_INT]
+            ':idBaixa' => [$idEquipamento, \PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -78,7 +78,7 @@ class equipamentoDAO extends abstractDAO {
 
         $sql = "DELETE from equipamento_saida WHERE idSaida = :idSaida";
         $params = array(
-            ':idSaida' => [$idSaida, PDO::PARAM_INT]
+            ':idSaida' => [$idSaida, \PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -136,12 +136,12 @@ class equipamentoDAO extends abstractDAO {
         $descricao = $novosDados->get_descricao();
 
         $params = array(
-            ':nome' => [$nome, PDO::PARAM_STR]
-            , ':quantidade' => [$quantidade, PDO::PARAM_INT]
-            , ':dataEntrada' => [$dataEntrada, PDO::PARAM_STR]
-            , ':numeroPatrimonio' => [$numeroPatrimonio, PDO::PARAM_STR]
-            , ':descricao' => [$descricao, PDO::PARAM_STR]
-            , ':idEquipamento' => [$idEquipamento, PDO::PARAM_INT]
+            ':nome' => [$nome, \PDO::PARAM_STR]
+            , ':quantidade' => [$quantidade, \PDO::PARAM_INT]
+            , ':dataEntrada' => [$dataEntrada, \PDO::PARAM_STR]
+            , ':numeroPatrimonio' => [$numeroPatrimonio, \PDO::PARAM_STR]
+            , ':descricao' => [$descricao, \PDO::PARAM_STR]
+            , ':idEquipamento' => [$idEquipamento, \PDO::PARAM_INT]
         );
 
         $sql = "UPDATE equipamento SET nomeEquipamento = :nome ,quantidade = :quantidade ,dataEntrada = :dataEntrada ,numeroPatrimonio = :numeroPatrimonio ,descricao = :descricao WHERE idEquipamento = :idEquipamento";
@@ -157,7 +157,7 @@ class equipamentoDAO extends abstractDAO {
             $idEquipamento = (int) $idEquipamento;
             $sql = "DELETE FROM equipamento WHERE idEquipamento = :idEquipamento";
             $params = array(
-                ':idEquipamento' => [$idEquipamento, PDO::PARAM_INT]
+                ':idEquipamento' => [$idEquipamento, \PDO::PARAM_INT]
             );
             return $this->executarQuery($sql, $params);
         }
@@ -167,12 +167,12 @@ class equipamentoDAO extends abstractDAO {
         $sql = "INSERT INTO equipamento_saida(equipamento,responsavel,destino,quantidadeSaida,quantidadeSaidaOriginal,dataSaida,PoloDestino) VALUES " .
                 "(:idEquipamento,:idResponsavel,:destinoAlternativo,:quantidade,:quantidade,:data,:destino)";
         $params = array(
-            ':idEquipamento' => [$idEquipamento, PDO::PARAM_INT]
-            , ':idResponsavel' => [$idResponsavel, PDO::PARAM_INT]
-            , ':destinoAlternativo' => [$destinoAlternativo, PDO::PARAM_STR]
-            , ':quantidade' => [$quantidade, PDO::PARAM_INT]
-            , ':data' => [$data, $data === null ? PDO::PARAM_NULL : PDO::PARAM_STR]
-            , ':destino' => [$destino, PDO::PARAM_STR]
+            ':idEquipamento' => [$idEquipamento, \PDO::PARAM_INT]
+            , ':idResponsavel' => [$idResponsavel, \PDO::PARAM_INT]
+            , ':destinoAlternativo' => [$destinoAlternativo, \PDO::PARAM_STR]
+            , ':quantidade' => [$quantidade, \PDO::PARAM_INT]
+            , ':data' => [$data, $data === null ? \PDO::PARAM_NULL : \PDO::PARAM_STR]
+            , ':destino' => [$destino, \PDO::PARAM_STR]
         );
 
         return $this->executarQuery($sql, $params);
@@ -182,10 +182,10 @@ class equipamentoDAO extends abstractDAO {
         $sql = "INSERT INTO equipamento_retorno(saida,dataRetorno,quantidadeRetorno,observacoes) VALUES " .
                 "(:idSaida,:data,:quantidade,:observacoes)";
         $params = array(
-            ':idSaida' => [$idSaida, PDO::PARAM_INT]
-            , ':data' => [$data, PDO::PARAM_STR]
-            , ':quantidade' => [$quantidade, PDO::PARAM_INT]
-            , ':observacoes' => [$observacoes, $observacoes === null ? PDO::PARAM_NULL : PDO::PARAM_STR]
+            ':idSaida' => [$idSaida, \PDO::PARAM_INT]
+            , ':data' => [$data, \PDO::PARAM_STR]
+            , ':quantidade' => [$quantidade, \PDO::PARAM_INT]
+            , ':observacoes' => [$observacoes, $observacoes === null ? \PDO::PARAM_NULL : \PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -194,11 +194,11 @@ class equipamentoDAO extends abstractDAO {
         $sql = "INSERT INTO equipamento_baixa(equipamento,saida,dataBaixa,quantidadeBaixa,observacoes) VALUES " .
                 "(:idEquipamento,:idSaida,:dataBaixa,:quantidade,:observacoes)";
         $params = array(
-            ':idEquipamento' => [$idEquipamento, PDO::PARAM_INT]
-            , ':idSaida' => [$idSaida, $idSaida === null ? PDO::PARAM_NULL : PDO::PARAM_INT]
-            , ':dataBaixa' => [$dataBaixa, PDO::PARAM_STR]
-            , ':quantidade' => [$quantidade, PDO::PARAM_INT]
-            , ':observacoes' => [$observacoes, $observacoes === null ? PDO::PARAM_NULL : PDO::PARAM_STR]
+            ':idEquipamento' => [$idEquipamento, \PDO::PARAM_INT]
+            , ':idSaida' => [$idSaida, $idSaida === null ? \PDO::PARAM_NULL : \PDO::PARAM_INT]
+            , ':dataBaixa' => [$dataBaixa, \PDO::PARAM_STR]
+            , ':quantidade' => [$quantidade, \PDO::PARAM_INT]
+            , ':observacoes' => [$observacoes, $observacoes === null ? \PDO::PARAM_NULL : \PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -214,7 +214,7 @@ class equipamentoDAO extends abstractDAO {
         //  Verifica se tem saída
         $sql1 = "SELECT count(equipamento) as qtdSaidas FROM equipamento_saida WHERE equipamento = :equipamento LIMIT 1";
         $params = array(
-            ':equipamento' => [$idEquipamento, PDO::PARAM_INT]
+            ':equipamento' => [$idEquipamento, \PDO::PARAM_INT]
         );
         $resultado1 = $this->executarSelect($sql1, $params, false);
         if (is_array($resultado1)) {
@@ -226,7 +226,7 @@ class equipamentoDAO extends abstractDAO {
         //  Verifica se tem baixa
         $sql2 = "SELECT count(equipamento) as qtdBaixas FROM equipamento_baixa WHERE equipamento = :equipamento LIMIT 1";
         $params2 = array(
-            ':equipamento' => [$idEquipamento, PDO::PARAM_INT]
+            ':equipamento' => [$idEquipamento, \PDO::PARAM_INT]
         );
         $resultado2 = $this->executarSelect($sql2, $params2, false);
         if (is_array($resultado2)) {
@@ -238,7 +238,7 @@ class equipamentoDAO extends abstractDAO {
         //  Verifica se tem retorno
         $sql3 = "SELECT count(equipamento) as qtdSaidas FROM equipamento_saida WHERE equipamento = :equipamento LIMIT 1";
         $params3 = array(
-            ':equipamento' => [$idEquipamento, PDO::PARAM_INT]
+            ':equipamento' => [$idEquipamento, \PDO::PARAM_INT]
         );
         $resultado = $this->executarSelect($sql3, $params3, false);
         if (is_array($resultado)) {
@@ -257,10 +257,10 @@ class equipamentoDAO extends abstractDAO {
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,equipamento,data) VALUES ";
         $sql .= " (:tipo,:usuarioID,:idEquipamento,:data )";
         $params = array(
-            ':tipo' => [$tipo, PDO::PARAM_INT]
-            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
-            , ':idEquipamento' => [$idEquipamento, PDO::PARAM_INT]
-            , ':data' => [time(), PDO::PARAM_STR]
+            ':tipo' => [$tipo, \PDO::PARAM_INT]
+            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), \PDO::PARAM_INT]
+            , ':idEquipamento' => [$idEquipamento, \PDO::PARAM_INT]
+            , ':data' => [time(), \PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -270,10 +270,10 @@ class equipamentoDAO extends abstractDAO {
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,equipamento,data) VALUES ";
         $sql .= " (:tipo,:usuarioID,:idEquipamento,:data)";
         $params = array(
-            ':tipo' => [$tipo, PDO::PARAM_INT]
-            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
-            , ':idEquipamento' => [$idEquipamento, PDO::PARAM_INT]
-            , ':data' => [time(), PDO::PARAM_STR]
+            ':tipo' => [$tipo, \PDO::PARAM_INT]
+            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), \PDO::PARAM_INT]
+            , ':idEquipamento' => [$idEquipamento, \PDO::PARAM_INT]
+            , ':data' => [time(), \PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -283,10 +283,10 @@ class equipamentoDAO extends abstractDAO {
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,equipamento,data) VALUES ";
         $sql .= " (:tipo,:usuarioID,:idEquipamento,:data)";
         $params = array(
-            ':tipo' => [$tipo, PDO::PARAM_INT]
-            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
-            , ':idEquipamento' => [$idEquipamento, PDO::PARAM_INT]
-            , ':data' => [time(), PDO::PARAM_STR]
+            ':tipo' => [$tipo, \PDO::PARAM_INT]
+            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), \PDO::PARAM_INT]
+            , ':idEquipamento' => [$idEquipamento, \PDO::PARAM_INT]
+            , ':data' => [time(), \PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -296,10 +296,10 @@ class equipamentoDAO extends abstractDAO {
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,baixa,data) VALUES ";
         $sql .= " (:tipo,:usuarioID,:idBaixa,:data)";
         $params = array(
-            ':tipo' => [$tipo, PDO::PARAM_INT]
-            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
-            , ':idBaixa' => [$idBaixa, PDO::PARAM_INT]
-            , ':data' => [time(), PDO::PARAM_STR]
+            ':tipo' => [$tipo, \PDO::PARAM_INT]
+            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), \PDO::PARAM_INT]
+            , ':idBaixa' => [$idBaixa, \PDO::PARAM_INT]
+            , ':data' => [time(), \PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -309,10 +309,10 @@ class equipamentoDAO extends abstractDAO {
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,baixa,data) VALUES ";
         $sql .= " (:tipo,:usuarioID,:idBaixa,:data)";
         $params = array(
-            ':tipo' => [$tipo, PDO::PARAM_INT]
-            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
-            , ':idBaixa' => [$idBaixa, PDO::PARAM_INT]
-            , ':data' => [time(), PDO::PARAM_STR]
+            ':tipo' => [$tipo, \PDO::PARAM_INT]
+            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), \PDO::PARAM_INT]
+            , ':idBaixa' => [$idBaixa, \PDO::PARAM_INT]
+            , ':data' => [time(), \PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -322,10 +322,10 @@ class equipamentoDAO extends abstractDAO {
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,saida,data) VALUES ";
         $sql .= " (:tipo,:usuarioID,:idSaida,:data)";
         $params = array(
-            ':tipo' => [$tipo, PDO::PARAM_INT]
-            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
-            , ':idSaida' => [$idSaida, PDO::PARAM_INT]
-            , ':data' => [time(), PDO::PARAM_STR]
+            ':tipo' => [$tipo, \PDO::PARAM_INT]
+            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), \PDO::PARAM_INT]
+            , ':idSaida' => [$idSaida, \PDO::PARAM_INT]
+            , ':data' => [time(), \PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -335,10 +335,10 @@ class equipamentoDAO extends abstractDAO {
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,saida,data) VALUES ";
         $sql .= " (:tipo,:usuarioID,:idSaida,:data)";
         $params = array(
-            ':tipo' => [$tipo, PDO::PARAM_INT]
-            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
-            , ':idSaida' => [$idSaida, PDO::PARAM_INT]
-            , ':data' => [time(), PDO::PARAM_STR]
+            ':tipo' => [$tipo, \PDO::PARAM_INT]
+            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), \PDO::PARAM_INT]
+            , ':idSaida' => [$idSaida, \PDO::PARAM_INT]
+            , ':data' => [time(), \PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -348,10 +348,10 @@ class equipamentoDAO extends abstractDAO {
         $sql = "INSERT INTO equipamento_evento(tipoEvento,usuario,retorno,data) VALUES ";
         $sql .= " (:tipo,:usuarioID,:idSaida,:data)";
         $params = array(
-            ':tipo' => [$tipo, PDO::PARAM_INT]
-            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT]
-            , ':idSaida' => [$idRetorno, PDO::PARAM_INT]
-            , ':data' => [time(), PDO::PARAM_STR]
+            ':tipo' => [$tipo, \PDO::PARAM_INT]
+            , ':usuarioID' => [obterUsuarioSessao()->get_idUsuario(), \PDO::PARAM_INT]
+            , ':idSaida' => [$idRetorno, \PDO::PARAM_INT]
+            , ':data' => [time(), \PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }

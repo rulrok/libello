@@ -1,5 +1,5 @@
 <?php
-
+namespace app\modelo;
 require_once 'abstractDAO.php';
 require_once APP_DIR . "modelo/vo/Curso.php";
 
@@ -14,7 +14,7 @@ class cursoDAO extends abstractDAO {
         $idCurso = (int) $idCurso;
         $sql = "SELECT nomeTipoCurso FROM cursospolos_tipocurso WHERE idTipoCurso = :idCurso";
         $params = array(
-            'idCurso' => [$idCurso, PDO::PARAM_INT]
+            'idCurso' => [$idCurso, \PDO::PARAM_INT]
         );
         return (string) $this->executarSelect($sql, $params, false);
     }
@@ -28,7 +28,7 @@ class cursoDAO extends abstractDAO {
 
         $sql = "SELECT idTipoCurso FROM cursospolos_tipocurso WHERE nomeCurso = :nomeCurso";
         $params = array(
-            ':nomeCurso' => [$nomeCurso, PDO::PARAM_STR]
+            ':nomeCurso' => [$nomeCurso, \PDO::PARAM_STR]
         );
         return (int) $this->executarSelect($sql, $params, false);
     }
@@ -41,9 +41,9 @@ class cursoDAO extends abstractDAO {
     public function cadastrarCurso(Curso $curso) {
         $sql = "INSERT INTO cursospolos_curso(nomeCurso,area,tipo) VALUES (:nome, :area, :tipoCurso)";
         $params = array(
-            ':nome' => [$curso->get_nome(), PDO::PARAM_STR]
-            , ':area' => [$curso->get_idArea(), PDO::PARAM_INT]
-            , ':tipoCurso' => [$curso->get_idTipo(), PDO::PARAM_INT]
+            ':nome' => [$curso->get_nome(), \PDO::PARAM_STR]
+            , ':area' => [$curso->get_idArea(), \PDO::PARAM_INT]
+            , ':tipoCurso' => [$curso->get_idTipo(), \PDO::PARAM_INT]
         );
         return (boolean) $this->executarQuery($sql, $params);
     }
@@ -57,9 +57,9 @@ class cursoDAO extends abstractDAO {
     public function consultarCurso(Curso $curso) {
         $sql = "SELECT count(idCurso) FROM cursospolos_curso WHERE nomeCurso = :nomeCurso AND area = :area AND tipo = :tCurso";
         $params = array(
-            ':nomeCurso' => [$curso->get_nome(), PDO::PARAM_STR]
-            , ':area' => [$curso->get_idArea(), PDO::PARAM_INT]
-            , ':tCurso' => [$curso->get_idTipo(), PDO::PARAM_INT]
+            ':nomeCurso' => [$curso->get_nome(), \PDO::PARAM_STR]
+            , ':area' => [$curso->get_idArea(), \PDO::PARAM_INT]
+            , ':tCurso' => [$curso->get_idTipo(), \PDO::PARAM_INT]
         );
         return (int) $this->executarSelect($sql, $params, false);
     }
@@ -93,10 +93,10 @@ class cursoDAO extends abstractDAO {
 
         $sql = "UPDATE cursospolos_curso SET nomeCurso = :nome ,area = :area ,tipo = :tipoCurso WHERE idCurso = :idCurso";
         $params = array(
-            ':nome' => [$nome, PDO::PARAM_STR]
-            , ':area' => [$area, PDO::PARAM_INT]
-            , ':tipoCurso' => [$tipocurso, PDO::PARAM_INT]
-            , ':idCurso' => [$idCurso, PDO::PARAM_INT]
+            ':nome' => [$nome, \PDO::PARAM_STR]
+            , ':area' => [$area, \PDO::PARAM_INT]
+            , ':tipoCurso' => [$tipocurso, \PDO::PARAM_INT]
+            , ':idCurso' => [$idCurso, \PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -134,7 +134,7 @@ class cursoDAO extends abstractDAO {
             $idCurso = (int) $idCurso;
             $sql = "DELETE FROM cursospolos_curso WHERE idCurso = :idCurso";
             $params = array(
-                ':idCurso' => [$idCurso, PDO::PARAM_INT]
+                ':idCurso' => [$idCurso, \PDO::PARAM_INT]
             );
             return $this->executarQuery($sql, $params);
         }
@@ -152,7 +152,7 @@ class cursoDAO extends abstractDAO {
 
         $sql = "SELECT * from cursospolos_curso WHERE idCurso = :idCurso";
         $params = array(
-            ':idCurso' => [$idCurso, PDO::PARAM_INT]
+            ':idCurso' => [$idCurso, \PDO::PARAM_INT]
         );
         return $this->executarSelect($sql, $params, false, 'Curso');
     }

@@ -1,4 +1,5 @@
 <?php
+namespace app\modelo;
 
 require_once APP_LIBRARY_DIR . "configuracoes.php";
 require_once APP_DIR . 'modelo/enumeracao/TipoCurso.php';

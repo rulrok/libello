@@ -1,5 +1,7 @@
 <?php
 
+namespace app\controlador;
+
 include_once APP_LIBRARY_DIR . 'Mvc/Controlador.php';
 require_once APP_LIBRARY_DIR . "seguranca/Permissao.php";
 require_once APP_LIBRARY_DIR . "seguranca/criptografia.php";
@@ -220,7 +222,7 @@ class ControladorDocumentos extends Controlador {
             $this->visao->remetente = $oficioTmp->get_remetente();
             $this->visao->cargo_remetente = $oficioTmp->get_cargo_remetente();
             $this->visao->sigla = $oficioTmp->get_tipoSigla();
-            
+
 //            if ($oficioTmp->get_numMemorando() != -1) {
             if (isset($_GET['acao'])) {
                 if ($_GET['acao'] == 'aproveitar') {

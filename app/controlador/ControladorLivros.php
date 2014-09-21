@@ -1,5 +1,7 @@
 <?php
 
+namespace app\controlador;
+
 include_once APP_LIBRARY_DIR . 'Mvc/Controlador.php';
 require_once APP_DIR . "modelo/comboboxes/ComboBoxPapeis.php";
 require_once APP_DIR . "modelo/comboboxes/ComboBoxUsuarios.php";

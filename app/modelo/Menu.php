@@ -1,4 +1,5 @@
 <?php
+namespace app\modelo;
 
 include_once APP_DIR . 'modelo/vo/Usuario.php';
 include_once APP_DIR . 'modelo/dao/usuarioDAO.php';

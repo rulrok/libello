@@ -20,7 +20,7 @@ if (file_exists(ROOT . 'manutencao.php')) {
     if (sessaoIniciada()) {
         $usuario = obterUsuarioSessao();
         require_once APP_DIR . 'modelo/enumeracao/Papel.php';
-        if ($usuario->get_idPapel() == Papel::ADMINISTRADOR) {
+        if ($usuario->get_idPapel() == \app\modelo\Papel::ADMINISTRADOR) {
             $adminLogando = true;
         } else {
             encerrarSessao();
@@ -32,8 +32,8 @@ if (file_exists(ROOT . 'manutencao.php')) {
     }
 }
 
-CarregadorAutomatico::registrar();
+app\controlador\CarregadorAutomatico::registrar();
 
-Mvc::pegarInstancia()->rodar();
+app\controlador\Mvc::pegarInstancia()->rodar();
 ob_end_flush();
 

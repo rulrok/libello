@@ -1,5 +1,7 @@
 <?php
 
+namespace app\modelo;
+
 require_once APP_LIBRARY_ABSOLUTE_DIR . 'configuracoes.php';
 require_once APP_LIBRARY_ABSOLUTE_DIR . 'bancoDeDados/PDOconnectionFactory.php';
 require_once APP_DIR . 'modelo/Utils.php';
@@ -21,7 +23,7 @@ abstract class abstractDAO {
      */
     public function getConexao() {
         if ($this->conexao === null) {
-            $this->conexao = PDOconnectionFactory::obterConexao();
+            $this->conexao = \PDOconnectionFactory::obterConexao();
         }
         return $this->conexao;
     }
@@ -44,6 +46,7 @@ abstract class abstractDAO {
                 }
             }
             if ($fetchClass !== null) {
+                $fetchClass = "\\app\\modelo\\".$fetchClass;
                 $stmt->setFetchMode(\PDO::FETCH_CLASS, $fetchClass);
             }
             $stmt->execute();

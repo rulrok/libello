@@ -1,10 +1,11 @@
 <?php
+namespace app\modelo\ferramentas\sistema;
 
 include_once APP_DIR . "modelo/Mensagem.php";
 include_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/criptografia.php';
 
-class validarAlteracoesConta extends verificadorFormularioAjax {
+class validarAlteracoesConta extends \app\modelo\verificadorFormularioAjax {
 
     public function _validar() {
         $nome = filter_input(INPUT_POST, 'nome');
@@ -18,7 +19,7 @@ class validarAlteracoesConta extends verificadorFormularioAjax {
         $senha = encriptarSenha(filter_input(INPUT_POST, 'senhaAtual'));
         $dataNascimento = filter_input(INPUT_POST, 'dataNascimento');
 
-        $usuarioDAO = new usuarioDAO();
+        $usuarioDAO = new \app\modelo\usuarioDAO();
         $usuario = $usuarioDAO->recuperarUsuario(obterUsuarioSessao()->get_email());
 //        $this->visao->papel = $usuarioDAO->consultarPapel($_SESSION['email']);
 

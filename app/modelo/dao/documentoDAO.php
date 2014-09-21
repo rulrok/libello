@@ -1,5 +1,5 @@
 <?php
-
+namespace app\modelo;
 require_once 'abstractDAO.php';
 require_once APP_DIR . "modelo/vo/Oficio.php";
 require_once APP_DIR . "modelo/vo/Memorando.php";
@@ -51,20 +51,20 @@ class documentoDAO extends abstractDAO {
         $sql .= "(:assunto, :corpo, :idUsuario, :estadoEdicao, :tratamento, :destino, :cargo_destino, :data, :tipoSigla, :referencia, :remetente, :cargo_remetente, :numOficio)";
 
         $params = array(
-            ':assunto' => [$obj->get_assunto(), PDO::PARAM_STR]
-            , ':corpo' => [$obj->get_corpo(), PDO::PARAM_STR]
-            , ':idUsuario' => [$obj->get_idUsuario(), PDO::PARAM_INT]
-            , ':estadoEdicao' => [$obj->get_estadoEdicao(), PDO::PARAM_INT]
-            , ':tratamento' => [$obj->get_tratamento(), PDO::PARAM_STR]
-            , ':destino' => [$obj->get_destino(), PDO::PARAM_STR]
-            , ':cargo_destino' => [$obj->get_cargo_destino(), PDO::PARAM_STR]
-            , ':data' => [$obj->get_data(), PDO::PARAM_STR]
-            , ':tipoSigla' => [$obj->get_tipoSigla(), PDO::PARAM_STR]
-            , ':referencia' => [$obj->get_referencia(), PDO::PARAM_STR]
-            , ':remetente' => [$obj->get_remetente(), PDO::PARAM_STR]
-            , ':cargo_remetente' => [$obj->get_cargo_remetente(), PDO::PARAM_STR]
-//            , ':numOficio' => [$obj->get_numOficio(), PDO::PARAM_INT]
-            , ':numOficio' => [$numOficio, PDO::PARAM_INT]
+            ':assunto' => [$obj->get_assunto(), \PDO::PARAM_STR]
+            , ':corpo' => [$obj->get_corpo(), \PDO::PARAM_STR]
+            , ':idUsuario' => [$obj->get_idUsuario(), \PDO::PARAM_INT]
+            , ':estadoEdicao' => [$obj->get_estadoEdicao(), \PDO::PARAM_INT]
+            , ':tratamento' => [$obj->get_tratamento(), \PDO::PARAM_STR]
+            , ':destino' => [$obj->get_destino(), \PDO::PARAM_STR]
+            , ':cargo_destino' => [$obj->get_cargo_destino(), \PDO::PARAM_STR]
+            , ':data' => [$obj->get_data(), \PDO::PARAM_STR]
+            , ':tipoSigla' => [$obj->get_tipoSigla(), \PDO::PARAM_STR]
+            , ':referencia' => [$obj->get_referencia(), \PDO::PARAM_STR]
+            , ':remetente' => [$obj->get_remetente(), \PDO::PARAM_STR]
+            , ':cargo_remetente' => [$obj->get_cargo_remetente(), \PDO::PARAM_STR]
+//            , ':numOficio' => [$obj->get_numOficio(), \PDO::PARAM_INT]
+            , ':numOficio' => [$numOficio, \PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -80,19 +80,19 @@ class documentoDAO extends abstractDAO {
         $sql .= ' WHERE idOficio = :idOficio';
 
         $params = array(
-            ':assunto' => [$obj->get_assunto(), PDO::PARAM_STR]
-            , ':corpo' => [$obj->get_corpo(), PDO::PARAM_STR]
-            , ':estadoEdicao' => [$obj->get_estadoEdicao(), PDO::PARAM_INT]
-            , ':tratamento' => [$obj->get_tratamento(), PDO::PARAM_STR]
-            , ':destino' => [$obj->get_destino(), PDO::PARAM_STR]
-            , ':cargo_destino' => [$obj->get_cargo_destino(), PDO::PARAM_STR]
-            , ':data' => [$obj->get_data(), PDO::PARAM_STR]
-            , ':tipoSigla' => [$obj->get_tipoSigla(), PDO::PARAM_STR]
-            , ':referencia' => [$obj->get_referencia(), PDO::PARAM_STR]
-            , ':remetente' => [$obj->get_remetente(), PDO::PARAM_STR]
-            , ':cargo_remetente' => [$obj->get_cargo_remetente(), PDO::PARAM_STR]
-//            , ':numOficio' => [$obj->get_numOficio(), PDO::PARAM_INT]
-            , ':idOficio' => [$obj->get_idOficio(), PDO::PARAM_INT]
+            ':assunto' => [$obj->get_assunto(), \PDO::PARAM_STR]
+            , ':corpo' => [$obj->get_corpo(), \PDO::PARAM_STR]
+            , ':estadoEdicao' => [$obj->get_estadoEdicao(), \PDO::PARAM_INT]
+            , ':tratamento' => [$obj->get_tratamento(), \PDO::PARAM_STR]
+            , ':destino' => [$obj->get_destino(), \PDO::PARAM_STR]
+            , ':cargo_destino' => [$obj->get_cargo_destino(), \PDO::PARAM_STR]
+            , ':data' => [$obj->get_data(), \PDO::PARAM_STR]
+            , ':tipoSigla' => [$obj->get_tipoSigla(), \PDO::PARAM_STR]
+            , ':referencia' => [$obj->get_referencia(), \PDO::PARAM_STR]
+            , ':remetente' => [$obj->get_remetente(), \PDO::PARAM_STR]
+            , ':cargo_remetente' => [$obj->get_cargo_remetente(), \PDO::PARAM_STR]
+//            , ':numOficio' => [$obj->get_numOficio(), \PDO::PARAM_INT]
+            , ':idOficio' => [$obj->get_idOficio(), \PDO::PARAM_INT]
         );
 
         return $this->executarQuery($sql, $params);
@@ -101,7 +101,7 @@ class documentoDAO extends abstractDAO {
     public function invalidarOficio($idOficio) {
         $sql = "UPDATE documento_oficio SET estadoValidacao = 0, estadoEdicao = 0 WHERE idOficio = :idOficio";
         $params = array(
-            ':idOficio' => [$idOficio, PDO::PARAM_INT]
+            ':idOficio' => [$idOficio, \PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -109,7 +109,7 @@ class documentoDAO extends abstractDAO {
     public function deleteOficio($idOficio) {
         $sql = "DELETE FROM documento_oficio WHERE idOficio= :idOficio";
         $params = array(
-            ':idOficio' => [$idOficio, PDO::PARAM_INT]
+            ':idOficio' => [$idOficio, \PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -117,7 +117,7 @@ class documentoDAO extends abstractDAO {
     public function validarOficio($idOficio) { //mesmo que "gerar"
         $sql = "UPDATE documento_oficio SET estadoValidacao = 1, estadoEdicao = 0 WHERE idOficio= :idOficio";
         $params = array(
-            ':idOficio' => [$idOficio, PDO::PARAM_INT]
+            ':idOficio' => [$idOficio, \PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -126,7 +126,7 @@ class documentoDAO extends abstractDAO {
     public function validarMemorando($idMemorando) { //mesmo que "gerar"
         $sql = "UPDATE documento_memorando SET estadoValidacao = 1, estadoEdicao = 0 WHERE idMemorando = :idMemorando";
         $params = array(
-            ':idMemorando' => [$idMemorando, PDO::PARAM_INT]
+            ':idMemorando' => [$idMemorando, \PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -135,7 +135,7 @@ class documentoDAO extends abstractDAO {
 
         $sql = "DELETE FROM documento_memorando WHERE idMemorando= :idMemorando";
         $params = array(
-            ':idMemorando' => [$idMemorando, PDO::PARAM_INT]
+            ':idMemorando' => [$idMemorando, \PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -158,17 +158,17 @@ class documentoDAO extends abstractDAO {
         $sql .= "(:assunto, :corpo, :idUsuario, :estadoEdicao, :tratamento, :cargo_destino, :data, :tipoSigla, :remetente, :cargo_remetente,  :numMemorando)";
 
         $params = array(
-            ':assunto' => [$obj->get_assunto(), PDO::PARAM_STR]
-            , ':corpo' => [$obj->get_corpo(), PDO::PARAM_STR]
-            , ':idUsuario' => [$obj->get_idUsuario(), PDO::PARAM_INT]
-            , ':estadoEdicao' => [$obj->get_estadoEdicao(), PDO::PARAM_INT]
-            , ':tratamento' => [$obj->get_tratamento(), PDO::PARAM_STR]
-            , ':cargo_destino' => [$obj->get_cargo_destino(), PDO::PARAM_STR]
-            , ':data' => [$obj->get_data(), PDO::PARAM_STR]
-            , ':tipoSigla' => [$obj->get_tipoSigla(), PDO::PARAM_STR]
-            , ':remetente' => [$obj->get_remetente(), PDO::PARAM_STR]
-            , ':cargo_remetente' => [$obj->get_cargo_remetente(), PDO::PARAM_STR]
-            , ':numMemorando' => [$numMemorando, PDO::PARAM_INT]
+            ':assunto' => [$obj->get_assunto(), \PDO::PARAM_STR]
+            , ':corpo' => [$obj->get_corpo(), \PDO::PARAM_STR]
+            , ':idUsuario' => [$obj->get_idUsuario(), \PDO::PARAM_INT]
+            , ':estadoEdicao' => [$obj->get_estadoEdicao(), \PDO::PARAM_INT]
+            , ':tratamento' => [$obj->get_tratamento(), \PDO::PARAM_STR]
+            , ':cargo_destino' => [$obj->get_cargo_destino(), \PDO::PARAM_STR]
+            , ':data' => [$obj->get_data(), \PDO::PARAM_STR]
+            , ':tipoSigla' => [$obj->get_tipoSigla(), \PDO::PARAM_STR]
+            , ':remetente' => [$obj->get_remetente(), \PDO::PARAM_STR]
+            , ':cargo_remetente' => [$obj->get_cargo_remetente(), \PDO::PARAM_STR]
+            , ':numMemorando' => [$numMemorando, \PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -181,17 +181,17 @@ class documentoDAO extends abstractDAO {
                 . 'WHERE idMemorando = :idMemorando';
 
         $params = array(
-            ':assunto' => [$obj->get_assunto(), PDO::PARAM_STR]
-            , ':corpo' => [$obj->get_corpo(), PDO::PARAM_STR]
-            , ':estadoEdicao' => [$obj->get_estadoEdicao(), PDO::PARAM_INT]
-            , ':tratamento' => [$obj->get_tratamento(), PDO::PARAM_STR]
-            , ':cargo_destino' => [$obj->get_cargo_destino(), PDO::PARAM_STR]
-            , ':data' => [$obj->get_data(), PDO::PARAM_STR]
-            , ':tipoSigla' => [$obj->get_tipoSigla(), PDO::PARAM_STR]
-            , ':remetente' => [$obj->get_remetente(), PDO::PARAM_STR]
-            , ':cargo_remetente' => [$obj->get_cargo_remetente(), PDO::PARAM_STR]
-//            , ':numMemorando' => [$obj->get_numMemorando(), PDO::PARAM_INT]
-            , ':idMemorando' => [$obj->get_idMemorando(), PDO::PARAM_INT]
+            ':assunto' => [$obj->get_assunto(), \PDO::PARAM_STR]
+            , ':corpo' => [$obj->get_corpo(), \PDO::PARAM_STR]
+            , ':estadoEdicao' => [$obj->get_estadoEdicao(), \PDO::PARAM_INT]
+            , ':tratamento' => [$obj->get_tratamento(), \PDO::PARAM_STR]
+            , ':cargo_destino' => [$obj->get_cargo_destino(), \PDO::PARAM_STR]
+            , ':data' => [$obj->get_data(), \PDO::PARAM_STR]
+            , ':tipoSigla' => [$obj->get_tipoSigla(), \PDO::PARAM_STR]
+            , ':remetente' => [$obj->get_remetente(), \PDO::PARAM_STR]
+            , ':cargo_remetente' => [$obj->get_cargo_remetente(), \PDO::PARAM_STR]
+//            , ':numMemorando' => [$obj->get_numMemorando(), \PDO::PARAM_INT]
+            , ':idMemorando' => [$obj->get_idMemorando(), \PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }

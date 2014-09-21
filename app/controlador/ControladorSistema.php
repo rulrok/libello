@@ -1,4 +1,5 @@
 <?php
+namespace app\controlador;
 
 include_once APP_LIBRARY_ABSOLUTE_DIR . 'Mvc/Controlador.php';
 include_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/seguranca.php';
@@ -35,7 +36,7 @@ class ControladorSistema extends Controlador {
             $this->visao->sobrenome = obterUsuarioSessao()->get_UNome();
             $this->visao->email = obterUsuarioSessao()->get_email();
             $this->visao->dataNascimento = obterUsuarioSessao()->get_dataNascimento();
-            $this->visao->papel = (new usuarioDAO())->consultarPapel(obterUsuarioSessao()->get_email());
+            $this->visao->papel = (new \app\modelo\usuarioDAO())->consultarPapel(obterUsuarioSessao()->get_email());
         } else {
             if ($this->visao->mensagem_usuario == NULL || $this->visao->mensagem_usuario == "") {
                 $this->visao->mensagem_usuario = "Informações inválidas.";

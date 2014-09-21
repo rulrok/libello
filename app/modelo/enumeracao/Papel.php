@@ -1,4 +1,5 @@
 <?php
+namespace app\modelo;
 
 require_once APP_DIR . "modelo/dao/papelDAO.php";
 

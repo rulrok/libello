@@ -54,7 +54,7 @@ function obterUsuarioSessao() {
  * 
  * @param Usuario $usuario
  */
-function atualizarUsuarioSessao(Usuario $usuario) {
+function atualizarUsuarioSessao(\app\modelo\Usuario $usuario) {
     $_SESSION['usuario'] = $usuario;
 }
 
@@ -69,24 +69,25 @@ function atualizarUsuarioSessao(Usuario $usuario) {
 //
 //    spl_autoload_register("carregarVisao");
 
-function usuarioAutorizado(Usuario $usuario, $acessoMinimo) {
-    $diretorio = strtolower(Mvc::pegarInstancia()->pegarControlador());
+function usuarioAutorizado(\app\modelo\Usuario $usuario, $acessoMinimo) {
+    $diretorio = strtolower(\app\controlador\Mvc::pegarInstancia()->pegarControlador());
 //        $arquivo = strtolower(Mvc::pegarInstancia()->pegarAcao());
 
     $nomeClasseControlador = 'Controlador' . ucfirst($diretorio);
-    $controlador = new $nomeClasseControlador;
+    $nome = "\\app\\controlador\\".$nomeClasseControlador;
+    $controlador = new $nome();
 
-    if ($controlador instanceof ControladorInicial) {
+    if ($controlador instanceof \app\controlador\ControladorInicial) {
         return true;
     }
 
     $idFerramentaAssociada = $controlador->idFerramentaAssociada();
-    $usuarioDAO = new usuarioDAO();
+    $usuarioDAO = new \app\modelo\usuarioDAO();
     $permissoes = $usuarioDAO->obterPermissoes($usuario->get_idUsuario());
     foreach ($permissoes as $permissao_ferramenta) { //Procura pela ferramenta
         if ($permissao_ferramenta['idFerramenta'] == $idFerramentaAssociada) {
             //Achou a ferramenta
-            if ($permissao_ferramenta['idPermissao'] != Permissao::SEM_ACESSO) {
+            if ($permissao_ferramenta['idPermissao'] != \app\modelo\Permissao::SEM_ACESSO) {
                 if ($permissao_ferramenta['idPermissao'] >= $acessoMinimo) {
                     return true;
                 } else {
@@ -135,14 +136,14 @@ function expulsaVisitante($msg_erro = null) {
  * @param Usuario $user Um objeto usuário com login e senha preenchidos.
  * @return boolean Verdadeiro se o usuário existir no banco de dados, falso caso contrário
  */
-function autenticarUsuario(Usuario $user) {
+function autenticarUsuario(\app\modelo\Usuario $user) {
     if (($con = PDOconnectionFactory::obterConexao()) != null) {
         //$con = $_SESSION['conexao'];
         if ($user->get_email() !== null && $user->get_email() !== '' && $user->get_senha() !== null && $user->get_senha() !== '') {
             try {
                     $query = $con->prepare("SELECT * FROM usuario WHERE email = :email AND senha = :senha AND ativo = 1");
                     $query->execute(array('email' => $user->get_email(), 'senha' => $user->senha));
-                    $ret = $query->fetchAll(PDO::FETCH_CLASS, 'Usuario');
+                    $ret = $query->fetchAll(\PDO::FETCH_CLASS, '\app\modelo\Usuario');
                 
                 if (sizeof($ret) === 1) {
                     $_SESSION['usuario'] = $ret[0];

@@ -1,5 +1,5 @@
 <?php
-
+namespace app\modelo;
 /**
  * Uma mensagem para ser enviada a uma página depois de uma operação ser
  * concluída, como por exemplo, uma mensagem de erro ou sucesso.

@@ -1,4 +1,5 @@
 <?php
+namespace app\modelo;
 
 require_once APP_LIBRARY_ABSOLUTE_DIR . "configuracoes.php";
 require_once APP_DIR . 'modelo/dao/usuarioDAO.php';
@@ -36,9 +37,9 @@ class ComboBoxUsuarios {
         }
         for ($i = 1; $i <= Papel::__length; $i++) {
             if ($campoExtra !== null) {
-                $usuarios = $usuarioDAO->consultar("idUsuario,concat_ws(' ',PNome,UNome) as Nome, $campoExtra", "idPapel = :idPapel", array(':idPapel' => array($i, PDO::PARAM_INT)));
+                $usuarios = $usuarioDAO->consultar("idUsuario,concat_ws(' ',PNome,UNome) as Nome, $campoExtra", "idPapel = :idPapel", array(':idPapel' => array($i, \PDO::PARAM_INT)));
             } else {
-                $usuarios = $usuarioDAO->consultar("idUsuario,concat_ws(' ',PNome,UNome) as Nome", "idPapel = :idPapel", array(':idPapel' => array($i, PDO::PARAM_INT)));
+                $usuarios = $usuarioDAO->consultar("idUsuario,concat_ws(' ',PNome,UNome) as Nome", "idPapel = :idPapel", array(':idPapel' => array($i, \PDO::PARAM_INT)));
             }
             if (sizeof($usuarios) == 0) {
                 continue;

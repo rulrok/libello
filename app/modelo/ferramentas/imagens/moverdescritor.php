@@ -11,7 +11,7 @@ if (is_numeric((int) $idDescritor) && is_numeric((int) $idAntigoPai) && is_numer
     $imagensDAO = new imagensDAO();
     $sqlImagensRenomear = "SELECT idImagem FROM imagem WHERE descritor$nivel = :idDescritorExcluido";
     $paramsImagensRenomear = array(
-        ':idDescritorExcluido' => [$idDescritor, PDO::PARAM_INT]
+        ':idDescritorExcluido' => [$idDescritor, \PDO::PARAM_INT]
     );
     $imagensParaRenomearArquivo = $imagensDAO->executarSelect($sqlImagensRenomear, $paramsImagensRenomear);
     if ($imagensDAO->moverDescritor($idDescritor, $idNovoPai, $idAntigoPai)) {

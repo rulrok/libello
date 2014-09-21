@@ -1,4 +1,5 @@
 <?php
+namespace app\modelo;
 
 require_once 'abstractDAO.php';
 
@@ -6,7 +7,7 @@ class papelDAO extends abstractDAO {
 
     public function obterNomePapel($papelID) {
         $sql = "SELECT nome FROM usuario_papel WHERE idpapel = :idPapel";
-        $params = array(':idPapel' => array((int) $papelID, PDO::PARAM_INT));
+        $params = array(':idPapel' => array((int) $papelID, \PDO::PARAM_INT));
 
         return $this->executarSelect($sql, $params, false);
     }

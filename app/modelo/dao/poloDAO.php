@@ -1,5 +1,5 @@
 <?php
-
+namespace app\modelo;
 require_once 'abstractDAO.php';
 
 class poloDAO extends abstractDAO {
@@ -12,9 +12,9 @@ class poloDAO extends abstractDAO {
     public function cadastrarPolo(Polo $polo) {
         $sql = "INSERT INTO cursospolos_polo(nomePolo,cidade,estado) VALUES (:nome, :cidade, :estado)";
         $params = array(
-            ':nome' => [$polo->get_nome(), PDO::PARAM_STR]
-            , ':cidade' => [$polo->get_cidade(), PDO::PARAM_STR]
-            , ':estado' => [$polo->get_estado(), PDO::PARAM_STR]
+            ':nome' => [$polo->get_nome(), \PDO::PARAM_STR]
+            , ':cidade' => [$polo->get_cidade(), \PDO::PARAM_STR]
+            , ':estado' => [$polo->get_estado(), \PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -28,9 +28,9 @@ class poloDAO extends abstractDAO {
         //OBS: LIKE não foi utilizado nessa query por motivo de desempenho
         $sql = "SELECT count(idPolo) FROM cursospolos_polo WHERE nomePolo = :nome AND cidade = :cidade AND estado = :estado";
         $params = array(
-            ':nome' => [$polo->get_nome(), PDO::PARAM_STR]
-            , ':cidade' => [$polo->get_cidade(), PDO::PARAM_STR]
-            , ':estado' => [$polo->get_estado(), PDO::PARAM_STR]
+            ':nome' => [$polo->get_nome(), \PDO::PARAM_STR]
+            , ':cidade' => [$polo->get_cidade(), \PDO::PARAM_STR]
+            , ':estado' => [$polo->get_estado(), \PDO::PARAM_STR]
         );
         return (int) $this->executarSelect($sql, $params, false);
     }
@@ -48,7 +48,7 @@ class poloDAO extends abstractDAO {
             $idPolo = (int) $idPolo;
             $sql = "DELETE FROM cursospolos_polo WHERE idPolo = :idPolo";
             $params = array(
-                ':idPolo' => [$idPolo, PDO::PARAM_INT]
+                ':idPolo' => [$idPolo, \PDO::PARAM_INT]
             );
             return $this->executarQuery($sql, $params);
         }
@@ -83,10 +83,10 @@ class poloDAO extends abstractDAO {
 
         $sql = "UPDATE cursospolos_polo SET nomePolo = :nome ,cidade = :cidade ,estado = :estado WHERE idPolo = :idPolo";
         $params = array(
-            ':nome' => [$nome, PDO::PARAM_STR]
-            , ':cidade' => [$cidade, PDO::PARAM_STR]
-            , ':estado' => [$estado, PDO::PARAM_STR]
-            , ':idPolo' => [$idPolo, PDO::PARAM_INT]
+            ':nome' => [$nome, \PDO::PARAM_STR]
+            , ':cidade' => [$cidade, \PDO::PARAM_STR]
+            , ':estado' => [$estado, \PDO::PARAM_STR]
+            , ':idPolo' => [$idPolo, \PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -121,7 +121,7 @@ class poloDAO extends abstractDAO {
 
         $sql = "SELECT * from cursospolos_polo WHERE idPolo = :idPolo";
         $params = array(
-            ':idPolo' => [$idPolo, PDO::PARAM_INT]
+            ':idPolo' => [$idPolo, \PDO::PARAM_INT]
         );
         return $this->executarSelect($sql, $params, false, 'Polo');
     }

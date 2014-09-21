@@ -1,5 +1,5 @@
 <?php
-
+namespace app\modelo;
 require_once 'abstractDAO.php';
 
 class areaDAO extends abstractDAO {
@@ -13,7 +13,7 @@ class areaDAO extends abstractDAO {
         $idArea = (int) $idArea;
         $sql = "SELECT nomeArea FROM cursospolos_area WHERE idArea = :idArea";
         $params = array(
-            ':idArea' => [$idArea, PDO::PARAM_STR]
+            ':idArea' => [$idArea, \PDO::PARAM_STR]
         );
         return (string) $this->executarSelect($sql, $params, false);
     }
@@ -27,7 +27,7 @@ class areaDAO extends abstractDAO {
 
         $sql = "SELECT idArea FROM cursospolos_area WHERE nome = :nome";
         $params = array(
-            ':nome' => [$nomeArea, PDO::PARAM_STR]
+            ':nome' => [$nomeArea, \PDO::PARAM_STR]
         );
         return (int) $this->executarSelect($sql, $params, false);
     }

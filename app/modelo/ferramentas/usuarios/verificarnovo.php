@@ -1,5 +1,7 @@
 <?php
 
+namespace app\modelo\ferramentas\usuarios;
+
 include_once APP_DIR . "modelo/Mensagem.php";
 require_once APP_DIR . "modelo/vo/Usuario.php";
 include_once APP_DIR . 'modelo/comboboxes/ComboBoxPermissoes.php';
@@ -10,7 +12,9 @@ include_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/criptografia.php';
 require_once APP_LIBRARY_ABSOLUTE_DIR . 'PHPMailer/Email.php';
 
-class verificarNovoUsuario extends verificadorFormularioAjax {
+use \app\modelo as Modelo;
+
+class verificarnovo extends Modelo\verificadorFormularioAjax {
 
     public function _validar() {
         $nome = filter_input(INPUT_POST, 'nome');
@@ -27,7 +31,7 @@ class verificarNovoUsuario extends verificadorFormularioAjax {
         $email = filter_input(INPUT_POST, 'email');
         $dataNascimento = filter_input(INPUT_POST, 'dataNascimento');
         $cpf = filter_input(INPUT_POST, 'cpf');
-        $cpf = validadorCPF::normalizarCPF($cpf);
+        $cpf = \validadorCPF::normalizarCPF($cpf);
 
         $erro_ocorrido = false;
         if ($papel < obterUsuarioSessao()->get_idPapel()) {
@@ -36,7 +40,7 @@ class verificarNovoUsuario extends verificadorFormularioAjax {
             $this->abortarExecucao();
         }
 
-        $usuario = new Usuario();
+        $usuario = new Modelo\Usuario();
         $usuario->set_PNome($nome)->set_UNome($sobreNome);
         $usuario->set_senha($senha);
         $usuario->set_idPapel($papel);
@@ -52,7 +56,7 @@ class verificarNovoUsuario extends verificadorFormularioAjax {
             $this->adicionarMensagemErro("Senhas não conferem");
             $erro_ocorrido = true;
         }
-        $usuarioDAO = new usuarioDAO();
+        $usuarioDAO = new Modelo\usuarioDAO();
 
         if ($nome == '' || $sobreNome == '') {
             $this->adicionarMensagemErro("Nome e sobrenome são campos obrigatórios");
@@ -70,16 +74,16 @@ class verificarNovoUsuario extends verificadorFormularioAjax {
             $this->adicionarMensagemErro("Email inválido");
             $erro_ocorrido = true;
         }
-        if (!validadorCPF::validarCPF($cpf)) {
+        if (!\validadorCPF::validarCPF($cpf)) {
             $this->adicionarMensagemErro("CPF inválido");
             $erro_ocorrido = true;
         }
-        $paramEmail = array(':email' => [$email, PDO::PARAM_STR]);
+        $paramEmail = array(':email' => [$email, \PDO::PARAM_STR]);
         if (count($usuarioDAO->consultar("email", "email = :email", $paramEmail)) > 0) {
             $this->adicionarMensagemErro("Email <i>$email</i> já está em uso!");
             $erro_ocorrido = true;
         }
-        $paramCpf = array(':cpf' => [$cpf, PDO::PARAM_STR]);
+        $paramCpf = array(':cpf' => [$cpf, \PDO::PARAM_STR]);
         if (count($usuarioDAO->consultar("cpf", "cpf = :cpf", $paramCpf)) > 0) {
             $this->adicionarMensagemErro("Cpf <i>$cpf</i> já está em uso!");
             $erro_ocorrido = true;
@@ -88,7 +92,7 @@ class verificarNovoUsuario extends verificadorFormularioAjax {
             $this->abortarExecucao();
         }
 
-        $MailSender = new Email();
+        $MailSender = new \Email();
         if ($enviarSenha !== null) {
             $MailSender->definirAssunto("Nova senha temporária");
             $nomeAplicativo = APP_NAME;
@@ -104,7 +108,7 @@ class verificarNovoUsuario extends verificadorFormularioAjax {
             if ($usuarioDAO->inserir($usuario)) {
                 $id = $usuarioDAO->obterUltimoIdInserido();
                 $usuario->set_idUsuario($id);
-                $permissoes = new PermissoesFerramenta();
+                $permissoes = new Modelo\PermissoesFerramenta();
                 $permissoes->set_controleCursos(filter_input(INPUT_POST, 'permissoes_controle_de_cursos_e_polos'));
                 $permissoes->set_controleDocumentos(filter_input(INPUT_POST, 'permissoes_controle_de_documentos'));
                 $permissoes->set_controleEquipamentos(filter_input(INPUT_POST, 'permissoes_controle_de_equipamentos'));
@@ -118,7 +122,7 @@ class verificarNovoUsuario extends verificadorFormularioAjax {
                     throw new Exception("Erro ao cadastrar permissões", 40);
                 }
                 $usuario = $usuarioDAO->recuperarUsuario($usuario->get_email());
-                $usuarioDAO->registrarCadastroUsuario(obterUsuarioSessao()->get_idUsuario(), $usuario->get_idUsuario());
+//                $usuarioDAO->registrarCadastroUsuario(obterUsuarioSessao()->get_idUsuario(), $usuario->get_idUsuario());
                 if ($enviarSenha !== null) {
                     $MailSender->enviar();
                     if (!$MailSender->emailFoiEnviado()) {

@@ -1,4 +1,5 @@
 <?php
+namespace app\modelo;
 
 class Polo {
     var $idPolo;

@@ -1,5 +1,7 @@
 <?php
 
+namespace app\modelo;
+
 final class ImagensDificuldadeEnum {
 
     const __default = self::DESCONHECIDO;

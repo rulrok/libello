@@ -31,15 +31,15 @@ try {
             break;
     }
     $paramsAtualizar = array(
-        ':descritor1' => [$caminhoNovo[0]['idDescritor'], PDO::PARAM_INT]
-        , ':descritor2' => [$caminhoNovo[1]['idDescritor'], PDO::PARAM_INT]
-        , ':descritor3' => [$caminhoNovo[2]['idDescritor'], PDO::PARAM_INT]
-        , ':descritor4' => [$caminhoNovo[3]['idDescritor'], PDO::PARAM_INT]
-        , ':descritorExcluir' => [$idDescritor, PDO::PARAM_INT]
+        ':descritor1' => [$caminhoNovo[0]['idDescritor'], \PDO::PARAM_INT]
+        , ':descritor2' => [$caminhoNovo[1]['idDescritor'], \PDO::PARAM_INT]
+        , ':descritor3' => [$caminhoNovo[2]['idDescritor'], \PDO::PARAM_INT]
+        , ':descritor4' => [$caminhoNovo[3]['idDescritor'], \PDO::PARAM_INT]
+        , ':descritorExcluir' => [$idDescritor, \PDO::PARAM_INT]
     );
 
     $paramsImagensRenomear = array(
-        ':descritorExcluir' => [$idDescritor, PDO::PARAM_INT]
+        ':descritorExcluir' => [$idDescritor, \PDO::PARAM_INT]
     );
 
     $imagensParaRenomearArquivo = $imagensDAO->executarSelect($sqlImagensRenomear, $paramsImagensRenomear);
@@ -49,7 +49,7 @@ try {
     if ($descritorExcluido['pai'] != null) {
         $sqlAtualizaQtdFilhos = 'UPDATE imagem_descritor SET qtdFilhos = qtdFilhos - 1 WHERE idDescritor = :idDescritor';
         $paramsAtualizarQtdFilhos = array(
-            ':idDescritor' => [$descritorExcluido['pai'], PDO::PARAM_INT]
+            ':idDescritor' => [$descritorExcluido['pai'], \PDO::PARAM_INT]
         );
         $imagensDAO->executarQuery($sqlAtualizaQtdFilhos, $paramsAtualizarQtdFilhos);
     } else {
@@ -57,7 +57,7 @@ try {
     }
     $sqlRemover = 'DELETE FROM imagem_descritor WHERE idDescritor = :idDescritorRemover';
     $paramsRemover = array(
-        ':idDescritorRemover' => [$idDescritor, PDO::PARAM_INT]
+        ':idDescritorRemover' => [$idDescritor, \PDO::PARAM_INT]
     );
     if ($imagensDAO->executarQuery($sqlRemover, $paramsRemover)) {
         //Deve-se agora renomear os arquivos afetados pela mudança de descritores, para manter a consistência com o nome dos arquivos em relação aos rótulos

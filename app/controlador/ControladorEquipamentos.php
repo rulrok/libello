@@ -1,5 +1,7 @@
 <?php
 
+namespace app\controlador;
+
 include_once APP_LIBRARY_DIR . 'Mvc/Controlador.php';
 require_once APP_DIR . "modelo/comboboxes/ComboBoxPapeis.php";
 require_once APP_DIR . "modelo/comboboxes/ComboBoxUsuarios.php";
@@ -101,7 +103,7 @@ class ControladorEquipamentos extends Controlador {
         $i = 0;
         foreach ($this->visao->saidas as $value) {
             $value[0] = fnEncrypt($value[0]);
-            if ($value[4] == null){
+            if ($value[4] == null) {
                 $value[4] = '';
             }
             $this->visao->saidas[$i++] = $value;

@@ -1,5 +1,7 @@
 <?php
 
+namespace app\controlador;
+
 include_once APP_LIBRARY_ABSOLUTE_DIR . 'Mvc/Controlador.php';
 require_once APP_LIBRARY_ABSOLUTE_DIR . "seguranca/criptografia.php";
 require_once APP_DIR . "modelo/comboboxes/ComboBoxDescritores.php";
@@ -15,8 +17,8 @@ class ControladorImagens extends Controlador {
 
     public function acaoBuscar() {
         $this->visao->acessoMinimo = Permissao::CONSULTA;
-        
-        
+
+
 
         $papel = obterUsuarioSessao()->get_idPapel();
 

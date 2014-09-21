@@ -1,5 +1,7 @@
 <?php
 
+namespace app\modelo;
+
 require_once 'abstractDAO.php';
 require_once APP_DIR . 'modelo/vo/Usuario.php';
 require_once APP_DIR . 'modelo/vo/PermissoesFerramenta.php';
@@ -7,6 +9,8 @@ require_once APP_DIR . 'modelo/enumeracao/Ferramenta.php';
 require_once APP_DIR . 'modelo/enumeracao/TipoEventoUsuarios.php';
 require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/Permissao.php';
 require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/criptografia.php';
+
+use \app\modelo as Modelo;
 
 class usuarioDAO extends abstractDAO {
 
@@ -51,13 +55,13 @@ class usuarioDAO extends abstractDAO {
         $sql = "UPDATE usuario SET idPapel = :idPapel, senha = :senha, PNome= :PNome, UNome = :UNome, dataNascimento = :dataNascimento, cpf = :cpf WHERE email = :email AND ativo = 1";
 
         $params = array(
-            ':email' => [$email, PDO::PARAM_STR]
-            , ':idPapel' => [$idPapel, PDO::PARAM_INT]
-            , ':senha' => [$senha, PDO::PARAM_STR]
-            , ':PNome' => [$nome, PDO::PARAM_STR]
-            , ':UNome' => [$sobrenome, PDO::PARAM_STR]
-            , ':dataNascimento' => [$dataNascimento, PDO::PARAM_STR]
-            , ':cpf' => [$cpf, PDO::PARAM_STR]
+            ':email' => [$email, \PDO::PARAM_STR]
+            , ':idPapel' => [$idPapel, \PDO::PARAM_INT]
+            , ':senha' => [$senha, \PDO::PARAM_STR]
+            , ':PNome' => [$nome, \PDO::PARAM_STR]
+            , ':UNome' => [$sobrenome, \PDO::PARAM_STR]
+            , ':dataNascimento' => [$dataNascimento, \PDO::PARAM_STR]
+            , ':cpf' => [$cpf, \PDO::PARAM_STR]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -93,7 +97,7 @@ class usuarioDAO extends abstractDAO {
                 $email = $email['email'];
             }
             $sql = 'UPDATE usuario SET ativo = 0 WHERE email = :email';
-            $params = array(':email' => [$email, PDO::PARAM_STR]);
+            $params = array(':email' => [$email, \PDO::PARAM_STR]);
             return $this->executarQuery($sql, $params);
         } else {
             return false;
@@ -106,7 +110,7 @@ class usuarioDAO extends abstractDAO {
                 $email = $email['email'];
             }
             $sql = 'UPDATE usuario SET ativo = 1 WHERE email = :email';
-            $params = array(':email' => [$email, PDO::PARAM_STR]);
+            $params = array(':email' => [$email, \PDO::PARAM_STR]);
             return $this->executarQuery($sql, $params);
         } else {
             return false;
@@ -121,7 +125,7 @@ class usuarioDAO extends abstractDAO {
     public function descobrirEmail($idUsuario) {
         if ($idUsuario != null) {
             $sql = 'SELECT email FROM usuario WHERE idUsuario = :idUsuario';
-            $params = array(':idUsuario' => [$idUsuario, PDO::PARAM_INT]);
+            $params = array(':idUsuario' => [$idUsuario, \PDO::PARAM_INT]);
             return $this->executarSelect($sql, $params, false);
         }
     }
@@ -135,15 +139,15 @@ class usuarioDAO extends abstractDAO {
         $sql = 'INSERT INTO usuario(idPapel,senha,PNome, UNome, email, dataNascimento, cpf, dataCadastro, ultimoAcesso) VALUES (  :idPapel, :senha, :PNome, :UNome, :email, :nasc, :cpf, :dataCadastro, :ultimoAcesso )';
         $cpf = str_replace(array('.', '-'), '', $vo->get_cpf());
         $params = array(
-            ':idPapel' => [$vo->get_idPapel(), PDO::PARAM_INT]
-            , ':senha' => [$vo->get_senha(), PDO::PARAM_STR]
-            , ':PNome' => [$vo->get_PNome(), PDO::PARAM_STR]
-            , ':UNome' => [$vo->get_UNome(), PDO::PARAM_STR]
-            , ':email' => [$vo->get_email(), PDO::PARAM_STR]
-            , ':nasc' => [$vo->get_dataNascimento(), PDO::PARAM_STR]
-            , ':cpf' => [$cpf, PDO::PARAM_STR]
-            , ':dataCadastro' => [time(), PDO::PARAM_INT]
-            , ':ultimoAcesso' => [0, PDO::PARAM_INT]
+            ':idPapel' => [$vo->get_idPapel(), \PDO::PARAM_INT]
+            , ':senha' => [$vo->get_senha(), \PDO::PARAM_STR]
+            , ':PNome' => [$vo->get_PNome(), \PDO::PARAM_STR]
+            , ':UNome' => [$vo->get_UNome(), \PDO::PARAM_STR]
+            , ':email' => [$vo->get_email(), \PDO::PARAM_STR]
+            , ':nasc' => [$vo->get_dataNascimento(), \PDO::PARAM_STR]
+            , ':cpf' => [$cpf, \PDO::PARAM_STR]
+            , ':dataCadastro' => [time(), \PDO::PARAM_INT]
+            , ':ultimoAcesso' => [0, \PDO::PARAM_INT]
         );
 
         return $this->executarQuery($sql, $params);
@@ -156,7 +160,7 @@ class usuarioDAO extends abstractDAO {
      */
     public function consultarPapel($email) {
         $sql = 'SELECT p.nome FROM usuario_papel p NATURAL JOIN usuario u WHERE u.email = :email';
-        $params = array(':email' => array($email, PDO::PARAM_STR));
+        $params = array(':email' => array($email, \PDO::PARAM_STR));
         return $this->executarSelect($sql, $params, false);
     }
 
@@ -171,7 +175,7 @@ class usuarioDAO extends abstractDAO {
         $usuario = $this->recuperarUsuario($email);
         $sqlTokenExistente = "SELECT token FROM usuario_recuperarsenha WHERE idUsuario = :idUsuario";
         $paramTokenExistente = array(
-            ':idUsuario' => [$usuario->get_idUsuario(), PDO::PARAM_INT]
+            ':idUsuario' => [$usuario->get_idUsuario(), \PDO::PARAM_INT]
         );
         $resultado = $this->executarSelect($sqlTokenExistente, $paramTokenExistente);
         if ($resultado !== null && !empty($resultado)) {
@@ -183,8 +187,8 @@ class usuarioDAO extends abstractDAO {
             $token = encriptarSenha($antigaSenhaMD5 . $hora);
             $sql = 'INSERT INTO usuario_recuperarsenha VALUES (:idUsuario, :token)';
             $params = array(
-                ':idUsuario' => [$idUsuario, PDO::PARAM_INT]
-                , ':token' => [$token, PDO::PARAM_STR]
+                ':idUsuario' => [$idUsuario, \PDO::PARAM_INT]
+                , ':token' => [$token, \PDO::PARAM_STR]
             );
             $this->executarQuery($sql, $params);
         }
@@ -201,7 +205,7 @@ class usuarioDAO extends abstractDAO {
      */
     public function consultarTokenRecuperarSenha($idUsuario) {
         $sql = 'SELECT token FROM usuario_recuperarsenha WHERE idUsuario = :idUsuario';
-        $params = array(':idUsuario' => [$idUsuario, PDO::PARAM_INT]);
+        $params = array(':idUsuario' => [$idUsuario, \PDO::PARAM_INT]);
         return $this->executarSelect($sql, $params, false);
     }
 
@@ -212,7 +216,7 @@ class usuarioDAO extends abstractDAO {
      */
     public function consultarIDUsuario_RecuperarSenha($token) {
         $sql = "SELECT idUsuario FROM usuario_recuperarsenha WHERE token = :token";
-        $params = array(':token' => [$token, PDO::PARAM_INT]);
+        $params = array(':token' => [$token, \PDO::PARAM_INT]);
         $resultado = $this->executarSelect($sql, $params, false);
         if ($resultado === null) {
             throw new Exception('Token não encontrado');
@@ -229,7 +233,7 @@ class usuarioDAO extends abstractDAO {
      */
     public function removerToken($token) {
         $sql = "DELETE FROM usuario_recuperarsenha WHERE token = :token";
-        $params = array(':token' => [$token, PDO::PARAM_STR]);
+        $params = array(':token' => [$token, \PDO::PARAM_STR]);
         return $this->executarQuery($sql, $params);
     }
 
@@ -252,7 +256,7 @@ class usuarioDAO extends abstractDAO {
         }
 
         $sql = "SELECT * from usuario WHERE email = :email " . $qAux;
-        $params = array(':email' => [$email, PDO::PARAM_INT]);
+        $params = array(':email' => [$email, \PDO::PARAM_INT]);
         $resultado = $this->executarSelect($sql, $params, false, 'Usuario');
         return $resultado;
     }
@@ -260,7 +264,7 @@ class usuarioDAO extends abstractDAO {
     public function obterPermissoes($idUsuario) {
         $sql = "SELECT f.idFerramenta,f.nome,tp.idPermissao,tp.tipo FROM sistema_ferramenta f, usuario_permissao tp, usuario_x_permissao_x_ferramenta p WHERE f.idFerramenta = p.idFerramenta AND tp.idPermissao = p.idPermissao AND idUsuario =  :idUsuario  ORDER BY idFerramenta";
         $params = array(
-            ':idUsuario' => [$idUsuario, PDO::PARAM_INT]
+            ':idUsuario' => [$idUsuario, \PDO::PARAM_INT]
         );
         return $this->executarSelect($sql, $params);
     }
@@ -275,7 +279,7 @@ class usuarioDAO extends abstractDAO {
      */
     public function alterarPermissoes(Usuario $usuario, PermissoesFerramenta $permissoes) {
         if ($usuario->get_idUsuario() != null) {
-            $consulta = $this->consultar('idUsuario', 'idUsuario = :idUsuario', array(':idUsuario' => [(int) $usuario->get_idUsuario(), PDO::PARAM_INT]));
+            $consulta = $this->consultar('idUsuario', 'idUsuario = :idUsuario', array(':idUsuario' => [(int) $usuario->get_idUsuario(), \PDO::PARAM_INT]));
 //            $querys = array();
             $query = 'UPDATE usuario_x_permissao_x_ferramenta SET idPermissao = :idPermissao WHERE idUsuario = :idUsuario AND idFerramenta = :idFerramenta';
             $parametros = array();
@@ -284,9 +288,9 @@ class usuarioDAO extends abstractDAO {
                     if ($permissoes->get_permissao($i + 1) != null) {
 //                        $querys[] = 'UPDATE usuario_x_permissao_x_ferramenta SET idPermissao = :idPermissao WHERE idUsuario = :idUsuario AND idFerramenta = :idFerramenta';
                         $parametros[] = array(
-                            ':idPermissao' => [(int) $permissoes->get_permissao($i + 1), PDO::PARAM_INT]
-                            , ':idUsuario' => [(int) $usuario->get_idUsuario(), PDO::PARAM_INT]
-                            , ':idFerramenta' => [((int) $i + 1), PDO::PARAM_INT]
+                            ':idPermissao' => [(int) $permissoes->get_permissao($i + 1), \PDO::PARAM_INT]
+                            , ':idUsuario' => [(int) $usuario->get_idUsuario(), \PDO::PARAM_INT]
+                            , ':idFerramenta' => [((int) $i + 1), \PDO::PARAM_INT]
                         );
                     } else {
                         //TODO tratar esse suposto caso
@@ -313,7 +317,7 @@ class usuarioDAO extends abstractDAO {
      */
     public function cadastrarPermissoes(Usuario $usuario, PermissoesFerramenta $permissoes) {
         if ($usuario->get_email() != null) {
-            $consulta = $this->consultar('idUsuario', "email = :email", array(':email' => [$usuario->get_email(), PDO::PARAM_STR]));
+            $consulta = $this->consultar('idUsuario', "email = :email", array(':email' => [$usuario->get_email(), \PDO::PARAM_STR]));
 //            $values = array();
             if (sizeof($consulta) == 1) {
 //                for ($i = 0; $i < Ferramenta::__length; $i++) {
@@ -327,9 +331,9 @@ class usuarioDAO extends abstractDAO {
                 for ($i = 0; $i < Ferramenta::__length; $i++) {
                     if ($permissoes->get_permissao($i + 1) != null) {
                         $parametros[] = array(
-                            ':idPermissao' => [(int) $permissoes->get_permissao($i + 1), PDO::PARAM_INT]
-                            , ':idUsuario' => [(int) $usuario->get_idUsuario(), PDO::PARAM_INT]
-                            , ':idFerramenta' => [((int) $i + 1), PDO::PARAM_INT]
+                            ':idPermissao' => [(int) $permissoes->get_permissao($i + 1), \PDO::PARAM_INT]
+                            , ':idUsuario' => [(int) $usuario->get_idUsuario(), \PDO::PARAM_INT]
+                            , ':idFerramenta' => [((int) $i + 1), \PDO::PARAM_INT]
                         );
                     } else {
                         //TODO tratar esse suposto caso
@@ -372,7 +376,7 @@ class usuarioDAO extends abstractDAO {
             }
 
             $sql = 'DELETE FROM usuario_x_permissao_x_ferramenta WHERE idUsuario =  :idUsuario';
-            if (!$this->executarQuery($sql, array(':idUsuario' => [$idUsuario, PDO::PARAM_INT]))) {
+            if (!$this->executarQuery($sql, array(':idUsuario' => [$idUsuario, \PDO::PARAM_INT]))) {
                 return false;
             }
             $this->cadastrarPermissoes($usuario, $permissoes);
@@ -389,16 +393,16 @@ class usuarioDAO extends abstractDAO {
      * @param type $idUsuarioAlvo Usuário que está sendo cadastrado
      */
     public function registrarCadastroUsuario($idUsuarioFonte, $idUsuarioAlvo) {
-        $tipo = TipoEventoUsuarios::CADASTRO_USUARIO;
+        $tipo = Modelo\TipoEventoUsuarios::CADASTRO_USUARIO;
         $sql = "INSERT INTO usuario_evento(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data) VALUES (:idUF, :idUA, :t, :d)";
         $params = array(
-            ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
-            , ':idUA' => [$idUsuarioAlvo, PDO::PARAM_INT]
-            , ':t' => [$tipo, PDO::PARAM_INT]
-            , ':d' => [time(), PDO::PARAM_INT]
+            ':idUF' => [$idUsuarioFonte, \PDO::PARAM_INT]
+            , ':idUA' => [$idUsuarioAlvo, \PDO::PARAM_INT]
+            , ':t' => [$tipo, \PDO::PARAM_INT]
+            , ':d' => [time(), \PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
-}
+    }
 
     /**
      * Registra um evento de remoção de um usuário do sistema.
@@ -410,10 +414,10 @@ class usuarioDAO extends abstractDAO {
         $tipo = TipoEventoUsuarios::DESATIVACAO_USUARIO;
         $sql = "INSERT INTO usuario_evento(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data) VALUES (:idUF, :idUA,:t, :d)";
         $params = array(
-            ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
-            , ':idUA' => [$idUsuarioAlvo, PDO::PARAM_INT]
-            , ':t' => [$tipo, PDO::PARAM_INT]
-            , ':d' => [time(), PDO::PARAM_INT]
+            ':idUF' => [$idUsuarioFonte, \PDO::PARAM_INT]
+            , ':idUA' => [$idUsuarioAlvo, \PDO::PARAM_INT]
+            , ':t' => [$tipo, \PDO::PARAM_INT]
+            , ':d' => [time(), \PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -422,10 +426,10 @@ class usuarioDAO extends abstractDAO {
         $tipo = TipoEventoUsuarios::ATIVACAO_USUARIO;
         $sql = "INSERT INTO usuario_evento(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data) VALUES (:idUF, :idUA,:t, :d)";
         $params = array(
-            ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
-            , ':idUA' => [$idUsuarioAlvo, PDO::PARAM_INT]
-            , ':t' => [$tipo, PDO::PARAM_INT]
-            , ':d' => [time(), PDO::PARAM_INT]
+            ':idUF' => [$idUsuarioFonte, \PDO::PARAM_INT]
+            , ':idUA' => [$idUsuarioAlvo, \PDO::PARAM_INT]
+            , ':t' => [$tipo, \PDO::PARAM_INT]
+            , ':d' => [time(), \PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -440,10 +444,10 @@ class usuarioDAO extends abstractDAO {
         $tipo = TipoEventoUsuarios::ALTERACAO_USUARIO;
         $sql = "INSERT INTO usuario_evento(idUsuario,idUsuarioAlvo,idTipoEventoSistema,data) VALUES (:idUF,:idUA,:t,:d)";
         $params = array(
-            ':idUF' => [$idUsuarioFonte, PDO::PARAM_INT]
-            , ':idUA' => [$idUsuarioAlvo, PDO::PARAM_INT]
-            , ':t' => [$tipo, PDO::PARAM_INT]
-            , ':d' => [time(), PDO::PARAM_INT]
+            ':idUF' => [$idUsuarioFonte, \PDO::PARAM_INT]
+            , ':idUA' => [$idUsuarioAlvo, \PDO::PARAM_INT]
+            , ':t' => [$tipo, \PDO::PARAM_INT]
+            , ':d' => [time(), \PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }

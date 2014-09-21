@@ -1,4 +1,5 @@
 <?php
+namespace app\modelo\ferramentas\usuarios;
 
 include_once APP_DIR . "modelo/Mensagem.php";
 require_once APP_DIR . "modelo/vo/Usuario.php";
@@ -7,7 +8,9 @@ include_once APP_DIR . 'modelo/comboboxes/ComboBoxPapeis.php';
 include_once APP_DIR . 'modelo/comboboxes/ComboBoxPermissoes.php';
 include_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 
-class verificarEdicaoUsuario extends verificadorFormularioAjax {
+use \app\modelo as Modelo;
+
+class verificaredicao extends Modelo\verificadorFormularioAjax {
 
     public function _validar() {
         $userID = fnDecrypt(filter_input(INPUT_POST, 'userID'));
@@ -17,9 +20,9 @@ class verificarEdicaoUsuario extends verificadorFormularioAjax {
         $dataNascimento = filter_input(INPUT_POST, 'dataNascimento');
         $idPapel = (int) filter_input(INPUT_POST, 'papel');
         $cpf = filter_input(INPUT_POST, 'cpf');
-        $cpf = validadorCPF::normalizarCPF($cpf); //Retira os pontos e o traço do CPF
+        $cpf = \validadorCPF::normalizarCPF($cpf); //Retira os pontos e o traço do CPF
 
-        $usuarioDAO = new usuarioDAO();
+        $usuarioDAO = new Modelo\usuarioDAO();
 
         $emailOriginal = $usuarioDAO->descobrirEmail($userID);
         $usuarioOriginal = $usuarioDAO->recuperarUsuario($emailOriginal);
@@ -54,7 +57,7 @@ class verificarEdicaoUsuario extends verificadorFormularioAjax {
             $this->adicionarMensagemErro("Email inválido");
             $erro_ocorrido = true;
         }
-        if (!validadorCPF::validarCPF($cpf)) {
+        if (!\validadorCPF::validarCPF($cpf)) {
             $this->adicionarMensagemErro("CPF inválido");
             $erro_ocorrido = true;
         }
@@ -62,7 +65,7 @@ class verificarEdicaoUsuario extends verificadorFormularioAjax {
         if ($erro_ocorrido){
             $this->abortarExecucao();
         }
-        $usuario = new Usuario();
+        $usuario = new Modelo\Usuario();
         $usuario->set_PNome($nome);
         $usuario->set_UNome($sobreNome);
         $usuario->set_dataNascimento($dataNascimento);
@@ -77,7 +80,7 @@ class verificarEdicaoUsuario extends verificadorFormularioAjax {
                 throw new Exception("Falha ao atualizar dados do usuário");
             }
 
-            $permissoes = new PermissoesFerramenta();
+            $permissoes = new Modelo\PermissoesFerramenta();
             $permissoes->set_controleCursos(filter_input(INPUT_POST, 'permissoes_controle_de_cursos_e_polos'));
             $permissoes->set_controleDocumentos(filter_input(INPUT_POST, 'permissoes_controle_de_documentos'));
             $permissoes->set_controleEquipamentos(filter_input(INPUT_POST, 'permissoes_controle_de_equipamentos'));

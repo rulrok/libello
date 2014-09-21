@@ -1,5 +1,7 @@
 <?php
 
+namespace app\controlador;
+
 include_once APP_LIBRARY_DIR . 'Mvc/Controlador.php';
 include_once APP_LIBRARY_DIR . "seguranca/criptografia.php";
 include_once APP_LIBRARY_DIR . "seguranca/Permissao.php";

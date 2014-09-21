@@ -1,7 +1,11 @@
 <?php
 
+namespace app\controlador;
+
 require_once ROOT . 'biblioteca/configuracoes.php';
 require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/seguranca.php';
+//require_once APP_DIR . 'controlador/ControladorInicial.php';
+//require_once APP_DIR . 'controlador/ControladorUsuarios.php';
 
 class Mvc {
 
@@ -81,18 +85,19 @@ class Mvc {
         $nomeAcao = 'acao' . $this->acao;
 
         //verifica se a classe existe
-        if (!class_exists($nomeClasseControlador)) {
+        $nome = "\\app\\controlador\\".$nomeClasseControlador;
+        if (!class_exists($nome)) {
             require APP_DIR . 'visao/404.php';
             return false;
         }
 
-        $controladorObjeto = new $nomeClasseControlador;
+        $controladorObjeto = new $nome();
         //verifica se o metodo existe
         if (!method_exists($controladorObjeto, $nomeAcao)) {
             require APP_DIR . 'visao/404.php';
             return false;
         }
-        
+
         //Tudo certo
         $controladorObjeto->$nomeAcao();
         return true;

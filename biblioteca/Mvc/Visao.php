@@ -1,5 +1,7 @@
 <?php
 
+namespace app\controlador;
+
 require_once APP_LIBRARY_ABSOLUTE_DIR . "seguranca/seguranca.php";
 require_once APP_LIBRARY_ABSOLUTE_DIR . "seguranca/Permissao.php";
 require_once APP_DIR . "modelo/Utils.php";
@@ -22,7 +24,7 @@ class Visao {
                 //Acenssando um core do sistema
                 //Verificação baseada em papel
                 //Apenas administrador
-                if (obterUsuarioSessao()->get_idPapel() != Papel::ADMINISTRADOR) {
+                if (obterUsuarioSessao()->get_idPapel() != \app\modelo\Papel::ADMINISTRADOR) {
                     require APP_DIR . "visao/acessoproibido.php";
                     registrar_erro("Tentativa de acesso a página não autorizada. [$diretorio/$arquivo]. Apenas administradores possuem acesso a essa parte do sistema");
                     exit;
@@ -34,16 +36,23 @@ class Visao {
         for ($i = 0; $i < sizeof($local); $i++) {
             if (file_exists(ROOT . $local[$i] . $diretorio . '/' . $arquivo)) {
                 $caminho_completo = ROOT . $local[$i] . $diretorio . '/' . $arquivo;
+
+                $namespace = str_replace('/', '\\', $local[$i] . $diretorio);
+                $namespace = "\\" . $namespace . "\\";
+                $classe = substr($arquivo, 0, -4);
+                $nomeObjeto = $namespace . $classe;
+
                 require $caminho_completo;
-                
+
                 //Verifica se o arquivo possui definicão de classe que implemente
                 //a classe 'PaginaDeAcao' e executa ela.
-                $classe = get_php_classes($caminho_completo);
-                if (!empty($classe)) {
-                    $a = new $classe[0];
-                    $a->executar();
-//                    register_shutdown_function('executar');
+                if (class_exists($nomeObjeto, false)) {
+                    $objeto = new $nomeObjeto();
+                    if (method_exists($objeto, 'executar')) {
+                        $objeto->executar();
+                    }
                 }
+
                 $encontrou = true;
                 break;
             }

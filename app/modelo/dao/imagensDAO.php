@@ -1,5 +1,5 @@
 <?php
-
+namespace app\modelo;
 require_once 'abstractDAO.php';
 require_once APP_DIR . 'modelo/vo/Descritor.php';
 require_once APP_DIR . 'modelo/enumeracao/TipoEventoImagens.php';
@@ -17,7 +17,7 @@ class imagensDAO extends abstractDAO {
     public function consultarImagem($idImagem) {
         $sql = 'SELECT * FROM imagem WHERE idImagem = :idImagem';
         $params = array(
-            ':idImagem' => [$idImagem, PDO::PARAM_INT]
+            ':idImagem' => [$idImagem, \PDO::PARAM_INT]
         );
         return $this->executarSelect($sql, $params, false, 'Imagem');
     }
@@ -46,13 +46,13 @@ class imagensDAO extends abstractDAO {
         if ($acessoTotal) {
             if ($autor !== null) {
                 $query_auxiliar_autor = ' autor = :idAutor ';
-                $params[':idAutor'] = [$autor, PDO::PARAM_INT];
+                $params[':idAutor'] = [$autor, \PDO::PARAM_INT];
             } else {
                 $query_auxiliar_autor = '';
             }
         } else {
             $query_auxiliar_autor = ' autor = :idUsuarioLogado ';
-            $params[':idUsuarioLogado'] = [obterUsuarioSessao()->get_idUsuario(), PDO::PARAM_INT];
+            $params[':idUsuarioLogado'] = [obterUsuarioSessao()->get_idUsuario(), \PDO::PARAM_INT];
         }
 
         if (!empty($query_auxiliar_autor)) {
@@ -63,14 +63,14 @@ class imagensDAO extends abstractDAO {
         if ($dataInicio !== null) {
             if ($dataFim !== null) {
                 $query_auxiliar_data = ' (dataCadastro BETWEEN :inicio AND :fim) ';
-                $params[':fim'] = [$dataFim, PDO::PARAM_INT];
+                $params[':fim'] = [$dataFim, \PDO::PARAM_INT];
             } else {
                 $query_auxiliar_data = ' dataCadastro >= :inicio ';
             }
-            $params[':inicio'] = [$dataInicio, PDO::PARAM_INT];
+            $params[':inicio'] = [$dataInicio, \PDO::PARAM_INT];
         } elseif ($dataFim !== null) {
             $query_auxiliar_data = ' dataCadastro <= :fim ';
-            $params[':fim'] = [$dataFim, PDO::PARAM_INT];
+            $params[':fim'] = [$dataFim, \PDO::PARAM_INT];
         } else {
             $query_auxiliar_data = '';
         }
@@ -130,7 +130,7 @@ class imagensDAO extends abstractDAO {
         } else {
             $regexTermoBusca = ".";
         }
-        $params[':termoBusca'] = [$regexTermoBusca, PDO::PARAM_STR];
+        $params[':termoBusca'] = [$regexTermoBusca, \PDO::PARAM_STR];
 
         return $this->executarSelect($sql, $params);
     }
@@ -139,23 +139,23 @@ class imagensDAO extends abstractDAO {
         $sql = "INSERT INTO imagem(idGaleria,titulo,observacoes,dificuldade,cpfAutor,ano,nomeArquivo,diretorio,diretorioMiniatura,nomeArquivoMiniatura,nomeArquivoVetorial,descritor1,descritor2,descritor3,descritor4,autor,dataCadastro) VALUES ";
         $sql .= "(:idGaleria,:titulo,:observacoes,:dificuldade,:cpfAutor,:ano,:nomeArquivo,:diretorio,:diretorioMiniatura,:nomeArquivoMiniatura,:nomeArquivoVetorial,:des1,:des2,:des3,:des4,:autor,:dataCadastro)";
         $params = array(
-            ':idGaleria' => [$imagem->get_idGaleria(), PDO::PARAM_INT]
-            , ':titulo' => [$imagem->get_titulo(), PDO::PARAM_STR]
-            , ':observacoes' => [$imagem->get_observacoes(), PDO::PARAM_STR]
-            , ':dificuldade' => [$imagem->get_dificuldade(), PDO::PARAM_STR]
-            , ':cpfAutor' => [$imagem->get_cpfAutor(), PDO::PARAM_STR]
-            , ':ano' => [$imagem->get_ano(), PDO::PARAM_STR]
-            , ':diretorio' => [$imagem->get_diretorio(),  PDO::PARAM_STR]
-            , ':diretorioMiniatura' => [$imagem->get_diretorioMiniatura(),  PDO::PARAM_STR]
-            , ':nomeArquivo' => [$imagem->get_nomeArquivo(), PDO::PARAM_STR]
-            , ':nomeArquivoMiniatura' => [$imagem->get_nomeArquivoMiniatura(), PDO::PARAM_STR]
-            , ':nomeArquivoVetorial' => [$imagem->get_nomeArquivoVetorial(), PDO::PARAM_STR]
-            , ':des1' => [$imagem->get_descritor1(), PDO::PARAM_INT]
-            , ':des2' => [$imagem->get_descritor2(), PDO::PARAM_INT]
-            , ':des3' => [$imagem->get_descritor3(), PDO::PARAM_INT]
-            , ':des4' => [$imagem->get_descritor4(), PDO::PARAM_INT]
-            , ':autor' => [$imagem->get_autor(), PDO::PARAM_INT]
-            , ':dataCadastro' => [time(), PDO::PARAM_INT]
+            ':idGaleria' => [$imagem->get_idGaleria(), \PDO::PARAM_INT]
+            , ':titulo' => [$imagem->get_titulo(), \PDO::PARAM_STR]
+            , ':observacoes' => [$imagem->get_observacoes(), \PDO::PARAM_STR]
+            , ':dificuldade' => [$imagem->get_dificuldade(), \PDO::PARAM_STR]
+            , ':cpfAutor' => [$imagem->get_cpfAutor(), \PDO::PARAM_STR]
+            , ':ano' => [$imagem->get_ano(), \PDO::PARAM_STR]
+            , ':diretorio' => [$imagem->get_diretorio(),  \PDO::PARAM_STR]
+            , ':diretorioMiniatura' => [$imagem->get_diretorioMiniatura(),  \PDO::PARAM_STR]
+            , ':nomeArquivo' => [$imagem->get_nomeArquivo(), \PDO::PARAM_STR]
+            , ':nomeArquivoMiniatura' => [$imagem->get_nomeArquivoMiniatura(), \PDO::PARAM_STR]
+            , ':nomeArquivoVetorial' => [$imagem->get_nomeArquivoVetorial(), \PDO::PARAM_STR]
+            , ':des1' => [$imagem->get_descritor1(), \PDO::PARAM_INT]
+            , ':des2' => [$imagem->get_descritor2(), \PDO::PARAM_INT]
+            , ':des3' => [$imagem->get_descritor3(), \PDO::PARAM_INT]
+            , ':des4' => [$imagem->get_descritor4(), \PDO::PARAM_INT]
+            , ':autor' => [$imagem->get_autor(), \PDO::PARAM_INT]
+            , ':dataCadastro' => [time(), \PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -207,9 +207,9 @@ class imagensDAO extends abstractDAO {
             $antigoNomeMiniatura = $imagem->get_nomeArquivoMiniatura();
             $antigoNomeArquivoVetorial = $imagem->get_nomeArquivoVetorial();
 
-            $novoRotulo1 = $this->consultarDescritor('rotulo', 'idDescritor = :rotulo1 LIMIT 1', null, array(':rotulo1' => [$imagem->get_descritor1(), PDO::PARAM_INT]))[0]['rotulo'];
-            $novoRotulo2 = $this->consultarDescritor('rotulo', 'idDescritor = :rotulo2 LIMIT 1', null, array(':rotulo2' => [$imagem->get_descritor2(), PDO::PARAM_INT]))[0]['rotulo'];
-            $novoRotulo3 = $this->consultarDescritor('rotulo', 'idDescritor = :rotulo3 LIMIT 1', null, array(':rotulo3' => [$imagem->get_descritor3(), PDO::PARAM_INT]))[0]['rotulo'];
+            $novoRotulo1 = $this->consultarDescritor('rotulo', 'idDescritor = :rotulo1 LIMIT 1', null, array(':rotulo1' => [$imagem->get_descritor1(), \PDO::PARAM_INT]))[0]['rotulo'];
+            $novoRotulo2 = $this->consultarDescritor('rotulo', 'idDescritor = :rotulo2 LIMIT 1', null, array(':rotulo2' => [$imagem->get_descritor2(), \PDO::PARAM_INT]))[0]['rotulo'];
+            $novoRotulo3 = $this->consultarDescritor('rotulo', 'idDescritor = :rotulo3 LIMIT 1', null, array(':rotulo3' => [$imagem->get_descritor3(), \PDO::PARAM_INT]))[0]['rotulo'];
             $dificuldade = $imagem->get_dificuldade();
             $novaSigla = obterUsuarioSessao()->get_iniciais();
 
@@ -245,10 +245,10 @@ class imagensDAO extends abstractDAO {
 
             $sql = "UPDATE imagem SET nomeArquivo = :nomeArquivo, nomeArquivoMiniatura = :nomeArquivoMiniatura, nomeArquivoVetorial = :nomeArquivoVetorial WHERE idImagem = :idImagem";
             $params = array(
-                ':nomeArquivo' => [$novoNomeArquivo, PDO::PARAM_STR]
-                , ':nomeArquivoMiniatura' => [$novoNomeMiniatura, PDO::PARAM_STR]
-                , ':nomeArquivoVetorial' => [$novoNomeArquivoVetorial, PDO::PARAM_STR]
-                , ':idImagem' => [$id, PDO::PARAM_INT]
+                ':nomeArquivo' => [$novoNomeArquivo, \PDO::PARAM_STR]
+                , ':nomeArquivoMiniatura' => [$novoNomeMiniatura, \PDO::PARAM_STR]
+                , ':nomeArquivoVetorial' => [$novoNomeArquivoVetorial, \PDO::PARAM_STR]
+                , ':idImagem' => [$id, \PDO::PARAM_INT]
             );
 
             if (!$this->executarQuery($sql, $params)) {
@@ -274,7 +274,7 @@ class imagensDAO extends abstractDAO {
     public function consultarGaleria($nomeGaleria) {
         $sql = "SELECT idGaleria FROM imagem_galeria WHERE nomeGaleria = :nomeGaleria";
         $params = array(
-            ':nomeGaleria' => [$nomeGaleria, PDO::PARAM_STR]
+            ':nomeGaleria' => [$nomeGaleria, \PDO::PARAM_STR]
         );
         return $this->executarSelect($sql, $params, false);
     }
@@ -282,8 +282,8 @@ class imagensDAO extends abstractDAO {
     public function cadastrarGaleria($nomeGaleria, $idAutor) {
         $sql = "INSERT INTO imagem_galeria(nomeGaleria,qtdFotos,dataCriacao,autor) VALUES (:nomeGaleria,0,:data,:autor)";
         $params = array(
-            ':nomeGaleria' => [$nomeGaleria, PDO::PARAM_STR]
-            , ':data' => [time(), PDO::PARAM_INT]
+            ':nomeGaleria' => [$nomeGaleria, \PDO::PARAM_STR]
+            , ':data' => [time(), \PDO::PARAM_INT]
             , ':autor' => [$idAutor, pint]
         );
 
@@ -314,8 +314,8 @@ class imagensDAO extends abstractDAO {
         $sql = 'INSERT INTO imagem_descritor_aux_inserir(nome,pai) VALUES (:nome,:pai)';
         $nomeNormalizado = normalizarNomeDescritor($descritor->get_nome());
         $params = array(
-            ':nome' => [$nomeNormalizado, PDO::PARAM_STR]
-            , ':pai' => [$idDescritorPai, PDO::PARAM_INT]
+            ':nome' => [$nomeNormalizado, \PDO::PARAM_STR]
+            , ':pai' => [$idDescritorPai, \PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -381,7 +381,7 @@ class imagensDAO extends abstractDAO {
             $this->executarQuery($sql);
             if ($idDescritorExcluir !== null) {
                 $param = array(
-                    ':idDescritorExcluir' => [$idDescritorExcluir, PDO::PARAM_INT]
+                    ':idDescritorExcluir' => [$idDescritorExcluir, \PDO::PARAM_INT]
                 );
                 //Inicia a seleção a partir dos nós de nível 1
                 $sql = 'INSERT INTO ids_aux(id) SELECT idDescritor FROM imagem_descritor WHERE nivel = 1 AND idDescritor <> :idDescritorExcluir';
@@ -491,7 +491,7 @@ class imagensDAO extends abstractDAO {
 
         $sql = "SELECT * FROM imagem_descritor WHERE pai = :pai";
         $params = array(
-            ':pai' => [$idPai, PDO::PARAM_INT]
+            ':pai' => [$idPai, \PDO::PARAM_INT]
         );
         return $this->executarSelect($sql, $params);
     }
@@ -500,8 +500,8 @@ class imagensDAO extends abstractDAO {
         $sql = "UPDATE imagem_descritor SET nome = :nome WHERE idDescritor = :idDescritor";
         $nomeNormalizado = normalizarNomeDescritor($novoNome);
         $params = array(
-            ':nome' => [$nomeNormalizado, PDO::PARAM_STR]
-            , ':idDescritor' => [$idDescritor, PDO::PARAM_INT]
+            ':nome' => [$nomeNormalizado, \PDO::PARAM_STR]
+            , ':idDescritor' => [$idDescritor, \PDO::PARAM_INT]
         );
 
         return $this->executarQuery($sql, $params);
@@ -530,7 +530,7 @@ class imagensDAO extends abstractDAO {
             while ($ret != ImagensDescritor::ID_RAIZ_NIVEL_ZERO) {
                 $sqlAux = "SELECT pai FROM imagem_descritor WHERE idDescritor = :idDescritor LIMIT 1";
                 $paramsAux = array(
-                    ':idDescritor' => [$descAtual, PDO::PARAM_INT]
+                    ':idDescritor' => [$descAtual, \PDO::PARAM_INT]
                 );
                 $ret = $this->executarSelect($sqlAux, $paramsAux, FALSE);
                 $sequanciaNovaIds[] = $ret;
@@ -543,25 +543,25 @@ class imagensDAO extends abstractDAO {
                 case 3:
                     $sqlAtualizar = "UPDATE imagem SET descritor1 = :desc1, descritor2 = :desc2, descritor3 = :desc3 WHERE descritor4 = :desc4";
                     $paramsAtualizar = array(
-                        ':desc1' => [$sequanciaNovaIds[2], PDO::PARAM_INT]
-                        , ':desc2' => [$sequanciaNovaIds[1], PDO::PARAM_INT]
-                        , ':desc3' => [$sequanciaNovaIds[0], PDO::PARAM_INT]
-                        , ':desc4' => [$idDescritor, PDO::PARAM_INT]
+                        ':desc1' => [$sequanciaNovaIds[2], \PDO::PARAM_INT]
+                        , ':desc2' => [$sequanciaNovaIds[1], \PDO::PARAM_INT]
+                        , ':desc3' => [$sequanciaNovaIds[0], \PDO::PARAM_INT]
+                        , ':desc4' => [$idDescritor, \PDO::PARAM_INT]
                     );
                     break;
                 case 2:
                     $sqlAtualizar = "UPDATE imagem SET descritor1 = :desc1, descritor2 = :desc2  WHERE descritor3 = :desc3";
                     $paramsAtualizar = array(
-                        ':desc1' => [$sequanciaNovaIds[1], PDO::PARAM_INT]
-                        , ':desc2' => [$sequanciaNovaIds[0], PDO::PARAM_INT]
-                        , ':desc3' => [$idDescritor, PDO::PARAM_INT]
+                        ':desc1' => [$sequanciaNovaIds[1], \PDO::PARAM_INT]
+                        , ':desc2' => [$sequanciaNovaIds[0], \PDO::PARAM_INT]
+                        , ':desc3' => [$idDescritor, \PDO::PARAM_INT]
                     );
                     break;
                 case 1:
                     $sqlAtualizar = "UPDATE imagem SET descritor1 = :desc1 WHERE descritor2 = :desc2";
                     $paramsAtualizar = array(
-                        ':desc1' => [$sequanciaNovaIds[0], PDO::PARAM_INT]
-                        , ':desc2' => [$idDescritor, PDO::PARAM_INT]
+                        ':desc1' => [$sequanciaNovaIds[0], \PDO::PARAM_INT]
+                        , ':desc2' => [$idDescritor, \PDO::PARAM_INT]
                     );
                     break;
                 default:
@@ -579,7 +579,7 @@ class imagensDAO extends abstractDAO {
 
             $sqlRotulo = "SELECT IFNULL ( (SELECT rotulo FROM imagem_descritor WHERE pai = :novoPai ORDER BY rotulo DESC LIMIT 1) ,0)";
             $paramsRotulo = array(
-                ':novoPai' => [$idNovoPai, PDO::PARAM_INT]
+                ':novoPai' => [$idNovoPai, \PDO::PARAM_INT]
             );
             $maiorRotuloNovoPai = $this->executarSelect($sqlRotulo, $paramsRotulo, false);
             if (is_bool($maiorRotuloNovoPai) && !$maiorRotuloNovoPai || is_null($maiorRotuloNovoPai)) {
@@ -591,10 +591,10 @@ class imagensDAO extends abstractDAO {
             //------------------------------------------------------------------
             $sql = "UPDATE imagem_descritor SET pai = :novoPai,rotulo = :novoRotulo WHERE idDescritor = :idDescritor AND pai = :antigoPai";
             $params = array(
-                ':novoPai' => [$idNovoPai, PDO::PARAM_INT]
-                , ':antigoPai' => [$idAntigoPai, PDO::PARAM_INT]
-                , ':idDescritor' => [$idDescritor, PDO::PARAM_INT]
-                , ':novoRotulo' => [(int) $maiorRotuloNovoPai + 1, PDO::PARAM_INT]
+                ':novoPai' => [$idNovoPai, \PDO::PARAM_INT]
+                , ':antigoPai' => [$idAntigoPai, \PDO::PARAM_INT]
+                , ':idDescritor' => [$idDescritor, \PDO::PARAM_INT]
+                , ':novoRotulo' => [(int) $maiorRotuloNovoPai + 1, \PDO::PARAM_INT]
             );
 
             if (!$this->executarQuery($sql, $params)) {
@@ -607,7 +607,7 @@ class imagensDAO extends abstractDAO {
 
             $sql2 = "UPDATE imagem_descritor SET qtdFilhos = qtdFilhos - 1 WHERE idDescritor = :antigoPai";
             $params2 = array(
-                ':antigoPai' => [$idAntigoPai, PDO::PARAM_INT]
+                ':antigoPai' => [$idAntigoPai, \PDO::PARAM_INT]
             );
             if (!$this->executarQuery($sql2, $params2)) {
                 throw new Exception("Falha ao atualizar informações");
@@ -615,7 +615,7 @@ class imagensDAO extends abstractDAO {
 
             $sql3 = "UPDATE imagem_descritor SET qtdFilhos = qtdFilhos + 1 WHERE idDescritor = :novoPai";
             $params3 = array(
-                ':novoPai' => [$idNovoPai, PDO::PARAM_INT]
+                ':novoPai' => [$idNovoPai, \PDO::PARAM_INT]
             );
             if (!$this->executarQuery($sql3, $params3)) {
                 throw new Exception("Falha ao atualizar informações");
@@ -685,7 +685,7 @@ class imagensDAO extends abstractDAO {
     public function atualizarSiglas($idUsuario){
         $sql = "SELECT idImagem FROM imagem WHERE autor = :autor";
         $params = array(
-            ':autor' => [$idUsuario,  PDO::PARAM_INT]
+            ':autor' => [$idUsuario,  \PDO::PARAM_INT]
         );
         $resultado = $this->executarSelect($sql, $params);
         

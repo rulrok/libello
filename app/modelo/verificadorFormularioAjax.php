@@ -1,5 +1,5 @@
 <?php
-
+namespace app\modelo;
 /**
  * Essa classe centraliza algumas operações comuns à verificação de formulários enviados por Ajax usando Template Method.
  *

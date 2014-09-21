@@ -12,12 +12,12 @@ if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') == 'POST') {
 
             $email = (isset($_POST['login'])) ? $_POST['login'] : '';
             $senha = (isset($_POST['senha'])) ? encriptarSenha($_POST['senha']) : '';
-            $usuario = new Usuario();
+            $usuario = new \app\modelo\Usuario();
             $usuario->set_email($email);
             $usuario->set_senha($senha);
 
             if (autenticarUsuario($usuario)) {
-                (new sistemaDAO())->registrarAccesso(obterUsuarioSessao()->get_idUsuario());
+                (new \app\modelo\sistemaDAO())->registrarAccesso(obterUsuarioSessao()->get_idUsuario());
                 header("Location: " . WEB_SERVER_ADDRESS . filter_input(INPUT_POST, 'alvo'));
             } else {
                 // O usuário e/ou a senha são inválidos, manda de volta pro form de login

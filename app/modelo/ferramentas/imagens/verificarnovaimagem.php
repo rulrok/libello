@@ -129,8 +129,8 @@ class verificarnovaimagem extends verificadorFormularioAjax {
 
                 //Verifica se ele já está cadastrado para não tentar uma duplicidade de cadastro
                 $params = array(
-                    ':pai' => [$descritor3, PDO::PARAM_INT]
-                    , ':nome' => [normalizarNomeDescritor($novo_descritor_nome), PDO::PARAM_STR]
+                    ':pai' => [$descritor3, \PDO::PARAM_INT]
+                    , ':nome' => [normalizarNomeDescritor($novo_descritor_nome), \PDO::PARAM_STR]
                 );
                 $resultado = $imagensDAO->consultarDescritor('idDescritor', 'pai = :pai AND nome = :nome LIMIT 1', null, $params);
 

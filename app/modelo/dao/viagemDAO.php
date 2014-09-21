@@ -1,4 +1,5 @@
 <?php
+namespace app\modelo;
 
 require_once 'abstractDAO.php';
 require_once APP_DIR . 'modelo/vo/Viagem.php';
@@ -14,8 +15,8 @@ class viagemDAO extends abstractDAO {
     public function atualizarEstadoViagem($id, $estado) {
         $sql = "UPDATE viagem SET estadoViagem= :estado WHERE idViagem = :idViagem";
         $params = array(
-            ':estado' => [$estado, PDO::PARAM_STR]
-            , ':idViagem' => [$id, PDO::PARAM_INT]
+            ':estado' => [$estado, \PDO::PARAM_STR]
+            , ':idViagem' => [$id, \PDO::PARAM_INT]
         );
         return $this->executarQuery($sql, $params);
     }
@@ -48,17 +49,17 @@ class viagemDAO extends abstractDAO {
         $sql = "INSERT INTO viagem(idCurso,idPolo,responsavel, dataIda, horaIda, dataVolta, horaVolta, motivo, estadoViagem, diarias, outroDestino)";
         $sql .= " VALUES (:idCurso, :idPolo, :responsavel, :dataIda, :horaIda, :dataVolta, :horaVolta, :motivo, :estadoViagem, :diarias, :outroDestino);";
         $params = array(
-            ':idCurso' => [$idCurso, PDO::PARAM_INT]
-            , ':idPolo' => [$idPolo, $idPolo === null ? PDO::PARAM_NULL : PDO::PARAM_INT]
-            , ':responsavel' => [$responsavel, PDO::PARAM_STR]
-            , ':dataIda' => [$dataIda, PDO::PARAM_STR]
-            , ':horaIda' => [$horaIda, PDO::PARAM_STR]
-            , ':dataVolta' => [$dataVolta, PDO::PARAM_STR]
-            , ':horaVolta' => [$horaVolta, PDO::PARAM_STR]
-            , ':motivo' => [$motivo, PDO::PARAM_STR]
-            , ':estadoViagem' => [$estado, PDO::PARAM_STR]
-            , ':diarias' => [$diarias, PDO::PARAM_STR]
-            , ':outroDestino' => [$destinoAlternativo, $destinoAlternativo === null ? PDO::PARAM_NULL : PDO::PARAM_STR]
+            ':idCurso' => [$idCurso, \PDO::PARAM_INT]
+            , ':idPolo' => [$idPolo, $idPolo === null ? \PDO::PARAM_NULL : \PDO::PARAM_INT]
+            , ':responsavel' => [$responsavel, \PDO::PARAM_STR]
+            , ':dataIda' => [$dataIda, \PDO::PARAM_STR]
+            , ':horaIda' => [$horaIda, \PDO::PARAM_STR]
+            , ':dataVolta' => [$dataVolta, \PDO::PARAM_STR]
+            , ':horaVolta' => [$horaVolta, \PDO::PARAM_STR]
+            , ':motivo' => [$motivo, \PDO::PARAM_STR]
+            , ':estadoViagem' => [$estado, \PDO::PARAM_STR]
+            , ':diarias' => [$diarias, \PDO::PARAM_STR]
+            , ':outroDestino' => [$destinoAlternativo, $destinoAlternativo === null ? \PDO::PARAM_NULL : \PDO::PARAM_STR]
         );
         try {
             $this->iniciarTransacao();
@@ -75,16 +76,16 @@ class viagemDAO extends abstractDAO {
 
             $sqlPassageiros = "INSERT INTO viagem_passageiros(idViagem,idUsuario) VALUES ";
             $params2 = array(
-                ':idViagem' => [$idViagem, PDO::PARAM_INT]
+                ':idViagem' => [$idViagem, \PDO::PARAM_INT]
             );
             for ($i = 0; $i < $quantidadePassageiros - 1; $i++) {
                 $passageiro = ":passageiro$i";
                 $sqlPassageiros .= "(:idViagem,$passageiro), ";
-                $params2[$passageiro] = [$passageiros[$i], PDO::PARAM_INT];
+                $params2[$passageiro] = [$passageiros[$i], \PDO::PARAM_INT];
             }
             $passageiro = ":passageiro$i";
             $sqlPassageiros .= "(:idViagem,$passageiro);";
-            $params2[$passageiro] = [$passageiros[$i], PDO::PARAM_INT];
+            $params2[$passageiro] = [$passageiros[$i], \PDO::PARAM_INT];
             $this->executarQuery($sqlPassageiros, $params2);
             //TODO verificar
         } catch (Exception $e) {
@@ -161,17 +162,17 @@ class viagemDAO extends abstractDAO {
         
         $sql = "UPDATE viagem SET idViagem = :idViagem, idCurso = :idCurso, idPolo = :idPolo, responsavel = :responsavel, dataIda = :dataIda,horaIda = :horaIda, dataVolta = :dataVolta, horaVolta = :horaVolta, motivo = :motivo, estadoViagem = :estadoViagem, diarias = :diarias, outroDestino = :destinoAlternativo";
         $params = array(
-            ':idCurso' => [$idCurso, PDO::PARAM_INT]
-            , ':idPolo' => [$idPolo, $idPolo === null ? PDO::PARAM_NULL : PDO::PARAM_INT]
-            , ':responsavel' => [$responsavel, PDO::PARAM_STR]
-            , ':dataIda' => [$dataIda, PDO::PARAM_STR]
-            , ':horaIda' => [$horaIda, PDO::PARAM_STR]
-            , ':dataVolta' => [$dataVolta, PDO::PARAM_STR]
-            , ':horaVolta' => [$horaVolta, PDO::PARAM_STR]
-            , ':motivo' => [$motivo, PDO::PARAM_STR]
-            , ':estadoViagem' => [$estado, PDO::PARAM_STR]
-            , ':diarias' => [$diarias, PDO::PARAM_STR]
-            , ':outroDestino' => [$destinoAlternativo, $destinoAlternativo === null ? PDO::PARAM_NULL : PDO::PARAM_STR]
+            ':idCurso' => [$idCurso, \PDO::PARAM_INT]
+            , ':idPolo' => [$idPolo, $idPolo === null ? \PDO::PARAM_NULL : \PDO::PARAM_INT]
+            , ':responsavel' => [$responsavel, \PDO::PARAM_STR]
+            , ':dataIda' => [$dataIda, \PDO::PARAM_STR]
+            , ':horaIda' => [$horaIda, \PDO::PARAM_STR]
+            , ':dataVolta' => [$dataVolta, \PDO::PARAM_STR]
+            , ':horaVolta' => [$horaVolta, \PDO::PARAM_STR]
+            , ':motivo' => [$motivo, \PDO::PARAM_STR]
+            , ':estadoViagem' => [$estado, \PDO::PARAM_STR]
+            , ':diarias' => [$diarias, \PDO::PARAM_STR]
+            , ':outroDestino' => [$destinoAlternativo, $destinoAlternativo === null ? \PDO::PARAM_NULL : \PDO::PARAM_STR]
         );
 
         return $this->executarQuery($sql, $params);
@@ -182,14 +183,14 @@ class viagemDAO extends abstractDAO {
 //
 //        $sql = "UPDATE livro SET nomeLivro = :nome ,quantidade = :quantidade ,dataEntrada = :dataEntrada ,numeroPatrimonio = :numeroPatrimonio ,descricao= :descricao, grafica= :grafica, area= :area WHERE idLivro = :idLivro";
 //        $params = array(
-//            ':nome' => [$nome, PDO::PARAM_STR]
-//            , ':quantidade' => [$quantidade, PDO::PARAM_INT]
-//            , ':dataEntrada' => [$dataEntrada, $dataEntrada !== null ? PDO::PARAM_STR : PDO::PARAM_NULL]
-//            , ':numeroPatrimonio' => [$numeroPatrimonio, $numeroPatrimonio !== null ? PDO::PARAM_STR : PDO::PARAM_NULL] //TODO mudar o nome da variável para algo mais intuitivo
-//            , ':descricao' => [$descricao, $descricao !== null ? PDO::PARAM_STR : PDO::PARAM_NULL]
-//            , ':grafica' => [$grafica, PDO::PARAM_STR]
-//            , ':area' => [$area, PDO::PARAM_INT]
-//            , ':idLivro' => [$idLivro, PDO::PARAM_INT]
+//            ':nome' => [$nome, \PDO::PARAM_STR]
+//            , ':quantidade' => [$quantidade, \PDO::PARAM_INT]
+//            , ':dataEntrada' => [$dataEntrada, $dataEntrada !== null ? \PDO::PARAM_STR : \PDO::PARAM_NULL]
+//            , ':numeroPatrimonio' => [$numeroPatrimonio, $numeroPatrimonio !== null ? \PDO::PARAM_STR : \PDO::PARAM_NULL] //TODO mudar o nome da variável para algo mais intuitivo
+//            , ':descricao' => [$descricao, $descricao !== null ? \PDO::PARAM_STR : \PDO::PARAM_NULL]
+//            , ':grafica' => [$grafica, \PDO::PARAM_STR]
+//            , ':area' => [$area, \PDO::PARAM_INT]
+//            , ':idLivro' => [$idLivro, \PDO::PARAM_INT]
 //        );
 //        return $this->executarQuery($sql, $params);
 //    }
@@ -201,7 +202,7 @@ class viagemDAO extends abstractDAO {
 
         $sql = "SELECT * from viagem WHERE idViagem = :idViagem";
         $params = array(
-            ':idViagem' => [$idViagem, PDO::PARAM_INT]
+            ':idViagem' => [$idViagem, \PDO::PARAM_INT]
         );
         return $this->executarSelect($sql, $params, false, 'Viagem');
      }
@@ -209,7 +210,7 @@ class viagemDAO extends abstractDAO {
     public function recuperarResponsavel($idResponsavel){
         $sql = "SELECT PNome,UNome from usuario WHERE idUsuario = :idResponsavel";
         $params = array(
-            ':idResponsavel' => [$idResponsavel, PDO::PARAM_INT]
+            ':idResponsavel' => [$idResponsavel, \PDO::PARAM_INT]
         );
         $array =   $this->executarSelect($sql, $params);
         $responsavel = $array[0][0] . " " . $array[0][1];
@@ -219,7 +220,7 @@ class viagemDAO extends abstractDAO {
     public function recuperarCurso($idCurso){
         $sql = "SELECT nomeCurso from cursospolos_curso WHERE idCurso = :idCurso";
         $params = array(
-            ':idCurso' => [$idCurso, PDO::PARAM_INT]
+            ':idCurso' => [$idCurso, \PDO::PARAM_INT]
         );
         $array =   $this->executarSelect($sql, $params);
         $curso = $array[0][0];
@@ -229,7 +230,7 @@ class viagemDAO extends abstractDAO {
     public function recuperarDestino($idDestino){
         $sql = "SELECT nomePolo from cursospolos_polo WHERE idPolo = :idDestino";
         $params = array(
-            ':idDestino' => [$idDestino, PDO::PARAM_INT]
+            ':idDestino' => [$idDestino, \PDO::PARAM_INT]
         );
         $array = $this->executarSelect($sql, $params);
         $destino = $array[0][0];
@@ -239,7 +240,7 @@ class viagemDAO extends abstractDAO {
     public function recuperarDestinoAlternativo($idDestino){
         $sql = "SELECT outroDestino from viagem WHERE idViagem = :idDestino";
         $params = array(
-            ':idDestino' => [$idDestino, PDO::PARAM_INT]
+            ':idDestino' => [$idDestino, \PDO::PARAM_INT]
         );
         $array = $this->executarSelect($sql,$params);
         $destino = $array[0][0];

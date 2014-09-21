@@ -1,4 +1,5 @@
 <?php
+namespace app\modelo;
 
 /**
  * Algum equipamento qualquer.

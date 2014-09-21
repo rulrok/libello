@@ -12,7 +12,7 @@ if (is_numeric($idPai) && !empty($nomeNormalizado)) {
     $descritor->set_nome($nomeNormalizado);
     $imagensDAO->iniciarTransacao();
     if ($imagensDAO->cadastrarDescritor($descritor, $idPai)) {
-        $ultimoDescritor = $imagensDAO->consultarDescritor('idDescritor, nome, nivel', "nome = :nome AND pai = :pai ORDER BY idDescritor DESC LIMIT 1", null, array(':nome' => [$nomeNormalizado, PDO::PARAM_STR], ':pai' => [$idPai, PDO::PARAM_INT]));
+        $ultimoDescritor = $imagensDAO->consultarDescritor('idDescritor, nome, nivel', "nome = :nome AND pai = :pai ORDER BY idDescritor DESC LIMIT 1", null, array(':nome' => [$nomeNormalizado, \PDO::PARAM_STR], ':pai' => [$idPai, \PDO::PARAM_INT]));
         if (sizeof($ultimoDescritor) > 0) {
             echo json_encode(
                     [
