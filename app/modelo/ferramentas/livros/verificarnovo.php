@@ -1,10 +1,12 @@
 <?php
 
-require_once APP_DIR . "modelo/Mensagem.php";
-require_once APP_DIR . "modelo/vo/Livro.php";
-require_once APP_DIR . "modelo/verificadorFormularioAjax.php";
+namespace app\modelo\ferramentas\livros;
 
-class verificarnovolivro extends verificadorFormularioAjax {
+include_once APP_DIR . "modelo/verificadorFormularioAjax.php";
+
+use \app\modelo as Modelo;
+
+class verificarnovo extends Modelo\verificadorFormularioAjax {
 
     public function _validar() {
         $nomelivro = filter_input(INPUT_POST, 'livro');
@@ -17,7 +19,7 @@ class verificarnovolivro extends verificadorFormularioAjax {
 
 
 
-        $livro = new livro();
+        $livro = new Modelo\Livro();
 
         if ($nomelivro == "") {
             $this->adicionarMensagemErro("Nome inválido");
@@ -33,7 +35,7 @@ class verificarnovolivro extends verificadorFormularioAjax {
         }
         $livro->set_nomelivro($nomelivro)->set_dataEntrada($dataEntrada)->set_descricao($descricao)->set_area($area)->set_grafica($grafica);
 
-        $livroDAO = new livroDAO();
+        $livroDAO = new Modelo\livroDAO();
         if ($tipo == "patrimonio") {
 
 //            $quantidadePatrimonios = filter_input(INPUT_POST, 'quantidadePatrimonios');

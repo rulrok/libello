@@ -11,7 +11,7 @@ include_once APP_DIR . 'modelo/comboboxes/ComboBoxUsuarios.php';
 class ControladorViagens extends Controlador {
 
     public function acaoNova() {
-        $this->visao->acessoMinimo = Permissao::ESCRITA;
+        $this->visao->acessoMinimo = Modelo\Permissao::ESCRITA;
         $this->visao->cursos = Modelo\ComboBoxCurso::montarTodosOsCursos();
         $this->visao->polos = Modelo\ComboBoxPolo::montarTodosOsPolos();
         $this->visao->usuarios = Modelo\ComboBoxUsuarios::listarTodosUsuarios();
@@ -19,13 +19,13 @@ class ControladorViagens extends Controlador {
     }
 
     public function acaoVerificarnova() {
-        $this->visao->acessoMinimo = Permissao::ESCRITA;
+        $this->visao->acessoMinimo = Modelo\Permissao::ESCRITA;
         $this->renderizar();
     }
 
     public function acaoGerenciar() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
-        $this->visao->viagens = (new viagemDAO())->consultar("idViagem,nomeCurso,concat_ws(' - ',dataIda,horaIda) as ida,concat_ws(' - ',dataVolta,horaVolta) as volta,motivo,estadoViagem,diarias,concat(IFNULL(nomePolo,''),IFNULL(outroDestino,'')) as destino");
+        $this->visao->acessoMinimo = Modelo\Permissao::GESTOR;
+        $this->visao->viagens = (new Modelo\viagemDAO())->consultar("idViagem,nomeCurso,concat_ws(' - ',dataIda,horaIda) as ida,concat_ws(' - ',dataVolta,horaVolta) as volta,motivo,estadoViagem,diarias,concat(IFNULL(nomePolo,''),IFNULL(outroDestino,'')) as destino");
         $i = 0;
         foreach ($this->visao->viagens as $value) {
             $value[0] = fnEncrypt($value[0]);
@@ -35,11 +35,11 @@ class ControladorViagens extends Controlador {
     }
 
     public function acaoEditar() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
+        $this->visao->acessoMinimo = Modelo\Permissao::GESTOR;
         if (filter_has_var(INPUT_GET, 'viagemID') || filter_has_var(INPUT_POST, 'viagemID')) {
             $this->visao->usuarios = Modelo\ComboBoxUsuarios::listarTodosUsuarios();
             $idViagem = fnDecrypt($_REQUEST['viagemID']); //TODO mudar para filter_input() quando INPUT_REQUEST estiver implementado no PHP
-            $viagemDAO = new viagemDAO();
+            $viagemDAO = new Modelo\viagemDAO();
             $this->visao->viagemID = $_REQUEST['viagemID'];
             $viagem = $viagemDAO->recuperarViagem($idViagem);
             $this->visao->responsavel = $viagemDAO->recuperarResponsavel($viagem->get_responsavel());

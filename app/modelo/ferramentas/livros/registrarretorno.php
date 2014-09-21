@@ -1,9 +1,12 @@
 <?php
 
-include_once APP_DIR . "modelo/Mensagem.php";
+namespace app\modelo\ferramentas\livros;
+
 include_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 
-class registrarSaida extends verificadorFormularioAjax {
+use \app\modelo as Modelo;
+
+class registrarsaida extends Modelo\verificadorFormularioAjax {
 
     public function _validar() {
         $saidaID = fnDecrypt(filter_input(INPUT_POST, 'saidaID'));
@@ -14,17 +17,25 @@ class registrarSaida extends verificadorFormularioAjax {
         $quantidadeMaxima = filter_input(INPUT_POST, 'quantidadeMaxima', FILTER_VALIDATE_INT);
 
 
-        $livroDAO = new livroDAO();
+        $livroDAO = new Modelo\livroDAO();
+        $ocorreu_erro = false;
         if ($dataRetorno == '') {
             //TODO Verificar se a data de retorno não é inferior a data de saída
             $this->adicionarMensagemErro("Data de retorno inválida");
+            $ocorreu_erro = true;
         }
         $recuperarSaidalivro = $livroDAO->recuperarSaidalivro($saidaID);
         if ($recuperarSaidalivro['quantidadeSaida'] != $quantidadeMaxima) {
             $this->adicionarMensagemErro("Dados inconsistentes");
+            $ocorreu_erro = true;
         }
         if ($quantidade <= 0 || $quantidade > $quantidadeMaxima) {
             $this->adicionarMensagemErro("Quantidade informada inválida");
+            $ocorreu_erro = true;
+        }
+
+        if ($ocorreu_erro) {
+            $this->abortarExecucao();
         }
 
         if ($livroDAO->cadastrarRetorno($saidaID, $dataRetorno, $quantidade, $observacoes)) {
@@ -42,6 +53,4 @@ class registrarSaida extends verificadorFormularioAjax {
 
 }
 
-//$registrarSaida = new registrarSaida();
-//$registrarSaida->executar();
 ?>

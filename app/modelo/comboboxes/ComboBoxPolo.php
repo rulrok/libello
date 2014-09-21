@@ -2,13 +2,14 @@
 namespace app\modelo;
 
 require_once APP_LIBRARY_DIR . "configuracoes.php";
+require_once APP_DIR . 'modelo/dao/poloDAO.php';
 
 class ComboBoxPolo {
 
     public static function montarTodosOsPolos($tipo = null) {
         $rodrigo;
         $codigo = "";
-        $polos = (new poloDAO())->consultar();
+        $polos = (new \app\modelo\poloDAO())->consultar();
         if (sizeof($polos) == 0) {
             $codigo .= '<option value="default" selected="selected"> -- Não existem polos cadastrados --</option>';
         } else {

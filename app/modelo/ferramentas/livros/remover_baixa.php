@@ -1,16 +1,22 @@
 <?php
 
-require_once APP_DIR . "modelo/Mensagem.php";
+namespace app\modelo\ferramentas\livros;
 
-$baixaID = fnDecrypt(filter_input(INPUT_GET, 'baixaID'));
-$mensagem = new Mensagem();
+use \app\modelo as Modelo;
 
-$livroDAO = new livroDAO();
-if ($livroDAO->removerBaixa($baixaID)) {
-    $mensagem->set_mensagemSucesso("Baixa removida com sucesso.");
-    $livroDAO->registrarRemocaoBaixa($baixaID);
-} else {
-    $mensagem->set_mensagemErro("Erro ao excluir");
+class remover_baixa extends Modelo\PaginaDeAcao {
+
+    protected function _acaoPadrao() {
+        $baixaID = fnDecrypt(filter_input(INPUT_GET, 'baixaID'));
+        $livroDAO = new Modelo\livroDAO();
+        if ($livroDAO->removerBaixa($baixaID)) {
+            $this->adicionarMensagemSucesso("Baixa removida com sucesso.");
+            $livroDAO->registrarRemocaoBaixa($baixaID);
+        } else {
+            $this->adicionarMensagemErro("Erro ao excluir");
+        }
+    }
+
 }
-echo json_encode($mensagem);
+
 ?>

@@ -16,7 +16,7 @@ class ControladorImagens extends Controlador {
      */
 
     public function acaoBuscar() {
-        $this->visao->acessoMinimo = Permissao::CONSULTA;
+        $this->visao->acessoMinimo = Modelo\Permissao::CONSULTA;
 
 
 
@@ -99,14 +99,14 @@ class ControladorImagens extends Controlador {
     }
 
     public function acaoConsultarimagem() {
-        $this->visao->acessoMinimo = Permissao::CONSULTA;
+        $this->visao->acessoMinimo = Modelo\Permissao::CONSULTA;
         $this->visao->acessoTotal = obterUsuarioSessao()->get_idPapel() <= Papel::GESTOR;
         $this->visao->todosUsuarios = Modelo\ComboBoxUsuarios::listarTodosUsuarios(Modelo\ComboBoxUsuarios::LISTAR_COM_CPF, "");
         $this->renderizar();
     }
 
     public function acaoNovaImagem() {
-        $this->visao->acessoMinimo = Permissao::ESCRITA;
+        $this->visao->acessoMinimo = Modelo\Permissao::ESCRITA;
         $this->visao->cpfAutor = obterUsuarioSessao()->get_cpf();
         $this->visao->iniciaisAutor = obterUsuarioSessao()->get_iniciais();
         $this->visao->comboBoxDescritor = Modelo\ComboBoxDescritores::montarDescritorPrimeiroNivel();
@@ -115,27 +115,27 @@ class ControladorImagens extends Controlador {
     }
 
     public function acaoVerificarnovaimagem() {
-        $this->visao->acessoMinimo = Permissao::ESCRITA;
+        $this->visao->acessoMinimo = Modelo\Permissao::ESCRITA;
         $this->renderizar();
     }
 
     public function acaoCriarthumb() {
-        $this->visao->acessoMinimo = Permissao::ESCRITA;
+        $this->visao->acessoMinimo = Modelo\Permissao::ESCRITA;
         $this->renderizar();
     }
 
     public function acaoBaixarimagem() {
-        $this->visao->acessoMinimo = Permissao::CONSULTA;
+        $this->visao->acessoMinimo = Modelo\Permissao::CONSULTA;
         $this->renderizar();
     }
 
     public function acaoBaixarvetorial() {
-        $this->visao->acessoMinimo = Permissao::CONSULTA;
+        $this->visao->acessoMinimo = Modelo\Permissao::CONSULTA;
         $this->renderizar();
     }
 
     public function acaoVisualizarimagem() {
-        $this->visao->acessoMinimo = Permissao::CONSULTA;
+        $this->visao->acessoMinimo = Modelo\Permissao::CONSULTA;
         $this->renderizar();
     }
 
@@ -144,65 +144,65 @@ class ControladorImagens extends Controlador {
      */
 
     public function acaoObterdescritores() {
-        $this->visao->acessoMinimo = Permissao::ESCRITA;
+        $this->visao->acessoMinimo = Modelo\Permissao::ESCRITA;
         $this->renderizar();
     }
 
     public function acaoDescritores() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
+        $this->visao->acessoMinimo = Modelo\Permissao::GESTOR;
         $this->renderizar();
     }
 
     public function acaoNovodescritor() {
-        $this->visao->acessoMinimo = Permissao::ESCRITA;
+        $this->visao->acessoMinimo = Modelo\Permissao::ESCRITA;
         $this->visao->comboBoxDescritor = Modelo\ComboBoxDescritores::montarDescritorPrimeiroNivel();
         $this->renderizar();
     }
 
     public function acaoGerenciardescritores() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
-        $imagensDAO = new imagensDAO();
+        $this->visao->acessoMinimo = Modelo\Permissao::GESTOR;
+        $imagensDAO = new Modelo\imagensDAO();
         $this->visao->descritores = $imagensDAO->consultarDescritor('*', 'qtdFilhos = 0');
         $this->renderizar();
     }
 
     public function acaoVerificarnovodescritor() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
+        $this->visao->acessoMinimo = Modelo\Permissao::GESTOR;
         $this->renderizar();
     }
 
     public function acaoVerificaredicaodescritor() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
+        $this->visao->acessoMinimo = Modelo\Permissao::GESTOR;
         $this->renderizar();
     }
 
     public function acaoObterdescritor() {
-        $this->visao->acessoMinimo = Permissao::ESCRITA;
+        $this->visao->acessoMinimo = Modelo\Permissao::ESCRITA;
         $this->renderizar();
     }
 
     public function acaoAuxcombonivel1() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
+        $this->visao->acessoMinimo = Modelo\Permissao::GESTOR;
         $this->renderizar();
     }
 
     public function acaoRenomearDescritor() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
+        $this->visao->acessoMinimo = Modelo\Permissao::GESTOR;
         $this->renderizar();
     }
 
     public function acaoCriarDescritor() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
+        $this->visao->acessoMinimo = Modelo\Permissao::GESTOR;
         $this->renderizar();
     }
 
     public function acaoMoverDescritor() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
+        $this->visao->acessoMinimo = Modelo\Permissao::GESTOR;
         $this->renderizar();
     }
 
     public function acaoRemoverDescritor() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
+        $this->visao->acessoMinimo = Modelo\Permissao::GESTOR;
         $this->renderizar();
     }
 
@@ -211,7 +211,7 @@ class ControladorImagens extends Controlador {
      */
 
     public function acaoArvoreDescritores() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
+        $this->visao->acessoMinimo = Modelo\Permissao::GESTOR;
         $this->renderizar();
     }
 

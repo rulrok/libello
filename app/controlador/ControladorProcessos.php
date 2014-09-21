@@ -12,12 +12,12 @@ require_once APP_DIR . "modelo/enumeracao/Papel.php";
 class ControladorProcessos extends controlador {
 
     public function acaoNovoProcesso() {
-        //$this->visao->acessoMinimo = Permissao::ESCRITA;
+        //$this->visao->acessoMinimo = Modelo\Permissao::ESCRITA;
         $this->renderizar();
     }
 
     public function acaoArvoreProcessos() {
-        //$this->visao->acessoMinimo = Permissao::CONSULTA;
+        //$this->visao->acessoMinimo = Modelo\Permissao::CONSULTA;
         $this->renderizar();
     }
 

@@ -73,7 +73,7 @@ class ControladorDocumentos extends Controlador {
     }
 
     public function acaoGerenciar() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
+        $this->visao->acessoMinimo = Modelo\Permissao::GESTOR;
         $this->visao->todosOficios = listarOficios();
         $this->visao->oficiosValidos = listarOficios('validos');
         $this->visao->oficiosInvalidos = listarOficios('invalidos');
@@ -86,19 +86,19 @@ class ControladorDocumentos extends Controlador {
     }
 
     public function acaoGerenciarCabecalho() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
+        $this->visao->acessoMinimo = Modelo\Permissao::GESTOR;
         $this->renderizar();
     }
 
     public function acaoConsultar() {
-        $this->visao->acessoMinimo = Permissao::CONSULTA;
+        $this->visao->acessoMinimo = Modelo\Permissao::CONSULTA;
         $this->visao->oficios = listarOficios('validos');
         $this->visao->memorandos = listarMemorandos('validos');
         $this->renderizar();
     }
 
     public function acaoOficio() {
-        $this->visao->acessoMinimo = Permissao::ESCRITA;
+        $this->visao->acessoMinimo = Modelo\Permissao::ESCRITA;
         $this->visao->comboDia = Modelo\ComboBoxDocumentos::comboDia();
         $this->visao->comboMes = Modelo\ComboBoxDocumentos::comboMes();
 
@@ -116,7 +116,7 @@ class ControladorDocumentos extends Controlador {
         if (!isset($_GET['id'])) {
             $this->visao->action = 'gerar';
         } else {
-            $ofc = (new documentoDAO())->consultar('documento_oficio', 'idOficio = ' . fnDecrypt(filter_input(INPUT_GET, 'id')));
+            $ofc = (new Modelo\documentoDAO())->consultar('documento_oficio', 'idOficio = ' . fnDecrypt(filter_input(INPUT_GET, 'id')));
             $oficioTmp = $ofc[0];
 
             $this->visao->tratamento = $oficioTmp->get_tratamento();
@@ -142,8 +142,8 @@ class ControladorDocumentos extends Controlador {
     }
 
     public function acaoAproveitarOficio() {
-        $this->visao->acessoMinimo = Permissao::ESCRITA;
-        $ofc = (new documentoDAO())->consultar('documento_oficio', 'idOficio = ' . fnDecrypt(filter_input(INPUT_GET, 'id')));
+        $this->visao->acessoMinimo = Modelo\Permissao::ESCRITA;
+        $ofc = (new Modelo\documentoDAO())->consultar('documento_oficio', 'idOficio = ' . fnDecrypt(filter_input(INPUT_GET, 'id')));
 
         $oficioTmp = $ofc[0];
 
@@ -166,8 +166,8 @@ class ControladorDocumentos extends Controlador {
     }
 
     public function acaoEditarOficio() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
-        $ofc = (new documentoDAO())->consultar('documento_oficio', 'idOficio = ' . fnDecrypt(filter_input(INPUT_GET, 'id')));
+        $this->visao->acessoMinimo = Modelo\Permissao::GESTOR;
+        $ofc = (new Modelo\documentoDAO())->consultar('documento_oficio', 'idOficio = ' . fnDecrypt(filter_input(INPUT_GET, 'id')));
 
         $oficioTmp = $ofc[0];
 
@@ -189,13 +189,13 @@ class ControladorDocumentos extends Controlador {
     }
 
     public function acaoGerarRelatorio() {
-        $this->visao->acessoMinimo = Permissao::CONSULTA;
+        $this->visao->acessoMinimo = Modelo\Permissao::CONSULTA;
         $this->renderizar();
     }
 
     public function acaoMemorando() {
 
-        $this->visao->acessoMinimo = Permissao::ESCRITA;
+        $this->visao->acessoMinimo = Modelo\Permissao::ESCRITA;
         $this->visao->comboDia = Modelo\ComboBoxDocumentos::comboDia();
         $this->visao->comboMes = Modelo\ComboBoxDocumentos::comboMes();
 
@@ -211,7 +211,7 @@ class ControladorDocumentos extends Controlador {
         if (!isset($_GET['id'])) {
             $this->visao->action = 'gerar';
         } else {
-            $ofc = (new documentoDAO())->consultar('documento_memorando', 'idMemorando = ' . fnDecrypt(filter_input(INPUT_GET, 'id')));
+            $ofc = (new Modelo\documentoDAO())->consultar('documento_memorando', 'idMemorando = ' . fnDecrypt(filter_input(INPUT_GET, 'id')));
             $oficioTmp = $ofc[0];
 
             $this->visao->tratamento = $oficioTmp->get_tratamento();
@@ -237,8 +237,8 @@ class ControladorDocumentos extends Controlador {
     }
 
     public function acaoEditarMemorando() {
-        $this->visao->acessoMinimo = Permissao::GESTOR;
-        $mem = (new documentoDAO())->consultar('documento_memorando', 'idMemorando = ' . fnDecrypt(filter_input(INPUT_GET, 'id')));
+        $this->visao->acessoMinimo = Modelo\Permissao::GESTOR;
+        $mem = (new Modelo\documentoDAO())->consultar('documento_memorando', 'idMemorando = ' . fnDecrypt(filter_input(INPUT_GET, 'id')));
 
         $memorandoTmp = $mem[0];
 
@@ -258,8 +258,8 @@ class ControladorDocumentos extends Controlador {
     }
 
     public function acaoAproveitarMemorando() {
-        $this->visao->acessoMinimo = Permissao::ESCRITA;
-        $mem = (new documentoDAO())->consultar('documento_memorando', 'idMemorando = ' . fnDecrypt($_GET['id']));
+        $this->visao->acessoMinimo = Modelo\Permissao::ESCRITA;
+        $mem = (new Modelo\documentoDAO())->consultar('documento_memorando', 'idMemorando = ' . fnDecrypt($_GET['id']));
 
         $memorandoTmp = $mem[0];
 
