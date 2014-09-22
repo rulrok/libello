@@ -77,7 +77,7 @@ class verificaredicao extends Modelo\verificadorFormularioAjax {
         try {
             $usuarioDAO->iniciarTransacao();
             if (!$usuarioDAO->atualizar($email, $usuario)) {
-                throw new Exception("Falha ao atualizar dados do usuário");
+                throw new \Exception("Falha ao atualizar dados do usuário");
             }
 
             $permissoes = new Modelo\PermissoesFerramenta();
@@ -91,10 +91,10 @@ class verificaredicao extends Modelo\verificadorFormularioAjax {
             $permissoes->set_galeriaImagens(filter_input(INPUT_POST, 'permissoes_galeria_de_imagens'));
 
             if (!$usuarioDAO->atualizarPermissoes($usuario, $permissoes)) {
-                throw new Exception("Falha ao atualizar permissões");
+                throw new \Exception("Falha ao atualizar permissões");
             }
             $usuarioDAO->encerrarTransacao();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $usuarioDAO->rollback();
             $this->adicionarMensagemErro("Erro ao modificar. Nenhum alteração salva.");
             $this->abortarExecucao();
@@ -108,6 +108,4 @@ class verificaredicao extends Modelo\verificadorFormularioAjax {
 
 }
 
-//$verificarEdicaoUsuario = new verificarEdicaoUsuario();
-//$verificarEdicaoUsuario->executar();
 ?>

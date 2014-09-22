@@ -38,7 +38,7 @@ function sessaoIniciada() {
  * Obtem o VO com os dados do usuário logado atualmente ou caso contrário, retorna
  * NULL.
  * 
- * @return Usuario ou NULL
+ * @return \app\modelo\Usuario ou NULL
  */
 function obterUsuarioSessao() {
     if (sessaoIniciada()) {

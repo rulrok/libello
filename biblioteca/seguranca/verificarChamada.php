@@ -4,7 +4,9 @@ require_once __DIR__ . '/seguranca.php';
 
 /**
  * Verificação para proteger páginas de sejem chamadas diretamente pela barra
- * de endereço do navegador
+ * de endereço do navegador.
+ * 
+ * !!! Atualmente não está em uso !!! @Reuel
  */
 function verificarChamada() {
 

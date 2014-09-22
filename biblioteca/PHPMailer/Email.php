@@ -78,7 +78,7 @@ class Email {
             } else {
                 $this->STATUS = self::EMAIL_FALHA_ENVIAR;
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
                 $this->STATUS = self::EMAIL_FALHA_ENVIAR;
         }
     }

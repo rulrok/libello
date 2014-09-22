@@ -66,7 +66,7 @@ class baixarvetorial extends \app\modelo\PaginaDeAcao {
                     header("Content-disposition: attachment; filename=$nomeArquivoNormalizado");
                     readfile($diretorio . $nomeArquivo);
                 }
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 header("Charset: UTF-8");
                 echo "Erro ao processar o arquivo";
             }

@@ -43,7 +43,7 @@ class verificarnovo extends Modelo\verificadorFormularioAjax {
                     $id = $equipamentoDAO->obterUltimoIdInserido();
                     $equipamentoDAO->registrarInsercaoEquipamento($id);
                     $patrimoniosValidos .= $numeroPatrimonio . "<br/>";
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     //TODO Agora é possível mandar pop-ups separados para cada erro
                     //TODO Talvez seja mais interessante do que mandar todos dentro de um único pop-up
                     $patrimoniosInvalidos .= "<li>" . $numeroPatrimonio . "</li>";
@@ -68,7 +68,7 @@ class verificarnovo extends Modelo\verificadorFormularioAjax {
                     $id = $equipamentoDAO->obterUltimoIdInserido();
                     $equipamentoDAO->registrarInsercaoEquipamento($id);
                     $this->adicionarMensagemSucesso("Cadastrado com sucesso.");
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     $this->adicionarMensagemErro("Erro ao cadastrar no banco de dados.");
                     $this->abortarExecucao();
                 }

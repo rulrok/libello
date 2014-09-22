@@ -119,23 +119,23 @@ class verificarnovo extends Modelo\verificadorFormularioAjax {
                 $permissoes->set_galeriaImagens(filter_input(INPUT_POST, 'permissoes_galeria_de_imagens'));
 
                 if (!$usuarioDAO->cadastrarPermissoes($usuario, $permissoes)) {
-                    throw new Exception("Erro ao cadastrar permissões", 40);
+                    throw new \Exception("Erro ao cadastrar permissões", 40);
                 }
                 $usuario = $usuarioDAO->recuperarUsuario($usuario->get_email());
 //                $usuarioDAO->registrarCadastroUsuario(obterUsuarioSessao()->get_idUsuario(), $usuario->get_idUsuario());
                 if ($enviarSenha !== null) {
                     $MailSender->enviar();
                     if (!$MailSender->emailFoiEnviado()) {
-                        throw new Exception("Falha ao enviar email. Cadastro não realizado.", 41);
+                        throw new \Exception("Falha ao enviar email. Cadastro não realizado.", 41);
                     }
                 }
                 $usuarioDAO->encerrarTransacao();
                 //Essa linha deve estar por último, ou o COMMIT não irá acontecer pelo banco de dados
                 $this->adicionarMensagemSucesso("Cadastro realizado com sucesso");
             } else {
-                throw new Exception("Erro ao cadastrar no banco", 42);
+                throw new \Exception("Erro ao cadastrar no banco", 42);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $usuarioDAO->rollback();
             switch ($e->getCode()) {
                 case 40:

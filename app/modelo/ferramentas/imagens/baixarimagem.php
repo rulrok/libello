@@ -30,7 +30,7 @@ class baixarimagem extends \app\modelo\PaginaDeAcao {
                 header("Content-disposition: attachment; filename=$nomeArquivoNormalizado");
                 header("Content-type: image/$tipoImagem");
                 readfile($diretorio . $nomeArquivo);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 header("Charset: UTF-8");
                 echo "Erro ao processar o arquivo";
             }

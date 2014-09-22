@@ -75,7 +75,7 @@ class verificarnovomemorando extends Modelo\verificadorFormularioAjax {
             }
 
 //            }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->adicionarMensagemErro($e->getMessage());
         }
     }

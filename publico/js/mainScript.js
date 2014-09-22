@@ -38,7 +38,7 @@ if (navigator.appVersion.indexOf("Linux") != -1)
  * 
  * @author Reuel
  * 
- * @param {type} evt
+ * @param {tipo} evt
  * @returns {undefined}
  */
 function confirmarDadosNaoSalvos(evt) {
@@ -58,7 +58,7 @@ function confirmarDadosNaoSalvos(evt) {
  * Função auxiliar para quando clica-se em um link que é a página atual.
  * Quando isso ocorre, o event hashchange não é disparado e a página não é carregada.
  * 
- * @param {type} evt
+ * @param {tipo} evt
  * @returns {undefined}
  */
 function requererPaginaAtual(evt) {
@@ -161,12 +161,12 @@ function acoplarMenu() {
         $(popup).css('left', '10px');
         $(popup).css('top', alturaMenu + 40 + 'px');
 
-        $(".menuContainer").hover(function() {
+        $(".menuContainer").hover(function () {
             showSubMenu(100)
-        }, function() {
+        }, function () {
             hideSubMenu(20)
         });
-        $(".subMenu").mouseenter(function() {
+        $(".subMenu").mouseenter(function () {
             $(".menuContainer").css('background', 'url("publico/imagens/backgroundMenu.png")')
         })
     } else if (window.menuColou && windowPosition < menuPosition) {
@@ -296,16 +296,16 @@ function ajax(link, place, hidePop, async, ignorePageChanges) {
         url: link
         , async: async
                 //, timeout: 10000 //Espera no máximo 10 segundos,
-        , beforeSend: function() {
+        , beforeSend: function () {
 //            if (place !== null) {
-            setTimeout(function() {
+            setTimeout(function () {
                 if (!paginaCompleta && !ocorreuExcecaoJS) {
                     exibirShader();
                 }
             }, "1500");
 //            }
         }
-        , complete: function() {
+        , complete: function () {
             //Ao ocorreu uma exceção JS, as demais páginas carregas após isso não
             //terão seus scripts executados. Para forçar que eles sejam executados,
             //apenas recarregamos a página do navegador para que o JS volte a ser
@@ -322,13 +322,13 @@ function ajax(link, place, hidePop, async, ignorePageChanges) {
             paginaCompleta = true;
             esconderShader();
         }
-        , error: function() {
+        , error: function () {
             paginaCompleta = true;
             esconderShader();
         }
     });
 
-    var sucesso = request.success(function(data) {
+    var sucesso = request.success(function (data) {
 
         if (ignorePageChanges === undefined || ignorePageChanges === false) {
             if (document.paginaAlterada) {
@@ -370,19 +370,19 @@ function ajax(link, place, hidePop, async, ignorePageChanges) {
         //TODO encontrar uma forma de tratar os campos somente leitura dos datapickers, pois quando
         //é escolhida uma data através do jquery, o evento change não é acionado.
         var camposAlteraveis = $("input, select, textarea").not('.ignorar').not("[hidden]").not("[readonly]");
-        $(camposAlteraveis).bind("keyup", function(param) {
+        $(camposAlteraveis).bind("keyup", function (param) {
             if (param.keyCode != 13)
                 conteudoAlterado();
         });
-        $(camposAlteraveis).bind("change", function(param) {
+        $(camposAlteraveis).bind("change", function (param) {
             if (param.keyCode != 13)
                 conteudoAlterado();
         });
         var camposData = $(".campoData").not(".ignorar");
 
-        $(camposData).on("mousedown", function(e) {
-            $(camposData).on("mouseup", function(param) {
-                setTimeout(function() {
+        $(camposData).on("mousedown", function (e) {
+            $(camposData).on("mouseup", function (param) {
+                setTimeout(function () {
                     if (param.keyCode != 13)
                         conteudoAlterado();
                 }, 300);
@@ -401,7 +401,7 @@ function ajax(link, place, hidePop, async, ignorePageChanges) {
 
 //        return data;
     });
-    var erro = request.error(function(jqXHR, textStatus, errorThrown) {
+    var erro = request.error(function (jqXHR, textStatus, errorThrown) {
         if (textStatus != "timeout") {
             showPopUp("<b>" + errorThrown.name + "</b><br/>" + errorThrown.message, textStatus);
         } else {
@@ -576,7 +576,7 @@ function hideFooter() {
         }, 500);
         $(".content").animate({
 //            paddingBottom: "30px"
-        }, 300, function() {
+        }, 300, function () {
             $(".arrow-up").show();
             $(".arrow-up").animate({
                 opacity: 1
@@ -595,7 +595,7 @@ function hideFooter() {
 function showFooter() {
     if (window.footerHidden === true) {
         window.footerHidden = false; //Prevenir clique duplo sobre a seta azul, inutilizando o rodapé
-        $(".arrow-up").animate({opacity: 0}, 300, function() {
+        $(".arrow-up").animate({opacity: 0}, 300, function () {
             $(".arrow-down").show();
             $(".arrow-up").hide();
             $(".footerWrap").animate({
@@ -615,86 +615,48 @@ function showFooter() {
 }
 
 /**
- * Exibe um balão de aviso no centro da tela. Você pode personalizar o
- * tipo de aviso.
+ * Exibe popup com auxílio do plugin jQuery toastmessage.
  * 
  * @author Reuel
  * 
- * @param {string} data
- * @param {string} type 'sucesso', 'erro' ou 'informacao'. Por padrão, 'informacao'.
+ * @param {string} mensagem
+ * @param {string} tipo
  * @returns {undefined}
  */
-function showPopUp(data, type) {
-    if (type === undefined || type === null) {
-        type = "pop_info";
+function showPopUp(mensagem, tipo) {
+    if (tipo === undefined || tipo === null) {
+        tipo = "pop_info";
     }
-    var texto, fundo, borda;
-    switch (type.toLocaleLowerCase()) {
+
+    var usarFixo = false;
+    switch (tipo.toLocaleLowerCase()) {
+        case "pop_info_fixo":
+            usarFixo = true;
         case "pop_info":
-            texto = "#3a87ad !important";
-            fundo = "#d9edf7";
-            borda = "#bce8f1";
-            type = "showNoticeToast";
+            tipo = "notice";
             break;
+        case "pop_erro_fixo":
+            usarFixo = true;
         case "pop_erro":
-            texto = "#b94a48 !important";
-            fundo = "#f2dede";
-            borda = "#eed3d7";
-            type = "showErrorToast";
+            tipo = "error";
             break;
+        case "pop_sucesso_fixo":
+            usarFixo = true;
         case "pop_sucesso":
-            texto = "#468847 !important";
-            fundo = "#dff0d8";
-            borda = "#d6e9c6";
-            type = "showSuccessToast";
+            tipo = "success";
+            break;
+        case "pop_alerta_fixo":
+            usarFixo = true;
+        case "pop_alerta":
+            tipo = "warning";
             break;
     }
-    $().toastmessage(type, data);
-
-//    $(".popUpContent").empty();
-//    $(".popUp").css('color', texto);
-//    $(".popUp").css('background-color', fundo);
-//    $(".popUp").css('border-color', borda);
-////    $(".popUp").css('left', 480);
-//    $(".popUp").css('left', 570);
-//    $(".popUpContent").append(data);
-//    $(".popUp").show(200, function() {
-//        $(".botao_fechar").show(100, function() {
-//            $(".popUp").css("display", "table");
-//            //Aplica o efeito de lightbox (esmaece o fundo e destaca o popUp)
-//            $(".shaderFrame").css("visibility", "visible").animate({opacity: "0.5"}, 150);
-//        });
-//        $(this).effect("shake", {}, 500);
-//    });
-
-    //Trecho sem efeito de esmaecimento
-    //    $(".popUp").show(200, function() {
-    //        $(".botao_fechar").show(100, function() {
-    //            $(".popUp").css("display", "table");
-    //        });
-    //        $(this).effect("shake", {}, 500);
-    //    });
+    $().toastmessage('showToast', {
+        text: mensagem
+        , sticky: usarFixo
+        , type: tipo
+    });
 }
-
-/**
- * Esconde o pop-up central da página.
- * 
- * @author Reuel
- * 
- * @returns {undefined}
- */
-//function hidePopUp() {
-//    $(".botao_fechar").hide(100, function() {
-//        $(".popUp").hide(200, function() {
-//            $(".sub_popUp").empty();
-//            //Fecha o esmaecimento cinza ao fundo logo que se fechar o pop-up
-//            $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
-//        });
-//    });
-//
-//
-//
-//}
 
 /**
  * Esconde o sub-menu.
@@ -774,7 +736,7 @@ function makeSubMenu(originMenu) {
             if (subMenus[i].classList.contains(menuName)) {
                 subMenus[i].classList.remove("hiddenSubMenuLink");
 
-                subMenus[i].onclick = function() {
+                subMenus[i].onclick = function () {
                     $(".actualTool").removeClass('actualTool');
                     $('.menuLink.visited').addClass('actualTool');
                 };
@@ -788,7 +750,7 @@ function makeSubMenu(originMenu) {
                 $(subMenus[i]).removeClass("hiddenSubMenuLink");
                 break;
             }
-            subMenus[i].onclick = function() {
+            subMenus[i].onclick = function () {
                 $(".actualTool").removeClass('actualTool');
                 $('.menuLink.visited').addClass('actualTool');
             };
@@ -818,119 +780,5 @@ function mudarTitulo(titulo, ignorarTituloPadrao) {
     } else {
         $("title").empty();
         $("title").append(tituloPadrao);
-    }
-}
-
-/**
- * Procura por uma resposta JSON. Especififamente feito para as respostas de páginas,
- * como por exemplo, páginas de edições, alterações, ou quando deleta-se algum item.
- * Isso precisa ser melhorado, mas por enquanto, funciona bem =).
- * 
- * @author Reuel
- *  
- * @param {String} string Texto qualquer. Nesse caso, trata-se do retorno das páginas solicitadas via Ajax.
- * @returns {String} 
- */
-function filtrarJSON(string) {
-    console.log(string);
-    $(".debug_div").empty();
-    $(".debug_div").append(string);
-//    $(".debug_div_border").css({
-//        height: 40
-//    });
-    var data = new RespostaJSON();
-
-    var regex = /\[(\[\"sys_msgs\"\]).*?}\]/g;
-    var match = regex.exec(string);
-
-    if (match != undefined) {
-//        console.log(JSON.parse(match[0]));
-        var resultados = JSON.parse(match[0]);
-        if (resultados[0][0] == "sys_msgs") {
-            for (var i = 1; i < resultados.length; i++) {
-                switch (resultados[i]['tipo']) {
-                    case 'pop_sucesso':
-                        data.addMensagemSucesso(resultados[i]['mensagem']);
-                        break;
-                    case 'pop_erro':
-                        data.addMensagemErro(resultados[i]['mensagem']);
-                        break;
-                    case 'pop_info':
-                        data.addMensagemInfo(resultados[i]['mensagem']);
-                        break;
-                    case 'sys_status':
-                        data.status = resultados[i]['mensagem'];
-                        break;
-                    default:
-                        //TODO errado, precisa tmb adicionar o 'tipo', visto que nao é mensagem padrao
-                        data.addMensagemPersonalizada(resultados[i]['mensagem']);
-                        break;
-                }
-            }
-        } else {
-            data.status = "indefinido";
-        }
-    } else {
-        data.status = "indefinido";
-    }
-
-    return data;
-}
-
-function processarMensagens(data) {
-    var erros = data.getMensagensErro();
-    for (var i = 0; i < erros.length; i++) {
-        showPopUp(erros[i], 'pop_erro');
-    }
-    var sucessos = data.getMensagensSucesso();
-    for (var i = 0; i < sucessos.length; i++) {
-        showPopUp(sucessos[i], 'pop_sucesso');
-    }
-
-    var infos = data.getMensagensInfo();
-    for (var i = 0; i < infos.length; i++) {
-        showPopUp(infos[i], 'pop_info');
-    }
-}
-
-function RespostaJSON() {
-    this.status = "indefinido";
-//    this.mensagens = [];
-    this.mensagensSucesso = [];
-    this.mensagensErro = [];
-    this.mensagensInfo = [];
-    this.mensagensPersonalizadas = [];
-
-    this.getMensagensSucesso = function() {
-        return this.mensagensSucesso;
-    }
-    this.getMensagensInfo = function() {
-        return this.mensagensInfo;
-    }
-    this.getMensagensErro = function() {
-        return this.mensagensErro;
-    }
-    this.getMensagensPersonalizadas = function() {
-        return this.mensagensPersonalizadas;
-    }
-
-    this.addMensagemSucesso = function(mensagem) {
-//        this.mensagens[this.mensagens.length] = mensagem;
-        this.mensagensSucesso[this.mensagensSucesso.length] = mensagem;
-    }
-
-    this.addMensagemErro = function(mensagem) {
-//        this.mensagens[this.mensagens.length] = mensagem;
-        this.mensagensErro[this.mensagensErro.length] = mensagem;
-    }
-
-    this.addMensagemInfo = function(mensagem) {
-//        this.mensagens[this.mensagens.length] = mensagem;
-        this.mensagensInfo[this.mensagensInfo.length] = mensagem;
-    }
-
-    this.addMensagemPersonalizada = function(mensagem) {
-//        this.mensagens[this.mensagens.length] = mensagem;
-        this.mensagensPersonalizadas[this.mensagensPersonalizadas.length] = mensagem;
     }
 }

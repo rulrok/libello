@@ -202,7 +202,7 @@ class documentoDAO extends abstractDAO {
         try {
             parent::getConexao()->query($sql);
             return true;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }

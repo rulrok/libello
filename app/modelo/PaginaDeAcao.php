@@ -50,24 +50,28 @@ abstract class PaginaDeAcao {
         $this->_terminarExecucao();
     }
 
-    public function adicionarMensagemSucesso($mensagem) {
+    public function adicionarMensagemSucesso($mensagem, $fixa = false) {
         if ($this->status !== PaginaDeAcao::ERRO) {
             $this->status = PaginaDeAcao::SUCESSO;
         }
-        $this->mensagensRetorno[] = (new Mensagem())->set_mensagemSucesso($mensagem);
+        $this->adicionarMensagem((new Mensagem())->set_mensagemSucesso($mensagem, $fixa));
     }
 
-    public function adicionarMensagemErro($mensagem) {
+    public function adicionarMensagemErro($mensagem, $fixa = false) {
         $this->status = PaginaDeAcao::ERRO;
-        $this->mensagensRetorno[] = (new Mensagem())->set_mensagemErro($mensagem);
+        $this->adicionarMensagem((new Mensagem())->set_mensagemErro($mensagem, $fixa));
     }
 
-    public function adicionarMensagemInfo($mensagem) {
-        $this->mensagensRetorno[] = (new Mensagem())->set_mensagemInfo($mensagem);
+    public function adicionarMensagemInfo($mensagem, $fixa = false) {
+        $this->adicionarMensagem((new Mensagem())->set_mensagemInfo($mensagem, $fixa));
+    }
+
+    public function adicionarMensagemAlerta($mensagem, $fixa = false) {
+        $this->adicionarMensagem((new Mensagem())->set_mensagemAlerta($mensagem, $fixa));
     }
 
     public function adicionarMensagemPersonalizada($tipo, $mensagem) {
-        $this->mensagensRetorno[] = (new Mensagem())->set_mensagemPersonalizada($tipo, $mensagem);
+        $this->adicionarMensagem((new Mensagem())->set_mensagemPersonalizada($tipo, $mensagem));
     }
 
     private function adicionarMensagem(Mensagem $mensagem) {

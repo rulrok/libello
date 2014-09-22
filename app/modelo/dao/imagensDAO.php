@@ -458,7 +458,7 @@ class imagensDAO extends abstractDAO {
             $sql = 'DROP TEMPORARY TABLE IF EXISTS ids, ids_aux, ids_aux2';
             $this->executarQuery($sql);
             $this->encerrarTransacao();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $resultado = [];
             $this->rollback();
         }
@@ -568,12 +568,12 @@ class imagensDAO extends abstractDAO {
                     );
                     break;
                 default:
-                    throw new Exception("Erro ao processar descritores");
+                    throw new \Exception("Erro ao processar descritores");
             }
 
             if (!$this->executarQuery($sqlAtualizar, $paramsAtualizar)) {
                 //Essa exceção causa um rollback
-                throw new Exception("Falha ao atualizar descritores");
+                throw new \Exception("Falha ao atualizar descritores");
             }
 
             //------------------------------------------------------------------
@@ -586,7 +586,7 @@ class imagensDAO extends abstractDAO {
             );
             $maiorRotuloNovoPai = $this->executarSelect($sqlRotulo, $paramsRotulo, false);
             if (is_bool($maiorRotuloNovoPai) && !$maiorRotuloNovoPai || is_null($maiorRotuloNovoPai)) {
-                throw new Exception("Erro");
+                throw new \Exception("Erro");
             }
 
             //------------------------------------------------------------------
@@ -601,7 +601,7 @@ class imagensDAO extends abstractDAO {
             );
 
             if (!$this->executarQuery($sql, $params)) {
-                throw new Exception("Falha ao mover descritor");
+                throw new \Exception("Falha ao mover descritor");
             }
 
             //------------------------------------------------------------------
@@ -613,7 +613,7 @@ class imagensDAO extends abstractDAO {
                 ':antigoPai' => [$idAntigoPai, \PDO::PARAM_INT]
             );
             if (!$this->executarQuery($sql2, $params2)) {
-                throw new Exception("Falha ao atualizar informações");
+                throw new \Exception("Falha ao atualizar informações");
             }
 
             $sql3 = "UPDATE imagem_descritor SET qtdFilhos = qtdFilhos + 1 WHERE idDescritor = :novoPai";
@@ -621,12 +621,12 @@ class imagensDAO extends abstractDAO {
                 ':novoPai' => [$idNovoPai, \PDO::PARAM_INT]
             );
             if (!$this->executarQuery($sql3, $params3)) {
-                throw new Exception("Falha ao atualizar informações");
+                throw new \Exception("Falha ao atualizar informações");
             }
 
             $this->encerrarTransacao();
             return true;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->rollback();
             return false;
         }
@@ -662,14 +662,14 @@ class imagensDAO extends abstractDAO {
      * @return array
      * @deprecated Método recursivo que pode prejudicar o desempenho do sistema. É basicamente substituída por 'arvoreDescritores()'
      */
-    private function montarRecursivamente($idPai) {
+    private function _montarRecursivamente($idPai) {
         $filhos = $this->consultarDescritor('idDescritor,nome,qtdFilhos,nivel,rotulo', "pai = $idPai");
         $array = array();
         foreach ($filhos as $descritor) {
             if ($descritor['qtdFilhos'] == '0') {
                 $array[] = array('id' => fnEncrypt($descritor['idDescritor']), 'text' => $descritor['nome'], 'nivel' => $descritor['nivel'], 'rotulo' => $descritor['rotulo']);
             } else {
-                $array[] = array('id' => fnEncrypt($descritor['idDescritor']), 'text' => $descritor['nome'], 'nivel' => $descritor['nivel'], 'rotulo' => $descritor['rotulo'], 'children' => $this->montarRecursivamente($descritor['idDescritor']));
+                $array[] = array('id' => fnEncrypt($descritor['idDescritor']), 'text' => $descritor['nome'], 'nivel' => $descritor['nivel'], 'rotulo' => $descritor['rotulo'], 'children' => $this->_montarRecursivamente($descritor['idDescritor']));
             }
         }
         return $array;

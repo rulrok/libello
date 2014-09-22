@@ -12,7 +12,8 @@ function registrar_erro($mensagem, Usuario $usuarioAfetado = null) {
 
     //O lançamento abaixo é feito para que seja capturado pelo modelo da ação, de forma que seja printado
     //na tela o erro para o usuário. Talvez futuramente este lançamento deva ser aprimorado de alguma forma.
-    throw new Exception($mensagem);
+//    throw new \Exception($mensagem);
+    //Editado: Essa excecao não deve ser lançada aqui @Reuel
 
     $usuarioLogado = obterUsuarioSessao();
     if ($usuarioLogado !== null) {
@@ -36,7 +37,7 @@ function registrar_erro($mensagem, Usuario $usuarioAfetado = null) {
  * @param Usuario
  * @return string
  */
-function _formatarDadosUsuario(Usuario $u) {
+function _formatarDadosUsuario(\app\modelo\Usuario $u) {
     return $u->get_PNome() . ' ' . $u->get_UNome() . '(' . $u->get_iniciais() . '), ' . $u->get_email() . ', papel: ' . $u->get_idPapel() . ', id: ' . $u->get_idUsuario();
 }
 

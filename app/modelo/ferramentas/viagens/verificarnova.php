@@ -45,7 +45,7 @@ class verificarnova extends Modelo\verificadorFormularioAjax {
             } else {
                 $this->adicionarMensagemAviso("Preencha todos os campos obrigatórios!");
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->adicionarMensagemErro("Erro");
             $this->abortarExecucao();
         }

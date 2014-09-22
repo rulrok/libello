@@ -65,7 +65,7 @@ class viagemDAO extends abstractDAO {
         try {
             $this->iniciarTransacao();
             if (!$this->executarQuery($sql, $params)) {
-                throw new Exception("Erro ao cadastrar viagem");
+                throw new \Exception("Erro ao cadastrar viagem");
             }
 
 
@@ -89,7 +89,7 @@ class viagemDAO extends abstractDAO {
             $params2[$passageiro] = [$passageiros[$i], \PDO::PARAM_INT];
             $this->executarQuery($sqlPassageiros, $params2);
             //TODO verificar
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->rollback();
             return false;
         }

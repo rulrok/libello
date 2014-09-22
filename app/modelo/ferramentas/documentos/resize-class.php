@@ -33,7 +33,7 @@ class ResizeImage
 		{
 			$this->setImage( $filename );
 		} else {
-			throw new Exception('Image ' . $filename . ' can not be found, try another image.');
+			throw new \Exception('Image ' . $filename . ' can not be found, try another image.');
 		}
 	}
 
@@ -68,7 +68,7 @@ class ResizeImage
 
 	        // Mime type not found
 	        default:
-	            throw new Exception("File is not an image, please use another file type.", 1);
+	            throw new \Exception("File is not an image, please use another file type.", 1);
 	    }
 
 	    $this->origWidth = imagesx($this->image);

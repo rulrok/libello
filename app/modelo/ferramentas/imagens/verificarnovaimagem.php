@@ -16,7 +16,7 @@ use \app\modelo as Modelo;
  */
 class verificarnovaimagem extends Modelo\verificadorFormularioAjax {
 
-    private function auxiliar_ultimo_id_inserido(Modelo\imagensDAO $dao, $nomeDescritor) {
+    private function _auxiliar_ultimo_id_inserido(Modelo\imagensDAO $dao, $nomeDescritor) {
         $resultado = $dao->consultarDescritor("idDescritor", "nome = '$nomeDescritor' ORDER BY idDescritor DESC LIMIT 1");
         return $resultado[0][0];
     }
@@ -151,7 +151,7 @@ class verificarnovaimagem extends Modelo\verificadorFormularioAjax {
                     $novo_descritor = new Descritor();
                     $novo_descritor->set_nome($novo_descritor_nome);
                     if ($imagensDAO->cadastrarDescritor($novo_descritor, $descritor3)) {
-                        $descritor4 = $this->auxiliar_ultimo_id_inserido($imagensDAO, $novo_descritor_nome);
+                        $descritor4 = $this->_auxiliar_ultimo_id_inserido($imagensDAO, $novo_descritor_nome);
                     } else {
                         $this->adicionarMensagemErro("Não foi possível cadastrar o novo descritor");
                         $this->abortarExecucao();
@@ -245,7 +245,7 @@ class verificarnovaimagem extends Modelo\verificadorFormularioAjax {
                     $this->adicionarMensagemErro("Falha ao cadastrar a imagem.");
                     $this->abortarExecucao();
                 }
-            } catch (Exception $ex) {
+            } catch (\Exception $ex) {
                 $this->adicionarMensagemErro($ex->getMessage());
                 $this->abortarExecucao();
             }

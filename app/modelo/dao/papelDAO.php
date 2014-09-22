@@ -17,7 +17,7 @@ class papelDAO extends abstractDAO {
         $sql = "SELECT idPapel FROM usuario_papel WHERE nome = '" . $nomePapel . "'";
         try {
             $resultado = parent::getConexao()->query($sql)->fetch();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             echo $e;
         }
         return $resultado[0];

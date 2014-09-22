@@ -53,7 +53,7 @@ try {
         );
         $imagensDAO->executarQuery($sqlAtualizaQtdFilhos, $paramsAtualizarQtdFilhos);
     } else {
-        throw new Exception("Tentativa de excluir descritor raiz");
+        throw new \Exception("Tentativa de excluir descritor raiz");
     }
     $sqlRemover = 'DELETE FROM imagem_descritor WHERE idDescritor = :idDescritorRemover';
     $paramsRemover = array(
@@ -66,8 +66,8 @@ try {
         
         $imagensDAO->encerrarTransacao();
     } else {
-        throw new Exception("Falha ao remover descritor do banco.");
+        throw new \Exception("Falha ao remover descritor do banco.");
     }
-} catch (Exception $e) {
+} catch (\Exception $e) {
     $imagensDAO->rollback();
 }

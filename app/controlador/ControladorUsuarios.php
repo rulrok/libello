@@ -35,7 +35,8 @@ class ControladorUsuarios extends MVC\Controlador {
         $userID = fnDecrypt(filter_input(INPUT_GET, 'userID'));
         if ($userID == obterUsuarioSessao()->get_idUsuario()) { //!!! Impede que o usuário edite o próprio perfil, alterando assim sua permissões e papel. Uma violação de segurança.
             registrar_erro("Usuário tentou alterar seu próprio perfil através da página de edição de usuários do sistema (isso geraria problemas de segurança como alterar as próprias permissões)");
-            die("Acesso indevido");
+            $this->adicionarMensagemAlerta("Você não possui permissão para executar essa ação.<br/>Essa ação será registrada!.", true);
+            $this->abortarExecucao();
         }
 
         $emailOriginal = $usuarioDAO->descobrirEmail($userID);
@@ -44,7 +45,8 @@ class ControladorUsuarios extends MVC\Controlador {
         //Esse id poderia ser obtido na tela de consultar usuários, por exemplo.
         if (obterUsuarioSessao()->get_idPapel() > $usuarioOriginal->get_idPapel()) {
             registrar_erro("Usuário tentou alterar um perfil de papel mais alto que o seu. (OBS: Papeis mais altos possuem valor numérico menor)", $usuarioOriginal);
-            die("Você não tem permissão para fazer essa edição");
+            $this->adicionarMensagemAlerta("Você não possui permissão para executar essa ação.<br/>Essa ação será registrada!.", true);
+            $this->abortarExecucao();
         }
 
         $this->visao->comboPermissoes = Modelo\ComboBoxPermissoes::montarTodasPermissoesRadio();
@@ -80,9 +82,8 @@ class ControladorUsuarios extends MVC\Controlador {
         $userID = fnDecrypt(filter_input(INPUT_GET, 'userID'));
         if ($userID == obterUsuarioSessao()->get_idUsuario()) {
             registrar_erro("Usuário tentou desativar seu próprio perfil através da página de edição de usuários do sistema");
-            //TODO alterar isso, mover para classe superior como um método geral
-            echo json_encode((new Modelo\Mensagem())->set_mensagemErro("Você não pode fazer isso."));
-            exit;
+            $this->adicionarMensagemAlerta("Você não possui permissão para executar essa ação.<br/>Essa ação será registrada!.", true);
+            $this->abortarExecucao();
         }
 
         $emailOriginal = $usuarioDAO->descobrirEmail($userID);
@@ -91,8 +92,8 @@ class ControladorUsuarios extends MVC\Controlador {
         //Esse id poderia ser obtido na tela de consultar usuários, por exemplo.
         if (obterUsuarioSessao()->get_idPapel() > $usuarioOriginal->get_idPapel()) {
             registrar_erro("Usuário tentou desativar um perfil de papel mais alto que o seu. (OBS: Papeis mais altos possuem valor numérico menor)", $usuarioOriginal);
-            echo json_encode((new Mensagem())->set_mensagemErro("Você não pode fazer isso."));
-            exit;
+            $this->adicionarMensagemAlerta("Você não possui permissão para executar essa ação.<br/>Essa ação será registrada!", true);
+            $this->abortarExecucao();
         }
         $this->renderizar();
     }
@@ -108,9 +109,8 @@ class ControladorUsuarios extends MVC\Controlador {
         //Esse id poderia ser obtido na tela de consultar usuários, por exemplo.
         if (obterUsuarioSessao()->get_idPapel() > $usuarioOriginal->get_idPapel()) {
             registrar_erro("Usuário tentou desativar um perfil de papel mais alto que o seu. (OBS: Papeis mais altos possuem valor numérico menor)", $usuarioOriginal);
-            //TODO Mudar esse encode para classe superior
-            echo json_encode((new Modelo\Mensagem())->set_mensagemErro("Você não pode fazer isso."));
-            exit;
+            $this->adicionarMensagemAlerta("Você não possui permissão para executar essa ação.<br/>Essa ação será registrada!", true);
+            $this->abortarExecucao();
         }
         $this->renderizar();
     }

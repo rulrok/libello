@@ -8,7 +8,7 @@ use \app\modelo as Modelo;
 
 class verificarnovodescritor extends \app\modelo\verificadorFormularioAjax {
 
-    private function auxiliar_ultimo_id_inserido(imagensDAO $dao, $nomeDescritor) {
+    private function _auxiliar_ultimo_id_inserido(imagensDAO $dao, $nomeDescritor) {
         $resultado = $dao->consultarDescritor("idDescritor", "nome = '$nomeDescritor' ORDER BY idDescritor DESC LIMIT 1");
         return $resultado[0][0];
     }
@@ -54,7 +54,7 @@ class verificarnovodescritor extends \app\modelo\verificadorFormularioAjax {
                  * é UNIQUE. Para eficiência, é usado LIMIT 1 com ORDER BY DESC.
                  * Em resumo: O maior ID associado ao nome procurado é buscado.
                  */
-                $idDescritor1 = $this->auxiliar_ultimo_id_inserido($imagensDAO, $nomeDescritor1);
+                $idDescritor1 = $this->_auxiliar_ultimo_id_inserido($imagensDAO, $nomeDescritor1);
 
                 //Descritor 2
                 $descritor2 = new Modelo\Descritor();
@@ -62,7 +62,7 @@ class verificarnovodescritor extends \app\modelo\verificadorFormularioAjax {
                 if (!$imagensDAO->cadastrarDescritor($descritor2, $idDescritor1)) {
                     throw new \Exception("Falha ao cadastrar descritor nível 2");
                 }
-                $idDescritor2 = $this->auxiliar_ultimo_id_inserido($imagensDAO, $nomeDescritor2);
+                $idDescritor2 = $this->_auxiliar_ultimo_id_inserido($imagensDAO, $nomeDescritor2);
 
                 //Descritor 3
                 $descritor3 = new Modelo\Descritor();
@@ -70,7 +70,7 @@ class verificarnovodescritor extends \app\modelo\verificadorFormularioAjax {
                 if (!$imagensDAO->cadastrarDescritor($descritor3, $idDescritor2)) {
                     throw new \Exception("Falha ao cadastrar descritor nível 3");
                 }
-                $idDescritor4 = $this->auxiliar_ultimo_id_inserido($imagensDAO, $nomeDescritor3);
+                $idDescritor4 = $this->_auxiliar_ultimo_id_inserido($imagensDAO, $nomeDescritor3);
 
                 //Descritor 4
                 $descritor4 = new Modelo\Descritor();
@@ -112,7 +112,7 @@ class verificarnovodescritor extends \app\modelo\verificadorFormularioAjax {
                 if (!$imagensDAO->cadastrarDescritor($descritor2, $idDescritor1)) {
                     throw new \Exception("Falha ao cadastrar descritor nível 2");
                 }
-                $idDescritor2 = $this->auxiliar_ultimo_id_inserido($imagensDAO, $nomeDescritor2);
+                $idDescritor2 = $this->_auxiliar_ultimo_id_inserido($imagensDAO, $nomeDescritor2);
 
                 //Descritor 3
                 $descritor3 = new Modelo\Descritor();
@@ -120,7 +120,7 @@ class verificarnovodescritor extends \app\modelo\verificadorFormularioAjax {
                 if (!$imagensDAO->cadastrarDescritor($descritor3, $idDescritor2)) {
                     throw new \Exception("Falha ao cadastrar descritor nível 3");
                 }
-                $idDescritor3 = $this->auxiliar_ultimo_id_inserido($imagensDAO, $nomeDescritor3);
+                $idDescritor3 = $this->_auxiliar_ultimo_id_inserido($imagensDAO, $nomeDescritor3);
 
                 //Descritor 4
                 $descritor4 = new Modelo\Descritor();
@@ -159,7 +159,7 @@ class verificarnovodescritor extends \app\modelo\verificadorFormularioAjax {
                 if (!$imagensDAO->cadastrarDescritor($descritor3, $idDescritor2)) {
                     throw new \Exception("Falha ao cadastrar descritor nível 3");
                 }
-                $idDescritor3 = $this->auxiliar_ultimo_id_inserido($imagensDAO, $nomeDescritor3);
+                $idDescritor3 = $this->_auxiliar_ultimo_id_inserido($imagensDAO, $nomeDescritor3);
 
                 //Descritor 4
                 $descritor4 = new Modelo\Descritor();

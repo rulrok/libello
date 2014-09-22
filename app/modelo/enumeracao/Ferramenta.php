@@ -8,15 +8,15 @@ final class Ferramenta {
 
     const __default = self::DESCONHECIDO;
     const __length = 8;
-    const DESCONHECIDO = 0;
-    const CONTROLE_USUARIOS = 1;
-    const CURSOS_E_POLOS = 2;
-    const CONTROLE_LIVROS = 3;
-    const CONTROLE_EQUIPAMENTOS = 4;
-    const CONTROLE_DOCUMENTOS = 5;
-    const CONTROLE_VIAGENS = 6;
-    const TAREFAS = 7;
-    const GALERIA_IMAGENS = 8;
+    const DESCONHECIDO = 0x00;
+    const CONTROLE_USUARIOS = 0x01;
+    const CURSOS_E_POLOS = 0x02;
+    const CONTROLE_LIVROS = 0x3;
+    const CONTROLE_EQUIPAMENTOS = 0x04;
+    const CONTROLE_DOCUMENTOS = 0x05;
+    const CONTROLE_VIAGENS = 0x06;
+    const TAREFAS = 0x07;
+    const GALERIA_IMAGENS = 0x08;
 
     public static function get_codigo_ferramenta($nomeFerramenta) {
         $nomeFerramenta = strtolower($nomeFerramenta);

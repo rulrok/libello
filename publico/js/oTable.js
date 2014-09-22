@@ -120,11 +120,11 @@ function configurarTabela(parametros) {
         nCloneTd.innerHTML = '<img src="publico/imagens/details_open.png" alt="Exibir detalhes">';
         nCloneTd.className = "center";
 
-        $('#' + idTabela + ' thead tr').each(function() {
+        $('#' + idTabela + ' thead tr').each(function () {
             this.insertBefore(nCloneTh, this.childNodes[0]);
         });
 
-        $('#' + idTabela + ' tbody tr').each(function() {
+        $('#' + idTabela + ' tbody tr').each(function () {
             this.insertBefore(nCloneTd.cloneNode(true), this.childNodes[0]);
         });
 
@@ -134,7 +134,7 @@ function configurarTabela(parametros) {
          * Note that the indicator for showing which row is open is not controlled by DataTables,
          * rather it is done here
          */
-        $('#' + idTabela + ' tbody td img').on('click', function() {
+        $('#' + idTabela + ' tbody td img').on('click', function () {
 //            console.log($(this).parents('tr')[0])
             var nTr = $(this).parents('tr')[0];
             if (oTable.fnIsOpen(nTr))
@@ -152,7 +152,7 @@ function configurarTabela(parametros) {
         });
 
         //Duplo clique para abrir as descrições
-        oTable.$('tr').dblclick(function() {
+        oTable.$('tr').dblclick(function () {
             console.log()
             var nTr = $(this)[0];
             var imagem = $($(this).children('td')[0]).children('img')[0];
@@ -176,7 +176,7 @@ function configurarTabela(parametros) {
 //        }
                 );
     }
-    $(window).bind('resize', function() {
+    $(window).bind('resize', function () {
         try {
             oTable.fnAdjustColumnSizing();
         } catch (e) {
@@ -198,14 +198,14 @@ function configurarTabela(parametros) {
 
     selectedElement = selecionarPrimeiraLinha(idTabela);
 
-    var delay = function() {
+    var delay = function () {
         configurarBusca(idTabela);
     };
     setTimeout(delay, 1000);
 
     function configurarBusca(id) {
         var aux = $("#" + id + "_wrapper input[aria-controls]");
-        $(aux).on('keyup', function() {
+        $(aux).on('keyup', function () {
             selectedElement = selecionarPrimeiraLinha(id);
 //        if ($('.row_selected').size() == 0) {
 //            desabilitarBotoes();
@@ -216,14 +216,14 @@ function configurarTabela(parametros) {
 
     }
 
-    oTable.$('tr').mousedown(function(e) {
+    oTable.$('tr').mousedown(function (e) {
         oTable.$('tr.row_selected').removeClass('row_selected');
         $(this).addClass('row_selected');
         habilitarBotoes();
         selectedElement = this;
     });
 
-    $(".btn-editar").on('mousedown', function() {
+    $(".btn-editar").on('mousedown', function () {
         if ($('.row_selected').size() == 0) {
             return false;
         }
@@ -231,7 +231,7 @@ function configurarTabela(parametros) {
         carregarPagina(acaoEditar + id);
     });
 
-    $(".btn-deletar").on('click', function() {
+    $(".btn-deletar").on('click', function () {
         if ($('.row_selected').size() == 0) {
             return false;
         }
@@ -245,10 +245,11 @@ function configurarTabela(parametros) {
 
 
                     processarMensagens(data);
+
                     if (data.status === "sucesso") {
                         var pos = oTable.fnGetPosition(selectedElement);
                         oTable.fnDeleteRow(pos);
-                        $($("tr.odd")[0]).addClass(function() {
+                        $($("tr.odd")[0]).addClass(function () {
                             var $this = $(this.children[0]);
                             if (!$this.hasClass("dataTables_empty")) {
                                 return "row_selected";
@@ -267,7 +268,7 @@ function configurarTabela(parametros) {
         }
     });
 
-    $(".btn-ativar").on('click', function() {
+    $(".btn-ativar").on('click', function () {
         if ($('.row_selected').size() == 0) {
             return false;
         }
@@ -285,7 +286,7 @@ function configurarTabela(parametros) {
                     if (data.status === "sucesso") {
                         var pos = oTable.fnGetPosition(selectedElement);
                         oTable.fnDeleteRow(pos);
-                        $($("tr.odd")[0]).addClass(function() {
+                        $($("tr.odd")[0]).addClass(function () {
                             var $this = $(this.children[0]);
                             if (!$this.hasClass("dataTables_empty")) {
                                 return "row_selected";
@@ -306,13 +307,13 @@ function configurarTabela(parametros) {
         }
     });
 
-    $(".visualizarPermissoes").on('click', function() {
+    $(".visualizarPermissoes").on('click', function () {
         var id = $("tr.row_selected>.campoID").html();
         $("#myModal").load("index.php?c=usuarios&a=consultarpermissoes&userID=" + id).modal();
 
     });
 
-    $(".btn-saida").on('click', function() {
+    $(".btn-saida").on('click', function () {
         if ($('.row_selected').size() == 0) {
             return false;
         }
@@ -320,7 +321,7 @@ function configurarTabela(parametros) {
         carregarPagina(acaoSaida + id);
     });
 
-    $(".btn-retorno").on('click', function() {
+    $(".btn-retorno").on('click', function () {
         if ($('.row_selected').size() == 0) {
             return false;
         }
@@ -328,7 +329,7 @@ function configurarTabela(parametros) {
         carregarPagina(acaoRetorno + id);
     });
 
-    $(".btn-baixa").on('click', function() {
+    $(".btn-baixa").on('click', function () {
         if ($('.row_selected').size() == 0) {
             return false;
         }

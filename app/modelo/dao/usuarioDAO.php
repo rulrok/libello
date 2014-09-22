@@ -219,7 +219,7 @@ class usuarioDAO extends abstractDAO {
         $params = array(':token' => [$token, \PDO::PARAM_INT]);
         $resultado = $this->executarSelect($sql, $params, false);
         if ($resultado === null) {
-            throw new Exception('Token não encontrado');
+            throw new \Exception('Token não encontrado');
         }
         if (is_array($resultado)) {
             $resultado = $resultado[0];

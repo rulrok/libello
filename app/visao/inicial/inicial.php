@@ -70,6 +70,7 @@
         <script src="publico/js/jquery/jquery.form.js"></script>
         <script src="publico/js/jquery/jquery.chosen.js"></script>
         <script src="publico/js/jquery/jquery.center.js"></script>
+        <script src="publico/js/mensagens.js"></script>
         <script src="publico/js/mainScript.js"></script>
         <script src="publico/js/validarCampos.js"></script>
         <script src="publico/js/ajaxForms.js"></script>

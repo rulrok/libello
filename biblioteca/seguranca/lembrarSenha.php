@@ -5,9 +5,11 @@ require_once APP_DIR . "modelo/dao/usuarioDAO.php";
 require_once APP_DIR . "modelo/Utils.php";
 require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/criptografia.php';
 
+use \app\modelo as Modelo;
+
 if (filter_has_var(INPUT_POST, 'email') && filter_input(INPUT_POST, 'email') != NULL && filter_input(INPUT_POST, 'email') != "") :
     $email = filter_input(INPUT_POST, 'email');
-    $usuarioDAO = new usuarioDAO();
+    $usuarioDAO = new Modelo\usuarioDAO();
     $usuario = $usuarioDAO->recuperarUsuario($email);
     if ($usuario && $usuario !== null) :
         try {
@@ -30,7 +32,7 @@ if (filter_has_var(INPUT_POST, 'email') && filter_input(INPUT_POST, 'email') != 
 
             require APP_LIBRARY_ABSOLUTE_DIR . 'PHPMailer/Email.php';
 
-            $mail = new Email();
+            $mail = new \Email();
             $mail->definirAssunto($assunto);
             $mail->definirDestinatario($usuario->get_email(), $usuario->get_PNome() . " " . $usuario->get_UNome());
             $mail->definirMensagem($mensagem);
@@ -46,7 +48,7 @@ if (filter_has_var(INPUT_POST, 'email') && filter_input(INPUT_POST, 'email') != 
                     echo "Email enviado. Consulte sua caixa de entrada.";
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             registrar_erro($e->getMessage());
             echo "Erro desconhecido";
         }
@@ -58,16 +60,16 @@ elseif (filter_has_var(INPUT_POST, 'novaSenha') && filter_input(INPUT_POST, 'nov
     $novaSenha = filter_input(INPUT_POST, 'novaSenha');
 
     try {
-        $usuarioDAO = new usuarioDAO();
+        $usuarioDAO = new Modelo\usuarioDAO();
         $idUsuario = $usuarioDAO->consultarIDUsuario_RecuperarSenha($token);
         $email = $usuarioDAO->descobrirEmail($idUsuario);
-        $usuario = new Usuario();
+        $usuario = new Modelo\Usuario();
         $usuario->set_senha(encriptarSenha($novaSenha));
         $usuarioDAO->atualizar($email, $usuario);
         $usuarioDAO->removerToken($token);
 
         echo "<p>Senha alterada com sucesso!</p>";
-    } catch (Exception $e) {
+    } catch (\Exception $e) {
         echo "<p>Token inválido</p>";
     }
 else:

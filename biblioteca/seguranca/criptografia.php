@@ -29,7 +29,6 @@ function fnDecrypt($sValue, $sSecretKey = SECRET) {
         }
         return $fValue;
     } else {
-        //TODO Criar tabela de códigos de erro
         die("Código inválido. Erro 0x0060");
     }
 }

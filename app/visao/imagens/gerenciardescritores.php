@@ -256,6 +256,7 @@
 
                             //TODO A partir da versão beta-10 do jsTree, duas árvore diferentes com o mesmo ID são possíveis.
                             //Quando for estável o sulficiente, atualizar para essa versão ou maior para não precisar adicionar a_ ao id dos componentes
+                            //Isso é uma sugestão, visto que funciona bem atualmente @Reuel
                             for (var i = 0; i < jsonAux.length; i++) {
                                 jsonAux[i].id = jsonAux[i].id != "#" ? "a_" + jsonAux[i].id : "#";
                                 jsonAux[i].parent = jsonAux[i].parent != "#" ? "a_" + jsonAux[i].parent : "#";

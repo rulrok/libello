@@ -22,14 +22,14 @@ class pesquisa {
         return $this->temResultados;
     }
 
-    private function ofuscarIds() {
+    private function _ofuscarIds() {
         foreach ($this->resultados as $key => $value) {
             $this->resultados[$key]['idImagem'] = fnEncrypt($value['idImagem']);
             $this->resultados[$key][0] = $this->resultados[$key]['idImagem'];
         }
     }
 
-    private function processarTipos() {
+    private function _processarTipos() {
 
         function getExtension($str) {
             $i = strrpos($str, ".");
@@ -46,7 +46,7 @@ class pesquisa {
         }
     }
 
-    private function criarPaginacao($pagina, $ultimaPagina) {
+    private function _criarPaginacao($pagina, $ultimaPagina) {
         $centerPages = "";
         $centerPages .= '<div class="pagination pagination-centered "><ul>';
         $ant = $pagina - 1;
@@ -134,9 +134,9 @@ class pesquisa {
 
         $this->resultados = $imagensDAO->pesquisarImagem($termoBusca, $limite, $acessoTotal, $autor, $dataInicio, $dataFim);
 
-        $this->criarPaginacao($pagina, $ultimaPagina);
-        $this->ofuscarIds();
-        $this->processarTipos();
+        $this->_criarPaginacao($pagina, $ultimaPagina);
+        $this->_ofuscarIds();
+        $this->_processarTipos();
         $this->tempoFinal = microtime(true);
     }
 

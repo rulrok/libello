@@ -15,7 +15,7 @@ try {
     $sql1 = "DELETE FROM imagem_descritor_aux_inserir";
     $stmt1 = $conn->prepare($sql1);
     $stmt1->execute();
-} catch (Exception $e) {
+} catch (\Exception $e) {
     registrar_erro("Falha ao limpar tabela imagem_descritor_aux_inserir");
 }
 try {
@@ -23,7 +23,7 @@ try {
     $sql2 = "DELETE FROM imagem_descritor_aux_remover";
     $stmt2 = $conn->prepare($sql2);
     $stmt2->execute();
-} catch (Exception $e) {
+} catch (\Exception $e) {
     registrar_erro("Falha ao limpar tabela imagem_descritor_aux_remover");
 }
 

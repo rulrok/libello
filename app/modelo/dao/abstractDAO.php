@@ -64,7 +64,7 @@ abstract class abstractDAO {
                 }
             }
             return $retorno;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
 //            print_r($e);
             registrar_erro($e->getMessage());
             return null;
@@ -92,7 +92,7 @@ abstract class abstractDAO {
             } else {
                 return $stmt->rowCount();
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             //TODO Armazenar exceção para depuração do sistema
 //            print_r($e);
             registrar_erro($e->getMessage());
