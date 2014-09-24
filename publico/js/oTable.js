@@ -19,6 +19,11 @@ function habilitarBotoes() {
     $('.btn-ativar').prop('disabled', false);
 }
 
+
+//TODO padronizar nome de classe de butões para tornar essa função genérica para
+//todas as página que possuem botões de ação. O problema de classes com o nome btn
+//é que o bootstrap faz uso de classes com esses nomes
+
 /*
  * Função que configura a classe do botões das páginas de gerência para dar a 
  * aparência de botões desabilitados
@@ -166,7 +171,7 @@ function configurarTabela(parametros) {
                 imagem.src = "publico/imagens/details_close.png";
                 oTable.fnOpen(nTr, fnFormatDetails(oTable, nTr), 'details');
             }
-        })
+        });
     } else {
         oTable = $("#" + idTabela).dataTable(
                 definicoesTabela
@@ -207,11 +212,6 @@ function configurarTabela(parametros) {
         var aux = $("#" + id + "_wrapper input[aria-controls]");
         $(aux).on('keyup', function () {
             selectedElement = selecionarPrimeiraLinha(id);
-//        if ($('.row_selected').size() == 0) {
-//            desabilitarBotoes();
-//        } else {
-//            habilitarBotoes();
-//        }
         });
 
     }
@@ -223,13 +223,6 @@ function configurarTabela(parametros) {
         selectedElement = this;
     });
 
-    $(".btn-editar").on('mousedown', function () {
-        if ($('.row_selected').size() == 0) {
-            return false;
-        }
-        var id = $("tr.row_selected>.campoID").html();
-        carregarPagina(acaoEditar + id);
-    });
 
     $(".btn-deletar").on('click', function () {
         if ($('.row_selected').size() == 0) {
@@ -237,16 +230,12 @@ function configurarTabela(parametros) {
         }
         if (confirm('Deseja realmente fazer isso?')) {
             var id = $("tr.row_selected>.campoID").html();
-            var data = ajax(acaoDeletar + id, null, false, false);
-            if (data !== null && data !== undefined) {
-                data = filtrarJSON(data);
 
-                if (data !== undefined && data.status !== undefined) {
-
-
-                    processarMensagens(data);
-
-                    if (data.status === "sucesso") {
+            $.ajax({
+                url: acaoDeletar + id
+                , success: function () {
+                    var status = obterStatusOperacao()
+                    if (status == Mensagem.prototype.Tipo.SUCESSO) {
                         var pos = oTable.fnGetPosition(selectedElement);
                         oTable.fnDeleteRow(pos);
                         $($("tr.odd")[0]).addClass(function () {
@@ -258,13 +247,8 @@ function configurarTabela(parametros) {
                             }
                         });
                     }
-                } else {
-                    showPopUp("Houve algum problema na resposta do servidor.", "pop_erro");
                 }
-            } else {
-                showPopUp("Houve algum problema na resposta do servidor.", "pop_erro");
-            }
-
+            });
         }
     });
 
@@ -274,16 +258,11 @@ function configurarTabela(parametros) {
         }
         if (confirm('Deseja realmente fazer isso?')) {
             var id = $("tr.row_selected>.campoID").html();
-            var data = ajax(acaoAtivar + id, null, false, false);
-            if (data !== null && data !== undefined) {
-                data = filtrarJSON(data);
-
-
-                if (data !== undefined && data.status !== undefined) {
-
-
-                    processarMensagens(data);
-                    if (data.status === "sucesso") {
+            $.ajax({
+                url: acaoAtivar + id
+                , success: function () {
+                    var status = obterStatusOperacao()
+                    if (status == Mensagem.prototype.Tipo.SUCESSO) {
                         var pos = oTable.fnGetPosition(selectedElement);
                         oTable.fnDeleteRow(pos);
                         $($("tr.odd")[0]).addClass(function () {
@@ -295,16 +274,18 @@ function configurarTabela(parametros) {
                             }
                         });
                     }
-                } else {
-                    showPopUp("Houve algum problema na resposta do servidor.", "pop_erro");
                 }
-
-
-            } else {
-                showPopUp("Houve algum problema na resposta do servidor.", "pop_erro");
-            }
+            });
 
         }
+    });
+
+    $(".btn-editar").on('mousedown', function () {
+        if ($('.row_selected').size() == 0) {
+            return false;
+        }
+        var id = $("tr.row_selected>.campoID").html();
+        carregarPagina(acaoEditar + id);
     });
 
     $(".visualizarPermissoes").on('click', function () {

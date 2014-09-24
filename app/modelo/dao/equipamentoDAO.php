@@ -42,7 +42,7 @@ class equipamentoDAO extends abstractDAO {
             $idEquipamento = $idEquipamento['equipamentoID'];
         }
 
-        $sql = "SELECT * from equipamento WHERE idEquipamento = :idEquipamento";
+        $sql = "SELECT * from equipamento WHERE idEquipamento = :idEquipamento WHERE quantidade > 0";
         $params = array(
             ':idEquipamento' => [$idEquipamento, \PDO::PARAM_INT]
         );
@@ -51,10 +51,11 @@ class equipamentoDAO extends abstractDAO {
 
     public function recuperarSaidaEquipamento($saidaID) {
         $saida = $this->consultarSaidas("*", "es.idSaida = " . $saidaID);
-        if (is_array($saida)) {
-            $saida = $saida[0];
+        if (!empty($saida)) {
+            return $saida[0];
+        } else {
+            return null;
         }
-        return $saida;
     }
 
     public function removerBaixa($baixaID) {
@@ -97,7 +98,7 @@ class equipamentoDAO extends abstractDAO {
     public function consultarBaixas($colunas = "*", $condicao = null) {
 
         if ($condicao == null) {
-            $condicao = "";
+            $condicao = "WHERE quantidadeBaixa > 0";
         } else {
             $condicao = "WHERE " . $condicao;
         }

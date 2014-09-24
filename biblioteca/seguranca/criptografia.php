@@ -22,14 +22,14 @@ function fnDecrypt($sValue, $sSecretKey = SECRET) {
         if ($fValue !== false) {
             $fValue = preg_replace("#@[a-zA-Z]+[0-9]+#", "", $fValue);
             if ($fValue === false) {
-                die("Erro ao decodificar ID. Erro 0x0062");
+                die("Erro ao decodificar ID. Erro 0x0003");
             }
         } else {
-            die("Erro ao decodificar ID. Erro 0x0061");
+            die("Erro ao decodificar ID. Erro 0x0002");
         }
         return $fValue;
     } else {
-        die("Código inválido. Erro 0x0060");
+        die("Código inválido. Erro 0x0001");
     }
 }
 

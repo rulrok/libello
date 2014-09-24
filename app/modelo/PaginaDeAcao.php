@@ -51,9 +51,6 @@ abstract class PaginaDeAcao {
     }
 
     public function adicionarMensagemSucesso($mensagem, $fixa = false) {
-        if ($this->status !== PaginaDeAcao::ERRO) {
-            $this->status = PaginaDeAcao::SUCESSO;
-        }
         $this->adicionarMensagem((new Mensagem())->set_mensagemSucesso($mensagem, $fixa));
     }
 
@@ -75,6 +72,9 @@ abstract class PaginaDeAcao {
     }
 
     private function adicionarMensagem(Mensagem $mensagem) {
+        if ($this->status !== PaginaDeAcao::ERRO) {
+            $this->status = PaginaDeAcao::SUCESSO;
+        }
         $this->mensagensRetorno[] = $mensagem;
     }
 

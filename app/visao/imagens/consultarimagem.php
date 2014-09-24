@@ -209,7 +209,6 @@
                     dataType: 'JSON',
                     data: 'query=' + extractor(query),
                     success: function(data) {
-                        console.log(data)
                         process(data);
                     }
                     , error : function(data){

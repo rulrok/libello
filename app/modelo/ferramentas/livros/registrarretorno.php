@@ -6,7 +6,7 @@ include_once APP_DIR . "modelo/verificadorFormularioAjax.php";
 
 use \app\modelo as Modelo;
 
-class registrarsaida extends Modelo\verificadorFormularioAjax {
+class registrarretorno extends Modelo\verificadorFormularioAjax {
 
     public function _validar() {
         $saidaID = fnDecrypt(filter_input(INPUT_POST, 'saidaID'));
@@ -25,9 +25,12 @@ class registrarsaida extends Modelo\verificadorFormularioAjax {
             $ocorreu_erro = true;
         }
         $recuperarSaidalivro = $livroDAO->recuperarSaidalivro($saidaID);
-        if ($recuperarSaidalivro['quantidadeSaida'] != $quantidadeMaxima) {
+        if (!is_null($recuperarSaidalivro) && $recuperarSaidalivro['quantidadeSaida'] != $quantidadeMaxima) {
             $this->adicionarMensagemErro("Dados inconsistentes");
             $ocorreu_erro = true;
+        } else if (is_null($recuperarSaidalivro)){
+            $this->adicionarMensagemErro("O retorno desse livro provavelmente já foi cadastrado previamente.", true);
+            $this->abortarExecucao();
         }
         if ($quantidade <= 0 || $quantidade > $quantidadeMaxima) {
             $this->adicionarMensagemErro("Quantidade informada inválida");
@@ -40,7 +43,8 @@ class registrarsaida extends Modelo\verificadorFormularioAjax {
 
         if ($livroDAO->cadastrarRetorno($saidaID, $dataRetorno, $quantidade, $observacoes)) {
             $id = $livroDAO->obterUltimoIdInserido();
-            $livroDAO->registrarRetorno($id);
+            //TODO Sistema de registro de ações precisa ser completamente remodelado
+//            $livroDAO->registrarRetorno($id);
             if ($quantidade > 1) {
                 $this->adicionarMensagemSucesso("Livros Retornados");
             } else {

@@ -45,44 +45,36 @@
 
 <script>
     //Este script configura as ações para os botões da página.
-    $(document).ready(function() {
+    $(document).ready(function () {
 
 
         $("#botao_limpar").tooltip({placement: 'top'});
-        $("#botao_limpar").on('click', function() {
+        $("#botao_limpar").on('click', function () {
             $('#busca_descritor').val('').trigger('keyup');
         });
 
-        $("#mostrar_todos").on('click', function() {
+        $("#mostrar_todos").on('click', function () {
             $(this).addClass("hidden");
             $("#ocultar_todos").removeClass("hidden");
             arvoreAtual.jstree(true).open_all(undefined, false);
         });
 
-        $("#ocultar_todos").on('click', function() {
+        $("#ocultar_todos").on('click', function () {
             $(this).addClass("hidden");
             $("#mostrar_todos").removeClass("hidden");
             arvoreAtual.jstree().close_all();
-            arvoreAtual.jstree(true).open_node(arvoreAtual.jstree(true).get_json('#'), undefined, false)
+            arvoreAtual.jstree(true).open_node(arvoreAtual.jstree(true).get_json('#'), undefined, false);
         });
 
-        //Fechar todos os Nodes exceto a raiz
-        //
-        //Abrir todos os Nodes
-        //
-
-        
         $.ajax({
             async: true,
             type: "GET",
             url: "index.php?c=imagens&a=arvoredescritores",
-            dataType: "json",
-            success: function(json) {
-                //TODO Utilizar o sistema centralizado de respostas do servidor ao invés do um ajax próprio
-                criarArvore(JSON.parse(json[1]['mensagem']));
+            success: function (json) {
+                criarArvore(obterResposta('img_arvore', true));
                 configurarBarraFerramentas('#jstree_div');
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
                 alert(xhr.status);
                 alert(thrownError);
                 //TODO fazer algo indicando que houve um erro
@@ -122,11 +114,11 @@
         arvoreAtual.jstree(true).search();
         var to = false;
         $('#busca_descritor').off('keyup');
-        $('#busca_descritor').keyup(function() {
+        $('#busca_descritor').keyup(function () {
             if (to) {
                 clearTimeout(to);
             }
-            to = setTimeout(function() {
+            to = setTimeout(function () {
                 var v = $('#busca_descritor').val();
                 arvoreAtual.jstree(true).search(v);
             }, 250);
@@ -136,16 +128,16 @@
     //novo descritor que irá substituir o atual descritor removido.
     function escolherSubstituto() {
 
-        $("#botao_cancelar").on('click', function() {
+        $("#botao_cancelar").on('click', function () {
             configurarBarraFerramentas('#jstree_div');
             $('#wrap_aux').addClass('hidden');
             $('#jstree_div').removeClass('hidden', 200);
-            setTimeout(function() {
+            setTimeout(function () {
                 $('#jstree_div_aux').jstree(true).destroy();
                 $("#botao_cancelar,#botao_confirmar").off('click');
             }, 400);
         });
-        $("#botao_confirmar").on('click', function() {
+        $("#botao_confirmar").on('click', function () {
             confirmadoRemocao = true;
             configurarBarraFerramentas('#jstree_div');
             $('#jstree_div').jstree(true).delete_node($('#jstree_div').jstree(true).get_selected());
@@ -165,10 +157,10 @@
             , url: "index.php?c=imagens&a=renomearDescritor"
             , dataType: "json"
             , data: {'id': id, 'novoNome': novoNome}
-            , success: function(json) {
+            , success: function (json) {
                 sucesso = json;
             }
-            , error: function(xhr, ajaxOptions, thrownError) {
+            , error: function (xhr, ajaxOptions, thrownError) {
                 sucesso = false;
             }
         });
@@ -183,7 +175,7 @@
             , url: "index.php?c=imagens&a=criarDescritor"
             , dataType: "json"
             , data: {'idPai': pai.id, 'nome': novoDescritor.text}
-            , success: function(json) {
+            , success: function (json) {
                 if (json.sucesso) {
                     ultimoDescritorCriado = new Descritor(json.id, json.nome, json.nivel);
                 } else {
@@ -192,7 +184,7 @@
                 sucesso = json.sucesso;
                 return json;
             }
-            , error: function(xhr, ajaxOptions, thrownError) {
+            , error: function (xhr, ajaxOptions, thrownError) {
                 sucesso = false;
                 return false;
             }
@@ -207,11 +199,11 @@
             , url: "index.php?c=imagens&a=moverDescritor"
             , dataType: "json"
             , data: {'idDescritor': descritor.id, nivel: descritor.original.nivel, 'idNovoPai': idNovoPai, 'idAntigoPai': idAntigoPai}
-            , success: function(json) {
+            , success: function (json) {
                 sucesso = json;
                 return json;
             }
-            , error: function(xhr, ajaxOptions, thrownError) {
+            , error: function (xhr, ajaxOptions, thrownError) {
                 sucesso = false;
                 return false;
             }
@@ -226,11 +218,11 @@
             , url: "index.php?c=imagens&a=removerDescritor"
             , dataType: "json"
             , data: {'idDescritor': idDescritor, 'idDescritorSubstituto': idDescritorSubstituto}
-            , success: function(json) {
+            , success: function (json) {
                 sucesso = json;
                 return json;
             }
-            , error: function(xhr, ajaxOptions, thrownError) {
+            , error: function (xhr, ajaxOptions, thrownError) {
                 sucesso = false;
                 return false;
             }
@@ -248,10 +240,10 @@
             type: "GET",
             url: "index.php?c=imagens&a=arvoredescritores&completa=true&descritorExcluir=" + idIgnorar,
             dataType: "json",
-            success: function(jsonData) {
+            success: function (jsonData) {
                 $('#jstree_div_aux').jstree({
                     core: {
-                        data: function(node, callback) {
+                        data: function (node, callback) {
                             var jsonAux = jsonData;
 
                             //TODO A partir da versão beta-10 do jsTree, duas árvore diferentes com o mesmo ID são possíveis.
@@ -276,11 +268,11 @@
                 $('#wrap_aux').removeClass('hidden', 200);
                 configurarBarraFerramentas('#jstree_div_aux');
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
                 alert("Erro. Recarregue a página!");
             }
         });
-        $('#jstree_div_aux').on("changed.jstree", function(e, data) {
+        $('#jstree_div_aux').on("changed.jstree", function (e, data) {
             if (data.action == "select_node") {
                 if (data.node.original.nivel != 4) {
                     $("#botao_confirmar").addClass('disabled');
@@ -303,14 +295,14 @@
         "separator_after": true,
         "_disabled": false, //(this.check("create_node", data.reference, {}, "last")),
         "label": "Criar descritor",
-        "action": function(data) {
+        "action": function (data) {
             var nomebase = "Novo descritor";
             var inst = $.jstree.reference(data.reference),
                     obj = inst.get_node(data.reference);
             var child = inst.get_children_dom(data.reference);
 
             var maiorNumero = -1;
-            $(child).each(function(index, data) {
+            $(child).each(function (index, data) {
                 var nomeDescritor = inst.get_node(data).text;
                 if (nomebase == nomeDescritor.substr(0, nomebase.length)) {
                     var numeroEncontrado = parseInt(nomeDescritor.substr(nomebase.length, nomeDescritor.length));
@@ -329,8 +321,8 @@
                 nomebase = nomebase + " " + maiorNumero;
             }
 
-            inst.create_node(obj, {text: nomebase}, "last", function(new_node) {
-                setTimeout(function() {
+            inst.create_node(obj, {text: nomebase}, "last", function (new_node) {
+                setTimeout(function () {
                     inst.edit(new_node);
                 }, 0);
             });
@@ -346,7 +338,7 @@
          "shortcut_label"	: 'F2',
          "icon"				: "glyphicon glyphicon-leaf",
          */
-        "action": function(data) {
+        "action": function (data) {
             var inst = $.jstree.reference(data.reference),
                     obj = inst.get_node(data.reference);
             inst.edit(obj);
@@ -358,7 +350,7 @@
         "separator_after": false,
         "_disabled": false, //(this.check("delete_node", data.reference, this.get_parent(data.reference), "")),
         "label": "Remover",
-        "action": function(data) {
+        "action": function (data) {
             var inst = $.jstree.reference(data.reference),
                     obj = inst.get_node(data.reference);
             if (inst.is_selected(obj)) {
@@ -391,7 +383,7 @@
                     , icons: false
                 }
                 , "multiple": false
-                , "check_callback": function(operation, node, node_parent, node_position) {
+                , "check_callback": function (operation, node, node_parent, node_position) {
                     var check_passed = false;
                     switch (operation) {
                         case "move_node":
@@ -422,7 +414,7 @@
                 }
             }
             , contextmenu: {//Menu com clique direito
-                items: function(node) {
+                items: function (node) {
                     if (node.parent == "#") {
                         return {
                             "create": menuCriar
@@ -443,14 +435,14 @@
 
             }
             , dnd: {//Drag 'n' Drop
-                is_draggable: function(node) {
+                is_draggable: function (node) {
                     if (node.parent == "#" || node.original.nivel == 1) {
                         return false;
                     }
                     return true;
                 }
             }
-            , "plugins": ["contextmenu", "unique", "json_data", "dnd", "search","sort"]
+            , "plugins": ["contextmenu", "unique", "json_data", "dnd", "search", "sort"]
         });
 
 
@@ -469,7 +461,7 @@
 //                console.log(data);
 //            });
 
-        $('#jstree_div').on("move_node.jstree", function(e, data) {
+        $('#jstree_div').on("move_node.jstree", function (e, data) {
             if (!moverDescritor(data.node, data.parent, data.old_parent)) {
                 showPopUp("Falha ao mover.<br/>Recarregue a página.", "erro");
                 return false;
@@ -478,7 +470,7 @@
             }
         });
 
-        $('#jstree_div').on("delete_node.jstree", function(e, data) {
+        $('#jstree_div').on("delete_node.jstree", function (e, data) {
             configurarBarraFerramentas('#jstree_div');
             $('#wrap_aux').toggleClass('hidden', 200);
             $('#jstree_div').removeClass('hidden', 200);
@@ -486,7 +478,7 @@
             $("#botao_cancelar,#botao_confirmar").off('click');
         });
 
-        $('#jstree_div').on("create_node.jstree", function(e, data) {
+        $('#jstree_div').on("create_node.jstree", function (e, data) {
             if (ultimoDescritorCriado !== undefined) {
                 var $tree = $("#jstree_div").jstree(true);
                 $tree.set_id(data.node, ultimoDescritorCriado.id);

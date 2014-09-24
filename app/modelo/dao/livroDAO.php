@@ -1,5 +1,7 @@
 <?php
+
 namespace app\modelo;
+
 require_once 'abstractDAO.php';
 require_once APP_DIR . "modelo/vo/Livro.php";
 require_once APP_DIR . 'modelo/enumeracao/TipoEventoLivro.php';
@@ -17,7 +19,7 @@ class livroDAO extends abstractDAO {
 
         $nome = $livro->get_nomeLivro();
         $quantidade = $livro->get_quantidade();
-        
+
         $dataEntrada = $livro->get_dataEntrada();
         if ($dataEntrada == "") {
             $dataEntrada = null;
@@ -31,7 +33,7 @@ class livroDAO extends abstractDAO {
         $numeroPatrimonio = $livro->get_numeroPatrimonio();
 
         $grafica = $livro->get_grafica();
-        
+
         $area = $livro->get_area();
 
         $params = array(
@@ -74,7 +76,7 @@ class livroDAO extends abstractDAO {
             $idLivro = $idLivro['livroID'];
         }
 
-        $sql = "SELECT * from livro WHERE idLivro = :idLivro";
+        $sql = "SELECT * from livro WHERE idLivro = :idLivro AND quantidade > 0";
         $params = array(
             ':idLivro' => [$idLivro, \PDO::PARAM_INT]
         );
@@ -87,7 +89,12 @@ class livroDAO extends abstractDAO {
      * @return array
      */
     public function recuperarSaidaLivro($saidaID) {
-        return $this->consultarSaidas('*', "ls.idSaida = $saidaID")[0];
+        $resultado = $this->consultarSaidas('*', "ls.idSaida = $saidaID");
+        if (!empty($resultado)) {
+            return $resultado[0];
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -159,7 +166,7 @@ class livroDAO extends abstractDAO {
     public function consultarBaixas($colunas = "*", $condicao = null) {
 
         if ($condicao == null) {
-            $condicao = "";
+            $condicao = "WHERE quantidadeBaixa > 0";
         } else {
             $condicao = "WHERE $condicao";
         }

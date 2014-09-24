@@ -68,7 +68,10 @@ class ControladorEquipamentos extends MVC\Controlador {
             $this->visao->equipamentoEditavel = $equipamentoDAO->equipamentoPodeTerTipoAlterado($idEquipamento);
             $this->visao->equipamentoID = $_REQUEST['equipamentoID'];
             $equipamento = $equipamentoDAO->recuperarEquipamento($idEquipamento);
-
+            if (is_null($equipamento)) {
+                $this->adicionarMensagemErro("Esse equipamento não existe mais.", true);
+                $this->abortarExecucao();
+            }
             $this->visao->descricao = $equipamento->get_descricao();
             $this->visao->equipamento = $equipamento->get_nomeEquipamento();
             $this->visao->quantidade = $equipamento->get_quantidade();
@@ -121,10 +124,16 @@ class ControladorEquipamentos extends MVC\Controlador {
             $idSaida = fnDecrypt($_REQUEST['saidaID']);
             $equipamentoDAO = new Modelo\equipamentoDAO();
             $saida = $equipamentoDAO->recuperarSaidaEquipamento($idSaida);
-
+            if (is_null($saida)) {
+                $this->adicionarMensagemErro("Esse equipamento provavelmente já foi retornado.");
+                $this->abortarExecucao();
+            }
             $equipamentoID = $saida['equipamento'];
             $equipamento = $equipamentoDAO->recuperarEquipamento($equipamentoID);
-
+            if (is_null($equipamento)) {
+                $this->adicionarMensagemErro("Esse equipamento não existe mais.", true);
+                $this->abortarExecucao();
+            }
             $this->visao->saidaID = fnEncrypt($idSaida);
             $this->visao->equipamentoID = fnEncrypt($equipamentoID);
             $this->visao->equipamento = $equipamento;
@@ -132,7 +141,8 @@ class ControladorEquipamentos extends MVC\Controlador {
             $this->visao->dataSaida = $saida['dataSaida'];
             $this->renderizar();
         } else {
-            die("Acesso indevido");
+            $this->adicionarMensagemErro("ID não informado", true);
+            $this->abortarExecucao();
         }
     }
 
@@ -157,12 +167,17 @@ class ControladorEquipamentos extends MVC\Controlador {
         if (filter_has_var(INPUT_GET, 'equipamentoID')) {
             $this->visao->comboboxPapeis = Modelo\ComboBoxPapeis::montarTodosPapeis();
             $this->visao->equipamento = (new Modelo\equipamentoDAO())->recuperarEquipamento(fnDecrypt(filter_input(INPUT_GET, 'equipamentoID')));
+            if (is_null($this->visao->equipamento)) {
+                $this->adicionarMensagemErro("Esse livro não existe mais.", true);
+                $this->abortarExecucao();
+            }
             $this->visao->equipamentoID = fnEncrypt($this->visao->equipamento->get_idEquipamento());
             $this->visao->responsavel = Modelo\ComboBoxUsuarios::listarTodosUsuarios();
             $this->visao->polos = Modelo\ComboBoxPolo::montarTodosOsPolos();
             $this->renderizar();
         } else {
-            die("Acesso indevido.");
+            $this->adicionarMensagemErro("ID não informado", true);
+            $this->abortarExecucao();
         }
     }
 
@@ -179,7 +194,12 @@ class ControladorEquipamentos extends MVC\Controlador {
     public function acaoNovabaixa() {
         $this->visao->acessoMinimo = Modelo\Permissao::ESCRITA;
         if (filter_has_var(INPUT_GET, 'equipamentoID')) {
-            $equipamento = (new Modelo\equipamentoDAO())->recuperarEquipamento(fnDecrypt(filter_input(INPUT_GET, 'equipamentoID')));
+            $equipamentoDAO = new Modelo\equipamentoDAO();
+            $equipamento = $equipamentoDAO->recuperarEquipamento(fnDecrypt(filter_input(INPUT_GET, 'equipamentoID')));
+            if (is_null($equipamento)) {
+                $this->adicionarMensagemErro("Esse equipamento não existe mais.", true);
+                $this->abortarExecucao();
+            }
             $this->visao->equipamento = $equipamento;
             $this->visao->dataMinima = $equipamento->get_dataEntrada();
             if ($this->visao->dataMinima == "") {
@@ -199,7 +219,8 @@ class ControladorEquipamentos extends MVC\Controlador {
             $this->visao->saidaID = filter_input(INPUT_GET, 'saidaID');
             $this->renderizar();
         } else {
-            die("Acesso indevido.");
+            $this->adicionarMensagemErro("ID não informado", true);
+            $this->abortarExecucao();
         }
     }
 

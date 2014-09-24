@@ -192,8 +192,11 @@ function acoplarMenu() {
         $(".menuContainer").unbind("mouseenter mouseleave")
     }
 }
+
+//TODO Revisar documentação e oferecer mais detalhes sobre meta-links na wiki.
 /**
- * Função que carrega uma página, com auxílio da função <code>ajax</code>, com
+ * Função que carrega uma página para ser exibida para o usuário.
+ * Ela tem auxílio da função <code>ajax</code>, com
  * base em um meta-link formatado da seguinte maneira:
  *  #![nomeControlador]|[nomeAcao](lista opcional de parâmetros GET).<br/>
  * Em outras palavras, o link deve casar com a expressão regular: <code>^#![a-z]+\|[a-z]+((\&[a-zA-Z]+=[a-z0-9]*)+)?</code>
@@ -281,9 +284,12 @@ function esconderShader() {
  * se ele deve ser escondido ou permanecer sendo exibido.
  * @param {boolean} async Especifíca se o carregamento deve ser assíncrono ou não. Por padrão, essa opção é falsa.
  * @param {boolean} ignorePageChanges Faz a chamada sem perguntar se o usuário deseja sair, caso tenho feito alguma alteração no documento.
+ * @param {string} tipo GET ou POST
+ * @param {function} fnSucesso Função para ser executada caso a REQUISIÇÃO AJAX seja concluída com sucesso (não confundir com uma mensagem interna da aplicação de sucesso)
+ * @param {function} fnErro Função para ser executada caso a REQUISIÇÃO AJAX não possar seja concluída 
  * @returns O retorno da página requisitada, caso ela retorne algum.
  */
-function ajax(link, place, hidePop, async, ignorePageChanges) {
+function ajax(link, place, hidePop, async, ignorePageChanges, tipo, fnSucesso, fnErro) {
     if (place === undefined) {
         place = ".contentWrap";
     }
@@ -342,8 +348,6 @@ function ajax(link, place, hidePop, async, ignorePageChanges) {
         if (place !== null) {
             $(place).empty();
             var patt = new RegExp("<title>.*?</title>.*?");
-//            window.alert(data);
-//            var tituloProprio = data.lastIndexOf("<title>");
 
             //Trata páginas com títulos personalizados
             if (data !== undefined && data !== null) {
@@ -353,6 +357,8 @@ function ajax(link, place, hidePop, async, ignorePageChanges) {
                     titulo = titulo.replace("<title>", "");
                     titulo = titulo.replace("</title>", "");
                     mudarTitulo(titulo);
+                    if (isFunction(fnSucesso))
+                        fnSucesso();
                 } else {
                     //Volta o título para o padrão
                     mudarTitulo();
@@ -360,12 +366,6 @@ function ajax(link, place, hidePop, async, ignorePageChanges) {
                 $(place).append(data);
             }
         }
-//        //Caso o conteúdo seja carregado no popup com fundo cinza
-//        if (place == ".shaderFrameContentWrap") {
-//            $(".shaderFrame").css("visibility", "visible").animate({opacity: "0.5"}, 150);
-//            $(".shaderFrameContent").css("visibility", "visible").animate({opacity: "1"}, 350);
-//            $(".shaderFrameContent").center();
-//        }
 
         //TODO encontrar uma forma de tratar os campos somente leitura dos datapickers, pois quando
         //é escolhida uma data através do jquery, o evento change não é acionado.
@@ -388,20 +388,12 @@ function ajax(link, place, hidePop, async, ignorePageChanges) {
                 }, 300);
             });
         });
-
-        if (hidePop === undefined) {
-            hidePop = true;
-        }
-
-//A função "hidePopup" foi desativada, pois atualmente o sistema
-//utiliza uma espécie de "framework" para os popups.        
-//        if (hidePop === true) {
-//            hidePopUp();
-//        }
-
-//        return data;
     });
+
     var erro = request.error(function (jqXHR, textStatus, errorThrown) {
+        if (isFunction(fnErro)) {
+            fnErro();
+        }
         if (textStatus != "timeout") {
             showPopUp("<b>" + errorThrown.name + "</b><br/>" + errorThrown.message, textStatus);
         } else {
@@ -413,10 +405,6 @@ function ajax(link, place, hidePop, async, ignorePageChanges) {
     return sucesso.responseText;
 }
 
-//funcao temporaria para debug
-function conteudoAlterado() {
-    document.paginaAlterada = true;
-}
 //TODO verificar porque a tela cheia não funciona, através desse método, do mesmo
 //modo que apertando F11 (ou botão apropriado para exibir em tela cheia) no navegador.
 //function launchFullScreen(element) {

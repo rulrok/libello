@@ -72,29 +72,37 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn
         // property set to 'json' then the first argument to the success callback 
         // is the json data object returned by the server 
 
-        var data = responseText;
-        if (data !== null && data !== undefined) {
-            data = filtrarJSON(data);
-            if (data !== undefined && data.status !== undefined) {
-
-
-                processarMensagens(data);
-//                showPopUp(data.mensagem, data.status);
-                if (data.status === "sucesso") {
-                    document.paginaAlterada = false;
-                    if (successFn !== undefined && isFunction(successFn)) {
-                        successFn(data);
-                    }
-                    if (resetarFormulario) {
-                        $("input[type=reset],button[type=reset]").click();
-                    }
-                }
-            } else {
-                showPopUp("Houve algum problema na resposta do servidor.", "pop_erro");
+        var status = obterStatusOperacao()
+        if (status == Mensagem.prototype.Tipo.SUCESSO) {
+            document.paginaAlterada = false;
+            if (successFn !== undefined && isFunction(successFn)) {
+                successFn();
             }
-        } else {
-            showPopUp("Houve algum problema na resposta do servidor.", "pop_erro");
+            if (resetarFormulario) {
+                $("input[type=reset],button[type=reset]").click();
+            }
         }
+
+//        var data = responseText;
+//        if (data !== null && data !== undefined) {
+//            data = filtrarJSON(data);
+//            if (data !== undefined && data.status !== undefined) {
+//
+//                if (data.status === "sucesso") {
+//                    document.paginaAlterada = false;
+//                    if (successFn !== undefined && isFunction(successFn)) {
+//                        successFn(data);
+//                    }
+//                    if (resetarFormulario) {
+//                        $("input[type=reset],button[type=reset]").click();
+//                    }
+//                }
+//            } else {
+//                showPopUp("Houve algum problema na resposta do servidor.", "pop_erro");
+//            }
+//        } else {
+//            showPopUp("Houve algum problema na resposta do servidor.", "pop_erro");
+//        }
     }
 
 
@@ -111,49 +119,10 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn
         , resetForm: false      // reset the form after successful submit 
     };
 
-    $("#" + idFormulario).submit(function(e) {
+    $("#" + idFormulario).submit(function (e) {
 
-//        //Do the AJAX post
-//        var post = $.post($("#" + idFormulario).attr("action"), $("#" + idFormulario).serialize(), function(data) {
-//            if (data !== null && data !== undefined) {
-//                console.log(data);
-//                data = filtrarJSON(data);
-//
-//                if (data.status !== undefined && data.mensagem !== undefined) {
-//                    showPopUp(data.mensagem, data.status);
-//                    if (data.status.toLowerCase() === "sucesso") {
-//                        $("input[type=reset],button[type=reset]").click();
-//                        if (successFn !== undefined && isFunction(successFn)) {
-//                            successFn(data);
-//                        }
-//                    }
-//                } else {
-//                    showPopUp("Houve algum problema na resposta do servidor.", "erro");
-//                }
-//            } else {
-//                showPopUp("Houve algum problema na resposta do servidor.", "erro");
-//            }
-//
-//        });
         $(this).ajaxSubmit(opcoes);
-//        document.paginaAlterada = false;
 
-//        post.complete(function(data) {
-//            if (recipient !== undefined) {
-//
-//                $(recipient).empty();
-//                $(recipient).html(data.responseText);
-//            }
-//            if (completeFn !== undefined && isFunction(completeFn)) {
-//                completeFn();
-//            }
-//        });
-
-//        post.always(function() {
-//            if (alwaysFn !== undefined && isFunction(alwaysFn)) {
-//                alwaysFn();
-//            }
-//        });
         //Important. Stop the normal POST
         e.preventDefault();
         return false;
@@ -173,7 +142,7 @@ function isFunction(functionToCheck) {
  * @returns {undefined}
  */
 function desabilitarBotaoAcao(botao) {
-    $(botao).on("mouseup", function() {
+    $(botao).on("mouseup", function () {
         $(this).prop("enabled", false);
     });
 }

@@ -31,6 +31,7 @@ abstract class Controlador {
      * erro para o cliente (indicando que a operação como um todo não foi bem sucedida)
      */
     public function abortarExecucao() {
+        require APP_DIR . 'visao/abortado.php';
         $this->_terminarExecucao();
     }
 
@@ -54,7 +55,7 @@ abstract class Controlador {
     }
 
     private function _adicionarMensagem(Modelo\Mensagem $mensagem) {
-        $this->mensagensRetorno[] = $mensagem;
+        array_push($this->mensagensRetorno, $mensagem);
     }
 
     /**

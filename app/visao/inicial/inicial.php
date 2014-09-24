@@ -53,7 +53,7 @@
             //Quando a variável 'ocorreuExcecaoJS' é verdadeira, ao abrir qualquer nova
             //página em seguida, a página no navegador será recarregada para que os scripts
             //delas possam ser executados
-            window.onerror = function(msg, url, linenumber) {
+            window.onerror = function (msg, url, linenumber) {
                 ocorreuExcecaoJS = true;
 //                alert("Um erro ocorreu no aplicativo e a página pode não ser exibida corretamente.\nTente recarregar a sua página.\nPersistindo o erro, entre em contato com suporte@bi.com.br");
                 console.log("Exceção ocorrida na página " + url);
@@ -76,7 +76,7 @@
         <script src="publico/js/ajaxForms.js"></script>
         <script src="publico/js/debug.js"></script>
         <script>
-            window.onbeforeunload = function(e) {
+            window.onbeforeunload = function (e) {
                 if (document.paginaAlterada) {
                     e = e || window.event;
 
@@ -125,22 +125,17 @@
                     <p>Logado como: <b id='nomeusuarioHeader'><?php echo $this->nomeUsuario ?></b> (<?php echo $this->papel ?>)</p>
                     <div class="btn-toolbar" id="configuracoesSite">
                         <div id="botoesSuperiores" class="centralizado btn-group">
-
-
-                            <a class="btn btn-small" href="#!sistema|gerenciarconta" onclick="
-                                    if (!document.paginaAlterada) {
-                                        hideSubMenu(150);
-                                        $('.visited').removeClass('visited');
-                                        $('.actualTool').removeClass('actualTool');
-                                    }"><i class="icon-cog"></i> Gerenciar Conta</a>
-                               <?php if ($this->administrador): ?>
-                                   <?php if ($this->modoManutencao) : ?>
+                            <a id="b_gerenciarconta" class="btn btn-small" href="#!sistema|gerenciarconta">
+                                <i class="icon-cog"></i> Gerenciar Conta
+                            </a>
+                            <?php if ($this->administrador): ?>
+                                <?php if ($this->modoManutencao) : ?>
                                     <a id="desativarManutencao" class="btn btn-small" ><i class="icon-certificate"></i> Desativar manutenção</a>
                                 <?php else: ?>
                                     <a id="ativarManutencao" class="btn btn-small" ><i class="icon-wrench"></i> Ativar manutenção</a>
                                 <?php endif; ?>
                             <?php endif; ?>
-<!--<a class="btn btn-small" href="#!processos|arvoreProcessos"><i class="icon-tasks"></i>Processos</a>-->
+                            <!--<a class="btn btn-small" href="#!processos|arvoreProcessos"><i class="icon-tasks"></i>Processos</a>-->
                             <a class="btn btn-small" href="sair.php"><i class="icon-off"></i> Sair</a>
                         </div>
                     </div>
@@ -170,12 +165,6 @@
                 <div class="modal-footer">
                     <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Fechar</button>
                 </div>
-            </div>
-
-            <!-- Pop-up para mensagens do sistema -->
-            <div class="popUp tabela" style="display: none;">
-                <div class="botao_fechar" onclick="hidePopUp();"></div>
-                <p class="popUpContent textoCentralizado " onclick="hidePopUp();"></p>
             </div>
 
             <div class="debug_div_helper">
@@ -261,7 +250,7 @@
                     //----------------------------------------------------------------------//
                     //                          INICIALIZAÇÕES BÁSICAS                      //
                     //----------------------------------------------------------------------//
-                    $(document).ready(function() {
+                    $(document).ready(function () {
 
                         $(".debug_div_border").resizable({
                             handles: 'n'
@@ -271,21 +260,21 @@
 //                            , alsoResize: ".debug_div"
 //                            , animate: true
 //                            , helper: "ui-resizable-helper"
-                            , resize: function(event, ui) {
+                            , resize: function (event, ui) {
                                 $(".debug_div_border").css({
                                     position: "relative !important",
                                     top: "",
                                     left: "0 !important"
                                 });
                             }
-                            , start: function(event, ui) {
+                            , start: function (event, ui) {
                                 $(".debug_div_border").css({
                                     position: "relative !important",
                                     top: "",
                                     left: "0 !important"
                                 });
                             }
-                            , stop: function(event, ui) {
+                            , stop: function (event, ui) {
                                 $(".debug_div_border").css({
                                     position: "absolute",
                                     bottom: "0",
@@ -294,16 +283,25 @@
                                 });
                             }
                         });
-                        $(".debug_div, .debug_div_border").dblclick(function() {
+                        $(".debug_div, .debug_div_border").dblclick(function () {
                             setTimeout(
-                                    function() {
+                                    function () {
                                         $(".debug_div_border").css({
                                             height: 20
                                         });
                                     }
                             , 50);
+                        });
+
+                        $("#b_gerenciarconta").on('click', function () {
+                            if (!document.paginaAlterada) {
+                                hideSubMenu(150);
+                                $('.visited').removeClass('visited');
+                                $('.actualTool').removeClass('actualTool');
+                            }
                         })
-                        $("#ativarManutencao").on('click', function() {
+
+                        $("#ativarManutencao").on('click', function () {
                             var resultado = confirm("Deseja realmente fazer isso?\nTodos os usuários serão desconectados do portal (exceto administradores).");
                             if (resultado) {
                                 ajax('index.php?c=sistema&a=ativarmanutencao', null, true, false, true);
@@ -311,7 +309,7 @@
                             }
                         });
 
-                        $("#desativarManutencao").on('click', function() {
+                        $("#desativarManutencao").on('click', function () {
                             ajax('index.php?c=sistema&a=desativarmanutencao', null, true, false, true);
                             location.reload();
                         });
@@ -320,7 +318,7 @@
                         // Bind an event to window.onhashchange that, when the history state changes,
                         // gets the url from the hash and displays either our cached content or fetches
                         // new content to be displayed.
-                        $(window).bind('hashchange', function(e) {
+                        $(window).bind('hashchange', function (e) {
                             if (document.ignorarHashChange === true) {
                                 document.ignorarHashChange = false;
                                 return;
@@ -347,7 +345,7 @@
                             }
 
                             carregarPagina(url);
-                            $("a[href^=#]").each(function(index) {
+                            $("a[href^=#]").each(function (index) {
                                 if (this.confirmarDados === undefined) {
                                     this.confirmarDados = true;
                                     $(this).bind("click", confirmarDadosNaoSalvos);
@@ -367,7 +365,7 @@
                         //    window.onload = function() {
 
                         //Função para centralizar elementos na página de acordo com o tamanho da tela
-                        jQuery.fn.center = function() {
+                        jQuery.fn.center = function () {
                             this.css("position", "absolute");
                             this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
                                     $(window).scrollTop()) + "px");
@@ -378,11 +376,11 @@
 
                         //Para que quando a tela redimensionar e o popup com fundo cinza estiver sendo exibido,
                         //ele seja centralizado novamente, evitando exibições estranhas
-                        $(window).bind("resize", function() {
+                        $(window).bind("resize", function () {
                             $(".shaderFrameContent").center();
                         });
 
-                        //Permite que o popup seja arrastado pela tela
+                        //Permite que a mensagem `carregando` seja arrastada pela tela
                         $('.shaderFrameContent').draggable({cancel: ".shaderFrameContentWrap"});
 
                         //Comentado para que não permita o fechamento do cinza esmacido ao ser clicado!
@@ -394,10 +392,10 @@
                         hideFooter();
                         showFooter();
 
-                        $(".popUp").hide();
+//                        $(".popUp").hide();
 
                         if (!String.prototype.trim) {
-                            String.prototype.trim = function() {
+                            String.prototype.trim = function () {
                                 return this.replace(/^\s+|\s+$/g, '');
                             };
                         }
@@ -406,7 +404,7 @@
                         var menus = $('.menuLink');
                         for (var i = 0; i < menus.length; i++) {
                             if (menus[i].id == "homeLink") {
-                                $(menus[i]).bind("mouseup", function() {
+                                $(menus[i]).bind("mouseup", function () {
                                     if (document.paginaAlterada) { //Fix :p
                                         return false;
                                     }
@@ -420,7 +418,7 @@
                                 });
                                 continue;
                             }
-                            $(menus[i]).bind("mouseup", function() {
+                            $(menus[i]).bind("mouseup", function () {
                                 var id = this.id;
                                 if (!this.className.match(".*visited.*")) {
                                     $(".menuLink.visited").removeClass("visited");
@@ -503,7 +501,7 @@
                                 y: "um ano",
                                 yy: "%d anos"
                             },
-                            ordinal: function(number) {
+                            ordinal: function (number) {
                                 return number + (number === 1 ? 'º' : '');
                             },
                             week: {
@@ -539,7 +537,7 @@
                         if (canToggleFullScreen()) {
                             $("#botoesSuperiores").children(":first-child").before('<a id="fullscreen-toggle" title="Modo tela cheia" class="btn btn-small" href="javascript:void(0)" onclick="toggleFullScreen();"><i class="icon-fullscreen"></i></a>');
                         }
-                        setTimeout(function() {
+                        setTimeout(function () {
                             $("#telaCarregando").fadeOut(150);
                         }, 150);
                     });

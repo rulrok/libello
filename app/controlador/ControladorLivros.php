@@ -71,6 +71,10 @@ class ControladorLivros extends MVC\Controlador {
             $this->visao->livroEditavel = $livroDAO->livroPodeTerTipoAlterado($idlivro);
             $this->visao->livroID = $_REQUEST['livroID'];
             $livro = $livroDAO->recuperarlivro($idlivro);
+            if (is_null($livro)) {
+                $this->adicionarMensagemErro("Esse livro não existe mais.", true);
+                $this->abortarExecucao();
+            }
             $this->visao->comboBoxAreas = Modelo\ComboBoxAreas::montarTodasAsAreas();
             $this->visao->descricao = $livro->get_descricao();
             $this->visao->livro = $livro->get_nomelivro();
@@ -80,7 +84,8 @@ class ControladorLivros extends MVC\Controlador {
             $this->visao->grafica = $livro->get_grafica();
             $this->visao->area = $livro->get_area();
         } else {
-            die("Acesso indevido");
+            $this->adicionarMensagemErro("ID não informado", true);
+            $this->abortarExecucao();
         }
 
         $this->renderizar();
@@ -113,8 +118,16 @@ class ControladorLivros extends MVC\Controlador {
             $idSaida = fnDecrypt($_REQUEST['saidaID']);
             $livroDAO = new Modelo\livroDAO();
             $saida = $livroDAO->recuperarSaidalivro($idSaida);
+            if (is_null($saida)) {
+                $this->adicionarMensagemErro("Esse livro provavelmente já foi retornado.");
+                $this->abortarExecucao();
+            }
             $livroID = $saida['livro'];
             $livro = $livroDAO->recuperarlivro($livroID);
+            if (is_null($livro)) {
+                $this->adicionarMensagemErro("Esse livro não existe mais.", true);
+                $this->abortarExecucao();
+            }
             $this->visao->saidaID = fnEncrypt($idSaida);
             $this->visao->livroID = fnEncrypt($livroID);
             $this->visao->livro = $livro;
@@ -122,7 +135,8 @@ class ControladorLivros extends MVC\Controlador {
             $this->visao->dataSaida = $saida['dataSaida'];
             $this->renderizar();
         } else {
-            die("Acesso indevido");
+            $this->adicionarMensagemErro("ID não informado", true);
+            $this->abortarExecucao();
         }
     }
 
@@ -147,13 +161,18 @@ class ControladorLivros extends MVC\Controlador {
         if (filter_has_var(INPUT_GET, 'livroID')) {
             $this->visao->comboboxPapeis = Modelo\ComboBoxPapeis::montarTodosPapeis();
             $this->visao->livro = (new Modelo\livroDAO())->recuperarlivro(fnDecrypt(filter_input(INPUT_GET, 'livroID')));
+            if (is_null($this->visao->livro)) {
+                $this->adicionarMensagemErro("Esse livro não existe mais.", true);
+                $this->abortarExecucao();
+            }
             $this->visao->livroID = fnEncrypt($this->visao->livro->get_idLivro());
             //$this->visao->responsavel = Modelo\ComboBoxUsuarios::montarResponsavelLivros();
             $this->visao->responsavel = Modelo\ComboBoxUsuarios::listarTodosUsuarios();
             $this->visao->polos = Modelo\ComboBoxPolo::montarTodosOsPolos();
             $this->renderizar();
         } else {
-            die("Acesso indevido.");
+            $this->adicionarMensagemErro("ID não informado", true);
+            $this->abortarExecucao();
         }
     }
 
@@ -172,6 +191,10 @@ class ControladorLivros extends MVC\Controlador {
         if (filter_has_var(INPUT_GET, 'livroID')) {
             $livroDAO = new Modelo\livroDAO();
             $livro = $livroDAO->recuperarlivro(fnDecrypt(filter_input(INPUT_GET, 'livroID')));
+            if (is_null($livro)) {
+                $this->adicionarMensagemErro("Esse livro não existe mais.", true);
+                $this->abortarExecucao();
+            }
             $this->visao->livro = $livro;
             $this->visao->dataMinima = $livro->get_dataEntrada();
             if ($this->visao->dataMinima == "") {
@@ -191,7 +214,8 @@ class ControladorLivros extends MVC\Controlador {
             $this->visao->saidaID = filter_input(INPUT_GET, 'saidaID');
             $this->renderizar();
         } else {
-            die("Acesso indevido.");
+            $this->adicionarMensagemErro("ID não informado", true);
+            $this->abortarExecucao();
         }
     }
 

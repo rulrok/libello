@@ -9,7 +9,6 @@ use \app\modelo as Modelo;
 class arvoredescritores extends \app\modelo\PaginaDeAcao {
 
     protected function _acaoPadrao() {
-//        $this->omitirMensagens();
         $imagensDAO = new Modelo\imagensDAO();
         if (filter_has_var(INPUT_GET, 'completa') && filter_input(INPUT_GET, 'completa')) {
             if (filter_has_var(INPUT_GET, 'descritorExcluir')) {
@@ -21,9 +20,7 @@ class arvoredescritores extends \app\modelo\PaginaDeAcao {
         } else {
             $arvore = $imagensDAO->arvoreDescritores();
         }
-
-//        print_r(json_encode($arvore));
-        $this->adicionarMensagemPersonalizada('sys_arvore',print_r(json_encode($arvore),true));
+        $this->adicionarMensagemPersonalizada('img_arvore', json_encode($arvore));
     }
 
 }

@@ -46,7 +46,7 @@ abstract class abstractDAO {
                 }
             }
             if ($fetchClass !== null) {
-                $fetchClass = "\\app\\modelo\\".$fetchClass;
+                $fetchClass = "\\app\\modelo\\" . $fetchClass;
                 $stmt->setFetchMode(\PDO::FETCH_CLASS, $fetchClass);
             }
             $stmt->execute();
@@ -60,7 +60,7 @@ abstract class abstractDAO {
                     $retorno = $stmt->fetch()[0];
                 } else {
                     $r = $stmt->fetchObject($fetchClass);
-                    $retorno = $r;
+                    $retorno = $r === false ? null : $r;
                 }
             }
             return $retorno;

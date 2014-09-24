@@ -1,25 +1,35 @@
 [21-Sep-2014 23:34:08 America/Sao_Paulo] Mensagem: <Usuário tentou desativar seu próprio perfil através da página de edição de usuários do sistema>
 [Usuário: Reuel Ramos Ribeiro(RRR), rulrok@gmail.com, papel: 2, id: 2]
 
-
+
+
 [21-Sep-2014 23:34:44 America/Sao_Paulo] Mensagem: <Usuário tentou desativar seu próprio perfil através da página de edição de usuários do sistema>
 [Usuário: Reuel Ramos Ribeiro(RRR), rulrok@gmail.com, papel: 2, id: 2]
 
-
+
+
 [21-Sep-2014 23:34:59 America/Sao_Paulo] Mensagem: <Usuário tentou desativar seu próprio perfil através da página de edição de usuários do sistema>
 [Usuário: Reuel Ramos Ribeiro(RRR), rulrok@gmail.com, papel: 2, id: 2]
 
-
-[21-Sep-2014 23:34:59 America/Sao_Paulo] PHP Fatal error:  Call to undefined method app\controlador\ControladorUsuarios::adicionarMensagemSucesso() in C:\wamp\www\libello\app\controlador\ControladorUsuarios.php on line 85
-[21-Sep-2014 23:34:59 America/Sao_Paulo] PHP Stack trace:
-[21-Sep-2014 23:34:59 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
-[21-Sep-2014 23:34:59 America/Sao_Paulo] PHP   2. app\mvc\Mvc->rodar() C:\wamp\www\libello\index.php:37
-[21-Sep-2014 23:34:59 America/Sao_Paulo] PHP   3. app\controlador\ControladorUsuarios->acaoDesativar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+
+
+[21-Sep-2014 23:34:59 America/Sao_Paulo] PHP Fatal error:  Call to undefined method app\controlador\ControladorUsuarios::adicionarMensagemSucesso() in C:\wamp\www\libello\app\controlador\ControladorUsuarios.php on line 85
+
+[21-Sep-2014 23:34:59 America/Sao_Paulo] PHP Stack trace:
+
+[21-Sep-2014 23:34:59 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+
+[21-Sep-2014 23:34:59 America/Sao_Paulo] PHP   2. app\mvc\Mvc->rodar() C:\wamp\www\libello\index.php:37
+
+[21-Sep-2014 23:34:59 America/Sao_Paulo] PHP   3. app\controlador\ControladorUsuarios->acaoDesativar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+
 [21-Sep-2014 23:35:10 America/Sao_Paulo] Mensagem: <Usuário tentou desativar seu próprio perfil através da página de edição de usuários do sistema>
 [Usuário: Reuel Ramos Ribeiro(RRR), rulrok@gmail.com, papel: 2, id: 2]
 
-
+
+
 [21-Sep-2014 23:35:45 America/Sao_Paulo] Mensagem: <Usuário tentou desativar seu próprio perfil através da página de edição de usuários do sistema>
 [Usuário: Reuel Ramos Ribeiro(RRR), rulrok@gmail.com, papel: 2, id: 2]
 
-
+
+
