@@ -123,7 +123,7 @@ class ControladorLivros extends MVC\Controlador {
                 $this->abortarExecucao();
             }
             $livroID = $saida['livro'];
-            $livro = $livroDAO->recuperarlivro($livroID);
+            $livro = $livroDAO->recuperarlivro($livroID, true);
             if (is_null($livro)) {
                 $this->adicionarMensagemErro("Esse livro não existe mais.", true);
                 $this->abortarExecucao();
@@ -207,8 +207,12 @@ class ControladorLivros extends MVC\Controlador {
         } else if (filter_has_var(INPUT_GET, 'saidaID')) {
             $livroDAO = new Modelo\livroDAO();
             $saida = $livroDAO->recuperarSaidalivro(fnDecrypt(filter_input(INPUT_GET, 'saidaID')));
+            if (is_null($saida)) {
+                $this->adicionarMensagemErro("Essa saída não existe mais.", true);
+                $this->abortarExecucao();
+            }
             $this->visao->dataMinima = $saida['dataSaida'];
-            $this->visao->livro = $livroDAO->recuperarlivro($saida['livro']);
+            $this->visao->livro = $livroDAO->recuperarlivro($saida['livro'], true);
             $this->visao->livroID = fnEncrypt($this->visao->livro->get_idlivro());
             $this->visao->quantidadeMaxima = $saida['quantidadeSaida'];
             $this->visao->saidaID = filter_input(INPUT_GET, 'saidaID');

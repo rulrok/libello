@@ -31,7 +31,7 @@
 </form>
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         var dataMinima = "<?php echo $this->dataSaida; ?>";
         dataMinima = dataMinima.split("/");
         dataMinima = dataMinima[1] + "/" + dataMinima[0] + "/" + dataMinima[2];
@@ -42,26 +42,11 @@
         $(".line input").popover({trigger: 'focus', container: 'body'});
         $(".line textarea").popover({trigger: 'focus', container: 'body'});
         formularioAjax({
-            alwaysFn: function() {
-                $("input[type=submit]").prop("disabled", true);
-            },
-            successFn: function() {
-                setTimeout(function() {
-                    document.paginaAlterada = false;
-                    history.back();
-                }, 5000);
+            successFn: function () {
+                document.paginaAlterada = false;
+                history.back();
             }
         });
-//        formularioAjax("ajaxForm", undefined,
-//                function() {
-//                    $("input[type=submit]").prop("disabled", true);
-//                },
-//                function() {
-//                    setTimeout(function() {
-//                        history.back();
-//                    }, 1000);
-//                }
-//        );
         varrerCampos();
     });
 </script>

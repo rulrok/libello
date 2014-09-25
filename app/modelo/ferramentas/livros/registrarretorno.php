@@ -28,7 +28,7 @@ class registrarretorno extends Modelo\verificadorFormularioAjax {
         if (!is_null($recuperarSaidalivro) && $recuperarSaidalivro['quantidadeSaida'] != $quantidadeMaxima) {
             $this->adicionarMensagemErro("Dados inconsistentes");
             $ocorreu_erro = true;
-        } else if (is_null($recuperarSaidalivro)){
+        } else if (is_null($recuperarSaidalivro)) {
             $this->adicionarMensagemErro("O retorno desse livro provavelmente já foi cadastrado previamente.", true);
             $this->abortarExecucao();
         }
@@ -40,16 +40,19 @@ class registrarretorno extends Modelo\verificadorFormularioAjax {
         if ($ocorreu_erro) {
             $this->abortarExecucao();
         }
-
+        $saida = $livroDAO->recuperarSaidaLivro($saidaID);
+        if (is_null($saida)) {
+            $this->adicionarMensagemErro("Essa saída não existe mais.");
+            $this->abortarExecucao();
+        }
         if ($livroDAO->cadastrarRetorno($saidaID, $dataRetorno, $quantidade, $observacoes)) {
-            $id = $livroDAO->obterUltimoIdInserido();
-            //TODO Sistema de registro de ações precisa ser completamente remodelado
-//            $livroDAO->registrarRetorno($id);
             if ($quantidade > 1) {
                 $this->adicionarMensagemSucesso("Livros Retornados");
             } else {
                 $this->adicionarMensagemSucesso("Livro Retornado");
             }
+            $id = $livroDAO->obterUltimoIdInserido();
+//            $livroDAO->registrarRetorno($id);
         } else {
             $this->adicionarMensagemErro("Erro ao cadastrar no banco")->set_status(Mensagem::ERRO);
         }

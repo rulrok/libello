@@ -47,6 +47,11 @@ class registrarsaida extends Modelo\verificadorFormularioAjax {
         }
 
         $livroDAO = new Modelo\livroDAO();
+        $livro = $livroDAO->recuperarLivro($livroID);
+        if (is_null($livro)) {
+            $this->adicionarMensagemErro("Esse livro não existe mais.");
+            $this->abortarExecucao();
+        }
         if ($livroDAO->cadastrarSaida($livroID, $responsavel, $destino, $destinoAlternativo, $quantidade, $dataSaida)) {
             $id = $livroDAO->obterUltimoIdInserido();
 //            $livroDAO->registrarCadastroSaida($id);

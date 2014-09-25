@@ -11,11 +11,11 @@ class registrarbaixa extends Modelo\verificadorFormularioAjax {
     public function _validar() {
         $saidaID = filter_input(INPUT_POST, 'saidaID');
         if ($saidaID !== "") {
-            $saidaID = fnDecrypt(filter_input(INPUT_POST, 'saidaID'));
+            $saidaID = fnDecrypt($saidaID);
         }
         $livroID = filter_input(INPUT_POST, 'livroID');
         if ($livroID !== "") {
-            $livroID = fnDecrypt(filter_input(INPUT_POST, 'livroID'));
+            $livroID = fnDecrypt($livroID);
         }
         $dataBaixa = filter_input(INPUT_POST, 'dataBaixa');
         $observacoes = filter_input(INPUT_POST, 'observacoes');
@@ -38,7 +38,13 @@ class registrarbaixa extends Modelo\verificadorFormularioAjax {
             $this->adicionarMensagemErro("Quantidade informada inválida");
             $ocorreu_erro = true;
         }
+
         if ($saidaID !== "") {
+            $saida = $livroDAO->recuperarSaidaLivro($saidaID);
+            if (is_null($saida)) {
+                $this->adicionarMensagemErro("Essa saída não existe mais.");
+                $this->abortarExecucao();
+            }
             //É uma saída
             if ($livroDAO->cadastrarBaixa($livroID, $dataBaixa, $quantidade, $observacoes, $saidaID)) {
                 $id = $livroDAO->obterUltimoIdInserido();
@@ -50,6 +56,11 @@ class registrarbaixa extends Modelo\verificadorFormularioAjax {
             }
         } else {
             //É um livro no CEAD
+            $livro = $livroDAO->recuperarLivro($livroID);
+            if (is_null($livro)) {
+                $this->adicionarMensagemErro("Esse livro não existe mais.");
+                $this->abortarExecucao();
+            }
             if ($livroDAO->cadastrarBaixa($livroID, $dataBaixa, $quantidade, $observacoes)) {
                 $id = $livroDAO->obterUltimoIdInserido();
                 $livroDAO->registrarCadastroBaixa($id);

@@ -129,7 +129,7 @@ class ControladorEquipamentos extends MVC\Controlador {
                 $this->abortarExecucao();
             }
             $equipamentoID = $saida['equipamento'];
-            $equipamento = $equipamentoDAO->recuperarEquipamento($equipamentoID);
+            $equipamento = $equipamentoDAO->recuperarEquipamento($equipamentoID, true);
             if (is_null($equipamento)) {
                 $this->adicionarMensagemErro("Esse equipamento não existe mais.", true);
                 $this->abortarExecucao();
@@ -168,7 +168,7 @@ class ControladorEquipamentos extends MVC\Controlador {
             $this->visao->comboboxPapeis = Modelo\ComboBoxPapeis::montarTodosPapeis();
             $this->visao->equipamento = (new Modelo\equipamentoDAO())->recuperarEquipamento(fnDecrypt(filter_input(INPUT_GET, 'equipamentoID')));
             if (is_null($this->visao->equipamento)) {
-                $this->adicionarMensagemErro("Esse livro não existe mais.", true);
+                $this->adicionarMensagemErro("Esse equipamento não existe mais.", true);
                 $this->abortarExecucao();
             }
             $this->visao->equipamentoID = fnEncrypt($this->visao->equipamento->get_idEquipamento());
@@ -212,8 +212,12 @@ class ControladorEquipamentos extends MVC\Controlador {
         } else if (filter_has_var(INPUT_GET, 'saidaID')) {
             $equipamentoDAO = new Modelo\equipamentoDAO();
             $saida = $equipamentoDAO->recuperarSaidaEquipamento(fnDecrypt(filter_input(INPUT_GET, 'saidaID')));
+            if (is_null($saida)) {
+                $this->adicionarMensagemErro("Essa saída não existe mais.", true);
+                $this->abortarExecucao();
+            }
             $this->visao->dataMinima = $saida['dataSaida'];
-            $this->visao->equipamento = $equipamentoDAO->recuperarEquipamento($saida['equipamento']);
+            $this->visao->equipamento = $equipamentoDAO->recuperarEquipamento($saida['equipamento'], true);
             $this->visao->equipamentoID = fnEncrypt($this->visao->equipamento->get_idEquipamento());
             $this->visao->quantidadeMaxima = $saida['quantidadeSaida'];
             $this->visao->saidaID = filter_input(INPUT_GET, 'saidaID');

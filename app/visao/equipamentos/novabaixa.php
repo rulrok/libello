@@ -30,7 +30,7 @@
 </form>
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         var elem = $("#chars");
         $("#observacoes").limiter(1000, elem);
         var dataMinima = "<?php echo $this->dataMinima; ?>";
@@ -42,17 +42,12 @@
         });
         $(".line input").popover({trigger: 'focus', container: 'body'});
         $(".line textarea").popover({trigger: 'focus', container: 'body'});
-        formularioAjax("ajaxForm", undefined,
-                function() {
-                    $("input[type=submit]").prop("disabled", true);
-                },
-                function() {
-                    setTimeout(function() {
-                        document.paginaAlterada = false;
-                        history.back();
-                    }, 5000);
-                }
-        );
+        formularioAjax({
+            successFn: function () {
+                document.paginaAlterada = false;
+                history.back();
+            }
+        });
         varrerCampos();
     });
 

@@ -39,7 +39,13 @@ class registrarsaida extends Modelo\verificadorFormularioAjax {
         if ($ocorreu_erro) {
             $this->abortarExecucao();
         }
+
         $equipamentoDAO = new Modelo\equipamentoDAO();
+        $equipamento = $equipamentoDAO->recuperarEquipamento($equipamentoID);
+        if (is_null($equipamento)) {
+            $this->adicionarMensagemErro("Esse equipamento não existe mais.");
+            $this->abortarExecucao();
+        }
         if ($equipamentoDAO->cadastrarSaida($equipamentoID, $responsavel, $destino, $destinoAlternativo, $quantidade, $dataSaida)) {
             $id = $equipamentoDAO->obterUltimoIdInserido();
 //            $equipamentoDAO->registrarCadastroSaida($id);

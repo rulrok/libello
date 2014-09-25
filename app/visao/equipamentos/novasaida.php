@@ -43,7 +43,7 @@
 </form>
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $("#dataSaida").datepicker();
         $(".line input").popover({trigger: 'focus', container: 'body'});
 //        $("select[name=papel]").on("change", function(e) {
@@ -53,18 +53,11 @@
 //            }
 //        });
         formularioAjax({
-            idFormulario: "ajaxForm",
-            successFn: function() {
-                setTimeout(function() {
-                    document.paginaAlterada = false;
-                    history.back();
-                }, 5000);
-            },
-            completeFn: function() {
-                $("button[type=submit]").prop("disabled", true);
-            }}
-
-        );
+            successFn: function () {
+                document.paginaAlterada = false;
+                history.back();
+            }
+        });
         varrerCampos();
 
         var campoPolo = document.getElementById("polo");
@@ -78,9 +71,9 @@
         campoPolo.appendChild(optg);
         document.viagens_campoDestinoAlternativo = false;
 
-        $("#polo").on('change', function() {
+        $("#polo").on('change', function () {
             if ($("#polo option:selected").prop("value") === "outro") {
-                $($(".line")[2]).after("<div class='line'><label for='destinoManual'>Nome do destino</label><input type='text' required id='destinoManual' class='input-xlarge' name='destinoManual'/></div>");
+                $($(".line")[2]).after("<div class='line'><label for='destinoManual'>Nome do destino</label><input type='text' required id='destinoManua l' class='input-xlarge' name='destinoManual'/></div>");
                 varrerCampos();
                 document.viagens_campoDestinoAlternativo = true;
             } else if (document.viagens_campoDestinoAlternativo) {
@@ -90,10 +83,10 @@
         });
     });
 
-//    function buscarUsuarios(idPapel) {
+    //    function buscarUsuarios(idPapel) {
 //        document.paginaAlterada = false;
-//        var retorno = ajax("index.php?c=equipamentos&a=listarUsuarios&idPapel=" + idPapel, null, false, false);
-//        document.paginaAlterada = true;
+    //        var retorno = ajax("index.php?c=equipamentos&a=listarUsuarios&idPapel=" + idPapel, null, false, false);
+    //        document.paginaAlterada = true;
 //        var json = filtrarJSON(retorno);
 //        var cb;
 //        if (json.length > 0) {

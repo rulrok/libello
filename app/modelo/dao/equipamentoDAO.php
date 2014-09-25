@@ -1,5 +1,7 @@
 <?php
+
 namespace app\modelo;
+
 require_once 'abstractDAO.php';
 require_once APP_DIR . "modelo/vo/Equipamento.php";
 require_once APP_DIR . 'modelo/enumeracao/TipoEventoEquipamento.php';
@@ -37,12 +39,24 @@ class equipamentoDAO extends abstractDAO {
         return $this->executarSelect($sql);
     }
 
-    public function recuperarEquipamento($idEquipamento) {
+    /**
+     * 
+     * @param int $idEquipamento
+     * @param boolean $forcar Ignora se a quantidade no banco é igual a 0. Cuidado
+     * extra com essa variável, ou edições inválidas podem ser feitas chamando a página
+     * via URL direta com um ID de algum equipamento que não existe mais. 
+     * @return \app\Modelo\Equipamento ou null caso nenhum seja encontrado
+     */
+    public function recuperarEquipamento($idEquipamento, $forcar = false) {
         if (is_array($idEquipamento)) {
             $idEquipamento = $idEquipamento['equipamentoID'];
         }
 
-        $sql = "SELECT * from equipamento WHERE idEquipamento = :idEquipamento WHERE quantidade > 0";
+        if ($forcar) {
+            $sql = "SELECT * from equipamento WHERE idEquipamento = :idEquipamento";
+        } else {
+            $sql = "SELECT * from equipamento WHERE idEquipamento = :idEquipamento AND quantidade > 0";
+        }
         $params = array(
             ':idEquipamento' => [$idEquipamento, \PDO::PARAM_INT]
         );
@@ -64,7 +78,7 @@ class equipamentoDAO extends abstractDAO {
         } else {
             $idEquipamento = $baixaID;
         }
-        
+
         $sql = "DELETE from equipamento_baixa WHERE idBaixa = :idBaixa";
         $params = array(
             ':idBaixa' => [$idEquipamento, \PDO::PARAM_INT]

@@ -54,10 +54,11 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn
     }
 
     function _posProcessar(formData, jfForm, options) {
+        $("input[type=submit],button[type=submit]").attr('disabled', true);
         if (completeFn !== undefined && isFunction(completeFn)) {
             completeFn();
         }
-        $("input[type=submit],button[type=submit]").attr('disabled', false);
+        $("input[type=submit],button[type=submit]").attr('disabled', true);
     }
 
     function _sucesso(responseText, statusText, xhr, $form) {
@@ -82,27 +83,6 @@ function formularioAjax(idFormulario, recipient, completeFn, successFn, alwaysFn
                 $("input[type=reset],button[type=reset]").click();
             }
         }
-
-//        var data = responseText;
-//        if (data !== null && data !== undefined) {
-//            data = filtrarJSON(data);
-//            if (data !== undefined && data.status !== undefined) {
-//
-//                if (data.status === "sucesso") {
-//                    document.paginaAlterada = false;
-//                    if (successFn !== undefined && isFunction(successFn)) {
-//                        successFn(data);
-//                    }
-//                    if (resetarFormulario) {
-//                        $("input[type=reset],button[type=reset]").click();
-//                    }
-//                }
-//            } else {
-//                showPopUp("Houve algum problema na resposta do servidor.", "pop_erro");
-//            }
-//        } else {
-//            showPopUp("Houve algum problema na resposta do servidor.", "pop_erro");
-//        }
     }
 
 

@@ -14,7 +14,7 @@ class ComboBoxPolo {
             $codigo .= '<option value="default" selected="selected"> -- Não existem polos cadastrados --</option>';
         } else {
             if(!$tipo){
-                $codigo .= '<option value="default" selected="selected"> -- Selecione um descritor --</option>';
+                $codigo .= '<option value="default" selected="selected"> -- Selecione um polo --</option>';
             }else{
                 $codigo .= '<option value="default" selected="selected">Selecionado: '.$tipo.'</option>';
             }

@@ -42,7 +42,7 @@
 </form>
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $("#dataSaida").datepicker();
         $(".line input").popover({trigger: 'focus', container: 'body'});
 //        $("select[name=papel]").on("change", function(e) {
@@ -52,18 +52,11 @@
 //            }
 //        });
         formularioAjax({
-            idFormulario: "ajaxForm",
-            successFn: function() {
-                setTimeout(function() {
-                    document.paginaAlterada = false;
-                    history.back();
-                }, 5000);
-            },
-            completeFn: function() {
-                $("button[type=submit]").prop("disabled", true);
-            }}
-
-        );
+            successFn: function () {
+                document.paginaAlterada = false;
+                history.back();
+            }
+        });
         varrerCampos();
 
         var campoPolo = document.getElementById("polo");
@@ -77,7 +70,7 @@
         campoPolo.appendChild(optg);
         document.viagens_campoDestinoAlternativo = false;
 
-        $("#polo").on('change', function() {
+        $("#polo").on('change', function () {
             if ($("#polo option:selected").prop("value") === "outro") {
                 $($(".line")[2]).after("<div class='line'><label for='destinoManual'>Nome do destino</label><input type='text' required id='destinoManual' class='input-xlarge' name='destinoManual'/></div>")
                 varrerCampos();

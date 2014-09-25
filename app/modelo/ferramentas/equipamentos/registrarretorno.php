@@ -40,7 +40,11 @@ class registrarretorno extends Modelo\verificadorFormularioAjax {
         if ($ocorreu_erro) {
             $this->abortarExecucao();
         }
-
+        $saida = $equipamentoDAO->recuperarSaidaEquipamento($saidaID);
+        if (is_null($saida)) {
+            $this->adicionarMensagemErro("Essa saída não existe mais.");
+            $this->abortarExecucao();
+        }
         if ($equipamentoDAO->cadastrarRetorno($saidaID, $dataRetorno, $quantidade, $observacoes)) {
             if ($quantidade > 1) {
                 $this->adicionarMensagemSucesso("Equipamentos retornados");

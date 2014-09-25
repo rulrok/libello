@@ -69,14 +69,21 @@ class livroDAO extends abstractDAO {
     /**
      * 
      * @param int $idLivro
+     * @param boolean $forcar Ignora se a quantidade no banco é igual a 0. Cuidado
+     * extra com essa variável, ou edições inválidas podem ser feitas chamando a página
+     * via URL direta com um ID de algum livro que não existe mais. 
      * @return \Livro ou null caso nenhum seja encontrado
      */
-    public function recuperarLivro($idLivro) {
+    public function recuperarLivro($idLivro, $forcar = false) {
         if (is_array($idLivro)) {
             $idLivro = $idLivro['livroID'];
         }
 
-        $sql = "SELECT * from livro WHERE idLivro = :idLivro AND quantidade > 0";
+        if ($forcar) {
+            $sql = "SELECT * from livro WHERE idLivro = :idLivro ";
+        } else {
+            $sql = "SELECT * from livro WHERE idLivro = :idLivro AND quantidade > 0";
+        }
         $params = array(
             ':idLivro' => [$idLivro, \PDO::PARAM_INT]
         );

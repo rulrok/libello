@@ -11,12 +11,11 @@ class registrarbaixa extends Modelo\verificadorFormularioAjax {
     public function _validar() {
         $saidaID = filter_input(INPUT_POST, 'saidaID');
         if ($saidaID !== "") {
-            $saidaID = fnDecrypt(filter_input(INPUT_POST, 'saidaID'));
+            $saidaID = fnDecrypt($saidaID);
         }
         $equipamentoID = filter_input(INPUT_POST, 'equipamentoID');
         if ($equipamentoID !== "") {
-            //TODO - WHAT THE FUCK IS THIS?
-            $equipamentoID = fnDecrypt(filter_input(INPUT_POST, 'equipamentoID'));
+            $equipamentoID = fnDecrypt($equipamentoID);
         }
         $dataBaixa = filter_input(INPUT_POST, 'dataBaixa');
         $observacoes = filter_input(INPUT_POST, 'observacoes');
@@ -42,6 +41,11 @@ class registrarbaixa extends Modelo\verificadorFormularioAjax {
 
         $equipamentoDAO = new Modelo\equipamentoDAO();
         if ($saidaID !== "") {
+            $saida = $equipamentoDAO->recuperarSaidaEquipamento($saidaID);
+            if (is_null($saida)) {
+                $this->adicionarMensagemErro("Essa saída não existe mais.");
+                $this->abortarExecucao();
+            }
             //É uma saída
             if ($equipamentoDAO->cadastrarBaixa($equipamentoID, $dataBaixa, $quantidade, $observacoes, $saidaID)) {
                 $idBaixa = $equipamentoDAO->obterUltimoIdInserido();
@@ -53,6 +57,11 @@ class registrarbaixa extends Modelo\verificadorFormularioAjax {
             }
         } else {
             //É um equipamento no CEAD
+            $equipamento = $equipamentoDAO->recuperarEquipamento($equipamentoID);
+            if (is_null($equipamento)) {
+                $this->adicionarMensagemErro("Esse equipamento não existe mais.");
+                $this->abortarExecucao();
+            }
             if ($equipamentoDAO->cadastrarBaixa($equipamentoID, $dataBaixa, $quantidade, $observacoes)) {
                 $idBaixa = $equipamentoDAO->obterUltimoIdInserido();
 //                $equipamentoDAO->registrarCadastroBaixa($idBaixa);

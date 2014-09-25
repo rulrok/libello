@@ -210,9 +210,11 @@ Mensagem.prototype.getMensagem = function () {
 };
 
 Mensagem.prototype.Tipo = {
-    SUCESSO: "sucesso",
-    ERRO: "erro",
-    INDEFINIDO: "indefinido"
+    SUCESSO: "sucesso"
+    , ERRO: "erro"
+    , INDEFINIDO: "indefinido"
+    , POP_SUCESSO: "pop_sucesso"
+    , POP_SUCESSO_FIXO: "pop_sucesso_fixo"
 };
 
 /**
