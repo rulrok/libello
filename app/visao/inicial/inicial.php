@@ -359,21 +359,6 @@
                         // the event now, to handle the hash the page may have loaded with.
                         $(window).trigger('hashchange');
 
-
-
-                        //Prepara algumas funções especiais e conteúdos para serem exibidos no início
-                        //    window.onload = function() {
-
-                        //Função para centralizar elementos na página de acordo com o tamanho da tela
-                        jQuery.fn.center = function () {
-                            this.css("position", "absolute");
-                            this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) +
-                                    $(window).scrollTop()) + "px");
-                            this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
-                                    $(window).scrollLeft()) + "px");
-                            return this;
-                        };
-
                         //Para que quando a tela redimensionar e o popup com fundo cinza estiver sendo exibido,
                         //ele seja centralizado novamente, evitando exibições estranhas
                         $(window).bind("resize", function () {
