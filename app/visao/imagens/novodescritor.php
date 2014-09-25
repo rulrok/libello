@@ -115,30 +115,29 @@
             nomeNivel3 = $("#descritor_3 option:selected").text();
         }
 
-        $("#descritor_1").load(
-                'index.php?c=imagens&a=auxcombonivel1',
-                function(responseText, textStatus, XMLHttpRequest) {
-                    console.log(textStatus);
-                    $("#novo_descritor_1").val('');
-                    $("#descritor_1 option:contains('" + nomeNivel1 + "')").prop('selected', true);
-                    $("#descritor_1").trigger('change');
-
-                    setTimeout(function() {
-                        $("#novo_descritor_2").val('');
-                        $("#descritor_2 option:contains('" + nomeNivel2 + "')").prop('selected', true);
-                        $("#descritor_2").trigger('change');
-
-                        setTimeout(function() {
-                            $("#novo_descritor_3").val('');
-                            $("#descritor_3 option:contains('" + nomeNivel3 + "')").prop('selected', true);
-                            $("#descritor_3").trigger('change');
-
-                            $("#novo_descritor_4").val('');
-                            $("#novo_descritor_4").focus();
-                        }, 400);
-                    }, 400);
-                }
-        );
+//        $("#descritor_1").load(
+//                'index.php?c=imagens&a=auxcombonivel1',
+//                function(responseText, textStatus, XMLHttpRequest) {
+//                    $("#novo_descritor_1").val('');
+//                    $("#descritor_1 option:contains('" + nomeNivel1 + "')").prop('selected', true);
+//                    $("#descritor_1").trigger('change');
+//
+//                    setTimeout(function() {
+//                        $("#novo_descritor_2").val('');
+//                        $("#descritor_2 option:contains('" + nomeNivel2 + "')").prop('selected', true);
+//                        $("#descritor_2").trigger('change');
+//
+//                        setTimeout(function() {
+//                            $("#novo_descritor_3").val('');
+//                            $("#descritor_3 option:contains('" + nomeNivel3 + "')").prop('selected', true);
+//                            $("#descritor_3").trigger('change');
+//
+//                            $("#novo_descritor_4").val('');
+//                            $("#novo_descritor_4").focus();
+//                        }, 400);
+//                    }, 400);
+//                }
+//        );
     }
     $(document).ready(function() {
         $("button[type=reset]").on('click', function() {

@@ -155,10 +155,10 @@
             async: false
             , type: "POST"
             , url: "index.php?c=imagens&a=renomearDescritor"
-            , dataType: "json"
+//            , dataType: "json"
             , data: {'id': id, 'novoNome': novoNome}
             , success: function (json) {
-                sucesso = json;
+                sucesso = obterResposta("msg_renomeardescritor", true);
             }
             , error: function (xhr, ajaxOptions, thrownError) {
                 sucesso = false;
@@ -173,16 +173,18 @@
             async: false
             , type: "POST"
             , url: "index.php?c=imagens&a=criarDescritor"
-            , dataType: "json"
+//            , dataType: "json"
             , data: {'idPai': pai.id, 'nome': novoDescritor.text}
             , success: function (json) {
-                if (json.sucesso) {
-                    ultimoDescritorCriado = new Descritor(json.id, json.nome, json.nivel);
+                if (obterStatusOperacao() == Mensagem.prototype.Tipo.SUCESSO) {
+                    var descritorCriado = obterResposta("img_novodescritor", true);
+                    ultimoDescritorCriado = new Descritor(descritorCriado.id, descritorCriado.nome, descritorCriado.nivel);
+                    sucesso = true;
                 } else {
+                    sucesso = false;
                     ultimoDescritorCriado = undefined;
                 }
-                sucesso = json.sucesso;
-                return json;
+//                return json;
             }
             , error: function (xhr, ajaxOptions, thrownError) {
                 sucesso = false;
@@ -197,11 +199,15 @@
             async: false
             , type: "POST"
             , url: "index.php?c=imagens&a=moverDescritor"
-            , dataType: "json"
+//            , dataType: "json"
             , data: {'idDescritor': descritor.id, nivel: descritor.original.nivel, 'idNovoPai': idNovoPai, 'idAntigoPai': idAntigoPai}
             , success: function (json) {
-                sucesso = json;
-                return json;
+                if (obterStatusOperacao() == Mensagem.prototype.Tipo.SUCESSO) {
+                    sucesso = true;
+                } else {
+                    sucesso = false;
+                }
+//                return json;
             }
             , error: function (xhr, ajaxOptions, thrownError) {
                 sucesso = false;
@@ -216,11 +222,15 @@
             async: false
             , type: "POST"
             , url: "index.php?c=imagens&a=removerDescritor"
-            , dataType: "json"
+//            , dataType: "json"
             , data: {'idDescritor': idDescritor, 'idDescritorSubstituto': idDescritorSubstituto}
             , success: function (json) {
-                sucesso = json;
-                return json;
+                if (obterStatusOperacao() == Mensagem.prototype.Tipo.SUCESSO) {
+                    sucesso = true;
+                } else {
+                    sucesso = false;
+                }
+                return sucesso;
             }
             , error: function (xhr, ajaxOptions, thrownError) {
                 sucesso = false;
@@ -239,12 +249,12 @@
             async: false,
             type: "GET",
             url: "index.php?c=imagens&a=arvoredescritores&completa=true&descritorExcluir=" + idIgnorar,
-            dataType: "json",
+//            dataType: "json",
             success: function (jsonData) {
                 $('#jstree_div_aux').jstree({
                     core: {
                         data: function (node, callback) {
-                            var jsonAux = jsonData;
+                            var jsonAux = obterResposta("img_arvore_completa_semdescritor", true);
 
                             //TODO A partir da versão beta-10 do jsTree, duas árvore diferentes com o mesmo ID são possíveis.
                             //Quando for estável o sulficiente, atualizar para essa versão ou maior para não precisar adicionar a_ ao id dos componentes

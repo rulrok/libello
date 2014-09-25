@@ -22,8 +22,6 @@ class ControladorImagens extends MVC\Controlador {
     public function acaoBuscar() {
         $this->visao->acessoMinimo = Modelo\Permissao::CONSULTA;
 
-
-
         $papel = obterUsuarioSessao()->get_idPapel();
 
         if (filter_has_var(INPUT_GET, 'q')) {

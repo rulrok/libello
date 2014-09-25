@@ -372,11 +372,11 @@ function ajax(link, place, hidePop, async, ignorePageChanges, tipo, fnSucesso, f
         var camposAlteraveis = $("input, select, textarea").not('.ignorar').not("[hidden]").not("[readonly]");
         $(camposAlteraveis).bind("keyup", function (param) {
             if (param.keyCode != 13)
-                conteudoAlterado();
+                document.paginaAlterada = true;
         });
         $(camposAlteraveis).bind("change", function (param) {
             if (param.keyCode != 13)
-                conteudoAlterado();
+                document.paginaAlterada = true;
         });
         var camposData = $(".campoData").not(".ignorar");
 
@@ -384,7 +384,7 @@ function ajax(link, place, hidePop, async, ignorePageChanges, tipo, fnSucesso, f
             $(camposData).on("mouseup", function (param) {
                 setTimeout(function () {
                     if (param.keyCode != 13)
-                        conteudoAlterado();
+                        document.paginaAlterada = true;
                 }, 300);
             });
         });

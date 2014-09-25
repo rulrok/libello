@@ -1,16 +1,25 @@
 <?php
 
-require_once APP_DIR . "modelo/dao/imagensDAO.php";
+namespace app\modelo\ferramentas\imagens;
 
-$retorno = array();
-if (filter_has_var(INPUT_POST, 'query')) {
-    $imagensDAO = new imagensDAO();
-    $query = filter_input(INPUT_POST, 'query');
-    $resultado = $imagensDAO->consultarDescritor('DISTINCT nome', " nome LIKE '%$query%'");
+require_once APP_DIR . 'modelo/comboboxes/ComboBoxDescritores.php';
 
-    foreach ($resultado as $descritor) {
-        $retorno[] = $descritor['nome'];
+use \app\modelo as Modelo;
+
+class obterdescritores extends \app\modelo\PaginaDeAcao {
+
+    protected function _acaoPadrao() {
+        $retorno = array();
+        if (filter_has_var(INPUT_POST, 'query')) {
+            $imagensDAO = new Modelo\imagensDAO();
+            $query = filter_input(INPUT_POST, 'query');
+            $resultado = $imagensDAO->consultarDescritor('DISTINCT nome', " nome LIKE '%$query%'");
+
+            foreach ($resultado as $descritor) {
+                $retorno[] = $descritor['nome'];
+            }
+        }
+        $this->adicionarMensagemPersonalizada("img_descritores", json_encode($retorno));
     }
+
 }
-$json = json_encode($retorno);
-echo $json;

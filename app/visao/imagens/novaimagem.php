@@ -165,7 +165,7 @@
 
     function alternar_exibir_original() {
 
-        $("#image_original_wrap").toggle(400, function() {
+        $("#image_original_wrap").toggle(400, function () {
             if ($("#image_original_wrap").css("display") == "block") {
                 $("#mostrar_original").text("Ocultar original");
             } else {
@@ -187,37 +187,37 @@
 
             var reader = new FileReader();
             // Closure to capture the file information.
-            reader.onload = (function(theFile) {
-                return function(e) {
+            reader.onload = (function (theFile) {
+                return function (e) {
                     // Render thumbnail.
                     var file = e.target;
-//                    console.log(file.result);
-//                    ajax("index.php?c=imagens&a=criarthumb&imageURI=" + file.result, "#image_preview", false, true, true);
                     $.ajax({
                         url: "index.php?c=imagens&a=criarthumb"
                         , type: "POST"
                         , async: true
                         , data: {imagemURI: file.result}
-                        , success: function(data) {
-                            data = $.parseJSON(data);
-                            $("#image-info").show();
-                            $("#image_preview").prop('src', data.thumb.img_src);
-                            $("#image_original").prop('src', data.master.img_src);
-                            //show img data
-                            $("#thumb_info").empty();
-                            $("#thumb_info").html("<p>Dimensões: " + data.thumb.w + "x" + data.thumb.h + "</p><p>Tamanho: " + data.thumb.size + "</p>");
-                            $("#master_info").empty();
-                            $("#master_info").html("<p>Dimensões: " + data.master.w + "x" + data.master.h + "</p><p>Tamanho: " + data.master.size + "</p>");
-                            $('#remove-image-upload').show();
-                            $('#image-upload-line').hide();
+                        , success: function (data) {
+                            data = obterResposta("img_resultados", true);
+                            if (data != undefined) {
+                                $("#image-info").show();
+                                $("#image_preview").prop('src', data.thumb.img_src);
+                                $("#image_original").prop('src', data.master.img_src);
+                                //show img data
+                                $("#thumb_info").empty();
+                                $("#thumb_info").html("<p>Dimensões: " + data.thumb.w + "x" + data.thumb.h + "</p><p>Tamanho: " + data.thumb.size + "</p>");
+                                $("#master_info").empty();
+                                $("#master_info").html("<p>Dimensões: " + data.master.w + "x" + data.master.h + "</p><p>Tamanho: " + data.master.size + "</p>");
+                                $('#remove-image-upload').show();
+                                $('#image-upload-line').hide();
+                            }
                         }
-                        , error: function() {
+                        , error: function () {
                             $("#image-info").hide();
                         }
-                        , beforeSend: function() {
+                        , beforeSend: function () {
                             $("#image-loading").show();
                         },
-                        complete: function() {
+                        complete: function () {
                             $("#image-loading").hide();
                         }
 
@@ -231,7 +231,7 @@
     }
 
     function atualizar_combobox(combo_box) {
-        $(combo_box).on('change', function() {
+        $(combo_box).on('change', function () {
             var desnum = parseInt(this.id.substr(10));
             //Verifica se é o combobox certo
             if (desnum > 0 && desnum < 4) {
@@ -242,7 +242,7 @@
                     var $url = "index.php?c=imagens&a=obterDescritor&n=" + desnum + "&p=" + this.value;
 //                    console.log($url);
                     $(wrap_id).attr('disabled', true);
-                    $(wrap_id).load($url, function(response, status, xhr) {
+                    $(wrap_id).load($url, function (response, status, xhr) {
                         if (status == "error") {
                             $(this).val("default");
 //                        var msg = "Problema ao recuperar os descritores. Tente novamente. ";
@@ -266,12 +266,12 @@
         });
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         //Verifica se o navegador possui os requisitos necessários para poder gerar a pré visualização da imagem
         if (window.File && window.FileReader && window.FileList && window.Blob) {
             $("#image-upload").on('change', handleFileSelect);
-            $('#remove-image-upload').on('click', function(e)
+            $('#remove-image-upload').on('click', function (e)
             {
                 $('#image-upload-line').show();
                 $("#image_preview").prop('src', 'publico/imagens/350x150.jpg');
@@ -281,7 +281,7 @@
                 $("#thumb_info").empty();
                 $("#master_info").empty();
                 $("#image-info").hide();
-                $("[type=file]").each(function() {
+                $("[type=file]").each(function () {
                     $(this).val("");
                 });
                 e.preventDefault();
@@ -292,8 +292,8 @@
         }
 
         var botoes_radio_fake = $("#complexidade_botoes").children();
-        $.each(botoes_radio_fake, function() {
-            $(this).on('click', function() {
+        $.each(botoes_radio_fake, function () {
+            $(this).on('click', function () {
                 var id = this.id;
                 var limite = id.search("_");
                 id = id.substr(0, limite + 1) + "radio";
@@ -304,7 +304,7 @@
 
         var $cb_descritores = $(".cb_descritor");
 //        console.log(cb_descritores);
-        $.each($cb_descritores, function() {
+        $.each($cb_descritores, function () {
             atualizar_combobox(this);
         });
         formularioAjax();
@@ -318,11 +318,11 @@
         $("#descricoes").limiter(1000, elem);
         //Aplica mascara campo CPF
         $('#cpfautor').mask('999.999.999-99');
-        $("#mostrar_original").on("click", function() {
+        $("#mostrar_original").on("click", function () {
             alternar_exibir_original();
         });
 //        $(".line input,.line textearea").popover({trigger: 'focus', container: 'body'});
-        $("button[type=reset]").bind("click", function() {
+        $("button[type=reset]").bind("click", function () {
 //            $("[name=categoria]").trigger('change');
 //            $("#remove-image-upload").click();
 //            $("#simples_botao").click();
@@ -333,7 +333,7 @@
 //                $("#cpfautor").mask('999.999.999-99');
 //                liberarCadastro();
 //            }, "200");
-            ajax("index.php?c=imagens&a=novaImagem", ".contentWrap", true, false, true); 
+            ajax("index.php?c=imagens&a=novaImagem", ".contentWrap", true, false, true);
             //TODO tirar essa gambiarra
             //TODO AO invés de limpar os campos, a página é apenas recarregada (facilitando a vida de certa forma)
         });
@@ -341,7 +341,7 @@
 
         $("#descritor_4_personalizado").tooltip({placement: 'top'});
 
-        $("#descritor_4_personalizado").on('click', function() {
+        $("#descritor_4_personalizado").on('click', function () {
             if (this.checked) {
                 esconder("#descritor_4");
                 exibir("#novo_descritor_4");

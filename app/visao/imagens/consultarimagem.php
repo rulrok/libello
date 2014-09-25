@@ -42,7 +42,7 @@
                         <!--                        <li>
                                                     <span id="reportrange" class="btn" style="display: inline-block; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; margin: 0">
                                                         <i class="icon-calendar"></i>
-                                                        <span><?php // setlocale(LC_ALL, 'pt_BR'); echo date("j/M/Y", strtotime('-30 day'));                             ?> - <?php // echo date("j/M/Y");                             ?></span> <b class="caret"></b>
+                                                        <span><?php // setlocale(LC_ALL, 'pt_BR'); echo date("j/M/Y", strtotime('-30 day'));                              ?> - <?php // echo date("j/M/Y");                              ?></span> <b class="caret"></b>
                                                     </span>
                                                 </li>-->
                         <li>
@@ -124,7 +124,7 @@
             url = url + '&u=' + usuario;
         }
         $("#resultados").css('opacity', '0.3');
-        $("#resultados").load(url, function() {
+        $("#resultados").load(url, function () {
             $("#resultados").css('opacity', '1');
         });
     }
@@ -136,7 +136,7 @@
         return '';
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         $('.input-daterange').datepicker({
             autoclose: true,
@@ -146,7 +146,7 @@
             multidate: false,
             keyboardNavigation: false,
             todayHighlight: true
-        }).on('hide', function(e) {
+        }).on('hide', function (e) {
             var dataInicio = $("#dataInicio").val();
             var dataFim = $("#dataFim").val();
             var formato = "DD/MM/YYYY";
@@ -159,7 +159,7 @@
             }
         });
 
-        $("#limpar_datas").on('click', function() {
+        $("#limpar_datas").on('click', function () {
             if ($("#dataInicio").val().length > 0 || $("#dataFim").val().length > 0) {
                 $("#dataInicio,#dataFim").val('');
                 buscar();
@@ -172,18 +172,18 @@
 
         if ($("#usuarios").length) { //Verifica se o componente está sendo exibido
             $("#usuarios").chosen({allow_single_deselect: true});
-            $("#usuarios").on('change', function() {
+            $("#usuarios").on('change', function () {
                 buscar();
             });
         }
 
-        $("#botao_buscar_imagem").on('click', function() {
+        $("#botao_buscar_imagem").on('click', function () {
             buscar();
         });
 
         $("#b_filtros").tooltip({placement: 'top'});
-        $("#b_filtros").on('click', function() {
-            $("#barra_filtros").fadeToggle("fast", function() {
+        $("#b_filtros").on('click', function () {
+            $("#barra_filtros").fadeToggle("fast", function () {
 
                 $("#ocultar_filtros").toggleClass("hidden");
                 $("#mostrar_filtros").toggleClass("hidden");
@@ -191,7 +191,7 @@
         });
 
         $("#botao_limpar").tooltip({placement: 'top'});
-        $("#botao_limpar").on('click', function() {
+        $("#botao_limpar").on('click', function () {
             if ($('#campo_busca').val().length > 0) {
                 $('#campo_busca').val('');
                 buscar();
@@ -202,39 +202,39 @@
         //Originalmente o componente não mostra outro depois de já haver algum selecionado.
         $('#campo_busca').typeahead({
             minLength: 2
-            , source: function(query, process) {
+            , source: function (query, process) {
                 $.ajax({
                     url: 'index.php?c=imagens&a=obterDescritores',
                     type: 'POST',
-                    dataType: 'JSON',
+//                    dataType: 'JSON',
                     data: 'query=' + extractor(query),
-                    success: function(data) {
-                        process(data);
+                    success: function (data) {
+                        process(obterResposta("img_descritores", true));
                     }
-                    , error : function(data){
+                    , error: function (data) {
                         console.log(data);
                     }
                 });
             }
-            , updater: function(item) {
+            , updater: function (item) {
                 return this.$element.val().replace(/[^,]*$/, '') + item + ',';
             }
-            , matcher: function(item) {
+            , matcher: function (item) {
                 var tquery = extractor(this.query);
                 if (!tquery)
                     return false;
                 return ~item.toLowerCase().indexOf(tquery.toLowerCase());
             }
-            , highlighter: function(item) {
+            , highlighter: function (item) {
                 var query = extractor(this.query).replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&');
-                return item.replace(new RegExp('(' + query + ')', 'ig'), function($1, match) {
+                return item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
                     return '<strong>' + match + '</strong>';
                 });
             }
         });
 
         var to = false;
-        $("#campo_busca").on('keyup', function(e) {
+        $("#campo_busca").on('keyup', function (e) {
             switch (e.keyCode) {
                 case 13: // enter
                     //                    clearTimeout(timeoutBuscaId);
@@ -258,7 +258,7 @@
                     if (to) {
                         clearTimeout(to);
                     }
-                    to = setTimeout(function() {
+                    to = setTimeout(function () {
                         buscar();
                     }, 400);
                     break;
