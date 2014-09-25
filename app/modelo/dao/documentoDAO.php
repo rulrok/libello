@@ -17,7 +17,7 @@ class documentoDAO extends abstractDAO {
         $sql = "SELECT MAX(" . $chavePrimariaTabela . ") FROM " . $nomeTabelaDocumento;
         $ultimoIdInserido = $this->executarSelect($sql);
 
-        if ($ultimoIdInserido[0][0]=="") {
+        if ($ultimoIdInserido[0][0] == "") {
             return "";
         } else {
             $sql = "SELECT " . $campoUltimoRegistroDesejado . " FROM " . $nomeTabelaDocumento . " WHERE " . $chavePrimariaTabela . " = " . $ultimoIdInserido[0][0];
@@ -48,7 +48,19 @@ class documentoDAO extends abstractDAO {
             $ultimaInsercao = 0;
         }
         $ultimaInsercao++; //incrementa o número do oficio
-        $numOficio = $ultimaInsercao . "/" . date("Y");
+//        $numOficio = $ultimaInsercao . "/" . date("Y");
+
+        if ($ultimaInsercao < 10) {
+            $numOficio = "0000" . $ultimaInsercao . "/" . date("Y"); //até 9
+        } else if ($ultimaInsercao < 100) {
+            $numOficio = "000" . $ultimaInsercao . "/" . date("Y"); //ate 99
+        } else if ($ultimaInsercao < 1000) {
+            $numOficio = "00" . $ultimaInsercao . "/" . date("Y"); //ate 999
+        } else if ($ultimaInsercao < 10000) {
+            $numOficio = "0" . $ultimaInsercao . "/" . date("Y"); //ate 9999
+        } else if ($ultimaInsercao >= 10000) {
+            $numOficio = $ultimaInsercao . "/" . date("Y"); //10000 pra frente a ordenação do campo "numeração" não irá funcionar
+        }
 
 
         $sql = "INSERT INTO documento_oficio (assunto, corpo, idUsuario, estadoEdicao, tratamento, destino, cargo_destino, data, tipoSigla, referencia, remetente, cargo_remetente,  numOficio) VALUES ";
@@ -155,7 +167,19 @@ class documentoDAO extends abstractDAO {
             $ultimaInsercao = 0;
         }
         $ultimaInsercao++; //incrementa o número do oficio
-        $numMemorando = $ultimaInsercao . "/" . date("Y");
+//        $numMemorando = $ultimaInsercao . "/" . date("Y");
+
+        if ($ultimaInsercao < 10) {
+            $numMemorando = "0000" . $ultimaInsercao . "/" . date("Y"); //até 9
+        } else if ($ultimaInsercao < 100) {
+            $numMemorando = "000" . $ultimaInsercao . "/" . date("Y"); //ate 99
+        } else if ($ultimaInsercao < 1000) {
+            $numMemorando = "00" . $ultimaInsercao . "/" . date("Y"); //ate 999
+        } else if ($ultimaInsercao < 10000) {
+            $numMemorando = "0" . $ultimaInsercao . "/" . date("Y"); //ate 9999
+        } else if ($ultimaInsercao >= 10000) {
+            $numMemorando = $ultimaInsercao . "/" . date("Y"); //10000 pra frente a ordenação do campo "numeração" não irá funcionar
+        }
 
         $sql = "INSERT INTO documento_memorando (assunto, corpo, idUsuario, estadoEdicao, tratamento, cargo_destino, data, tipoSigla, remetente, cargo_remetente,  numMemorando) VALUES ";
         $sql .= "(:assunto, :corpo, :idUsuario, :estadoEdicao, :tratamento, :cargo_destino, :data, :tipoSigla, :remetente, :cargo_remetente,  :numMemorando)";
