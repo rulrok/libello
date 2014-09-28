@@ -16,6 +16,7 @@ class moverdescritor extends \app\modelo\PaginaDeAcao {
 
         if (is_numeric((int) $idDescritor) && is_numeric((int) $idAntigoPai) && is_numeric((int) $idNovoPai) && is_numeric($nivel)) {
             $imagensDAO = new Modelo\imagensDAO();
+            //TODO Retirar essas queries desse arquivo e mover para algum método em imagensDAO para consistência da estrutura do código.
             $sqlImagensRenomear = "SELECT idImagem FROM imagem WHERE descritor$nivel = :idDescritorExcluido";
             $paramsImagensRenomear = array(
                 ':idDescritorExcluido' => [$idDescritor, \PDO::PARAM_INT]

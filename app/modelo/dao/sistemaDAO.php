@@ -1,4 +1,5 @@
 <?php
+
 namespace app\modelo;
 
 require_once 'abstractDAO.php';
@@ -24,4 +25,23 @@ class sistemaDAO extends abstractDAO {
 
         return $this->executarQuery($sqlUltimoAcesso, $paramsUltimoAcesso);
     }
+
+    public function recuperarMenu($ferramenta) {
+        $sql = "SELECT idLink, nomeMenu FROM sistema_menu WHERE idFerramenta = :idFerramenta";
+        $params = array(
+            ':idFerramenta' => [$ferramenta, \PDO::PARAM_INT]
+        );
+
+        return $this->executarSelect($sql, $params);
     }
+
+    public function recuperarSubmenu($ferramenta) {
+        $sql = "SELECT nivelPermissao,link, nomeSubmenu FROM sistema_menu NATURAL JOIN sistema_submenu WHERE idFerramenta = :idFerramenta";
+        $params = array(
+            ':idFerramenta' => [$ferramenta, \PDO::PARAM_INT]
+        );
+
+        return $this->executarSelect($sql, $params);
+    }
+
+}

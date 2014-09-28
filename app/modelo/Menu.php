@@ -2,153 +2,10 @@
 
 namespace app\modelo;
 
-include_once APP_DIR . 'modelo/vo/Usuario.php';
-include_once APP_DIR . 'modelo/dao/usuarioDAO.php';
-include_once APP_DIR . 'modelo/dao/areaDAO.php';
-require_once 'enumeracao/ImagensDificuldadeEnum.php';
 require_once 'enumeracao/Ferramenta.php';
-require_once 'enumeracao/Area.php';
-require_once 'enumeracao/TipoCurso.php';
-require_once 'enumeracao/Papel.php';
 require_once APP_LIBRARY_ABSOLUTE_DIR . 'seguranca/Permissao.php';
 
 class Menu {
-
-    private $menus = [];
-
-    private function __construct() {
-
-        $this->menus[Ferramenta::CONTROLE_USUARIOS] = [
-            ['usuarios', "Usuários"]
-            , Permissao::ADMINISTRADOR => array(
-                ["#!usuarios|restaurar", "Usuários inativos"]
-            )
-            , Permissao::GESTOR => array(
-                ["#!usuarios|gerenciar", "Gerenciar usuários"]
-            )
-            , Permissao::ESCRITA => array(
-                ["#!usuarios|novo", "Novo usuário"]
-            )
-            , Permissao::CONSULTA => array(
-                ["#!usuarios|consultar", "Consultar usuários"]
-            )
-        ];
-
-        $this->menus[Ferramenta::CURSOS_E_POLOS] = [
-            ['cursospolos', "Cursos e polos"]
-            , Permissao::ADMINISTRADOR => array()
-            , Permissao::GESTOR => array(
-                ["#!cursospolos|gerenciarcursos", "Gerenciar cursos"],
-                ["#!cursospolos|gerenciarpolos", "Gerenciar polos"]
-            )
-            , Permissao::ESCRITA => array(
-                ["#!cursospolos|novocurso", "Novo curso"],
-                ["#!cursospolos|novopolo", "Novo polo"]
-            )
-            , Permissao::CONSULTA => array()
-        ];
-
-        $this->menus[Ferramenta::CONTROLE_LIVROS] = [
-            ['livros', "Livros"]
-            , Permissao::ADMINISTRADOR => array(
-                ["#!livros|gerenciarbaixasesaidas", "Administrar baixas e saídas"]
-            )
-            , Permissao::GESTOR => array(
-                ["#!livros|gerenciar", "Gerenciar livros"],
-                ["#!livros|saida", "Registrar saída"]
-            )
-            , Permissao::ESCRITA => array(
-                ["#!livros|retorno", "Registrar retorno"],
-                ["#!livros|novo", "Cadastrar livro"]
-            )
-            , Permissao::CONSULTA => array(
-                ["#!livros|consultar", "Consultar livros"],
-                ["#!livros|relatorios", "Gerar relatórios"]
-            )
-        ];
-
-        $this->menus[Ferramenta::CONTROLE_EQUIPAMENTOS] = [
-            ['equipamentos', "Equipamentos"]
-            , Permissao::ADMINISTRADOR => array(
-                ["#!equipamentos|gerenciarbaixasesaidas", "Administrar baixas e saídas"]
-            )
-            , Permissao::GESTOR => array(
-                ["#!equipamentos|gerenciar", "Gerenciar equipamentos"],
-                ["#!equipamentos|saida", "Registrar saída"]
-            )
-            , Permissao::ESCRITA => array(
-                ["#!equipamentos|retorno", "Registrar retorno"],
-                ["#!equipamentos|novo", "Cadastrar equipamento"]
-            )
-            , Permissao::CONSULTA => array(
-                ["#!equipamentos|consultar", "Consultar equipamentos"]
-            )
-        ];
-
-        $this->menus[Ferramenta::CONTROLE_DOCUMENTOS] = [
-            ['documentos', "Documentos"]
-            , Permissao::ADMINISTRADOR => array()
-            , Permissao::GESTOR => array(
-                ["#!documentos|gerenciar", "Gerenciar histórico"],
-                ["#!documentos|gerenciarCabecalho", "Gerenciar Cabeçalho"]
-            )
-            , Permissao::ESCRITA => array(
-                ["#!documentos|oficio", "Criar ofício"],
-                ["#!documentos|memorando", "Criar memorando"]
-            )
-            , Permissao::CONSULTA => array(
-                ["#!documentos|consultar", "Consultar histórico"]
-            )
-        ];
-
-        $this->menus[Ferramenta::CONTROLE_VIAGENS] = [
-            ['viagens', "Viagens"]
-            , Permissao::ADMINISTRADOR => array()
-            , Permissao::GESTOR => array(
-                ["#!viagens|gerenciar", "Gerenciar viagens"]
-            )
-            , Permissao::ESCRITA => array(
-                ["#!viagens|nova", "Inserir nova viagem"],
-            )
-            , Permissao::CONSULTA => array()
-        ];
-
-        $this->menus[Ferramenta::TAREFAS] = [
-            ['tarefas', "Tarefas"]
-            , Permissao::ADMINISTRADOR => array()
-            , Permissao::GESTOR => array(
-                ["#!tarefas|gerenciar", "Gerenciar tarefas"]
-            )
-            , Permissao::ESCRITA => array(
-                ["#!tarefas|nova", "Nova Tarefa"],
-            )
-            , Permissao::CONSULTA => array()
-        ];
-
-
-        $this->menus[Ferramenta::GALERIA_IMAGENS] = [
-            ['imagens', "Imagens"]
-            , Permissao::ADMINISTRADOR => array()
-            , Permissao::GESTOR => array(
-                ["#!imagens|gerenciarDescritores", "Gerenciar descritores"],
-                ["#!imagens|novoDescritor", "Novo descritor"]
-            )
-            , Permissao::ESCRITA => array(
-                ["#!imagens|novaImagem", "Cadastrar imagem"]
-            )
-            , Permissao::CONSULTA => array(
-                ["#!imagens|consultarimagem", "Consultar imagens"]
-            )
-        ];
-
-//        $this->menus[Ferramenta::PROCESSOS] = [
-////            ['processos', "Processos"]
-////            , Permissao::ADMINISTRADOR => array()
-////            , Permissao::GESTOR => array()
-////            , Permissao::ESCRITA => array()
-////            , Permissao::CONSULTA => array()
-//        ];
-    }
 
     private static function _processarDados($menu, $permissao) {
 
@@ -198,6 +55,25 @@ class Menu {
         return [$menuCode, $subMenuCode];
     }
 
+    private static function _montarDados($menu, $submenu) {
+        $menuInfos = array();
+
+        if (is_null($menu) || empty($menu)) {
+            return $menuInfos;
+        }
+        $menuInfos[0] = [$menu['idLink'], $menu['nomeMenu']];
+        $permissoes = Permissao::obterValores();
+        foreach ($permissoes as $permissao) {
+            $menuInfos[$permissao] = [];
+        }
+        foreach ($submenu as $sublink) {
+            $i = $sublink['nivelPermissao'];
+            $valores = [$sublink['link'], $sublink['nomeSubmenu']];
+            $menuInfos[$i][] = $valores;
+        }
+        return $menuInfos;
+    }
+
     public static function montarMenuNavegacao() {
 
 
@@ -216,15 +92,22 @@ class Menu {
         $subMenuCode = "<div class=\"subMenu\">" . "\n";
         $subMenuCode .= "<menu>" . "\n";
 
-        $Menu = new Menu();
+        $sistemaDAO = new sistemaDAO();
+
         foreach (Ferramenta::obterValores() as $ferramenta) {
             $permissao = $permissoes_indice_ferramentas[$ferramenta];
 
-            if (!isset($Menu->menus[$ferramenta])) {
+            $menu = $sistemaDAO->recuperarMenu($ferramenta);
+            //Se não existe um menu cadastrado para alguma ferramenta, o resultado será um veto vazio,
+            //obviamente se não há um menu, não há submenus e apenas pulamos essa etapa
+            if (empty($menu)) {
                 continue;
-            } else {
-                $codigo = static::_processarDados($Menu->menus[$ferramenta], $permissao);
             }
+            $submenu = $sistemaDAO->recuperarSubmenu($ferramenta);
+            $menuInfos = static::_montarDados($menu[0], $submenu);
+
+            $codigo = static::_processarDados($menuInfos, $permissao);
+
             $menuCode .= "\t\t" . $codigo[0];
             $subMenuCode .= "\t" . $codigo[1];
             $subMenuCode .= "\t</ul>";
