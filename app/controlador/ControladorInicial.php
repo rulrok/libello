@@ -41,7 +41,7 @@ class ControladorInicial extends MVC\Controlador {
     }
 
     public function idFerramentaAssociada() {
-        return Ferramenta::DESCONHECIDO;
+        return Modelo\Ferramenta::__default;
     }
 
 }

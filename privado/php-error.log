@@ -1,35 +1,26 @@
-[21-Sep-2014 23:34:08 America/Sao_Paulo] Mensagem: <Usuário tentou desativar seu próprio perfil através da página de edição de usuários do sistema>
-[Usuário: Reuel Ramos Ribeiro(RRR), rulrok@gmail.com, papel: 2, id: 2]
-
-
-
-[21-Sep-2014 23:34:44 America/Sao_Paulo] Mensagem: <Usuário tentou desativar seu próprio perfil através da página de edição de usuários do sistema>
-[Usuário: Reuel Ramos Ribeiro(RRR), rulrok@gmail.com, papel: 2, id: 2]
-
-
-
-[21-Sep-2014 23:34:59 America/Sao_Paulo] Mensagem: <Usuário tentou desativar seu próprio perfil através da página de edição de usuários do sistema>
-[Usuário: Reuel Ramos Ribeiro(RRR), rulrok@gmail.com, papel: 2, id: 2]
-
-
-
-[21-Sep-2014 23:34:59 America/Sao_Paulo] PHP Fatal error:  Call to undefined method app\controlador\ControladorUsuarios::adicionarMensagemSucesso() in C:\wamp\www\libello\app\controlador\ControladorUsuarios.php on line 85
-
-[21-Sep-2014 23:34:59 America/Sao_Paulo] PHP Stack trace:
-
-[21-Sep-2014 23:34:59 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
-
-[21-Sep-2014 23:34:59 America/Sao_Paulo] PHP   2. app\mvc\Mvc->rodar() C:\wamp\www\libello\index.php:37
-
-[21-Sep-2014 23:34:59 America/Sao_Paulo] PHP   3. app\controlador\ControladorUsuarios->acaoDesativar() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
-
-[21-Sep-2014 23:35:10 America/Sao_Paulo] Mensagem: <Usuário tentou desativar seu próprio perfil através da página de edição de usuários do sistema>
-[Usuário: Reuel Ramos Ribeiro(RRR), rulrok@gmail.com, papel: 2, id: 2]
-
-
-
-[21-Sep-2014 23:35:45 America/Sao_Paulo] Mensagem: <Usuário tentou desativar seu próprio perfil através da página de edição de usuários do sistema>
-[Usuário: Reuel Ramos Ribeiro(RRR), rulrok@gmail.com, papel: 2, id: 2]
-
-
-
+[28-Sep-2014 01:06:34 America/Sao_Paulo] PHP Fatal error:  Undefined class constant 'GALERIA_IMAGENS' in C:\wamp\www\libello\app\modelo\Menu.php on line 128
+[28-Sep-2014 01:06:34 America/Sao_Paulo] PHP Stack trace:
+[28-Sep-2014 01:06:34 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[28-Sep-2014 01:06:34 America/Sao_Paulo] PHP   2. app\mvc\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[28-Sep-2014 01:06:34 America/Sao_Paulo] PHP   3. app\controlador\ControladorInicial->acaoInicial() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[28-Sep-2014 01:06:34 America/Sao_Paulo] PHP   4. app\modelo\Menu::montarMenuNavegacao() C:\wamp\www\libello\app\controlador\ControladorInicial.php:31
+[28-Sep-2014 01:06:34 America/Sao_Paulo] PHP   5. app\modelo\Menu->__construct() C:\wamp\www\libello\app\modelo\Menu.php:218
+[28-Sep-2014 01:16:45 America/Sao_Paulo] PHP Fatal error:  Undefined class constant 'GALERIA_IMAGENS' in C:\wamp\www\libello\app\modelo\Menu.php on line 129
+[28-Sep-2014 01:16:45 America/Sao_Paulo] PHP Stack trace:
+[28-Sep-2014 01:16:45 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[28-Sep-2014 01:16:45 America/Sao_Paulo] PHP   2. app\mvc\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[28-Sep-2014 01:16:45 America/Sao_Paulo] PHP   3. app\controlador\ControladorInicial->acaoInicial() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:102
+[28-Sep-2014 01:16:45 America/Sao_Paulo] PHP   4. app\modelo\Menu::montarMenuNavegacao() C:\wamp\www\libello\app\controlador\ControladorInicial.php:31
+[28-Sep-2014 01:16:45 America/Sao_Paulo] PHP   5. app\modelo\Menu->__construct() C:\wamp\www\libello\app\modelo\Menu.php:219
+[28-Sep-2014 01:17:33 America/Sao_Paulo] PHP Fatal error:  Undefined class constant 'GALERIA_IMAGENS' in C:\wamp\www\libello\app\controlador\ControladorImagens.php on line 233
+[28-Sep-2014 01:17:33 America/Sao_Paulo] PHP Stack trace:
+[28-Sep-2014 01:17:33 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[28-Sep-2014 01:17:33 America/Sao_Paulo] PHP   2. app\mvc\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[28-Sep-2014 01:17:33 America/Sao_Paulo] PHP   3. app\mvc\Controlador->__construct() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:94
+[28-Sep-2014 01:17:33 America/Sao_Paulo] PHP   4. app\controlador\ControladorImagens->idFerramentaAssociada() C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:19
+[28-Sep-2014 01:18:05 America/Sao_Paulo] PHP Fatal error:  Undefined class constant 'GALERIA_IMAGENS' in C:\wamp\www\libello\app\controlador\ControladorImagens.php on line 233
+[28-Sep-2014 01:18:05 America/Sao_Paulo] PHP Stack trace:
+[28-Sep-2014 01:18:05 America/Sao_Paulo] PHP   1. {main}() C:\wamp\www\libello\index.php:0
+[28-Sep-2014 01:18:05 America/Sao_Paulo] PHP   2. app\mvc\Mvc->rodar() C:\wamp\www\libello\index.php:37
+[28-Sep-2014 01:18:05 America/Sao_Paulo] PHP   3. app\mvc\Controlador->__construct() C:\wamp\www\libello\biblioteca\Mvc\Mvc.php:94
+[28-Sep-2014 01:18:05 America/Sao_Paulo] PHP   4. app\controlador\ControladorImagens->idFerramentaAssociada() C:\wamp\www\libello\biblioteca\Mvc\Controlador.php:20

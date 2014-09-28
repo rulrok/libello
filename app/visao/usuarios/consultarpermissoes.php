@@ -6,10 +6,10 @@
     $usuarioDAO = new \app\modelo\usuarioDAO();
     $email = $usuarioDAO->descobrirEmail($idUsuario);
     if ($email != NULL) {
-        $usuario = $usuarioDAO->recuperarUsuario($email,true);
+        $usuario = $usuarioDAO->recuperarUsuario($email, true);
         echo "<h3 id=\"myModalLabel\">Usuário: " . $usuario->get_PNome() . " " . $usuario->get_UNome() . "</h3>";
         if ($usuario instanceof \app\modelo\Usuario) :
-            $resultado = $usuarioDAO->obterPermissoes($idUsuario);
+            $resultado = $usuarioDAO->obterPermissoes($idUsuario, true);
             ?>
         </div>
         <div class="modal-body">

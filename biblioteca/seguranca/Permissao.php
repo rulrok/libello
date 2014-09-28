@@ -4,10 +4,10 @@ namespace app\modelo;
 /**
  * Simular classe de enumeração
  */
-final class Permissao {
+final class Permissao extends \SplEnum {
 
-    const __default = self::SEM_ACESSO;
-    const __length = 5;
+//    const __default = self::SEM_ACESSO;
+//    const __length = 5;
     
     const SEM_ACESSO = 1;
     const CONSULTA = 10;

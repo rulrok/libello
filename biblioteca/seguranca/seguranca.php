@@ -75,7 +75,7 @@ function usuarioAutorizado(\app\modelo\Usuario $usuario, $acessoMinimo) {
 //        $arquivo = strtolower(Mvc::pegarInstancia()->pegarAcao());
 
     $nomeClasseControlador = 'Controlador' . ucfirst($diretorio);
-    $nome = "\\app\\controlador\\".$nomeClasseControlador;
+    $nome = "\\app\\controlador\\" . $nomeClasseControlador;
     $controlador = new $nome();
 
     if ($controlador instanceof \app\mvc\ControladorInicial) {
@@ -142,10 +142,10 @@ function autenticarUsuario(\app\modelo\Usuario $user) {
         //$con = $_SESSION['conexao'];
         if ($user->get_email() !== null && $user->get_email() !== '' && $user->get_senha() !== null && $user->get_senha() !== '') {
             try {
-                    $query = $con->prepare("SELECT * FROM usuario WHERE email = :email AND senha = :senha AND ativo = 1");
-                    $query->execute(array('email' => $user->get_email(), 'senha' => $user->senha));
-                    $ret = $query->fetchAll(\PDO::FETCH_CLASS, '\app\modelo\Usuario');
-                
+                $query = $con->prepare("SELECT * FROM usuario WHERE email = :email AND senha = :senha AND ativo = 1");
+                $query->execute(array('email' => $user->get_email(), 'senha' => $user->senha));
+                $ret = $query->fetchAll(\PDO::FETCH_CLASS, '\app\modelo\Usuario');
+
                 if (sizeof($ret) === 1) {
                     $_SESSION['usuario'] = $ret[0];
                     $_SESSION['autenticado'] = true;

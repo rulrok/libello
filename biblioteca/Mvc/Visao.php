@@ -44,8 +44,8 @@ class Visao {
 
                 require $caminho_completo;
 
-                //Verifica se o arquivo possui definicão de classe que implemente
-                //a classe 'PaginaDeAcao' e executa ela.
+                //Verifica se o arquivo possui definicão de classe que possua
+                //o método 'executar' e invoca-o.
                 if (class_exists($nomeObjeto, false)) {
                     $objeto = new $nomeObjeto();
                     if (method_exists($objeto, 'executar')) {

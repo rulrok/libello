@@ -71,10 +71,10 @@
         var valorEscolhido = $(this).context.value;
         try {
             var nome = $(this).children()[valorEscolhido].text;
-            } catch (e) {
+        } catch (e) {
             nome = "";
         }
-        
+
         var escolha;
         switch (nome) {
             case "Aluno":
@@ -98,15 +98,15 @@
 //            if (this.value == escolha){
 //                $(this).attr('checked',true);
 //            }
-              $(":radio[value='"+escolha+"']").prop('checked',true);
+        $(":radio[value='" + escolha + "']").prop('checked', true);
 //        });
 
         /*$("[name ^= 'permissoes']").each(function() {  //Funciona para quando se usa Selects
-            $(this).val(escolha);
-        });*/
+         $(this).val(escolha);
+         });*/
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#cpf').mask('999.999.999-99');
         $("#ajuda").tooltip({placement: 'right'});
         $("#dataNascimento").datepicker();
@@ -118,14 +118,14 @@
         $("[name=papel]").on('change', preconfigurarPermissoes);
 
         var obj = <?php echo json_encode($this->permissoes) ?>;
-        var nome, idPermissao, element;
+        var idPermissao, element, idFerramenta;
         for (var i = 0; i < obj.length; i++) {
             element = obj[i];
-            nome = element['nome'].toLowerCase();
-//        idFerramenta = element['idFerramenta'];
+//            nome = element['nome'].toLowerCase();
+            idFerramenta = element['idFerramenta'];
             idPermissao = element['idPermissao'];
 
-            $(':radio[value='+idPermissao+'][name$="'+nome+'"]').attr('checked',true);
+            $(':radio[value=' + idPermissao + '][ferramenta-id="' + idFerramenta + '"]').attr('checked', true);
         }
     });
 

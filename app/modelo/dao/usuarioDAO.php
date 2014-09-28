@@ -261,8 +261,12 @@ class usuarioDAO extends abstractDAO {
         return $resultado;
     }
 
-    public function obterPermissoes($idUsuario) {
-        $sql = "SELECT f.idFerramenta,f.nome,tp.idPermissao,tp.tipo FROM sistema_ferramenta f, usuario_permissao tp, usuario_x_permissao_x_ferramenta p WHERE f.idFerramenta = p.idFerramenta AND tp.idPermissao = p.idPermissao AND idUsuario =  :idUsuario  ORDER BY idFerramenta";
+    public function obterPermissoes($idUsuario, $obterNomes = false) {
+        if (!$obterNomes) {
+            $sql = "SELECT f.idFerramenta,tp.idPermissao FROM sistema_ferramenta f, usuario_permissao tp, usuario_x_permissao_x_ferramenta p WHERE f.idFerramenta = p.idFerramenta AND tp.idPermissao = p.idPermissao AND idUsuario =  :idUsuario  ORDER BY idFerramenta";
+        } else {
+            $sql = "SELECT f.idFerramenta,f.nome,tp.idPermissao,tp.tipo FROM sistema_ferramenta f, usuario_permissao tp, usuario_x_permissao_x_ferramenta p WHERE f.idFerramenta = p.idFerramenta AND tp.idPermissao = p.idPermissao AND idUsuario =  :idUsuario  ORDER BY idFerramenta";
+        }
         $params = array(
             ':idUsuario' => [$idUsuario, \PDO::PARAM_INT]
         );
@@ -320,33 +324,20 @@ class usuarioDAO extends abstractDAO {
             $consulta = $this->consultar('idUsuario', "email = :email", array(':email' => [$usuario->get_email(), \PDO::PARAM_STR]));
 //            $values = array();
             if (sizeof($consulta) == 1) {
-//                for ($i = 0; $i < Ferramenta::__length; $i++) {
-//                    if ($permissoes->get_permissao($i + 1) != null) {
-//                        $values[sizeof($values)] = '(' . $consulta[0]['idUsuario'] . ',' . ($i + 1) . ',' . $permissoes->get_permissao($i + 1) . ')';
-//                    } else {
-//                        $values[sizeof($values)] = '(' . $consulta[0]['idUsuario'] . ',' . ($i + 1) . ',' . Permissao::SEM_ACESSO . ')';
-//                    }
-//                }
                 $parametros = array();
-                for ($i = 0; $i < Ferramenta::__length; $i++) {
-                    if ($permissoes->get_permissao($i + 1) != null) {
-                        $parametros[] = array(
-                            ':idPermissao' => [(int) $permissoes->get_permissao($i + 1), \PDO::PARAM_INT]
-                            , ':idUsuario' => [(int) $usuario->get_idUsuario(), \PDO::PARAM_INT]
-                            , ':idFerramenta' => [((int) $i + 1), \PDO::PARAM_INT]
-                        );
-                    } else {
-                        //TODO tratar esse suposto caso
-                        return false;
-                    }
+                $ferramentas = Ferramenta::obterValores();
+
+                foreach ($ferramentas as $ferramenta) {
+                    $nome = Ferramenta::obterNome($ferramenta, true, '_');
+                    $parametros[] = array(
+                        ':idPermissao' => [(int) $permissoes->$nome, \PDO::PARAM_INT]
+                        , ':idUsuario' => [(int) $usuario->get_idUsuario(), \PDO::PARAM_INT]
+                        , ':idFerramenta' => [((int) $ferramenta), \PDO::PARAM_INT]
+                    );
                 }
                 $sql = 'INSERT INTO usuario_x_permissao_x_ferramenta (idUsuario, idFerramenta, idPermissao) VALUES (:idUsuario, :idFerramenta, :idPermissao)';
 
-//                for ($i = 1; $i < sizeof($values); $i++) {
-//                    $sql .= ' ,' . $values[$i];
-//                }
-//                $sql = str_pad($sql, strlen($sql) - 2);
-//                return $this->executarQuery($values);
+
                 for ($i = 0; $i < count($parametros); $i++) {
                     if (!$this->executarQuery($sql, $parametros[$i])) {
                         return false;

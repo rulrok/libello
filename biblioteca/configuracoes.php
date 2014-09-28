@@ -13,7 +13,7 @@ if (!defined("APP_CONFIGS")) {
     
     define('APP_COPYRIGHT', 'Copyright &copy; 2012 - 2014');
 
-    define('APP_VERSION', "Alpha");
+    define('APP_VERSION', "Alpha-1");
 
     define('APP_ADMIN_EMAIL', 'a11021@bcc.unifal-mg.edu.br');
 

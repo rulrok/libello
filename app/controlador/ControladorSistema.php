@@ -71,7 +71,7 @@ class ControladorSistema extends MVC\Controlador {
     }
 
     public function idFerramentaAssociada() {
-        return Modelo\Ferramenta::DESCONHECIDO;
+        return Modelo\Ferramenta::__default;
     }
 
 }

@@ -4,6 +4,7 @@ namespace app\mvc;
 
 include_once APP_LIBRARY_ABSOLUTE_DIR . 'Mvc/Visao.php';
 require_once APP_DIR . 'modelo/Mensagem.php';
+require_once APP_DIR . 'modelo/enumeracao/Ferramenta.php';
 
 use \app\modelo as Modelo;
 
@@ -15,7 +16,7 @@ abstract class Controlador {
 
     public function __construct() {
         $this->visao = new Visao();
-    }
+        }
 
     public function renderizar() {
         $diretorio = strtolower(Mvc::pegarInstancia()->pegarControlador());

@@ -1,4 +1,5 @@
 <?php
+
 namespace app\modelo\ferramentas\usuarios;
 
 include_once APP_DIR . "modelo/Mensagem.php";
@@ -26,7 +27,7 @@ class verificaredicao extends Modelo\verificadorFormularioAjax {
 
         $emailOriginal = $usuarioDAO->descobrirEmail($userID);
         $usuarioOriginal = $usuarioDAO->recuperarUsuario($emailOriginal);
-        
+
         $erro_ocorrido = false;
         if (strcmp($email, $emailOriginal)) {
             registrar_erro("Tentativa de modificar email do usuário para ($email), o que não é permitido", $usuarioOriginal);
@@ -47,7 +48,7 @@ class verificaredicao extends Modelo\verificadorFormularioAjax {
             $this->adicionarMensagemErro("Papel inválido");
             $erro_ocorrido = true;
         }
-        
+
         if ($idPapel < obterUsuarioSessao()->get_idPapel()) {
             registrar_erro("Tentativa de alterar papel de usuário para um maior que o seu próprio (para valor $idPapel)", $usuarioOriginal);
             $this->adicionarMensagemErro("Alteração não permitida");
@@ -62,7 +63,7 @@ class verificaredicao extends Modelo\verificadorFormularioAjax {
             $erro_ocorrido = true;
         }
 
-        if ($erro_ocorrido){
+        if ($erro_ocorrido) {
             $this->abortarExecucao();
         }
         $usuario = new Modelo\Usuario();
@@ -81,14 +82,11 @@ class verificaredicao extends Modelo\verificadorFormularioAjax {
             }
 
             $permissoes = new Modelo\PermissoesFerramenta();
-            $permissoes->set_controleCursos(filter_input(INPUT_POST, 'permissoes_controle_de_cursos_e_polos'));
-            $permissoes->set_controleDocumentos(filter_input(INPUT_POST, 'permissoes_controle_de_documentos'));
-            $permissoes->set_controleEquipamentos(filter_input(INPUT_POST, 'permissoes_controle_de_equipamentos'));
-            $permissoes->set_controleLivros(filter_input(INPUT_POST, 'permissoes_controle_de_livros'));
-            $permissoes->set_controleUsuarios(filter_input(INPUT_POST, 'permissoes_controle_de_usuarios'));
-            $permissoes->set_controleViagens(filter_input(INPUT_POST, 'permissoes_controle_de_viagens'));
-            $permissoes->set_tarefas(filter_input(INPUT_POST, 'permissoes_tarefas'));
-            $permissoes->set_galeriaImagens(filter_input(INPUT_POST, 'permissoes_galeria_de_imagens'));
+            foreach (Modelo\Ferramenta::obterValores() as $ferramenta) {
+                $nome = Modelo\Ferramenta::obterNome($ferramenta, true, '_');
+                $nomeCampoFormulario = "permissoes_$nome";
+                $permissoes->$nome = filter_input(INPUT_POST, $nomeCampoFormulario);
+            }
 
             if (!$usuarioDAO->atualizarPermissoes($usuario, $permissoes)) {
                 throw new \Exception("Falha ao atualizar permissões");
@@ -101,7 +99,6 @@ class verificaredicao extends Modelo\verificadorFormularioAjax {
         }
         $idUsuario = $usuarioDAO->recuperarUsuario($usuario->get_email())->get_idUsuario();
 //        $usuarioDAO->registrarAlteracaoUsuario(obterUsuarioSessao()->get_idUsuario(), $idUsuario);
-
 //                $this->visao->permissoes = $usuarioDAO->obterPermissoes($usuarioDAO->recuperarUsuario($email)->get_id());
         $this->adicionarMensagemSucesso("Atualização concluída");
     }

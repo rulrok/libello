@@ -115,7 +115,7 @@ abstract class PaginaDeAcao {
     /**
      * Função padrão que será chamada ao final da execução de uma página.
      */
-    private function _terminarExecucao() {
+    public function _terminarExecucao() {
         if ($this->omitirMensagens) {
             exit;
         }

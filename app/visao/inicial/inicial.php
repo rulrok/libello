@@ -14,7 +14,8 @@
         <meta name="rating" content="general">
         <!-- FIM META TAGS -->
 
-        <link rel="icon" type="image/ico" href="favicon.ico"/>
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
 
         <!-- ESTILOS -->
         <link type="text/css" rel="stylesheet" href="publico/css/jquery-ui.css" />
@@ -22,6 +23,7 @@
         <link type="text/css" rel="stylesheet" href="publico/css/bootstrap-responsive.css"/>
         <link type="text/css" rel="stylesheet" href="publico/css/bootstrap-datepicker.css"/>
         <link type="text/css" rel="stylesheet" href="publico/css/mainStyle.css" />
+        <link type="text/css" rel="stylesheet" href="publico/css/menu.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.dataTables_themeroller.css" />
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.chosen.css"/>
         <link type="text/css" rel="stylesheet" href="publico/css/jquery.jstree.css"/> 
@@ -135,7 +137,7 @@
                                     <a id="ativarManutencao" class="btn btn-small" ><i class="icon-wrench"></i> Ativar manutenção</a>
                                 <?php endif; ?>
                             <?php endif; ?>
-                            <!--<a class="btn btn-small" href="#!processos|arvoreProcessos"><i class="icon-tasks"></i>Processos</a>-->
+                    <!--<a class="btn btn-small" href="#!processos|arvoreProcessos"><i class="icon-tasks"></i>Processos</a>-->
                             <a class="btn btn-small" href="sair.php"><i class="icon-off"></i> Sair</a>
                         </div>
                     </div>

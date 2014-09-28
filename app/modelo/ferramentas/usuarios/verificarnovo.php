@@ -109,15 +109,11 @@ class verificarnovo extends Modelo\verificadorFormularioAjax {
                 $id = $usuarioDAO->obterUltimoIdInserido();
                 $usuario->set_idUsuario($id);
                 $permissoes = new Modelo\PermissoesFerramenta();
-                $permissoes->set_controleCursos(filter_input(INPUT_POST, 'permissoes_controle_de_cursos_e_polos'));
-                $permissoes->set_controleDocumentos(filter_input(INPUT_POST, 'permissoes_controle_de_documentos'));
-                $permissoes->set_controleEquipamentos(filter_input(INPUT_POST, 'permissoes_controle_de_equipamentos'));
-                $permissoes->set_controleLivros(filter_input(INPUT_POST, 'permissoes_controle_de_livros'));
-                $permissoes->set_controleUsuarios(filter_input(INPUT_POST, 'permissoes_controle_de_usuarios'));
-                $permissoes->set_controleViagens(filter_input(INPUT_POST, 'permissoes_controle_de_viagens'));
-                $permissoes->set_tarefas(filter_input(INPUT_POST, 'permissoes_controle_de_viagens'));
-                $permissoes->set_galeriaImagens(filter_input(INPUT_POST, 'permissoes_galeria_de_imagens'));
-
+                foreach (Modelo\Ferramenta::obterValores() as $ferramenta) {
+                    $nome = Modelo\Ferramenta::obterNome($ferramenta, true, '_');
+                    $nomeCampoFormulario = "permissoes_$nome";
+                    $permissoes->$nome = filter_input(INPUT_POST, $nomeCampoFormulario);
+                }
                 if (!$usuarioDAO->cadastrarPermissoes($usuario, $permissoes)) {
                     throw new \Exception("Erro ao cadastrar permissões", 40);
                 }
