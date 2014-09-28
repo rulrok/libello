@@ -26,24 +26,15 @@
     </tbody>
 </table>
 <script id="pos_script">
-    $(document).ready(function() {
+    $(document).ready(function () {
         var oTable = $('#consulta_usuario').dataTable({
             "aaSorting": [[1, "asc"]]
         });
 
-        $(window).bind('resize', function() {
+        $(window).bind('resize', function () {
             oTable.fnAdjustColumnSizing();
         });
-        $(".visualizarPermissoes").on('click', function() {
-            var id = $("tr.row_selected>.campoID").html();
-            $("#myModal").load("index.php?c=usuarios&a=consultarpermissoes&userID=" + id).modal();
-//            $("#myModal").modal({
-//                remote: "index.php?c=usuario&a=consultarpermissoes&userID=" + id
-//            });
-
-//            ajax("index.php?c=usuario&a=consultarpermissoes&userID=" + id, "#myModal");
-        });
-        oTable.$('tr').mousedown(function() {
+        oTable.$('tr').mousedown(function () {
             if ($(this).hasClass('row_selected')) {
                 return;
             } else {
@@ -51,12 +42,5 @@
                 $(this).addClass('row_selected');
             }
         });
-//
-//        oTable.$('tr').dblclick(function() {
-//            var data = oTable.fnGetData(this);
-//            window.alert(data);
-//            // ... do something with the array / object of data for the row
-//        });
     });
-//    $('#table_id').dataTable();
 </script>

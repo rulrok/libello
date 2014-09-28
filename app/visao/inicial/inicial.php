@@ -137,7 +137,7 @@
                                     <a id="ativarManutencao" class="btn btn-small" ><i class="icon-wrench"></i> Ativar manutenção</a>
                                 <?php endif; ?>
                             <?php endif; ?>
-                    <!--<a class="btn btn-small" href="#!processos|arvoreProcessos"><i class="icon-tasks"></i>Processos</a>-->
+    <!--<a class="btn btn-small" href="#!processos|arvoreProcessos"><i class="icon-tasks"></i>Processos</a>-->
                             <a class="btn btn-small" href="sair.php"><i class="icon-off"></i> Sair</a>
                         </div>
                     </div>
@@ -157,28 +157,28 @@
 
             <!-- Modal Bootstrap -->
             <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <!--                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                    <h3 id="myModalLabel">Modal header</h3>
-                                </div>-->
-                <div class="modal-body">
-                    <!-- Cordo da Modal -->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="myModalLabel">Modal header</h3>
+                </div>
+                <div id="myModalBody" class="modal-body">
+                    Corpo da Modal 
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Fechar</button>
                 </div>
             </div>
 
-            <div class="debug_div_helper">
-
-                <div class="debug_div_border">
-                    <p>Debug window <small>(duplo-clique para minimizar)</small></p>
-                    <div class="debug_div">
-
-                    </div>
-                </div>
-
-            </div>
+            <!--            <div class="debug_div_helper">
+            
+                            <div class="debug_div_border">
+                                <p>Debug window <small>(duplo-clique para minimizar)</small></p>
+                                <div class="debug_div">
+            
+                                </div>
+                            </div>
+            
+                        </div>-->
 
             <!-- Fim dos conteúdos auxiliares -->
 
@@ -377,7 +377,7 @@
 //                        });
 
                         hideFooter();
-                        showFooter();
+//                        showFooter();
 
 //                        $(".popUp").hide();
 

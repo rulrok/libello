@@ -42,7 +42,7 @@
 </div>
 <script>
     //Este script configura as ações para os botões da página.
-    $(document).ready(function() {
+    $(document).ready(function () {
         configurarTabela({
             idTabela: 'gerenciar_usuario',
             editar: '#!usuarios|editar&userID=',

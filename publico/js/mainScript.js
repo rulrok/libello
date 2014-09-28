@@ -770,3 +770,27 @@ function mudarTitulo(titulo, ignorarTituloPadrao) {
         $("title").append(tituloPadrao);
     }
 }
+
+function carregarModal(url) {
+    $.ajax(url, {
+        success: function () {
+            var $titulo = obterResposta('sys_modal_header');
+            var $corpo = obterResposta('sys_modal_body');
+            carregarHeader($titulo);
+            carregarCorpo($corpo);
+//            $("#myModal").load(url).modal();
+            $("#myModal").modal({backdrop: "static"});
+        }
+    });
+
+
+    function carregarHeader(dados) {
+        $("#myModalLabel").empty();
+        $("#myModalLabel").append(dados);
+    }
+
+    function carregarCorpo(dados) {
+        $("#myModalBody").empty();
+        $("#myModalBody").append(dados);
+    }
+}

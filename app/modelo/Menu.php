@@ -10,7 +10,7 @@ class Menu {
     private static function _processarDados($menu, $permissao) {
 
         if ($permissao == Permissao::SEM_ACESSO || empty($menu)) {
-            return ['', "\n\t<ul>\n"];
+            return ['', "\n\t<ul class='hiddenSubMenuLink>\n"];
         }
 
         $id = $menu[0][0] . "Link";
@@ -89,7 +89,7 @@ class Menu {
         $menuCode .= "\t<menu class=\"centralizado\">\n";
         $menuCode .= "\t\t<a href=\"#!inicial|homepage\"><li class=\"menuLink actualTool visited\" id=\"homeLink\" class=\"visited\">Home</li></a>" . "\n";
 
-        $subMenuCode = "<div class=\"subMenu\">" . "\n";
+        $subMenuCode = "<div class=\"subMenu hidden\">" . "\n";
         $subMenuCode .= "<menu>" . "\n";
 
         $sistemaDAO = new sistemaDAO();

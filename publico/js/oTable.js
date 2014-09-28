@@ -290,7 +290,7 @@ function configurarTabela(parametros) {
 
     $(".visualizarPermissoes").on('click', function () {
         var id = $("tr.row_selected>.campoID").html();
-        $("#myModal").load("index.php?c=usuarios&a=consultarpermissoes&userID=" + id).modal();
+        carregarModal("index.php?c=usuarios&a=consultarpermissoes&userID=" + id);
 
     });
 
