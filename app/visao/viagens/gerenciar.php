@@ -66,7 +66,7 @@
                      $.getJSON("index?c=viagens&a=acoes&alterar=alterarEstado&idViagem="+id+"&estadoViagem="+estado,
                                     function(data) {
                                         document.paginaAlterada = false;
-                                        showPopUp('Estado alterado com sucesso!', 'sucesso');
+                                        exibirPopup('Estado alterado com sucesso!', 'sucesso');
                                     }
                             );
         });
@@ -85,7 +85,7 @@
                 "aaSorting": [[1, 'asc']]
             }
         });
-//        showPopUp("Duplo clique nas linhas <br/>mostra a descrição<br/>do viagem","Info")
+//        exibirPopup("Duplo clique nas linhas <br/>mostra a descrição<br/>do viagem","Info")
     });
 
 </script>

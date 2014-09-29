@@ -137,7 +137,7 @@
                                     <a id="ativarManutencao" class="btn btn-small" ><i class="icon-wrench"></i> Ativar manutenção</a>
                                 <?php endif; ?>
                             <?php endif; ?>
-    <!--<a class="btn btn-small" href="#!processos|arvoreProcessos"><i class="icon-tasks"></i>Processos</a>-->
+<!--<a class="btn btn-small" href="#!processos|arvoreProcessos"><i class="icon-tasks"></i>Processos</a>-->
                             <a class="btn btn-small" href="sair.php"><i class="icon-off"></i> Sair</a>
                         </div>
                     </div>
@@ -180,6 +180,8 @@
             
                         </div>-->
 
+            <div class="voltar_topo hide"></div>
+
             <!-- Fim dos conteúdos auxiliares -->
 
             <hr id="menuPosition" >
@@ -201,9 +203,9 @@
             </div>
         </div>
         <footer>
-            <span class="arrow-up" onclick="showFooter();"></span>
+            <span class="arrow-up" onclick="exibirRodape();"></span>
             <div class="footerWrap">
-                <span class="arrow-down" onclick="hideFooter();"></span>
+                <span class="arrow-down" onclick="esconderRodape();"></span>
                 <center>
                     <nav>
                         <div class="footerLinks" id="links-rapidos">
@@ -254,6 +256,10 @@
                     //----------------------------------------------------------------------//
                     $(document).ready(function () {
 
+                        $(".voltar_topo").on('click', function () {
+                            $('html, body').animate({scrollTop: 0}, 'fast');
+                        });
+
                         $(".debug_div_border").resizable({
                             handles: 'n'
                             , grid: 20
@@ -297,7 +303,7 @@
 
                         $("#b_gerenciarconta").on('click', function () {
                             if (!document.paginaAlterada) {
-                                hideSubMenu(150);
+                                _esconderSubmenu(150);
                                 $('.visited').removeClass('visited');
                                 $('.actualTool').removeClass('actualTool');
                             }
@@ -306,20 +312,25 @@
                         $("#ativarManutencao").on('click', function () {
                             var resultado = confirm("Deseja realmente fazer isso?\nTodos os usuários serão desconectados do portal (exceto administradores).");
                             if (resultado) {
-                                ajax('index.php?c=sistema&a=ativarmanutencao', null, true, false, true);
-                                location.reload();
+                                carregarAjax('index.php?c=sistema&a=ativarmanutencao', {
+                                    recipiente: null
+                                    , sucesso: function () {
+                                        location.reload();
+                                    }
+                                });
                             }
                         });
 
                         $("#desativarManutencao").on('click', function () {
-                            ajax('index.php?c=sistema&a=desativarmanutencao', null, true, false, true);
-                            location.reload();
+                            carregarAjax('index.php?c=sistema&a=desativarmanutencao', {
+                                recipiente: null
+                                , sucesso: function () {
+                                    location.reload();
+                                }
+                            });
                         });
 
-                        //Carrega links passados com hash pela barra de endereço
-                        // Bind an event to window.onhashchange that, when the history state changes,
-                        // gets the url from the hash and displays either our cached content or fetches
-                        // new content to be displayed.
+                        //Quando o endereço url for mudado na barra de endereço, ativa essa função.
                         $(window).bind('hashchange', function (e) {
                             if (document.ignorarHashChange === true) {
                                 document.ignorarHashChange = false;
@@ -346,12 +357,12 @@
                                 history.replaceState(null, null, url); //Importante! Não apagar!
                             }
 
-                            carregarPagina(url);
+                            carregarMetalink(url);
                             $("a[href^=#]").each(function (index) {
                                 if (this.confirmarDados === undefined) {
                                     this.confirmarDados = true;
-                                    $(this).bind("click", confirmarDadosNaoSalvos);
-                                    $(this).bind("click", requererPaginaAtual);
+                                    $(this).bind("click", _confirmarDadosNaoSalvos);
+                                    $(this).bind("click", _requererPaginaAtual);
                                 }
                             });
                             document.paginaAlterada = false;
@@ -376,8 +387,8 @@
 //                            $(".shaderFrameContent").css("visibility", "hidden").css("opacity", "0");
 //                        });
 
-                        hideFooter();
-//                        showFooter();
+                        esconderRodape();
+//                        exibirRodape();
 
 //                        $(".popUp").hide();
 
@@ -400,8 +411,8 @@
                                     $(".actualTool").removeClass('actualTool');
                                     $(this).addClass("actualTool");
 
-                                    hideSubMenu(150);
-                                    makeSubMenu(null);
+                                    _esconderSubmenu(150);
+                                    _contruirSubmenus(null);
                                 });
                                 continue;
                             }
@@ -410,15 +421,15 @@
                                 if (!this.className.match(".*visited.*")) {
                                     $(".menuLink.visited").removeClass("visited");
                                     $(this).addClass("visited");
-                                    hideSubMenu(0);
-                                    makeSubMenu(this);
-                                    showSubMenu();
+                                    _esconderSubmenu(0);
+                                    _contruirSubmenus(this);
+                                    _exibirSubmenu();
                                 } else {
                                     //                if ($(".subMenu").css("opacity") == "1") {
                                     if (!$(".subMenu").hasClass("hidden")) {
-                                        hideSubMenu();
+                                        _esconderSubmenu();
                                     } else {
-                                        showSubMenu();
+                                        _exibirSubmenu();
                                     }
                                 }
                             });
@@ -426,7 +437,7 @@
                         //    };
 
                         //Manter o menu 'colado' no topo da página quando ela desce muito
-                        $(window).bind("scroll", acoplarMenu);
+                        $(window).bind("scroll", _acoplarMenu);
 
                         //----------------------------------------------------------------------//
                         //               CONFIGURAÇÕES DE COMPONENTES DE TERCEIROS              //
@@ -521,8 +532,8 @@
                         $.fn.datepicker.defaults.weekStart = 0;
 
                         //Configurar botão para tela cheia
-                        if (canToggleFullScreen()) {
-                            $("#botoesSuperiores").children(":first-child").before('<a id="fullscreen-toggle" title="Modo tela cheia" class="btn btn-small" href="javascript:void(0)" onclick="toggleFullScreen();"><i class="icon-fullscreen"></i></a>');
+                        if (_canToggleFullScreen()) {
+                            $("#botoesSuperiores").children(":first-child").before('<a id="fullscreen-toggle" title="Modo tela cheia" class="btn btn-small" href="javascript:void(0)" onclick="_toggleFullScreen();"><i class="icon-fullscreen"></i></a>');
                         }
                         setTimeout(function () {
                             $("#telaCarregando").fadeOut(150);

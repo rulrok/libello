@@ -1,9 +1,9 @@
 <title>Consultar equipamentos</title>
 <!-- Início da página -->
 <ul class="nav nav-tabs" id="abas">
-    <li><a href="javascript:void(0)" onclick="ajax('index.php?c=equipamentos&a=consultar_interno', '#resultado_consulta', false);" data-toggle="tab">Interno</a></li>
-    <li><a href="javascript:void(0)" onclick="ajax('index.php?c=equipamentos&a=consultar_externo', '#resultado_consulta', false);" data-toggle="tab">Externo</a></li>
-    <li><a href="javascript:void(0)" onclick="ajax('index.php?c=equipamentos&a=consultar_embaixa', '#resultado_consulta', false);" data-toggle="tab">Baixa</a></li>
+    <li><a href="javascript:void(0)" onclick="carregarAjax('index.php?c=equipamentos&a=consultar_interno', {recipiente: '#resultado_consulta', async: false});" data-toggle="tab">Interno</a></li>
+    <li><a href="javascript:void(0)" onclick="carregarAjax('index.php?c=equipamentos&a=consultar_externo', {recipiente: '#resultado_consulta', async: false});" data-toggle="tab">Externo</a></li>
+    <li><a href="javascript:void(0)" onclick="carregarAjax('index.php?c=equipamentos&a=consultar_embaixa', {recipiente: '#resultado_consulta', async: false});" data-toggle="tab">Baixa</a></li>
 </ul>
 <div id="resultado_consulta">
 
@@ -29,9 +29,9 @@ if (filter_has_var(INPUT_GET, 'l')) {
 }
 ?>
 <script id="pos_script">
-    $(document).ready(function() {
+    $(document).ready(function () {
 
-        $('#abas a').on('click', function() {
+        $('#abas a').on('click', function () {
             switch (this.innerHTML.toLowerCase()) {
                 case "interno":
                     local = "interno";

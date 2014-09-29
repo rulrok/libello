@@ -1,34 +1,55 @@
-window.menuColou = false;
-//De fato a página está configurada para exibir ele, e o script para esconde-lo é executado
-//na primeira renderização da página, por tanto, window.footerHidden deve estar inicialmente
-//configurado como false.
-window.footerHidden = false;
-//Usado para quando se muda de página para não sair por engano e perder dados.
+//----------------------------------------------------------------------//
+//                          VARIÁVEIS                                   //
+//----------------------------------------------------------------------//
+
+/**
+ * Auxilia o script para saber quando deve fixar ou não o menu ao topo da página
+ * 
+ * @type Boolean
+ */
+window.menuAcoplado = false;
+/**
+ * Inicialmente a página está codificada para exibir ele, e o script para esconde-lo é executado
+ * na primeira renderização da página, por tanto, window.rodapeEscondido deve estar inicialmente
+ * configurado como false.
+ * @type Boolean
+ */
+window.rodapeEscondido = false;
+/**
+ * Usado para quando se muda de página para não sair por engano e perder dados.
+ * @type Boolean
+ */
 document.paginaAlterada = false;
-//Um fix
+/**
+ * Permite trocar o endereço URL da barra de endereço sem forçar o carregamento da página
+ * @type Boolean
+ */
 document.ignorarHashChange = false;
-
-// This script sets OSName variable as follows:
-// "Windows"    for all versions of Windows
-// "MacOS"      for all versions of Macintosh OS
-// "Linux"      for all versions of Linux
-// "UNIX"       for all other UNIX flavors 
-// "Unknown OS" indicates failure to detect the OS
-
-var OSName = "Unknown OS";
-if (navigator.appVersion.indexOf("Win") != -1)
-    OSName = "Windows";
-if (navigator.appVersion.indexOf("Mac") != -1)
-    OSName = "MacOS";
-if (navigator.appVersion.indexOf("X11") != -1)
-    OSName = "UNIX";
-if (navigator.appVersion.indexOf("Linux") != -1)
-    OSName = "Linux";
-
 
 //----------------------------------------------------------------------//
 //                          FUNÇÕES                                     //
 //----------------------------------------------------------------------//
+
+/**
+ * Retorna um código identificando o S.O. Possíveis retornos:
+ * "Windows", "MacOS", "UNIX", "Linux" ou "Unknown".
+ * 
+ * @returns {String}
+ */
+function obterNomeNavegador() {
+
+    var OSName = "Unknown";
+    if (navigator.appVersion.indexOf("Win") != -1)
+        OSName = "Windows";
+    if (navigator.appVersion.indexOf("Mac") != -1)
+        OSName = "MacOS";
+    if (navigator.appVersion.indexOf("X11") != -1)
+        OSName = "UNIX";
+    if (navigator.appVersion.indexOf("Linux") != -1)
+        OSName = "Linux";
+
+    return OSName;
+}
 
 /**
  * Função auxiliar, executada quando um link é clicado, para antes que uma hash
@@ -41,7 +62,7 @@ if (navigator.appVersion.indexOf("Linux") != -1)
  * @param {tipo} evt
  * @returns {undefined}
  */
-function confirmarDadosNaoSalvos(evt) {
+function _confirmarDadosNaoSalvos(evt) {
     if (document.paginaAlterada) {
         var ignorarMudancas = confirm("Modificações não salvas. Continuar?");
         if (!ignorarMudancas) {
@@ -61,89 +82,36 @@ function confirmarDadosNaoSalvos(evt) {
  * @param {tipo} evt
  * @returns {undefined}
  */
-function requererPaginaAtual(evt) {
+function _requererPaginaAtual(evt) {
     var index = this.href.lastIndexOf("#")
     var hash = this.href.substring(index);
     if (location.hash == hash) {
         if (!document.paginaAlterada) {
-            carregarPagina(hash);
+            carregarMetalink(hash);
         }
 
     }
-}
-
-function getBrowser() {
-    var n, v, t, ua = navigator.userAgent;
-    var names = {i: 'Internet Explorer', f: 'Firefox', o: 'Opera', s: 'Apple Safari', n: 'Netscape Navigator', c: "Chrome", x: "Other"};
-    if (/bot|googlebot|slurp|mediapartners|adsbot|silk|android|phone|bingbot|google web preview|like firefox|chromeframe|seamonkey|opera mini|min|meego|netfront|moblin|maemo|arora|camino|flot|k-meleon|fennec|kazehakase|galeon|android|mobile|iphone|ipod|ipad|epiphany|rekonq|symbian|webos/i.test(ua))
-        n = "x";
-    else if (/Trident.(\d+\.\d+)/i.test(ua))
-        n = "io";
-    else if (/MSIE.(\d+\.\d+)/i.test(ua))
-        n = "i";
-    else if (/Opera.*Version.(\d+\.?\d+)/i.test(ua))
-        n = "o";
-    else if (/Opera.(\d+\.?\d+)/i.test(ua))
-        n = "o";
-    else if (/OPR.(\d+\.?\d+)/i.test(ua))
-        n = "o";
-    else if (/Chrome.(\d+\.\d+)/i.test(ua))
-        n = "c";
-    else if (/Firefox.(\d+\.\d+)/i.test(ua))
-        n = "f";
-    else if (/Version.(\d+.\d+).{0,10}Safari/i.test(ua))
-        n = "s";
-    else if (/Safari.(\d+)/i.test(ua))
-        n = "so";
-    else if (/Netscape.(\d+)/i.test(ua))
-        n = "n";
-    else
-        return {n: "x", v: 0, t: names[n]};
-    if (n == "x")
-        return {n: "x", v: 0, t: names[n]};
-
-    v = new Number(RegExp.$1);
-    if (n == "so") {
-        v = ((v < 100) && 1.0) || ((v < 130) && 1.2) || ((v < 320) && 1.3) || ((v < 520) && 2.0) || ((v < 524) && 3.0) || ((v < 526) && 3.2) || 4.0;
-        n = "s";
-    }
-    if (n == "i" && v == 7 && window.XDomainRequest) {
-        v = 8;
-    }
-    if (n == "io") {
-        n = "i";
-        if (v > 5)
-            v = 10;
-        else if (v > 4)
-            v = 9;
-        else if (v > 3.1)
-            v = 8;
-        else if (v > 3)
-            v = 7;
-        else
-            v = 9;
-    }
-    return {n: n, v: v, t: names[n] + " " + v}
 }
 
 /**
  * Função para 'colar' o menu quando a página descer. Perceba que a função é otimizada.
  * Ela não fica refazendo operações desnecessárias, como atualizar o css do menu
  * sem necessidade. Em suma, ela detecta quando de fato o menu deve ser desprendido
- * e quando deve ser colado superiormente, através da variável window.menuColou.
+ * e quando deve ser colado superiormente, através da variável window.menuAcoplado.
  * 
  * @author Reuel
  * 
  * @returns {undefined}
  */
-function acoplarMenu() {
+function _acoplarMenu() {
     var menu = $("#menuPosition");
     var menuPosition = menu.position().top;
     var windowPosition = $(window).scrollTop();
-    if (!window.menuColou && windowPosition >= menuPosition) {
-        window.menuColou = true;
+    if (!window.menuAcoplado && windowPosition >= menuPosition) {
+        window.menuAcoplado = true;
         /*  MENU FIXADO  */
-        hideSubMenu(400);
+        _esconderSubmenu(400);
+        $(".voltar_topo").show(500);
         $("#barra_superior").show(800);
         var divMenu = $(".menuContainer");
         var menuHeight = divMenu.height();
@@ -154,25 +122,19 @@ function acoplarMenu() {
         var divContent = $(".content");
         divContent.css('padding-top', menuHeight + 'px');
 
-        //Trata div do popup
-        var popup = $(".popUp");
-        var alturaMenu = $(".menu").height();
-        $(popup).css('position', 'fixed');
-        $(popup).css('left', '10px');
-        $(popup).css('top', alturaMenu + 40 + 'px');
-
         $(".menuContainer").hover(function () {
-            showSubMenu(100)
+            _exibirSubmenu(100)
         }, function () {
-            hideSubMenu(20)
+            _esconderSubmenu(20)
         });
         $(".subMenu").mouseenter(function () {
             $(".menuContainer").css('background', 'url("publico/imagens/backgroundMenu.png")')
         })
-    } else if (window.menuColou && windowPosition < menuPosition) {
-        window.menuColou = false;
+    } else if (window.menuAcoplado && windowPosition < menuPosition) {
+        window.menuAcoplado = false;
+        $(".voltar_topo").hide(500);
         $("#barra_superior").hide(500);
-        showSubMenu();
+        _exibirSubmenu();
         /*  MENU NORMAL  */
         var divMenu = $(".menuContainer");
         divMenu.removeClass("fixedMenu");
@@ -181,56 +143,42 @@ function acoplarMenu() {
         var divContent = $(".content");
         divContent.css('padding-top', '0px');
 
-        //Trata div do popup
-        var popup = $(".popUp");
-        var alturaMenu = $(".menu").height();
-        var alturaHeader = $("header").height();
-        $(popup).css('position', 'absolute');
-        $(popup).css('left', '10px');
-        $(popup).css('top', alturaMenu + alturaHeader + 40 + "px");
-
         $(".menuContainer").unbind("mouseenter mouseleave")
     }
 }
 
-//TODO Revisar documentação e oferecer mais detalhes sobre meta-links na wiki.
 /**
- * Função que carrega uma página para ser exibida para o usuário.
- * Ela tem auxílio da função <code>ajax</code>, com
- * base em um meta-link formatado da seguinte maneira:
- *  #![nomeControlador]|[nomeAcao](lista opcional de parâmetros GET).<br/>
- * Em outras palavras, o link deve casar com a expressão regular: <code>^#![a-z]+\|[a-z]+((\&[a-zA-Z]+=[a-z0-9]*)+)?</code>
+ * Recebe um meta-link e faz a sua requisição via Ajax. A maior importância desse método é para após
+ * a página ser carregada, 
  * 
- * @author Reuel
+ * Um meta-link possui o seguinte formato:
+ * <code>#![nomeControlador]|[nomeAcao](lista opcional de parâmetros GET)</code>
  * 
- * @param {string} link Página a ser carregada
- * @returns {undefined}
+ * @param {string} metalink
+ * @returns {Boolean}
  */
-function carregarPagina(link) {
-    // Get the hash (fragment) as a string, with any leading # removed. Note that
-    // in jQuery 1.4, you should use e.fragment instead of $.param.fragment().
+function carregarMetalink(metalink) {
 
-    if (link === undefined || link === null | !link.match("^#![a-z]+\|[a-z]+((\&[a-zA-Z]+=[a-z0-9]*)+)?")) {
-        return undefined;
+    if (metalink === undefined || metalink === null | !/^#![a-z]+\|[a-z]+((\&[a-zA-Z]+=[a-z0-9]*)+)?/.test(metalink)) {
+        return false;
     }
     var url = "index.php?c=<c>&a=<a>";
 
 
-    var novolink = link.replace("#!", "");
+    var novolink = metalink.replace("#!", "");
     novolink = novolink.split("|");
 
-    if (novolink[1] === "inicial") { //Importante para não causar um loop infinito na página.
+    //Importante para não causar um loop infinito na página.
+    if (novolink[1] === "inicial") {
         novolink[1] = "404";
     }
     url = url.replace("<c>", novolink[0]);
     url = url.replace("<a>", novolink[1]);
 
-    var resultadoOperacao = ajax(url);
-    if (resultadoOperacao === false) {
-        return false;
-    }
-    if (link !== location.hash) {
-        history.pushState(null, null, link);
+    carregarAjax(url);
+
+    if (metalink !== location.hash) {
+        history.pushState(null, null, metalink);
     }
     var menu = novolink[0];
     if (menu === "inicial" || menu === undefined) {
@@ -245,130 +193,81 @@ function carregarPagina(link) {
             $(".menuLink[id^=" + menu + "]").addClass("visited");
             var menuObj = new Object();
             menuObj.id = menu + "Link";
-            makeSubMenu(menuObj);
-            showSubMenu();
+            _contruirSubmenus(menuObj);
+            _exibirSubmenu();
         }
     } catch (ex) {
         $(".menuLink[id^=" + menu + "]").addClass("actualTool");
         $(".menuLink[id^=" + menu + "]").addClass("visited");
         var menuObj = new Object();
         menuObj.id = menu + "Link";
-        makeSubMenu(menuObj);
-        showSubMenu();
+        _contruirSubmenus(menuObj);
+        _exibirSubmenu();
     }
 }
 
-function exibirShader() {
+/**
+ * Bloqueia a tela com uma pequena janela de 'Carregando...' e um fundo preto transparente.
+ * 
+ * @returns {undefined}
+ */
+function exibirMensagemCarregando() {
     $(".loading_background").css("display", "initial");
     $(".shaderFrame").css("visibility", "visible").animate({opacity: "0.5"}, 150);
     $(".shaderFrameContent").css("visibility", "visible").animate({opacity: "1"}, 350);
     $(".shaderFrameContent").center();
 }
 
-function esconderShader() {
+/**
+ * Desfaz a ação do método <code>exibirMensagemCarregando</code>
+ * @returns {undefined}
+ */
+function esconderMensagemCarregando() {
     $(".loading_background").css("display", "none");
     $(".shaderFrame").css("visibility", "hidden").css("opacity", "0");
     $(".shaderFrameContent").css("visibility", "hidden").css("opacity", "0");
 }
 /**
- * Faz uma requisição Ajax de alguma página qualquer, podendo escolher onde a 
- * resposta será colocada.
+ * Função para auxiliar chamadas Ajax.
+ * Faz a chamada do link via Ajax usando o método GET. A resposta da página invocada
+ * pode ser inserida em qualquer elemento através da opção <code>recipiente</code>. Por padrão elas são
+ * carregadas
  * 
- * @author Reuel
- * 
- * @param {URL} link URL para a página que deseja-se obter via ajax.
- * @param {String} place Um div (ou até mesmo um SPAN) referenciado pelo nome da sua classe
- * ou ID, onde a resposta será inserida. Caso seja <code>undefined</code>, <i>.contentWrap</i> será utilizado
- * por padrão. Caso <code>null</code>, a resposta não será colocada em nenhum lugar.
- * @param {boolean} hidePop Determina se, caso um pop-up esteja sendo exibido no canto da tela do usuário,
- * se ele deve ser escondido ou permanecer sendo exibido.
- * @param {boolean} async Especifíca se o carregamento deve ser assíncrono ou não. Por padrão, essa opção é falsa.
- * @param {boolean} ignorePageChanges Faz a chamada sem perguntar se o usuário deseja sair, caso tenho feito alguma alteração no documento.
- * @param {string} tipo GET ou POST
- * @param {function} fnSucesso Função para ser executada caso a REQUISIÇÃO AJAX seja concluída com sucesso (não confundir com uma mensagem interna da aplicação de sucesso)
- * @param {function} fnErro Função para ser executada caso a REQUISIÇÃO AJAX não possar seja concluída 
- * @returns O retorno da página requisitada, caso ela retorne algum.
+ * @param {string} url Endereço a ser invocado
+ * @param {PlainObject} opcoes 
+ * <dl>
+ * <dt>{string} <b>recipiente</b></dt><dd>Qualquer string que possa ser usada como um seletor jQuery, como por exemplo '.classe' ou '#id'.<br/>Caso <code>null</code> seja passado, a resposta não será colocada em lugar algum.<br/>Caso <code>undefined</code>, a resposta será colocada em ".contentWrap".</dd>
+ * <dt>{boolean} <b>async</b></dt><dd>Especifíca se o carregamento deve ser assíncrono ou não. Por padrão, essa opção é falsa.</dd>
+ * <dt>{boolean} <b>ignorarMudancas</b></dt><dd> Faz a chamada sem perguntar se o usuário deseja sair, caso tenho feito alguma alteração no documento. Falso por padrão.</dd>
+ * <dt>{function} <b>sucesso</b></dt><dd>Função para ser executada caso a operação Ajax seja bem sucedida. Ela será a última função a ser executada antes de retornar o método (e após a resposta ter sido adicionada ao recipiente, caso algum tenha sido escolhido).</dd>
+ * <dt>{function} <b>fnErro</b></dt><dd> Função para ser executada caso a operação Ajax seja mal sucedida. </dd>
+ * </dl>
+ * @returns {undefined}
  */
-function ajax(link, place, hidePop, async, ignorePageChanges, tipo, fnSucesso, fnErro) {
-    if (place === undefined) {
-        place = ".contentWrap";
-    }
-    if (async === undefined || async === null) {
-        async = true;
-    }
+function carregarAjax(url, opcoes) {
 
-    paginaCompleta = false;
-    var request = $.ajax({
-        url: link
-        , async: async
-                //, timeout: 10000 //Espera no máximo 10 segundos,
-        , beforeSend: function () {
-//            if (place !== null) {
-            setTimeout(function () {
-                if (!paginaCompleta && !ocorreuExcecaoJS) {
-                    exibirShader();
-                }
-            }, "1500");
-//            }
-        }
-        , complete: function () {
-            //Ao ocorreu uma exceção JS, as demais páginas carregas após isso não
-            //terão seus scripts executados. Para forçar que eles sejam executados,
-            //apenas recarregamos a página do navegador para que o JS volte a ser
-            //executado.
-            if (ocorreuExcecaoJS) {
-                document.paginaAlterada = false;
-                ocorreuExcecaoJS = false;
-                //Previnir um reload infinito caso o erro ocorra na página inicial
-                if (!/(index.php($|\?c=inicial&a=(inicial|homepage))|#!(inicial\|homepage))/.test(location.href)) {
-                    location.reload(true);
-                }
-                return false;
-            }
-            paginaCompleta = true;
-            esconderShader();
-        }
-        , error: function () {
-            paginaCompleta = true;
-            esconderShader();
-        }
-    });
+    var opcoes = opcoes || {};
+    var funcaoVazia = function () {
+    };
 
-    var sucesso = request.success(function (data) {
+    var recipiente = opcoes.recipiente ? recipiente = opcoes.recipiente : (opcoes.recipiente === undefined ? ".contentWrap" : null);
+    var async = opcoes.async || true;
+    var ignorarMudancas = opcoes.ignorarMudancas || false;
+    var fnSucesso = opcoes.sucesso || funcaoVazia;
+    var fnErro = opcoes.erro || funcaoVazia;
 
-        if (ignorePageChanges === undefined || ignorePageChanges === false) {
-            if (document.paginaAlterada) {
-                var ignorarMudancas = confirm("Modificações não salvas. Continuar?");
-                if (!ignorarMudancas) {
-                    return false;
-                }
-            }
-        }
-        document.paginaAlterada = false;
-        if (place !== null) {
-            $(place).empty();
-            var patt = new RegExp("<title>.*?</title>.*?");
-
-            //Trata páginas com títulos personalizados
-            if (data !== undefined && data !== null) {
-                if (patt.test(data)) {
-                    var titulo = patt.exec(data)[0];
-                    data = data.replace(titulo, "");
-                    titulo = titulo.replace("<title>", "");
-                    titulo = titulo.replace("</title>", "");
-                    mudarTitulo(titulo);
-                    if (isFunction(fnSucesso))
-                        fnSucesso();
-                } else {
-                    //Volta o título para o padrão
-                    mudarTitulo();
-                }
-                $(place).append(data);
-            }
-        }
-
-        //TODO encontrar uma forma de tratar os campos somente leitura dos datapickers, pois quando
-        //é escolhida uma data através do jquery, o evento change não é acionado.
+    /**
+     * Trata todos os campos obrigatórios de uma página recém carregada.
+     * Com exceção dos campos da classe <code>.ignorar</code>, todos os demais
+     * (caso existam) modificarão a variável <code>document.paginaAlterada</code>
+     * indicando que dados foram modificados no formulário desde a sua chamada.
+     * Com isso, caso o usuário tente acessar outra página, a página atual irá
+     * pergutar se ele realmente deseja fazer isso, perdendo todos os dados ainda
+     * não salvos.
+     * 
+     * @returns {undefined}
+     */
+    function _tratarCamposEditaveis() {
         var camposAlteraveis = $("input, select, textarea").not('.ignorar').not("[hidden]").not("[readonly]");
         $(camposAlteraveis).bind("keyup", function (param) {
             if (param.keyCode != 13)
@@ -388,75 +287,81 @@ function ajax(link, place, hidePop, async, ignorePageChanges, tipo, fnSucesso, f
                 }, 300);
             });
         });
-    });
+    }
 
-    var erro = request.error(function (jqXHR, textStatus, errorThrown) {
-        if (isFunction(fnErro)) {
+    paginaCompleta = false;
+    $.ajax({
+        url: url
+        , async: async
+//        , timeout: 10000 //Espera no máximo 10 segundos,
+        , beforeSend: function () {
+            if (ignorarMudancas !== true && document.paginaAlterada) {
+                var ignorar = confirm("Modificações não salvas. Continuar?");
+                if (!ignorar) {
+                    return false; //Cancela a chamada Ajax
+                } else {
+                    setTimeout(function () {
+                        if (!paginaCompleta && !ocorreuExcecaoJS) {
+                            exibirMensagemCarregando();
+                        }
+                    }, "1500");
+                }
+            }
+
+        }
+        // A função 'complete' é executada somente depois das funções 'success' e 'error'
+        , complete: function () {
+            //Ao ocorreu uma exceção JS, as demais páginas carregas após isso não
+            //terão seus scripts executados. Para forçar que eles sejam executados,
+            //apenas recarregamos a página do navegador para que o JS volte a ser
+            //executado.
+            if (ocorreuExcecaoJS) {
+                document.paginaAlterada = false;
+                ocorreuExcecaoJS = false;
+                //Previnir um reload infinito caso o erro ocorra na página inicial
+                if (!/(index.php($|\?c=inicial&a=(inicial|homepage))|#!(inicial\|homepage))/.test(location.href)) {
+                    location.reload(true);
+                }
+                return false;
+            }
+            paginaCompleta = true;
+            esconderMensagemCarregando();
+        }
+        , success: function (data, textStatus, jqXHR) {
+
+            if (recipiente !== null) {
+                //Trata páginas com títulos personalizados
+                var patt = /<title>.*?<\/title>/;
+                if (patt.test(data)) {
+                    var titulo = patt.exec(data)[0];
+                    data = data.replace(titulo, "");
+                    titulo = titulo.replace("<title>", "");
+                    titulo = titulo.replace("</title>", "");
+                    mudarTitulo(titulo);
+                } else {
+                    //Volta o título para o padrão (para não manter o título da página anterior!)
+                    mudarTitulo();
+                }
+                $(recipiente).empty();
+                $(recipiente).append(data);
+                _tratarCamposEditaveis();
+            }
+
+            fnSucesso();
+            document.paginaAlterada = false;
+        }
+
+        , error: function (jqXHR, textStatus, errorThrown) {
+            paginaCompleta = true;
+            esconderMensagemCarregando();
             fnErro();
         }
-        if (textStatus != "timeout") {
-            showPopUp("<b>" + errorThrown.name + "</b><br/>" + errorThrown.message, textStatus);
-        } else {
-            showPopUp("<B>Timeout</b><br/>A operação não pode ser concluída pois o servidor demorou muito para responder.", "Info");
-        }
     });
-
-
-    return sucesso.responseText;
 }
-
-//TODO verificar porque a tela cheia não funciona, através desse método, do mesmo
-//modo que apertando F11 (ou botão apropriado para exibir em tela cheia) no navegador.
-//function launchFullScreen(element) {
-//
-//    if (element.requestFullScreen) {
-//        element.requestFullScreen();
-//    } else if (element.mozRequestFullScreen) {
-//        element.mozRequestFullScreen();
-//    } else if (element.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT)) {
-//        element.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
-//    } else {
-//        var wscript = new ActiveXObject("Wscript.shell");
-//        wscript.SendKeys("{F11}");
-//
-//    }
-//    $("#fullscreen-on").addClass("hide");
-//    $("#fullscreen-off").removeClass("hide");
-//}
-//
-//function cancelFullscreen() {
-//
-//    if (document.cancelFullScreen) {
-//        document.cancelFullScreen();
-//    } else if (document.mozCancelFullScreen) {
-//        document.mozCancelFullScreen();
-//    } else if (document.webkitCancelFullScreen) {
-//        document.webkitCancelFullScreen();
-//    } else {
-//        var wscript = new ActiveXObject("Wscript.shell");
-//        wscript.SendKeys("{F11}");
-//    }
-//    $("#fullscreen-off").addClass("hide");
-//    $("#fullscreen-on").removeClass("hide");
-//}
 
 var pfx = ["webkit", "moz", "ms", "o", ""];
 
-function canToggleFullScreen() {
-//    if (document.documentElement.requestFullscreen) {
-//        return true;
-//    } else if (document.documentElement.mozRequestFullScreen) {
-//        return true;
-//    } else if (document.documentElement.webkitRequestFullscreen) {
-//        return true;
-//    } else {
-//        try {
-//            var wscript = new ActiveXObject("Wscript.shell");
-//            return true;
-//        } catch (e) {
-//        }
-//    }
-//    return false;
+function _canToggleFullScreen() {
     var agente = getBrowser().t;
     if (/.*?(Safari|Opera).*?/i.test(agente)) {
         return false;
@@ -479,7 +384,7 @@ function canToggleFullScreen() {
     return false;
 }
 
-function RunPrefixMethod(obj, method) {
+function _RunPrefixMethod(obj, method) {
 
     var p = 0, m, t;
     while (p < pfx.length && !obj[m]) {
@@ -499,42 +404,13 @@ function RunPrefixMethod(obj, method) {
 
 }
 
-function toggleFullScreen() {
-//    if (!document.fullscreenElement && // alternative standard method
-//            !document.mozFullScreenElement && !document.webkitFullscreenElement) {  // current working methods
-//        if (document.documentElement.requestFullscreen) {
-//            document.documentElement.requestFullscreen();
-//        } else if (document.documentElement.mozRequestFullScreen) {
-//            document.documentElement.mozRequestFullScreen();
-//        } else if (document.documentElement.webkitRequestFullscreen) {
-//            document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-//        } else {
-//            var wscript = new ActiveXObject("Wscript.shell");
-//            wscript.SendKeys("{F11}");
-//        }
-//        $("div.userInfoWrap  i.icon-fullscreen").removeClass("icon-fullscreen").addClass("icon-resize-small");
-//        $("#fullscreen-toggle").prop('title', "Voltar ao modo normal");
-//    } else {
-//        if (document.cancelFullScreen) {
-//            document.cancelFullScreen();
-//        } else if (document.mozCancelFullScreen) {
-//            document.mozCancelFullScreen();
-//        } else if (document.webkitCancelFullScreen) {
-//            document.webkitCancelFullScreen();
-//        } else {
-//            var wscript = new ActiveXObject("Wscript.shell");
-//            wscript.SendKeys("{F11}");
-//        }
-//        $("div.userInfoWrap  i.icon-resize-small").removeClass("icon-resize-small").addClass("icon-fullscreen");
-//        $("#fullscreen-toggle").prop('title', "Modo tela cheia");
-//
-//    }
-    if (RunPrefixMethod(document, "FullScreen") || RunPrefixMethod(document, "IsFullScreen")) {
-        RunPrefixMethod(document, "CancelFullScreen");
+function _toggleFullScreen() {
+    if (_RunPrefixMethod(document, "FullScreen") || _RunPrefixMethod(document, "IsFullScreen")) {
+        _RunPrefixMethod(document, "CancelFullScreen");
         $("div.userInfoWrap  i.icon-resize-small").removeClass("icon-resize-small").addClass("icon-fullscreen");
         $("#fullscreen-toggle").prop('title', "Modo tela cheia");
     } else {
-        RunPrefixMethod(document.documentElement, "RequestFullScreen");
+        _RunPrefixMethod(document.documentElement, "RequestFullScreen");
 
         $("div.userInfoWrap  i.icon-fullscreen").removeClass("icon-fullscreen").addClass("icon-resize-small");
         $("#fullscreen-toggle").prop('title', "Voltar ao modo normal");
@@ -546,13 +422,12 @@ function toggleFullScreen() {
 /**
  * Esconde o rodapé da página.
  * 
- * @author Reuel
  * 
  * @returns {undefined} 
  */
-function hideFooter() {
-    if (window.footerHidden === false) {
-        window.footerHidden = true;
+function esconderRodape() {
+    if (window.rodapeEscondido === false) {
+        window.rodapeEscondido = true;
         $(".footerWrap").animate({
             opacity: 0,
             top: '+=50',
@@ -574,15 +449,14 @@ function hideFooter() {
 }
 
 /**
- * Mostra o rodapé da página. Por padão ela fica escondida para ganhar espaço.
+ * Mostra o rodapé da página.
  * 
- * @author Reuel
  * 
  * @returns {undefined} 
  */
-function showFooter() {
-    if (window.footerHidden === true) {
-        window.footerHidden = false; //Prevenir clique duplo sobre a seta azul, inutilizando o rodapé
+function exibirRodape() {
+    if (window.rodapeEscondido === true) {
+        window.rodapeEscondido = false; //Prevenir clique duplo sobre a seta azul, inutilizando o rodapé
         $(".arrow-up").animate({opacity: 0}, 300, function () {
             $(".arrow-down").show();
             $(".arrow-up").hide();
@@ -605,13 +479,12 @@ function showFooter() {
 /**
  * Exibe popup com auxílio do plugin jQuery toastmessage.
  * 
- * @author Reuel
  * 
  * @param {string} mensagem
  * @param {string} tipo
  * @returns {undefined}
  */
-function showPopUp(mensagem, tipo) {
+function exibirPopup(mensagem, tipo) {
     if (tipo === undefined || tipo === null) {
         tipo = "pop_info";
     }
@@ -647,14 +520,13 @@ function showPopUp(mensagem, tipo) {
 }
 
 /**
- * Esconde o sub-menu.
+ * Esconde o sub-menu da página caso ele esteja visível.
  * 
- * @author Reuel
  * 
- * @param {int} time Tempo de duração da animação.
+ * @param {int} time Tempo de duração da animação. 200ms por padrão.
  * @returns {undefined}
  */
-function hideSubMenu(time) {
+function _esconderSubmenu(time) {
     if (time === null || time === undefined) {
         time = 200;
     }
@@ -672,12 +544,11 @@ function hideSubMenu(time) {
 /**
  * Mostra o sub-menu.
  * 
- * @author Reuel
  * 
- * @param {int} time Tempo de duração da animação.
+ * @param {int} time Tempo de duração da animação. 200ms por padrão.
  * @returns {undefined}
  */
-function showSubMenu(time) {
+function _exibirSubmenu(time) {
     if (time === null || time === undefined) {
         time = 200;
     }
@@ -695,10 +566,10 @@ function showSubMenu(time) {
  * 
  * @author Reuel
  * 
- * @param {json} Menu onde o clique foi originado.
+ * @param {json} originMenu Menu onde o clique foi originado.
  * @returns {undefined}
  */
-function makeSubMenu(originMenu) {
+function _contruirSubmenus(originMenu) {
     var menuName;
     if (originMenu !== null) {
         menuName = originMenu.id;

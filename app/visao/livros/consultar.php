@@ -1,9 +1,9 @@
 <title>Consultar livros</title>
 <!-- Início da página -->
 <ul class="nav nav-tabs" id="abas">
-    <li><a href="javascript:void(0)" onclick="ajax('index.php?c=livros&a=consultar_interno', '#resultado_consulta', false);" data-toggle="tab">Interno</a></li>
-    <li><a href="javascript:void(0)" onclick="ajax('index.php?c=livros&a=consultar_externo', '#resultado_consulta', false);" data-toggle="tab">Externo</a></li>
-    <li><a href="javascript:void(0)" onclick="ajax('index.php?c=livros&a=consultar_embaixa', '#resultado_consulta', false);" data-toggle="tab">Baixa</a></li>
+    <li><a href="javascript:void(0)" onclick="carregarAjax('index.php?c=livros&a=consultar_interno', {recipiente: '#resultado_consulta', async: false});" data-toggle="tab">Interno</a></li>
+    <li><a href="javascript:void(0)" onclick="carregarAjax('index.php?c=livros&a=consultar_externo', {recipiente: '#resultado_consulta', async: false});" data-toggle="tab">Externo</a></li>
+    <li><a href="javascript:void(0)" onclick="carregarAjax('index.php?c=livros&a=consultar_embaixa', {recipiente: '#resultado_consulta', async: false});" data-toggle="tab">Baixa</a></li>
 </ul>
 <div id="resultado_consulta">
 
@@ -29,30 +29,30 @@ if (isset($_GET['l'])) {
 }
 ?>
 <script id="pos_script">
-        $(document).ready(function() {
+    $(document).ready(function () {
 
-            $('#abas a').on('click', function() {
-                switch (this.innerHTML.toLowerCase()) {
-                    case "interno":
-                        local = "interno";
-                        break;
-                    case "externo":
-                        local = "externo";
-                        break;
-                    case "baixa":
-                        local = "baixa";
-                        break;
-                    default:
-                        local = "interno";
-                }
-                history.replaceState(null, null, "#!livros|consultar&l=" + local)
-            });
-            var i = <?php echo $local; ?>;
-            var local;
-            //Script necessário para as abas
-            var aba = $('#abas a')[i];
-            $(aba).tab('show');
-            $(aba).click();
-
+        $('#abas a').on('click', function () {
+            switch (this.innerHTML.toLowerCase()) {
+                case "interno":
+                    local = "interno";
+                    break;
+                case "externo":
+                    local = "externo";
+                    break;
+                case "baixa":
+                    local = "baixa";
+                    break;
+                default:
+                    local = "interno";
+            }
+            history.replaceState(null, null, "#!livros|consultar&l=" + local)
         });
+        var i = <?php echo $local; ?>;
+        var local;
+        //Script necessário para as abas
+        var aba = $('#abas a')[i];
+        $(aba).tab('show');
+        $(aba).click();
+
+    });
 </script>

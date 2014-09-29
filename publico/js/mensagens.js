@@ -166,22 +166,22 @@ function _processarMensagens(data) {
 
     var erros = data.getMensagensErro();
     for (var i = 0; i < erros.length; i++) {
-        showPopUp(erros[i].getMensagem(), erros[i].getTipo());
+        exibirPopup(erros[i].getMensagem(), erros[i].getTipo());
     }
 
     var sucessos = data.getMensagensSucesso();
     for (var i = 0; i < sucessos.length; i++) {
-        showPopUp(sucessos[i].getMensagem(), sucessos[i].getTipo());
+        exibirPopup(sucessos[i].getMensagem(), sucessos[i].getTipo());
     }
 
     var alertas = data.getMensagensAlerta();
     for (var i = 0; i < alertas.length; i++) {
-        showPopUp(alertas[i].getMensagem(), alertas[i].getTipo());
+        exibirPopup(alertas[i].getMensagem(), alertas[i].getTipo());
     }
 
     var infos = data.getMensagensInfo();
     for (var i = 0; i < infos.length; i++) {
-        showPopUp(infos[i].getMensagem(), infos[i].getTipo());
+        exibirPopup(infos[i].getMensagem(), infos[i].getTipo());
     }
 }
 

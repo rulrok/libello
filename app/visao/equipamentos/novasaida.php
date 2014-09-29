@@ -46,12 +46,6 @@
     $(document).ready(function () {
         $("#dataSaida").datepicker();
         $(".line input").popover({trigger: 'focus', container: 'body'});
-//        $("select[name=papel]").on("change", function(e) {
-//            var id = $(this).val();
-//            if (id > 0) {
-//                buscarUsuarios(id, this);
-//            }
-//        });
         formularioAjax({
             successFn: function () {
                 document.paginaAlterada = false;
@@ -83,24 +77,5 @@
         });
     });
 
-    //    function buscarUsuarios(idPapel) {
-//        document.paginaAlterada = false;
-    //        var retorno = ajax("index.php?c=equipamentos&a=listarUsuarios&idPapel=" + idPapel, null, false, false);
-    //        document.paginaAlterada = true;
-//        var json = filtrarJSON(retorno);
-//        var cb;
-//        if (json.length > 0) {
-//            cb = '<option value="default">-- Selecione um usuário --</option>';
-//            for (var i = 0; i < json.length; i++) {
-////            console.log(retorno[i]);
-//                cb += '\n<option value="' + json[i].idUsuario + '">' + (i + 1) + ": " + json[i].Nome + '</option>';
-//            }
-//        } else {
-//            cb = '<option value="default">-- Não existem usuários desse tipo --</option>';
-//        }
-////        console.log(cb);
-//        $("#cb_usuarios").empty();
-//        $("#cb_usuarios").append(cb);
-//    }
     $("#responsavel").chosen({display_disabled_options: false, display_selected_options: true, inherit_select_classes: true, placeholder_text_multiple: "Selecione o responsavel pela saída", width: "450px"});
 </script>

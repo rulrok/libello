@@ -8,7 +8,7 @@
     <div id="documento_form" style='' border="0" align="center">
         <div style="position: relative;padding:50px 90px;padding-bottom: 120px;">
             <!--"microtime" força o navegador a puxar a imagem sem uso do cache-->
-            <img id="cabecalho" style="" src="publico/imagens/cabecalho-documentos/cabecalho.jpg?<?php echo microtime();?>" />
+            <img id="cabecalho" style="" src="publico/imagens/cabecalho-documentos/cabecalho.jpg?<?php echo microtime(); ?>" />
             <div class="left_align" style="">
                 Mem. nº/Ano/CEAD -
                 <select id='sigla' name='sigla'>
@@ -58,14 +58,14 @@
 </form>
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
 
         FormDocumentos.instancia.iniciarForm();
-        formularioAjax(undefined, undefined, null, function(i) {
+        formularioAjax(undefined, undefined, null, function (i) {
             if (i.documento != undefined) {
                 window.open('index.php?c=documentos&a=visualizarMemorando&idv=' + i.id, '_blank');
                 $('[type=reset]').click();
-                if (document.location.hash != '#!documentos|memorando'){
+                if (document.location.hash != '#!documentos|memorando') {
                     document.ignorarHashChange = true;
                     document.location.hash = '#!documentos|memorando';
                 }
@@ -82,7 +82,7 @@
             }
         }, null, false);
 
-        $('#b_gerar').on('click', function() {
+        $('#b_gerar').on('click', function () {
 //            bloqueia();
 //            if (confirm('Atenção, o memorando será gerado e registrado permanentemente! Tem certeza?')) {
 //                capturaNumMemorando();
@@ -95,25 +95,11 @@
                 var id = $('#i_idmemorando').val();
                 var tipo = "memorando";
                 var acaoGerar = "index.php?c=documentos&a=validar" + tipo + "&i_id" + tipo + "=";
-                var data = ajax(acaoGerar + id, null, false, false);
-                if (data !== null && data !== undefined) {
-                    data = filtrarJSON(data);
-                    if (data.status !== undefined && data.mensagem !== undefined) {
-                        showPopUp(data.mensagem, data.status);
-                        if (data.status.toLowerCase() === "sucesso") {
-                            document.paginaAlterada = false;
-//                            document.location.reload();
-                        }
-                    } else {
-                        showPopUp("Houve algum problema na resposta do servidor", "erro");
-                    }
-                } else {
-                    showPopUp("Houve algum problema na resposta do servidor.", "erro");
-                }
+                carregarAjax(acaoGerar + id, {recipiente: null, async: false});
             }
         });
 
-        $('#b_salvar').on('click', function() {
+        $('#b_salvar').on('click', function () {
             bloqueia();
             if (confirm('Atenção, o memorando será salvo! Tem certeza?')) {
                 concatenarAssinaturas();

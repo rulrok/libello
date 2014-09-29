@@ -285,7 +285,7 @@ function configurarTabela(parametros) {
             return false;
         }
         var id = $("tr.row_selected>.campoID").html();
-        carregarPagina(acaoEditar + id);
+        carregarMetalink(acaoEditar + id);
     });
 
     $(".visualizarPermissoes").on('click', function () {
@@ -299,7 +299,7 @@ function configurarTabela(parametros) {
             return false;
         }
         var id = $("tr.row_selected>.campoID").html();
-        carregarPagina(acaoSaida + id);
+        carregarMetalink(acaoSaida + id);
     });
 
     $(".btn-retorno").on('click', function () {
@@ -307,7 +307,7 @@ function configurarTabela(parametros) {
             return false;
         }
         var id = $("tr.row_selected>.campoID").html();
-        carregarPagina(acaoRetorno + id);
+        carregarMetalink(acaoRetorno + id);
     });
 
     $(".btn-baixa").on('click', function () {
@@ -315,7 +315,7 @@ function configurarTabela(parametros) {
             return false;
         }
         var id = $("tr.row_selected>.campoID").html();
-        carregarPagina(acaoBaixa + id);
+        carregarMetalink(acaoBaixa + id);
     });
 
 

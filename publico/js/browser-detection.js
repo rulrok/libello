@@ -115,13 +115,13 @@ var BrowserDetection = {
 //        };
     },
     remindMe: function(never) {
-        this.writeCookie('bdnotice', 1, never == true ? 4 : 1);
+//        this.writeCookie('bdnotice', 1, 0);
         this.getEl('browser-detection').style.display = 'none';
         this.getEl('black_overlay').style.display = 'none';
     },
     writeCookie: function(name, value, days) {
         var expiration = "";
-        if (parseInt(days) > 0) {
+        if (parseFloat(days) > 0) {
             var date = new Date();
             date.setTime(date.getTime() + parseInt(days) * 24 * 60 * 60 * 1000);
             expiration = '; expires=' + date.toGMTString();

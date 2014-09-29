@@ -74,7 +74,7 @@
                 "aaSorting": [[2, 'asc']]
             }
         });
-//        showPopUp("Duplo clique nas linhas <br/>mostra a descrição<br/>do equipamento","Info")
+//        exibirPopup("Duplo clique nas linhas <br/>mostra a descrição<br/>do equipamento","Info")
     });
 
 </script>

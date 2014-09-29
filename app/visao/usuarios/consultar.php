@@ -34,6 +34,11 @@
         $(window).bind('resize', function () {
             oTable.fnAdjustColumnSizing();
         });
+
+        $(".visualizarPermissoes").on('click', function () {
+            var id = $("tr.row_selected>.campoID").html();
+            carregarModal("index.php?c=usuarios&a=consultarpermissoes&userID=" + id);
+        });
         oTable.$('tr').mousedown(function () {
             if ($(this).hasClass('row_selected')) {
                 return;

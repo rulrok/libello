@@ -8,7 +8,7 @@
     <div id="documento_form" style='' border="0" align="center">
         <div style="position: relative;">
             <!--"microtime" força o navegador a puxar a imagem sem uso do cache-->
-            <img id="cabecalho" style="" src="publico/imagens/cabecalho-documentos/cabecalho.jpg?<?php echo microtime();?>" />
+            <img id="cabecalho" style="" src="publico/imagens/cabecalho-documentos/cabecalho.jpg?<?php echo microtime(); ?>" />
             <div class="left_align" style="">
                 Ofício nº/Ano/CEAD -
                 <select id='sigla' name='sigla'>
@@ -64,9 +64,9 @@
 </form>           
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         FormDocumentos.instancia.iniciarForm();
-        formularioAjax(undefined, undefined, null, function(i) {
+        formularioAjax(undefined, undefined, null, function (i) {
             if (i.documento != undefined) {
                 window.open('index.php?c=documentos&a=visualizarOficio&idv=' + i.id, '_blank');
                 $('[type=reset]').click();
@@ -86,40 +86,26 @@
             }
         }, null, false);
 
-        $('#b_gerar').on('click', function() {
+        $('#b_gerar').on('click', function () {
 //            bloqueia();
 //            if (confirm('Atenção, o ofício será gerado e registrado permanentemente! Tem certeza?')) {
 ////                capturaNumOficio();
 //            }
 //            desbloqueia();
 
-        
+
             var r = confirm("Atenção, o ofício será gerado e registrado permanentemente! Tem certeza?");
             if (r) {
 //                var id = document.getElementsByName("i_idoficio")[0].value;
                 var id = $('#i_idoficio').val();
                 var tipo = "oficio";
                 var acaoGerar = "index.php?c=documentos&a=validar" + tipo + "&i_id" + tipo + "=";
-                var data = ajax(acaoGerar + id, null, false, false);
-                if (data !== null && data !== undefined) {
-                    data = filtrarJSON(data);
-                    if (data.status !== undefined && data.mensagem !== undefined) {
-                        showPopUp(data.mensagem, data.status);
-                        if (data.status.toLowerCase() === "sucesso") {
-                            document.paginaAlterada = false;
-//                            document.location.reload();
-                        }
-                    } else {
-                        showPopUp("Houve algum problema na resposta do servidor", "erro");
-                    }
-                } else {
-                    showPopUp("Houve algum problema na resposta do servidor.", "erro");
-                }
+                carregarAjax(acaoGerar + id, {recipiente: null, async: false});
             }
 
         });
 
-        $('#b_salvar').on('click', function() {
+        $('#b_salvar').on('click', function () {
             bloqueia();
             if (confirm('Atenção, o rascunho do ofício será salvo! Tem certeza?')) {
 

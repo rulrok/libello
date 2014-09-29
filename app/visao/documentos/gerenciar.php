@@ -153,7 +153,7 @@
     function mouseTabela(tab) {
 
 
-        $(' tr.row_selected').each(function() {
+        $(' tr.row_selected').each(function () {
             $(this).removeClass('row_selected');
         });
         var selectedElement = $($('#' + tab.attr('id') + ' tr')[1]).addClass('row_selected');
@@ -172,7 +172,7 @@
                 $(".editavel").show();
             }
 
-        tab.$('tr').mousedown(function(e) {
+        tab.$('tr').mousedown(function (e) {
             $('tr.row_selected').removeClass('row_selected');
             $(this).parent().parent().find('tr.row_selected').removeClass('row_selected');
             $(this).addClass('row_selected');
@@ -216,7 +216,7 @@
 //            }
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
 
         $('#todosOficios .tabelaDeEdicao').attr('id', 'tabelaTodosOficios');
@@ -247,7 +247,7 @@
         mouseTabela(tab_memorandosAberto);
 
 
-        $('.visualizar-oficio').change(function() {
+        $('.visualizar-oficio').change(function () {
             var valor = $('.visualizar-oficio .active').val();
             //alert(valor);
             $('#todosOficios').hide();
@@ -314,7 +314,7 @@
             }
         });
 
-        $('.visualizar-memorando').change(function() {
+        $('.visualizar-memorando').change(function () {
             var valor = $('.visualizar-memorando .active').val();
             $('#todosMemorandos').hide();
             $('#memorandosValidos').hide();
@@ -384,15 +384,13 @@
             }
         });
 
-
-
-/**
- * Abaixo, botões de ação e visualizacao 
- *
- */
+        /**
+         * Abaixo, botões de ação e visualizacao 
+         *
+         */
         //função botão visualizar
         //mostra o documento de acordo com o tipo da tabela visivel
-        $('.btn-visualizar').on('click', function() {
+        $('.btn-visualizar').on('click', function () {
             if ($('#tabela1').css('display') != 'none') {
                 window.open('index.php?c=documentos&a=visualizarOficio&idv=' + $('.row_selected td.campoID').text());
             }
@@ -402,131 +400,102 @@
         });
 
         //função botão invalidar
-        $('.btn-invalidar').on('click', function() {
+        $('.btn-invalidar').on('click', function () {
             var r = confirm("Tem certeza? O documento será permanentemente invalidado!");
             if (r) {
                 var doc = $('tr.row_selected').attr('doc');
                 var id = $('tr.row_selected .campoID').text();
                 var acaoDeletar = "index.php?c=documentos&a=invalidar" + doc + "&i_id" + doc + "=";
-                var data = ajax(acaoDeletar + id, null, false, false);
+                carregarAjax(acaoDeletar + id, {recipiente: null, async: false, sucesso: function () {
+                        //Desabilitando os botões após a invalidação e antes da tela ser atualizada
+                        $('.btn-invalidar').addClass('disabled');
+                        $('.btn-invalidar').attr({disabled: true});
 
-                if (data !== null && data !== undefined) {
-                    data = filtrarJSON(data);
+                        $('.btn-visualizar').addClass('disabled');
+                        $('.btn-visualizar').attr({disabled: true});
 
-                    if (data.status !== undefined && data.mensagem !== undefined) {
-                        console.log(data.mensagem + "\n\n");
-                        console.log(data.status);
-                        showPopUp(data.mensagem, data.status);
-                        if (data.status.toLowerCase() === "sucesso") {
-                            document.paginaAlterada = false;
+                        $('.btn-aproveitar').addClass('disabled');
+                        $('.btn-aproveitar').attr({disabled: true});
 
-                            //Desabilitando os botões após a invalidação e antes da tela ser atualizada
-                            $('.btn-invalidar').addClass('disabled');
-                            $('.btn-invalidar').attr({disabled: true});
+                        $('.btn-todos').addClass('disabled');
+                        $('.btn-todos').attr({disabled: true});
 
-                            $('.btn-visualizar').addClass('disabled');
-                            $('.btn-visualizar').attr({disabled: true});
+                        $('.btn-validos').addClass('disabled');
+                        $('.btn-validos').attr({disabled: true});
 
-                            $('.btn-aproveitar').addClass('disabled');
-                            $('.btn-aproveitar').attr({disabled: true});
+                        $('.btn-invalidos').addClass('disabled');
+                        $('.btn-invalidos').attr({disabled: true});
 
-                            $('.btn-todos').addClass('disabled');
-                            $('.btn-todos').attr({disabled: true});
+                        $('.btn-em-aberto').addClass('disabled');
+                        $('.btn-em-aberto').attr({disabled: true});
 
-                            $('.btn-validos').addClass('disabled');
-                            $('.btn-validos').attr({disabled: true});
+                        $('.btn_oficio').addClass('disabled');
+                        $('.btn_oficio').attr({disabled: true});
 
-                            $('.btn-invalidos').addClass('disabled');
-                            $('.btn-invalidos').attr({disabled: true});
+                        $('.btn_memorando').addClass('disabled');
+                        $('.btn_memorando').attr({disabled: true});
 
-                            $('.btn-em-aberto').addClass('disabled');
-                            $('.btn-em-aberto').attr({disabled: true});
-
-                            $('.btn_oficio').addClass('disabled');
-                            $('.btn_oficio').attr({disabled: true});
-
-                            $('.btn_memorando').addClass('disabled');
-                            $('.btn_memorando').attr({disabled: true});
-
-                            setTimeout(function() {
-                                document.location.reload();
-                            }, 2500);
+                        //TODO Ao invés de recarregar a páginas, poderia ser alterada a linha da dataTable apenas
+                        setTimeout(function () {
+                            document.location.reload();
+                        }, 2500);
 //                            document.location.reload();
 //                            $('tr.row_selected').hide();
-                        }
-                    } else {
-                        showPopUp("Houve algum problema na resposta do servidor", "erro");
                     }
-                } else {
-                    showPopUp("Houve algum problema na resposta do servidor.", "erro");
-                }
-
+                });
             }
         });
 
         //função botão deletar
-        $('.btn-deletar').on('click', function() {
+        $('.btn-deletar').on('click', function () {
             var r = confirm("Tem certeza? O documento será permanentemente excluido!");
             if (r) {
                 var id = $('tr.row_selected .campoID').text();
                 var doc = $('tr.row_selected').attr('doc');
 
                 var acaoDeletar = "index.php?c=documentos&a=deletar" + doc + "&i_id" + doc + "=";
-                var data = ajax(acaoDeletar + id, null, false, false);
-                if (data !== null && data !== undefined) {
-                    data = filtrarJSON(data);
+                carregarAjax(acaoDeletar + id, {recipiente: null, async: false, sucesso: function () {
+                        //Desabilitando os botões após deletar a linha e antes da tela ser atualizada
+                        $('.btn-visualizar').addClass('disabled');
+                        $('.btn-visualizar').attr({disabled: true});
 
-                    if (data.status !== undefined && data.mensagem !== undefined) {
-                        showPopUp(data.mensagem, data.status);
-                        if (data.status.toLowerCase() === "sucesso") {
-                            document.paginaAlterada = false;
+                        $('.btn-editar').addClass('disabled');
+                        $('.btn-editar').attr({disabled: true});
 
-                            //Desabilitando os botões após deletar a linha e antes da tela ser atualizada
-                            $('.btn-visualizar').addClass('disabled');
-                            $('.btn-visualizar').attr({disabled: true});
+                        $('.btn-deletar').addClass('disabled');
+                        $('.btn-deletar').attr({disabled: true});
 
-                            $('.btn-editar').addClass('disabled');
-                            $('.btn-editar').attr({disabled: true});
+                        $('.btn-todos').addClass('disabled');
+                        $('.btn-todos').attr({disabled: true});
 
-                            $('.btn-deletar').addClass('disabled');
-                            $('.btn-deletar').attr({disabled: true});
+                        $('.btn-validos').addClass('disabled');
+                        $('.btn-validos').attr({disabled: true});
 
-                            $('.btn-todos').addClass('disabled');
-                            $('.btn-todos').attr({disabled: true});
+                        $('.btn-invalidos').addClass('disabled');
+                        $('.btn-invalidos').attr({disabled: true});
 
-                            $('.btn-validos').addClass('disabled');
-                            $('.btn-validos').attr({disabled: true});
+                        $('.btn-em-aberto').addClass('disabled');
+                        $('.btn-em-aberto').attr({disabled: true});
 
-                            $('.btn-invalidos').addClass('disabled');
-                            $('.btn-invalidos').attr({disabled: true});
+                        $('.btn_oficio').addClass('disabled');
+                        $('.btn_oficio').attr({disabled: true});
 
-                            $('.btn-em-aberto').addClass('disabled');
-                            $('.btn-em-aberto').attr({disabled: true});
+                        $('.btn_memorando').addClass('disabled');
+                        $('.btn_memorando').attr({disabled: true});
 
-                            $('.btn_oficio').addClass('disabled');
-                            $('.btn_oficio').attr({disabled: true});
+                        //Ocultando a linha que acabou de ser apagada
+                        $('tr.row_selected').hide();
 
-                            $('.btn_memorando').addClass('disabled');
-                            $('.btn_memorando').attr({disabled: true});
-
-                            //Ocultando a linha que acabou de ser apagada
-                            $('tr.row_selected').hide();
-
-                            setTimeout(function() {
-                                document.location.reload();
-                            }, 2500);
-                        }
-                    } else {
-                        showPopUp("Houve algum problema na resposta do servidor", "erro");
+                        setTimeout(function () {
+                            document.location.reload();
+                        }, 2500);
                     }
-                } else {
-                    showPopUp("Houve algum problema na resposta do servidor.", "erro");
-                }
+                });
             }
         });
 
         //função botão editar
-        $('.btn-editar').on('click', function() {
+        $('.btn-editar').on('click', function () {
             var doc = $('tr.row_selected').attr('doc');
             var temp = doc[0].toUpperCase() + doc.slice(1);
             var id = $('tr.row_selected .campoID').text();
@@ -534,7 +503,7 @@
         });
 
         //função botão aproveitar
-        $('.btn-aproveitar').on('click', function() {
+        $('.btn-aproveitar').on('click', function () {
             var doc = $('tr.row_selected').attr('doc');
             var temp = doc[0].toUpperCase() + doc.slice(1);
             var id = $('tr.row_selected .campoID').text();
@@ -558,7 +527,7 @@
             $('#tabela2').hide();
             if (primeiro_acesso_oficio == 0) {
                 //$('.visualizar-oficio ').change();
-                setTimeout(function() {
+                setTimeout(function () {
                     tab_todosOficios.fnAdjustColumnSizing();
                     select(tab_todosOficios);
                 }, 50);
@@ -583,7 +552,7 @@
             $('#tabela1').hide();
             $('#tabela2').show();
             if (primeiro_acesso_memorando == 0) {
-                setTimeout(function() {
+                setTimeout(function () {
                     tab_todosMemorandos.fnAdjustColumnSizing();
                     select(tab_todosMemorandos);
                 }, 50);
@@ -608,7 +577,7 @@ if (filter_has_var(INPUT_GET, 'doc')) {//reload, delete ou invalidar usam isso p
     ?>
     <script>
         var doc_select = '<?php echo filter_input(INPUT_GET, 'doc'); ?>';
-        $(document).ready(function() {
+        $(document).ready(function () {
             doc = doc_select;
             $('.btn_' + doc_select).click();
         });
@@ -619,7 +588,7 @@ if (filter_has_var(INPUT_GET, 'tipo')) {
     ?>
     <script>
         var tipo_select = '<?php echo filter_input(INPUT_GET, 'tipo'); ?>';
-        $(document).ready(function() {
+        $(document).ready(function () {
             ignorarhash = false;
             $('.visualizar-' + doc + ' .btn-' + tipo_select).click();
             ignorarhash = true;

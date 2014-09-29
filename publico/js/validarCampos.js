@@ -29,14 +29,6 @@ function varrerCampos() {
                 }
             });
 
-//            $(this).keyup(function() {
-//                tempoDigitando = setTimeout(liberarCadastro, intervaloDigitacao);
-//            });
-//
-//            $(this).keydown(function() {
-//                clearTimeout(tempoDigitando);
-//            });
-
 
             $(this).bind('change', liberarCadastro);
         });

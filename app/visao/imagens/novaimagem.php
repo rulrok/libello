@@ -333,7 +333,7 @@
 //                $("#cpfautor").mask('999.999.999-99');
 //                liberarCadastro();
 //            }, "200");
-            ajax("index.php?c=imagens&a=novaImagem", ".contentWrap", true, false, true);
+            carregarAjax("index.php?c=imagens&a=novaImagem", {ignorarMudancas: true});
             //TODO tirar essa gambiarra
             //TODO AO invés de limpar os campos, a página é apenas recarregada (facilitando a vida de certa forma)
         });

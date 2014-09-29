@@ -122,7 +122,7 @@
 
         //Descobre o SO para exibir texto correto sobre tecla CTRL ou Command (Mac)
         var teclaSpan = document.getElementById("tecla");
-        if (OSName === "MacOS") {
+        if (obterNomeNavegador() === "MacOS") {
             var texto = document.createTextNode("Command " + String.fromCharCode(8984));
         } else {
             texto = document.createTextNode("CTRL");
@@ -130,7 +130,6 @@
         teclaSpan.appendChild(texto);
 
 
-//        configurarCamposDataHora('#dataIda', '#dataVolta');
         varrerCampos();
         $("#responsavel").chosen({display_disabled_options: false, display_selected_options: true, inherit_select_classes: true, placeholder_text_multiple: "Selecione o responsavel pela viagem", width: "450px"});
         $("#passageiros").chosen({display_disabled_options: false, display_selected_options: false, inherit_select_classes: true, placeholder_text_multiple: "Selecione os passageiros", width: "750px"});

@@ -33,14 +33,6 @@
         $("[type=file]").on('change', function() {
             $('#btn_enviar').removeAttr('disabled');
         });
-        formularioAjax();
-
-        //Atualiza a imagem após o submit
-//        $("#ajaxForm").submit(function() {
-//            d = new Date();
-//            //a passagem extra de parâmetro neste caso, força o navegador a "Atualizar" o cache
-//            $("#imagem").attr("src", "publico/imagens/cabecalho-documentos/cabecalho.jpg?" + d.getTime());
-//        });
 
         $("form[name='formulario']").submit(function(e) {
             var formData = new FormData($(this)[0]);

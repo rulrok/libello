@@ -473,7 +473,7 @@
 
         $('#jstree_div').on("move_node.jstree", function (e, data) {
             if (!moverDescritor(data.node, data.parent, data.old_parent)) {
-                showPopUp("Falha ao mover.<br/>Recarregue a página.", "erro");
+                exibirPopup("Falha ao mover.<br/>Recarregue a página.", "erro");
                 return false;
             } else {
                 return true;
