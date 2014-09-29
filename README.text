@@ -1,0 +1,294 @@
+|)[-_\~[-|\|\/()|_\/||)() |^()/? /?[-|_|[-|_ /?/\|\/|()_\~ /?|]3[-|/?() 
+##################################   README  ###################################
+
+ ██████╗ ██████╗  ██████╗   ██╗     ██╗██████╗ ███████╗██╗     ██╗      ██████╗ 
+██╔═══██╗██╔══██╗██╔════╝   ██║     ██║██╔══██╗██╔════╝██║     ██║     ██╔═══██╗
+██║   ██║██████╔╝██║  ███╗  ██║     ██║██████╔╝█████╗  ██║     ██║     ██║   ██║
+██║   ██║██╔══██╗██║   ██║  ██║     ██║██╔══██╗██╔══╝  ██║     ██║     ██║   ██║
+╚██████╔╝██║  ██║╚██████╔╝  ███████╗██║██████╔╝███████╗███████╗███████╗╚██████╔╝
+ ╚═════╝ ╚═╝  ╚═╝ ╚═════╝   ╚══════╝╚═╝╚═════╝ ╚══════╝╚══════╝╚══════╝ ╚═════╝ 
+                                                                                  
+
+################################################################################
+    |)[-_\~[-|\|\/()|_\/||)() |^()/? /?[-|_|[-|_ /?/\|\/|()_\~ /?|]3[-|/?() 
+
+================================================================================
+    0. Estrutura do documento
+================================================================================
+
+    1.      O sistema
+     1.1.   O fluxo do MVC a cada requisição
+    2.      Requisitos
+    3.      Instalação
+    4.      O arquivo de configuração
+    5.      Tipos de arquivos permitidos para a galeria de imagens
+    6.      Protegendo arquivos de chamadas diretas
+    7.      Colocando o sistema em modo de manutenção
+
+================================================================================
+    1. O sistema
+================================================================================
+
+    O sistema orgLibello (referenciado apenas como Libello, que significa 'caderneta'
+em latim) foi desenvolvido com tecnologia PHP utilizando MySQL para a gestão de 
+informações diversas (por isso o nome derivado de caderneta).
+    Foi desenvolvido e testado com Apache2 e Nginx rodando corretamente em ambos
+
+    Foi construído sobre uma forma simplificada de MVC e apresenta a seguinte 
+estrutura de arquivos, uma breve explicação dos arquivos mais importantes:
+
+    ( Reticências indicam que existem outros arquivos no diretório )
+
+-libello/
+        |---app/    * Diretório que contém todas as páginas e lógicas de negócios do portal
+        |   |
+        |   |---Modelo/         * Queries ao banco, geração de opções para componentes HTML e etc...
+        |   |   |...
+        |   |
+        |   |---Visao/          * Páginas que serão visualizadas pelos usuários
+        |   |   |...
+        |   |
+        |   |---Controlador/    * Tratam as chamadas das páginas feitas através do portal
+        |   |   |...
+        |   |
+        |---biblioteca/
+        |   |
+        |   |---seguranca/
+        |   |   |
+        |   |   |---verificarChamada.php    * Protege arquivos de serem chamados diretamente
+        |   |   |---seguranca.php           * Rotinas principais de gerência da sessão do usuário e etc
+        |   |   |---criptografia.php        * Funções para codificar e decodificar valores
+        |   |   |   ...
+        |   |   
+        |   |---configuracoes.php   * Arquivo de configurações principal. Cada opção será explicada posteriormente
+        |   |---cron.php            * Arquivo para executar tarefas de manutenção como limpeza da pasta temporária e tabelas do banco
+        |   |   ...
+        |
+        |---privado/            * Pasta que deve ser protegida ao acesso dos usuários pelo servidor web
+        |   |
+        |   |---galerias/       * Repositório para as imagens enviadas pelo portal. Cada usuário possuirá uma pasta dentro desta.
+        |   |---instalacao/     * Arquivos utilizados para poder configurar sua instalação (manualmente)
+        |   |   |
+        |   |   |---configuracao_apache     * Regras para o servidor para proteger o diretório privado
+        |   |   |---banco_dados.sql         * Dump limpo do banco para ser importado em uma base de dados MySQL
+        |   |   
+        |   |---temp/               * Pasta de arquivos temporários de uso geral pela aplicação
+        |   |---php-error.log       * Log de eventos gerais do sistema, como erros ou tentativas de burlar o sistema por parte dos usuários
+        |
+        |---publico/                * Pasta onde estarão os arquivos de imagens do portal, códigos JavaScript e folhas de estilo CSS
+        |   ...
+        |
+        |---no-js.php       * Página a ser exibida automaticamente para usuários com o JavaScript desabilitados
+        |   ...
+    
+
+        Note que a arquitetura do código não segue exatamente como um MVC deve-se
+    comportar. Atualmente a visão não é atualizada automaticamente quando o modelo
+    muda. O MVC utilizado aqui então está mais relacionado a organização do código
+    em suas respectivas pastas.
+
+================================================================================
+     1.1 O fluxo do MVC a cada requisição
+================================================================================
+
+  Consulte a wiki para mais detalhes
+
+================================================================================
+    2. Requisitos
+================================================================================
+
+    PHP
+
+        * Versão 5.4.4 ou superior
+        * Driver PDO/Mysql - http://br2.php.net/manual/en/pdo.installation.php
+        * Módulo php5-mcrypt - http://br2.php.net/manual/en/mcrypt.installation.php
+
+    MySQL
+
+        * Versão 5.5 ou superior
+
+    Apache ou Nginx recentes
+
+
+================================================================================
+    3. Instalação
+================================================================================
+
+    O processo de instalação deve ser feita de forma manual atualmente.
+    No diretório 'libello/privado/instalacao' você encontrará os arquivos
+necessários para configurar seu ambiente para o Libello, configurando uma base
+de dados inicial mínima para o funcionamento do portal.
+
+    - Arquivo 'banco_dados.sql'
+        Um dump SQL com um usuário padrão configurado como administrador.
+        Usuário: admin@cead.com (email fictício)
+          Senha: 123
+
+    Por questões de padronização, antes de subir o arquivo 'banco_dados.sql'
+para o BD local ou até mesmo para o BD do servidor, deve-se criar um usuário,
+senha e um schema assim como se segue:
+
+        Schema: 'libello' 
+        Usuário: 'libello_cead'
+        Senha: '!l1b3ll0_c34d!'
+
+    E dentro, importar o arquivo de dump 'banco_dados.sql'. Atente-se às aspas,
+que NÃO fazem parte do usuário e nem da senha. De modo a facilitar este processo,
+segue os comandos básicos do SQL para tal:
+
+        - mysql -u seu_usuario_root -p
+        - create user 'libello_cead'@'localhost';
+        - set password for 'libello_cead'@'localhost' = password('!l1b3ll0_c34d!');
+        - grant all on libello.* to 'libello_cead'@'localhost';
+
+    É extremamente necessário configurar as permissões do diretório 'libello', 
+dentro da pasta do servidor web, com usuário o configurado como
+'www-data', que representa o usuário padrão do serviço web 'nginx' e 'apache',
+ou então, com o padrão do serviço web que está sendo usado. Se seu S.O. for o
+linux, você pode fazer isto facilmente com o comando: 
+"sudo chown -R www-data:[SEU_USUÁRIO] libello/".
+    Sem esta configuração o sistema não funcionará em sua plenitude e apresentará
+diversos problemas relacionados à permissão de escrita nas pastas do servidor.
+
+    As pastas 'privado' e 'público' e precisam ser graváveis pelo php
+(por isto, deve-se efetuar a modificação descrita acima), ou as imagens não
+poderão ser enviadas ao portal. Uma mensagem de erro irá alertar qualquer
+administrador que esteja autenticado no site, com as respectivas mensagens 
+de erro logo na parte superior do portal.
+Outros usuários não visualizam essas mensagens, apenas administradores.
+
+    Concluída a instalação, deve-se remover, renomear ou retirar as permissões
+da pasta 'instalacao' para que o servidor web não os acesse.
+
+    Estas configurações de permissões são de suma importancia e devem ser
+verificadas pelo administrador do seu servidor.
+
+    Também por questões de padronização, deve-se colocar os arquivos deste
+sistema dentro de uma pasta denominada 'libello', tanto no diretório de origem,
+quanto no diretório de cópia (/var/www/ ou /var/www/html ou C:/xampp/htdocs ou
+Applications/MAMP/htdocs ou outro diretório web do seu Sistema Operacional).
+
+    * Observação sobre o Banco de imagens
+
+        Outra observação importante que pode não ser tão óbvia é sobre a tabela
+    imagem_descritor que DEVE conter a seguinte linha inserida para o correto
+    funcionamento do módulo de galeria de imagens:
+    
+
+    |  idDescritor  |   nome   |   pai   |   nivel   | rotulo  | qtdFilhos |
+    |       0       |   'NIL'  |   NULL  |     0     |    0    |     0     |
+
+
+    - Arquivo 'configuracao_apache'
+        Regras mínimas para serem adicionadas ao apache para proteger o diretório
+        'privado'.
+
+    - Arquivo 'configuracao_nginx'
+        Semelhante ao arquivo acima, mas para o Nginx
+
+
+
+
+IMPORTANTE:
+    
+    Durante a manutenção do sistema, se for necessário executar algum DUMP, é de
+extrema importancia que se execute o comando adicionando o parâmetro: '--routines' 
+assim como se segue:
+
+        - mysqldump -u root -p --routines libello > banco_dados.sql
+
+
+================================================================================
+    4. O arquivo de configuração
+================================================================================
+
+ Visite a wiki para mais detalhes
+
+================================================================================
+    5. Tipos de arquivos permitidos para a galeria de imagens
+================================================================================
+
+        Os tipos de arquivos permitidos para envio através do site atualmente são:
+
+        jpg|jpeg|png    -   svg|cdr|fh|ai|wmd|dwg|dwf|3ds|xcf
+
+        São os tipos básicos de arquivos de imagens e formatos vetorizados.
+
+        Para alterar os tipos permitidos pela aplicação será necessário editar
+    cinco arquivos:
+
+    * libello/app/modelo/ferramentas/imagens/verificarnova.php
+
+    Próximo da linha 27 haverá dois vetores que irão conter as extensões aceitas
+    pelo servidor quando o usuário tentar enviar sua imagem pela tela de envio.
+
+    * libello/app/modelo/ferramentas/imagens/baixarimagem.php
+
+        Editar de forma a mandar um cabeçalho no formato
+    "Content-type: image/<formato_imagem>"
+
+    * libello/app/modelo/ferramentas/imagens/baixarvetorial.php
+
+        Editar de forma a mandar o cabeçalho apropriado de acordo com o tipo do
+    arquivo vetorial
+
+    * libello/app/visao/imagens/novaimagem.php
+
+        Próximo da linha 90 haverá os dois elementos <input>, uma para a imagem e
+    outro para o arquivo vetorial. Deve-se alterar os valores do atributo 'accept'
+    para que o navegador ao abrir uma janela de seleção de arquivos, permita o
+    usuário selecionar um arquivo para enviar. Isso é apenas uma comodidade para
+    que o usuário selecione apenas o que seja apropriado, mas pode ser burlado
+    caso o usuário edite o DOM do elemento.
+
+    * Arquivo de configurações do servidor apache ou nginx
+
+        Deve-se alterar a diretiva 'FilesMatch' para refletir os novos padrões 
+    que se deseja configurar
+
+================================================================================
+    6. Protegendo arquivos de chamadas diretas
+================================================================================
+
+        As páginas de conteúdo do portal são carregadas via AJAX
+        Quando uma página da visão é solicitada pelo MVC, é possível que a
+    requisição esteja sendo feita de duas maneiras:
+
+        1) O usuário está seguindo os links de navegação do portal
+
+        2) O usuário digita a url diretamente no navegador, como por exemplo:
+
+            index.php?c=imagens&a=novaimagem
+
+        Para proteger as páginas desse tipo de chamada, você pode incluir as
+    seguintes linhas de código:
+
+        <?php
+            include_once APP_LIBRARY_DIR . 'seguranca/verificarChamada.php';
+            verificarChamada();
+        ?>
+
+================================================================================
+    7. Colocando o sistema em modo de manutenção
+================================================================================
+
+        Quando é necessário barrar o uso por parte dos usuários ao sistema,
+    por qualquer motivo ou problema, há a opção (apenas para administradores)
+    de ativar o modo de manutenção. Quando ativado, nenhum usuário consiguirá
+    acessar o site, os atuais usuários não administradores também terão suas
+    sessões no portal encerradas e apenas os administradores continuarão tendo
+    acesso aos recursos do sistema.
+
+        Há duas formas de ativar o modo de manutenção
+
+        1) Pela interface do portal, na caixa de ações localizada no canto
+    direito superior da página, haverá um botão com a ação correspondente ao
+    estado do sistema (em manutenção ou não) e ao clicar o portal será 
+    recarregado modificando o estado
+
+        2) Manualmente, criando um arquivo em branco no diretório raiz da
+    aplicação com o nome 'manutencao.php'. Removendo esse arquivo, o portal
+    deixará o modo de manutenção
+
+################################################################################
+    |)[-_\~[-|\|\/()|_\/||)() |^()/? /?[-|_|[-|_ /?/\|\/|()_\~ /?|]3[-|/?()
